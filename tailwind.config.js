@@ -1,16 +1,21 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: { content: ['./public/**/*.html', './src/**/*.vue'] },
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      colors: { // Custom colour palette
+        'regal-blue': '#243c5a',
+      },
+    },
     screens: {
       sm: '640px',
       md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1536px',
+      lg: '1124px',
+      xl: '1124px',
+      '2xl': '1124px',
     },
     colors: {
       transparent: 'transparent',
@@ -176,7 +181,10 @@ module.exports = {
       150: '1.5',
       200: '2',
     },
-    container: {},
+    container: {
+      center: true,
+      padding: "1rem",
+    },
     content: {
       none: 'none',
     },
@@ -239,6 +247,7 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
+      Poppins: ["Poppins, sans"],
       sans: [
         'ui-sans-serif',
         'system-ui',
@@ -967,5 +976,7 @@ module.exports = {
     wordBreak: ['responsive'],
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-dracula')(),
+  ],
 }
