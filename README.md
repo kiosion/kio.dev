@@ -1,6 +1,6 @@
 # Portfolio Site
 
-Misc code for my (new & improved) art / development portfolio. Using Vue 3, Tailwind.css, and TS.
+Misc code for my (new & improved) art / development portfolio.
 
 To-do list: <a href="TODO.md">TODO.md</a>
 
@@ -8,9 +8,9 @@ To-do list: <a href="TODO.md">TODO.md</a>
 
 <img src="ss.png"/>
 
----
+# Project setup
 
-### Project setup
+I'm using Vue 3, Tailwind.css, and TS.
 
 #### Install deps:
 
