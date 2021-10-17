@@ -4,4 +4,21 @@
 @tailwind utilities;
 
 /* Fonts */
+
+/* FiraCode */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+/* GothamBold */
+@font-face {
+    font-family: GothamBold;
+    src: url(./fonts/Gotham\ Bold.ttf);
+}
+
+/* MetropolisBlack */
+@font-face {
+    font-family: MetropolisBlack;
+    src: url(./fonts/Metropolis\ Black.otf);
+}
+
+/* Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');

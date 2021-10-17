@@ -7,8 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: { // Custom colour palette
-        'regal-blue': '#243c5a',
+        'regalblue': '#243c5a',
       },
+      dropShadow: {
+        'xlg': '0 35px 35px rgba(255, 255, 255, 0.25)',
+      }
     },
     screens: {
       sm: '640px',
@@ -247,6 +250,9 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
+      FiraCode: ["Fira Code, mono"],
+      GothamBold: ["GothamBold, sans"],
+      MetropolisBlack: ["MetropolisBlack, sans"],
       Poppins: ["Poppins, sans"],
       sans: [
         'ui-sans-serif',
