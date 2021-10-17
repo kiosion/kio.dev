@@ -1,0 +1,21 @@
+# TODO list
+
+- Finalize layout mockup
+- Start work on needed components (roughly)
+  - Main page frame, header + footer
+  - Sub-pages
+    - Index
+    - About
+    - Contact
+    - Work
+  - Header (navbar plus logo)
+  - Footer (Copyright plus sitemap)
+  - Small components
+    - Buttons
+    - Links
+    - Navbar elements
+    - Headers / paragraphs
+    - Images
+    - Frames / containers
+- Finalize fonts & colour palette
+- Work on minifying elements / components
