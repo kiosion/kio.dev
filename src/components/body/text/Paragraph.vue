@@ -1,5 +1,5 @@
 <template>
-    <span class="text-base font-FiraCode">{{ msg }}</span>
+    <span class="text-base font-FiraCode leading-8">{{ msg }}</span>
 </template>
 
 <script>

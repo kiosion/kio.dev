@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="container text-light mt-4 sm:mt-8"> -->
   <div class="container flex flex-1 flex-col mt-4 sm:mt-8">
     <Index 
       header1="placeholder" 
