@@ -5,17 +5,15 @@
   </div>
 </template>
 
-<script>
-import NavBar from './components/nav/NavBar.vue'
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import NavBar from './components/nav/NavBar.vue';
 import Page from './components/body/Page.vue'
 
-export default {
-  name: 'App',
+@Options({
   components: {
-    NavBar,
-    Page,
-  }
-}
+    NavBar, Page
+  },
+})
+export default class App extends Vue {}
 </script>
-
-<style src="./assets/tailwind.css"/>
