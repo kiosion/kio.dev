@@ -1,12 +1,11 @@
 <template>
-    <span class="text-5xl font-MetropolisBlack">{{ msg }}</span>
+    <span class="text-5xl font-MetropolisBlack lowercase">{{ msg }}</span>
 </template>
 
 <script>
 export default {
   name: 'Header',
   props: {
-      label: String,
       msg: String
   }
 }
