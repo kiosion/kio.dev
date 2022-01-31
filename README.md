@@ -1,33 +1,17 @@
-# Portfolio Site
+### ABOUT
 
-Misc code for my (new & improved) art / development portfolio.
+Misc code for my art / development portfolio.
 
 To-do list: <a href="TODO.md">TODO.md</a>
 
-Colour palette: <a href="https://draculatheme.com/">Dracula Theme</a>
+Colour palette: <a href="#">Coming soon</a>
 
-Current portfolio: <a href="https://kio.dev/">kio.dev</a>
+Live portfolio: <a href="https://kio.dev/">kio.dev</a>
 
-### Current progress:
+### PREVIEW
 
-<img src="ss.png"/>
+No ss yet :)
 
-# Project setup
+### SETUP
 
-I'm using Vue 3, Tailwind.css, and TypeScript.
-
-#### Install deps:
-
-`npm install`
-
-#### Compiles and hot-reloads for development:
-
-`npm run serve`
-
-#### Compiles and minifies for production:
-
-`npm run build`
-
-#### Lints and fixes files
-
-`npm run lint`
+I'm currently just using html, css and js, however I plan to eventually(TM) transition to using Vue 3 + Tailwind.
