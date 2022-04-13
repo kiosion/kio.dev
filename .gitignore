@@ -4,5 +4,6 @@
 # Node files
 /node_modules
 
-# Tailwindcss
+# Built files
+/dist
 /public/styles.css
