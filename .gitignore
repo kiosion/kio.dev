@@ -1,4 +1,8 @@
+# System files
 .DS_Store
+
+# Node files
+/node_modules
 
 # Editor directories and files
 .idea
