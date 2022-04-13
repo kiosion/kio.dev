@@ -1,6 +1,6 @@
 ### ABOUT
 
-Misc code for my art / development portfolio.
+React app for my visual art and development portfolio.
 
 To-do list: <a href="TODO.md">TODO.md</a>
 
@@ -13,5 +13,3 @@ Live portfolio: <a href="https://kio.dev/">kio.dev</a>
 No ss yet :)
 
 ### SETUP
-
-I'm currently just using html, css and js, however I plan to eventually(TM) transition to using Vue 3 + Tailwind.

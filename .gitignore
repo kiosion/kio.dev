@@ -1,9 +1,0 @@
-# System files
-.DS_Store
-
-# Node files
-/node_modules
-
-# Built files
-/dist
-/public/styles.css
