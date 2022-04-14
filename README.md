@@ -11,5 +11,3 @@ Live portfolio: <a href="https://kio.dev/">kio.dev</a>
 ### PREVIEW
 
 No ss yet :)
-
-### SETUP
