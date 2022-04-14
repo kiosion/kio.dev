@@ -1,6 +1,6 @@
 export default {
-	name: 'devitems',
-	title: 'Dev Items',
+	name: 'workitems',
+	title: 'Work Items',
 	type: 'document',
 	fields: [
 		{
@@ -9,23 +9,13 @@ export default {
 			type: 'string',
 		},
 		{
-			name: 'description',
-			title: 'Description',
-			type: 'string',
-		},
-		{
 			name: 'projectLink',
 			title: 'Project Link',
 			type: 'string',
 		},
 		{
-			name: 'codeLink',
-			title: 'Code Link',
-			type: 'string',
-		},
-		{
 			name: 'image',
-			title: 'Image',
+			title: 'Imgage',
 			type: 'image',
 			options: {
 				hotspot: false,

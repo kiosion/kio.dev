@@ -1,0 +1,15 @@
+{
+  "short_name": "Portfolio",
+  "name": "Portfolio",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32 16x16",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#000000"
+}
