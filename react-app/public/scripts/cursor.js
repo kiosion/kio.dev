@@ -1,13 +1,6 @@
 // on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
 	const cursor = document.querySelector(".app__cursor");
-	// const bindToQuerySelector = (querySelector) => {
-	// 	let a = document.querySelectorAll(".app__cursor-link");
-	// 	console.log('Found links:')
-	// 	a.forEach(link => {console.log(link);})
-	// 	a.forEach(e => e.addEventListener('mouseenter', handleMouseEnter));
-	// 	a.forEach(e => e.addEventListener('mouseleave', handleMouseLeave));
-	// };
 
 	// Event: mouse enter on link
 	const handleMouseEnter = () => {
@@ -20,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	let a = document.querySelectorAll(".app__cursor-link");
-	console.log('Found links:');
-	a.forEach(link => {console.log(link);});
 	a.forEach(e => e.addEventListener('mouseenter', handleMouseEnter));
 	a.forEach(e => e.addEventListener('mouseleave', handleMouseLeave));
 
