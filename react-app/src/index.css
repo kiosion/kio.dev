@@ -37,6 +37,7 @@
 
 html {
 	background-color: var(--background-primary);
+	min-height: 100%;
 }
 
 .app__no-select {
@@ -49,7 +50,7 @@ html {
 .app__cursor {
 	width: 1.6rem;
 	height: 1.6rem;
-	border: 2px solid rgba(0, 0, 0, 0.8);
+	border: 2px solid rgba(255, 255, 255, 0.8);
 	border-radius: 50%;
 	position: fixed;
 	transform: translate(-50%, -50%);
@@ -59,11 +60,12 @@ html {
 	-moz-transition: border 200ms ease;
 	-webkit-transition: border 200ms ease;
 	-o-transition: border 200ms ease;
+	mix-blend-mode: difference;
 	
 }
 .app__cursor.cursor-hover {
-	border: 1.4rem solid rgba(0, 0, 0, 0.2);
+	border: 1.4rem solid rgba(255, 255, 255, 0.2);
 }
 .app__cursor.cursor-click {
-	border: .84rem solid rgba(0, 0, 0, 0.6);
+	border: .84rem solid rgba(255, 255, 255, 0.6);
 }
