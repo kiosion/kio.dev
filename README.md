@@ -1,13 +1,11 @@
-### ABOUT
+## About
 
-React app for my visual art and development portfolio.
+React app for my visual art / development portfolio, blog, and social links.
 
 To-do list: <a href="TODO.md">TODO.md</a>
 
-Colour palette: <a href="#">Coming soon</a>
+Live site: <a href="https://kio.dev/">kio.dev</a>
 
-Live portfolio: <a href="https://kio.dev/">kio.dev</a>
+## Preview
 
-### PREVIEW
-
-No ss yet :)
+<img src="./.github/img/prev.png" width="600px" alt="Preview image" />
