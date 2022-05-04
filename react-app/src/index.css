@@ -40,6 +40,10 @@ html {
 	min-height: 100%;
 }
 
+.app {
+	padding: 0 4rem;
+}
+
 .app__no-select {
 	-webkit-user-select: none;
 	-moz-user-select: none;
