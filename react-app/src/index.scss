@@ -38,10 +38,14 @@
 html {
 	background-color: var(--background-primary);
 	min-height: 100%;
+	overflow-y: hidden scroll;
+	overflow-x: hidden;
 }
 
 .app {
 	padding: 0 4rem;
+	max-width: 70rem;
+	margin: 0 auto;
 }
 
 .app__no-select {

@@ -13,7 +13,11 @@ const Work = () => {
 		<div className="app__workSection">
 			<div className="app__workSection-grid">
 				{/* Very temp, will put in a for loop later lol */}
-				<GridItem props={{ src: '', title: 'Placeholder', cat: 'ART' }} />
+				<GridItem props={{ 
+					src: 'https://cdn.kio.dev/portfolio/infinitys-edge-ii.0.5x.webp', 
+					title: 'Infinity\'s Edge II', 
+					cat: 'ART' 
+					}} />
 				<GridItem props={{ src: '', title: 'Placeholder', cat: 'DESIGN' }} />
 			</div>
 		</div>
