@@ -1,0 +1,16 @@
+.app__footer {
+	flex: 1;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	max-width: 70rem;
+	margin: 0 auto;
+	padding: 4rem 0 4rem;
+
+	span {
+		color: var(--text-secondary);
+		font-family: 'Work Sans', monospace;
+		font-weight: 400;
+		font-size: .9rem;
+	}
+}

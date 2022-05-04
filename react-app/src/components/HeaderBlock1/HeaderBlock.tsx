@@ -1,6 +1,6 @@
 import React from 'react';
 import './HeaderBlock.scss';
-const AboutBlock = ({ props }) => {
+const AboutBlock: React.FunctionComponent<any> = ({ props }) => {
 	const { title, body } = props;
 	return (
 	<div className="block app__no-select">

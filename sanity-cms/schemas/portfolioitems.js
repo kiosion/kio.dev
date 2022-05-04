@@ -13,6 +13,23 @@ export default {
 			name: 'url',
 			title: 'URL Slug',
 			type: 'string',
+			validation: Rule => Rule.required(),
+		},
+		{
+			name: 'desc',
+			title: 'Description',
+			type: 'text',
+			validation: Rule => Rule.required(),
+		},
+		{
+			name: 'date',
+			title: 'Date',
+			type: 'date',
+			options: {
+				dateFormat: 'MMMM Do, YYYY',
+			},
+			initialValue: () => new Date(),
+			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'pimage',
@@ -50,8 +67,8 @@ export default {
 			options: {
 				list: [
 					{ title: 'Art', value: 'art' },
-					{ title: 'Music', value: 'music' },
 					{ title: 'Design', value: 'design' },
+					{ title: 'Music', value: 'music' },
 					{ title: 'Development', value: 'development' },
 					{ title: 'Blog Post', value: 'blog-post' },
 				],

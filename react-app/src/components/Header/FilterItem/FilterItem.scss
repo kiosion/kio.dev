@@ -1,0 +1,27 @@
+.linkitem {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	color: var(--text-primary);
+	font-family: 'Work Sans', monospace;
+	font-weight: 400;
+	padding: 0;
+	margin: 0;
+	font-size: 1.1rem;
+
+	&:hover {
+		color: var(--accent-primary);
+		// font-weight: 600;
+		text-shadow: 0 0 14px var(--shadow-accent);
+	}
+}
+.linkitem-secondary {
+	color: var(--text-secondary);
+
+	&:hover {
+		color: var(--accent-primary);
+		// font-weight: 600;
+		text-shadow: 0 0 14px var(--shadow-accent);
+	}
+}

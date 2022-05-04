@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Footer, Header, Work } from './container';
+import { Header, Footer, Work } from './components';
 import './App.scss';
 
 const App = () => {
 	return (
-	<div className="app" onDrag="">
+	<div className="app">
 		<Header />
 		<Work />
 		<Footer />
