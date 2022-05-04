@@ -1,0 +1,16 @@
+.app__workSection {
+	flex: 1;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	max-width: 70rem;
+	margin: 0 auto;
+}
+
+.app__workSection-grid {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	column-gap: 4rem;
+}

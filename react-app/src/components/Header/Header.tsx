@@ -16,7 +16,7 @@ const Header = () => {
 				className="app__header-row app__no-select"
 			>
 				<motion.div
-					whileInView={{ x: [25, 0], opacity: [0, 1] }}
+					whileInView={{ x: [-25, 0], opacity: [0, 1] }}
 					transition={{ duration: 1, ease: 'easeInOut' }}
 					className="app__header-col"
 				>
@@ -43,9 +43,9 @@ const Header = () => {
 					className="app__header-col"
 				>
 					<div className="app__header-list">
-						<div className="linkitem linkitem-secondary">ABOUT</div>
-						<div className="linkitem linkitem-secondary">SOCIALS</div>
-						<div className="linkitem linkitem-secondary">BLOG</div>
+						<div className="app__cursor-link linkitem linkitem-secondary">ABOUT</div>
+						<div className="app__cursor-link linkitem linkitem-secondary">SOCIALS</div>
+						<div className="app__cursor-link linkitem linkitem-secondary">BLOG</div>
 					</div>
 				</motion.div>
 

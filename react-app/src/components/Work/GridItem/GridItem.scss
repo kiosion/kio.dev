@@ -1,0 +1,32 @@
+.workSection__gridItem {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	.gridItem__frame {
+		min-width: 16rem;
+		min-height: 26rem;
+		border: 1px solid var(--black-colour);
+	}
+	.gridItem__sub {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		margin: .4rem 0 0 0;
+
+		.gridItem__sub-title {
+			font-family: 'Poppins', sans-serif;
+			font-size: 1rem;
+		}
+
+		.gridItem__sub-cat {
+			font-family: 'Work Sans', monospace;
+			font-size: 1rem;
+			color: var(--text-secondary);
+		}
+		
+	}
+}

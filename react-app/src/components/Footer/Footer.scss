@@ -1,11 +1,15 @@
 .app__footer {
+	display: flex;
 	flex: 1;
 	flex-direction: column;
-	height: 100%;
-	width: 100%;
+	height: fit-content;
 	max-width: 70rem;
 	margin: 0 auto;
 	padding: 4rem 0 4rem;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: fixed;
 
 	span {
 		color: var(--text-secondary);
