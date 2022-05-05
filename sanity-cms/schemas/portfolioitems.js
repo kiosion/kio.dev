@@ -10,9 +10,22 @@ export default {
 			validation: Rule => Rule.required(),
 		},
 		{
-			name: 'url',
+			name: 'slug',
 			title: 'URL Slug',
-			type: 'string',
+			type: 'slug',
+			options: {
+				source: 'title',
+				maxLength: 96,
+			},
+			validation: Rule => Rule.required(),
+		},
+		{
+			name: 'pimage',
+			title: 'Preview',
+			type: 'image',
+			options: {
+				hotspot: true,
+			},
 			validation: Rule => Rule.required(),
 		},
 		{
@@ -29,15 +42,6 @@ export default {
 				dateFormat: 'MMMM Do, YYYY',
 			},
 			initialValue: () => new Date(),
-			validation: Rule => Rule.required(),
-		},
-		{
-			name: 'pimage',
-			title: 'Preview',
-			type: 'image',
-			options: {
-				hotspot: true,
-			},
 			validation: Rule => Rule.required(),
 		},
 		{
@@ -60,19 +64,32 @@ export default {
 			of: [{ type: 'block' }],
 		},
 		{
-			name: 'tags',
-			title: 'Tags',
-			type: 'array',
-			of: [{ type: 'string' }],
+			name: 'category',
+			title: 'Category',
+			type: 'string',
 			options: {
 				list: [
-					{ title: 'Art', value: 'art' },
 					{ title: 'Design', value: 'design' },
-					{ title: 'Music', value: 'music' },
 					{ title: 'Development', value: 'development' },
-					{ title: 'Blog Post', value: 'blog-post' },
 				],
 			},
+			validation: Rule => Rule.required(),
 		},
-	],
+		{
+			name: 'visibility',
+			title: 'Visibility',
+			description: 'Set the visibility of this item',
+			type: 'boolean',
+			initialValue: true,
+		},
+		{
+			name: 'priority',
+			title: 'Priority',
+			type: 'number',
+			options: {
+				min: 0,
+			},
+			validation: Rule => Rule.required(),
+		}
+	]
 }

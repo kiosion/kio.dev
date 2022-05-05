@@ -13,13 +13,13 @@ if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
 		// Defind consts + vars
 		const cursor = document.querySelector(".app__cursor") as HTMLElement;
 		cursor.style.display = "none";
-		const handleMouseEnter = () => { cursor.classList.add('cursor-hover'); };
-		const handleMouseLeave = () => { cursor.classList.remove('cursor-hover'); };
+		// const handleMouseEnter = () => { cursor.classList.add('cursor-hover'); };
+		// const handleMouseLeave = () => { cursor.classList.remove('cursor-hover'); };
 		let xp = 0, yp = 0;
 		let mouseX = 0, mouseY = 0;
-		let a = document.querySelectorAll(".app__cursor-link");
-		a.forEach(e => e.addEventListener('mouseenter', handleMouseEnter));
-		a.forEach(e => e.addEventListener('mouseleave', handleMouseLeave));
+		// let a = document.querySelectorAll(".app__cursor-link");
+		// a.forEach(e => e.addEventListener('mouseenter', handleMouseEnter));
+		// a.forEach(e => e.addEventListener('mouseleave', handleMouseLeave));
 		// Event listeners
 		const cursorMove = () => { cursor.style.display = "block"; document.removeEventListener("mousemove", cursorMove); };
 		document.addEventListener("mousemove", cursorMove);

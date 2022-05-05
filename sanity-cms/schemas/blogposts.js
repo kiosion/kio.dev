@@ -10,6 +10,24 @@ export default {
 			validation: Rule => Rule.required(),
 		},
 		{
+			name: 'slug',
+			title: 'URL Slug',
+			type: 'slug',
+			options: {
+				source: 'title',
+				maxLength: 96,
+			},
+			validation: Rule => Rule.required(),
+		},
+		{
+			name: 'himage',
+			title: 'Header Image',
+			type: 'image',
+			options: {
+				hotspot: false,
+			},
+		},
+		{
 			name: 'desc',
 			title: 'Description',
 			type: 'text',
@@ -24,14 +42,6 @@ export default {
 			},
 			initialValue: () => new Date(),
 			validation: Rule => Rule.required(),
-		},
-		{
-			name: 'headerimage',
-			title: 'Header Image',
-			type: 'image',
-			options: {
-				hotspot: false,
-			},
 		},
 		{
 			name: 'body',
