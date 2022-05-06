@@ -5,7 +5,7 @@ import { Header, Footer, Work } from '../components';
 const Home = () => {
 	return (
 		<div className="app">
-			<Header />
+			<Header view={"home"} />
 			<Work />
 			<Footer />
 		</div>

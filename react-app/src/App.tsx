@@ -10,16 +10,11 @@ const App = () => {
 			<Routes>
 				<Route element={ <Home /> } path='/' />
 				<Route element={ <About /> } path='/about' />
-				<Route element={ <Post /> } path='/blog/*' />
+				<Route element={ <Post /> } path='/blog/:slug' />
 				<Route element={ <Blog /> } path='/blog' />
 				<Route element={ <Project /> } path='/project/*' />
 			</Routes>
 		</BrowserRouter>
-		// <div className="app">
-		// 	<Header />
-		// 	<Work />
-		// 	<Footer />
-		// </div>
 	);
 }
 

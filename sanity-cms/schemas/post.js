@@ -20,18 +20,23 @@ export default {
 			validation: Rule => Rule.required(),
 		},
 		{
+			name: 'author',
+			title: 'Author',
+			type: 'reference',
+			to: {type: 'author'},
+		},
+		{
 			name: 'himage',
 			title: 'Header Image',
 			type: 'image',
 			options: {
-				hotspot: false,
+				hotspot: true,
 			},
 		},
 		{
 			name: 'desc',
 			title: 'Description',
 			type: 'text',
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'date',
@@ -41,14 +46,12 @@ export default {
 				dateFormat: 'MMMM Do, YYYY',
 			},
 			initialValue: () => new Date(),
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'body',
 			title: 'Body',
 			type: 'array',
 			of: [{ type: 'block' }],
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'tags',

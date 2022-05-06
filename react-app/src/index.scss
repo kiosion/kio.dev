@@ -5,7 +5,7 @@
 	--background-secondary: #1c1c1c;
 
 	--shadow-primary: #ffffff2c;
-	--shadow-secondary: #ebebeb2c;
+	--shadow-secondary: #8b8b8b2c;
 	--shadow-accent: #bd93f99d;
 
 	--border-primary: #ffffff2e;
@@ -42,11 +42,11 @@ html {
 	overflow-x: hidden;
 }
 
-.app {
-	padding: 0 4rem;
-	max-width: 70rem;
-	margin: 0 auto;
-}
+// .app {
+// 	padding: 0 4rem;
+// 	max-width: 70rem;
+// 	margin: 0 auto;
+// }
 
 .app__no-select {
 	-webkit-user-select: none;

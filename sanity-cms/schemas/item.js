@@ -1,5 +1,5 @@
 export default {
-	name: 'portfolioitems',
+	name: 'item',
 	title: 'Portfolio Items',
 	type: 'document',
 	fields: [
@@ -32,7 +32,6 @@ export default {
 			name: 'desc',
 			title: 'Description',
 			type: 'text',
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'date',
@@ -42,7 +41,6 @@ export default {
 				dateFormat: 'MMMM Do, YYYY',
 			},
 			initialValue: () => new Date(),
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'images',
@@ -73,14 +71,13 @@ export default {
 					{ title: 'Development', value: 'development' },
 				],
 			},
-			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'visibility',
 			title: 'Visibility',
 			description: 'Set the visibility of this item',
 			type: 'boolean',
-			initialValue: true,
+			initialValue: false,
 		},
 		{
 			name: 'priority',

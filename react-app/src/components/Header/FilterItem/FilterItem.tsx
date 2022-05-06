@@ -9,7 +9,6 @@ const FilterItem: React.FunctionComponent<any> = ({ props }) => {
 		<Hover>
 			<div className="header__filteritem">
 				<span>{text}</span>
-				<div></div>
 			</div>
 		</Hover>
 	);

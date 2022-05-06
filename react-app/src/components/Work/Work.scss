@@ -3,9 +3,21 @@
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
+	max-width: 70rem;
+	margin: 0 auto;
+	padding: 0 4rem;
+	overflow: visible;
 }
 
-.app__workSection-grid {
+.workSection__carousel-container {
+	// width: fit-content;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.grid__carousel {
+	width: fit-content;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;

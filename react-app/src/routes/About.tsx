@@ -5,7 +5,7 @@ import { Header, Footer } from '../components';
 const About = () => {
 	return (
 		<div className="app">
-			<Header />
+			<Header view={"about"} route={""} />
 			<Footer />
 		</div>
 	);
