@@ -1,20 +1,20 @@
 .app__footer {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	height: fit-content;
-	width: 100%;
-	padding: 3rem 4rem;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	position: fixed;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    padding: 3rem 4rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
 
-	span {
-		color: var(--text-secondary);
-		font-family: 'Work Sans', monospace;
-		font-weight: 400;
-		font-size: .9rem;
-		text-align: center;
-	}
+    span {
+        color: var(--text-secondary);
+        font-family: 'Work Sans', monospace;
+        font-weight: 400;
+        font-size: .9rem;
+        text-align: center;
+    }
 }

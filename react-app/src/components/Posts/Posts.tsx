@@ -4,7 +4,7 @@ import { client } from '../../client';
 import './Posts.css';
 const Posts = () => {
   return (
-	<div>All Posts</div>
+    <div>All Posts</div>
   );
 }
 

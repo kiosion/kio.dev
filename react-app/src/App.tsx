@@ -5,17 +5,17 @@ import { Home, About, Post, Blog, Project } from './routes';
 import './App.scss';
 
 const App = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route element={ <Home /> } path='/' />
-				<Route element={ <About /> } path='/about' />
-				<Route element={ <Post /> } path='/blog/:slug' />
-				<Route element={ <Blog /> } path='/blog' />
-				<Route element={ <Project /> } path='/project/*' />
-			</Routes>
-		</BrowserRouter>
-	);
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route element={ <Home /> } path='/' />
+                <Route element={ <About /> } path='/about' />
+                <Route element={ <Post /> } path='/blog/:slug' />
+                <Route element={ <Blog /> } path='/blog' />
+                <Route element={ <Project /> } path='/project/*' />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
