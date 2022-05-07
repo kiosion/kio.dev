@@ -1,10 +1,92 @@
 .postContainer__postFooter {
+	margin: 3rem 0 3rem 0;
+	width: 100%;
+}
+
+.postFooter__postInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.postFooter__postInfo-tags {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin: 0 0 2rem 0;
+
+	a {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		font-weight: normal;
+		color: var(--text-primary);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: line-through;
+		}
+	}
+
+	.app__hover {
+		margin: 0 .5rem 0 0;
+
+		&:last-of-type {
+			margin: 0;
+		}
+	}
+}
+
+.postFooter__postInfo-author {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	overflow: hidden;
+	max-width: 24rem;
+}
+
+.postInfo-author__img {
+	max-width: inherit;
+	max-height: inherit;
+
+	img {
+		border-radius: 50%;
+		max-width: 80px;
+		max-height: 80px;
+	}
+}
+
+.postInfo-author__text {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	position: relative;
+	top: 0;
+	margin: 0 0 0 1.8rem;
+
+	p:first-of-type {
+		font-family: var(--font-body);
+		font-size: 1.1rem;
+		font-weight: bold;
+		margin: 0.4rem 0 0.6rem 0;
+	}
+	p:last-of-type {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		font-weight: normal;
+	}
+}
+
+.postFooter__navButtons {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	margin: 2rem 0 0 0;
 	font-family: var(--font-mono);
+	display: none;
 }
 
 .postFooter__prevLink, .postFooter__nextLink {

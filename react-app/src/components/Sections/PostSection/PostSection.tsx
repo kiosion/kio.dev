@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { client } from '../../../client';
 import { PortableText, toPlainText, PortableTextComponents } from '@portabletext/react';
 import slugify from 'slugify';
+import { Link } from 'react-router-dom';
 
 import Hover from '../../Utils/Hover/Hover';
 import PostFooter from './PostFooter/PostFooter';
@@ -17,7 +18,9 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
             slug,
             "author": {
                 "name": author->name,
+                "bio": author->bio,
                 "slug": author->slug.current,
+                "image": author->image.asset->url,
             },
             desc,
             body,
@@ -99,20 +102,24 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                             <Hover>
                                 #{tag}
                             </Hover>
-                        )) : ''}
+                        )) : 'No tags'}
                     </div>
                     <h1 className="postContainer__postTitle">{post.title}</h1>
                     <div className="postContainer__postInfo app__no-select">
-                        <span className="postInfo__postAuthor">
-                            By {post.author ? post.author.name : 'Unknown Author'}
-                        </span>
+                        <div className="postInfo__postAuthor">
+                            <Hover>
+                                <Link to="/about">
+                                    <p>{(post.author && post.author.name) ? ('By ' + post.author.name) : 'Unknown'}</p>
+                                </Link>
+                            </Hover>
+                        </div>
                         <div className="postInfo__seperator" />
                         <span className="postInfo__postDate">
-                            {post.date ? new Date(post.date).toLocaleDateString('en-US', {
+                            {post.date && new Date(post.date).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
-                            }) : 'Unknown Date'}
+                            })}
                         </span>
                     </div>
                     <h2 className="postContainer__postDesc">{post.desc}</h2>
@@ -130,9 +137,19 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
             ) : (
                 <div>404</div>
             )}
-            
             <div className="app__section-divider"></div>
-            <PostFooter prevSlug={prevSlug} nextSlug={nextSlug} />
+            <PostFooter 
+                prevSlug={prevSlug}
+                nextSlug={nextSlug}
+                tags={post.tags}
+                postAuthor={{
+                    name: post.author && post.author.name,
+                    bio: post.author && post.author.bio,
+                    slug: post.author && post.author.slug, 
+                    img: post.author && post.author.image,
+                }}
+            />
+            <div className="app__section-divider"></div>
         </div>
     );
 }

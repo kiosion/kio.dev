@@ -6,7 +6,8 @@ export default {
 		{
 			name: 'name',
 			title: 'Name',
-			type: 'string'
+			type: 'string',
+			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'slug',
@@ -15,7 +16,8 @@ export default {
 			options: {
 				source: 'name',
 				maxLength: 96
-			}
+			},
+			validation: Rule => Rule.required(),
 		},
 		{
 			name: 'image',
@@ -28,6 +30,13 @@ export default {
 		{
 			name: 'bio',
 			title: 'Bio',
+			type: 'text',
+			rows: 2,
+			validation: Rule => Rule.required(),
+		},
+		{
+			name: 'about',
+			title: 'About',
 			type: 'array',
 			of: [
 				{
@@ -36,7 +45,8 @@ export default {
 					styles: [{title: 'Normal', value: 'normal'}],
 					lists: []
 				}
-			]
+			],
+			validation: Rule => Rule.required(),
 		}
 	],
 	preview: {

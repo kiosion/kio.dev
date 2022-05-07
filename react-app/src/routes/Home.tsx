@@ -7,7 +7,7 @@ const Home = () => {
         <div className="app">
             <Header view={"home"} route={["", ""]} />
             <Work />
-            <Footer />
+            <Footer view={"fixed"}/>
         </div>
     );
 }

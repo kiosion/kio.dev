@@ -32,6 +32,7 @@ export default {
 			name: 'desc',
 			title: 'Description',
 			type: 'text',
+			rows: 2,
 		},
 		{
 			name: 'date',
