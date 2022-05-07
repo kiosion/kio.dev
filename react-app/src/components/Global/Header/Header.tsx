@@ -11,7 +11,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
     const [backRoute, setBackRoute] = useState([page, title]);
     const [filterItems, setFilterItems] = useState(new Set<string>(['design']));
     const [backHover, setBackHover] = useState(false);
-    const [linkHover, setLinkHover] = useState('0');
+    const [linkHover, setLinkHover] = useState(view);
     const [filterIndicator, setFilterIndicator] = useState(1);
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
     }
 
     const handleLinkHover = (event: string, item: string) => {
-        setLinkHover(event === 'enter' ? item : '0');
+        setLinkHover(event === 'enter' ? item : view);
     }
 
     return (
@@ -203,7 +203,9 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                                 </div>
                             </Link>
                         </Hover>
-                        <Hover>
+                        <Hover
+                            state={isActive('blog') ? false : true}
+                        >
                             <Link to="/blog">
                                 <div 
                                     className={"header__linkitem linkitem__secondary" + isActive('blog')}

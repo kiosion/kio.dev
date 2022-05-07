@@ -1,0 +1,16 @@
+.postContainer__postFooter {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rem 0 0 0;
+	font-family: var(--font-mono);
+}
+
+.postFooter__prevLink, .postFooter__nextLink {
+	a {
+		text-decoration: none;
+		color: var(--accent-primary);
+		text-transform: uppercase;
+	}
+}

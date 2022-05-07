@@ -6,7 +6,6 @@ import schemaTypes from 'all:part:@sanity/base/schema-type';
 import author from './author';
 import post from './post';
 import item from './item';
-import siteimage from './siteimage';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -18,6 +17,5 @@ export default createSchema({
     author,
     item,
     post,
-    siteimage,
   ]),
 });

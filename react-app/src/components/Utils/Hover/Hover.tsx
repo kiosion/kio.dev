@@ -1,25 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Hover.scss';
 
-type HoverProps = {
+type HoverChildren = {
+    state?: boolean;
+    className?: string;
     children: React.ReactChild | React.ReactChild[];
 }
 
-const Hover = (props: HoverProps) => {
+const Hover: React.FunctionComponent<HoverChildren> = (props) => {
+    const [state, setState] = useState(false);
+    const [className, setClassName] = useState('');
+    const [children, setChildren] = useState(props.children);
+
+    useEffect(() => {
+        props.state === undefined ? setState(true) : setState(props.state);
+        props.className === undefined ? setClassName('') : setClassName(' ' + props.className);
+        props.children && setChildren(props.children);
+    }, [props.state, props.className, props.children]);
+
     const cursor = document.querySelector(".app__cursor") as HTMLElement;
     const handleMouseEnter = () => { cursor.classList.add('cursor-hover'); };
     const handleMouseLeave = () => { cursor.classList.remove('cursor-hover'); };
-
-    return (
+    let res;
+    
+    state ? (res = (
         <div
-            className="app__hover"
+            className={"app__hover" + className}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            {props.children}
+            {children}
+        </div>
+    )) : res = (
+        <div className={"app__hover" + className} >
+            {children}
         </div>
     );
+
+    return ( res );
 }
 
 export default Hover;

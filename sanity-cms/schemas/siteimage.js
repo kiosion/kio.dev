@@ -1,6 +1,6 @@
 export default {
-	name: 'siteimages',
-	title: 'Site Images',
+	name: 'asset',
+	title: 'Assets',
 	type: 'document',
 	fields: [
 		{

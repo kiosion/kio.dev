@@ -4,6 +4,7 @@ import { PortableText, toPlainText, PortableTextComponents } from '@portabletext
 import slugify from 'slugify';
 
 import Hover from '../../Utils/Hover/Hover';
+import PostFooter from './PostFooter/PostFooter';
 
 import './PostSection.scss';
 const PostSection: React.FunctionComponent<any> = ({ slug }) => {
@@ -28,7 +29,6 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
             .then((res) => {
                 setPost(res);
                 setPostBody(res.body);
-                //console.log(res.body);
             })
             .catch((err) => {
                 console.log('Error: ', err);
@@ -56,7 +56,11 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
             },
             code: ({ children, value }) => {
                 return (
-                    <div className="postBody__codeBlock"><code>{children}</code></div>
+                    <div className="postBody__codeBlock">
+                        <code>
+                            {children}
+                        </code>
+                    </div>
                 );
             },
         },
@@ -76,6 +80,16 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
         },
     }
 
+    // Query for current post based on slug, get position in array based on date, and get previous and next post
+    const query = `*[_type == "post"]{
+        title,
+        slug,
+        date,
+    }`;
+    // TODO: Complete this query
+    const prevSlug = 'prev';
+    const nextSlug = 'next';
+
     return (
         <div className="app__postSection">
             {post ? (
@@ -90,7 +104,7 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                     <h1 className="postContainer__postTitle">{post.title}</h1>
                     <div className="postContainer__postInfo app__no-select">
                         <span className="postInfo__postAuthor">
-                            By {post.author ? post.author.name : 'Unknown'}
+                            By {post.author ? post.author.name : 'Unknown Author'}
                         </span>
                         <div className="postInfo__seperator" />
                         <span className="postInfo__postDate">
@@ -98,22 +112,27 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
-                            }) : 'Unknown'}
+                            }) : 'Unknown Date'}
                         </span>
                     </div>
                     <h2 className="postContainer__postDesc">{post.desc}</h2>
                     <div className="postContainer__seperator" />
                     <div className="postContainer__postBody">
-                        <PortableText 
-                            value={postBody}
-                            components={portableTextComponents}
-                        />
+                        {postBody ? (
+                            <PortableText 
+                                value={postBody}
+                                components={portableTextComponents}
+                            />
+                        ) : 'Unable to load post content.'}
+                        
                     </div>
                 </div>
             ) : (
                 <div>404</div>
             )}
+            
             <div className="app__section-divider"></div>
+            <PostFooter prevSlug={prevSlug} nextSlug={nextSlug} />
         </div>
     );
 }
