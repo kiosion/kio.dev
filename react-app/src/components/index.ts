@@ -1,4 +1,5 @@
-export { default as Header } from './Header/Header';
-export { default as Footer } from './Footer/Footer';
-export { default as Work } from './Work/Work';
-export { default as PostSection } from './PostSection/PostSection';
+export { default as Header } from './Global/Header/Header';
+export { default as Footer } from './Global/Footer/Footer';
+export { default as Work } from './Sections/Work/Work';
+export { default as Posts } from './Sections/Posts/Posts';
+export { default as PostSection } from './Sections/PostSection/PostSection';

@@ -8,9 +8,9 @@ const Post = () => {
 
     return (
         <div className="app">
-            <Header view={"blog"} route={"blog"} />
+            <Header view={"blog"} route={["blog", "all posts"]} />
             <PostSection slug={ slug } />
-            <Footer />
+            <Footer view={"relative"} />
         </div>
     );
 }

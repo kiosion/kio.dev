@@ -5,7 +5,7 @@ import { Header, Footer, Work } from '../components';
 const Home = () => {
     return (
         <div className="app">
-            <Header view={"home"} />
+            <Header view={"home"} route={["", ""]} />
             <Work />
             <Footer />
         </div>

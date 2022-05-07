@@ -2,29 +2,35 @@
 
 :root {
 	--background-primary: #dce3e9;
-	--background-secondary: #1c1c1c;
+	--background-secondary: #c1c9d1;
+	--background-tertiary: #86898b;
 
-	--shadow-primary: #ffffff2c;
-	--shadow-secondary: #8b8b8b2c;
-	--shadow-accent: #bd93f99d;
+	--shape-primary: #b6bec481;
 
-	--border-primary: #ffffff2e;
+	--shadow-primary: #57575738;
+	--shadow-secondary: #8f8f8f38;
+	--shadow-accent: #b48ee9a4;
 
-	--border-radius-primary: 15px;
-	--border-radius-secondary: 10px;
-	--border-radius-tertiary: 0px;
+	--border-primary: #111111d0;
+
+	--border-radius-primary: .6rem;
+	--border-radius-secondary: .2rem;
+	--border-radius-tertiary: 0;
 
 	--text-primary: #111111;
 	--text-secondary: #646464;
 
-	--accent-primary: #bd93f9;
-	--accent-secondary: #50fa7b;
+	--accent-primary: #c69efd;
+	--accent-secondary: #51f89c;
 
-	--black-colour: #111111;
-	--white-colour: #ffffff;
-	--gray-colour: #808080;
+	--colour-black: #111111;
+	--colour-white: #ffffff;
+	--colour-gray: #808080;
 
-	--font-base: "DM Sans", sans-serif;
+	--font-title: "Poppins", sans-serif;
+	--font-mono: "Work Sans", monospace;
+	--font-body: "Roboto", sans-serif;
+	--font-code: "Ubuntu Mono", monospace;
 }
 
 * {

@@ -2,28 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import { images } from '../../constants';
-import Hover from '../Hover/Hover';
+import { images } from '../../../constants';
+import Hover from '../../Utils/Hover/Hover';
 
 import './Header.scss';
-const Header: React.FunctionComponent<any> = ({ view, route }) => {
+const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) => {
     const [currentView, setCurrentView] = useState(view);
-    const [backRoute, setBackRoute] = useState(route);
+    const [backRoute, setBackRoute] = useState([page, title]);
     const [filterItems, setFilterItems] = useState(new Set<string>(['design']));
-    const [hover, setHover] = useState(false);
-    const [indicator, setIndicator] = useState(1);
+    const [backHover, setBackHover] = useState(false);
+    const [linkHover, setLinkHover] = useState('0');
+    const [filterIndicator, setFilterIndicator] = useState(1);
 
     useEffect(() => {
         setCurrentView(view);
-        setBackRoute(route);
-    }, [view, route]);
+        setBackRoute([page, title]);
+    }, [page, title, view]);
 
     const isActive = (view: string) => {
         return currentView === view ? ' linkitem__active' : '';
     }
 
-    const isHover = () => {
-        return hover ? ' linkitem__placeholder-hover' : '';
+    const isBackHover = () => {
+        return backHover ? ' linkitem__placeholder-hover' : '';
     }
 
     const isFiltered = (item: string) => {
@@ -46,10 +47,10 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
         }
         
         item === 'all' ? setFilterItems(new Set(['all'])) : setFilterItems(new Set([item]));
-        setIndicator(num);
+        setFilterIndicator(num);
     }
 
-    const handleIndicator = (num: number) => {
+    const handleFilterIndicator = (num: number) => {
         switch (num) {
             case 0:
                 return ' indicator__all';
@@ -60,8 +61,26 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
         }
     }
 
-    const handleHover = (event: string) => {
-        setHover(event === 'enter' ? true : false);
+    const handleLinkIndicator = () => {
+        switch (linkHover) {
+            case '0':
+            case 'home':
+                return ' indicator__0';
+            case 'about':
+                return ' indicator__1';
+            case 'socials':
+                return ' indicator__2';
+            case 'blog':
+                return ' indicator__3';
+        }
+    }
+
+    const handleBackHover = (event: string) => {
+        setBackHover(event === 'enter' ? true : false);
+    }
+
+    const handleLinkHover = (event: string, item: string) => {
+        setLinkHover(event === 'enter' ? item : '0');
     }
 
     return (
@@ -92,7 +111,7 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
                 >
                     {currentView === 'home' ? (
                         <div className="app__header-list">
-                            <div className={"filterItem__indicator" + handleIndicator(indicator)} />
+                            <div className={"filterItem__indicator" + handleFilterIndicator(filterIndicator)} />
                             <Hover>
                                 <div 
                                     className={"header__linkitem linkitem__primary" + isFiltered('design')}
@@ -126,19 +145,19 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
                         </div>
                     ) : (
                         <div className="app__header-list">
-                            <div className={"header__linkitem linkitem__placeholder" + isHover()} />
+                            <div className={"header__linkitem linkitem__placeholder" + isBackHover()} />
                             <Hover>
-                                <Link to={'/' + backRoute}>
+                                <Link to={'/' + backRoute[0]}>
                                     <div 
                                         className="header__linkitem linkitem__primary"
                                         onMouseEnter={() => {
-                                            handleHover('enter');
+                                            handleBackHover('enter');
                                         }}
                                         onMouseLeave={() => {
-                                            handleHover('leave');
+                                            handleBackHover('leave');
                                         }}
                                     >
-                                        back
+                                        &lt; {backRoute[1]}
                                     </div>
                                 </Link>
                             </Hover>
@@ -153,19 +172,50 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
                     className="app__header-col"
                 >
                     <div className="app__header-list">
+                        <div className={"linkItem__indicator" + handleLinkIndicator()} />
                         <Hover>
                             <Link to="/about">
-                                <div className={"header__linkitem linkitem__secondary" + isActive('about')}>about</div>
+                                <div 
+                                    className={"header__linkitem linkitem__secondary" + isActive('about')}
+                                    onMouseEnter={() => {
+                                        handleLinkHover('enter', 'about');
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleLinkHover('leave', 'about');
+                                    }}
+                                >
+                                    about
+                                </div>
                             </Link>
                         </Hover>
                         <Hover>
                             <Link to="/socials">
-                                <div className={"header__linkitem linkitem__secondary" + isActive('social')}>social</div>
+                                <div 
+                                    className={"header__linkitem linkitem__secondary" + isActive('social')}
+                                    onMouseEnter={() => {
+                                        handleLinkHover('enter', 'socials');
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleLinkHover('leave', 'socials');
+                                    }}
+                                >
+                                    social
+                                </div>
                             </Link>
                         </Hover>
                         <Hover>
                             <Link to="/blog">
-                                <div className={"header__linkitem linkitem__secondary" + isActive('blog')}>blog</div>
+                                <div 
+                                    className={"header__linkitem linkitem__secondary" + isActive('blog')}
+                                    onMouseEnter={() => {
+                                        handleLinkHover('enter', 'blog');
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleLinkHover('leave', 'blog');
+                                    }}
+                                >
+                                    blog
+                                </div>
                             </Link>
                         </Hover>
                     </div>
@@ -173,7 +223,7 @@ const Header: React.FunctionComponent<any> = ({ view, route }) => {
 
             </motion.div>
 
-        <div className="app__header-divider"></div>
+        <div className="app__section-divider"></div>
 
     </div>
     );

@@ -6,7 +6,6 @@
 	padding: 4rem;
 	max-width: 70rem;
 	margin: 0 auto;
-	//padding: 4rem 0;
 	transition: all 500ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
 	@media screen and (min-width: 2000px) {
@@ -57,21 +56,46 @@
 
 	.filterItem__indicator {
 		width: 1.2em;
-		height: 1.2em;
-		background: var(--shadow-secondary);
+		height: 1.4em;
+		background: var(--shape-primary);
 		position: absolute;
+		pointer-events: none;
 		transform: translateX(-10px);
-		transition: all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+		transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
 		&.indicator__all {
-			height: calc(1.2em * 3);	
+			height: calc(1.4em * 3);	
 		}
 		&.indicator__1 {
-			height: 1.2em;
+			height: 1.4em;
 		}
 		&.indicator__2 {
-			height: 1.2em;
+			height: 1.4em;
 			transform: translateX(-10px) translateY(1.2em);
+		}
+	}
+
+	.linkItem__indicator {
+		width: 1.2em;
+		height: 1.4em;
+		background: var(--shape-primary);
+		position: absolute;
+		pointer-events: none;
+		transform: translateX(50px);
+		transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+		&.indicator__0 {
+			background: transparent;
+			transform: translateX(-10px) translateY(1.3em)
+		}
+		&.indicator__1 {
+			transform: translateX(-10px) translateY(0em);
+		}
+        &.indicator__2 {
+			transform: translateX(-10px) translateY(1.3em);
+		}
+        &.indicator__3 {
+			transform: translateX(-10px) translateY(calc(1.3em * 2));
 		}
 	}
 
@@ -80,7 +104,7 @@
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
-		font-family: 'Work Sans', monospace;
+		font-family: var(--font-mono);
 		font-weight: 400;
 		padding: 0;
 		margin: 0;
@@ -88,8 +112,10 @@
 		line-height: 1.2em;
 		text-transform: uppercase;
 		text-decoration: none;
+		position: relative;
+		z-index: 1;
+
 		&:hover {
-			text-shadow: 0 0 14px var(--shadow-accent);
 			text-decoration: line-through;
 		}
 		&.linkitem__primary {
@@ -103,7 +129,8 @@
 	.linkitem__placeholder {
 		width: 1.2em;
 		height: calc(1.2em * 2);
-		background: var(--shadow-secondary);
+		background: var(--shape-primary);
+		pointer-events: none;
 		transform: translateX(-10px);
 		transition: all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
@@ -113,16 +140,9 @@
 	}
 	.linkitem__active {
 		text-decoration: line-through;
-		text-shadow: 0 0 14px var(--shadow-accent);
 	}
 
 	.filteritem__active {
-		text-shadow: 0 0 14px var(--shadow-accent);
+		//text-decoration: line-through;
 	}
-}
-
-.app__header-divider {
-	height: 1px;
-	width: 100%;
-	background-color: var(--black-colour);
 }

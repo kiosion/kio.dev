@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Hover from '../../Hover/Hover';
+import Hover from '../../../Utils/Hover/Hover';
 import CarouselItem from '../CarouselItem/CarouselItem';
 
 import './Carousel.scss';

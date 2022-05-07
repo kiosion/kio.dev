@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Hover.scss';
+
 type HoverProps = {
     children: React.ReactChild | React.ReactChild[];
 }
@@ -11,6 +13,7 @@ const Hover = (props: HoverProps) => {
 
     return (
         <div
+            className="app__hover"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >

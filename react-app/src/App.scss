@@ -1,16 +1,17 @@
 .app {
 	background-color: var(--background-primary);
-	font-family: var(--font-base);
-}
-
-.app__primarybg {
-	background-color: var(--background-primary);
+	font-family: var(--font-body);
 }
 
 .app__container {
 	width: 100%;
 	min-height: 100vh;
-
 	display: flex;
 	flex-direction: row;
+}
+
+.app__section-divider {
+	height: 1px;
+	width: 100%;
+	background-color: var(--colour-black);
 }

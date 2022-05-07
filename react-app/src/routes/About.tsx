@@ -5,8 +5,8 @@ import { Header, Footer } from '../components';
 const About = () => {
     return (
         <div className="app">
-            <Header view={"about"} route={""} />
-            <Footer />
+            <Header view={"about"} route={["", "home"]} />
+            <Footer view={"fixed"} />
         </div>
     );
 }
