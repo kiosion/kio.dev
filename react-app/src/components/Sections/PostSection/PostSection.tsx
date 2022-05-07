@@ -58,8 +58,18 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                 );
             },
             code: ({ children, value }) => {
+                // If 'children' is array, then return
+                if (Array.isArray(children) && children.length > 1) {
+                    return (
+                        <div className="postBody__codeBlock">
+                            <code>
+                                {children}
+                            </code>
+                        </div>
+                    );
+                }
                 return (
-                    <div className="postBody__codeBlock">
+                    <div className="postBody__codeInline">
                         <code>
                             {children}
                         </code>

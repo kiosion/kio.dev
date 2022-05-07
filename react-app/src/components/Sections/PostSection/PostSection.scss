@@ -104,26 +104,28 @@
 			position: absolute;
 			z-index: 0;
 			width: 100%;
-			height: .4rem;
+			height: 0.2rem;
 			background-color: var(--shape-primary);
+			color: var(--accent-primary);
 			bottom: 0;
 			left: 0;
+			border-radius: var(--border-radius-tertiary);
 			transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 		}
 
 		&:hover:after {
-			height: 1.4rem;
-			background-color: var(--accent-secondary);
+			height: 1.8rem;
+			color: var(--text-primary);
 		}
 
 		a {
 			position: relative;
 			z-index: 1;
+			color: var(--accent-primary);
 			transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
 			&:hover {
-				//color: var(--accent-primary);
-				//color: var(--colour-white);
+				color: var(--text-primary);
 			}
 		}
 	}
@@ -150,8 +152,9 @@
 	}
 
 	p {
-		margin: .5rem 0;
-		min-height: 1rem;
+		margin: .6rem 0;
+		min-height: .8rem;
+		line-height: 1.8rem;
 
 		strong {
 			font-weight: bold;
@@ -183,21 +186,21 @@
 		font-family: var(--font-title);
 		font-size: 1.6rem;
 		font-weight: bold;
-		margin: 1.4rem 0 1rem 0;
+		margin: 1.2rem 0 .6rem 0;
 	}
 
 	h5 {
 		font-family: var(--font-title);
-		font-size: 1.4rem;
+		font-size: 1.25rem;
 		font-weight: bold;
-		margin: 1.4rem 0 1rem 0;
+		margin: 1.2rem 0 .6rem 0;
 	}
 
 	h6 {
 		font-family: var(--font-title);
 		font-size: 1.1rem;
 		font-weight: bold;
-		margin: 1.4rem 0 1rem 0;
+		margin: 1rem 0 .6rem 0;
 	}
 
 	blockquote {
@@ -225,6 +228,15 @@
 		}
 	}
 
+	ul {
+		margin: 0 0 0 2rem;
+
+		li {
+			line-height: 1.8rem;
+			margin: 0.2rem 0;
+		}
+	}
+
 	.postBody__codeBlock {
 		white-space: pre-wrap;
 		font-family: var(--font-code);
@@ -235,5 +247,16 @@
 		margin: 1rem 0 1rem 0;
 		border-radius: .2rem;
 		box-shadow: 0 0 10px var(--shadow-secondary);
+	}
+
+	.postBody__codeInline {
+		white-space: pre-wrap;
+		font-family: var(--font-code);
+		font-size: 0.9rem;
+		padding: 0rem 0.4rem;
+		font-weight: normal;
+		background-color: var(--background-secondary);
+		display: inline-block;
+		border-radius: var(--border-radius-secondary);
 	}
 }
