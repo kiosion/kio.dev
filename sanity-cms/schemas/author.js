@@ -35,19 +35,15 @@ export default {
 			validation: Rule => Rule.required(),
 		},
 		{
-			name: 'about',
-			title: 'About',
+			name: 'body',
+			title: 'Body',
 			type: 'array',
 			of: [
-				{
-					title: 'Block',
-					type: 'block',
-					styles: [{title: 'Normal', value: 'normal'}],
-					lists: []
-				}
+				{ type: 'block' },
+				{ type: 'image' },
 			],
 			validation: Rule => Rule.required(),
-		}
+		},
 	],
 	preview: {
 		select: {

@@ -1,4 +1,4 @@
-.grid__carousel-button {
+.grid__carousel-buttons {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -7,9 +7,11 @@
 
     &.carousel__button-left {
         left: 0;
+        top: 50%;
     }
 
     &.carousel__button-right {
         right: 0;
+        top: 50%;
     }
 }

@@ -1,6 +1,6 @@
 export default {
 	name: 'post',
-	title: 'Blog Post',
+	title: 'Blog Posts',
 	type: 'document',
 	fields: [
 		{
@@ -51,7 +51,11 @@ export default {
 			name: 'body',
 			title: 'Body',
 			type: 'array',
-			of: [{ type: 'block' }],
+			of: [
+				{ type: 'block' },
+				{ type: 'image' },
+				{ type: 'code' },
+			],
 		},
 		{
 			name: 'tags',
@@ -59,9 +63,8 @@ export default {
 			type: 'array',
 			of: [
 				{
-					name: 'tag',
-					title: 'Tag',
-					type: 'string',
+					type: 'reference',
+					to: [{type: 'tag'}],
 				},
 			],
 		},

@@ -1,0 +1,1 @@
+export { portableTextComponents } from './PortableTextComponents';

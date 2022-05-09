@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundComponent } from '../components/ErrorBounds';
 import { Header, Footer, PostSection } from '../components';
 
 const Post = () => {
@@ -8,9 +10,15 @@ const Post = () => {
 
     return (
         <div className="app">
-            <Header view={"blog"} route={["blog", "all posts"]} />
-            <PostSection slug={ slug } />
-            <Footer view={"relative"} />
+            <ErrorBoundary FallbackComponent={ ErrorBoundComponent }>
+                <Header view={"blog"} route={["blog", "all posts"]} />
+            </ErrorBoundary>
+            <ErrorBoundary FallbackComponent={ ErrorBoundComponent }>
+                <PostSection slug={ slug } />
+            </ErrorBoundary>
+            <ErrorBoundary FallbackComponent={ ErrorBoundComponent }>
+                <Footer view={"relative"} />
+            </ErrorBoundary>
         </div>
     );
 }

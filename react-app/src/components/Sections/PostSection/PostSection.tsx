@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { client } from '../../../client';
-import { PortableText, toPlainText, PortableTextComponents } from '@portabletext/react';
-import slugify from 'slugify';
+import { PortableText } from '@portabletext/react';
 import { Link } from 'react-router-dom';
+
+import { portableTextComponents } from '../../PortableTextComponents';
 
 import Hover from '../../Utils/Hover/Hover';
 import PostFooter from './PostFooter/PostFooter';
@@ -20,12 +21,15 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                 "name": author->name,
                 "bio": author->bio,
                 "slug": author->slug.current,
-                "image": author->image.asset->url,
+                "image": author->image,
             },
             desc,
             body,
             date,
-            tags,
+            "tags": tags[]->{
+                title,
+                slug,
+            },
         }[0]`;
         client
             .fetch(query)
@@ -37,61 +41,6 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                 console.log('Error: ', err);
             });
     }, [slug]);
-
-    const stringToSlug = (value: any) => {
-        return slugify(toPlainText(value))
-            .toLowerCase();
-    }
-
-    const portableTextComponents: PortableTextComponents = {
-        marks: {
-            link: ({ children, value }) => {
-                const target = (value?.href || '').startsWith('http') ? '_blank' : undefined;
-                return (
-                    <Hover>
-                        <p className="app__ul-selector">
-                            <a href={value?.href} target={target} rel={target === '_blank' ? 'noindex nofollow' : ''}>
-                                {children}
-                            </a>
-                        </p>
-                    </Hover>
-                );
-            },
-            code: ({ children, value }) => {
-                // If 'children' is array, then return
-                if (Array.isArray(children) && children.length > 1) {
-                    return (
-                        <div className="postBody__codeBlock">
-                            <code>
-                                {children}
-                            </code>
-                        </div>
-                    );
-                }
-                return (
-                    <div className="postBody__codeInline">
-                        <code>
-                            {children}
-                        </code>
-                    </div>
-                );
-            },
-        },
-        block: {
-            h1: ({ children, value }) => {
-                return ( <h1 id={stringToSlug(value)}>{children}</h1> );
-            },
-            h2: ({ children, value }) => {
-                return ( <h2 id={stringToSlug(value)}>{children}</h2> );
-            },
-            h3: ({ children, value }) => {
-                return ( <h3 id={stringToSlug(value)}>{children}</h3> );
-            },
-            h4: ({ children, value }) => {
-                return ( <h4 id={stringToSlug(value)}>{children}</h4> );
-            },
-        },
-    }
 
     // Query for current post based on slug, get position in array based on date, and get previous and next post
     const query = `*[_type == "post"]{
@@ -109,12 +58,18 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                 <div className="postSection__postContainer">
                     <div className="postContainer__postTags app__no-select">
                         {post.tags ? post.tags.map((tag: any, index: number) => (
-                            <Hover>
-                                #{tag}
+                            <Hover key={index}>
+                                <Link to={tag.slug.current ? ("/blog/tag/" + tag.slug.current) : ''}>
+                                    #{tag.title ? tag.title: 'unknown tag'}
+                                </Link>
                             </Hover>
-                        )) : 'No tags'}
+                        )) : (
+                            <div>
+                                <a href="/blog/">no tags</a>
+                            </div>
+                        )}
                     </div>
-                    <h1 className="postContainer__postTitle">{post.title}</h1>
+                    <div className="app__section-title">{post.title}</div>
                     <div className="postContainer__postInfo app__no-select">
                         <div className="postInfo__postAuthor">
                             <Hover>
@@ -145,18 +100,18 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
                     </div>
                 </div>
             ) : (
-                <div>404</div>
+                <div className="app__sectionLoading">Loading...</div>
             )}
             <div className="app__section-divider"></div>
             <PostFooter 
                 prevSlug={prevSlug}
                 nextSlug={nextSlug}
-                tags={post.tags}
+                tags={(post && post.tags) ? post.tags : []}
                 postAuthor={{
-                    name: post.author && post.author.name,
-                    bio: post.author && post.author.bio,
-                    slug: post.author && post.author.slug, 
-                    img: post.author && post.author.image,
+                    name: (post && post.author) && post.author.name,
+                    bio: (post && post.author) && post.author.bio,
+                    slug: (post && post.author) && post.author.slug, 
+                    img: (post && post.author) && post.author.image,
                 }}
             />
             <div className="app__section-divider"></div>

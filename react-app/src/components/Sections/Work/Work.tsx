@@ -8,7 +8,7 @@ const Work = () => {
     const [data, setData] = useState<any>([]);
 
     useEffect(() => {
-        const query = `*[_type == "item" && (visibility)]{
+        const query = `*[!(_id in path('drafts.**')) && _type == "item"]{
             title,
             slug,
             "image": pimage.asset->url,

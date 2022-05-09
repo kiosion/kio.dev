@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { urlFor } from '../../../../client';
 import { Link } from 'react-router-dom';
-import { StringMappingType } from 'typescript';
 
 import Hover from '../../../Utils/Hover/Hover';
 
@@ -43,20 +43,24 @@ const PostFooter: React.FunctionComponent<any> = (
         <div className="postContainer__postFooter">
             <div className="postFooter__postInfo">
                 <div className="postFooter__postInfo-tags app__no-select">
-                    {tags ? tags.map((tag: string, index: number) => (
+                    {tags ? tags.map((tag: any, index: number) => (
                         <Hover key={index}>
-                            <Link to={"/blog/tag/" + tag}>
-                                <span className="postInfo-tags__tag">#{tag}</span>
+                            <Link to={tag.slug.current ? ("/blog/tag/" + tag.slug.current) : '/blog'}>
+                                #{tag.title ? tag.title : 'unknown tag'}
                             </Link>
                         </Hover>
-                    )): 'No tags'}
+                    )): (
+                        <div>
+                            <a href="/blog/">no tags</a>
+                        </div>
+                    )}
                 </div>
                 <div className="postFooter__postInfo-author">
                     <div className="postInfo-author__img app__no-select">
                         <Hover>
                             <Link to={"/about"}>
                                 {(author && author.img) && (
-                                    <img src={author.img + '?rect=620,160,600,600&h=100'} alt={author.name} />
+                                    <img src={urlFor(author.img).width(100).height(100).url()} alt={author.name + 'profile image'} />
                                 )}
                             </Link>
                         </Hover>

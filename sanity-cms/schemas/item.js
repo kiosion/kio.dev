@@ -74,13 +74,6 @@ export default {
 			},
 		},
 		{
-			name: 'visibility',
-			title: 'Visibility',
-			description: 'Set the visibility of this item',
-			type: 'boolean',
-			initialValue: false,
-		},
-		{
 			name: 'priority',
 			title: 'Priority',
 			type: 'number',

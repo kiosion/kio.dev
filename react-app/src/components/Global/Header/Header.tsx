@@ -9,10 +9,11 @@ import './Header.scss';
 const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) => {
     const [currentView, setCurrentView] = useState(view);
     const [backRoute, setBackRoute] = useState([page, title]);
-    const [filterItems, setFilterItems] = useState(new Set<string>(['design']));
+    const [filterItems, setFilterItems] = useState(1);
     const [backHover, setBackHover] = useState(false);
     const [linkHover, setLinkHover] = useState(view);
     const [filterIndicator, setFilterIndicator] = useState(1);
+    const [filterState, setFilterState] = useState(filterIndicator);
 
     useEffect(() => {
         setCurrentView(view);
@@ -27,33 +28,24 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
         return backHover ? ' linkitem__placeholder-hover' : '';
     }
 
-    const isFiltered = (item: string) => {
-        return filterItems.has(item) ? ' filteritem__active' : '';
+    const isFiltered = (item: number) => {
+        return filterItems === item ? ' filteritem__active' : '';
     }
 
-    const handleFilterChange = (item: string) => {
-        let num: number = 0;
-
-        switch (item) {
-            case 'all':
-                num = 0;
-                break;
-            case 'design':
-                num = 1;
-                break;
-            case 'development':
-                num = 2;
-                break;
-        }
-        
-        item === 'all' ? setFilterItems(new Set(['all'])) : setFilterItems(new Set([item]));
-        setFilterIndicator(num);
+    const handleFilterChange = (item: number) => {
+        setFilterItems(item);
+        setFilterIndicator(item);
     }
 
-    const handleFilterIndicator = (num: number) => {
-        switch (num) {
+    const handleFilterIndicatorChange = (item: number) => {
+        setFilterIndicator(item);
+    }
+
+    const handleFilterIndicator = () => {
+        switch (filterIndicator) {
             case 0:
                 return ' indicator__all';
+            default:
             case 1:
                 return ' indicator__1';
             case 2:
@@ -81,6 +73,10 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
     const handleLinkHover = (event: string, item: string) => {
         setLinkHover(event === 'enter' ? item : view);
+    }
+
+    const handleFilterHover = (event: string, item: number) => {
+        handleFilterIndicatorChange(event === 'enter' ? item : filterItems);
     }
 
     return (
@@ -111,12 +107,18 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                 >
                     {currentView === 'home' ? (
                         <div className="app__header-list">
-                            <div className={"filterItem__indicator" + handleFilterIndicator(filterIndicator)} />
+                            <div className={"filterItem__indicator" + handleFilterIndicator()} />
                             <Hover>
                                 <div 
-                                    className={"header__linkitem linkitem__primary" + isFiltered('design')}
+                                    className={"header__linkitem linkitem__primary" + isFiltered(1)}
+                                    onMouseEnter={() => {
+                                        handleFilterHover('enter', 1);
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleFilterHover('leave', 1);
+                                    }}
                                     onClick={() => {
-                                        handleFilterChange('design');
+                                        handleFilterChange(1);
                                     }}
                                 >
                                     design
@@ -124,9 +126,15 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                             </Hover>
                             <Hover>
                                 <div 
-                                    className={"header__linkitem linkitem__primary" + isFiltered('development')}
+                                    className={"header__linkitem linkitem__primary" + isFiltered(2)}
+                                    onMouseEnter={() => {
+                                        handleFilterHover('enter', 2);
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleFilterHover('leave', 2);
+                                    }}
                                     onClick={() => {
-                                        handleFilterChange('development');
+                                        handleFilterChange(2);
                                     }}
                                 >
                                     development
@@ -134,9 +142,15 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                             </Hover>
                             <Hover>
                                 <div 
-                                    className={"header__linkitem linkitem__primary" + isFiltered('all')}
+                                    className={"header__linkitem linkitem__primary" + isFiltered(0)}
+                                    onMouseEnter={() => {
+                                        handleFilterHover('enter', 0);
+                                    }}
+                                    onMouseLeave={() => {
+                                        handleFilterHover('leave', 0);
+                                    }}
                                     onClick={() => {
-                                        handleFilterChange('all');
+                                        handleFilterChange(0);
                                     }}
                                 >
                                     all work
@@ -173,7 +187,9 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                 >
                     <div className="app__header-list">
                         <div className={"linkItem__indicator" + handleLinkIndicator()} />
-                        <Hover>
+                        <Hover
+                            state={isActive('about') ? false : true}
+                        >
                             <Link to="/about">
                                 <div 
                                     className={"header__linkitem linkitem__secondary" + isActive('about')}
@@ -188,7 +204,9 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                                 </div>
                             </Link>
                         </Hover>
-                        <Hover>
+                        <Hover
+                            state={isActive('socials') ? false : true}
+                        >
                             <Link to="/socials">
                                 <div 
                                     className={"header__linkitem linkitem__secondary" + isActive('social')}

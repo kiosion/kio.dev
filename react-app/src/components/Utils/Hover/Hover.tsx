@@ -25,17 +25,17 @@ const Hover: React.FunctionComponent<HoverChildren> = (props) => {
     let res;
     
     state ? (res = (
-        <div
+        <span
             className={"app__hover" + className}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {children}
-        </div>
+        </span>
     )) : res = (
-        <div className={"app__hover" + className} >
+        <span className={"app__hover" + className} >
             {children}
-        </div>
+        </span>
     );
 
     return ( res );
