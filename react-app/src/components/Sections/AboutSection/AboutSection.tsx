@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PortableText } from '@portabletext/react';
 
-import { portableTextComponents } from '../../PortableTextComponents';
+import { portableTextComponents } from '../../PortableText';
 //import Hover from '../../Utils/Hover/Hover';
 import { client } from '../../../client';
 

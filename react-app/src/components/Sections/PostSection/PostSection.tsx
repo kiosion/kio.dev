@@ -3,7 +3,7 @@ import { client } from '../../../client';
 import { PortableText } from '@portabletext/react';
 import { Link } from 'react-router-dom';
 
-import { portableTextComponents } from '../../PortableTextComponents';
+import { portableTextComponents } from '../../PortableText';
 
 import Hover from '../../Utils/Hover/Hover';
 import PostFooter from './PostFooter/PostFooter';

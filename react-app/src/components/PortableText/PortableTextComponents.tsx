@@ -2,7 +2,7 @@ import React from 'react';
 import { toPlainText, PortableTextComponents } from '@portabletext/react';
 import slugify from 'slugify';
 
-import { CodeblockComponent, ImageComponent } from '../SanityComponents';
+import { CodeblockComponent, ImageComponent } from '../Sanity';
 
 import Hover from '../Utils/Hover/Hover';
 
