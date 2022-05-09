@@ -1,17 +1,17 @@
 .grid__carousel-buttons {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: var(--shadow-secondary);
-    position: absolute;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--shadow-secondary);
+  position: absolute;
 
-    &.carousel__button-left {
-        left: 0;
-        top: 50%;
-    }
+  &.carousel__button-left {
+      left: 0;
+      top: 50%;
+  }
 
-    &.carousel__button-right {
-        right: 0;
-        top: 50%;
-    }
+  &.carousel__button-right {
+      right: 0;
+      top: 50%;
+  }
 }

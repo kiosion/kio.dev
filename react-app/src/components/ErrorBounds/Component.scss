@@ -1,42 +1,42 @@
 .app__errorWrapper-component {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-	background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 }
 
 .errorWrapper__content {
-	max-width: 40rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 0 2rem;
-	padding: 1rem;
-	border-radius: var(--border-radius-tertiary);
-	border: 1px solid var(--border-primary);
-	background-color: var(--background-primary);
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2rem;
+  padding: 1rem;
+  border-radius: var(--border-radius-tertiary);
+  border: 1px solid var(--border-primary);
+  background-color: var(--background-primary);
 }
 
 .errorWrapper__content-title {
-	font-family: var(--font-title);
-	font-size: 1.5rem;
-	font-weight: bold;
-	color: var(--text-primary);
-	margin: 0;
-	padding: 1rem 0 2rem 0;
-	text-align: center;
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 1rem 0 2rem 0;
+  text-align: center;
 }
 
 .errorWrapper__content-message {
-	font-family: var(--font-mono);
-	font-size: 1rem;
-	font-weight: normal;
-	color: var(--text-primary);
-	max-width: 90%;
-	margin: 1rem auto 1rem auto;
-	padding: 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--text-primary);
+  max-width: 90%;
+  margin: 1rem auto 1rem auto;
+  padding: 0;
 }
