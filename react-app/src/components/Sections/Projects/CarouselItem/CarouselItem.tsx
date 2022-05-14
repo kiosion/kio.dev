@@ -6,10 +6,10 @@ import './CarouselItem.scss';
 const CarouselItem: React.FunctionComponent<any> = ({ props }) => {
   const { src, url, title, cat, id } = props;
   return (
-    <div className="carousel__carouselItem" id={id}>
+    <div className="carousel__carouselItem app__no-select" id={id}>
       <Link to={'/project/' + url} >
         <Hover>
-          <div className="carouselItem__frame app__no-select">
+          <div className="carouselItem__frame">
             <img src={src} alt={title} />
           </div>
         </Hover>

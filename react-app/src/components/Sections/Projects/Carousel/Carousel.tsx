@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 
 import Hover from '../../../Utils/Hover/Hover';
 import CarouselItem from '../CarouselItem/CarouselItem';
+import ReactScrollWheelHandler from 'react-scroll-wheel-handler';
 
 import './Carousel.scss';
 const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dir, setDir] = useState('');
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [controlsWidth, setControlsWidth] = useState(0);
     
   const carouselLeft = () => {
     if (currentIndex > 0) {
@@ -22,6 +24,25 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
       setDir('right');
     }
   };
+
+  const handleScroll = (dir: string) => dir === 'down' ? carouselRight() : carouselLeft();
+
+  const handleResize = () => {
+    setHasScrolled(false);
+    const container = document.querySelector('.carouselContainer__carouselControls') as HTMLElement | null;
+    !container ? setControlsWidth(window.innerWidth) : setControlsWidth(container.clientWidth);
+  };
+
+  // Handle buttons
+  useEffect(() => {
+    const buttons = document.querySelector('.carouselControls__carouselButtons') as HTMLElement | null;
+    if (!buttons) return;
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    buttons.style.transform = `translateY(29rem) translateX(${controlsWidth - buttons.clientWidth}px)`;
+    buttons.style.width = '7rem';
+    return () => window.removeEventListener('resize', handleResize);
+  }, [controlsWidth]);
 
   useEffect(() => {
     const carouselItem = document.getElementById(`carouselItem-${currentIndex}`) as HTMLElement | null;
@@ -61,18 +82,25 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
           >&gt;</div>
         </Hover>
       </div>
-      <div className="carouselControls__carouselSlider">
-        {itemData.map((item: any, index: number) => (
-          <CarouselItem props={{
-            src: item.image,
-            url: item.slug.current,
-            title: item.title,
-            cat: item.category,
-            id: `carouselItem-${index}`,
-          }} key={item.title + '-' + index} />
-        ))}
-      </div>
-      
+      <ReactScrollWheelHandler
+        timeout={200}
+        rightHandler={() => handleScroll('up')}
+        leftHandler={() => handleScroll('down')}
+        upHandler={(e) => handleScroll('up')}
+        downHandler={(e) => handleScroll('down')}
+      >
+        <div className="carouselControls__carouselSlider">
+          {itemData.map((item: any, index: number) => (
+            <CarouselItem props={{
+              src: item.image,
+              url: item.slug.current,
+              title: item.title,
+              cat: item.category,
+              id: `carouselItem-${index}`,
+            }} key={item.title + '-' + index} />
+          ))}
+        </div>
+      </ReactScrollWheelHandler>
     </div>
   );
 };

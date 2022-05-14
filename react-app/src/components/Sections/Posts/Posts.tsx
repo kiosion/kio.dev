@@ -36,10 +36,6 @@ const Posts = () => {
       });
   }, [results]);
 
-  const error = () => {
-    throw new Error('Something went wrong!');
-  };
-
   return (
     <div className="app__postList">
       <div className="app__section-title">Blog</div>
@@ -71,8 +67,6 @@ const Posts = () => {
               )}
             </span>
           </div>
-
-          {error()}
                     
           <p className="cardItem__desc">{item.desc}</p>
           <Hover

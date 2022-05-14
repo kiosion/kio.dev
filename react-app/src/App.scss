@@ -184,7 +184,9 @@ html {
     }
 
     &:after {
-      height: 1.8rem;
+      //height: 1.8rem;
+      transform: translateY(-0.8rem);
+      background-color: var(--colour-black);
     }
   }
 }
