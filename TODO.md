@@ -1,8 +1,12 @@
 # To-do
 
 - [x] Finish main page wireframe lol
-- [ ] Finish migration to TS
-- [ ] Create grid layout for featured projects
-- [ ] Draft Blog + social + about pages
-  - [ ] Blog post pages
-- [ ] Create template for reqs using Sanity cms
+- [x] Finish migration to TS
+- [x] Create grid layout for featured projects
+- [x] Draft Blog + social + about pages
+  - [x] Blog post pages
+- [ ] Create api for reqs using Sanity cms
+- [ ] Finish home page layout
+  - [ ] Wireframe, then final
+  - [ ] Migrate projs to projs page
+- [ ] Finish router, static header/footer and dynamic inner content
