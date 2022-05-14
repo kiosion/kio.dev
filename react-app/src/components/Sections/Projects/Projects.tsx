@@ -3,8 +3,8 @@ import { client } from '../../../client';
 
 import Carousel from './Carousel/Carousel';
 
-import './Work.scss';
-const Work = () => {
+import './Projects.scss';
+const Projects = () => {
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
@@ -26,12 +26,12 @@ const Work = () => {
   }, []);
     
   return (
-    <div className="app__workSection">
-      <div className="workSection__carousel-container">
+    <div className="app__projectsSection">
+      <div className="carouselContainer">
         <Carousel itemData={ data } />
       </div>
     </div>
   );
 };
 
-export default Work;
+export default Projects;

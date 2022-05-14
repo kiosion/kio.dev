@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import Hover from '../../../Utils/Hover/Hover';
 
 import './CarouselItem.scss';
 const CarouselItem: React.FunctionComponent<any> = ({ props }) => {
-  const { src, url, title, cat } = props;
+  const { src, url, title, cat, id } = props;
   return (
-    <div className="workSection__carouselItem">
+    <div className="carousel__carouselItem" id={id}>
       <Link to={'/project/' + url} >
         <Hover>
-          <div className="carouselItem__frame">
+          <div className="carouselItem__frame app__no-select">
             <img src={src} alt={title} />
           </div>
         </Hover>

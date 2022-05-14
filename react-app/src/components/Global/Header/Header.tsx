@@ -9,11 +9,23 @@ import './Header.scss';
 const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) => {
   const [currentView, setCurrentView] = useState(view);
   const [backRoute, setBackRoute] = useState([page, title]);
-  const [filterItems, setFilterItems] = useState(1);
+  const [filterItems, setFilterItems] = useState(0);
   const [backHover, setBackHover] = useState(false);
   const [linkHover, setLinkHover] = useState(view);
-  const [filterIndicator, setFilterIndicator] = useState(1);
+  const [filterIndicator, setFilterIndicator] = useState(0);
   const [filterState, setFilterState] = useState(filterIndicator);
+
+  const navLinks = [
+    'about',
+    'projects',
+    'blog',
+  ];
+
+  const filters = [
+    'design',
+    'development',
+    'all work',
+  ];
 
   useEffect(() => {
     setCurrentView(view);
@@ -43,9 +55,9 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
   const handleFilterIndicator = () => {
     switch (filterIndicator) {
+    default:
     case 0:
       return ' indicator__all';
-    default:
     case 1:
       return ' indicator__1';
     case 2:
@@ -55,14 +67,13 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
   const handleLinkIndicator = () => {
     switch (linkHover) {
-    case '0':
     case 'home':
       return ' indicator__0';
-    case 'about':
+    case navLinks[0]:
       return ' indicator__1';
-    case 'socials':
+    case navLinks[1]:
       return ' indicator__2';
-    case 'blog':
+    case navLinks[2]:
       return ' indicator__3';
     }
   };
@@ -120,9 +131,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                   onClick={() => {
                     handleFilterChange(1);
                   }}
-                >
-                                    design
-                </div>
+                >{filters[0]}</div>
               </Hover>
               <Hover>
                 <div 
@@ -136,9 +145,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                   onClick={() => {
                     handleFilterChange(2);
                   }}
-                >
-                                    development
-                </div>
+                >{filters[1]}</div>
               </Hover>
               <Hover>
                 <div 
@@ -152,9 +159,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                   onClick={() => {
                     handleFilterChange(0);
                   }}
-                >
-                                    all work
-                </div>
+                >{filters[2]}</div>
               </Hover>
             </div>
           ) : (
@@ -170,9 +175,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                     onMouseLeave={() => {
                       handleBackHover('leave');
                     }}
-                  >
-                                        &lt; {backRoute[1]}
-                  </div>
+                  >&lt; {backRoute[1]}</div>
                 </Link>
               </Hover>
             </div>
@@ -187,57 +190,66 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
         >
           <div className="app__header-list">
             <div className={'linkItem__indicator' + handleLinkIndicator()} />
-            <Hover
+            {navLinks.map((item, index) => (
+              <Hover key={index} state={isActive(navLinks[index]) ? false : true}>
+                <Link to={'/' + item}>
+                  <div 
+                    className={'header__linkitem linkitem__secondary' + isActive(navLinks[index])}
+                    onMouseEnter={() => {
+                      handleLinkHover('enter', navLinks[index]);
+                    }}
+                    onMouseLeave={() => {
+                      handleLinkHover('leave', navLinks[index]);
+                    }}
+                  >{navLinks[index]}</div>
+                </Link>
+              </Hover>
+            ))}
+            {/* <Hover
               state={isActive('about') ? false : true}
             >
-              <Link to="/about">
+              <Link to={'/' + navLinks[0]}>
                 <div 
-                  className={'header__linkitem linkitem__secondary' + isActive('about')}
+                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[0])}
                   onMouseEnter={() => {
-                    handleLinkHover('enter', 'about');
+                    handleLinkHover('enter', navLinks[0]);
                   }}
                   onMouseLeave={() => {
-                    handleLinkHover('leave', 'about');
+                    handleLinkHover('leave', navLinks[0]);
                   }}
-                >
-                                    about
-                </div>
+                >{navLinks[0]}</div>
               </Link>
             </Hover>
             <Hover
-              state={isActive('socials') ? false : true}
+              state={isActive(navLinks[1]) ? false : true}
             >
-              <Link to="/socials">
+              <Link to={'/' + navLinks[1]}>
                 <div 
-                  className={'header__linkitem linkitem__secondary' + isActive('social')}
+                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[1])}
                   onMouseEnter={() => {
-                    handleLinkHover('enter', 'socials');
+                    handleLinkHover('enter', navLinks[1]);
                   }}
                   onMouseLeave={() => {
-                    handleLinkHover('leave', 'socials');
+                    handleLinkHover('leave', navLinks[1]);
                   }}
-                >
-                                    social
-                </div>
+                >{navLinks[1]}</div>
               </Link>
             </Hover>
             <Hover
-              state={isActive('blog') ? false : true}
+              state={isActive(navLinks[2]) ? false : true}
             >
-              <Link to="/blog">
+              <Link to={'/' + navLinks[2]}>
                 <div 
-                  className={'header__linkitem linkitem__secondary' + isActive('blog')}
+                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[2])}
                   onMouseEnter={() => {
-                    handleLinkHover('enter', 'blog');
+                    handleLinkHover('enter', navLinks[2]);
                   }}
                   onMouseLeave={() => {
-                    handleLinkHover('leave', 'blog');
+                    handleLinkHover('leave', navLinks[2]);
                   }}
-                >
-                                    blog
-                </div>
+                >{navLinks[2]}</div>
               </Link>
-            </Hover>
+            </Hover> */}
           </div>
         </motion.div>
 

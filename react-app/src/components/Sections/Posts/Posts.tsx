@@ -62,27 +62,23 @@ const Posts = () => {
             <span className="cardInfo__tags app__no-select">
               {item.tags ? item.tags.map((tag: any, index: number) => (
                 <Hover key={index}>
-                  <Link to={tag.slug.current ? ('/blog/tag/' + tag.slug.current) : '/blog/'}>
-                                        #{tag.title ? tag.title : 'unknown tag'}
-                  </Link>
+                  <Link to={tag.slug.current ? ('/blog/tag/' + tag.slug.current) : '/blog/'}>#{tag.title ? tag.title : 'unknown tag'}</Link>
                 </Hover>
               )) : (
                 <div>
-                  <a href="/blog/">
-                                        no tags
-                  </a>
+                  <a href="/blog/">no tags</a>
                 </div>
               )}
             </span>
           </div>
+
+          {error()}
                     
           <p className="cardItem__desc">{item.desc}</p>
           <Hover
             className="cardItem__readMore"
           >
-            <Link to={`/blog/p/${item.slug.current}`}>
-                            Read more
-            </Link>
+            <Link to={`/blog/p/${item.slug.current}`}>Read more</Link>
           </Hover>
         </div>
       ))

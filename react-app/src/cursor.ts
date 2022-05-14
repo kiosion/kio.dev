@@ -12,7 +12,7 @@ if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
     document.addEventListener('mouseout', () => { cursor.style.display = 'none'; });
     document.addEventListener('mouseover', () => { cursor.style.display = 'block'; });
     document.addEventListener('mousedown', () => { cursor.classList.add('cursor-click'); });
-    document.addEventListener('mouseup', () => { cursor.classList.remove('cursor-click'); cursor.classList.remove('cursor-hover'); });
+    document.addEventListener('mouseup', () => { cursor.classList.remove('cursor-click'); });
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;

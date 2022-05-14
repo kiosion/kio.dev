@@ -1,0 +1,36 @@
+.carouselControls__carouselSlider {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  column-gap: 4rem;
+  transition: all 400ms ease-out;
+}
+
+.carouselControls__carouselButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-title);
+  //font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  transform: translateY(-2rem);
+}
+
+.carouselButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  transition: all 200ms ease;
+
+  &:hover {
+    background-color: var(--shadow-primary);
+  }
+}
