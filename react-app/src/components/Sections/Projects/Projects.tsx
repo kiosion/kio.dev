@@ -6,6 +6,11 @@ import Carousel from './Carousel/Carousel';
 import './Projects.scss';
 const Projects = () => {
   const [data, setData] = useState<any>([]);
+  const [index, setIndex] = useState<number>(0);
+
+  const changeState = (num: number) => {
+    setIndex(num);
+  };
 
   useEffect(() => {
     const query = `*[!(_id in path('drafts.**')) && _type == "item"]{
@@ -24,12 +29,15 @@ const Projects = () => {
         console.log('Error: ', err);
       });
   }, []);
+
+  useEffect(() => {
+    console.log('index: ', index);
+  }, [index]);
     
   return (
     <div className="app__projectsSection">
-      <div className="carouselContainer">
-        <Carousel itemData={ data } />
-      </div>
+      <div className="app__section-title">Featured</div>
+      <Carousel itemData={ data } changeState={ changeState }/>
     </div>
   );
 };

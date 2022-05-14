@@ -7,10 +7,8 @@
   margin: 0 auto;
   padding: 0 4rem;
   overflow: visible;
-}
-
-.carouselContainer {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+  
+  @media screen and (max-width: 600px) {
+    padding: 0 1rem;
+  }
 }

@@ -6,7 +6,7 @@ import CarouselItem from '../CarouselItem/CarouselItem';
 import ReactScrollWheelHandler from 'react-scroll-wheel-handler';
 
 import './Carousel.scss';
-const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
+const Carousel: React.FunctionComponent<any> = ({ itemData, changeState }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dir, setDir] = useState('');
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -15,12 +15,14 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
   const carouselLeft = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
+      changeState(currentIndex - 1);
       setDir('left');
     }
   };
   const carouselRight = () => {
     if (currentIndex < itemData.length - 1) {
       setCurrentIndex(currentIndex + 1);
+      changeState(currentIndex + 1);
       setDir('right');
     }
   };
@@ -40,7 +42,7 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
     window.addEventListener('resize', handleResize);
     handleResize();
     buttons.style.transform = `translateY(29rem) translateX(${controlsWidth - buttons.clientWidth}px)`;
-    buttons.style.width = '7rem';
+    buttons.style.width = '6rem';
     return () => window.removeEventListener('resize', handleResize);
   }, [controlsWidth]);
 
@@ -49,15 +51,12 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
     const slide = document.querySelector('.carouselControls__carouselSlider') as HTMLElement | null;
     const section = document.querySelector('.app__projectsSection') as HTMLElement | null;
     if (!carouselItem || !slide || !section) return;
-    const sectionPadding: number = parseInt(getComputedStyle(section).paddingLeft, 10);
-    const sectionMargin: number = parseInt(getComputedStyle(section).marginLeft, 10);
-    const itemOffset: number = carouselItem.offsetLeft;
     const calcTranslate = () => {
       if (dir === 'right' && !hasScrolled && currentIndex == 1) {
         setHasScrolled(true);
-        return itemOffset - sectionPadding - sectionMargin;
+        return carouselItem.offsetLeft - parseInt(getComputedStyle(section).paddingLeft, 10) - parseInt(getComputedStyle(section).marginLeft, 10);
       }
-      return itemOffset;
+      return carouselItem.offsetLeft;
     };
     slide.style.transform = `translateX(-${calcTranslate()}px)`;
   }, [currentIndex, dir]);
@@ -83,7 +82,7 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
         </Hover>
       </div>
       <ReactScrollWheelHandler
-        timeout={200}
+        timeout={50}
         rightHandler={() => handleScroll('up')}
         leftHandler={() => handleScroll('down')}
         upHandler={(e) => handleScroll('up')}
@@ -92,7 +91,7 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
         <div className="carouselControls__carouselSlider">
           {itemData.map((item: any, index: number) => (
             <CarouselItem props={{
-              src: item.image,
+              src: item.image + '?h=500',
               url: item.slug.current,
               title: item.title,
               cat: item.category,
