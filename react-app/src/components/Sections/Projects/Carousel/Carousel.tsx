@@ -24,25 +24,13 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
   };
 
   useEffect(() => {
-    console.log('\n');
-    console.log('currentIndex: ', currentIndex);
-    console.log('dir: ', dir);
-    console.log('numItems: ', itemData.length);
     const carouselItem = document.getElementById(`carouselItem-${currentIndex}`) as HTMLElement | null;
     const slide = document.querySelector('.carouselControls__carouselSlider') as HTMLElement | null;
     const section = document.querySelector('.app__projectsSection') as HTMLElement | null;
-
     if (!carouselItem || !slide || !section) return;
-
     const sectionPadding: number = parseInt(getComputedStyle(section).paddingLeft, 10);
     const sectionMargin: number = parseInt(getComputedStyle(section).marginLeft, 10);
     const itemOffset: number = carouselItem.offsetLeft;
-    const itemWidth: number = parseInt(getComputedStyle(carouselItem).width, 10);
-    console.log('sectionPadding: ', sectionPadding);
-    console.log('sectionMargin: ', sectionMargin);
-    console.log('itemWidth: ', itemWidth);
-    console.log('itemOffset: ', itemOffset);
-
     const calcTranslate = () => {
       if (dir === 'right' && !hasScrolled && currentIndex == 1) {
         setHasScrolled(true);
@@ -50,7 +38,6 @@ const Carousel: React.FunctionComponent<any> = ({ itemData }) => {
       }
       return itemOffset;
     };
-    console.log('translate value: ', calcTranslate());
     slide.style.transform = `translateX(-${calcTranslate()}px)`;
   }, [currentIndex, dir]);
 
