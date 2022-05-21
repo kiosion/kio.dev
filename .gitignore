@@ -1,5 +1,11 @@
 # Node
 */node_modules
 
+# TS
+*/dist
+
+# MacOS
+**/.DS_Store
+
 # Env
 **/.env

@@ -18,12 +18,22 @@ const Carousel: React.FunctionComponent<any> = ({ itemData, changeState }) => {
       changeState(currentIndex - 1);
       setDir('left');
     }
+    else {
+      setCurrentIndex(itemData.length - 1);
+      changeState(itemData.length - 1);
+      setDir('right');
+    }
   };
   const carouselRight = () => {
     if (currentIndex < itemData.length - 1) {
       setCurrentIndex(currentIndex + 1);
       changeState(currentIndex + 1);
       setDir('right');
+    }
+    else {
+      setCurrentIndex(0);
+      changeState(0);
+      setDir('left');
     }
   };
 

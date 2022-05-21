@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { client } from '../../../client';
-
 import Carousel from './Carousel/Carousel';
 
 import './Projects.scss';
@@ -35,8 +34,18 @@ const Projects = () => {
   }, [index]);
     
   return (
-    <div className="app__projectsSection">
-      <div className="app__section-title">Featured</div>
+    <div className="app__section">
+      <div className="app__section-title">Projects</div>
+      <div className="app__projectsSection">
+        {/* Filters */}
+        <div className="app__projectsSection-filters">
+        </div>
+        {/* Description, pulled from data arr using 'index' */}
+        <div className="app__projectsSection-description">
+        </div>
+        {/* Horiz divider */}
+      </div>
+      {/* Todo: refactor carousel so border is fixed as a vertical divider */}
       <Carousel itemData={ data } changeState={ changeState }/>
     </div>
   );

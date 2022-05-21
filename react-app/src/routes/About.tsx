@@ -1,12 +1,14 @@
 import React from 'react';
-import { Header, Footer, AboutSection } from '../components';
+import { Helmet } from 'react-helmet';
+import { AboutSection } from '../components';
 
 const About = () => {
   return (
-    <div className="app">
-      <Header view={'about'} route={['', 'home']} />
+    <div className="app__content">
+      <Helmet>
+        <title>kio.dev / about</title>
+      </Helmet>
       <AboutSection />
-      <Footer view={'fixed'} />
     </div>
   );
 };

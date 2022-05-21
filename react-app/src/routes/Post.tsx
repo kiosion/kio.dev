@@ -1,14 +1,17 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Header, Footer, PostSection } from '../components';
+import { Helmet } from 'react-helmet';
+import { PostSection } from '../components';
 
 const Post = () => {
   const { slug } = useParams();
   return (
-    <div className="app">
-      <Header view={'blog'} route={['blog', 'all posts']} />
+    <div className="app__content">
+      {/* TODO: Fetch blog post content here, pass down to components in order to use metadata for SEO */}
+      <Helmet>
+        <title>kio.dev / {slug}</title>
+      </Helmet>
       <PostSection slug={ slug } />
-      <Footer view={'relative'} />
     </div>
   );
 };

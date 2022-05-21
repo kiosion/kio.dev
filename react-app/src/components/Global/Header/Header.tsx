@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import { images } from '../../../constants';
 import Hover from '../../Utils/Hover/Hover';
 
 import './Header.scss';
-const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) => {
+const Header = () => {
+  const view = useLocation().pathname.substring(1);
   const [currentView, setCurrentView] = useState(view);
-  const [backRoute, setBackRoute] = useState([page, title]);
+  const [backRoute, setBackRoute] = useState(['', '']);
   const [filterItems, setFilterItems] = useState(0);
   const [backHover, setBackHover] = useState(false);
   const [linkHover, setLinkHover] = useState(view);
   const [filterIndicator, setFilterIndicator] = useState(0);
-  const [filterState, setFilterState] = useState(filterIndicator);
 
   const navLinks = [
     'about',
@@ -29,8 +29,19 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
   useEffect(() => {
     setCurrentView(view);
-    setBackRoute([page, title]);
-  }, [page, title, view]);
+    if (view === '' || view === '/') {
+      setBackRoute(['', '']);
+    }
+    else if (view.startsWith('blog/p/') || view.startsWith('blog/t/')) {
+      setBackRoute(['blog', 'all posts']);
+    }
+    else if (view.startsWith('work/p/')) {
+      setBackRoute(['work', 'all projects']);
+    }
+    else {
+      setBackRoute(['', 'home']);
+    }
+  }, [view]);
 
   const isActive = (view: string) => {
     return currentView === view ? ' linkitem__active' : '';
@@ -67,7 +78,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
   const handleLinkIndicator = () => {
     switch (linkHover) {
-    case 'home':
+    case '':
       return ' indicator__0';
     case navLinks[0]:
       return ' indicator__1';
@@ -88,6 +99,11 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
 
   const handleFilterHover = (event: string, item: number) => {
     handleFilterIndicatorChange(event === 'enter' ? item : filterItems);
+  };
+
+  const handleCursorClick = () => {
+    const cursor = document.querySelector('.app__cursor') as HTMLElement | null;
+    cursor && cursor.classList.remove('cursor-hover');
   };
 
   return (
@@ -116,7 +132,7 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
           transition={{ duration: 1, ease: 'easeInOut' }}
           className="app__header-col"
         >
-          {currentView === 'home' ? (
+          {currentView === 'projects' ? (
             <div className="app__header-list">
               <div className={'filterItem__indicator' + handleFilterIndicator()} />
               <Hover>
@@ -162,6 +178,11 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                 >{filters[2]}</div>
               </Hover>
             </div>
+          ) : currentView === '' ? (
+            <div className="app__header-list">
+              <div className={'header__linkitem linkitem__placeholder'} />
+              <div className="header__linkitem linkitem__primary">:/</div>
+            </div>
           ) : (
             <div className="app__header-list">
               <div className={'header__linkitem linkitem__placeholder' + isBackHover()} />
@@ -175,12 +196,14 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                     onMouseLeave={() => {
                       handleBackHover('leave');
                     }}
-                  >&lt; {backRoute[1]}</div>
+                    onClick={() => {
+                      handleCursorClick();
+                    }}
+                  >&lt; //{backRoute[1]}</div>
                 </Link>
               </Hover>
             </div>
           )}
-
         </motion.div>
 
         <motion.div
@@ -201,55 +224,13 @@ const Header: React.FunctionComponent<any> = ({ view, route: [page, title] }) =>
                     onMouseLeave={() => {
                       handleLinkHover('leave', navLinks[index]);
                     }}
+                    onClick={() => {
+                      handleCursorClick();
+                    }}
                   >{navLinks[index]}</div>
                 </Link>
               </Hover>
             ))}
-            {/* <Hover
-              state={isActive('about') ? false : true}
-            >
-              <Link to={'/' + navLinks[0]}>
-                <div 
-                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[0])}
-                  onMouseEnter={() => {
-                    handleLinkHover('enter', navLinks[0]);
-                  }}
-                  onMouseLeave={() => {
-                    handleLinkHover('leave', navLinks[0]);
-                  }}
-                >{navLinks[0]}</div>
-              </Link>
-            </Hover>
-            <Hover
-              state={isActive(navLinks[1]) ? false : true}
-            >
-              <Link to={'/' + navLinks[1]}>
-                <div 
-                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[1])}
-                  onMouseEnter={() => {
-                    handleLinkHover('enter', navLinks[1]);
-                  }}
-                  onMouseLeave={() => {
-                    handleLinkHover('leave', navLinks[1]);
-                  }}
-                >{navLinks[1]}</div>
-              </Link>
-            </Hover>
-            <Hover
-              state={isActive(navLinks[2]) ? false : true}
-            >
-              <Link to={'/' + navLinks[2]}>
-                <div 
-                  className={'header__linkitem linkitem__secondary' + isActive(navLinks[2])}
-                  onMouseEnter={() => {
-                    handleLinkHover('enter', navLinks[2]);
-                  }}
-                  onMouseLeave={() => {
-                    handleLinkHover('leave', navLinks[2]);
-                  }}
-                >{navLinks[2]}</div>
-              </Link>
-            </Hover> */}
           </div>
         </motion.div>
 

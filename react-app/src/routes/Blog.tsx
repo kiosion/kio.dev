@@ -1,12 +1,14 @@
 import React from 'react';
-import { Header, Footer, Posts } from '../components';
+import { Helmet } from 'react-helmet';
+import { Posts } from '../components';
 
 const Blog = () => {
   return (
-    <div className="app">
-      <Header view={'blog'} route={['', 'home']} />
+    <div className="app__content">
+      <Helmet>
+        <title>kio.dev / blog</title>
+      </Helmet>
       <Posts />
-      <Footer view={'relative'} />
     </div>
   );
 };

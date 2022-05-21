@@ -1,12 +1,14 @@
 import React from 'react';
-import { Header, Footer, Projects } from '../components';
+import { Helmet } from 'react-helmet';
+import { HomeSection } from '../components';
 
 const Home = () => {
   return (
-    <div className="app">
-      <Header view={'home'} route={['', '']} />
-      <Projects />
-      <Footer view={'fixed'}/>
+    <div className="app__content">
+      <Helmet>
+        <title>kio.dev / home</title>
+      </Helmet>
+      <HomeSection />
     </div>
   );
 };
