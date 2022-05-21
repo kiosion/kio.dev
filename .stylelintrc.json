@@ -21,6 +21,14 @@
         "message": "Custom property names should be lowercase and separated by hyphens"
       }
     ],
+    "scss/dollar-variable-pattern": [
+      "^[a-zA-Z][a-zA-Z0-9-_]*$",
+      {
+        "message": "Variable names should be lowercase and separated by hyphens"
+      }
+    ],
+    "scss/at-import-partial-extension": null, 
+    "no-empty-source": null,
     "string-quotes": "single",
     "selector-pseudo-element-colon-notation": "single",
     "at-rule-no-unknown": null,
@@ -28,6 +36,7 @@
     "scss/selector-no-redundant-nesting-selector": true,
     "color-hex-length": "long",
     "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
     "selector-list-comma-newline-after": "always",
     "indentation": [2, {
       "indentInsideParens": "twice",

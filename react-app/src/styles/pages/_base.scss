@@ -1,0 +1,12 @@
+html {
+  background-color: $color-background-primary;
+  font-family: $font-body;
+  min-height: 100%;
+  overflow-y: hidden scroll;
+  overflow-x: hidden;
+}
+
+.app {
+  background-color: $color-background-primary;
+  font-family: $font-body;
+}
