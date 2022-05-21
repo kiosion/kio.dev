@@ -16,5 +16,10 @@
   },
   "scripts": {
     "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "env FORCE_COLOR=1 node  ./node_modules/lint-staged/bin/lint-staged -r"
+    }
   }
 }
