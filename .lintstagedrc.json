@@ -1,0 +1,7 @@
+{
+  "*.ts": [
+    "npx prettier --write",
+    "npx eslint"
+  ],
+  "*.scss": "npx stylelint --fix"
+}
