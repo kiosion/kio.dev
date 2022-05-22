@@ -10,7 +10,8 @@ Clone / install deps
 
 ```bash
 git clone https://github.com/kiosion/portfolio kio-portfolio && \
-cd ./kio-portfolio/ && npm i && cd ./react-app/ && npm i && cd ../sanity-cms/ && npm i && ../express-api/ && npm i && cd ../
+cd ./kio-portfolio/ && npm i && cd ./react-app/ && npm i && cd ../sanity-cms/ && npm i && ../express-api/ && npm i && cd ../ && \
+npx husky-init && npm i
 ```
 
 Running locally requires the sanity & express api to be available as backends, either locally, or using <a href="https://api.kio.dev/">api.kio.dev</a>.
