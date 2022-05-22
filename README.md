@@ -1,15 +1,32 @@
 ## About
 
-React app for my visual art / development portfolio, blog, and social links.
+React app / sanity studio / nodejs api for my visual art / development portfolio, blog, bio, and social links.
 
-To-do list: <a href="TODO.md">TODO.md</a>
+Live at <a href="https://kio.dev/">kio.dev</a>
 
-Live site: <a href="https://kio.dev/">kio.dev</a>
+## Building
 
-## Previews
+Clone / install deps
 
-Still a work-in-progress, but here are some previews:
+```bash
+git clone https://github.com/kiosion/portfolio kio-portfolio && \
+cd ./kio-portfolio/ && npm i && cd ./react-app/ && npm i && cd ../sanity-cms/ && npm i && ../express-api/ && npm i && cd ../
+```
 
-<img src="./.github/img/home.jpg" width="750px" alt="Screenshot of website homepage" />
+Running locally requires the sanity & express api to be available as backends, either locally, or using <a href="https://api.kio.dev/">api.kio.dev</a>.
 
-<img src="./.github/img/post.jpg" width="750px" alt="Screenshot of blog post" />
+#### Prod
+
+```bash
+cd ./react-app/ && npm run build && npm run serve
+```
+
+#### Dev
+
+```bash
+cd ./react-app/ && npm run start
+```
+
+## Issues / To-do
+
+Check out <a href="TODO.md">TODO.md</a>.
