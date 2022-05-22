@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "Maxim Dietz <max@kio.dev>",
+  "author": "kiosion <hi@kio.dev>",
   "license": "UNLICENSED",
   "scripts": {
     "start": "sanity start",
