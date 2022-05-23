@@ -1,2 +1,1 @@
-export { default as ErrorBoundFullPage } from './FullPage';
-export { default as ErrorBoundComponent } from './Component';
+export { default as ErrorPage } from "./FullPage";

@@ -5,3 +5,9 @@
   scroll-behavior: smooth;
   cursor: none;
 }
+
+html {
+  min-height: 100%;
+  overflow-y: hidden scroll;
+  overflow-x: hidden;
+}

@@ -1,4 +1,4 @@
-.app__errorWrapper-fullPage {
+.app__errorPage {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   background-color: var(--background-secondary);
 }
 
-.errorWrapper__content {
+.errorPage__content {
   max-width: 30rem;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@
   background-color: var(--background-primary);
 }
 
-.errorWrapper__content-title {
+.errorPage__content-title {
   font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: bold;
@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.errorWrapper__content-message {
+.errorPage__content-message {
   font-family: var(--font-mono);
   font-size: 1rem;
   font-weight: normal;
@@ -44,7 +44,7 @@
   padding: 0;
 }
 
-.errorWrapper__content-button {
+.errorPage__content-button {
   font-family: var(--font-mono);
   font-size: 1rem;
   font-weight: normal;

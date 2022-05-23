@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Header, Footer } from './components';
-import { Home, About, Post, Blog, Project, Projects, Error } from './routes';
+import { Home, About, Post, Blog, Project, Projects, ErrorPage } from './routes';
 import './styles/styles.scss';
 
 const App = () => {
   return (
-    <ErrorBoundary FallbackComponent={ Error }>
+    <ErrorBoundary FallbackComponent={ ErrorPage }>
       <BrowserRouter>
         <Header />
         <Routes>

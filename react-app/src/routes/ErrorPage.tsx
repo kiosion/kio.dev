@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const ErrorPage = (props?: any) => {
-  const [error, setError] = useState((props && props.error) ? props.error : 'unknown');
+import { ErrorPage } from '../components/ErrorBounds';
 
-  useEffect(() => {
-    setError(props.error);
-  }, [props.error]);
-
-  const errorToString = (error: string) => {
-    switch (error) {
-    case '404':
-      return 'Page not found';
-    case '500':
-      return 'Internal server error';
-    default:
-      return 'Unknown error';
-    }
-  };
-
+export default function Error() {
   return (
-    <div>
-            Error: {error && (error + ' ' + errorToString(error))}
+    <div className="app__content">
+      <ErrorPage />
     </div>
   );
-};
-
-export default ErrorPage;
+}

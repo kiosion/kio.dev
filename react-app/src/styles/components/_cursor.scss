@@ -1,0 +1,34 @@
+.app__hover {
+  display: inline;
+}
+
+.app__no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.app__cursor {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 90000;
+  transition: border 200ms ease;
+  -moz-transition: border 200ms ease;
+  -webkit-transition: border 200ms ease;
+  -o-transition: border 200ms ease;
+  mix-blend-mode: difference;
+
+  &.cursor--hover {
+    border: 1.4rem solid rgba(255, 255, 255, 0.2);
+  }
+
+  &.cursor--click {
+    border: 0.84rem solid rgba(255, 255, 255, 0.6);
+  }
+}

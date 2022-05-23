@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { client } from '../../../client';
 import { PortableText } from '@portabletext/react';
 import { Link } from 'react-router-dom';
-
 import { portableTextComponents } from '../../PortableText';
-
 import Hover from '../../Utils/Hover/Hover';
 import PostFooter from './PostFooter/PostFooter';
 
-import './PostSection.scss';
 const PostSection: React.FunctionComponent<any> = ({ slug }) => {
   const [post, setPost] = useState<any>([]);
   const [postBody, setPostBody] = useState<any>([]);
@@ -89,14 +86,15 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
           </div>
           <h2 className="postContainer__postDesc">{post.desc}</h2>
           <div className="postContainer__seperator" />
-          <div className="postContainer__postBody">
-            {postBody ? (
-              <PortableText 
-                value={postBody}
-                components={portableTextComponents}
-              />
-            ) : 'Unable to load post content.'}
-                        
+          <div className="postContainer__contentBody">
+            <div className="contentBody">
+              {postBody ? (
+                <PortableText 
+                  value={postBody}
+                  components={portableTextComponents}
+                />
+              ) : 'Unable to load post content.'}
+            </div>
           </div>
         </div>
       ) : (

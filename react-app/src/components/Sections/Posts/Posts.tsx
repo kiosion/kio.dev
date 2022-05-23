@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Hover from '../../Utils/Hover/Hover';
 import { client } from '../../../client';
 
-import './Posts.scss';
 const Posts = () => {
   const resultsPerPage = 2;
 
@@ -37,10 +36,10 @@ const Posts = () => {
   }, [results]);
 
   return (
-    <div className="app__postList">
+    <div className="app__cardList">
       <div className="app__section-title">Blog</div>
       {posts ? (posts.map((item: any, index: any) => (
-        <div className="postList__cardItem" key={index}>
+        <div className="cardList__cardItem" key={index}>
           <h3 className="cardItem__title">{item.title}</h3>
           <div className="cardItem__cardInfo">
             <span className="cardInfo__author">
@@ -80,10 +79,10 @@ const Posts = () => {
         <div className="app__sectionLoading">Loading...</div>
       )}
       {posts ? (
-        <div className="postList__loadMore">
+        <div className="cardList__loadMore">
           <Hover>
             <div 
-              className="loadMore__button"
+              className="loadMore-button"
               onClick={() => {
                 setResults(results + resultsPerPage);
               }}

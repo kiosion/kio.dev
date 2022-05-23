@@ -1,0 +1,25 @@
+.app__section-divider {
+  height: 1px;
+  width: 100%;
+  background-color: $border-color-primary;
+}
+
+.app__section-title {
+  font-family: $font-title;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+}
+
+.app__section-title--hero {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0 0.4rem 0 0.4rem;
+}
+
+.app__section-subtitle {
+  font-family: $font-title;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 1rem 0 2rem 0;
+}

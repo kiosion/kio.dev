@@ -17,7 +17,7 @@ export const portableTextComponents: PortableTextComponents = {
       const target = (value?.href || '').startsWith('http') ? '_blank' : undefined;
       return (
         <Hover>
-          <p className="app__ul-selector">
+          <p className="contentBody__ul-selector">
             <a href={value?.href} target={target} rel={target === '_blank' ? 'noindex nofollow' : ''}>
               {children}
             </a>
@@ -28,7 +28,7 @@ export const portableTextComponents: PortableTextComponents = {
     code: ({ children, value }) => {
       // If code is inline and not of a 'code' type
       return (
-        <div className="contentBody__codeInline">
+        <div className="contentBody__code--inline">
           <code>
             {children}
           </code>

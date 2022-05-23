@@ -8,6 +8,7 @@
   "rules": {
     "property-no-vendor-prefix": null,
     "shorthand-property-no-redundant-values": null,
+    "declaration-block-no-redundant-longhand-properties": null,
     "selector-no-qualifying-type": true,
     "selector-class-pattern": [
       "^[a-zA-Z][a-zA-Z0-9-_]*$",
@@ -29,6 +30,7 @@
     ],
     "scss/at-import-partial-extension": null, 
     "no-empty-source": null,
+    "no-descending-specificity": null,
     "string-quotes": "single",
     "selector-pseudo-element-colon-notation": "single",
     "at-rule-no-unknown": null,
