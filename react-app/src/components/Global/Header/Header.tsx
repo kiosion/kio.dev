@@ -29,6 +29,7 @@ const Header = () => {
 
   useEffect(() => {
     setCurrentView(view);
+    handleLinkHover('leave', view);
     if (view === '' || view === '/') {
       setBackRoute(['', '']);
     }
