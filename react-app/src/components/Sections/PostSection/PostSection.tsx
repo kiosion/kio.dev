@@ -56,9 +56,7 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
           <div className="postContainer__postTags app__no-select">
             {post.tags ? post.tags.map((tag: any, index: number) => (
               <Hover key={index}>
-                <Link to={tag.slug.current ? ('/blog/tag/' + tag.slug.current) : ''}>
-                                    #{tag.title ? tag.title: 'unknown tag'}
-                </Link>
+                <Link to={tag.slug.current ? (`/blog/tag/${tag.slug.current}`) : ''}>#{tag.title ? tag.title: 'unknown tag'}</Link>
               </Hover>
             )) : (
               <div>
@@ -71,7 +69,7 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
             <div className="postInfo__postAuthor">
               <Hover>
                 <Link to="/about">
-                  <p>{(post.author && post.author.name) ? ('By ' + post.author.name) : 'Unknown'}</p>
+                  <p>{post?.author?.name ? (`By ${post.author.name}`) : 'Unknown'}</p>
                 </Link>
               </Hover>
             </div>
@@ -104,12 +102,12 @@ const PostSection: React.FunctionComponent<any> = ({ slug }) => {
       <PostFooter 
         prevSlug={prevSlug}
         nextSlug={nextSlug}
-        tags={(post && post.tags) ? post.tags : []}
+        tags={post?.tags ? post.tags : []}
         postAuthor={{
-          name: (post && post.author) && post.author.name,
-          bio: (post && post.author) && post.author.bio,
-          slug: (post && post.author) && post.author.slug, 
-          img: (post && post.author) && post.author.image,
+          name: post?.author?.name,
+          bio: post?.author?.bio,
+          slug: post?.author?.slug, 
+          img: post?.author?.image,
         }}
       />
       <div className="app__section-divider"></div>
