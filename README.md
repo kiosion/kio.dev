@@ -1,8 +1,8 @@
 ## About
 
-React app, sanity studio, and nodejs / express api for my visual art / development portfolio, blog, bio, and social links.
+Sveltekit app, sanity studio, and express api for my art / development portfolio, blog, and social links.
 
-Live at <a href="https://kio.dev/">kio.dev</a>
+(Soon to be) live at <a href="https://kio.dev/">kio.dev</a>
 
 ## Building / running
 
@@ -10,58 +10,52 @@ These steps are mostly here for me, or as a guide if you want to fork this proje
 
 ### Project setup
 
-Clone:
+Clone, then install node packages:
 ```bash
-git clone https://github.com/kiosion/portfolio ./kio-portfolio
-```
-
-Install node packages for react app and base project:
-```bash
-cd ./kio-portfolio/ && npm i && \
-cd ./react-app/ && npm i && cd ../
+./$ yarn install
+./express-api/$ yarn install
+./sanity-cms/$ yarn install
+./svelte-app/$ yarn install
 ```
 
 Install/init husky & lint-staged:
 ```bash
-npx husky-init && npm i
+./$ yarn husky-init && yarn install
 ```
 
 ### Running sanity cms
 
-Running locally requires the sanity cms & express api to be available as backends, either locally, or using <a href="https://api.kio.dev/">api.kio.dev</a>.
+Running locally requires the sanity cms & express api as backends, either locally or using <a href="https://api.kio.dev/">api.kio.dev</a>.
 
-To run sanity locally:
+Run Sanity locally:
 ```bash
-cd ./sanity-cms/ && npm i && \
-npx sanity update && npx sanity start
+./sanity-cms/$ yarn sanity update && yarn sanity start
 ```
 
-Or, to deploy:
+Or, deploy:
 ```bash
-cd ./sanity-cms/ && npm i && \
-npx sanity update && npx sanity deploy
+./sanity-cms/$ yarn sanity update && yarn sanity deploy
 ```
 
 ### Running express api
 
 To run the express api locally:
 ```bash
-cd ./express-api/ && npm i && \
-npx run build && npx run serve
+./express-api/$ yarn build && yarn serve
 ```
 
-### Running react app
+### Running svelte app
 
 #### Prod
 
 ```bash
-cd ./react-app/ && npm run build && npm run serve
+./svelte-app/$ yarn build && yarn serve
 ```
 
 #### Dev
 
 ```bash
-cd ./react-app/ && npm run start
+./svelte-app/$ yarn dev
 ```
 
 ## Issues / To-do
