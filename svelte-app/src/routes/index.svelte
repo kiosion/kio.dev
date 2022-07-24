@@ -1,5 +1,6 @@
 <script>
   import { posts, fetchPosts } from '@/stores/posts';
+  import { theme } from '@/stores/theme';
 
   let loaded = 0;
   const loadMore = () => {
@@ -12,6 +13,7 @@
     loaded = 0;
   };
 </script>
+
 <svelte:head>
   <title>kio.dev | blog</title>
 </svelte:head>
@@ -19,20 +21,18 @@
 <h1 class="text-4xl text-center my-8 uppercase">Blog</h1>
 <p class="text-center">Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 <p class="text-center mt-4">
-  <a 
-    href="{void 0}"
+  <button
     class="hover:cursor-pointer hover:font-bold"
-    on:click="{
+    on:click={
       () => loadMore()
-    }"
-  >Load more</a>
-  <a 
-    href="{void 0}"
+    }
+  >Load more</button>
+  <button
     class="hover:cursor-pointer hover:font-bold"
-    on:click="{
+    on:click={
       () => clearList()
-    }"
-  >Clear loaded</a>
+    }
+  >Clear loaded</button>
 </p>
 
 {#if $posts}

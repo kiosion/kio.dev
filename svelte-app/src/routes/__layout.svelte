@@ -1,13 +1,13 @@
 <script>
   import Nav from '@/components/nav.svelte';
+  import { theme } from '@/stores/theme';
 
-  let theme = 'light';
+  // !window.localStorage.getItem('theme') && window.localStorage.setItem('theme', 'light');
+  // let theme = window.localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
 </script>
 
 <div
-  class="md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150{
-    theme === 'light' ? ' light' : ' dark'
-  }"
+  class="md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150 {$theme}"
 >
   <!-- Sidebar -->
   <Nav />
