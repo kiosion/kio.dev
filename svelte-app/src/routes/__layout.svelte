@@ -11,7 +11,7 @@
     <Nav />
 
     <!-- Main content -->
-    <div class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20">
+    <div class="bg-white dark:bg-slate-800 md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20">
       <slot></slot>
     </div>
   </div>

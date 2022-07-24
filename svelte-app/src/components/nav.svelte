@@ -4,7 +4,7 @@
   
   let open = false;
 </script>
-<nav class="w-full p-4 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto">
+<nav class="bg-white dark:bg-slate-800 w-full p-4 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto">
   <!-- Logo -->
   <a class="hidden md:block my-0 mx-auto hover:scale-105 logo" sveltekit:prefetch href="/logo">
     <img class="w-full p-6 lg:p-12 2xl:p-14 aspect-square" src="/assets/logo-large.png" alt="kio.dev logo" />
