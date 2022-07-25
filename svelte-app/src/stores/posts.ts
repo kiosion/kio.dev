@@ -2,10 +2,12 @@ import { writable } from 'svelte/store';
 
 // Writables
 const posts = writable([]);
+const isLoading = writable(false);
 
 // Fetch funcs
 // Temp for now, just fetches from pokeapi. To be replaced with Sanity fetch
 const fetchPosts = async (limit: number) => {
+  isLoading.set(true);
   const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -18,7 +20,11 @@ const fetchPosts = async (limit: number) => {
       }.png`
     };
   });
-  posts.set(loadedData);
+  // Short settimeout to simulate loading more stuff
+  setTimeout(() => {
+    isLoading.set(false);
+    posts.set(loadedData);
+  }, 3000);
 };
 
 const getPost = async (id: number) => {
@@ -29,4 +35,4 @@ const getPost = async (id: number) => {
   });
 };
 
-export { posts, fetchPosts, getPost };
+export { posts, isLoading, fetchPosts, getPost };

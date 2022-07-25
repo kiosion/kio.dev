@@ -21,9 +21,18 @@
     </div>
   </div>
   <!-- Socials -->
-  <div class="text-center text-secondary flex justify-center gap-4 pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row">
-    <a class="hover:text-primary" href="https://github.com/kiosion" aria-label="My Github">
-      <Icon icon="akar-icons:github-fill" />
+  <div class="text-center text-secondary flex align-center justify-center gap-4 pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row">
+    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://twitter.com/0xKI0" target="_blank" aria-label="Twitter">
+      <Icon icon="fa-brands:twitter" />
+    </a>
+    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://github.com/kiosion" target="_blank" aria-label="Github">
+      <Icon icon="fa-brands:github" />
+    </a>
+    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://discord.gg/kiosion" target="_blank" aria-label="Discord">
+      <Icon icon="fa-brands:discord" />
+    </a>
+    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300 scale-90" href="/pgp" aria-label="PGP Key" sveltekit:prefetch>
+      <Icon icon="fa-solid:key" />
     </a>
   </div>
   <!-- Menu / toggle -->
@@ -35,18 +44,10 @@
 
 <style lang="scss">
   .dark {
-    .logo {
-      &,
-      &-text {
-        img {
-          filter: invert(100%);
-        }
+    .logo-text {
+      img {
+        filter: invert(100%);
       }
     }
-  }
-
-  .logo {
-    width: fit-content;
-    transition: transform 50ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
 </style>
