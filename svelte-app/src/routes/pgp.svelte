@@ -1,11 +1,12 @@
-<script>
-  import CodeBlock from "@/components/code-block.svelte";
+<script lang="ts">
+  import CodeBlock from '@/components/code-block.svelte';
 </script>
 
 <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">pgp</h1>
 <p class="text-center">Want to send a secure message my way? Here's my public PGP key.</p>
 
-<CodeBlock content={`-----BEGIN PGP PUBLIC KEY BLOCK-----
+<CodeBlock
+  content={`-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGEInkkBEACw/YZQbX8Oh60WV6+eh7mPcwWoJr7hKrRfBghiM6OQRzy4kkQG
 Y4UDDDL+c3jMrCYo1U43TOQU3n71R1AsBKc0LEz4CH3m+lUQUsWOEdvX968o5lXg
@@ -68,4 +69,6 @@ UMRu4+uSVd25tnhUzCN9L3P6kFBvhvuKPuI38baTlU4wweefGEVhXL2WOawQYadA
 mE06Uu+HmtIXqYS19ie0gCvIZztOe+FvTaUIhUE4BlCyYqq7VwRuVGq7o12nNoti
 UaUPw1iMvGfEEJf1NnaeLQ2m/lFPhsnA
 =bu2U
------END PGP PUBLIC KEY BLOCK-----`} showClipboard={true} />
+-----END PGP PUBLIC KEY BLOCK-----`}
+  showClipboard={true}
+/>

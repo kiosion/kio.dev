@@ -1,13 +1,16 @@
-<script lang="typescript">
-  import Icon from "@iconify/svelte";
-  import { theme } from "@/stores/theme";
+<script lang="ts">
+  import Icon from '@iconify/svelte';
+  import { theme } from '@/stores/theme';
 
   export let content: string;
-  export let showClipboard: boolean = false;
+  export let showClipboard = false;
 </script>
-<div class="relative mx-auto p-4 lg:p-6 my-6 md:my-4 bg-slate-300 dark:bg-slate-900 text-lg md:text-md w-fit is-{$theme}">
+
+<div
+  class="relative mx-auto p-4 lg:p-6 my-6 md:my-4 bg-slate-200 dark:bg-slate-900 text-lg md:text-md w-fit is-{$theme}"
+>
   {#if showClipboard}
-    <Icon 
+    <Icon
       icon="fa-regular:copy"
       class="cursor-pointer text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 m-3 absolute right-0 top-0"
       on:click={() => navigator.clipboard.writeText(`${content}`)}
@@ -24,10 +27,10 @@
 
     &.is {
       &-light {
-        box-shadow: 0 0 14px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 16px -2px rgba(0, 0, 0, 0.08);
       }
       &-dark {
-        box-shadow: 0 0 14px rgba(150, 150, 150, 0.1);
+        box-shadow: 0 0 16px -2px rgba(170, 170, 170, 0.08);
       }
     }
   }

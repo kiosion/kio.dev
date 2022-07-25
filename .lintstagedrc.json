@@ -1,7 +1,11 @@
 {
-  "*.ts": [
+  "*.{ts,js}": [
     "npx prettier --write",
     "npx eslint"
   ],
-  "*.scss": "npx stylelint --fix"
+  "*.scss": "npx stylelint --fix",
+  "*.svelte": [
+    "./svelte-app/node_modules/.bin/prettier --write",
+    "./svelte-app/node_modules/.bin/eslint"
+  ]
 }

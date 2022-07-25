@@ -1,51 +1,133 @@
-<script>
+<script lang="ts">
+  import { slide } from 'svelte/transition';
   import Icon from '@iconify/svelte';
   import ThemeToggle from '@/components/theme-toggle.svelte';
   import MenuToggle from '@/components/menu-toggle.svelte';
   import { menuOpen } from '@/stores/menu';
+
+  let links = [
+    { name: 'Blog', url: '/' },
+    { name: 'Works', url: '/works' },
+    { name: 'About', url: '/about' }
+  ];
+
+  let socials = [
+    {
+      name: 'Twitter',
+      url: 'https://twitter.com/0xKI0',
+      icon: 'fa-brands:twitter'
+    },
+    {
+      name: 'Github',
+      url: 'https://github.com/kiosion',
+      icon: 'fa-brands:github'
+    },
+    {
+      name: 'Discord',
+      url: 'https://discord.gg/kiosion',
+      icon: 'fa-brands:discord'
+    },
+    {
+      name: 'PGP',
+      url: '/pgp',
+      icon: 'fa-solid:key',
+      target: false,
+      class: 'scale-90'
+    }
+  ];
+
+  export let segment: string;
 </script>
-<nav class="w-full p-4 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto">
-  <!-- Nav links -->
+
+<nav
+  class="w-full p-4 pt-8 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
+>
   <div class="flex-grow -mt-10 md:-mt-4 click-through">
-    <!-- Logos -->
     <a class="block md:hidden mx-auto w-1/3 logo-text" sveltekit:prefetch href="/">
-      <img class="w-full" src="/assets/logo-text.png" alt="kiosion" />
+      <img class="w-full" src="/assets/logo-text.webp" alt="kiosion" />
     </a>
-    <a class="hidden md:block mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text" sveltekit:prefetch href="/">
-      <img class="w-full -rotate-90" src="/assets/logo-text--short.png" alt="kio." />
+    <a
+      class="hidden md:block mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text"
+      sveltekit:prefetch
+      href="/"
+    >
+      <img class="w-full -rotate-90" src="/assets/logo-text--short.webp" alt="kio." />
     </a>
-    <div class="text-2xl md:text-base flex md:flex flex-col justify-center mt-4 items-center {$menuOpen ? '' : 'hidden'}">
-      <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold" href="/">Blog</a>
-      <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold mt-2" href="/works">Works</a>
-      <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold mt-2" href="/about">About</a>
+    {#if $menuOpen}
+      <div
+        class="flex md:hidden text-2xl flex-col justify-center mt-4 items-center"
+        transition:slide|local
+      >
+        {#each links as link, index}
+          <a
+            class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
+            class:active={segment === link.url}
+            class:mt-3={index > 0}
+            href={link.url}><span class="strike">{link.name}</span></a
+          >
+        {/each}
+      </div>
+    {/if}
+    <div class="hidden md:flex text-base flex-col justify-center pt-4 items-center">
+      {#each links as link, index}
+        <a
+          class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
+          class:active={segment === link.url}
+          class:mt-3={index > 0}
+          href={link.url}><span class="strike">{link.name}</span></a
+        >
+      {/each}
     </div>
   </div>
-  <!-- Socials -->
-  <div class="text-center text-secondary flex align-center justify-center gap-4 pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row">
-    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://twitter.com/0xKI0" target="_blank" aria-label="Twitter">
-      <Icon icon="fa-brands:twitter" />
-    </a>
-    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://github.com/kiosion" target="_blank" aria-label="Github">
-      <Icon icon="fa-brands:github" />
-    </a>
-    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300" href="https://discord.gg/kiosion" target="_blank" aria-label="Discord">
-      <Icon icon="fa-brands:discord" />
-    </a>
-    <a class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300 scale-90" href="/pgp" aria-label="PGP Key" sveltekit:prefetch>
-      <Icon icon="fa-solid:key" />
-    </a>
+  <div
+    class="text-center text-secondary align-center justify-center gap-4 pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row"
+  >
+    {#each socials as social}
+      <a
+        class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300 {social?.class}"
+        href={social.url}
+        aria-label={social.name}
+        target={social?.target ? '_blank' : ''}
+      >
+        <Icon icon={social.icon} />
+      </a>
+    {/each}
   </div>
-  <!-- Menu / toggle -->
-  <div class="md:hidden flex justify-between p-4 click-through">
+  <div class="md:hidden flex align-center justify-between p-4 click-through">
     <MenuToggle />
     <ThemeToggle />
   </div>
 </nav>
 
 <style lang="scss">
-  .dark {
-    .logo-text {
-      img {
+  .nav-link {
+    .strike {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 0%;
+        height: 1px;
+        background-color: var(--textColour);
+        transition: width 200ms ease, background 150ms ease;
+      }
+    }
+    &:hover,
+    &.active {
+      .strike {
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .logo-text {
+    img {
+      transition: filter 150ms ease;
+      .dark & {
         filter: invert(100%);
       }
     }

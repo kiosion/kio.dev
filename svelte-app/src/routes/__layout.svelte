@@ -1,42 +1,83 @@
-<script>
+<script context="module" lang="ts">
+  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({ props: { url } });
+</script>
+
+<script lang="ts">
+  import { onMount } from 'svelte';
   import { classList } from 'svelte-body';
+  import { fly } from 'svelte/transition';
+  import { page } from '$app/stores';
   import { theme } from '@/stores/theme';
+  import { Diamonds } from 'svelte-loading-spinners';
+  import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
   import ThemeToggle from '@/components/theme-toggle.svelte';
+
+  let appLoaded = false;
+
+  onMount(() => {
+    setTimeout(() => {
+      appLoaded = true;
+    });
+  });
+
+  export let url: string;
 </script>
 
 <svelte:body use:classList={`w-full h-full ${$theme}`} />
 
+{#if !appLoaded}
+  <div class="loader flex items-center justify-center" out:fly={{ duration: 100, y: 10 }}>
+    <Diamonds size="38" color="rgba(30, 41 ,59, 1.0)" />
+  </div>
+{/if}
+
 <div
   class="w-full h-full text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150"
+  in:fly={{ delay: 100, duration: 100, y: -10 }}
 >
-  <Nav />
+  <Nav segment={$page.url.pathname} />
   <div class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20">
     <div class="text-right hidden md:block">
       <ThemeToggle />
     </div>
-    <slot></slot>
+    <PageTransition {url}>
+      <slot />
+    </PageTransition>
   </div>
 </div>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap');
-
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
 
+  .loader {
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   :global(body),
   :global(html) {
     height: 100vh;
+    transition: background 150ms ease;
   }
 
   :global(body.light) {
-    background: rgba(255, 255, 255, 1.0);
+    background: rgba(255, 255, 255, 1);
+    --textColour: rgba(30, 41, 59, 1);
   }
 
   :global(body.dark) {
-    background: rgba(30, 41 ,59, 1.0);
+    background: rgba(30, 41, 59, 1);
+    --textColour: rgba(255, 255, 255, 1);
   }
 
   :global(.pixel) {

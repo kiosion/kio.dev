@@ -9,8 +9,8 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
         mono: ['"Work Sans"', ...defaultTheme.fontFamily.mono],
-        code: ['"Ubuntu Mono"'],
-        display: ['Poppins']
+        code: ['"Ubuntu Mono"', ...defaultTheme.fontFamily.mono],
+        display: ['Poppins', ...defaultTheme.fontFamily.sans]
       }
     }
   },
