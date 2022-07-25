@@ -1,20 +1,20 @@
 <script>
   import Icon from '@iconify/svelte';
-  import { theme } from '@/stores/theme';
-  
-  let open = false;
+  import ThemeToggle from '@/components/theme-toggle.svelte';
+  import MenuToggle from '@/components/menu-toggle.svelte';
+  import { menuOpen } from '@/stores/menu';
 </script>
-<nav class="bg-white dark:bg-slate-800 w-full p-4 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto">
-  <!-- Logo -->
-  <a class="hidden md:block my-0 mx-auto hover:scale-105 logo" sveltekit:prefetch href="/logo">
-    <img class="w-full p-6 lg:p-12 2xl:p-14 aspect-square" src="/assets/logo-large.png" alt="kio.dev logo" />
-  </a>
+<nav class="w-full p-4 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto">
   <!-- Nav links -->
   <div class="flex-grow -mt-10 md:-mt-4 click-through">
-    <a class="block md:hidden mx-auto w-1/3 md:w-full logo-text" sveltekit:prefetch href="/">
+    <!-- Logos -->
+    <a class="block md:hidden mx-auto w-1/3 logo-text" sveltekit:prefetch href="/">
       <img class="w-full" src="/assets/logo-text.png" alt="kiosion" />
     </a>
-    <div class="text-2xl md:text-base flex md:flex flex-col justify-center mt-4 items-center {open ? '' : 'hidden'}">
+    <a class="hidden md:block mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text" sveltekit:prefetch href="/">
+      <img class="w-full -rotate-90" src="/assets/logo-text--short.png" alt="kio." />
+    </a>
+    <div class="text-2xl md:text-base flex md:flex flex-col justify-center mt-4 items-center {$menuOpen ? '' : 'hidden'}">
       <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold" href="/">Blog</a>
       <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold mt-2" href="/works">Works</a>
       <a class="font-mono font-normal uppercase text-base lg:text-lg hover:font-bold mt-2" href="/about">About</a>
@@ -28,23 +28,21 @@
   </div>
   <!-- Menu / toggle -->
   <div class="md:hidden flex justify-between p-4 click-through">
-    <button
-      class="nav-btn font-mono font-normal uppercase hover:font-bold" 
-      aria-label="Toggle nav"
-      on:click={() => open = !open}
-    >{open ? 'Close' : 'Menu'}</button>
-    <button
-      class="font-mono font-normal uppercase hover:font-bold"
-      aria-label="Toggle theme"
-      on:click={() => theme.set($theme === 'light' ? 'dark' : 'light')}
-    >{$theme === 'light' ? 'lights off' : 'lights on'}</button>
+    <MenuToggle />
+    <ThemeToggle />
   </div>
 </nav>
 
-<style>
-  .dark .logo img,
-  .dark .logo-text img {
-    filter: invert(100%);
+<style lang="scss">
+  .dark {
+    .logo {
+      &,
+      &-text {
+        img {
+          filter: invert(100%);
+        }
+      }
+    }
   }
 
   .logo {
