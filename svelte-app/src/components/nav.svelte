@@ -1,8 +1,8 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
   import Icon from '@iconify/svelte';
-  import ThemeToggle from '@/components/theme-toggle.svelte';
-  import MenuToggle from '@/components/menu-toggle.svelte';
+  import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
+  import MenuToggle from '@/components/toggles/menu-toggle.svelte';
   import { menuOpen } from '@/stores/menu';
 
   let links = [

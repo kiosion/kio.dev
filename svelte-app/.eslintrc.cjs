@@ -1,24 +1,24 @@
 module.exports = {
-	root: true,
-	parser: '@typescript-eslint/parser',
-	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
-	plugins: ['svelte3', '@typescript-eslint'],
-	ignorePatterns: ['*.cjs'],
-	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
-	settings: {
-		'svelte3/typescript': () => require('typescript')
-	},
-	parserOptions: {
-		sourceType: 'module',
-		ecmaVersion: 2020
-	},
-	env: {
-		browser: true,
-		es2017: true,
-		node: true
-	},
-	rules: {
-		'array-bracket-spacing': ['error', 'never'],
+  root: true,
+  parser: '@typescript-eslint/parser',
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
+  plugins: ['svelte3', '@typescript-eslint'],
+  ignorePatterns: ['*.cjs'],
+  overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
+  settings: {
+    'svelte3/typescript': () => require('typescript')
+  },
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 2020
+  },
+  env: {
+    browser: true,
+    es2017: true,
+    node: true
+  },
+  rules: {
+    'array-bracket-spacing': ['error', 'never'],
     'arrow-spacing': ['error'],
     'block-scoped-var': ['error'],
     'block-spacing': ['error'],
@@ -34,7 +34,7 @@ module.exports = {
     'keyword-spacing': ['error'],
     'linebreak-style': ['error'],
     'no-confusing-arrow': ['error'],
-		'no-duplicate-imports': ['error'],
+    'no-duplicate-imports': ['error'],
     'no-trailing-spaces': ['error'],
     'no-var': ['error'],
     'no-eval': ['error'],
@@ -61,5 +61,5 @@ module.exports = {
         block: { balanced: true }
       }
     ],
-	}
+  }
 };

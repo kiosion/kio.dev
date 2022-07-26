@@ -11,7 +11,7 @@
   import { Diamonds } from 'svelte-loading-spinners';
   import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
-  import ThemeToggle from '@/components/theme-toggle.svelte';
+  import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
 
   let appLoaded = false;
 
