@@ -1,3 +1,10 @@
+<script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit';
+  export const load: Load = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  };
+</script>
+
 <svelte:head>
   <title>kio.dev | works</title>
 </svelte:head>

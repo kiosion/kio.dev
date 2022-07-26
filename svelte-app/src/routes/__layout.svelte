@@ -3,30 +3,40 @@
 </script>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { classList } from 'svelte-body';
   import { fly } from 'svelte/transition';
-  import { page } from '$app/stores';
-  import { theme } from '@/stores/theme';
+  import { page, navigating } from '$app/stores';
+  import { loading, theme } from '@/stores/theme';
   import { Diamonds } from 'svelte-loading-spinners';
   import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
   import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
 
-  let appLoaded = false;
+  const unsubscribe = navigating.subscribe((res) => {
+    loading.set(!res);
+  });
+
+  let appLoading = true;
 
   onMount(() => {
     setTimeout(() => {
-      appLoaded = true;
+      appLoading = false;
+      loading.set(false);
     });
+  });
+
+  onDestroy(() => {
+    unsubscribe();
   });
 
   export let url: string;
 </script>
 
-<svelte:body use:classList={`w-full h-full ${$theme}`} />
+<svelte:body
+  use:classList={`w-full h-full ${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`} />
 
-{#if !appLoaded}
+{#if appLoading}
   <div class="loader flex items-center justify-center" out:fly={{ duration: 100, y: 10 }}>
     <Diamonds size="38" color="rgba(30, 41 ,59, 1.0)" />
   </div>
@@ -80,6 +90,14 @@
     --textColour: rgba(255, 255, 255, 1);
   }
 
+  :global(body:not(.is-loaded)) {
+    cursor: wait !important;
+  }
+
+  :global(.is-loading a, .is-loading button) {
+    cursor: wait !important;
+  }
+
   :global(.pixel) {
     image-rendering: pixelated !important;
   }
@@ -88,8 +106,7 @@
     pointer-events: none;
   }
 
-  :global(.click-through a),
-  :global(.click-through button) {
+  :global(.click-through a, .click-through button) {
     pointer-events: visible;
   }
 </style>

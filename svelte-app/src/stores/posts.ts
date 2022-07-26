@@ -1,38 +1,36 @@
-import { writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 
-// Writables
-const posts = writable([]);
-const isLoading = writable(false);
+const postsWritable = writable([]);
+const postWritable = writable({});
+const isLoadingPosts = readable(false);
+const isLoadingPost = readable(false);
 
-// Fetch funcs
-// Temp for now, just fetches from pokeapi. To be replaced with Sanity fetch
-const fetchPosts = async (limit: number) => {
-  isLoading.set(true);
-  const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`;
+const queryPosts = async ({ ...params }) => {
+  const { limit = 10, skip = 0, sort = 'date', order = 'desc' } = params;
+  isLoadingPosts.set(true);
+
+  const url = `${process.env.API_URL}/v1/query/posts?limit=${limit}&skip=${skip}&s=${sort}&o=${order}`;
   const res = await fetch(url);
-  const data = await res.json();
-  const loadedData = data.results?.map((item: any, index: number) => {
-    return {
-      name: item?.name,
-      id: index + 1,
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-        index + 1
-      }.png`
-    };
-  });
-  // Short settimeout to simulate loading more stuff
-  setTimeout(() => {
-    isLoading.set(false);
-    posts.set(loadedData);
-  }, 3000);
+  if (res.status !== 200) {
+    throw new Error(`Error fetching posts: ${res.status}`);
+  }
+  const json = await res.json();
+
+  return json;
 };
 
-const getPost = async (id: number) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ title: id } as any);
-    }, 1000);
-  });
+const queryPost = async ({ ...params }) => {
+  const { slug = '' } = params;
+  isLoadingPost.set(true);
+
+  const url = `${process.env.API_URL}/v1/query/post?slug=${slug}`;
+  const res = await fetch(url);
+  if (res.status !== 200) {
+    throw new Error(`Error fetching post: ${res.status}`);
+  }
+  const json = await res.json();
+
+  return json;
 };
 
-export { posts, isLoading, fetchPosts, getPost };
+export { postsWritable, postWritable, isLoadingPosts, isLoadingPost, queryPosts, queryPost };

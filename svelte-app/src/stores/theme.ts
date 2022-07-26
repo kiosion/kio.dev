@@ -10,4 +10,6 @@ theme.subscribe((value) => {
   browser && window.localStorage.setItem('theme', value);
 });
 
-export { theme };
+const loading = writable(false);
+
+export { loading, theme };

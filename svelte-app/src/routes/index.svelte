@@ -1,16 +1,37 @@
-<script>
-  import { posts, isLoading, fetchPosts } from '@/stores/posts';
+<script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit';
+  import { isLoadingPosts, postsWritable, queryPosts } from '@/stores/posts';
+  export const load: Load = async () => {
+    queryPosts({ limit: 1 })
+      .then((posts) => {
+        postsWritable.set(posts);
+      })
+      .catch(() => {
+        noop;
+      });
+    await new Promise((resolve) => setTimeout(resolve, 800)); // simulate loading
+  };
+</script>
 
-  let loaded = 0;
-  const loadMore = () => {
-    fetchPosts(loaded += 5).then(() => {
-      loaded += 5;
-    });
-  };
-  const clearList = () => {
-    posts.set([]);
-    loaded = 0;
-  };
+<script lang="ts">
+  import type { Posts } from '$lib/types';
+  import { onMount, onDestroy } from 'svelte';
+  import { loading } from '@/stores/theme';
+  import { noop } from 'svelte/internal';
+
+  export let posts: Posts;
+
+  const unsubscribe = postsWritable.subscribe((res) => {
+    posts = res;
+  });
+
+  onMount(() => {
+    loading.set(false);
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
 </script>
 
 <svelte:head>
@@ -20,24 +41,11 @@
 <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
 <p class="text-center">Some placeholder text for now.</p>
 <p class="text-center mt-4">
-  {#if $isLoading}
+  {#if $isLoadingPosts}
     <span class="font-mono font-normal text-sm uppercase">Loading...</span>
   {:else}
-    <button
-      class="text-sm font-mono uppercase hover:cursor-pointer hover:font-bold"
-      on:click={
-        () => loadMore()
-      }
-    >Load more</button>
+    <button class="text-sm font-mono uppercase hover:cursor-pointer hover:font-bold" on:click={noop}
+      >Load more</button
+    >
   {/if}
 </p>
-
-{#if $posts}
-  <div class="w-full mt-4">
-    {#each $posts as post}
-      <div class="w-fit mx-auto">
-        <span class="w-fit">{post.name}</span>
-      </div>
-    {/each}
-  </div>
-{/if}
