@@ -82,7 +82,7 @@ module query {
   export const post = ({ slug = '', id = '' }: postQueryParams) =>
     new Promise((resolve, reject) => {
       if ((!slug && !id) || (slug === '' && id === '')) {
-        reject('Invalid slug or id');
+        reject('Invalid params provided. Post slug or ID must be provided.');
       }
 
       const query = `*[!(_id in path('drafts.**')) && _type == "post"${

@@ -91,11 +91,11 @@
   }
 
   :global(body:not(.is-loaded)) {
-    cursor: wait !important;
+    cursor: progress !important;
   }
 
   :global(.is-loading a, .is-loading button) {
-    cursor: wait !important;
+    cursor: progress !important;
   }
 
   :global(.pixel) {

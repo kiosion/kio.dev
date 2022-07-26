@@ -4,29 +4,24 @@
   export const load: Load = async () => {
     queryPosts({ limit: 1 })
       .then((posts) => {
-        postsWritable.set(posts);
+        postsWritable.set(posts?.data);
       })
-      .catch(() => {
-        noop;
+      .catch((e) => {
+        console.error(e);
       });
-    await new Promise((resolve) => setTimeout(resolve, 800)); // simulate loading
   };
 </script>
 
 <script lang="ts">
   import type { Posts } from '$lib/types';
-  import { onMount, onDestroy } from 'svelte';
-  import { loading } from '@/stores/theme';
+  import { onDestroy } from 'svelte';
   import { noop } from 'svelte/internal';
 
   export let posts: Posts;
 
   const unsubscribe = postsWritable.subscribe((res) => {
     posts = res;
-  });
-
-  onMount(() => {
-    loading.set(false);
+    console.log('got posts', posts);
   });
 
   onDestroy(() => {
@@ -49,3 +44,9 @@
     >
   {/if}
 </p>
+
+{#if posts}
+  {#each posts as post}
+    <p>Title: {post.title}</p>
+  {/each}
+{/if}

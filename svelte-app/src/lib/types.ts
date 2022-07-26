@@ -39,5 +39,6 @@ export type Post = {
 };
 
 export type Posts = {
-  []: Post[];
+  []: Post;
+  length: number;
 };

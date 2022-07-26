@@ -7,9 +7,10 @@ export default {
     replace({
       process: JSON.stringify({
         env: {
-          IS_PROD: production,
-          BASE_URL: production ? 'https://kio.dev' : 'http://localhost:5173',
-          API_URL: production ? 'https://api.kio.dev' : 'http://localhost:4000'
+          VITE_IS_PROD: production,
+          VITE_BASE_URL: production ? 'https://kio.dev' : 'http://localhost:5173',
+          VITE_API_URL: production ? 'https://api.kio.dev' : 'http://localhost:4000',
+          __buildDate__: () => JSON.stringify(new Date())
         }
       })
     })
