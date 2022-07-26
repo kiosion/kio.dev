@@ -21,7 +21,6 @@
 
   const unsubscribe = postsWritable.subscribe((res) => {
     posts = res;
-    console.log('got posts', posts);
   });
 
   onDestroy(() => {

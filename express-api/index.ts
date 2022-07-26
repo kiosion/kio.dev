@@ -18,7 +18,6 @@ const app = express();
 passport.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new BearerStrategy((token: string, done: any) => {
-    console.log('new request with token: ', token);
     return ACCESS_TOKENS.includes(token) ? done(null, token) : done(null, false);
   })
 );
@@ -27,7 +26,6 @@ app.get(
   '/v1/query/posts',
   passport.authenticate('bearer', { session: false }),
   async (req, res) => {
-    // console.log('new request: ', req);
     let { limit = 10, skip = 0, s = 'date', o = 'desc', date = '', tags = '' } = req.query;
     limit = parseInt(`${limit}`);
     skip = parseInt(`${skip}`);
@@ -86,12 +84,6 @@ app.get('/v1/query/post', passport.authenticate('bearer', { session: false }), a
 // - fetching project by slug or id
 
 app.get('/(*)', (req, res) => {
-  console.log('new request: ', req.headers);
-  console.log('bearer token: ', req.headers.authorization);
-  console.log(
-    'bearer valid? ',
-    ACCESS_TOKENS.includes(req.headers.authorization?.split('Bearer ')?.[1])
-  );
   res.status(403).send('<center><h2>⛔ Go away! Nothing to see here</h2></center>');
 });
 
