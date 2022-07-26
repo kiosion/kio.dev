@@ -7,7 +7,7 @@
 
   let links = [
     { name: 'Blog', url: '/' },
-    { name: 'Works', url: '/works' },
+    { name: 'Work', url: '/work' },
     { name: 'About', url: '/about' }
   ];
 

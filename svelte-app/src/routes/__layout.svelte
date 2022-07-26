@@ -38,7 +38,7 @@
 
 {#if appLoading}
   <div class="loader flex items-center justify-center" out:fly={{ duration: 100, y: 10 }}>
-    <Diamonds size="38" color="rgba(30, 41 ,59, 1.0)" />
+    <Diamonds size="38" color="#1E293B" />
   </div>
 {/if}
 
@@ -81,21 +81,21 @@
   }
 
   :global(body.light) {
-    background: rgba(255, 255, 255, 1);
-    --textColour: rgba(30, 41, 59, 1);
+    background: #f1f5f9;
+    --textColour: #1e293b;
   }
 
   :global(body.dark) {
-    background: rgba(30, 41, 59, 1);
-    --textColour: rgba(255, 255, 255, 1);
+    background: #1e293b;
+    --textColour: #f1f5f9;
   }
 
   :global(body:not(.is-loaded)) {
-    cursor: progress !important;
+    cursor: wait !important;
   }
 
   :global(.is-loading a, .is-loading button) {
-    cursor: progress !important;
+    cursor: wait !important;
   }
 
   :global(.pixel) {

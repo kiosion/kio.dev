@@ -56,6 +56,7 @@ module query {
         title,
         slug
       },
+      slug,
       title
     } | order(${sort} ${order}) [${skip}...${limit}]`;
 
@@ -86,8 +87,8 @@ module query {
       }
 
       const query = `*[!(_id in path('drafts.**')) && _type == "post"${
-        slug ? ` && slug == "${slug}"` : ''
-      }${id ? ` && _id == "${id}"` : ''}]{
+        slug !== '' ? ` && slug.current == "${slug}"` : ''
+      }${id !== '' ? ` && _id == "${id}"` : ''}]{
       _id,
       _type,
       "author": {
@@ -104,13 +105,14 @@ module query {
         title,
         slug
       },
+      slug,
       title
     }[0]`;
 
       client
         .fetch(query)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((data: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
           resolve({
             meta: {
               count: data ? 1 : 0,
@@ -119,8 +121,8 @@ module query {
             data
           });
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((err: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
           reject(err);
         });
     });

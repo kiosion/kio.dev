@@ -2,7 +2,7 @@
   import type { Load } from '@sveltejs/kit';
   import { isLoadingPosts, postsWritable, queryPosts } from '@/stores/posts';
   export const load: Load = async () => {
-    queryPosts({ limit: 1 })
+    queryPosts({ limit: 2 })
       .then((posts) => {
         postsWritable.set(posts?.data);
       })
@@ -16,11 +16,13 @@
   import type { Posts } from '$lib/types';
   import { onDestroy } from 'svelte';
   import { noop } from 'svelte/internal';
+  import ListItem from '@/components/blog/list-item.svelte';
 
   export let posts: Posts;
 
   const unsubscribe = postsWritable.subscribe((res) => {
     posts = res;
+    res ? isLoadingPosts.set(false) : isLoadingPosts.set(true);
   });
 
   onDestroy(() => {
@@ -34,7 +36,7 @@
 
 <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
 <p class="text-center">Some placeholder text for now.</p>
-<p class="text-center mt-4">
+<!-- <p class="text-center mt-4">
   {#if $isLoadingPosts}
     <span class="font-mono font-normal text-sm uppercase">Loading...</span>
   {:else}
@@ -42,10 +44,10 @@
       >Load more</button
     >
   {/if}
-</p>
+</p> -->
 
 {#if posts}
   {#each posts as post}
-    <p>Title: {post.title}</p>
+    <ListItem {post} />
   {/each}
 {/if}
