@@ -32,6 +32,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>kio.dev | blog | {post.title}</title>
+</svelte:head>
+
 {#if $isLoadingPost}
   <div class="absolute w-fit h-fit top-1/2 left-1/2 ml-24">
     <Diamonds size="38" color={$theme === 'light' ? '#1E293B' : '#F1F5F9'} />

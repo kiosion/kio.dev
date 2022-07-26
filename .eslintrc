@@ -63,5 +63,19 @@
         "block": { "balanced": true }
       }
     ]
-  }
+  },
+  "ignorePatterns": [
+    "**/.DS_Store",
+    "**/*.cjs",
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/.svelte-kit/**",
+    "**/package",
+    "**/.env",
+    "**/.env.*",
+    "**/pnpm-lock.yaml",
+    "**/package-lock.json",
+    "**/yarn.lock"
+  ]
 }

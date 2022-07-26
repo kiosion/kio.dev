@@ -11,8 +11,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@types": ["types.d"],
-      "$lib":["src/lib"],
-      "$lib/*":["src/lib/*"]
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"]
     },
     "removeComments": true,
     "rootDir": "./",

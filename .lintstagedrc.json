@@ -4,8 +4,12 @@
     "npx eslint"
   ],
   "*.scss": "npx stylelint --fix",
-  "*.svelte": [
-    "./svelte-app/node_modules/.bin/prettier --write",
-    "./svelte-app/node_modules/.bin/eslint"
+  "**/express-api/**/*.{ts,js}": [
+    "./express-api/node_modules/.bin/prettier --config ./.prettierrc.json --plugin-search-dir . --write",
+    "./express-api/node_modules/.bin/eslint -c ./.eslintrc --resolve-plugins-relative-to ./node_modules --fix"
+  ],
+  "**/svelte-app/**/*.{svelte,ts,js}": [
+    "./svelte-app/node_modules/.bin/prettier --config ./svelte-app/.prettierrc --plugin-search-dir ./svelte-app --write",
+    "./svelte-app/node_modules/.bin/eslint -c ./svelte-app/.eslintrc.cjs --resolve-plugins-relative-to ./svelte-app/node_modules --fix"
   ]
 }

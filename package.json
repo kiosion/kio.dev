@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "react": "^18.1.0"
-  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",

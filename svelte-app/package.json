@@ -10,8 +10,8 @@
     "serve": "node ./dist",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --lint --plugin-search-dir=. . && eslint --fix .",
-    "format": "prettier --write --plugin-search-dir=. ."
+    "format": "prettier --config ../.prettierrc.json --write --plugin-search-dir=. .",
+    "lint": "yarn format && eslint -c ../.eslintrc --resolve-plugins-relative-to ./node_modules --fix ."
   },
   "devDependencies": {
     "@iconify/svelte": "^2.2.1",
