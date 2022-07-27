@@ -1,10 +1,15 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
-  import { isLoadingPosts, postsWritable, queryPosts } from '@/stores/posts';
+  import { postsWritable as posts, findPosts } from '@/stores/posts';
+  import { Diamonds } from 'svelte-loading-spinners';
+  import { theme } from '@/stores/theme';
+
+  let isLoadingData = true;
   export const load: Load = async () => {
-    queryPosts({ limit: 2 })
-      .then((posts) => {
-        postsWritable.set(posts?.data);
+    await findPosts({ limit: 2 })
+      .then((res) => {
+        posts.set(res?.data);
+        isLoadingData = false;
       })
       .catch((e) => {
         console.error(e);
@@ -13,20 +18,18 @@
 </script>
 
 <script lang="ts">
-  import type { Posts } from '$lib/types';
-  import { onDestroy } from 'svelte';
-  import { noop } from 'svelte/internal';
   import ListItem from '@/components/blog/list-item.svelte';
+  import { onMount } from 'svelte';
 
-  export let posts: Posts;
-
-  const unsubscribe = postsWritable.subscribe((res) => {
-    posts = res;
-    res ? isLoadingPosts.set(false) : isLoadingPosts.set(true);
-  });
-
-  onDestroy(() => {
-    unsubscribe();
+  onMount(async () => {
+    findPosts({ limit: 2 })
+      .then((res) => {
+        posts.set(res?.data);
+        isLoadingData = false;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   });
 </script>
 
@@ -36,18 +39,13 @@
 
 <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
 <p class="text-center">Some placeholder text for now.</p>
-<!-- <p class="text-center mt-4">
-  {#if $isLoadingPosts}
-    <span class="font-mono font-normal text-sm uppercase">Loading...</span>
-  {:else}
-    <button class="text-sm font-mono uppercase hover:cursor-pointer hover:font-bold" on:click={noop}
-      >Load more</button
-    >
-  {/if}
-</p> -->
 
-{#if posts}
-  {#each posts as post}
+{#if isLoadingData}
+  <div class="absolute w-fit h-fit top-1/2 left-1/2 ml-24">
+    <Diamonds size="38" color={$theme === 'light' ? '#1E293B' : '#F1F5F9'} />
+  </div>
+{:else}
+  {#each $posts as post}
     <ListItem {post} />
   {/each}
 {/if}

@@ -1,18 +1,12 @@
 {
-  "name": "portfolio",
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "package.json",
-  "author": "kiosion <hi@kio.dev>",
-  "license": "UNLICENSED",
+  "author": "kiosion",
   "scripts": {
     "start": "sanity start",
     "build": "sanity build"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
     "@sanity/base": "^2.30.1",
     "@sanity/cli": "^2.30.2",
@@ -29,8 +23,8 @@
     "react-dom": "^17.0",
     "styled-components": "^5.2.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:kiosion/portfolio"
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0"
   }
 }

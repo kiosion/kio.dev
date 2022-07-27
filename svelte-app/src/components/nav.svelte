@@ -15,23 +15,25 @@
     {
       name: 'Twitter',
       url: 'https://twitter.com/0xKI0',
-      icon: 'fa-brands:twitter'
+      icon: 'fa-brands:twitter',
+      target: '_blank'
     },
     {
       name: 'Github',
       url: 'https://github.com/kiosion',
-      icon: 'fa-brands:github'
+      icon: 'fa-brands:github',
+      target: '_blank'
     },
     {
       name: 'Discord',
       url: 'https://discord.gg/kiosion',
-      icon: 'fa-brands:discord'
+      icon: 'fa-brands:discord',
+      target: '_blank'
     },
     {
       name: 'PGP',
       url: '/pgp',
       icon: 'fa-solid:key',
-      target: false,
       class: 'scale-90'
     }
   ];
@@ -43,7 +45,11 @@
   class="w-full p-4 pt-8 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
 >
   <div class="flex-grow -mt-10 md:-mt-4 click-through">
-    <a class="block md:hidden mx-auto w-1/3 logo-text" sveltekit:prefetch href="/">
+    <a
+      class="block md:hidden mx-auto w-1/3 logo-text"
+      sveltekit:prefetch
+      href="/"
+    >
       <img class="w-full" src="/assets/logo-text.webp" alt="kiosion" />
     </a>
     <a
@@ -51,7 +57,11 @@
       sveltekit:prefetch
       href="/"
     >
-      <img class="w-full -rotate-90" src="/assets/logo-text--short.webp" alt="kio." />
+      <img
+        class="w-full -rotate-90"
+        src="/assets/logo-text--short.webp"
+        alt="kio."
+      />
     </a>
     {#if $menuOpen}
       <div
@@ -68,7 +78,9 @@
         {/each}
       </div>
     {/if}
-    <div class="hidden md:flex text-base flex-col justify-center pt-4 items-center">
+    <div
+      class="hidden md:flex text-base flex-col justify-center pt-4 items-center"
+    >
       {#each links as link, index}
         <a
           class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
@@ -93,7 +105,7 @@
       </a>
     {/each}
   </div>
-  <div class="md:hidden flex align-center justify-between p-4 click-through">
+  <div class="flex md:hidden align-center justify-between px-4 click-through">
     <MenuToggle />
     <ThemeToggle />
   </div>
@@ -105,7 +117,7 @@
       position: relative;
 
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         top: 50%;
         left: 0;

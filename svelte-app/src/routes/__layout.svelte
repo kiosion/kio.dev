@@ -1,5 +1,7 @@
 <script context="module" lang="ts">
-  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({ props: { url } });
+  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
+    props: { url }
+  });
 </script>
 
 <script lang="ts">
@@ -8,7 +10,7 @@
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '@/stores/theme';
-  import { Diamonds } from 'svelte-loading-spinners';
+  import Loader from '@/components/loader.svelte';
   import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
   import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
@@ -34,12 +36,12 @@
 </script>
 
 <svelte:body
-  use:classList={`w-full h-full ${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`} />
+  use:classList={`w-full h-full ${$theme} ${
+    $navigating ? 'is-loading' : 'is-loaded'
+  }`} />
 
 {#if appLoading}
-  <div class="loader flex items-center justify-center" out:fly={{ duration: 100, y: 10 }}>
-    <Diamonds size="38" color="#1E293B" />
-  </div>
+  <Loader />
 {/if}
 
 <div
@@ -47,8 +49,10 @@
   in:fly={{ delay: 100, duration: 100, y: -10 }}
 >
   <Nav segment={$page.url.pathname} />
-  <div class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20">
-    <div class="text-right hidden md:block">
+  <div
+    class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20"
+  >
+    <div class="hidden md:flex justify-end items-center">
       <ThemeToggle />
     </div>
     <PageTransition {url}>
@@ -61,18 +65,6 @@
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
-
-  .loader {
-    z-index: 100;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  @keyframes rotate {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 
   :global(body),
   :global(html) {

@@ -1,15 +1,15 @@
 {
-  "*.{ts,js}": [
-    "npx prettier --write",
-    "npx eslint"
+  "**/sanity-cmd/**/*.{ts,js}": [
+    "npx prettier --config ./.prettierrc.json --plugin-search-dir . --write",
+    "./sanity-cmd/node_modules/.bin/eslint --config ./sanity-cms/.eslintrc --resolve-plugins-relative-to ./sanity-cms --fix"
   ],
   "*.scss": "npx stylelint --fix",
   "**/express-api/**/*.{ts,js}": [
     "./express-api/node_modules/.bin/prettier --config ./.prettierrc.json --plugin-search-dir . --write",
-    "./express-api/node_modules/.bin/eslint -c ./.eslintrc --resolve-plugins-relative-to ./node_modules --fix"
+    "./express-api/node_modules/.bin/eslint --config ./.eslintrc --resolve-plugins-relative-to . --fix"
   ],
   "**/svelte-app/**/*.{svelte,ts,js}": [
     "./svelte-app/node_modules/.bin/prettier --config ./svelte-app/.prettierrc --plugin-search-dir ./svelte-app --write",
-    "./svelte-app/node_modules/.bin/eslint -c ./svelte-app/.eslintrc.cjs --resolve-plugins-relative-to ./svelte-app/node_modules --fix"
+    "./svelte-app/node_modules/.bin/eslint --config ./svelte-app/.eslintrc.cjs --resolve-plugins-relative-to ./svelte-app --fix"
   ]
 }
