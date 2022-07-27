@@ -1,21 +1,21 @@
 version: 2
 updates:
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/express-api"
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/svelte-app"
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/sanity-cms"
     schedule:
       interval: "weekly"
