@@ -1,0 +1,27 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Install dependencies
+      run: make install
+      
+    - name: Build for production
+      run: make prod
+      
+    - name: Run test
+      run: make test
+      
+    - name: Run distcheck
+      run: make distcheck
