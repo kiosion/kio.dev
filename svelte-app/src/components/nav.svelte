@@ -73,6 +73,7 @@
             class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
             class:active={segment === link.url}
             class:mt-3={index > 0}
+            aria-label={link.name}
             href={link.url}><span class="strike">{link.name}</span></a
           >
         {/each}
@@ -86,6 +87,7 @@
           class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
           class:active={segment === link.url}
           class:mt-3={index > 0}
+          aria-label={link.name}
           href={link.url}><span class="strike">{link.name}</span></a
         >
       {/each}

@@ -1,7 +1,7 @@
 import { get as value, writable } from 'svelte/store';
 
 module Cache {
-  const queryCache = writable([]);
+  export const queryCache = writable([]);
 
   export const getCacheKey = (model: string, query: any) => {
     return JSON.stringify({ model, query });

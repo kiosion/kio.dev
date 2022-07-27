@@ -20,8 +20,8 @@ jobs:
     - name: Build for production
       run: make prod
       
-    - name: Run test
+    - name: Run tests
       run: make test
       
-    - name: Run distcheck
-      run: make distcheck
+    - name: Run check
+      run: make check

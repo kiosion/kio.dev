@@ -1,4 +1,4 @@
-.PHONY: dev, dev-backed, prod, sanity-deploy, prepare
+.PHONY: install, dev, dev-backed, prod, sanity-deploy, prepare
 
 VITE_PORT=5173
 EXPRESS_PORT=4000
@@ -20,11 +20,10 @@ dev-backed: install
 	VITE_API_URL=https://api.kio.dev
 	./scripts/run-backed.sh
 
-# run prod servers
+# build for prod
 prod: SHELL:=/bin/bash
 prod: install
-	VITE_IS_PROD=true
-	./scripts/run-prod.sh
+	./scripts/build-prod.sh
 
 sanity-upgrade: SHELL:=/bin/bash
 sanity-upgrade: install
@@ -33,3 +32,14 @@ sanity-upgrade: install
 # push sanity cms
 sanity-deploy: sanity-upgrade
 	yarn sanity deploy
+
+# check
+check: SHELL:=/bin/bash
+check:
+	./scripts/check.sh
+
+# test
+test: SHELL:=/bin/bash
+test:
+	yarn test:svelte
+	yarn test:api
