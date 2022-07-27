@@ -33,6 +33,13 @@ make dev-backed
 make prod # or make prod-backed
 ```
 
+### Testing
+
+Run all tests for app & API:
+```bash
+make test
+```
+
 ## Issues / To-do
 
 Check out <a href="TODO.md">TODO.md</a>

@@ -23,15 +23,5 @@ jobs:
     - name: Run tests
       run: make test
 
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: make install
-      
-      - name: Build app
-        run: make prod
+    - name: Build app
+      run: make prod
