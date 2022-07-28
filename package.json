@@ -12,9 +12,7 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "prepare": "husky install",
-    "test:svelte": "cd ./svelte-app; yarn test",
-    "test:api": "cd ./express-api; yarn test"
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {

@@ -4,17 +4,27 @@
 
   export let content: string;
   export let showClipboard = false;
+  let hovered = false;
+
+  const copy = () => {
+    content && navigator.clipboard.writeText(content);
+  };
 </script>
 
 <div
-  class="relative mx-auto p-4 lg:p-6 my-6 md:my-4 bg-slate-200 dark:bg-slate-900 text-lg md:text-md w-fit is-{$theme}"
+  class="relative mx-auto p-4 lg:p-6 my-6 md:my-4 bg-slate-200 dark:bg-slate-900 text-lg md:text-md w-fit is-{$theme} transition-color duration-250"
+  on:mouseenter={() => (hovered = true)}
+  on:mouseleave={() => (hovered = false)}
 >
   {#if showClipboard}
-    <Icon
-      icon="fa-regular:copy"
-      class="cursor-pointer text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 m-3 absolute right-0 top-0"
-      on:click={() => navigator.clipboard.writeText(`${content}`)}
-    />
+    <button
+      class="{hovered
+        ? 'opacity-100'
+        : 'opacity-0'} cursor-pointer m-2 p-2 absolute right-0 top-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+      on:click={() => copy()}
+    >
+      <Icon icon="fa-regular:copy" />
+    </button>
   {/if}
   <pre class="font-code w-fit">{content}</pre>
 </div>

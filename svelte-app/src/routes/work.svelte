@@ -1,7 +1,9 @@
 <script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit';
-  export const load: Load = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
+  export const load: import('@sveltejs/kit').Load = async () => {
+    const now = performance.now();
+    const delta = performance.now() - now;
+    delta < 200 &&
+      (await new Promise((resolve) => setTimeout(resolve, 200 - delta)));
   };
 </script>
 

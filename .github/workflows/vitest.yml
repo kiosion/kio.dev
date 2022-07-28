@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Vitest
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
-
+  vitest-run:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
       
@@ -20,8 +18,5 @@ jobs:
     - name: Run check
       run: make check
       
-    - name: Run tests
-      run: make test
-
-    - name: Build app
-      run: make prod
+    - name: Run unit tests
+      run: make vitest

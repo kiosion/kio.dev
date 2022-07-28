@@ -43,6 +43,7 @@
 
 <nav
   class="w-full p-4 pt-8 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
+  data-test-id="navBar"
 >
   <div class="flex-grow -mt-10 md:-mt-4 click-through">
     <a

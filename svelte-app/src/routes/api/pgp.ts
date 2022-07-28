@@ -2,7 +2,6 @@
 import type { EndpointOutput } from '@sveltjs/kit';
 
 export const GET = async (): Promise<EndpointOutput> => {
-  await new Promise((resolve) => setTimeout(resolve, 800));
   return { body: { data } };
 };
 

@@ -1,4 +1,4 @@
-.PHONY: install, dev, dev-backed, prod, sanity-deploy, prepare
+.PHONY: install, run-dev, run-backed, build-test, build-prod, cypress, vitest, sanity-deploy
 
 VITE_PORT=5173
 EXPRESS_PORT=4000
@@ -10,19 +10,21 @@ install:
 	./scripts/install.sh
 
 # run dev servers
-dev: SHELL:=/bin/bash
-dev: install
+run-dev: SHELL:=/bin/bash
+run-dev: install
+	export VITE_ENV=cypress
 	./scripts/run-dev.sh
 
 # run dev frontend
-dev-backed: SHELL:=/bin/bash
-dev-backed: install
+run-backed: SHELL:=/bin/bash
+run-backed: install
+	export VITE_ENV=development
 	VITE_API_URL=https://api.kio.dev
 	./scripts/run-backed.sh
 
 # build for prod
-prod: SHELL:=/bin/bash
-prod: install
+build-prod: SHELL:=/bin/bash
+build-prod: install
 	./scripts/build-prod.sh
 
 sanity-upgrade: SHELL:=/bin/bash
@@ -39,7 +41,16 @@ check:
 	./scripts/check.sh
 
 # test
-test: SHELL:=/bin/bash
-test:
-	yarn test:svelte
-	yarn test:api
+build-test: SHELL:=/bin/bash
+build-test:
+	./scripts/build-test.sh
+
+# vitest
+vitest: SHELL:=/bin/bash
+vitest:
+	./scripts/vitest.sh
+
+# cypress tests
+cypress: SHELL:=/bin/bash
+cypress:
+	./scripts/cypress.sh

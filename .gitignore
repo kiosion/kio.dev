@@ -4,3 +4,6 @@
 **/.vscode
 **/dist
 **/coverage
+**/cypress/videos
+**/cypress/screenshots
+**/cypress/downloads

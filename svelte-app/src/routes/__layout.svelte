@@ -41,7 +41,7 @@
   }`} />
 
 {#if appLoading}
-  <Loader />
+  <Loader size="38" />
 {/if}
 
 <div
@@ -50,7 +50,7 @@
 >
   <Nav segment={$page.url.pathname} />
   <div
-    class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:px-12 lg:px-20"
+    class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
   >
     <div class="hidden md:flex justify-end items-center">
       <ThemeToggle />
