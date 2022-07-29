@@ -1,0 +1,16 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  vitest:
+    name: Vitest
+    uses: ./.github/workflows/vitest.yml
+  cypress:
+    name: Cypress
+    needs: [ vitest ]
+    uses: ./.github/workflows/cypress.yml

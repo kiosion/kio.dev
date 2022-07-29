@@ -3768,10 +3768,10 @@ vite-plugin-inspect@^0.6.0:
     sirv "^2.0.2"
     ufo "^0.8.5"
 
-vite-plugin-test-selectors@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-test-selectors/-/vite-plugin-test-selectors-0.0.1.tgz#a9044f70c6c505732adb6d82b03623dc0358acc3"
-  integrity sha512-oStPfW07huHlTJQXTL9cgdES8dIaFAwTXBpmHNU59U2voeKnnQPmFabuPxZJMj0t9fJ8DXb0eWVaZYXVkCFO9A==
+vite-plugin-test-selectors@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-test-selectors/-/vite-plugin-test-selectors-0.0.2.tgz#f1d14e09f9f6768e7b0f576fd995b0d4bc5abcd0"
+  integrity sha512-L+clewbVKX4AYVuX0PG9rFSjlNGR01qUjm0dl5Z0pNf4hPblGSowahnJO+z4TpsM/zNUJqTuWMOPqt1moBL42Q==
 
 "vite@^2.9.12 || ^3.0.0-0", vite@^3.0.0:
   version "3.0.3"

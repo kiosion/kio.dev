@@ -5,7 +5,7 @@
   "scripts": {
     "build:dev": "vite dev --mode development",
     "build": "vite build --mode production",
-    "build:test": "vite build --mode testing",
+    "build:test": "rimraf ./dist && vite build --mode testing",
     "package": "svelte-kit package",
     "preview": "vite preview",
     "prepare": "svelte-kit sync",
@@ -49,6 +49,7 @@
     "prettier": "^2.6.2",
     "prettier-plugin-svelte": "^2.7.0",
     "randomstring": "^1.2.2",
+    "rimraf": "^3.0.2",
     "rollup": "^2.77.2",
     "sass": "^1.54.0",
     "svelte": "^3.44.0",
@@ -61,7 +62,7 @@
     "typescript": "^4.7.4",
     "vite": "^3.0.0",
     "vite-plugin-inspect": "^0.6.0",
-    "vite-plugin-test-selectors": "^0.0.1",
+    "vite-plugin-test-selectors": "0.0.2",
     "vitest": "^0.19.1"
   },
   "type": "module"

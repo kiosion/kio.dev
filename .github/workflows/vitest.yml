@@ -1,22 +1,20 @@
 name: Vitest
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   vitest-run:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      
-    - name: Install dependencies
-      run: make install
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Install dependencies
+        run: make install
 
-    - name: Run check
-      run: make check
-      
-    - name: Run unit tests
-      run: make vitest
+      - name: Run check
+        run: make check
+        
+      - name: Run unit tests
+        run: make vitest

@@ -1,5 +1,5 @@
 describe('E2E | Index', () => {
-  const returnPosts = ({ req, delay = 1200, num = null }) => {
+  const returnPosts = ({ req, delay = 800, num = null }) => {
     num = num || req.query.limit;
     num = num || 10;
     const posts = [];
@@ -39,7 +39,7 @@ describe('E2E | Index', () => {
 
   it('should display loading indicator until ready', () => {
     cy.intercept('GET', '/api/getPosts*', (req) => {
-      req.reply(returnPosts({ req, delay: 3600 }));
+      req.reply(returnPosts({ req, delay: 2000 }));
     }).as('getPosts');
 
     cy.visit('/');
