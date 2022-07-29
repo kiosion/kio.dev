@@ -6,9 +6,11 @@
   import { onMount } from 'svelte';
 
   let isLoadingData = true;
+  let routeFetch: (info: any, init?: any) => Promise<any>;
 
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
     const now = performance.now();
+    routeFetch = fetch;
     await findPosts(fetch, { limit: 2 })
       .then((res) => {
         posts.set(res?.data);
@@ -25,7 +27,7 @@
 
 <script lang="ts">
   onMount(async () => {
-    findPosts({ limit: 2 })
+    findPosts(routeFetch, { limit: 2 })
       .then((res) => {
         posts.set(res?.data);
         isLoadingData = false;
@@ -40,17 +42,19 @@
   <title>kio.dev | blog</title>
 </svelte:head>
 
-<h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
-<p class="text-center">Some placeholder text for now.</p>
+<div data-test-route="index">
+  <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
+  <p class="text-center">Some placeholder text for now.</p>
 
-{#if isLoadingData}
-  <div class="absolute w-fit h-fit top-1/2 left-1/2 ml-24">
-    <Diamonds size="38" color={$theme === 'light' ? '#1E293B' : '#F1F5F9'} />
-  </div>
-{:else if $posts}
-  {#each $posts as post}
-    <ListItem {post} />
-  {/each}
-{:else}
-  <p class="text-center mt-4 text-base">No posts found.</p>
-{/if}
+  {#if isLoadingData}
+    <div class="absolute w-fit h-fit top-1/2 left-1/2 ml-24">
+      <Diamonds size="38" color={$theme === 'light' ? '#1E293B' : '#F1F5F9'} />
+    </div>
+  {:else if $posts}
+    {#each $posts as post}
+      <ListItem {post} />
+    {/each}
+  {:else}
+    <p class="text-center mt-4 text-base">No posts found.</p>
+  {/if}
+</div>

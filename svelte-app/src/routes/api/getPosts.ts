@@ -6,7 +6,7 @@ export const GET = async ({
   params,
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}/v1/query/posts${url.search}`;
+  const remoteUrl = `${REMOTE_API_URL}query/posts${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',

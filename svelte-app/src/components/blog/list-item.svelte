@@ -12,7 +12,9 @@
       {post.title}
     </h1></a
   >
-  <h3 class="font-sans text-base mt-2">{moment(post.date).format('MMM Do, YYYY')}</h3>
+  <h3 class="font-sans text-base mt-2">
+    {moment(post.date).format('MMM Do, YYYY')}
+  </h3>
   {#if post.desc}
     <p
       class="block overflow-hidden whitespace-nowrap w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-1"

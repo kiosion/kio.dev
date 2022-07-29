@@ -9,7 +9,7 @@
     "./express-api/node_modules/.bin/eslint --config ./.eslintrc --resolve-plugins-relative-to . --fix"
   ],
   "**/svelte-app/**/*.{svelte,ts,js}": [
-    "./svelte-app/node_modules/.bin/prettier --config ./svelte-app/.prettierrc --plugin-search-dir ./svelte-app --write",
+    "./svelte-app/node_modules/.bin/prettier --config ./.prettierrc.json --plugin-search-dir ./svelte-app --write",
     "./svelte-app/node_modules/.bin/eslint --config ./svelte-app/.eslintrc.cjs --resolve-plugins-relative-to ./svelte-app --fix"
   ]
 }

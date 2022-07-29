@@ -4,14 +4,14 @@ on:
   workflow_call:
 
 jobs:
-  cypress-run:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: make install
+        run: yarn install 2> >(grep -v warning 1>&2) && (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
       
       - name: Build testing env
         run: make build-test

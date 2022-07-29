@@ -1,9 +1,21 @@
+import type { CyHttpMessages } from 'cypress/types/net-stubbing';
+interface SetupParams {
+  delay?: number;
+  num?: number;
+}
+
+interface ReturnPostsParams {
+  req: CyHttpMessages.IncomingHttpRequest;
+  delay: number;
+  num?: string | number;
+}
+
 describe('E2E | Index', () => {
-  const returnPosts = ({ req, delay = 800, num = null }) => {
-    num = num || req.query.limit;
-    num = num || 10;
+  const returnPosts = ({ req, delay, num }: ReturnPostsParams) => {
+    let numPosts = num || +req.query.limit;
+    numPosts = numPosts || 10;
     const posts = [];
-    for (let i = 0; i < num; i++) {
+    for (let i = 0; i < numPosts; i++) {
       posts.push({
         _id: `${i}`,
         _type: 'post',
@@ -28,7 +40,7 @@ describe('E2E | Index', () => {
       statusCode: 200,
       body: {
         meta: {
-          length: num,
+          length: numPosts,
           filter: req.query
         },
         data: posts
@@ -37,21 +49,38 @@ describe('E2E | Index', () => {
     };
   };
 
-  it('should display loading indicator until ready', () => {
-    cy.intercept('GET', '/api/getPosts*', (req) => {
-      req.reply(returnPosts({ req, delay: 2000 }));
-    }).as('getPosts');
+  const setupContext = ({ delay = 800, num }: SetupParams) => {
+    return cy.intercept('GET', '/api/getPosts*', (req) => {
+      req.reply(returnPosts({ req, delay, num }));
+    });
+  };
+
+  it('should render index route', () => {
+    setupContext({});
 
     cy.visit('/');
-    cy.get('[data-test-id="loader"]').should('be.visible');
-    cy.wait('@getPosts');
-    cy.get('[data-test-id="loader"]').should('not.exist');
+
+    cy.get('[data-test-route="index"]').should('exist');
+
+    cy.reload();
+
+    cy.get('[data-test-route="index"]').should('exist');
   });
 
-  it('should render with no posts', () => {
-    cy.intercept('GET', '/api/getPosts*', (req) => {
-      req.reply(returnPosts({ req }));
-    }).as('getPosts');
+  it('should display loading indicator until ready', () => {
+    setupContext({ delay: 2000 }).as('getPosts');
+
+    cy.visit('/');
+
+    cy.get('[data-test-id="loader"]', { timeout: 6000 }).should('be.visible');
+
+    cy.wait('@getPosts');
+
+    cy.get('[data-test-id="loader"]', { timeout: 6000 }).should('not.exist');
+  });
+
+  it('should render index route with no posts', () => {
+    setupContext({ num: 0 }).as('getPosts');
 
     cy.visit('/');
     cy.wait('@getPosts');
@@ -59,10 +88,8 @@ describe('E2E | Index', () => {
     cy.get('[data-test-id="navBar"]').should('be.visible');
   });
 
-  it('should render with posts', () => {
-    cy.intercept('GET', '/api/getPosts*', (req) => {
-      req.reply(returnPosts({ req, num: 10 }));
-    }).as('getPosts');
+  it('should render index route with posts', () => {
+    setupContext({ num: 10 }).as('getPosts');
 
     cy.visit('/');
     cy.wait('@getPosts');

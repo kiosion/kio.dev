@@ -1,7 +1,7 @@
 // Temp endpoint with hardcoded data, will move to API later
-import type { EndpointOutput } from '@sveltjs/kit';
+import type { RequestHandlerOutput } from '@sveltejs/kit';
 
-export const GET = async (): Promise<EndpointOutput> => {
+export const GET = async (): Promise<RequestHandlerOutput> => {
   return { body: { data } };
 };
 
