@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Nav from '@/components/nav.svelte';
+import Nav from '../../src/components/nav.svelte';
 
 describe('Components | Nav', () => {
   it('should render', () => {

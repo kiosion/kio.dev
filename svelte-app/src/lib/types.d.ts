@@ -1,4 +1,4 @@
-export type Post = {
+export interface Post {
   _id?: string;
   _type?: string;
   author?: {
@@ -6,6 +6,10 @@ export type Post = {
     _type: string;
     name: string;
     slug: string;
+  };
+  slug?: {
+    _type: string;
+    current: string;
   };
   body?: {
     [
@@ -36,9 +40,32 @@ export type Post = {
     }
   ];
   title?: string;
-};
+}
 
-export type Posts = {
-  []: Post;
-  length: number;
-};
+export interface Posts {
+  meta: {
+    count: number;
+    filter: string;
+  };
+  posts?: Post[];
+  error?: {
+    message: string;
+  };
+}
+
+export interface PostsQueryParams {
+  limit?: number;
+  skip?: number;
+  sort?: string;
+  order?: string;
+  date?: string;
+  tags?: string[];
+}
+
+export interface PostQueryParams {
+  slug?: string;
+}
+
+export interface RouteFetch {
+  (info: RequestInfo, init?: RequestInit): Promise<Response>;
+}

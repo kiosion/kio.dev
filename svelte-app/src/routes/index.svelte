@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { postsWritable as posts, findPosts } from '@/stores/posts';
+  import { posts, findPosts } from '@/stores/posts';
   import { Diamonds } from 'svelte-loading-spinners';
   import { theme } from '@/stores/theme';
   import ListItem from '@/components/blog/list-item.svelte';

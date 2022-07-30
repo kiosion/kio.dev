@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { postWritable as post, findPost } from '@/stores/posts';
+  import { post, findPost } from '@/stores/posts';
 
   // let isLoadingData = true;
 

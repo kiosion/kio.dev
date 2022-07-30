@@ -10,9 +10,9 @@
     "noImplicitThis": true,
     "paths": {
       "@/*": ["src/*"],
-      "@types": ["types.d"],
       "$lib": ["src/lib"],
-      "$lib/*": ["src/lib/*"]
+      "$lib/*": ["src/lib/*"],
+      "$logs": ["logs"]
     },
     "removeComments": true,
     "rootDir": "./",
