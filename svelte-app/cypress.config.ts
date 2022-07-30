@@ -10,6 +10,11 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     // setupNodeEvents() {},
     specPattern: 'cypress/e2e/**/*cy.ts',
+    video: false,
+    retries: {
+      runMode: 2,
+      openMode: 0
+    },
     env: {
       VITE_TESTING: 'cypress'
     }
