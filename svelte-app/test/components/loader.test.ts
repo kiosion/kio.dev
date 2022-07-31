@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Loader from '@/components/loader.svelte';
+import Loader from '@/components/loader/full.svelte';
 
 describe('Components | Loader', () => {
   it('should render', () => {
@@ -17,7 +17,7 @@ describe('Components | Loader', () => {
 
   it('should render with default size', () => {
     const { container } = render(Loader);
-    const style = container.querySelector('div span').style;
+    const style = container.querySelector('div span')?.style;
     expect(style).toBeTruthy();
 
     expect(
@@ -29,11 +29,11 @@ describe('Components | Loader', () => {
     ).toContain('38px');
   });
 
-  it('should accept props', () => {
+  it('should render with default props', () => {
     const { container } = render(Loader, {
-      props: { size: '44', color: '#000000' }
+      props: { error: '' }
     });
-    const style = container.querySelector('div span').style;
+    const style = container.querySelector('div span')?.style;
     expect(style).toBeTruthy();
 
     let styles = {};
@@ -48,8 +48,8 @@ describe('Components | Loader', () => {
     expect(Object.keys(styles).length).toBe(3);
 
     const expected = {
-      '--size': '44px',
-      '--color': '#000000',
+      '--size': '38px',
+      '--color': '#F1F5F9',
       '--duration': '1.5s'
     };
 

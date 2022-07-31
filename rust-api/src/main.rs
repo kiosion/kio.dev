@@ -1,12 +1,14 @@
-#[macro_use]
-extern crate rocket;
+#[macro_use]extern crate rocket;
+extern crate dotenv;
 mod sanity;
+
+use dotenv::dotenv;
 
 use rocket::http::Status;
 use rocket::response::status;
 use rocket::response::content;
-use rocket::serde::json::{Json, Value, json};
-use rocket::serde::{Serialize, Deserialize};
+use rocket::serde::json::{Value, json};
+use rocket::serde::{Serialize};
 
 #[derive(Serialize)]
 #[serde(crate = "rocket::serde")]
@@ -38,20 +40,31 @@ async fn posts(query: String) -> status::Custom<content::RawJson<String>> {
     }
 }
 
+#[catch(500)]
+fn err_500() -> Value {
+    json!({
+        "status": "error",
+        "code": 500,
+        "reason": "Internal server error"
+    })
+}
+
 #[catch(404)]
-fn not_found() -> Value {
+fn err_404() -> Value {
     json!({
         "status": "error",
         "code": 404,
-        "reason": "Resource was not found."
+        "reason": "Resource was not found"
     })
 }
 
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
+    dotenv().ok();
+
     let _rocket = rocket::build()
         .mount("/", routes![index])
-        .register("/", catchers![not_found])
+        .register("/", catchers![err_404, err_500])
         .mount("/query", routes![posts])
         .launch()
         .await?;

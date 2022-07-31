@@ -72,11 +72,15 @@ describe('E2E | Index', () => {
 
     cy.visit('/');
 
-    cy.get('[data-test-id="loader"]', { timeout: 6000 }).should('be.visible');
+    cy.get('[data-test-id="loader-full"]', { timeout: 6000 }).should(
+      'be.visible'
+    );
 
     cy.wait('@getPosts');
 
-    cy.get('[data-test-id="loader"]', { timeout: 6000 }).should('not.exist');
+    cy.get('[data-test-id="loader-full"]', { timeout: 6000 }).should(
+      'not.exist'
+    );
   });
 
   it('should render index route with no posts', () => {
