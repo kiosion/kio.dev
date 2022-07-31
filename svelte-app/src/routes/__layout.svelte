@@ -1,19 +1,20 @@
 <script context="module" lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+  import { classList } from 'svelte-body';
+  import { fly } from 'svelte/transition';
+  import { page, navigating } from '$app/stores';
+  import { loading, theme } from '@/stores/theme';
+  import Loader from '@/components/loader/full.svelte';
+  import PageTransition from '@/components/page-transition.svelte';
+  import Nav from '@/components/nav.svelte';
+
   export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
     props: { url }
   });
 </script>
 
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { classList } from 'svelte-body';
-  import { fly } from 'svelte/transition';
-  import { page, navigating } from '$app/stores';
-  import { loading, theme } from '@/stores/theme';
-  import Loader from '@/components/loader.svelte';
-  import PageTransition from '@/components/page-transition.svelte';
-  import Nav from '@/components/nav.svelte';
-  import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
+  // import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
 
   const unsubscribe = navigating.subscribe((res) => {
     loading.set(!res);
@@ -36,12 +37,12 @@
 </script>
 
 <svelte:body
-  use:classList={`w-full h-full ${$theme} ${
-    $navigating ? 'is-loading' : 'is-loaded'
-  }`} />
+  use:classList={`w-full h-full ${
+    appLoading ? 'overflow-hidden' : ''
+  } ${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`} />
 
 {#if appLoading}
-  <Loader size="38" />
+  <Loader theme={$theme} />
 {/if}
 
 <div
@@ -52,9 +53,9 @@
   <div
     class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
   >
-    <div class="hidden md:flex justify-end items-center">
+    <!-- <div class="hidden md:flex justify-end items-center">
       <ThemeToggle />
-    </div>
+    </div> -->
     <PageTransition {url}>
       <slot />
     </PageTransition>

@@ -1,11 +1,13 @@
 <script lang="ts" context="module">
   import { posts, findPosts } from '@/stores/posts';
-  import { Diamonds } from 'svelte-loading-spinners';
   import { theme } from '@/stores/theme';
   import ListItem from '@/components/blog/list-item.svelte';
   import { onMount } from 'svelte';
+  import LoaderInline from '@/components/loader/inline.svelte';
+  import HeaderControls from '@/components/header-controls.svelte';
 
   let isLoadingData = true;
+  let errorLoading = true;
   let routeFetch: (info: any, init?: any) => Promise<any>;
 
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
@@ -13,6 +15,10 @@
     routeFetch = fetch;
     await findPosts(fetch, { limit: 2 })
       .then((res) => {
+        if (res.error) {
+          errorLoading = true;
+          return;
+        }
         posts.set(res?.data);
         isLoadingData = false;
       })
@@ -42,19 +48,27 @@
   <title>kio.dev | blog</title>
 </svelte:head>
 
-<div data-test-route="index">
+<div data-test-route="index" class="w-full">
+  <HeaderControls />
   <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
-  <p class="text-center">Some placeholder text for now.</p>
-
-  {#if isLoadingData}
-    <div class="absolute w-fit h-fit top-1/2 left-1/2 ml-24">
-      <Diamonds size="38" color={$theme === 'light' ? '#1E293B' : '#F1F5F9'} />
-    </div>
-  {:else if $posts}
-    {#each $posts as post}
-      <ListItem {post} />
-    {/each}
-  {:else}
-    <p class="text-center mt-4 text-base">No posts found.</p>
-  {/if}
+  <p class="text-center">
+    My ramblings about mostly tech & network-related stuff
+  </p>
+  <div class="mt-2">
+    {#if isLoadingData}
+      <LoaderInline theme={$theme} error={errorLoading} />
+    {:else if $posts}
+      {#each $posts as post}
+        <ListItem {post} />
+      {/each}
+    {:else}
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+      <ListItem error="No posts found." />
+    {/if}
+  </div>
 </div>
