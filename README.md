@@ -2,44 +2,32 @@
 
 Sveltekit client/server, sanity studio, and expressjs api for my art / development portfolio, blog, and social links.
 
-(Soon to be) live at <a href="https://kio.dev/">kio.dev</a>
+(Soon to be) live at <a href="https://kio.dev/">https://kio.dev</a>
+
+Info about the project at <a href="https://kio.dev/project/kio.dev">https://kio.dev/project/kio.dev</a>
 
 ## Building / running
 
-These steps are mostly here for me - as-is, this won't build or run properly as neccesary environment vars obviously aren't present :p
-
-### Project setup
-
-Ensure you have npm and yarn installed, then clone the repo:
+Install deps
 ```bash
-git clone https://github.com/kiosion/portfolio ./kio-portfolio
+make install
 ```
 
-### Running
-
-Run locally:
+Run locally
 ```bash
-make dev
+make run-dev
 ```
 
-Run backed by api.kio.dev:
+Build
 ```bash
-make dev-backed
+make build-prod
 ```
 
-### Building
+## Testing
 
+Run all tests
 ```bash
-make prod # or make prod-backed
+make build-test
+node ./svelte-app/dist/
+make vitest && make cypress
 ```
-
-### Testing
-
-Run all tests for app & API:
-```bash
-make test
-```
-
-## Issues / To-do
-
-Check out <a href="TODO.md">TODO.md</a>
