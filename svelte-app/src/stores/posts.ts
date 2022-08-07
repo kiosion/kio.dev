@@ -39,7 +39,7 @@ export const queryPosts = async (
       });
     }
     return response;
-  } catch (err) {
+  } catch (err: any) {
     Logger.error('Failed to query endpoint', 'store/queryPosts');
     return JSON.stringify({
       error: err,

@@ -1,5 +1,9 @@
 import SanityClient from '../client';
-import { postsQueryParams, postsQueryFilterParams, postQueryParams } from '../types';
+import {
+  postsQueryParams,
+  postsQueryFilterParams,
+  postQueryParams
+} from '../types';
 
 const client = SanityClient.client;
 
@@ -21,7 +25,10 @@ module query {
           !split[1].match(/^\d+$/) ||
           !split[2].match(/^\d+$/)
         ) {
-          reject('Invalid date format, must be YYYY-MM-DD, you provided: ' + filter.date);
+          reject(
+            'Invalid date format, must be YYYY-MM-DD, you provided: ' +
+              filter.date
+          );
         }
         date = `${split[0]}-${split[1]}-${split[2]}`;
       }
@@ -39,7 +46,11 @@ module query {
 
       const query = `*[!(_id in path('drafts.**')) && _type == "post"${
         date ? ` && date == "${date}"` : ''
-      }${tags ? ` && references(*[_type == "tag" && title in [${tags}]]._id)` : ''}]{
+      }${
+        tags
+          ? ` && references(*[_type == "tag" && title in [${tags}]]._id)`
+          : ''
+      }]{
       _id,
       _type,
       "author": {
@@ -143,8 +154,8 @@ module query {
 
       client
         .fetch(query)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((data: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
           resolve({
             meta: {
               count: data.length
@@ -152,8 +163,38 @@ module query {
             data
           });
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((err: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
+          reject(err);
+        });
+    });
+
+  // Fetch about page
+  export const about = () =>
+    new Promise((resolve, reject) => {
+      const query = `*[!(_id in path('drafts.**')) && _type == "author" && name == "Kio"]{
+      _id,
+      bio,
+      body,
+      image,
+      name,
+      slug
+    }[0]`;
+
+      client
+        .fetch(query)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
+          resolve({
+            meta: {
+              count: data ? 1 : 0,
+              filter: 'about'
+            },
+            data
+          });
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((err: any) => {
           reject(err);
         });
     });

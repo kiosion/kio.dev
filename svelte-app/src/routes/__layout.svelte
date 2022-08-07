@@ -7,6 +7,7 @@
   import Loader from '@/components/loader/full.svelte';
   import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
+  import HeaderControls from '@/components/header-controls.svelte';
 
   export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
     props: { url }
@@ -14,8 +15,6 @@
 </script>
 
 <script lang="ts">
-  // import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
-
   const unsubscribe = navigating.subscribe((res) => {
     loading.set(!res);
   });
@@ -51,14 +50,14 @@
 >
   <Nav segment={$page.url.pathname} />
   <div
-    class="md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
+    class="relative md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
   >
-    <!-- <div class="hidden md:flex justify-end items-center">
-      <ThemeToggle />
-    </div> -->
-    <PageTransition {url}>
-      <slot />
-    </PageTransition>
+    {#if !appLoading}
+      <HeaderControls />
+      <PageTransition {url}>
+        <slot />
+      </PageTransition>
+    {/if}
   </div>
 </div>
 

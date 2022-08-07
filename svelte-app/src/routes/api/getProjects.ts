@@ -7,7 +7,7 @@ export const GET = async ({
   params,
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/about`;
+  const remoteUrl = `${REMOTE_API_URL}query/projects${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -16,18 +16,21 @@ export const GET = async ({
       }
     });
     if (res.status !== 200) {
-      Logger.error(`Failed to fetch about: ${res.status}`, 'api/fetchAbout');
+      Logger.error(
+        `Failed to fetch projects: ${res.status}`,
+        'api/fetchProjects'
+      );
       return {
         body: JSON.stringify({
           status: res.status,
-          error: 'Endpoint error: Failed to fetch about'
+          error: 'Endpoint error: Failed to fetch projects'
         })
       };
     }
     const data = await res.json();
     return { body: data };
   } catch (err: any) {
-    Logger.error(`Failed to fetch about: ${err}`, 'api/fetchAbout');
+    Logger.error(`Failed to fetch projects: ${err}`, 'api/fetchProjects');
     return {
       body: JSON.stringify({
         status: 500,

@@ -10,7 +10,7 @@
 <div
   class="absolute bg-slate-100 dark:bg-slate-800 flex items-center justify-center z-40"
   data-test-id="loader-full"
-  out:fly={{ duration: 100, y: 10 }}
+  out:fly={{ duration: 200, y: 10 }}
 >
   {#if error}
     <p class="text-center text-base">Error loading data.</p>
