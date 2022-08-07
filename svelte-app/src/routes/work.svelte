@@ -16,6 +16,10 @@
   };
 </script>
 
+<script lang="ts">
+  import ListItem from '@/components/blog/list-item.svelte';
+</script>
+
 <svelte:head>
   <title>kio.dev | work</title>
 </svelte:head>
@@ -24,14 +28,12 @@
   <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">work</h1>
   <p class="text-center">Recent work and projects of mine</p>
   <div class="mt-2">
-    <div
-      class="w-full max-w-[28rem] px-4 mx-auto md:px-0 md:max-w-none md:w-[24rem] lg:w-[32rem] xl:w-[38rem] 2xl:w-[42rem]"
-    >
-      {#if $projects}
+    {#if $projects}
+      {#each $projects as project}
         <div />
-      {:else}
-        <p>Error loading</p>
-      {/if}
-    </div>
+      {/each}
+    {:else}
+      <ListItem error="No projects found" />
+    {/if}
   </div>
 </div>

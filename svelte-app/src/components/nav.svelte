@@ -42,27 +42,23 @@
 </script>
 
 <nav
-  class="w-full p-4 pt-8 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
+  class="w-full p-4 pt-6 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
   data-test-id="navBar"
 >
-  <div class="flex-grow -mt-10 md:-mt-4 click-through">
+  <div class="flex-grow -mt-7 md:-mt-4 click-through">
     <a
-      class="block md:hidden mx-auto w-1/3 logo-text"
+      class="inline-block md:hidden mx-auto w-1/3 logo-text"
       sveltekit:prefetch
       href="/"
     >
       <img class="w-full" src="/assets/logo-text.webp" alt="kiosion" />
     </a>
     <a
-      class="hidden md:block mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text"
+      class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text"
       sveltekit:prefetch
       href="/"
     >
-      <img
-        class="w-full -rotate-90"
-        src="/assets/logo-text--short.webp"
-        alt="kio."
-      />
+      <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
     </a>
     {#if $menuOpen}
       <div
@@ -75,7 +71,9 @@
             class:active={segment === link.url}
             class:mt-3={index > 0}
             aria-label={link.name}
-            href={link.url}><span class="strike">{link.name}</span></a
+            href={link.url}
+            on:click={() => menuOpen.set(false)}
+            ><span class="strike">{link.name}</span></a
           >
         {/each}
       </div>
@@ -89,7 +87,9 @@
           class:active={segment === link.url}
           class:mt-3={index > 0}
           aria-label={link.name}
-          href={link.url}><span class="strike">{link.name}</span></a
+          href={link.url}
+          on:click={() => menuOpen.set(false)}
+          ><span class="strike">{link.name}</span></a
         >
       {/each}
     </div>

@@ -74,7 +74,7 @@ export const findProjects = async (
 ) => {
   const cacheKey = Store.getCacheKey('projects', params);
   if (Store.has(cacheKey)) {
-    return Store.get(cachekey);
+    return Store.get(cacheKey);
   } else {
     const response = await queryProjects(fetch, params);
     Store.set(cacheKey, response);

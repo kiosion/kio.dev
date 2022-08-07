@@ -1,4 +1,10 @@
 <script context="module" lang="ts">
+  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
+    props: { url }
+  });
+</script>
+
+<script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { classList } from 'svelte-body';
   import { fly } from 'svelte/transition';
@@ -9,23 +15,19 @@
   import Nav from '@/components/nav.svelte';
   import HeaderControls from '@/components/header-controls.svelte';
 
-  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
-    props: { url }
-  });
-</script>
-
-<script lang="ts">
   const unsubscribe = navigating.subscribe((res) => {
     loading.set(!res);
   });
 
-  let appLoading = true;
+  let appLoaded: boolean;
+  const now = performance.now();
 
   onMount(() => {
+    const timeout = performance.now() - now < 2000 ? 2000 - now : 0;
     setTimeout(() => {
-      appLoading = false;
+      appLoaded = true;
       loading.set(false);
-    });
+    }, timeout);
   });
 
   onDestroy(() => {
@@ -37,11 +39,11 @@
 
 <svelte:body
   use:classList={`w-full h-full ${
-    appLoading ? 'overflow-hidden' : ''
-  } ${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`} />
+    appLoaded ? '' : 'overflow-hidden'
+  } ${$theme} ${!appLoaded || $navigating ? 'is-loading' : 'is-loaded'}`} />
 
-{#if appLoading}
-  <Loader theme={$theme} />
+{#if !appLoaded}
+  <Loader theme="dark" />
 {/if}
 
 <div
@@ -52,7 +54,7 @@
   <div
     class="relative md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
   >
-    {#if !appLoading}
+    {#if appLoaded}
       <HeaderControls />
       <PageTransition {url}>
         <slot />
