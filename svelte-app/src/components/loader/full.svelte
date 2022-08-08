@@ -5,7 +5,6 @@
   let phrase: string | undefined;
 
   const phrases = [
-    'Do you like my loading animation? :)',
     'Spinning violently around the y-axis',
     'Assembling from source',
     'Hunting for bugs',
@@ -16,7 +15,7 @@
     'Doing the heavy lifting',
     ':3',
     'Proving P=NP',
-    'Waiting for the heat-death of the universe',
+    'Waiting for the eventual heat-death of the universe',
     'Calculating the airspeed velocity of an unladen swallow'
   ];
 
@@ -38,14 +37,14 @@
     <p class="text-center text-base">Error loading data.</p>
   {:else}
     <div class="flex flex-col items-center justify-between w-1/2 h-full">
-      <div class="w-fit h-fit mt-[49vh]">
+      <div class="w-fit h-fit mt-[49vh]" data-test-id="loader-spinner">
         <Diamonds {size} color={theme === 'light' ? '#1E293B' : '#F1F5F9'} />
       </div>
       <p
         class="mb-[10vh]{theme === 'light'
           ? ' text-slate-800'
           : ' text-slate-100'} font-mono"
-        id={'loader-full-phrase'}
+        data-test-id="loader-full-phrase"
       >
         {phrase}
       </p>
