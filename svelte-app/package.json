@@ -23,7 +23,7 @@
     "@iconify/svelte": "^2.2.1",
     "@portabletext/svelte": "^1.0.1",
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/adapter-node": "^1.0.0-next.83",
+    "@sveltejs/adapter-node": "^1.0.0-next.86",
     "@sveltejs/kit": "next",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.4.0",
