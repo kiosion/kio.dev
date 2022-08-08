@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Loader from '@/components/loader/full.svelte';
 
-describe('Components | Loader', () => {
+describe('Components | Loader | Full', () => {
   it('should render', () => {
     const { container } = render(Loader);
     expect(container).toBeTruthy();
@@ -30,11 +30,43 @@ describe('Components | Loader', () => {
   });
 
   it('should render with default props', () => {
-    const { container } = render(Loader, {
-      props: { error: '' }
-    });
-    const style = container.querySelector('div span')?.style;
+    const { container } = render(Loader);
+    const style = container.querySelector(
+      '[data-test-id="loader-spinner"] span'
+    )?.style;
     expect(style).toBeTruthy();
+
+    let styles = {};
+    style.cssText.split(';').forEach((item) => {
+      item.split(':')[0] !== '' &&
+        (styles = {
+          ...styles,
+          [item.split(':')[0].trim()]: item.split(':')[1].trim()
+        });
+    });
+
+    expect(Object.keys(styles).length).toBe(3);
+
+    const expected = {
+      '--size': '38px',
+      '--color': '#1E293B',
+      '--duration': '1.5s'
+    };
+
+    for (const key in expected) {
+      expect(styles[key]).toBeTruthy();
+      expect(styles[key]).toBe(expected[key]);
+    }
+  });
+
+  it('should render with dark theme provided', () => {
+    const { container } = render(Loader, {
+      props: { theme: 'dark' }
+    });
+    const style = container.querySelector(
+      '[data-test-id="loader-spinner"] span'
+    )?.style;
+    expect(style.toBeTruthy);
 
     let styles = {};
     style.cssText.split(';').forEach((item) => {
@@ -57,5 +89,12 @@ describe('Components | Loader', () => {
       expect(styles[key]).toBeTruthy();
       expect(styles[key]).toBe(expected[key]);
     }
+  });
+
+  it('should render phrase', () => {
+    const { container } = render(Loader);
+    expect(
+      container.querySelector('[data-test-id="loader-full-phrase"]')
+    ).toBeTruthy();
   });
 });
