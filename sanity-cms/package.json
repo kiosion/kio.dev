@@ -24,7 +24,7 @@
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
+    "@babel/core": "^7.18.10",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.32.0"
   }
