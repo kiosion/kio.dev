@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@sanity/base": "^2.30.1",
-    "@sanity/cli": "^2.30.2",
+    "@sanity/cli": "^2.30.3",
     "@sanity/code-input": "^2.30.1",
     "@sanity/core": "^2.30.2",
     "@sanity/default-layout": "^2.30.1",
@@ -26,6 +26,6 @@
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.31.0"
+    "@typescript-eslint/parser": "^5.32.0"
   }
 }
