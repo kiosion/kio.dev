@@ -5,8 +5,8 @@ const highlightRender = (props) => (
 );
 
 export default {
-  name: 'post',
-  title: 'Blog Posts',
+  name: 'project',
+  title: 'Projects',
   type: 'document',
   fields: [
     {

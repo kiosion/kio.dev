@@ -1,7 +1,7 @@
 {
   "**/sanity-cms/**/*.{ts,js}": [
     "yarn prettier --config ./.prettierrc.json --plugin-search-dir . --write",
-    "yarn eslint --config ./sanity-cms/.eslintrc --resolve-plugins-relative-to ./sanity-cms --fix"
+    "./sanity-cms/node_modules/.bin/eslint --config ./sanity-cms/.eslintrc --resolve-plugins-relative-to ./sanity-cms --fix"
   ],
   "*.scss": "npx stylelint --fix",
   "**/express-api/**/*.{ts,js}": [

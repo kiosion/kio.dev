@@ -40,13 +40,13 @@
       </span>
     {/if}
     {#if style === 'h1'}
-      <h1 class="inline font-display text-4xl font-bold"><slot /></h1>
+      <h1 class="inline font-mono text-3xl font-bold"><slot /></h1>
     {:else if style === 'h2'}
-      <h2 class="inline font-display text-3xl font-bold"><slot /></h2>
+      <h2 class="inline font-mono text-2xl font-bold"><slot /></h2>
     {:else if style === 'h3'}
-      <h3 class="inline font-display text-2xl font-bold"><slot /></h3>
+      <h3 class="inline font-mono text-xl font-bold"><slot /></h3>
     {:else if style === 'h4'}
-      <h4 class="inline font-display text-xl font-bold"><slot /></h4>
+      <h4 class="inline font-mono text-l font-bold"><slot /></h4>
     {:else}
       <h5 class="font-sans text-lg font-bold text-slate-500"><slot /></h5>
     {/if}
