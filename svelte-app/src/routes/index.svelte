@@ -3,7 +3,7 @@
   import ListItem from '@/components/blog/list-item.svelte';
 
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
-    await findPosts(fetch, { limit: 2 })
+    await findPosts(fetch)
       .then((res) => {
         if (res.error) {
           return;

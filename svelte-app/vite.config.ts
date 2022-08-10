@@ -10,7 +10,7 @@ export default defineConfig({
     StripTestSelectors({
       dev: process.env.MODE !== 'testing'
     }),
-    process.env.MODE === 'development' && Inspect()
+    Inspect()
   ],
   resolve: {
     alias: {

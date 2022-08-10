@@ -5,7 +5,6 @@
     fetch,
     params
   }) => {
-    const now = performance.now();
     await findPost(fetch, { slug: params.slug })
       .then((res) => {
         post.set(res.data);
@@ -13,37 +12,43 @@
       .catch((e) => {
         console.error(e);
       });
-    const delta = performance.now() - now;
-    delta < 200 &&
-      (await new Promise((resolve) => setTimeout(resolve, 200 - delta)));
   };
 </script>
 
 <script lang="ts">
   import PortableText from '@/components/portable-text/portable-text.svelte';
   import { onDestroy } from 'svelte';
+  import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
+  import Divider from '@/components/divider.svelte';
+  import BulletPoint from '@/components/bullet-point.svelte';
 
   let readingTime: number;
   let dateFormat = 'rel';
   let date: string;
 
-  const getReadingTime = (post: any) => {
-    if (!post || !post.body) {
-      return 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTotalWords = (postBody: any) => {
+    if (!postBody) {
+      return [];
     }
 
-    const blocks = post.body
+    const blocks = postBody
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ?.filter((block: any) => block._type === 'block')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ?.reduce((prev: any[], item: any) => {
         return [...prev, item];
       }, []);
 
-    let texts: string[] = [];
+    let text: string[] = [];
 
     blocks
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ?.filter((block: any) => block?.children?.length)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ?.forEach((block: any) => {
-        texts.push(
+        text.push(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           block.children.reduce((prev: any[], item: any) => {
             if (item?.text?.length > 0) {
               return [...prev, item.text];
@@ -52,67 +57,19 @@
         );
       });
 
-    texts = texts.flat();
-    texts = texts.filter((text: string) => text);
-
-    const totalWords = texts.reduce((prev, item: any) => {
-      return (prev += item.split(' ').length);
-    }, 0);
-
-    return Math.floor(totalWords / (100 / 60));
-  };
-
-  const getAbsDate = (date: string | undefined) => {
-    if (!date) {
-      return '...';
-    }
-    const d = new Date(date);
-    const formatter = new Intl.DateTimeFormat('default', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    });
-    const dateString = `${formatter.format(d)}`;
-    return dateString;
-  };
-
-  const getRelDate = (date: string | undefined) => {
-    if (!date) {
-      return '...';
-    }
-    const d = new Date(date);
-    const rtf = new Intl.RelativeTimeFormat('default', {
-      numeric: 'auto'
-    });
-
-    const elapsed = Math.floor((new Date().getTime() - d.getTime()) / 1000),
-      elapsedMin = Math.floor(elapsed / 60),
-      elapsedH = Math.floor(elapsed / 3600),
-      elapsedMth = Math.floor(elapsed / (3600 * 24 * 30)),
-      elapsedY = Math.floor(elapsed / (3600 * 24 * 365));
-
-    if (elapsedY > 0) {
-      return `${rtf.format(-elapsedY, 'year')}`;
-    } else if (elapsedMth > 0) {
-      return `${rtf.format(-elapsedMth, 'month')}`;
-    } else if (elapsedH > 0) {
-      return `${rtf.format(-elapsedH, 'hour')}`;
-    } else if (elapsedMin > 0) {
-      return `${rtf.format(-elapsedMin, 'minute')}`;
-    } else {
-      return `${rtf.format(-elapsed, 'second')}`;
-    }
+    return text.flat().filter((text: string) => text);
   };
 
   const switchDate = () => {
-    dateFormat = dateFormat === 'rel' ? 'abs' : 'rel';
     dateFormat === 'rel'
       ? (date = getAbsDate($post.date))
       : (date = getRelDate($post.date));
+    dateFormat = dateFormat === 'rel' ? 'abs' : 'rel';
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const unsubscribe = post.subscribe((post: any) => {
-    readingTime = getReadingTime(post);
+    readingTime = getReadingTime(getTotalWords(post.body));
     date = getRelDate(post.date);
   });
 
@@ -129,23 +86,30 @@
   <div
     class="w-full max-w-[28rem] px-4 mx-auto md:px-0 md:max-w-none md:w-[24rem] lg:w-[32rem] xl:w-[38rem] 2xl:w-[42rem]"
   >
-    <h1 class="font-code text-4xl my-8 font-bold">{$post.title}</h1>
-    <div class="flex flex-col">
-      <p class="text-md">{$post.desc}</p>
-      <div class="flex flex-row my-2 items-center justify-start">
-        <p class="font-mono text-md">By {$post.author.name}</p>
-        <div class="h-1 w-1 rounded-full bg-slate-800 dark:bg-slate-100 mx-2" />
-        <p
-          class="font-mono text-md cursor-pointer"
-          on:click={() => switchDate()}
-        >
-          {date ? date : '...'}
-        </p>
-        <div class="h-1 w-1 rounded-full bg-slate-800 dark:bg-slate-100 mx-2" />
-        <p class="font-mono text-md">
-          {readingTime ? `${Math.floor(readingTime / 60)} min read` : '...'}
-        </p>
+    <div class="mt-8 mb-4" data-test-id="post-head">
+      <h1 class="font-code text-4xl mb-6 font-bold">{$post.title}</h1>
+      <div class="flex flex-col">
+        {#if $post.desc}
+          <p class="font-mono text-base">{$post.desc}</p>
+        {/if}
+        <div class="flex flex-row mt-4 items-center justify-start">
+          <p class="font-mono text-base">
+            <a href="/about" alt="About">By {$post.author.name}</a>
+          </p>
+          <BulletPoint />
+          <p
+            class="font-mono text-base cursor-pointer"
+            on:click={() => switchDate()}
+          >
+            {date ? date : '...'}
+          </p>
+          <BulletPoint />
+          <p class="font-mono text-base">
+            {readingTime ? `${Math.floor(readingTime / 60)} min read` : '...'}
+          </p>
+        </div>
       </div>
+      <Divider />
     </div>
 
     <div class="mt-4 font-sans text-base">

@@ -12,7 +12,7 @@
 </script>
 
 <div
-  class="relative mx-auto p-4 lg:p-6 my-6 md:my-4 bg-slate-200 dark:bg-slate-900 text-lg md:text-md w-fit is-{$theme} transition-color duration-250"
+  class="relative w-full p-4 my-6 bg-slate-200 dark:bg-slate-900 text-lg md:text-md is-{$theme} transition-all duration-150"
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
 >
