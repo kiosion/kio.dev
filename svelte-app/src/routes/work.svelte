@@ -17,23 +17,26 @@
 </script>
 
 <script lang="ts">
-  import ListItem from '@/components/blog/list-item.svelte';
+  import ListItem from '@/components/work/list-item.svelte';
+  import PageHeading from '@/components/headings/page-heading.svelte';
 </script>
 
 <svelte:head>
   <title>kio.dev | work</title>
 </svelte:head>
 
-<div data-test-route="work">
-  <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">work</h1>
-  <p class="text-center">Recent work and projects of mine</p>
+<div data-test-route="work" class="w-full">
+  <PageHeading
+    title="work"
+    subtitle="A collection of recent work and projects of mine"
+  />
   <div class="mt-2">
-    {#if $projects}
+    {#if $projects && $projects.length}
       {#each $projects as project}
-        <div />
+        <ListItem {project} />
       {/each}
     {:else}
-      <ListItem error="No projects found" />
+      <ListItem />
     {/if}
   </div>
 </div>

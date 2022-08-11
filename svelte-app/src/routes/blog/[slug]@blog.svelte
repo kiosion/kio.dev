@@ -21,6 +21,7 @@
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
   import Divider from '@/components/divider.svelte';
   import BulletPoint from '@/components/bullet-point.svelte';
+  import ContentWrapper from '@/components/content-wrapper.svelte';
 
   let readingTime: number;
   let dateFormat = 'rel';
@@ -83,9 +84,7 @@
 </svelte:head>
 
 {#if $post}
-  <div
-    class="w-full max-w-[28rem] px-4 mx-auto md:px-0 md:max-w-none md:w-[24rem] lg:w-[32rem] xl:w-[38rem] 2xl:w-[42rem]"
-  >
+  <ContentWrapper>
     <div class="mt-8 mb-4" data-test-id="post-head">
       <h1 class="font-code text-4xl mb-6 font-bold">{$post.title}</h1>
       <div class="flex flex-col">
@@ -105,7 +104,7 @@
           </p>
           <BulletPoint />
           <p class="font-mono text-base">
-            {readingTime ? `${Math.floor(readingTime / 60)} min read` : '...'}
+            {`${Math.floor(readingTime / 60)} min read`}
           </p>
         </div>
       </div>
@@ -115,5 +114,5 @@
     <div class="mt-4 font-sans text-base">
       <PortableText text={$post.body} />
     </div>
-  </div>
+  </ContentWrapper>
 {/if}

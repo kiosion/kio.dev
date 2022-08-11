@@ -1,4 +1,9 @@
 import { BsFillPersonFill } from 'react-icons/bs';
+import React from 'react';
+
+const highlightRender = (props) => (
+  <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
+);
 
 export default {
   name: 'author',
@@ -41,8 +46,30 @@ export default {
       name: 'body',
       title: 'Body',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image' }],
-      validation: (Rule) => Rule.required()
+      of: [
+        {
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+              { title: 'Underline', value: 'underline' },
+              { title: 'Code', value: 'code' },
+              {
+                title: 'Highlight',
+                value: 'highlight',
+                blockEditor: {
+                  icon: () => 'H',
+                  render: highlightRender
+                }
+              }
+            ]
+          }
+        },
+        { type: 'image' },
+        { type: 'code' },
+        { type: 'divider' }
+      ]
     }
   ],
   preview: {

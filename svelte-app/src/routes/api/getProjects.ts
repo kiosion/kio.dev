@@ -18,7 +18,7 @@ export const GET = async ({
     if (res.status !== 200) {
       Logger.error(
         `Failed to fetch projects: ${res.status}`,
-        'api/fetchProjects'
+        'api/getProjects'
       );
       return {
         body: JSON.stringify({

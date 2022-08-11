@@ -4,6 +4,9 @@ import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import dotenv from 'dotenv';
 import { query } from './lib';
 
+// eslint-disable-next-line no-duplicate-imports
+import type { Request, Response } from 'express';
+
 dotenv.config();
 
 const ACCESS_TOKENS = process.env.ACCESS_TOKENS
@@ -17,6 +20,55 @@ if (ACCESS_TOKENS.length === 0) {
 const port = 4000;
 const app = express();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const validateQueryParams = (req: Request, res: Response): any | null => {
+  let {
+    limit = 10,
+    skip = 0,
+    s = 'date',
+    o = 'desc',
+    date = '',
+    tags = ''
+  } = req.query;
+
+  limit = parseInt(`${limit}`);
+  skip = parseInt(`${skip}`);
+  s = `${s}`;
+  o = `${o}`;
+  date = `${date}`;
+  tags = `${tags}`.split(',');
+
+  if (isNaN(skip) || isNaN(limit) || skip < 0 || limit < 1) {
+    res
+      .status(401)
+      .send(
+        'Invalid limit or skip provided. Limit must be a positive integer, skip must be a non-negative integer.'
+      );
+    return null;
+  }
+  if (o !== 'asc' && o !== 'desc') {
+    res
+      .status(401)
+      .send('Invalid order provided. Order must be either "asc" or "desc".');
+    return null;
+  }
+  if (s !== 'date' && s !== 'title') {
+    res
+      .status(401)
+      .send('Invalid sort provided. Sort must be either "date" or "title".');
+    return null;
+  }
+
+  return {
+    limit,
+    skip,
+    s,
+    o,
+    date,
+    tags
+  };
+};
+
 passport.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new BearerStrategy((token: string, done: any) => {
@@ -29,38 +81,12 @@ passport.use(
 app.get(
   '/v1/query/posts',
   passport.authenticate('bearer', { session: false }),
-  async (req, res) => {
-    let {
-      limit = 10,
-      skip = 0,
-      s = 'date',
-      o = 'desc',
-      date = '',
-      tags = ''
-    } = req.query;
-    limit = parseInt(`${limit}`);
-    skip = parseInt(`${skip}`);
-    s = `${s}`;
-    o = `${o}`;
-    date = `${date}`;
-    tags = `${tags}`.split(',');
-    if (isNaN(skip) || isNaN(limit) || skip < 0 || limit < 1) {
-      return res
-        .status(401)
-        .send(
-          'Invalid limit or skip provided. Limit must be a positive integer, skip must be a non-negative integer.'
-        );
+  async (req: Request, res: Response) => {
+    const params = validateQueryParams(req, res);
+    if (typeof params !== 'object') {
+      return;
     }
-    if (o !== 'asc' && o !== 'desc') {
-      return res
-        .status(401)
-        .send('Invalid order provided. Order must be either "asc" or "desc".');
-    }
-    if (s !== 'date' && s !== 'title') {
-      return res
-        .status(401)
-        .send('Invalid sort provided. Sort must be either "date" or "title".');
-    }
+    const { limit, skip, s, o, date, tags } = params;
 
     query
       .posts({ limit, skip, sort: s, order: o }, { date, tags })
@@ -78,7 +104,7 @@ app.get(
 app.get(
   '/v1/query/post',
   passport.authenticate('bearer', { session: false }),
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     let { slug = '', id = '' } = req.query;
     slug = `${slug}`;
     id = `${id}`;
@@ -89,8 +115,29 @@ app.get(
       .then((data: any) => {
         res.json(data);
       })
+      .catch((err: Error) => {
+        res.status(500).send(err);
+      });
+  }
+);
+
+app.get(
+  '/v1/query/projects',
+  passport.authenticate('bearer', { session: false }),
+  async (req, res) => {
+    const params = validateQueryParams(req, res);
+    if (typeof params !== 'object') {
+      return;
+    }
+    const { limit, skip, s, o, date, tags } = params;
+
+    query
+      .projects({ limit, skip, sort: s, order: o }, { date, tags })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((err: any) => {
+      .then((data: any) => {
+        res.json(data);
+      })
+      .catch((err: Error) => {
         res.status(500).send(err);
       });
   }
@@ -99,28 +146,22 @@ app.get(
 app.get(
   '/v1/query/about',
   passport.authenticate('bearer', { session: false }),
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     query
       .about()
       .then((data) => {
         res.json(data);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         res.status(500).send(err);
       });
   }
 );
 
-// TODO: Add routes
-
-// - fetching all projects (count)
-// - fetching range of projects (x to y)
-// - fetching project by slug or id
-
-app.get('/(*)', (req, res) => {
+app.get('/(*)', (req: Request, res: Response) => {
   res
     .status(403)
-    .send('<center><h2>⛔ Go away! Nothing to see here</h2></center>');
+    .send('{ error: 403, status: "Go away! Nothing to see here" }');
 });
 
 app.listen(port, () => {

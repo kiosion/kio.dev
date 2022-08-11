@@ -2,6 +2,7 @@
   import type { BlockComponentProps } from '@portabletext/svelte';
   import Icon from '@iconify/svelte';
   import { fade } from 'svelte/transition';
+  import Divider from '@/components/divider.svelte';
 
   export let portableText: BlockComponentProps;
 
@@ -40,7 +41,7 @@
       </span>
     {/if}
     {#if style === 'h1'}
-      <h1 class="inline font-code text-2xl font-bold"><slot /></h1>
+      <h1 class="inline font-mono text-3xl font-bold"><slot /></h1>
     {:else if style === 'h2'}
       <h2 class="inline font-mono text-3xl font-bold"><slot /></h2>
     {:else if style === 'h3'}
@@ -52,3 +53,6 @@
     {/if}
   </a>
 </div>
+{#if style === 'h1'}
+  <Divider />
+{/if}

@@ -20,6 +20,18 @@ export type postsQueryFilterParams = {
   tags?: string[];
 };
 
+export type projectsQueryParams = {
+  limit?: number | string;
+  skip?: number | string;
+  sort?: 'date' | 'title';
+  order?: 'asc' | 'desc';
+};
+
+export type projectsQueryFilterParams = {
+  date?: string;
+  tags?: string[];
+};
+
 export type postsQueryResult = {
   []: postQueryResult;
 };

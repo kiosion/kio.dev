@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
   import { posts, findPosts } from '@/stores/posts';
   import ListItem from '@/components/blog/list-item.svelte';
+  import PageHeading from '@/components/headings/page-heading.svelte';
 
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
     await findPosts(fetch)
@@ -21,17 +22,17 @@
 </svelte:head>
 
 <div data-test-route="index" class="w-full">
-  <h1 class="font-code font-bold text-4xl text-center my-8 lowercase">blog</h1>
-  <p class="text-center">
-    Ramblings about tech, design, and development (mostly)
-  </p>
+  <PageHeading
+    title="blog"
+    subtitle="Thoughts & ramblings about tech, design, and development"
+  />
   <div class="mt-2">
-    {#if $posts}
+    {#if $posts && $posts.length}
       {#each $posts as post}
         <ListItem {post} />
       {/each}
     {:else}
-      <ListItem error="No posts found" />
+      <ListItem />
     {/if}
   </div>
 </div>

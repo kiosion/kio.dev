@@ -84,6 +84,10 @@
     --textColour: #f1f5f9;
   }
 
+  :global(::selection) {
+    background: #34d399;
+  }
+
   :global(body:not(.is-loaded)) {
     cursor: wait !important;
   }

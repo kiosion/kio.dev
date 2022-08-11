@@ -1,19 +1,14 @@
-export const getAbsDate = (dateStr: string | undefined) => {
-  if (!dateStr) {
-    return '...';
-  }
-  const date = new Date(dateStr);
-  const formatter = new Intl.DateTimeFormat('default', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  });
-  return `${formatter.format(date)}`;
+import moment from 'moment';
+
+export const getAbsDate = (dateStr: string | undefined): string => {
+  return dateStr
+    ? moment(dateStr).format('MMM Do, YYYY')
+    : moment('01-01-2022').format('MMM Do, YYYY');
 };
 
-export const getRelDate = (dateStr: string | undefined) => {
+export const getRelDate = (dateStr: string | undefined): string => {
   if (!dateStr) {
-    return '...';
+    return 'Just now';
   }
   const date = new Date(dateStr);
   const formatter = new Intl.RelativeTimeFormat('default', {

@@ -1,33 +1,34 @@
 <script lang="ts">
-  import type { Post } from '@/lib/types';
+  // import type { Project } from '@/lib/types';
   import { getAbsDate } from '$lib/helpers/date';
 
-  export let post: Post | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export let project: any | null = null;
 </script>
 
 <section
   class="flex flex-col align-center justify-center w-full h-32 mt-6 p-4 bg-slate-200 dark:bg-slate-900 rounded duration-150"
   data-test-id="list-item"
 >
-  {#if post}
-    <a href="blog/{post.slug && post.slug.current}">
+  {#if project}
+    <a href="work/{project.slug && project.slug.current}">
       <h1
         class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
       >
-        {post.title}
+        {project.title}
       </h1>
       <h3 class="font-sans text-base mt-2">
-        {getAbsDate(post.date)}
+        {getAbsDate(project.date)}
       </h3>
-      {#if post.desc}
+      {#if project.desc}
         <p
           class="block overflow-hidden whitespace-nowrap w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-1"
         >
-          {post.desc}
+          {project.desc}
         </p>
       {/if}
     </a>
   {:else}
-    <p class="text-center text-base w-full self-center">No posts found</p>
+    <p class="text-center text-base w-full self-center">No projects found</p>
   {/if}
 </section>

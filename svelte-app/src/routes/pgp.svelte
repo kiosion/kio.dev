@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import CodeBlock from '@/components/code-block.svelte';
+  import ContentWrapper from '@/components/content-wrapper.svelte';
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
     const now = performance.now();
     const res = await fetch('/api/pgp');
@@ -12,12 +13,17 @@
 </script>
 
 <script lang="ts">
-  export let pgp: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  import PageHeading from '@/components/headings/page-heading.svelte';
+
+  export let pgp: string;
 </script>
 
-<h1 class="font-code font-bold text-4xl text-center my-8 lowercase">pgp</h1>
-<p class="text-center">
-  Want to send a secure message my way? Here's my public PGP key.
-</p>
-
-<CodeBlock content={`${pgp}`} showClipboard={true} />
+<div data-test-route="index" class="w-full">
+  <PageHeading
+    title="pgp"
+    subtitle="Want to send a secure message my way? Here's my public PGP key"
+  />
+  <ContentWrapper>
+    <CodeBlock content={`${pgp}`} showClipboard={true} />
+  </ContentWrapper>
+</div>

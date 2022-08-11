@@ -16,7 +16,7 @@ export const GET = async ({
       }
     });
     if (res.status !== 200) {
-      Logger.error(`Failed to fetch post: ${res.status}`, 'api/fetchPost');
+      Logger.error(`Failed to fetch post: ${res.status}`, 'api/getPost');
       return {
         body: JSON.stringify({
           status: res.status,

@@ -2,7 +2,9 @@ import SanityClient from '../client';
 import {
   postsQueryParams,
   postsQueryFilterParams,
-  postQueryParams
+  postQueryParams,
+  projectsQueryParams,
+  projectsQueryFilterParams
 } from '../types';
 
 const client = SanityClient.client;
@@ -33,7 +35,7 @@ module query {
         date = `${split[0]}-${split[1]}-${split[2]}`;
       }
 
-      if (filter.tags && filter.tags?.length > 0) {
+      if (filter.tags?.length > 0 && filter.tags[0] !== '') {
         tags = filter.tags
           ?.map((tag) => {
             return tag !== '' && `'${tag}'`;
@@ -134,6 +136,93 @@ module query {
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((err: any) => {
+          reject(err);
+        });
+    });
+
+  // Fetch range of projects, by date, tags, or all
+  export const projects = (
+    {
+      limit = 10,
+      skip = 0,
+      sort = 'date',
+      order = 'desc'
+    }: projectsQueryParams,
+    filter: projectsQueryFilterParams = {}
+  ) =>
+    new Promise((resolve, reject) => {
+      let date: string | undefined = undefined,
+        tags: string | undefined = undefined;
+
+      if (filter.date && filter.date?.length > 0) {
+        const split = filter.date.split('-');
+        if (
+          split.length !== 3 ||
+          !split[0].match(/^\d+$/) ||
+          !split[1].match(/^\d+$/) ||
+          !split[2].match(/^\d+$/)
+        ) {
+          reject(
+            'Invalid date format, must be YYYY-MM-DD, you provided: ' +
+              filter.date
+          );
+        }
+        date = `${split[0]}-${split[1]}-${split[2]}`;
+      }
+
+      if (filter.tags?.length > 0 && filter.tags[0] !== '') {
+        tags = filter.tags
+          ?.map((tag) => {
+            return tag !== '' && `'${tag}'`;
+          })
+          ?.join(', ');
+      }
+
+      limit > 50 ? 50 : limit;
+      order !== 'desc' ? (order = 'asc') : (order = 'desc');
+
+      const query = `*[!(_id in path('drafts.**')) && _type == "project"${
+        date ? ` && date == "${date}"` : ''
+      }${
+        tags
+          ? ` && references(*[_type == "tag" && title in [${tags}]]._id)`
+          : ''
+      }]{
+      _id,
+      _type,
+      "author": {
+        "_id": author->_id,
+        "_type": author->_type,
+        "name": author->name,
+        "slug": author->slug
+      },
+      body,
+      desc,
+      date,
+      "tags": tags[]->{
+        _id,
+        title,
+        slug
+      },
+      slug,
+      title
+    } | order(${sort} ${order}) [${skip}...${limit}]`;
+
+      client
+        .fetch(query)
+        .then((data: any) => {
+          // eslint-disable-line @typescript-eslint/no-explicit-any
+          resolve({
+            meta: {
+              count: data.length,
+              sort,
+              order
+            },
+            data
+          });
+        })
+        .catch((err: any) => {
+          // eslint-disable-line @typescript-eslint/no-explicit-any
           reject(err);
         });
     });

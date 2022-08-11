@@ -11,6 +11,16 @@ module.exports = {
         mono: ['"Work Sans"', ...defaultTheme.fontFamily.mono],
         code: ['"Ubuntu Mono"', ...defaultTheme.fontFamily.mono],
         display: ['Poppins', ...defaultTheme.fontFamily.sans]
+      },
+      keyframes: {
+        wave: {
+          to: {
+            'margin-left': '-51%'
+          }
+        }
+      },
+      animation: {
+        wave: 'wave 1.5s linear infinite'
       }
     }
   },
