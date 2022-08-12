@@ -12,9 +12,6 @@ jobs:
         
       - name: Install dependencies
         run: yarn install 2> >(grep -v warning 1>&2) && (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
-
-      - name: Run check
-        run: make check
         
-      - name: Run unit tests
+      - name: Run tests
         run: make vitest

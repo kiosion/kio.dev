@@ -13,8 +13,8 @@ jobs:
       - name: Install dependencies
         run: yarn install 2> >(grep -v warning 1>&2) && (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
       
-      - name: Build testing env
+      - name: Build testing environment
         run: make build-test
 
-      - name: Run cypress tests
+      - name: Run tests
         run: make cypress

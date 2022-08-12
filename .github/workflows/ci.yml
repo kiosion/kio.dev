@@ -5,14 +5,19 @@ on:
     branches: [ "main" ]
 
 concurrency: 
-  group: ${{ github.run_id }}-${{ github.head_ref || github.ref }}
+  group: ${{ github.run_id }}
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Run tests
-    uses: ./.github/workflows/test.yml
+  vitest:
+    name: Run unit tests
+    uses: ./.github/workflows/vitest.yml
+  cypress:
+    name: Run Cypress tests
+    needs: [ vitest ]
+    uses: ./.github/workflows/cypress.yml
   deploy:
     name: Deploy
-    needs: [ test ]
+    needs: [ cypress ]
     uses: ./.github/workflows/netlify-deploy.yml
+    secrets: inherit

@@ -9,13 +9,14 @@ install:
 # run dev servers
 dev: SHELL:=/bin/bash
 dev: install
-	export VITE_ENV=cypress
 	./scripts/run-dev.sh
 
 # build for prod
 prod: SHELL:=/bin/bash
 prod: install
-	./scripts/build-prod.sh
+	cd ./svelte-app;\
+	SVELTE_ADAPTER_ENV=netlify \
+	yarn build
 
 sanity-upgrade: SHELL:=/bin/bash
 sanity-upgrade: install
@@ -23,9 +24,12 @@ sanity-upgrade: install
 
 # push sanity cms
 sanity-deploy: sanity-upgrade
+sanity-deploy:
 	yarn sanity deploy
 
+# push to netlify
 netlify-deploy: SHELL:=/bin/bash
+netlify-deploy:
 	cd ./svelte-app && yarn netlify deploy --dir=./build --prod
 
 # check
