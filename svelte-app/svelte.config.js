@@ -7,9 +7,9 @@ const config = {
   preprocess: preprocess(),
   kit: {
     adapter:
-      process.env.SVELTE_ADAPTER_ENV === 'development'
-        ? NodeAdapter({ out: './dist' })
-        : NetlifyAdapter()
+      process.env.SVELTE_ADAPTER_ENV === 'netlify'
+        ? NetlifyAdapter()
+        : NodeAdapter({ out: './dist' })
   }
 };
 
