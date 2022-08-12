@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+concurrency: 
+  group: ${{ github.run_id }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Run tests
+    uses: ./.github/workflows/test.yml
+  deploy:
+    name: Deploy
+    needs: [ test ]
+    uses: ./.github/workflows/netlify-deploy.yml

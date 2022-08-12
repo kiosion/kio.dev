@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: (cd ./svelte-app && yarn install 2> >(grep -v wawrning 1>&2))
+      
+      - name: Build for production
+        env:
+          SVELTE_NETLIFY_ENV: netlify
+        run: make app-prod
+
+      - name: Deploy app
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: make netlify-deploy

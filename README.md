@@ -8,7 +8,9 @@ Sveltekit client/server, sanity studio, and expressjs api for my art / developme
 
 Build
 ```bash
-make install && make build-prod
+make prod
+# or,
+make dev
 ```
 
 ## Testing
@@ -17,5 +19,6 @@ Run all tests
 ```bash
 make build-test
 node ./svelte-app/dist/
+# then,
 make vitest && make cypress
 ```

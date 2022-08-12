@@ -1,7 +1,4 @@
-.PHONY: install, run-dev, run-backed, build-test, build-prod, cypress, vitest, sanity-deploy
-
-VITE_PORT=5173
-EXPRESS_PORT=4000
+.PHONY: install, dev, build-test, prod, cypress, vitest, netlify-deploy, sanity-deploy
 
 install: SHELL:=/bin/bash
 install:
@@ -10,21 +7,14 @@ install:
 	./scripts/install.sh
 
 # run dev servers
-run-dev: SHELL:=/bin/bash
-run-dev: install
+dev: SHELL:=/bin/bash
+dev: install
 	export VITE_ENV=cypress
 	./scripts/run-dev.sh
 
-# run dev frontend
-run-backed: SHELL:=/bin/bash
-run-backed: install
-	export VITE_ENV=development
-	VITE_API_URL=https://api.kio.dev
-	./scripts/run-backed.sh
-
 # build for prod
-build-prod: SHELL:=/bin/bash
-build-prod: install
+prod: SHELL:=/bin/bash
+prod: install
 	./scripts/build-prod.sh
 
 sanity-upgrade: SHELL:=/bin/bash
@@ -34,6 +24,9 @@ sanity-upgrade: install
 # push sanity cms
 sanity-deploy: sanity-upgrade
 	yarn sanity deploy
+
+netlify-deploy: SHELL:=/bin/bash
+	cd ./svelte-app && yarn netlify deploy --dir=./build --prod
 
 # check
 check: SHELL:=/bin/bash
