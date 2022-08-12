@@ -5,7 +5,9 @@
   "author": "kiosion",
   "scripts": {
     "start": "sanity start",
-    "build": "sanity build"
+    "build": "sanity build",
+    "format": "prettier --write './**/*.js'",
+    "lint": "yarn format && eslint --fix './**/*.js'"
   },
   "dependencies": {
     "@sanity/base": "^2.30.4",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0"
+    "@typescript-eslint/parser": "^5.33.0",
+    "prettier": "^2.7.1"
   }
 }

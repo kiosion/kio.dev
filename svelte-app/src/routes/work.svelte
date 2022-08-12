@@ -6,12 +6,12 @@
     await findProjects(fetch)
       .then((res) => {
         if (res.error) {
-          return;
+          throw res.error;
         }
-        projects.set(res?.data);
+        projects.set(res);
       })
-      .catch((err: any) => {
-        Logger.error(err, 'routes/work');
+      .catch((err: unknown) => {
+        Logger.error(err as string, 'routes/work');
       });
   };
 </script>
@@ -19,6 +19,21 @@
 <script lang="ts">
   import ListItem from '@/components/work/list-item.svelte';
   import PageHeading from '@/components/headings/page-heading.svelte';
+  import { onMount, onDestroy } from 'svelte';
+
+  let mousePos: number[];
+
+  onMount(() => {
+    document.addEventListener('mousemove', (e) => {
+      mousePos = [e.clientX, e.clientY];
+    });
+  });
+
+  onDestroy(() => {
+    document.removeEventListener('mousemove', (e) => {
+      mousePos = [e.clientX, e.clientY];
+    });
+  });
 </script>
 
 <svelte:head>
@@ -31,12 +46,12 @@
     subtitle="A collection of recent work and projects of mine"
   />
   <div class="mt-2">
-    {#if $projects && $projects.length}
-      {#each $projects as project}
-        <ListItem {project} />
+    {#if $projects?.data?.length}
+      {#each $projects.data as project}
+        <ListItem {project} {mousePos} />
       {/each}
     {:else}
-      <ListItem />
+      <p>No projects found.</p>
     {/if}
   </div>
 </div>

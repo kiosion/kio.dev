@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import { post, findPost } from '@/stores/posts';
+  import Logger from '$lib/logger';
 
   export const load: import('@sveltejs/kit').Load = async ({
     fetch,
@@ -7,10 +8,10 @@
   }) => {
     await findPost(fetch, { slug: params.slug })
       .then((res) => {
-        post.set(res.data);
+        post.set(res);
       })
       .catch((e) => {
-        console.error(e);
+        Logger.error(e, `routes/blog/${params.slug}`);
       });
   };
 </script>
@@ -19,59 +20,33 @@
   import PortableText from '@/components/portable-text/portable-text.svelte';
   import { onDestroy } from 'svelte';
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
+  import { getTotalWords } from '$lib/helpers/post';
   import Divider from '@/components/divider.svelte';
   import BulletPoint from '@/components/bullet-point.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
+  import type { TextBlock, ResData } from '$lib/types';
 
   let readingTime: number;
   let dateFormat = 'rel';
   let date: string;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getTotalWords = (postBody: any) => {
-    if (!postBody) {
-      return [];
-    }
-
-    const blocks = postBody
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ?.filter((block: any) => block._type === 'block')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ?.reduce((prev: any[], item: any) => {
-        return [...prev, item];
-      }, []);
-
-    let text: string[] = [];
-
-    blocks
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ?.filter((block: any) => block?.children?.length)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ?.forEach((block: any) => {
-        text.push(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          block.children.reduce((prev: any[], item: any) => {
-            if (item?.text?.length > 0) {
-              return [...prev, item.text];
-            }
-          }, [])
-        );
-      });
-
-    return text.flat().filter((text: string) => text);
-  };
+  let title: string;
 
   const switchDate = () => {
     dateFormat === 'rel'
-      ? (date = getAbsDate($post.date))
-      : (date = getRelDate($post.date));
+      ? (date = getAbsDate($post.data.date))
+      : (date = getRelDate($post.data.date));
     dateFormat = dateFormat === 'rel' ? 'abs' : 'rel';
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const unsubscribe = post.subscribe((post: any) => {
-    readingTime = getReadingTime(getTotalWords(post.body));
-    date = getRelDate(post.date);
+  const unsubscribe = post.subscribe((post: ResData) => {
+    if (!post.data) {
+      return;
+    }
+    readingTime = getReadingTime(
+      getTotalWords(post.data.body as Array<TextBlock>)
+    );
+    date = getRelDate(post.data.date);
+    title = post.data.title;
   });
 
   onDestroy(() => {
@@ -80,20 +55,24 @@
 </script>
 
 <svelte:head>
-  <title>kio.dev | blog{$post ? ` | ${$post.title}` : ''}</title>
+  <title>kio.dev | blog{title ? ` | ${title}` : ''}</title>
 </svelte:head>
 
-{#if $post}
+{#if $post?.data}
   <ContentWrapper>
     <div class="mt-8 mb-4" data-test-id="post-head">
-      <h1 class="font-code text-4xl mb-6 font-bold">{$post.title}</h1>
+      <h1 class="font-code text-4xl mb-6 font-bold">{$post.data.title}</h1>
       <div class="flex flex-col">
-        {#if $post.desc}
-          <p class="font-mono text-base">{$post.desc}</p>
+        {#if $post.data.desc}
+          <p class="font-mono text-base">{$post.data.desc}</p>
         {/if}
         <div class="flex flex-row mt-4 items-center justify-start">
           <p class="font-mono text-base">
-            <a href="/about" alt="About">By {$post.author.name}</a>
+            <a href="/about" alt="About"
+              >By {$post.data?.author?.name
+                ? $post.data.author.name
+                : 'Unknown'}</a
+            >
           </p>
           <BulletPoint />
           <p
@@ -112,7 +91,7 @@
     </div>
 
     <div class="mt-4 font-sans text-base">
-      <PortableText text={$post.body} />
+      <PortableText text={$post.data.body} />
     </div>
   </ContentWrapper>
 {/if}

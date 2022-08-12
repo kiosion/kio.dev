@@ -18,6 +18,7 @@ export const getRelDate = (dateStr: string | undefined): string => {
   const elapsed = Math.floor((new Date().getTime() - date.getTime()) / 1000),
     elapsedMin = Math.floor(elapsed / 60),
     elapsedH = Math.floor(elapsed / 3600),
+    elapsedD = Math.floor(elapsed / 86400),
     elapsedMth = Math.floor(elapsed / (3600 * 24 * 30)),
     elapsedY = Math.floor(elapsed / (3600 * 24 * 365));
 
@@ -25,6 +26,8 @@ export const getRelDate = (dateStr: string | undefined): string => {
     return `${formatter.format(-elapsedY, 'year')}`;
   } else if (elapsedMth > 0) {
     return `${formatter.format(-elapsedMth, 'month')}`;
+  } else if (elapsedD > 0) {
+    return `${formatter.format(-elapsedD, 'day')}`;
   } else if (elapsedH > 0) {
     return `${formatter.format(-elapsedH, 'hour')}`;
   } else if (elapsedMin > 0) {

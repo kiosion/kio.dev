@@ -33,8 +33,8 @@
     {
       name: 'PGP',
       url: '/pgp',
-      icon: 'fa-solid:key',
-      class: 'scale-90'
+      icon: 'fa:key',
+      rotate: '90deg'
     }
   ];
 
@@ -95,16 +95,16 @@
     </div>
   </div>
   <div
-    class="text-center text-secondary align-center justify-center gap-4 pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row"
+    class="text-center text-secondary align-center justify-center pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row"
   >
     {#each socials as social}
       <a
-        class="flex align-center justify-center hover:text-slate-600 dark:hover:text-slate-300 {social?.class}"
+        class="flex align-center justify-center p-2 hover:text-slate-600 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer {social?.class}"
         href={social.url}
         aria-label={social.name}
         target={social?.target ? '_blank' : ''}
       >
-        <Icon icon={social.icon} />
+        <Icon icon={social.icon} rotate={social?.rotate} />
       </a>
     {/each}
   </div>

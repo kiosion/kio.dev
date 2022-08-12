@@ -6,12 +6,12 @@
     await findAbout(fetch)
       .then((res) => {
         if (res.error) {
-          return;
+          throw res.error;
         }
-        about.set(res?.data);
+        about.set(res);
       })
-      .catch((err: any) => {
-        Logger.error(err, 'routes/about');
+      .catch((err: unknown) => {
+        Logger.error(err as string, 'routes/about');
       });
   };
 </script>
@@ -29,12 +29,12 @@
 <div data-test-route="about" class="w-full">
   <PageHeading title="about" subtitle="A little blurb about me and my work" />
   <ContentWrapper>
-    {#if $about}
+    {#if $about?.data?.body}
       <div>
-        <PortableText text={$about.body} />
+        <PortableText text={$about.data.body} />
       </div>
     {:else}
-      <p>Error loading</p>
+      <p>Error loading about</p>
     {/if}
   </ContentWrapper>
 </div>

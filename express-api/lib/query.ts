@@ -75,8 +75,7 @@ module query {
 
       client
         .fetch(query)
-        .then((data: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
+        .then((data: unknown) => {
           resolve({
             meta: {
               count: data.length,
@@ -86,9 +85,8 @@ module query {
             data
           });
         })
-        .catch((err: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
-          reject(err);
+        .catch((err: unknown) => {
+          reject(err as string);
         });
     });
 
@@ -124,8 +122,7 @@ module query {
 
       client
         .fetch(query)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((data: any) => {
+        .then((data: unknown) => {
           resolve({
             meta: {
               count: data ? 1 : 0,
@@ -134,9 +131,8 @@ module query {
             data
           });
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((err: any) => {
-          reject(err);
+        .catch((err: unknown) => {
+          reject(err as string);
         });
     });
 
@@ -210,8 +206,7 @@ module query {
 
       client
         .fetch(query)
-        .then((data: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
+        .then((data: unknown) => {
           resolve({
             meta: {
               count: data.length,
@@ -221,9 +216,8 @@ module query {
             data
           });
         })
-        .catch((err: any) => {
-          // eslint-disable-line @typescript-eslint/no-explicit-any
-          reject(err);
+        .catch((err: unknown) => {
+          reject(err as string);
         });
     });
 
@@ -243,8 +237,7 @@ module query {
 
       client
         .fetch(query)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((data: any) => {
+        .then((data: unknown) => {
           resolve({
             meta: {
               count: data.length
@@ -252,9 +245,8 @@ module query {
             data
           });
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((err: any) => {
-          reject(err);
+        .catch((err: unknown) => {
+          reject(err as string);
         });
     });
 
@@ -272,8 +264,7 @@ module query {
 
       client
         .fetch(query)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((data: any) => {
+        .then((data: unknown) => {
           resolve({
             meta: {
               count: data ? 1 : 0,
@@ -282,9 +273,8 @@ module query {
             data
           });
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((err: any) => {
-          reject(err);
+        .catch((err: unknown) => {
+          reject(err as string);
         });
     });
 }

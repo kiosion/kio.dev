@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Cache from '$lib/cache';
-import type { RouteFetch } from '$lib/types';
+import type { RouteFetch, ResData } from '$lib/types';
 
 const Store = new Cache();
 
-export const about = writable({});
+export const about = writable({} as ResData);
 
 export const fetchAbout = async (fetch: RouteFetch) => {
   const url = `${API_URL}getAbout`;

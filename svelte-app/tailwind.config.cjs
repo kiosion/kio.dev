@@ -19,6 +19,10 @@ module.exports = {
           }
         }
       },
+      background: {
+        'radial-light': 'radial-gradient(#e2e8f0, transparent 25%)',
+        'radial-dark': 'radial-gradient(#0f172a, transparent 25%)'
+      },
       animation: {
         wave: 'wave 1.5s linear infinite'
       }

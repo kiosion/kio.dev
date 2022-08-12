@@ -6,7 +6,7 @@ EXPRESS_PORT=4000
 install: SHELL:=/bin/bash
 install:
 	yarn install 2> >(grep -v warning 1>&2)
-	npx husky-init && yarn prepare
+	yarn prepare
 	./scripts/install.sh
 
 # run dev servers

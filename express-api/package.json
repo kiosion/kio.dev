@@ -7,6 +7,8 @@
     "build": "npx tsc",
     "serve": "node ./dist/index.js",
     "dev": "tsc && concurrently \"tsc -w\" \"nodemon ./dist/index.js\"",
+    "format": "prettier --write './**/*.ts'",
+    "lint": "yarn format && eslint --fix './**/*.ts'",
     "test": "echo \"No tests yet\""
   },
   "author": "kiosion",
@@ -18,9 +20,12 @@
     "@types/node": "^18.7.1",
     "@types/passport": "^1.0.10",
     "@types/passport-http-bearer": "^1.0.37",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
     "axios": "^0.27.2",
     "concurrently": "^7.1.0",
     "dotenv": "^16.0.0",
+    "eslint": "^8.21.0",
     "express": "^4.18.1",
     "jest": "^28.1.3",
     "jwt-simple": "^0.5.6",
@@ -28,6 +33,7 @@
     "nodemon": "^2.0.16",
     "passport": "^0.6.0",
     "passport-http-bearer": "^1.0.1",
+    "prettier": "^2.7.1",
     "typescript": "^4.6.4"
   }
 }

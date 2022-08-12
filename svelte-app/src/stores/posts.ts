@@ -2,23 +2,22 @@ import { writable } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Cache from '$lib/cache';
 import Logger from '$lib/logger';
-// eslint-disable-next-line no-duplicate-imports
-import type { Writable } from 'svelte/store';
 import type {
-  PostsQueryParams,
-  PostQueryParams,
+  DocumentQueryParams,
+  SingleDocumentQueryParams,
   RouteFetch,
-  Post
+  ResData,
+  ResDataMany
 } from '$lib/types';
 
 const Store = new Cache();
 
-export const posts = writable([]) as Writable<Post[]>;
-export const post = writable({}) as Writable<Post>;
+export const posts = writable([] as ResDataMany);
+export const post = writable({} as ResData);
 
 export const queryPosts = async (
   fetch: RouteFetch,
-  params: PostsQueryParams
+  params: DocumentQueryParams
 ) => {
   const {
     limit = 10,
@@ -39,16 +38,19 @@ export const queryPosts = async (
       });
     }
     return response;
-  } catch (err: any) {
+  } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryPosts');
     return JSON.stringify({
-      error: err,
+      error: err as string,
       status: 'Store error'
     });
   }
 };
 
-export const queryPost = async (fetch: RouteFetch, params: PostQueryParams) => {
+export const queryPost = async (
+  fetch: RouteFetch,
+  params: SingleDocumentQueryParams
+) => {
   const { slug = '' } = params;
   const url = `${API_URL}getPost?slug=${slug}`;
   try {
@@ -62,10 +64,10 @@ export const queryPost = async (fetch: RouteFetch, params: PostQueryParams) => {
       });
     }
     return response;
-  } catch (err) {
+  } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryPost');
     return JSON.stringify({
-      error: err,
+      error: err as string,
       status: 'Store error'
     });
   }
@@ -73,7 +75,7 @@ export const queryPost = async (fetch: RouteFetch, params: PostQueryParams) => {
 
 export const findPosts = async (
   fetch: RouteFetch,
-  params: PostsQueryParams = {
+  params = {
     limit: 10,
     skip: 0,
     sort: 'date',
@@ -91,10 +93,7 @@ export const findPosts = async (
   }
 };
 
-export const findPost = async (
-  fetch: RouteFetch,
-  params: PostQueryParams = { slug: '' }
-) => {
+export const findPost = async (fetch: RouteFetch, params = { slug: '' }) => {
   const cacheKey = Store.getCacheKey('post', params);
   if (Store.has(cacheKey)) {
     return Store.get(cacheKey);
@@ -108,7 +107,7 @@ export const findPost = async (
 // Probably doesn't work lol
 export const findReloadPosts = async (
   fetch: RouteFetch,
-  params: PostsQueryParams = {
+  params = {
     limit: 10,
     skip: 0,
     sort: 'date',
@@ -135,7 +134,7 @@ export const findReloadPosts = async (
 
 export const findReloadPost = async (
   fetch: RouteFetch,
-  params: PostQueryParams = { slug: '' }
+  params = { slug: '' }
 ) => {
   const cacheKey = Store.getCacheKey('post', params);
   if (Store.has(cacheKey)) {

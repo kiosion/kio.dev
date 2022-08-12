@@ -1,15 +1,15 @@
 {
   "**/sanity-cms/**/*.{ts,js}": [
-    "yarn prettier --config ./.prettierrc.json --plugin-search-dir . --write",
-    "./sanity-cms/node_modules/.bin/eslint --config ./sanity-cms/.eslintrc --resolve-plugins-relative-to ./sanity-cms --fix"
+    "./sanity-cms/node_modules/.bin/prettier --write",
+    "./sanity-cms/node_modules/.bin/eslint --fix"
   ],
   "*.scss": "npx stylelint --fix",
   "**/express-api/**/*.{ts,js}": [
-    "yarn prettier --config ./.prettierrc.json --plugin-search-dir ./ --write",
-    "yarn eslint --config ./.eslintrc --resolve-plugins-relative-to ./ --fix"
+    "./express-api/node_modules/.bin/prettier --write",
+    "./express-api/node_modules/.bin/eslint --fix"
   ],
   "**/svelte-app/**/*.{svelte,ts,js}": [
-    "./svelte-app/node_modules/.bin/prettier --config ./.prettierrc.json --plugin-search-dir ./svelte-app --write",
-    "./svelte-app/node_modules/.bin/eslint --config ./svelte-app/.eslintrc.cjs --resolve-plugins-relative-to ./svelte-app --fix"
+    "./svelte-app/node_modules/.bin/prettier --write",
+    "./svelte-app/node_modules/.bin/eslint --fix"
   ]
 }

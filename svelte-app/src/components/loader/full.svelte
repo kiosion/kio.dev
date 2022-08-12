@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Diamonds } from 'svelte-loading-spinners';
   import { fly } from 'svelte/transition';
+  // import { onMount } from 'svelte';
+  // import BackgroundWaves from '../background-waves.svelte';
 
   let phrase: string | undefined;
 
@@ -49,6 +51,7 @@
         {phrase}
       </p>
     </div>
+    <!-- <BackgroundWaves classes="absolute top-0 left-0 w-full h-full opacity-50" /> -->
   {/if}
 </div>
 

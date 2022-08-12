@@ -1,33 +1,25 @@
-export interface Post {
-  _id?: string;
-  _type?: string;
+import type { InputValue } from '@portabletext/svelte/ptTypes';
+import type {
+  ArbitraryTypedObject,
+  PortableTextBlock
+} from '@portabletext/types';
+
+// Data types
+export interface Document {
+  _id: string;
+  _type: string;
   author?: {
     _id: string;
     _type: string;
     name: string;
     slug: string;
   };
-  slug?: {
+  slug: {
     _type: string;
     current: string;
   };
-  body?: {
-    [
-      _key?: string,
-      _type?: string,
-      children?: {
-        [_key: string, _type: string, marks?: [string], text: string];
-      },
-      markDefs?: [
-        {
-          _key: string;
-          _type: string;
-          href?: string;
-        }
-      ]
-    ];
-  };
-  date?: string;
+  body: InputValue;
+  date: string;
   desc?: string;
   tags?: [
     {
@@ -39,33 +31,50 @@ export interface Post {
       title?: string;
     }
   ];
-  title?: string;
+  title: string;
 }
 
-export interface Posts {
+// Param types
+export interface SingleDocumentQueryParams {
+  slug: string;
+}
+
+export interface DocumentQueryParams {
+  limit: number;
+  skip: number;
+  sort: string;
+  order: string;
+  date: string;
+  tags: string[];
+}
+
+// Responses
+export interface ResData {
   meta: {
-    count: number;
+    count: string;
     filter: string;
   };
-  posts?: Post[];
-  error?: {
-    message: string;
-  };
+  data: Document;
 }
 
-export interface PostsQueryParams {
-  limit?: number;
-  skip?: number;
-  sort?: string;
-  order?: string;
-  date?: string;
-  tags?: string[];
+export interface ResDataMany extends ResData {
+  data: Document[];
 }
 
-export interface PostQueryParams {
-  slug?: string;
-}
+// PortableText types
+export type TextBlock = PortableTextBlock;
 
+export type ArbTypedObject = ArbitraryTypedObject;
+
+// Sveltekit types
 export interface RouteFetch {
   (info: RequestInfo, init?: RequestInit): Promise<Response>;
 }
+
+export type Subscriber<T> = (value: T) => void;
+
+export type Unsubscriber = () => void;
+
+export type Updater<T> = (value: T) => T;
+
+export type Invalidator<T> = (value?: T) => void;

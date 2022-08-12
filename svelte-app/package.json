@@ -15,8 +15,8 @@
     "coverage": "vitest run --coverage",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "format": "prettier --config ../.prettierrc.json --write --plugin-search-dir=. .",
-    "lint": "yarn format && eslint -c ../.eslintrc --resolve-plugins-relative-to ./node_modules --fix ."
+    "format": "prettier --write --plugin-search-dir=. ./src/**/*.{ts,svelte}",
+    "lint": "yarn format && eslint --fix ./src/**/*.{ts,svelte}"
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^3.0.0",
