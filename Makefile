@@ -40,7 +40,9 @@ check:
 # test
 build-test: SHELL:=/bin/bash
 build-test:
-	./scripts/build-test.sh
+	cd ./svelte-app;\
+	SVELTE_ADAPTER_ENV=node \
+	yarn build:test
 
 # vitest
 vitest: SHELL:=/bin/bash

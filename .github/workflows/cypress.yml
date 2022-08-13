@@ -14,6 +14,8 @@ jobs:
         run: yarn install 2> >(grep -v warning 1>&2) && (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
       
       - name: Build testing environment
+        env:
+          SVELTE_ADAPTER_ENV: 'node'
         run: make build-test
 
       - name: Run tests
