@@ -1,55 +1,8 @@
-import type { CyHttpMessages } from 'cypress/types/net-stubbing';
-interface SetupParams {
-  delay?: number;
-  num?: number;
-}
-
-interface ReturnPostsParams {
-  req: CyHttpMessages.IncomingHttpRequest;
-  delay: number;
-  num?: string | number;
-}
+import { returnPosts } from '../../fixtures/index';
+import type { DocumentsSetupParams } from '../../types';
 
 describe('E2E | Index', () => {
-  const returnPosts = ({ req, delay, num }: ReturnPostsParams) => {
-    let numPosts = num || +req.query.limit;
-    numPosts = numPosts || 10;
-    const posts = [];
-    for (let i = 0; i < numPosts; i++) {
-      posts.push({
-        _id: `${i}`,
-        _type: 'post',
-        date: `${new Date(
-          Math.floor(
-            Math.random() *
-              (new Date('2021-01-01').getTime() -
-                new Date('2020-01-01').getTime())
-          ) + new Date('2020-01-01').getTime()
-        ).toISOString()}`,
-        desc: "Something very interesting I'm sure",
-        slug: {
-          current: `post-${i}`
-        },
-        title: `Post ${i}`
-      });
-    }
-    return {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      statusCode: 200,
-      body: {
-        meta: {
-          length: numPosts,
-          filter: req.query
-        },
-        data: posts
-      },
-      delay
-    };
-  };
-
-  const setupContext = ({ delay = 800, num }: SetupParams) => {
+  const setupContext = ({ delay = 800, num }: DocumentsSetupParams) => {
     return cy.intercept('GET', '/api/getPosts*', (req) => {
       req.reply(returnPosts({ req, delay, num }));
     });
@@ -60,11 +13,11 @@ describe('E2E | Index', () => {
 
     cy.visit('/');
 
-    cy.get('[data-test-route="index"]').should('exist');
+    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
 
     cy.reload();
 
-    cy.get('[data-test-route="index"]').should('exist');
+    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
   });
 
   it('should display loading indicator until ready', () => {
@@ -90,6 +43,7 @@ describe('E2E | Index', () => {
     cy.wait('@getPosts');
 
     cy.get('[data-test-id="navBar"]').should('be.visible');
+    cy.get('[data-test-id="list-item"]').should('have.length', 0);
   });
 
   it('should render index route with posts', () => {
@@ -99,5 +53,6 @@ describe('E2E | Index', () => {
     cy.wait('@getPosts');
 
     cy.get('[data-test-id="navBar"]').should('be.visible');
+    cy.get('[data-test-id="list-item"]').should('have.length', 10);
   });
 });
