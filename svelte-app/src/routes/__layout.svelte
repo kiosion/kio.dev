@@ -75,12 +75,12 @@
   }
 
   :global(body.light) {
-    background: #f1f5f9;
+    background-color: #f1f5f9;
     --textColour: #1e293b;
   }
 
   :global(body.dark) {
-    background: #1e293b;
+    background-color: #1e293b;
     --textColour: #f1f5f9;
   }
 
