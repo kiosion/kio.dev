@@ -31,9 +31,7 @@ describe('Components | Loader | Full', () => {
 
   it('should render with default props', () => {
     const { container } = render(Loader);
-    const style = container.querySelector(
-      '[data-test-id="loader-spinner"] span'
-    )?.style;
+    const style = container.querySelector('div span')?.style;
     expect(style).toBeTruthy();
 
     let styles = {};
@@ -63,10 +61,8 @@ describe('Components | Loader | Full', () => {
     const { container } = render(Loader, {
       props: { theme: 'dark' }
     });
-    const style = container.querySelector(
-      '[data-test-id="loader-spinner"] span'
-    )?.style;
-    expect(style.toBeTruthy);
+    const style = container.querySelector('div span')?.style;
+    expect(style).toBeTruthy();
 
     let styles = {};
     style.cssText.split(';').forEach((item) => {
@@ -89,12 +85,5 @@ describe('Components | Loader | Full', () => {
       expect(styles[key]).toBeTruthy();
       expect(styles[key]).toBe(expected[key]);
     }
-  });
-
-  it('should render phrase', () => {
-    const { container } = render(Loader);
-    expect(
-      container.querySelector('[data-test-id="loader-full-phrase"]')
-    ).toBeTruthy();
   });
 });
