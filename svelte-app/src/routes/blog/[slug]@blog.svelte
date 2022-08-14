@@ -18,18 +18,20 @@
 
 <script lang="ts">
   import PortableText from '@/components/portable-text/portable-text.svelte';
-  import { onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/post';
   import Divider from '@/components/divider.svelte';
   import BulletPoint from '@/components/bullet-point.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import type { TextBlock, ResData } from '$lib/types';
+  import twemoji from 'twemoji';
 
   let readingTime: number;
   let dateFormat = 'rel';
   let date: string;
   let title: string;
+  let body: HTMLElement;
 
   const switchDate = () => {
     dateFormat === 'rel'
@@ -49,6 +51,21 @@
     title = post.data.title;
   });
 
+  onMount(() => {
+    twemoji.parse(body);
+    body.querySelectorAll('img.emoji').forEach((emoji: Element) => {
+      if (!emoji?.style) {
+        return;
+      }
+      emoji.style.display = 'inline-block';
+      emoji.style.width = '1.1em';
+      emoji.style.height = '1.1em';
+      emoji.style.marginBottom = '0.15em';
+      emoji.style.marginRight = '0.05em';
+      emoji.style.verticalAlign = '-0.1em';
+    });
+  });
+
   onDestroy(() => {
     unsubscribe();
   });
@@ -60,7 +77,7 @@
 
 {#if $post?.data}
   <ContentWrapper>
-    <div class="mt-8 mb-4" data-test-id="post-head">
+    <div class="mt-8 mb-4" data-test-id="post-head" bind:this={body}>
       <h1 class="font-code text-4xl mb-6 font-bold">{$post.data.title}</h1>
       <div class="flex flex-col">
         {#if $post.data.desc}

@@ -20,19 +20,22 @@
   import ListItem from '@/components/work/list-item.svelte';
   import PageHeading from '@/components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
+  import { highlightEffects } from '@/stores/features';
 
   let mousePos: number[];
 
   onMount(() => {
-    document.addEventListener('mousemove', (e) => {
-      mousePos = [e.clientX, e.clientY];
-    });
+    $highlightEffects === 'on' &&
+      document.addEventListener('mousemove', (e) => {
+        mousePos = [e.clientX, e.clientY];
+      });
   });
 
   onDestroy(() => {
-    document.removeEventListener('mousemove', (e) => {
-      mousePos = [e.clientX, e.clientY];
-    });
+    $highlightEffects === 'on' &&
+      document.removeEventListener('mousemove', (e) => {
+        mousePos = [e.clientX, e.clientY];
+      });
   });
 </script>
 

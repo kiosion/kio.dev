@@ -4,6 +4,7 @@
   import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
   import MenuToggle from '@/components/toggles/menu-toggle.svelte';
   import { menuOpen } from '@/stores/menu';
+  import { goto } from '$app/navigation';
 
   let links = [
     { name: 'Blog', url: '/' },
@@ -38,6 +39,26 @@
     }
   ];
 
+  let clicks = 0;
+
+  const onLogoClick = () => {
+    clicks++;
+    if (clicks === 4) {
+      goto('/secret')
+        .then(() => {
+          clicks = 0;
+        })
+        .catch(() => {
+          clicks = 0;
+        });
+      return;
+    }
+    goto('/');
+    setTimeout(() => {
+      clicks = 0;
+    }, 2000);
+  };
+
   export let segment: string;
 </script>
 
@@ -46,20 +67,18 @@
   data-test-id="navBar"
 >
   <div class="flex-grow -mt-7 md:-mt-4 click-through">
-    <a
+    <button
       class="inline-block md:hidden mx-auto w-1/3 logo-text"
-      sveltekit:prefetch
-      href="/"
+      on:click={() => onLogoClick()}
     >
-      <img class="w-full" src="/assets/logo-text.webp" alt="kiosion" />
-    </a>
-    <a
+      <img class="w-full" src="/assets/logo-text.webp" alt="kiosion logo" />
+    </button>
+    <button
       class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text"
-      sveltekit:prefetch
-      href="/"
+      on:click={() => onLogoClick()}
     >
       <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
-    </a>
+    </button>
     {#if $menuOpen}
       <div
         class="flex md:hidden text-2xl flex-col justify-center mt-4 items-center"

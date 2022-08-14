@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
   import { posts, findPosts } from '@/stores/posts';
   import Logger from '$lib/logger';
+  import { highlightEffects } from '@/stores/features';
 
   export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
     await findPosts(fetch)
@@ -24,15 +25,17 @@
   let mousePos: number[];
 
   onMount(() => {
-    document.addEventListener('mousemove', (e) => {
-      mousePos = [e.clientX, e.clientY];
-    });
+    $highlightEffects === 'on' &&
+      document.addEventListener('mousemove', (e) => {
+        mousePos = [e.clientX, e.clientY];
+      });
   });
 
   onDestroy(() => {
-    document.removeEventListener('mousemove', (e) => {
-      mousePos = [e.clientX, e.clientY];
-    });
+    $highlightEffects === 'on' &&
+      document.removeEventListener('mousemove', (e) => {
+        mousePos = [e.clientX, e.clientY];
+      });
   });
 </script>
 

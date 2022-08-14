@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Document } from '$lib/types';
   import { getAbsDate } from '$lib/helpers/date';
+  import { highlightEffects } from '@/stores/features';
 
   export let project: Document;
   export let mousePos = [0, 0];
@@ -12,6 +13,9 @@
   let hovered: boolean;
 
   const mouseMove = () => {
+    if ($highlightEffects !== 'on') {
+      return;
+    }
     try {
       const { top, left } = container.getBoundingClientRect();
       glow.style && (glow.style.left = `${clientX - left}px`);
@@ -31,15 +35,20 @@
   bind:this={container}
 >
   {#if project}
-    <section
-      class="flex flex-col align-center justify-center relative w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
-      data-test-id="list-item"
+    <a
+      href="work/{project.slug && project.slug.current}"
+      on:mouseenter={() => (hovered = true)}
+      on:mouseleave={() => (hovered = false)}
     >
-      <a
-        href="work/{project.slug && project.slug.current}"
-        on:mouseenter={() => (hovered = true)}
-        on:mouseleave={() => (hovered = false)}
+      <section
+        class="flex flex-col align-center justify-center relative w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+        data-test-id="list-item"
       >
+        <div
+          class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
+            ? 'opacity-10'
+            : 'opacity-0'}"
+        />
         <h1
           class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
         >
@@ -55,9 +64,11 @@
             {project.desc}
           </p>
         {/if}
-      </a>
-    </section>
-    <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+      </section>
+    </a>
+    {#if $highlightEffects === 'on'}
+      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    {/if}
     <div
       class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {hovered
         ? '!opacity-60'
@@ -71,9 +82,21 @@
       class="flex flex-col cursor-default items-stretch justify-stretch w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
       data-test-id="list-item"
     >
+      <div
+        class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
+          ? 'opacity-10'
+          : 'opacity-0'}"
+      />
       <h3 class="text-center font-sans text-base my-2">No results found</h3>
     </section>
-    <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    {#if $highlightEffects === 'on'}
+      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    {/if}
+    <div
+      class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {hovered
+        ? '!opacity-60'
+        : ''} opacity-0 rounded-md"
+    />
     <div
       class="absolute top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-200 dark:bg-slate-900"
     />

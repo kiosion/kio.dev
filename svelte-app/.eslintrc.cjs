@@ -11,7 +11,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended'
   ],
   plugins: ['svelte3', '@typescript-eslint'],
@@ -28,7 +27,7 @@ module.exports = {
     'dot-notation': ['error'],
     'eqeqeq': ['error'],
     'func-call-spacing': ['error', 'never'],
-    'indent': ['error', 2],
+    '@typescript-eslint/indent': ['error', 2],
     'key-spacing': ['error'],
     'keyword-spacing': ['error'],
     'linebreak-style': ['error'],
@@ -63,7 +62,22 @@ module.exports = {
       }
     ]
   },
-  overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
+  overrides: [
+    { 
+      files: [
+        '*.svelte'
+      ], 
+      processor: 'svelte3/svelte3'
+    },
+    {
+      files: [
+        'src/components/background-waves.svelte'
+      ],
+      rules: {
+        'quote': 'off'
+      }
+    }
+  ],
   settings: {
     'svelte3/typescript': () => require('typescript')
   },

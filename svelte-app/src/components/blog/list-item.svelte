@@ -4,6 +4,7 @@
   import { getTotalWords } from '$lib/helpers/post';
   import BulletPoint from '../bullet-point.svelte';
   import type { TextBlock } from '$lib/types';
+  import { highlightEffects } from '@/stores/features';
 
   export let post: Document;
   export let mousePos = [0, 0];
@@ -18,6 +19,9 @@
   );
 
   const mouseMove = () => {
+    if ($highlightEffects !== 'on') {
+      return;
+    }
     try {
       const { top, left } = container.getBoundingClientRect();
       glow.style && (glow.style.left = `${clientX - left}px`);
@@ -75,7 +79,9 @@
           </p>
         {/if}
       </section>
-      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+      {#if $highlightEffects === 'on'}
+        <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+      {/if}
       <div
         class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {hovered
           ? '!opacity-60'
@@ -92,7 +98,9 @@
     >
       <h3 class="text-center font-sans text-base my-2">No results found</h3>
     </section>
-    <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    {#if $highlightEffects === 'on'}
+      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    {/if}
     <div
       class="absolute top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-200 dark:bg-slate-900"
     />

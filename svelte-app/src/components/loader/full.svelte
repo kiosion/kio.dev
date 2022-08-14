@@ -1,10 +1,9 @@
 <script lang="ts">
   import { Diamonds } from 'svelte-loading-spinners';
   import { fly } from 'svelte/transition';
-  // import { onMount } from 'svelte';
-  // import BackgroundWaves from '../background-waves.svelte';
+  import { browser } from '$app/env';
 
-  let phrase: string | undefined;
+  let phrase = '';
 
   const phrases = [
     'Spinning violently around the y-axis',
@@ -18,10 +17,12 @@
     ':3',
     'Proving P=NP',
     'Waiting for the eventual heat-death of the universe',
-    'Calculating the airspeed velocity of an unladen swallow'
+    'Calculating the airspeed velocity of an unladen swallow',
+    'Why do they call it oven when you of in the cold food of out hot eat the food'
   ];
 
-  phrase = `${phrases[Math.floor(Math.random() * phrases.length)]}`;
+  browser &&
+    (phrase = `${phrases[Math.floor(Math.random() * phrases.length)]}`);
 
   export let theme = 'light';
   export let size = 38;
@@ -42,16 +43,19 @@
       <div class="w-fit h-fit mt-[49vh]" data-test-id="loader-spinner">
         <Diamonds {size} color={theme === 'light' ? '#1E293B' : '#F1F5F9'} />
       </div>
-      <p
-        class="mb-[10vh]{theme === 'light'
-          ? ' text-slate-800'
-          : ' text-slate-100'} font-mono"
-        data-test-id="loader-full-phrase"
-      >
-        {phrase}
-      </p>
+      {#if phrase !== ''}
+        <div class="mb-[10vh]" in:fly={{ duration: 150, y: -10 }}>
+          <p
+            class="{theme === 'light'
+              ? ' text-slate-800'
+              : ' text-slate-100'} font-mono"
+            data-test-id="loader-full-phrase"
+          >
+            {phrase}
+          </p>
+        </div>
+      {/if}
     </div>
-    <!-- <BackgroundWaves classes="absolute top-0 left-0 w-full h-full opacity-50" /> -->
   {/if}
 </div>
 

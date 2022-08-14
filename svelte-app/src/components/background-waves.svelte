@@ -8,7 +8,7 @@
   }
 
   export let classes: string;
-  export let colors: Colors = {
+  let colors: Colors = {
     g1: ['#17232d', '#343f52'],
     g2: ['#595d7a', '#343f52'],
     g3: ['#595d7a', '#867aa2'],
@@ -16,8 +16,7 @@
     g5: ['#1e293b', '#f3b4f0']
   };
 
-  const svg = `
-    <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1715' height='1315' preserveAspectRatio='xMinYMin' viewBox='0 0 1715 1315'>
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1715' height='1315' preserveAspectRatio='xMinYMin' viewBox='0 0 1715 1315'>
       <g transform='translate(857.5,657.5) translate(-857.5,-657.5)'><defs>
         <linearGradient id='lg-0' x1='0' x2='1' y1='0' y2='0'>
         <stop stop-color='${colors.g1[0]}' offset='0.25'></stop>
@@ -79,14 +78,13 @@
       L1715 1854.15 c165.75 -394.5 -1880.75 394.5 -1715 0Z;M0 1170.35 c165.75 394.5 1549.25 -394.5 1715 0
       L1715 1854.15 c691.75 -394.5 -2406.75 394.5 -1715 0Z'></animate>
       </path></g>
-    </svg>
-  `;
+    </svg>`;
+  const prop = `background:url("data:image/svg+xml,${encodeURIComponent(
+    svg
+  )}");`;
 </script>
 
-<div
-  class={classes}
-  style="background:url('data:image/svg+xml,{encodeURIComponent(svg)}');"
-/>
+<div class={classes} style={prop} />
 
 <style lang="scss">
   div {

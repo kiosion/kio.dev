@@ -21,7 +21,7 @@
   href={href ? href : '#'}
   target={isExt ? '_blank' : undefined}
   class="z-10 {hovering ? 'active' : ''}"
-  style={'background-image:url("data:image/svg+xml,{svg}");'}
+  style={`background-image:url("data:image/svg+xml,${svg}");`}
   on:mouseenter={() => (hovering = true)}
   on:mouseleave={() => (hovering = false)}
 >

@@ -7,13 +7,15 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { classList } from 'svelte-body';
-  import { fly } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '@/stores/theme';
   import Loader from '@/components/loader/full.svelte';
   import PageTransition from '@/components/page-transition.svelte';
   import Nav from '@/components/nav.svelte';
   import HeaderControls from '@/components/header-controls.svelte';
+  import { svgBackground } from '@/stores/features';
+  import BackgroundWaves from '@/components/background-waves.svelte';
 
   const unsubscribe = navigating.subscribe((res) => {
     loading.set(!res);
@@ -61,6 +63,13 @@
       </PageTransition>
     {/if}
   </div>
+  {#if $svgBackground === 'on'}
+    <div in:fade={{ duration: 250 }} out:fade={{ duration: 250 }}>
+      <BackgroundWaves
+        classes="fixed w-full h-full top-0 left-0 opacity-30 dark:opacity-20 transition-opacity duration-150"
+      />
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -86,6 +95,7 @@
 
   :global(::selection) {
     background: #34d399;
+    color: #1e293b;
   }
 
   :global(body:not(.is-loaded)) {

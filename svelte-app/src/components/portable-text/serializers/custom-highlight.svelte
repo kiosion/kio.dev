@@ -7,10 +7,10 @@
   // $: ({ color } = value);
 </script>
 
-<span class="relative px-0.5">
+<span class="relative px-0.5 text-slate-800">
   <slot />
   <span
-    class="absolute w-full h-full left-0 bottom-0 bg-emerald-400 rounded-sm opacity-90"
+    class="absolute w-full h-full left-0 bottom-0 rounded-sm bg-emerald-300 dark:bg-emerald-400"
   />
 </span>
 

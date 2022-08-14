@@ -75,10 +75,11 @@ module query {
 
       client
         .fetch(query)
-        .then((data: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
           resolve({
             meta: {
-              count: data.length,
+              count: data?.length ?? 0,
               sort,
               order
             },
@@ -122,7 +123,8 @@ module query {
 
       client
         .fetch(query)
-        .then((data: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
           resolve({
             meta: {
               count: data ? 1 : 0,
@@ -206,10 +208,11 @@ module query {
 
       client
         .fetch(query)
-        .then((data: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
           resolve({
             meta: {
-              count: data.length,
+              count: data?.length ?? 0,
               sort,
               order
             },
@@ -237,10 +240,11 @@ module query {
 
       client
         .fetch(query)
-        .then((data: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
           resolve({
             meta: {
-              count: data.length
+              count: data?.length ?? 0
             },
             data
           });
@@ -264,7 +268,8 @@ module query {
 
       client
         .fetch(query)
-        .then((data: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
           resolve({
             meta: {
               count: data ? 1 : 0,
