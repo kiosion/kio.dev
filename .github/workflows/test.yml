@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
   workflow_call:
 
+concurrency: 
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   vitest:
     name: Vitest
