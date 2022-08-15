@@ -9,7 +9,7 @@ on:
       - '**/.husky'
 
 concurrency: 
-  group: ${{ github.run_id }}
+  group: ci
   cancel-in-progress: true
 
 jobs:
