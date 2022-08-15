@@ -1660,12 +1660,7 @@
   resolved "https://registry.npmjs.org/@sanity/generate-help-url/-/generate-help-url-3.0.0.tgz"
   integrity sha512-wtMYcV5GIDIhVyF/jjmdwq1GdlK07dRL40XMns73VbrFI7FteRltxv48bhYVZPcLkRXb0SHjpDS/icj9/yzbVA==
 
-"@sanity/icons@^1.2.6":
-  version "1.2.7"
-  resolved "https://registry.npmjs.org/@sanity/icons/-/icons-1.2.7.tgz"
-  integrity sha512-4E4idufdRrHuvTjZipnJp5Og+hrmB+n7xbwQLi0xCllRqbssbxDZ2Nnj4tc467SocP1RYbPGHD/sBTO8rxsUQg==
-
-"@sanity/icons@^1.2.8":
+"@sanity/icons@^1.2.6", "@sanity/icons@^1.2.8":
   version "1.2.8"
   resolved "https://registry.npmjs.org/@sanity/icons/-/icons-1.2.8.tgz#7d899a83104cb13c434a02f1e73e981148980c63"
   integrity sha512-WkFb1HGxzXQa+d7ETxIU5KF6TBok9RmbGPdS3H0rLJy302bjIEtUevDA3V6Lxu6j3oyVCOFj/Te5iaoTPqgSqw==
@@ -1960,10 +1955,10 @@
     date-fns "^2.16.1"
     lodash "^4.17.15"
 
-"@sanity/vision@^2.30.4":
-  version "2.30.4"
-  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.30.4.tgz#8b24c57292b66a802e227560d56fa4689d71be64"
-  integrity sha512-Vdrjmu0TnRp9QaUjH055bHklVlhK5ycv4XYi4fHmlSFftfCBXc9TWiGFcg3lVtEjtbLNdaDeIKiAwEdpkfTzoQ==
+"@sanity/vision@^2.30.5":
+  version "2.30.5"
+  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.30.5.tgz#d48c7c859b7f31387223b6737740d0ac4eb67636"
+  integrity sha512-bTe1SoExokeEv5AlpKHgEo+/Ug0bep2Q8AH2aj7Ie9Yyo4gCL6YUirSVX8Qcdn/tVGqZrJudcDA1pTm+LrIhUA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@sanity/icons" "^1.2.6"
