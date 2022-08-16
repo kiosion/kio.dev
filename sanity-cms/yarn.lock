@@ -1545,21 +1545,21 @@
     "@sanity/generate-help-url" "^3.0.0"
     lodash "^4.17.15"
 
-"@sanity/default-layout@^2.30.4":
-  version "2.30.4"
-  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.30.4.tgz#a6f8a8f2c34aac09a205cc9b654c45dd5707238d"
-  integrity sha512-QZlFk9lSrJ62vAKKGVrLreGSwMZc0RPkATmGOtmBOEKsBt9+iulKAA9/x0kajVG//8casbNUlQFE/1CDxpAlEg==
+"@sanity/default-layout@^2.30.5":
+  version "2.30.5"
+  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.30.5.tgz#a1fd4206619a1373288a511a111065b4e57b5152"
+  integrity sha512-18Qxb53Yq6ZGypmeb5yqZAW17v0KifPl+Kh5Sv8CqXPERKM5aO5rzWcZ7y/jeP0042y7k0Wd0ZUFInwEqbK/Gw==
   dependencies:
     "@portabletext/react" "^1.0.0"
     "@sanity/asset-utils" "^1.2.0"
-    "@sanity/base" "2.30.4"
+    "@sanity/base" "2.30.5"
     "@sanity/client" "^3.3.3"
     "@sanity/generate-help-url" "^3.0.0"
     "@sanity/icons" "^1.2.6"
     "@sanity/image-url" "^1.0.1"
     "@sanity/logos" "^1.1.9"
     "@sanity/ui" "^0.37.9"
-    "@sanity/util" "2.30.3"
+    "@sanity/util" "2.30.5"
     lodash "^4.17.15"
     react-rx "^1.0.0-beta.6"
     rxjs "^6.5.3"
