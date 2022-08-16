@@ -25,7 +25,7 @@
   import BulletPoint from '@/components/bullet-point.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import type { TextBlock, ResData } from '$lib/types';
-  import twemoji from 'twemoji';
+  import { parseEmoji } from '$lib/helpers/emoji';
 
   let readingTime: number;
   let dateFormat = 'rel';
@@ -52,18 +52,7 @@
   });
 
   onMount(() => {
-    twemoji.parse(body);
-    body.querySelectorAll('img.emoji').forEach((emoji: Element) => {
-      if (!emoji?.style) {
-        return;
-      }
-      emoji.style.display = 'inline-block';
-      emoji.style.width = '1.1em';
-      emoji.style.height = '1.1em';
-      emoji.style.marginBottom = '0.15em';
-      emoji.style.marginRight = '0.05em';
-      emoji.style.verticalAlign = '-0.1em';
-    });
+    parseEmoji(body);
   });
 
   onDestroy(() => {

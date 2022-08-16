@@ -4,21 +4,12 @@
   import SwitchItem from '@/components/toggles/switch-item.svelte';
   import { svgBackground, highlightEffects } from '@/stores/features';
   import { onMount } from 'svelte';
-  import twemoji from 'twemoji';
+  import { parseEmoji } from '$lib/helpers/emoji';
 
   let body: HTMLElement;
 
   onMount(() => {
-    twemoji.parse(body);
-    body.querySelectorAll('img.emoji').forEach((emoji: Element) => {
-      if (!emoji?.style) {
-        return;
-      }
-      emoji.style.display = 'inline-block';
-      emoji.style.width = '1.1em';
-      emoji.style.height = '1.1em';
-      emoji.style.marginBottom = '0.1em';
-    });
+    parseEmoji(body);
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -14,7 +14,7 @@
   };
 </script>
 
-<div class="mt-0.5">
+<div class="mt-0.5 scale-[.8]">
   <label
     class="{$theme === 'light' ? 'is-light' : 'is-dark'} {disabled
       ? '!cursor-not-allowed pointer-events-none opacity-60'
