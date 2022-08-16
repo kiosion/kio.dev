@@ -19,7 +19,7 @@
     "lint": "yarn format && eslint --fix ./src/**/*.{ts,svelte}"
   },
   "devDependencies": {
-    "@cypress/vite-dev-server": "^3.1.0",
+    "@cypress/vite-dev-server": "^3.1.1",
     "@iconify/svelte": "^2.2.1",
     "@portabletext/svelte": "^1.0.1",
     "@sveltejs/adapter-auto": "next",
