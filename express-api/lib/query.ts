@@ -71,20 +71,28 @@ module query {
       },
       slug,
       title
-    } | order(${sort} ${order}) [${skip}...${limit}]`;
+    }`;
 
       client
-        .fetch(query)
+        .fetch(`${query} | order(${sort} ${order}) [${skip}...${limit}]`)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((data: any) => {
-          resolve({
-            meta: {
-              count: data?.length ?? 0,
-              sort,
-              order
-            },
-            data
-          });
+          client
+            .fetch(`count(${query})`)
+            .then((count: number) => {
+              resolve({
+                meta: {
+                  count: data?.length ?? 0,
+                  total: count,
+                  sort,
+                  order
+                },
+                data
+              });
+            })
+            .catch((err: unknown) => {
+              reject(err as string);
+            });
         })
         .catch((err: unknown) => {
           reject(err as string);
@@ -213,6 +221,7 @@ module query {
           resolve({
             meta: {
               count: data?.length ?? 0,
+              total: 0,
               sort,
               order
             },

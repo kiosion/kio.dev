@@ -1,8 +1,17 @@
-// Temp endpoint with hardcoded data, will move to API later
-import type { RequestHandlerOutput } from '@sveltejs/kit';
+import { RequestHandler, RequestHandlerOutput } from '@sveltejs/kit';
 
-export const GET = async (): Promise<RequestHandlerOutput> => {
-  return { body: { data } };
+// Temp endpoint with hardcoded data, will move to API later
+export const GET: RequestHandler = async (): Promise<RequestHandlerOutput> => {
+  return new Response(
+    JSON.stringify(
+      { data },
+      {
+        headers: {
+          'content-type': 'application/json; charset=utf-8'
+        }
+      }
+    )
+  );
 };
 
 const data = `-----BEGIN PGP PUBLIC KEY BLOCK-----

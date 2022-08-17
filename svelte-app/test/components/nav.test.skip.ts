@@ -2,13 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Nav from '../../src/components/nav.svelte';
 
-describe('Components | Nav', () => {
-  it('should render', () => {
+describe.skip('Components | Nav', () => {
+  it.skip('should render', () => {
     const { container } = render(Nav);
     expect(container).toBeTruthy();
   });
 
-  it('should contain correct links', () => {
+  it.skip('should contain correct links', () => {
     const { container } = render(Nav);
 
     const expectedLinks = ['Blog', 'Work', 'About'];

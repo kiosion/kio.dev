@@ -19,6 +19,9 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom'
+    environment: 'jsdom',
+    deps: {
+      registerNodeLoader: true
+    }
   }
 });

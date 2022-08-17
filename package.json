@@ -14,5 +14,8 @@
   },
   "scripts": {
     "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
+  },
+  "dependencies": {
+    "envinfo": "^7.8.1"
   }
 }

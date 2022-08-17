@@ -3,6 +3,8 @@
   import { theme } from '@/stores/theme';
   import { onMount, onDestroy } from 'svelte';
   import { highlightEffects } from '@/stores/features';
+  import { fade } from 'svelte/transition';
+  import { navigating } from '$app/stores';
 
   export let content: string;
   export let showClipboard = false;
@@ -47,7 +49,7 @@
   });
 
   const mouseMove = () => {
-    if ($highlightEffects !== 'on') {
+    if ($highlightEffects !== 'on' && !$navigating) {
       return;
     }
     try {
@@ -70,19 +72,19 @@
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
 >
-  {#if showClipboard}
-    <button
-      class="{hovered
-        ? 'opacity-100'
-        : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
-      on:click={() => copy()}
-    >
-      {#if copied}
-        <Icon icon="fa-solid:clipboard-check" />
-      {:else}
-        <Icon icon="fa-solid:clipboard" />
-      {/if}
-    </button>
+  {#if showClipboard && !$navigating}
+    {#key copied}
+      <button
+        class="{hovered
+          ? 'opacity-100'
+          : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+        on:click={() => copy()}
+        in:fade={{ duration: 200 }}
+        out:fade={{ delay: 200, duration: 200 }}
+      >
+        <Icon icon="fa-solid:{copied ? 'clipboard-check' : 'clipboard'}" />
+      </button>
+    {/key}
   {/if}
   <div class="relative overflow-scroll rounded-md w-full text-lg md:text-md">
     <div
@@ -91,7 +93,7 @@
       <pre class="font-code w-fit">{content}</pre>
     </div>
   </div>
-  {#if $highlightEffects === 'on'}
+  {#if $highlightEffects === 'on' && !$navigating}
     <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
   {/if}
   <div

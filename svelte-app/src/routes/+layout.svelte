@@ -1,9 +1,3 @@
-<script context="module" lang="ts">
-  export const load: import('@sveltejs/kit').Load = async ({ url }) => ({
-    props: { url }
-  });
-</script>
-
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { classList } from 'svelte-body';
@@ -16,6 +10,7 @@
   import HeaderControls from '@/components/header-controls.svelte';
   import { svgBackground } from '@/stores/features';
   import BackgroundWaves from '@/components/background-waves.svelte';
+  import type { LayoutData } from './$types';
 
   const unsubscribe = navigating.subscribe((res) => {
     loading.set(!res);
@@ -36,7 +31,7 @@
     unsubscribe();
   });
 
-  export let url: string;
+  export let data: LayoutData;
 </script>
 
 <svelte:body
@@ -49,7 +44,7 @@
 {/if}
 
 <div
-  class="w-full h-full text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150"
+  class="w-full h-full text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150 "
   in:fly={{ delay: 100, duration: 100, y: -10 }}
 >
   <Nav segment={$page.url.pathname} />
@@ -58,8 +53,16 @@
   >
     {#if appLoaded}
       <HeaderControls />
-      <PageTransition {url}>
+      <PageTransition url={data.url}>
+        <!-- {#key data.url}
+          <div
+            in:fly={{ delay: 500, duration: 500, y: 10 }}
+            out:fly={{ duration: 500, y: 10 }}
+            class="m-0 p-0"
+          > -->
         <slot />
+        <!-- </div> -->
+        <!-- {/key} -->
       </PageTransition>
     {/if}
   </div>

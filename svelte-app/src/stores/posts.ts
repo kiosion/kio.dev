@@ -56,20 +56,25 @@ export const queryPost = async (
   try {
     const res = await fetch(url);
     const response = await res.json();
-    if (!response.meta || response.error) {
+    if (!response.meta || response.meta?.count === 0) {
+      Logger.error('Failed to get non-existent post', 'store/queryPost');
+      return {
+        error: 'Post not found',
+        status: 'Store error',
+        code: 404
+      };
+    } else if (response.error) {
       Logger.error('Failed to get post', 'store/queryPost');
-      return JSON.stringify({
-        error: response.error,
-        status: 'Store error'
-      });
+      throw response.error;
     }
     return response;
   } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryPost');
-    return JSON.stringify({
+    return {
       error: err as string,
-      status: 'Store error'
-    });
+      status: 'Store error',
+      code: 500
+    };
   }
 };
 

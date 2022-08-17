@@ -2,7 +2,11 @@
   import PageHeading from '@/components/headings/page-heading.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import SwitchItem from '@/components/toggles/switch-item.svelte';
-  import { svgBackground, highlightEffects } from '@/stores/features';
+  import {
+    svgBackground,
+    highlightEffects,
+    reduceMotion
+  } from '@/stores/features';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$lib/helpers/emoji';
 
@@ -43,6 +47,12 @@
       />
       <SwitchItem
         action={onChange}
+        target={reduceMotion}
+        state={$reduceMotion === 'on'}
+        label="Reduce motion"
+      />
+      <SwitchItem
+        action={onChange}
         label="Click / interaction sounds"
         disabled={true}
       />
@@ -50,9 +60,3 @@
     </ContentWrapper>
   </div>
 </div>
-
-<style lang="scss">
-  .emoji {
-    display: inline-block;
-  }
-</style>

@@ -118,7 +118,7 @@
   >
     {#each socials as social}
       <a
-        class="flex align-center justify-center p-2 hover:text-slate-600 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer {social?.class}"
+        class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer {social?.class}"
         href={social.url}
         aria-label={social.name}
         target={social?.target ? '_blank' : ''}
