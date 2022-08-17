@@ -19,4 +19,9 @@ highlightEffects.subscribe((value) => {
   browser && window.localStorage.setItem('feature-highlightEffects', value);
 });
 
-export { svgBackground, highlightEffects };
+const reduceMotion = writable<string>(initialSetting('reduceMotion', 'off'));
+reduceMotion.subscribe((value) => {
+  browser && window.localStorage.setItem('reduceMotion', value);
+});
+
+export { svgBackground, highlightEffects, reduceMotion };

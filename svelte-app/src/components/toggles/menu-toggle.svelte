@@ -4,7 +4,7 @@
 </script>
 
 <button
-  class="relative text-2xl hover:text-slate-600 dark:hover:text-slate-300"
+  class="relative text-2xl hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
   aria-label="Toggle nav"
   on:click={() => menuOpen.set(!$menuOpen)}
 >

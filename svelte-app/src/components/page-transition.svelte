@@ -1,14 +1,21 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
-  export let url: string;
+  import { reduceMotion } from '@/stores/features';
+
+  export let url: URL;
 </script>
 
 {#key url}
-  <div
-    in:fly={{ delay: 100, duration: 200, y: -10 }}
-    out:fly={{ duration: 100, y: 10 }}
-    class="m-0 p-0 h-full w-full"
-  >
-    <slot />
-  </div>
+  {#if $reduceMotion === 'on'}
+    <div class="m-0 p-0">
+      <slot />
+    </div>
+  {:else}
+    <div
+      in:fly={{ delay: 200, duration: 400, y: -20 }}
+      out:fly={{ duration: 200, y: 20 }}
+    >
+      <slot />
+    </div>
+  {/if}
 {/key}

@@ -1,21 +1,3 @@
-<script lang="ts" context="module">
-  import { post, findPost } from '@/stores/posts';
-  import Logger from '$lib/logger';
-
-  export const load: import('@sveltejs/kit').Load = async ({
-    fetch,
-    params
-  }) => {
-    await findPost(fetch, { slug: params.slug })
-      .then((res) => {
-        post.set(res);
-      })
-      .catch((e) => {
-        Logger.error(e, `routes/blog/${params.slug}`);
-      });
-  };
-</script>
-
 <script lang="ts">
   import PortableText from '@/components/portable-text/portable-text.svelte';
   import { onMount, onDestroy } from 'svelte';
@@ -25,6 +7,7 @@
   import BulletPoint from '@/components/bullet-point.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import type { TextBlock, ResData } from '$lib/types';
+  import { post } from '@/stores/posts';
   import { parseEmoji } from '$lib/helpers/emoji';
 
   let readingTime: number;

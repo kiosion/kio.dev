@@ -1,10 +1,12 @@
-import type { RequestEvent, RequestHandlerOutput } from '@sveltejs/kit';
+import type {
+  RequestEvent,
+  RequestHandler,
+  RequestHandlerOutput
+} from './$types';
 import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
 
-export const GET = async ({
-  request,
-  params,
+export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
   const remoteUrl = `${REMOTE_API_URL}query/projects${url.search}`;
@@ -20,22 +22,28 @@ export const GET = async ({
         `Failed to fetch projects: ${res.status}`,
         'api/getProjects'
       );
-      return {
-        body: JSON.stringify({
+      return new Response(
+        JSON.stringify({
           status: res.status,
           error: 'Endpoint error: Failed to fetch projects'
         })
-      };
+      );
     }
     const data = await res.json();
-    return { body: data };
-  } catch (err: any) {
-    Logger.error(`Failed to fetch projects: ${err}`, 'api/fetchProjects');
-    return {
-      body: JSON.stringify({
-        status: 500,
-        error: (err && err?.message) || 'Endpoint error: Unknown error'
+    return new Response(
+      JSON.stringify(data, {
+        headers: {
+          'content-type': 'application/json; charset=utf-8'
+        }
       })
-    };
+    );
+  } catch (err: Error) {
+    Logger.error(`Failed to fetch projects: ${err}`, 'api/fetchProjects');
+    return new Response(
+      JSON.stringify({
+        status: 500,
+        error: err?.message ? err.message : 'Endpoint error: Unknown error'
+      })
+    );
   }
 };

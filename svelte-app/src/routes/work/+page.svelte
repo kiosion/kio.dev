@@ -1,26 +1,9 @@
-<script lang="ts" context="module">
-  import { projects, findProjects } from '@/stores/work';
-  import Logger from '@/lib/logger';
-
-  export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {
-    await findProjects(fetch)
-      .then((res) => {
-        if (res.error) {
-          throw res.error;
-        }
-        projects.set(res);
-      })
-      .catch((err: unknown) => {
-        Logger.error(err as string, 'routes/work');
-      });
-  };
-</script>
-
 <script lang="ts">
   import ListItem from '@/components/work/list-item.svelte';
   import PageHeading from '@/components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
   import { highlightEffects } from '@/stores/features';
+  import { projects } from '@/stores/work';
 
   let mousePos: number[];
 

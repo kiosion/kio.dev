@@ -1,39 +1,15 @@
 <script lang="ts">
-  import type { Document } from '$lib/types';
+  import ListItemWrapper from '../list-item-wrapper.svelte';
   import { getAbsDate } from '$lib/helpers/date';
-  import { highlightEffects } from '@/stores/features';
+  import type { Document } from '$lib/types';
 
   export let project: Document;
   export let mousePos = [0, 0];
 
-  $: [clientX, clientY] = mousePos;
-
-  let glow: HTMLElement;
-  let container: HTMLElement;
-  let hovered: boolean;
-
-  const mouseMove = () => {
-    if ($highlightEffects !== 'on') {
-      return;
-    }
-    try {
-      const { top, left } = container.getBoundingClientRect();
-      glow.style && (glow.style.left = `${clientX - left}px`);
-      glow.style && (glow.style.top = `${clientY - top}px`);
-    } catch {
-      () => undefined;
-    }
-  };
-
-  $: clientX, clientY, mouseMove();
+  let hovered = false;
 </script>
 
-<div
-  class="relative p-[1px] mt-6 overflow-hidden rounded-md {hovered
-    ? 'active'
-    : ''}"
-  bind:this={container}
->
+<ListItemWrapper {hovered} {mousePos}>
   {#if project}
     <a
       href="work/{project.slug && project.slug.current}"
@@ -66,17 +42,6 @@
         {/if}
       </section>
     </a>
-    {#if $highlightEffects === 'on'}
-      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
-    {/if}
-    <div
-      class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {hovered
-        ? '!opacity-60'
-        : ''} opacity-0 rounded-md"
-    />
-    <div
-      class="absolute top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-200 dark:bg-slate-900 transition-colors duration-[120ms]"
-    />
   {:else}
     <section
       class="flex flex-col cursor-default items-stretch justify-stretch w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
@@ -89,36 +54,5 @@
       />
       <h3 class="text-center font-sans text-base my-2">No results found</h3>
     </section>
-    {#if $highlightEffects === 'on'}
-      <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
-    {/if}
-    <div
-      class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {hovered
-        ? '!opacity-60'
-        : ''} opacity-0 rounded-md"
-    />
-    <div
-      class="absolute top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-200 dark:bg-slate-900"
-    />
   {/if}
-</div>
-
-<style lang="scss">
-  .filled {
-    z-index: -2;
-    + div {
-      z-index: -3;
-    }
-  }
-  .cover,
-  .filled {
-    transition: opacity 150ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  }
-  .unfilled {
-    z-index: -1;
-    top: -9999px;
-    left: -9999px;
-    background: radial-gradient(#94a3b8, transparent 35%);
-    transform: translate(-50%, -50%);
-  }
-</style>
+</ListItemWrapper>
