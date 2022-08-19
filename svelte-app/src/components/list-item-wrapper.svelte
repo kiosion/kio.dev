@@ -4,6 +4,7 @@
 
   export let mousePos = [0, 0];
   export let hovered: boolean;
+  export let wrapperClass = '';
 
   $: [clientX, clientY] = mousePos;
   $: active = hovered;
@@ -28,13 +29,17 @@
 </script>
 
 <div
-  class="relative p-[1px] mt-6 overflow-hidden rounded-md {active
+  class="relative p-[1px] {wrapperClass} overflow-hidden rounded-md {active
     ? 'active'
     : ''}"
   bind:this={container}
 >
+  <div
+    class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
+      ? 'opacity-10'
+      : 'opacity-0'}"
+  />
   <slot />
-
   {#if $highlightEffects === 'on' && !$navigating}
     <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
   {/if}

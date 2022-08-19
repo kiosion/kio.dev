@@ -1,8 +1,7 @@
 import express from 'express';
-import passport from 'passport';
-import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import dotenv from 'dotenv';
 import { query } from './lib';
+import type { Error, JsonError } from './types';
 
 // eslint-disable-next-line no-duplicate-imports
 import type { Request, Response } from 'express';
@@ -18,6 +17,9 @@ if (ACCESS_TOKENS.length === 0) {
 }
 
 const port = 4000;
+const version = 'v1';
+const baseUrl = `/api/${version}`;
+const queryUrl = `${baseUrl}/query`;
 const app = express();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +42,7 @@ const validateQueryParams = (req: Request, res: Response): any | null => {
 
   if (isNaN(skip) || isNaN(limit) || skip < 0 || limit < 1) {
     res
-      .status(401)
+      .status(400)
       .send(
         'Invalid limit or skip provided. Limit must be a positive integer, skip must be a non-negative integer.'
       );
@@ -48,13 +50,13 @@ const validateQueryParams = (req: Request, res: Response): any | null => {
   }
   if (o !== 'asc' && o !== 'desc') {
     res
-      .status(401)
+      .status(400)
       .send('Invalid order provided. Order must be either "asc" or "desc".');
     return null;
   }
   if (s !== 'date' && s !== 'title') {
     res
-      .status(401)
+      .status(400)
       .send('Invalid sort provided. Sort must be either "date" or "title".');
     return null;
   }
@@ -69,18 +71,51 @@ const validateQueryParams = (req: Request, res: Response): any | null => {
   };
 };
 
-passport.use(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new BearerStrategy((token: string, done: any) => {
-    return ACCESS_TOKENS.includes(token)
-      ? done(null, token)
-      : done(null, false);
-  })
-);
+const constructError = (
+  code: number,
+  message: string,
+  detail?: string
+): string => {
+  const res: JsonError = {
+    code,
+    message
+  };
+  detail && (res.detail = detail);
+  return JSON.stringify(res);
+};
+
+const authHandler = (
+  req: Request,
+  res: Response,
+  next: (params?: unknown) => unknown
+) => {
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res
+      .status(401)
+      .send(constructError(401, 'Unauthorized', 'No token provided.'));
+  }
+
+  const token = authorization.split(' ')[1];
+
+  if (!token) {
+    return res
+      .status(401)
+      .send(constructError(401, 'Unauthorized', 'No token provided.'));
+  }
+  if (!ACCESS_TOKENS.includes(token)) {
+    return res
+      .status(401)
+      .send(constructError(401, 'Unauthorized', 'Invalid token.'));
+  }
+
+  return next();
+};
 
 app.get(
-  '/v1/query/posts',
-  passport.authenticate('bearer', { session: false }),
+  `${queryUrl}/posts`,
+  authHandler,
   async (req: Request, res: Response) => {
     const params = validateQueryParams(req, res);
     if (typeof params !== 'object') {
@@ -94,16 +129,22 @@ app.get(
       .then((data: any) => {
         res.json(data);
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((err: any) => {
-        res.status(500).send(err);
+      .catch((err: Error) => {
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
       });
   }
 );
 
 app.get(
-  '/v1/query/post',
-  passport.authenticate('bearer', { session: false }),
+  `${queryUrl}/post`,
+  authHandler,
   async (req: Request, res: Response) => {
     let { slug = '', id = '' } = req.query;
     slug = `${slug}`;
@@ -116,14 +157,21 @@ app.get(
         res.json(data);
       })
       .catch((err: Error) => {
-        res.status(500).send(err);
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
       });
   }
 );
 
 app.get(
-  '/v1/query/projects',
-  passport.authenticate('bearer', { session: false }),
+  `${queryUrl}/projects`,
+  // authHandler,
   async (req, res) => {
     const params = validateQueryParams(req, res);
     if (typeof params !== 'object') {
@@ -138,14 +186,21 @@ app.get(
         res.json(data);
       })
       .catch((err: Error) => {
-        res.status(500).send(err);
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
       });
   }
 );
 
 app.get(
-  '/v1/query/about',
-  passport.authenticate('bearer', { session: false }),
+  `${queryUrl}/about`,
+  authHandler,
   async (req: Request, res: Response) => {
     query
       .about()
@@ -153,15 +208,24 @@ app.get(
         res.json(data);
       })
       .catch((err: Error) => {
-        res.status(500).send(err);
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
       });
   }
 );
 
+app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
+  res.status(404).send(constructError(404, 'Invalid endpoint'));
+});
+
 app.get('/(*)', (req: Request, res: Response) => {
-  res
-    .status(403)
-    .send('{ error: 403, status: "Go away! Nothing to see here" }');
+  res.status(403).send(constructError(403, 'Forbidden'));
 });
 
 app.listen(port, () => {

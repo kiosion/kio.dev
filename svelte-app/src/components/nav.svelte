@@ -7,7 +7,7 @@
   import { goto } from '$app/navigation';
 
   let links = [
-    { name: 'Blog', url: '/' },
+    { name: 'Blog', url: '/blog' },
     { name: 'Work', url: '/work' },
     { name: 'About', url: '/about' }
   ];

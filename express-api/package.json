@@ -4,8 +4,8 @@
   "description": "simple api for interacting with Sanity CMS",
   "main": "index.ts",
   "scripts": {
-    "build": "npx tsc",
-    "serve": "node ./dist/index.js",
+    "build": "tsc && webpack",
+    "serve": "node ./dist/server.js",
     "dev": "tsc && concurrently \"tsc -w\" \"nodemon ./dist/index.js\"",
     "format": "prettier --write './**/*.ts'",
     "lint": "yarn format && eslint --fix './**/*.ts'",
@@ -32,8 +32,12 @@
     "node-fetch": "^3.2.10",
     "nodemon": "^2.0.16",
     "passport": "^0.6.0",
+    "passport-custom": "^1.1.1",
     "passport-http-bearer": "^1.0.1",
     "prettier": "^2.7.1",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }

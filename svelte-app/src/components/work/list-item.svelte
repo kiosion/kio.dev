@@ -9,7 +9,7 @@
   let hovered = false;
 </script>
 
-<ListItemWrapper {hovered} {mousePos}>
+<ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if project}
     <a
       href="work/{project.slug && project.slug.current}"
@@ -20,11 +20,6 @@
         class="flex flex-col align-center justify-center relative w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
         data-test-id="list-item"
       >
-        <div
-          class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
-            ? 'opacity-10'
-            : 'opacity-0'}"
-        />
         <h1
           class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
         >

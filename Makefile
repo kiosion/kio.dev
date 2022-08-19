@@ -1,4 +1,4 @@
-.PHONY: install, dev, build-test, prod, cypress, vitest, netlify-deploy, sanity-deploy
+.PHONY: install, dev, backed, build-test, prod, cypress, vitest, netlify-deploy, sanity-deploy
 
 install: SHELL:=/bin/bash
 install:
@@ -10,6 +10,11 @@ install:
 dev: SHELL:=/bin/bash
 dev: install
 	./scripts/run-dev.sh
+
+# run dev backed
+backed: SHELL:=/bin/bash
+backed: install
+	./scripts/run-dev-backed.sh
 
 # build for prod
 prod: SHELL:=/bin/bash

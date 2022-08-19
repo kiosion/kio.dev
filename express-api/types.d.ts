@@ -1,3 +1,12 @@
+export interface Error {
+  code?: number;
+  message?: string;
+}
+
+export interface JsonError extends Error {
+  detail?: string;
+}
+
 export type queryResponse = {
   meta: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   data: any; // eslint-disable-line @typescript-eslint/no-explicit-any

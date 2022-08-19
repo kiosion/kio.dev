@@ -27,10 +27,12 @@ module query {
           !split[1].match(/^\d+$/) ||
           !split[2].match(/^\d+$/)
         ) {
-          reject(
-            'Invalid date format, must be YYYY-MM-DD, you provided: ' +
+          reject({
+            code: 400,
+            message:
+              'Invalid date format, must be YYYY-MM-DD, you provided: ' +
               filter.date
-          );
+          });
         }
         date = `${split[0]}-${split[1]}-${split[2]}`;
       }
@@ -90,12 +92,12 @@ module query {
                 data
               });
             })
-            .catch((err: unknown) => {
-              reject(err as string);
+            .catch((err: Error) => {
+              reject(err);
             });
         })
-        .catch((err: unknown) => {
-          reject(err as string);
+        .catch((err: Error) => {
+          reject(err);
         });
     });
 
@@ -103,7 +105,10 @@ module query {
   export const post = ({ slug = '', id = '' }: postQueryParams) =>
     new Promise((resolve, reject) => {
       if ((!slug && !id) || (slug === '' && id === '')) {
-        reject('Invalid params provided. Post slug or ID must be provided.');
+        reject({
+          code: 400,
+          message: 'Invalid params provided. Post slug or ID must be provided.'
+        });
       }
 
       const query = `*[!(_id in path('drafts.**')) && _type == "post"${
@@ -141,8 +146,8 @@ module query {
             data
           });
         })
-        .catch((err: unknown) => {
-          reject(err as string);
+        .catch((err: Error) => {
+          reject(err);
         });
     });
 
@@ -168,10 +173,12 @@ module query {
           !split[1].match(/^\d+$/) ||
           !split[2].match(/^\d+$/)
         ) {
-          reject(
-            'Invalid date format, must be YYYY-MM-DD, you provided: ' +
+          reject({
+            code: 400,
+            message:
+              'Invalid date format, must be YYYY-MM-DD, you provided: ' +
               filter.date
-          );
+          });
         }
         date = `${split[0]}-${split[1]}-${split[2]}`;
       }
@@ -215,21 +222,28 @@ module query {
     } | order(${sort} ${order}) [${skip}...${limit}]`;
 
       client
-        .fetch(query)
+        .fetch(`${query} | order(${sort} ${order}) [${skip}...${limit}]`)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((data: any) => {
-          resolve({
-            meta: {
-              count: data?.length ?? 0,
-              total: 0,
-              sort,
-              order
-            },
-            data
-          });
+          client
+            .fetch(`count(${query})`)
+            .then((count: number) => {
+              resolve({
+                meta: {
+                  count: data?.length ?? 0,
+                  total: count,
+                  sort,
+                  order
+                },
+                data
+              });
+            })
+            .catch((err: Error) => {
+              reject(err);
+            });
         })
-        .catch((err: unknown) => {
-          reject(err as string);
+        .catch((err: Error) => {
+          reject(err);
         });
     });
 
@@ -237,7 +251,7 @@ module query {
   export const tags = ({ limit = 0 }) =>
     new Promise((resolve, reject) => {
       if (limit < 1) {
-        reject('Invalid limit');
+        reject({ code: 400, message: 'Invalid limit' });
       }
 
       const query = `*[_type == "tag"]{
@@ -258,8 +272,8 @@ module query {
             data
           });
         })
-        .catch((err: unknown) => {
-          reject(err as string);
+        .catch((err: Error) => {
+          reject(err);
         });
     });
 
@@ -287,8 +301,8 @@ module query {
             data
           });
         })
-        .catch((err: unknown) => {
-          reject(err as string);
+        .catch((err: Error) => {
+          reject(err);
         });
     });
 }

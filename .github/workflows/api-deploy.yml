@@ -1,0 +1,23 @@
+name: Deploy API
+
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    environment: api
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: (cd ./express-api && yarn install 2> >(grep -v wawrning 1>&2))
+      
+      - name: Build for production
+        run: (cd ./express-api && yarn build && cp -r ./bundle/bundle.js /home/kio/public/build/bundle.js)
+
+      - name: Deploy
+        run: |
+          pm2 stop all 2> /dev/null || true
+          pm2 start all --env production --update-env

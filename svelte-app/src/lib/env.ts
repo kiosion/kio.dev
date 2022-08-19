@@ -3,7 +3,7 @@ export const BASE_URL = '/';
 export const API_URL = `${BASE_URL}api/`;
 export const REMOTE_API_VERSION = 'v1';
 export const REMOTE_API_URL =
-  import.meta.env.MODE === 'production'
-    ? `https://api.kio.dev/${REMOTE_API_VERSION}/`
-    : `http://localhost:4000/${REMOTE_API_VERSION}/`;
+  import.meta.env.MODE === 'production' || import.meta.env.MODE === 'backed'
+    ? `https://kio.sh/api/${REMOTE_API_VERSION}/`
+    : `http://localhost:4000/api/${REMOTE_API_VERSION}/`;
 export const REMOTE_API_TOKEN = import.meta.env.VITE_API_TOKEN;

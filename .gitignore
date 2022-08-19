@@ -8,3 +8,5 @@
 **/cypress/screenshots
 **/cypress/downloads
 **/.netlify
+**/bundle
+**/build

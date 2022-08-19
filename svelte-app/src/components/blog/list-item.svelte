@@ -15,47 +15,50 @@
   );
 </script>
 
-<ListItemWrapper {hovered} {mousePos}>
+<ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if post}
-    <a
+    <!-- <a
       href="blog/{post.slug && post.slug.current}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
+    > -->
+    <section
+      class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+      data-test-id="list-item"
     >
-      <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
-        data-test-id="list-item"
+      <h1
+        class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
       >
-        <div
-          class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
-            ? 'opacity-10'
-            : 'opacity-0'}"
-        />
-        <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
-        >
-          {post.title}
-        </h1>
-        <div
-          class="flex flex-row flex-wrap items-center justify-start w-full mt-2"
-        >
-          <h3 class="inline-block w-fit font-sans text-base">
-            {getAbsDate(post.date)}
-          </h3>
-          <BulletPoint />
-          <h3 class="inline-block w-fit font-sans text-base">
-            {`${Math.floor(readingTime / 60)} min read`}
-          </h3>
-        </div>
-        {#if post.desc}
+        {post.title}
+      </h1>
+      <div
+        class="flex flex-row flex-wrap items-center justify-start w-full my-2"
+      >
+        <h3 class="inline-block w-fit font-sans text-base">
+          {getAbsDate(post.date)}
+        </h3>
+        <BulletPoint />
+        <h3 class="inline-block w-fit font-sans text-base">
+          {`${Math.floor(readingTime / 60)} min read`}
+        </h3>
+      </div>
+      {#if post.desc}
+        <div class="relative flex flex-row align-center justify-start">
           <p
-            class="block overflow-hidden whitespace-nowrap w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-1"
+            class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-1"
           >
             {post.desc}
           </p>
-        {/if}
-      </section>
-    </a>
+          <a
+            href="blog/{post.slug && post.slug.current}"
+            class="flex--1 whitespace-nowrap font-sans text-base hover:underline"
+            on:mouseenter={() => (hovered = true)}
+            on:mouseleave={() => (hovered = false)}>Read more</a
+          >
+        </div>
+      {/if}
+    </section>
+    <!-- </a> -->
   {:else}
     <section
       class="flex flex-col cursor-default items-stretch justify-stretch w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
