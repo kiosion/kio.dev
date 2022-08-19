@@ -9,6 +9,7 @@ on:
       - '**/.husky'
       - 'sanity-cms/**'
       - 'express-api/**'
+      - 'rust-api/**'
 
 concurrency: 
   group: ci

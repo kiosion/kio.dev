@@ -1,5 +1,4 @@
 {
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": "latest"
@@ -11,11 +10,7 @@
   },
   "extends": [
     "@sanity/eslint-config-studio",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint"
+    "eslint:recommended"
   ],
   "rules": {
     "array-bracket-spacing": ["error", "never"],
@@ -50,8 +45,6 @@
     "no-script-url": ["error"],
     "object-shorthand": ["error"],
     "one-var-declaration-per-line": ["error"],
-    "@typescript-eslint/prefer-namespace-keyword": "off",
-    "@typescript-eslint/no-namespace": "off",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "quote-props": ["error", "as-needed"],
     "semi": ["error", "always"],
