@@ -40,6 +40,8 @@ const validateQueryParams = (req: Request, res: Response): any | null => {
   date = `${date}`;
   tags = `${tags}`.split(',');
 
+  setHeaders(res);
+
   if (isNaN(skip) || isNaN(limit) || skip < 0 || limit < 1) {
     res
       .status(400)
@@ -90,6 +92,7 @@ const authHandler = (
   next: (params?: unknown) => unknown
 ) => {
   const { authorization } = req.headers;
+  setHeaders(res);
 
   if (!authorization) {
     return res
@@ -113,6 +116,11 @@ const authHandler = (
   return next();
 };
 
+const setHeaders = (res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'max-age=0');
+};
+
 app.get(
   `${queryUrl}/posts`,
   authHandler,
@@ -127,9 +135,11 @@ app.get(
       .posts({ limit, skip, sort: s, order: o }, { date, tags })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((data: any) => {
+        setHeaders(res);
         res.json(data);
       })
       .catch((err: Error) => {
+        setHeaders(res);
         res
           .status(err?.code ?? 500)
           .send(
@@ -154,9 +164,11 @@ app.get(
       .post({ slug, id })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((data: any) => {
+        setHeaders(res);
         res.json(data);
       })
       .catch((err: Error) => {
+        setHeaders(res);
         res
           .status(err?.code ?? 500)
           .send(
@@ -169,34 +181,32 @@ app.get(
   }
 );
 
-app.get(
-  `${queryUrl}/projects`,
-  // authHandler,
-  async (req, res) => {
-    const params = validateQueryParams(req, res);
-    if (typeof params !== 'object') {
-      return;
-    }
-    const { limit, skip, s, o, date, tags } = params;
-
-    query
-      .projects({ limit, skip, sort: s, order: o }, { date, tags })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((data: any) => {
-        res.json(data);
-      })
-      .catch((err: Error) => {
-        res
-          .status(err?.code ?? 500)
-          .send(
-            constructError(
-              err?.code ?? 500,
-              err?.message ?? 'Internal Server Error'
-            )
-          );
-      });
+app.get(`${queryUrl}/projects`, authHandler, async (req, res) => {
+  const params = validateQueryParams(req, res);
+  if (typeof params !== 'object') {
+    return;
   }
-);
+  const { limit, skip, s, o, date, tags } = params;
+
+  query
+    .projects({ limit, skip, sort: s, order: o }, { date, tags })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .then((data: any) => {
+      setHeaders(res);
+      res.json(data);
+    })
+    .catch((err: Error) => {
+      setHeaders(res);
+      res
+        .status(err?.code ?? 500)
+        .send(
+          constructError(
+            err?.code ?? 500,
+            err?.message ?? 'Internal Server Error'
+          )
+        );
+    });
+});
 
 app.get(
   `${queryUrl}/about`,
