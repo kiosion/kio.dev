@@ -8,6 +8,7 @@
 
   let mousePos: number[];
 
+  // TODO: Convert to helper function, just need to pass context / 'document'.
   onMount(() => {
     $highlightEffects === 'on' &&
       document.addEventListener('mousemove', (e) => {

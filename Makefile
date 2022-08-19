@@ -6,6 +6,12 @@ install:
 	yarn prepare
 	./scripts/install.sh
 
+# only install app deps
+install-app: SHELL:=/bin/bash
+install-app:
+	cd ./svelte-app;\
+	yarn install 2> >(grep -v warning 1>&2)
+
 # run dev servers
 dev: SHELL:=/bin/bash
 dev: install
@@ -13,7 +19,7 @@ dev: install
 
 # run dev backed
 backed: SHELL:=/bin/bash
-backed: install
+backed: install-app
 	./scripts/run-dev-backed.sh
 
 # build for prod

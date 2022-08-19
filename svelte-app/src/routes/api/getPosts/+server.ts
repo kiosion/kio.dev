@@ -10,7 +10,6 @@ export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
   const remoteUrl = `${REMOTE_API_URL}query/posts${url.search}`;
-  console.log('fetching from:', remoteUrl);
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -18,7 +17,6 @@ export const GET: RequestHandler = async ({
         authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`
       }
     });
-    console.log('res:', res);
     if (res.status !== 200) {
       Logger.error(`Failed to fetch posts: ${res.status}`, 'api/getPosts');
       return new Response(

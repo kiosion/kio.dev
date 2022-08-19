@@ -94,6 +94,9 @@ const authHandler = (
   const { authorization } = req.headers;
   setHeaders(res);
 
+  console.log('auth headers:', authorization);
+  console.log('allowed tokens:', ACCESS_TOKENS);
+
   if (!authorization) {
     return res
       .status(401)
@@ -235,6 +238,13 @@ app.get(
 app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
   setHeaders(res);
   res.status(404).send(constructError(404, 'Invalid endpoint'));
+});
+
+app.get('/', (req: Request, res: Response) => {
+  setHeaders(res);
+  res
+    .status(418)
+    .send(constructError(418, 'Do I look like a coffee machine to you??'));
 });
 
 app.get('/(*)', (req: Request, res: Response) => {

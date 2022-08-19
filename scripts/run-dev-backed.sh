@@ -2,4 +2,4 @@
 
 echo "-> Starting vite..."
 
-(cd ./svelte-app; exec yarn build:backed)
+(cd ./svelte-app; exec yarn dev:backed)

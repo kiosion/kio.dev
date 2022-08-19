@@ -47,7 +47,7 @@
   class="w-full h-full text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition motion-reduce:transition-none duration-150 "
   in:fly={{ delay: 100, duration: 100, y: -10 }}
 >
-  <Nav segment={$page.url.pathname} />
+  <Nav segment={$page?.url?.pathname} />
   <div
     class="relative md:ml-40 lg:ml-64 xl:mr-48 2xl:mx-80 px-8 pb-8 md:py-8 md:pr-12 lg:pr-20"
   >
