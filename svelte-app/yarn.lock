@@ -969,12 +969,11 @@
     esbuild "^0.14.48"
 
 "@sveltejs/kit@next":
-  version "1.0.0-next.415"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.415.tgz#9fa2528b385889bc159a0f86c837b0c50c23321f"
-  integrity sha512-XtiiEW/LuhYeT0YdyLxNA+lCcu+1NMhLd4xM8ZYJ//x408eM9Oeckfh8qmzcBurksaZEZHd1cwHscSkOnJLOww==
+  version "1.0.0-next.423"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.423.tgz#7821511efcf6856b342b967c46c4eeb4b3fc2afa"
+  integrity sha512-AL2jLelCXRUpaL5AMccaMJfUIgbOooRG/arxYudqj8DT9bBsyPFzxEl7yLKE91bD+FCFLICKTZOsvjKiHxTjhg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.1"
-    chokidar "^3.5.3"
     cookie "^0.5.0"
     devalue "^2.0.1"
     kleur "^4.1.4"
@@ -1386,10 +1385,10 @@
     resolve-from "^5.0.0"
     rollup-pluginutils "^2.8.2"
 
-"@vitest/ui@^0.22.0":
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.22.0.tgz#803508012083d5f47f1239f51d8f0fa08d168b59"
-  integrity sha512-Xyqa0M7l6OxGipCBsKwrDWQB96itqb8h3ZP8mSnuths+xTWucIC7LIU6MAe4cSTlLvGCeihecPJPs5l5GAucgA==
+"@vitest/ui@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.22.1.tgz#549fe2d156bf91824c61cde74bd835c81c4a7996"
+  integrity sha512-iiM2JN+vzY8pEejUbPPi0EgkEselI3RvrgMPNUOalxQRgtlNVGyMsM0Re99xQsrZ/eBkHgWrlW216gNDoeD5cA==
   dependencies:
     sirv "^2.0.2"
 
