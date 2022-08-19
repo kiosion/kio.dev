@@ -3,6 +3,15 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const viteEnv = {};
+Object.keys(process.env).forEach((key) => {
+  if (key.startsWith('VITE_')) {
+    viteEnv[`import.meta.env.${key}`] = process.env[key];
+  }
+});
 
 export default defineConfig({
   plugins: [
@@ -15,6 +24,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
+    },
+    define: {
+      ...viteEnv
     }
   },
   test: {

@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({
     const res = await fetch(remoteUrl, {
       method: 'GET',
       headers: {
-        authorization: `Bearer ${REMOTE_API_TOKEN}`
+        authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`
       }
     });
     console.log('res:', res);
@@ -23,8 +23,9 @@ export const GET: RequestHandler = async ({
       Logger.error(`Failed to fetch posts: ${res.status}`, 'api/getPosts');
       return new Response(
         JSON.stringify({
-          status: res.status,
-          error: 'Endpoint error: Failed to fetch posts'
+          status: 500,
+          error: 'Endpoint error: Failed to fetch posts',
+          detail: `Remote API returned status code: ${res.status}`
         })
       );
     }

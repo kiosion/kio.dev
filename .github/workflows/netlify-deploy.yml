@@ -12,12 +12,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: (cd ./svelte-app && yarn install 2> >(grep -v wawrning 1>&2))
+        run: (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
+
+      - name: Add environment variables
+        run: (touch ./svelte-app/.env && echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" >> ./svelte-app/.env)
       
       - name: Build for production
         env:
           SVELTE_NETLIFY_ENV: netlify
-        run: make prod
+        run: (make prod && cp ./svelte-app/.env ./svelte-app/build/.env)
 
       - name: Deploy app
         env:
