@@ -215,9 +215,11 @@ app.get(
     query
       .about()
       .then((data) => {
+        setHeaders(res);
         res.json(data);
       })
       .catch((err: Error) => {
+        setHeaders(res);
         res
           .status(err?.code ?? 500)
           .send(
@@ -231,10 +233,12 @@ app.get(
 );
 
 app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
+  setHeaders(res);
   res.status(404).send(constructError(404, 'Invalid endpoint'));
 });
 
 app.get('/(*)', (req: Request, res: Response) => {
+  setHeaders(res);
   res.status(403).send(constructError(403, 'Forbidden'));
 });
 
