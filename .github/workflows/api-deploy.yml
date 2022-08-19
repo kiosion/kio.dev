@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy:
-    environment: api
+    environment: API
     runs-on: self-hosted
     steps:
       - name: Checkout

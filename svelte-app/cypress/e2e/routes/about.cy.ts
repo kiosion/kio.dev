@@ -2,8 +2,7 @@ import { aboutRes } from '../../fixtures/about';
 import type { AboutSetupParams } from '../../types';
 
 describe('E2E | About', () => {
-  const setupContext = ({ delay = 800 }: AboutSetupParams) => {
-    console.log('aboutRes', aboutRes);
+  const setupContext = ({ delay = 800, content = true }: AboutSetupParams) => {
     return cy.intercept('GET', '/api/getAbout*', (req) => {
       req.reply({
         headers: {
@@ -12,10 +11,10 @@ describe('E2E | About', () => {
         statusCode: 200,
         body: {
           meta: {
-            length: 1,
+            length: content ? 1 : 0,
             filter: 'about'
           },
-          data: aboutRes()
+          data: content ? aboutRes() : undefined
         },
         delay
       });
@@ -23,7 +22,10 @@ describe('E2E | About', () => {
   };
 
   it('should render about route with no data', () => {
+    setupContext({ content: false }).as('getAbout');
+
     cy.visit('/about');
+    cy.wait('@getAbout');
 
     cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
     cy.get('[data-test-route="about"').contains('Error loading about');
