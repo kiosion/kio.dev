@@ -18,7 +18,6 @@ fn setup_sanity() -> &'static SanityConfigReader {
     static ONCE: Once = Once::new();
     unsafe {
       ONCE.call_once(|| {
-          // Make config
           let sn = SanityConfigReader {
               inner: Mutex::new(sanity::create(
                 env::var("SANITY_PROJECT_ID").ok().unwrap().as_str(),

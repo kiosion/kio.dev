@@ -2,7 +2,7 @@
   import ListItem from '@/components/blog/list-item.svelte';
   import PageHeading from '@/components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '@/stores/posts';
+  import { posts, queryPosts } from '@/stores/posts';
   import { highlightEffects } from '@/stores/features';
 
   let mousePos: number[];
@@ -12,6 +12,8 @@
       document.addEventListener('mousemove', (e) => {
         mousePos = [e.clientX, e.clientY];
       });
+
+    // !$posts?.data?.length &&
   });
 
   onDestroy(() => {

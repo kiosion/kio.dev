@@ -26,13 +26,8 @@
         class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
         data-test-id="list-item"
       >
-        <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
-        >
-          {post.title}
-        </h1>
         <div
-          class="flex flex-row flex-wrap items-center justify-start w-full mt-2 mb-1"
+          class="flex flex-row flex-wrap items-center justify-start w-full mb-1"
         >
           <h3 class="inline-block w-fit font-sans text-base">
             {getAbsDate(post.date)}
@@ -42,6 +37,11 @@
             {`${Math.floor(readingTime / 60)} min read`}
           </h3>
         </div>
+        <h1
+          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg my-2"
+        >
+          {post.title}
+        </h1>
         {#if post.desc}
           <div class="relative flex flex-row align-center justify-start my-1">
             <p

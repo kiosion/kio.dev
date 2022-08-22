@@ -20,14 +20,14 @@
         class="flex flex-col align-center justify-center relative w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
         data-test-id="list-item"
       >
+        <h3 class="font-sans text-base mb-1">
+          {getAbsDate(project.date)}
+        </h3>
         <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
+          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg mt-2"
         >
           {project.title}
         </h1>
-        <h3 class="font-sans text-base mt-2">
-          {getAbsDate(project.date)}
-        </h3>
         {#if project.desc}
           <p
             class="block overflow-hidden whitespace-nowrap w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-1"
