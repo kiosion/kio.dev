@@ -68,6 +68,5 @@
     "vite-plugin-inspect": "^0.6.0",
     "vite-plugin-test-selectors": "0.0.2",
     "vitest": "^0.22.1"
-  },
-  "type": "module"
+  }
 }
