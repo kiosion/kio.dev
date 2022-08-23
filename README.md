@@ -2,26 +2,34 @@
 
 ## About
 
-Frontend + backend monorepo for my art / development portfolio, blog, and social links.
+Frontend + backend monorepo for the site hosting my art / development portfolio, blog, and CV.
 
-(Eventually) live at <a href="https://kio.dev/">https://kio.dev</a>
+(Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
 
-### Stack
+### Tech stack
 
 - Sveltekit
 - Typescript
 - Scss
-- Sanity studio / client
+- Sanity.io
+- Express.js
 - Rust
-- Express
 
 ## Building / running
 
-Build
+Build for dev
+```bash
+make dev
+```
+
+Build for UI dev only (use existing backends)
+```bash
+make backed
+```
+
+Build for testing / production
 ```bash
 make prod
-# or,
-make dev
 ```
 
 ## Testing
@@ -30,6 +38,6 @@ Run all tests
 ```bash
 make build-test
 node ./svelte-app/dist/
-# then,
+# simultaneously,
 make vitest && make cypress
 ```
