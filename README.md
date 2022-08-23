@@ -2,9 +2,18 @@
 
 ## About
 
-The sveltekit app, sanity instance, and api for my art / development portfolio, blog, and social links.
+Frontend + backend monorepo for my art / development portfolio, blog, and social links.
 
 (Eventually) live at <a href="https://kio.dev/">https://kio.dev</a>
+
+### Stack
+
+- Sveltekit
+- Typescript
+- Scss
+- Sanity studio / client
+- Rust
+- Express
 
 ## Building / running
 
