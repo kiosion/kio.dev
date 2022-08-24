@@ -29,10 +29,19 @@ jobs:
       - name: Lint check
         run: (cd ./sanity-cms && yarn lint)
 
+      - name: Build for development
+        run: (cd ./sanity-cms && SANITY_STUDIO_API_DATASET="dev" yarn sanity build)
+      
+      - name: Deploy development studio
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
+
       - name: Build for production
         run: (cd ./sanity-cms && yarn sanity build)
       
-      - name: Deploy studio
+      - name: Deploy production studio
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
