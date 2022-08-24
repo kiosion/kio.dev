@@ -1,4 +1,4 @@
-.PHONY: install, dev, backed, build-test, prod, cypress, vitest, netlify-deploy, sanity-deploy
+.PHONY: install, dev, backed, test, prod, cypress, vitest, netlify-deploy, sanity-deploy
 
 install: SHELL:=/bin/bash
 install:
@@ -6,34 +6,52 @@ install:
 	yarn prepare
 	./scripts/install.sh
 
-# only install app deps
-install-app: SHELL:=/bin/bash
-install-app:
+# only install svelte deps
+install-web: SHELL:=/bin/bash
+install-web:
 	cd ./svelte-app;\
 	yarn install 2> >(grep -v warning 1>&2)
 
-# run dev servers
+# build & run backends
+server: SHELL:=/bin/bash
+server: install
+server:
+	./scripts/server.sh
+
+# build & run web ui
+web: SHELL:=/bin/bash
+web: install-web
+web:
+	cd ./svelte-app;\
+	yarn dev
+
+# run full dev stack
 dev: SHELL:=/bin/bash
 dev: install
-	./scripts/run-dev.sh
+dev:
+	./scripts/dev.sh
 
 # run dev backed
 backed: SHELL:=/bin/bash
-backed: install-app
-	./scripts/run-dev-backed.sh
+backed: install-web
+backed:
+	cd ./svelte-app;\
+	yarn dev:backed
 
 # build for prod
 prod: SHELL:=/bin/bash
-prod: install
+prod: install-web
+prod:
 	cd ./svelte-app;\
 	SVELTE_ADAPTER_ENV=netlify \
 	yarn build
 
 sanity-upgrade: SHELL:=/bin/bash
 sanity-upgrade: install
+sanity-upgrade:
 	cd ./sanity-cms && yarn sanity upgrade
 
-# push sanity cms
+# deploy sanity
 sanity-deploy: sanity-upgrade
 sanity-deploy:
 	yarn sanity deploy
@@ -43,14 +61,9 @@ netlify-deploy: SHELL:=/bin/bash
 netlify-deploy:
 	cd ./svelte-app && yarn netlify deploy --dir=./build --prod
 
-# check
-check: SHELL:=/bin/bash
-check:
-	./scripts/check.sh
-
 # test
-build-test: SHELL:=/bin/bash
-build-test:
+test: SHELL:=/bin/bash
+test:
 	cd ./svelte-app;\
 	SVELTE_ADAPTER_ENV=node \
 	yarn build:test

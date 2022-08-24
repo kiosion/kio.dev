@@ -29,5 +29,11 @@ jobs:
       - name: Lint check
         run: (cd ./sanity-cms && yarn lint)
 
-      - name: Build & deploy to Sanity
-        run: (cd ./sanity-cms && SANITY_AUTH_TOKEN=${{ secrets.SANITY_AUTH_TOKEN }} yarn sanity deploy)
+      - name: Build for production
+        run: (cd ./sanity-cms && yarn sanity build)
+      
+      - name: Deploy studio
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod

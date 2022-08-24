@@ -94,9 +94,6 @@ const authHandler = (
   const { authorization } = req.headers;
   setHeaders(res);
 
-  console.log('auth headers:', authorization);
-  console.log('allowed tokens:', ACCESS_TOKENS);
-
   if (!authorization) {
     return res
       .status(401)

@@ -22,7 +22,7 @@ jobs:
       - name: Build testing environment
         env:
           SVELTE_ADAPTER_ENV: 'node'
-        run: make build-test
+        run: make test
 
       - name: Run tests
         run: make cypress

@@ -7,7 +7,9 @@ dotenv.config();
 module SanityClient {
   export const client = sanityClient({
     projectId: process.env.SANITY_PROJECT_ID,
-    dataset: 'production',
+    dataset: process.env.SANITY_STUDIO_API_DATASET
+      ? process.env.SANITY_STUDIO_API_DATASET
+      : 'production',
     token: process.env.SANITY_API_TOKEN,
     apiVersion: '2022-07-25',
     useCdn: true
