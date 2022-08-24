@@ -8,12 +8,15 @@ Frontend + backend monorepo for the site hosting my art / development portfolio,
 
 ### Tech stack
 
-- Sveltekit
+- Svelte
 - Typescript
 - Scss
-- Sanity.io
+- Vite
+- Sanity
 - Express.js
 - Rust
+- pm2
+- Netlify
 
 ## Building / running
 
