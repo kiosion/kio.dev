@@ -16,7 +16,7 @@ if (ACCESS_TOKENS.length === 0) {
   throw new Error('ACCESS_TOKENS is not defined');
 }
 
-const port = 4000;
+const port = process.env.SANITY_STUDIO_API_DATASET === 'dev' ? 4444 : 4000;
 const version = 'v1';
 const baseUrl = `/api/${version}`;
 const queryUrl = `${baseUrl}/query`;
