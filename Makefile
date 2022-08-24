@@ -63,4 +63,6 @@ vitest:
 # cypress tests
 cypress: SHELL:=/bin/bash
 cypress:
+	cd ./svelte-app/;\
+	yarn cypress install
 	./scripts/cypress.sh
