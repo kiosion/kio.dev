@@ -39,7 +39,7 @@ const Logo = () => {
             fontSize: 'smaller'
           }}
         >
-          Development
+          Production
         </p>
       </div>
     );
