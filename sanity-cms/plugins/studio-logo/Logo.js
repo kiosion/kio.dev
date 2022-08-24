@@ -11,7 +11,7 @@ const Logo = () => {
           flexDirection: 'column'
         }}
       >
-        <b>Noether Studio</b>
+        <b>kio.dev Studio</b>
         <p
           style={{
             margin: '0',
@@ -31,7 +31,7 @@ const Logo = () => {
           flexDirection: 'column'
         }}
       >
-        <b>Noether Studio</b>
+        <b>kio.dev Studio</b>
         <p
           style={{
             margin: '0',
