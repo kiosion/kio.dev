@@ -10,6 +10,8 @@
     "lint": "yarn format && eslint --fix './**/*.js'"
   },
   "dependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
     "@sanity/base": "^2.30.4",
     "@sanity/cli": "^2.30.6",
     "@sanity/code-input": "^2.30.5",
@@ -27,7 +29,6 @@
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.10",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "prettier": "^2.7.1"

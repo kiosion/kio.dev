@@ -43,7 +43,7 @@
 
   const onLogoClick = () => {
     clicks++;
-    if (clicks === 4) {
+    if (clicks > 4) {
       goto('/secret')
         .then(() => {
           clicks = 0;
@@ -108,7 +108,7 @@
           aria-label={link.name}
           href={link.url}
           on:click={() => menuOpen.set(false)}
-          ><span class="strike">{link.name}</span></a
+          ><span class="strike" tabindex="0">{link.name}</span></a
         >
       {/each}
     </div>
@@ -118,12 +118,12 @@
   >
     {#each socials as social}
       <a
-        class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer {social?.class}"
+        class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
         href={social.url}
         aria-label={social.name}
         target={social?.target ? '_blank' : ''}
       >
-        <Icon icon={social.icon} rotate={social?.rotate} />
+        <Icon icon={social.icon} rotate={social?.rotate} tabindex="0" />
       </a>
     {/each}
   </div>
@@ -150,6 +150,8 @@
       }
     }
     &:hover,
+    &:focus,
+    &:focus-within,
     &.active {
       .strike {
         &:after {

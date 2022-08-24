@@ -9,6 +9,7 @@
   import type { TextBlock, ResData } from '$lib/types';
   import { post } from '@/stores/posts';
   import { parseEmoji } from '$lib/helpers/emoji';
+  import { goto } from '$app/navigation';
 
   let readingTime: number;
   let dateFormat = 'rel';
@@ -56,20 +57,22 @@
           <p class="font-mono text-base">{$post.data.desc}</p>
         {/if}
         <div class="flex flex-row mt-4 items-center justify-start">
-          <p class="font-mono text-base">
-            <a href="/about" alt="About"
-              >By {$post.data?.author?.name
-                ? $post.data.author.name
-                : 'Unknown'}</a
-            >
-          </p>
+          <button
+            class="inline font-mono text-base"
+            on:click={() => goto('/about')}
+            tabindex="0"
+            >By {$post.data?.author?.name
+              ? $post.data.author.name
+              : 'Unknown'}</button
+          >
           <BulletPoint />
-          <p
-            class="font-mono text-base cursor-pointer"
+          <button
+            class="inline font-mono text-base cursor-pointer select-none"
             on:click={() => switchDate()}
+            tabindex="0"
           >
             {date ? date : '...'}
-          </p>
+          </button>
           <BulletPoint />
           <p class="font-mono text-base">
             {`${Math.floor(readingTime / 60)} min read`}
