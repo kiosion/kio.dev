@@ -2,7 +2,7 @@
   import { fly } from 'svelte/transition';
   import { reduceMotion } from '@/stores/features';
 
-  export let url: URL;
+  export let url: string;
 
   let prevPath: string;
   let navDir: 'forward' | 'backward' = 'forward';
@@ -73,7 +73,7 @@
     }
   };
 
-  $: url, onNav(url.pathname);
+  $: url, onNav(url);
 </script>
 
 {#key url}

@@ -3,6 +3,4 @@
   import ContentWrapper from '@/components/content-wrapper.svelte';
 </script>
 
-<PageTransition>
-  <ContentWrapper />
-</PageTransition>
+<ContentWrapper />

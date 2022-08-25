@@ -81,7 +81,7 @@
       class="h-full w-full max-w-[60rem] mx-auto grid grid-rows-1 grid-cols-1"
     >
       {#if appLoaded}
-        <PageTransition url={data.url}>
+        <PageTransition url={data.url.pathname}>
           <slot />
         </PageTransition>
       {/if}
