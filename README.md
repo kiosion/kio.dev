@@ -6,6 +6,8 @@ Frontend + backend monorepo for the site hosting my art / development portfolio,
 
 (Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
 
+<img src="https://user-images.githubusercontent.com/34040324/186787872-ddf956cf-9c26-4600-a32e-64a9232786e7.jpg" alt="Preview 1" width="48%" /> <img src="https://user-images.githubusercontent.com/34040324/186787906-80d237e5-3d49-4bc3-afdb-349f16e2fd48.jpg" alt="Preview 2" width="48%" />
+
 ### Tech stack
 
 - Svelte
