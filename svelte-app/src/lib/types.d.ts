@@ -13,6 +13,12 @@ export interface Document {
     _type: string;
     name: string;
     slug: string;
+    image: {
+      _id: string;
+      asset: {
+        _ref: string;
+      };
+    };
   };
   slug: {
     _type: string;
@@ -40,12 +46,12 @@ export interface SingleDocumentQueryParams {
 }
 
 export interface DocumentQueryParams {
-  limit: number;
-  skip: number;
-  sort: string;
-  order: string;
-  date: string;
-  tags: string[];
+  limit?: number;
+  skip?: number;
+  sort?: string;
+  order?: string;
+  date?: string;
+  tags?: string[];
 }
 
 // Responses

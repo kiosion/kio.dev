@@ -7,5 +7,7 @@ export const REMOTE_API_URL =
     ? `https://kio.sh/api/${REMOTE_API_VERSION}/`
     : ENV === 'backed'
       ? `https://dev.kio.sh/api/${REMOTE_API_VERSION}/`
-      : `http://localhost:4000/api/${REMOTE_API_VERSION}/`;
+      : `http://localhost:4444/api/${REMOTE_API_VERSION}/`;
 export const REMOTE_API_TOKEN = import.meta.env.VITE_API_TOKEN;
+export const SANITY_DATASET = ENV === 'production' ? 'production' : 'dev';
+export const SANITY_PROJECT_ID = 'gkgnfulv';

@@ -73,14 +73,18 @@ export const queryProject = async (
 
 export const findProjects = async (
   fetch: RouteFetch,
-  params = {
-    limit: 10,
-    skip: 0,
-    sort: 'date',
-    order: 'desc',
-    date: ''
-  }
+  params: DocumentQueryParams
 ) => {
+  params = Object.assign(
+    {
+      limit: 10,
+      skip: 0,
+      sort: 'date',
+      order: 'desc',
+      date: ''
+    },
+    params
+  );
   const cacheKey = Store.getCacheKey('projects', params);
   if (Store.has(cacheKey)) {
     return Store.get(cacheKey);

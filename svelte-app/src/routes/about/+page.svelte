@@ -3,6 +3,10 @@
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import PortableText from '@/components/portable-text/portable-text.svelte';
   import { about } from '@/stores/about';
+  import { navOptions, pageHeading } from '@/stores/menu';
+
+  navOptions.set({ down: '', up: '/work' });
+  pageHeading.set('About');
 </script>
 
 <svelte:head>

@@ -5,6 +5,9 @@
   import MenuToggle from '@/components/toggles/menu-toggle.svelte';
   import { menuOpen } from '@/stores/menu';
   import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+  import type UIfx from 'uifx';
+  import { sounds } from '@/stores/features';
 
   let links = [
     { name: 'Blog', url: '/blog' },
@@ -41,9 +44,20 @@
 
   let clicks = 0;
 
+  let click: UIfx;
+  let ping: UIfx;
+
+  onMount(() => {
+    import('$lib/sfx').then((sfx) => {
+      click = sfx.click;
+      ping = sfx.ping;
+    });
+  });
+
   const onLogoClick = () => {
     clicks++;
-    if (clicks > 4) {
+    if (clicks > 3) {
+      $sounds === 'on' && ping?.play();
       goto('/secret')
         .then(() => {
           clicks = 0;
@@ -53,6 +67,7 @@
         });
       return;
     }
+    $sounds === 'on' && click?.play();
     goto('/');
     setTimeout(() => {
       clicks = 0;
@@ -60,11 +75,16 @@
   };
 
   export let segment: string;
+  export let hovered: boolean;
 </script>
 
 <nav
-  class="w-full p-4 pt-6 md:p-8 md:pr-0 2xl:w-80 lg:w-64 md:w-40 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
+  class="p-4 pt-6 md:py-8 md:px-4 w-full md:w-40 lg:w-60 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
   data-test-id="navBar"
+  on:mouseover={() => (hovered = true)}
+  on:focus={() => (hovered = true)}
+  on:mouseout={() => (hovered = false)}
+  on:blur={() => (hovered = false)}
 >
   <div class="flex-grow -mt-7 md:-mt-4 click-through">
     <button
@@ -91,8 +111,10 @@
             class:mt-3={index > 0}
             aria-label={link.name}
             href={link.url}
-            on:click={() => menuOpen.set(false)}
-            ><span class="strike">{link.name}</span></a
+            on:click={() => {
+              menuOpen.set(false);
+              $sounds === 'on' && click?.play();
+            }}><span class="strike">{link.name}</span></a
           >
         {/each}
       </div>
@@ -107,8 +129,10 @@
           class:mt-3={index > 0}
           aria-label={link.name}
           href={link.url}
-          on:click={() => menuOpen.set(false)}
-          ><span class="strike" tabindex="0">{link.name}</span></a
+          on:click={() => {
+            menuOpen.set(false);
+            $sounds === 'on' && click?.play();
+          }}><span class="strike" tabindex="0">{link.name}</span></a
         >
       {/each}
     </div>
@@ -122,6 +146,7 @@
         href={social.url}
         aria-label={social.name}
         target={social?.target ? '_blank' : ''}
+        on:click={() => $sounds === 'on' && click?.play()}
       >
         <Icon icon={social.icon} rotate={social?.rotate} tabindex="0" />
       </a>

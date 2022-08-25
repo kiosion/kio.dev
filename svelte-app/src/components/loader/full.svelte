@@ -11,11 +11,10 @@
     'Hunting for bugs',
     'Dusting the cobwebs',
     'Looking for missing semicolons',
-    'Fetching a bigger boat',
+    'Getting a bigger boat',
     'Reading the docs',
     'Doing the heavy lifting',
     ':3',
-    'Proving P=NP',
     'Waiting for the eventual heat-death of the universe',
     'Calculating the airspeed velocity of an unladen swallow',
     'Why do they call it oven when you of in the cold food of out hot eat the food'
@@ -31,8 +30,8 @@
 
 <div
   class="absolute{theme === 'light'
-    ? ' bg-slate-100'
-    : ' bg-slate-800'} flex items-center justify-center z-40"
+    ? ' bg-slate-200'
+    : ' bg-slate-900'} flex items-center justify-center z-40"
   data-test-id="loader-full"
   out:fly={{ duration: 200, y: 10 }}
 >

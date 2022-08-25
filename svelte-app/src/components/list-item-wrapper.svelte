@@ -2,7 +2,7 @@
   import { highlightEffects } from '@/stores/features';
   import { navigating } from '$app/stores';
 
-  export let mousePos = [0, 0];
+  export let mousePos = [-1000, -1000];
   export let hovered: boolean;
   export let wrapperClass = '';
 

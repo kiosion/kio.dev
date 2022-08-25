@@ -61,6 +61,7 @@ module query {
         "_id": author->_id,
         "_type": author->_type,
         "name": author->name,
+        "image": author->image,
         "slug": author->slug
       },
       body,
@@ -120,6 +121,7 @@ module query {
         "_id": author->_id,
         "_type": author->_type,
         "name": author->name,
+        "image": author->image,
         "slug": author->slug
       },
       body,
@@ -207,6 +209,7 @@ module query {
         "_id": author->_id,
         "_type": author->_type,
         "name": author->name,
+        "image": author->image,
         "slug": author->slug
       },
       body,

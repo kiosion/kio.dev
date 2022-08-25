@@ -15,12 +15,27 @@
     let prev = prevPath ?? path;
     prevPath = path;
 
-    const [toRoute] = path.startsWith('/')
-      ? path.slice(1).split('/')
-      : path.split('/');
-    const [fromRoute] = prev.startsWith('/')
-      ? prev.slice(1).split('/')
-      : prev.split('/');
+    const toRoute = path.startsWith('/')
+      ? path
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
+      : path
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
+    const fromRoute = prev.startsWith('/')
+      ? prev
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
+      : prev
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
+
     const dirs = [
       fromRoute === '' ? 'index' : fromRoute,
       toRoute === '' ? 'index' : toRoute
@@ -30,6 +45,7 @@
     if (
       [
         'blog-about',
+        'blog-blog/*',
         'blog-work',
         'index-about',
         'index-blog',
@@ -44,6 +60,7 @@
         'about-blog',
         'about-index',
         'about-work',
+        'blog/*-blog',
         'blog-index',
         'secret-index',
         'work-index',
@@ -61,11 +78,12 @@
 
 {#key url}
   {#if $reduceMotion === 'on'}
-    <div class="m-0 p-0">
+    <div>
       <slot />
     </div>
   {:else}
     <div
+      class="h-full grid grid-cols-1 grid-rows-1"
       in:fly={{
         delay: 200,
         duration: 400,
@@ -77,3 +95,10 @@
     </div>
   {/if}
 {/key}
+
+<style lang="scss">
+  div > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
+</style>

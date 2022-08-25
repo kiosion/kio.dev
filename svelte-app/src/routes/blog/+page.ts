@@ -4,7 +4,7 @@ import Logger from '$lib/logger';
 export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
   await parent();
 
-  await findPosts(fetch)
+  await findPosts(fetch, { limit: 6 })
     .then((res) => {
       if (res.error) {
         throw res.error;

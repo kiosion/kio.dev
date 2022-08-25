@@ -10,6 +10,7 @@
   import Divider from './serializers/divider.svelte';
 
   import type { InputValue } from '@portabletext/svelte/ptTypes';
+  import Image from './serializers/image.svelte';
 
   export let text: InputValue;
 </script>
@@ -20,7 +21,8 @@
     components={{
       types: {
         code: CodeBlock,
-        divider: Divider
+        divider: Divider,
+        image: Image
       },
       marks: {
         link: CustomLink,

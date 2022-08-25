@@ -2,4 +2,8 @@ import { writable } from 'svelte/store';
 
 const menuOpen = writable(false);
 
-export { menuOpen };
+const navOptions = writable({ down: '', up: '' });
+
+const pageHeading = writable('');
+
+export { menuOpen, navOptions, pageHeading };

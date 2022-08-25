@@ -881,6 +881,11 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@sanity/image-url@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@sanity/image-url/-/image-url-1.0.1.tgz#960d649b2f4396da0adb31cf94503c929495cea0"
+  integrity sha512-AdKQ3zMk7WdoNwoJPrAvQhW+kUtBldBX0nHtnGy+rwmgsCQ0rAXasrgH43Fhmsp/yB6piiq+F2d5qEuBFsdQVg==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -9393,6 +9398,11 @@ uid-safe@2.1.5:
   integrity sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==
   dependencies:
     random-bytes "~1.0.0"
+
+uifx@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/uifx/-/uifx-2.0.7.tgz#e4710063bfb2deaa9c4b173172baa6c1211bfd2d"
+  integrity sha512-tnPwdYe1dDmsxWJeU84CjDN/rcWOzOcG6tL1bsi5bUXw5nJaq+c4ThsbShMkedX2dAQ5gq1Q5CxQGsxwa5wxfw==
 
 unbzip2-stream@^1.0.9:
   version "1.4.3"

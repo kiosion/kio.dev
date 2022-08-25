@@ -24,4 +24,9 @@ reduceMotion.subscribe((value) => {
   browser && window.localStorage.setItem('reduceMotion', value);
 });
 
-export { svgBackground, highlightEffects, reduceMotion };
+const sounds = writable<string>(initialSetting('sounds', 'on'));
+sounds.subscribe((value) => {
+  browser && window.localStorage.setItem('sounds', value);
+});
+
+export { svgBackground, highlightEffects, reduceMotion, sounds };

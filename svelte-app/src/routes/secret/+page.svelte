@@ -2,24 +2,35 @@
   import PageHeading from '@/components/headings/page-heading.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import SwitchItem from '@/components/toggles/switch-item.svelte';
+  import { navOptions, pageHeading } from '@/stores/menu';
   import {
     svgBackground,
     highlightEffects,
-    reduceMotion
+    reduceMotion,
+    sounds
   } from '@/stores/features';
+  import type UIfx from 'uifx';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$lib/helpers/emoji';
 
   let body: HTMLElement;
+  let click: UIfx;
 
   onMount(() => {
     parseEmoji(body);
+    import('$lib/sfx').then((sfx) => {
+      click = sfx.click;
+    });
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (event: CustomEvent, target: any) => {
     target.set(event?.detail?.state === true ? 'on' : 'off');
+    $sounds === 'on' && click?.play();
   };
+
+  navOptions.set({ down: '', up: '/' });
+  pageHeading.set('Secret');
 </script>
 
 <svelte:head>
@@ -31,7 +42,7 @@
     title="secret features"
     subtitle="You found the secret features page!"
   />
-  <div class="mt-14">
+  <div class="mt-12">
     <ContentWrapper>
       <SwitchItem
         action={onChange}
@@ -53,8 +64,9 @@
       />
       <SwitchItem
         action={onChange}
-        label="Click / interaction sounds"
-        disabled={true}
+        target={sounds}
+        state={$sounds === 'on'}
+        label="UI interaction sounds"
       />
       <SwitchItem action={onChange} label="Comic Sans 😃" disabled={true} />
     </ContentWrapper>

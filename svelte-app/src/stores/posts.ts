@@ -80,14 +80,18 @@ export const queryPost = async (
 
 export const findPosts = async (
   fetch: RouteFetch,
-  params = {
-    limit: 10,
-    skip: 0,
-    sort: 'date',
-    order: 'desc',
-    date: ''
-  }
+  params: DocumentQueryParams
 ) => {
+  params = Object.assign(
+    {
+      limit: 10,
+      skip: 0,
+      sort: 'date',
+      order: 'desc',
+      date: ''
+    },
+    params
+  );
   const cacheKey = Store.getCacheKey('posts', params);
   if (Store.has(cacheKey)) {
     return Store.get(cacheKey);

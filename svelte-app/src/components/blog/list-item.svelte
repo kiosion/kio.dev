@@ -5,14 +5,25 @@
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
   import type { Document } from '@/lib/types';
   import type { TextBlock } from '$lib/types';
+  import { onMount } from 'svelte';
+  import type UIfx from 'uifx';
+  import { sounds } from '@/stores/features';
 
   export let post: Document;
   export let mousePos = [0, 0];
+
+  let click: UIfx;
 
   let hovered = false;
   let readingTime = getReadingTime(
     getTotalWords(post.body as Array<TextBlock>)
   );
+
+  onMount(() => {
+    import('$lib/sfx').then((sfx) => {
+      click = sfx.click;
+    });
+  });
 </script>
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
@@ -21,6 +32,7 @@
       href="blog/{post.slug && post.slug.current}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
+      on:click={() => $sounds === 'on' && click?.play()}
     >
       <section
         class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"

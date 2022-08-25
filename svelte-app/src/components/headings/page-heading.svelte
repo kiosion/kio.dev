@@ -1,8 +1,9 @@
 <script lang="ts">
-  export let title: string, subtitle: string;
+  export let heading: string | undefined = undefined;
 </script>
 
-<h1 class="font-code font-bold text-4xl text-center my-8 lowercase">{title}</h1>
-{#if subtitle}
-  <p class="text-center">{subtitle}</p>
-{/if}
+<div class="my-12">
+  {#if heading}
+    <p class="text-center">{heading}</p>
+  {/if}
+</div>
