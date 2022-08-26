@@ -22,6 +22,7 @@
   "devDependencies": {
     "@cypress/vite-dev-server": "^3.1.1",
     "@iconify/svelte": "^2.2.1",
+    "@poppanator/sveltekit-svg": "^0.3.4",
     "@portabletext/svelte": "^1.0.1",
     "@sanity/image-url": "^1.0.1",
     "@sveltejs/adapter-auto": "next",
@@ -71,5 +72,8 @@
     "vite-plugin-test-selectors": "0.0.2",
     "vitest": "^0.22.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "pixelarticons": "^1.7.0"
+  }
 }

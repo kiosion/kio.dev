@@ -6,10 +6,11 @@
   import { highlightEffects } from '@/stores/features';
   import { navOptions, pageHeading } from '@/stores/menu';
   import ErrorText from '@/components/error-text.svelte';
-  // import { handleScrollNav } from '$lib/helpers/navigation';
+  import Pin from 'pixelarticons/svg/pin.svg';
+  import Clock from 'pixelarticons/svg/clock.svg';
+  import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
 
   let mousePos: [number, number];
-  // let scrollContainer: HTMLElement;
 
   const setMousePos = (x: number, y: number) => {
     mousePos = [x, y];
@@ -51,9 +52,14 @@
     heading="Thoughts & ramblings about tech, design, and development"
   />
   <div class="mb-12">
-    <h3 class="font-code text-lg mt-4 mb-2">Pinned</h3>
-
-    <h3 class="font-code text-lg mt-4 mb-2">Recent</h3>
+    <div class="flex flex-row justify-start align-center gap-2 mt-4 mb-2">
+      <Pin width="20" />
+      <h3 class="font-code text-lg">Pinned</h3>
+    </div>
+    <div class="flex flex-row justify-start align-center gap-2 mt-4 mb-2">
+      <Clock width="20" />
+      <h3 class="font-code text-lg">Recent</h3>
+    </div>
     {#if $posts?.data?.length}
       {#each $posts.data as post}
         <ListItem {post} {mousePos} />
@@ -61,10 +67,11 @@
     {:else}
       <ErrorText text="No data" classes="w-fit" />
     {/if}
-    <div class="w-full flex flex-row items-center justify-center mt-8">
-      <a href="/blog/all" class="w-fit" aria-label="View all posts">
+    <a href="/blog/all" class="w-fit" aria-label="View all posts">
+      <div class="flex flex-row items-center justify-start gap-2 mt-8">
+        <ArrowRight width="20" />
         <h3 class="font-code text-lg w-fit" tabindex="0">View all</h3>
-      </a>
-    </div>
+      </div>
+    </a>
   </div>
 </div>

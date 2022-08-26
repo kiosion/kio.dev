@@ -21,12 +21,12 @@ highlightEffects.subscribe((value) => {
 
 const reduceMotion = writable<string>(initialSetting('reduceMotion', 'off'));
 reduceMotion.subscribe((value) => {
-  browser && window.localStorage.setItem('reduceMotion', value);
+  browser && window.localStorage.setItem('feature-reduceMotion', value);
 });
 
 const sounds = writable<string>(initialSetting('sounds', 'on'));
 sounds.subscribe((value) => {
-  browser && window.localStorage.setItem('sounds', value);
+  browser && window.localStorage.setItem('feature-sounds', value);
 });
 
 export { svgBackground, highlightEffects, reduceMotion, sounds };

@@ -2,9 +2,13 @@
   import { theme } from '@/stores/theme';
   import { navOptions, pageHeading } from '@/stores/menu';
   import { onMount } from 'svelte';
-  import Icon from '@iconify/svelte';
   import type UIfx from 'uifx';
   import { sounds } from '@/stores/features';
+  import ArrowUp from 'pixelarticons/svg/arrow-up.svg';
+  import MoonStars from 'pixelarticons/svg/moon-stars.svg';
+  import Sun from 'pixelarticons/svg/sun.svg';
+  import Volume2 from 'pixelarticons/svg/volume-2.svg';
+  import VolumeX from 'pixelarticons/svg/volume-x.svg';
 
   let click: UIfx;
 
@@ -25,7 +29,7 @@
         class="flex flex-row items-center select-none w-52"
         on:click={() => $sounds === 'on' && click?.play()}
       >
-        <Icon icon="akar-icons:arrow-up" />
+        <ArrowUp width="20" />
         <p class="font-code text-base w-fit ml-4" tabindex="0">
           Back ({$navOptions.up})
         </p>
@@ -36,7 +40,7 @@
     <p class="font-code text-lg w-fit select-none -ml-52 -mr-40">
       {$pageHeading}
     </p>
-    <div class="flex flex-row items-center justify-end w-40">
+    <div class="flex flex-row items-center justify-end w-40 gap-4">
       <button
         class="flex flex-row items-center justify-end select-none"
         aria-label="Toggle theme"
@@ -47,12 +51,30 @@
           $sounds === 'on' && click?.play();
         }}
       >
-        <p class="font-code text-base w-fit mr-4">
+        <!-- <p class="font-code text-base w-fit mr-4">
           {$theme === 'light' ? 'Light' : 'Dark'}
-        </p>
-        <Icon
-          icon="akar-icons:{$theme === 'light' ? 'moon-fill' : 'sun-fill'}"
-        />
+        </p> -->
+        {#if $theme === 'light'}
+          <MoonStars width="20" />
+        {:else}
+          <Sun width="20" />
+        {/if}
+      </button>
+      <button
+        class="flex flex-row items-center justify-end select-none"
+        aria-label="Toggle sfx"
+        data-test-id="sfx-toggle"
+        tabindex="0"
+        on:click={() => {
+          sounds.set($sounds === 'on' ? 'off' : 'on');
+          $sounds === 'on' && click?.play();
+        }}
+      >
+        {#if $sounds === 'on'}
+          <Volume2 width="20" />
+        {:else}
+          <VolumeX width="20" />
+        {/if}
       </button>
     </div>
   </div>

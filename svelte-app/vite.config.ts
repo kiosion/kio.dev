@@ -4,6 +4,7 @@ import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import path from 'path';
 import dotenv from 'dotenv';
+import svg from '@poppanator/sveltekit-svg';
 
 dotenv.config();
 const viteEnv = {};
@@ -15,6 +16,7 @@ Object.keys(process.env).forEach((key) => {
 
 export default defineConfig({
   plugins: [
+    svg(),
     sveltekit(),
     StripTestSelectors({
       dev: process.env.MODE !== 'testing'
