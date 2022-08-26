@@ -1,7 +1,10 @@
 {
+  "root": true,
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "requireConfigFile": false
   },
   "env": {
     "browser": true,
@@ -9,7 +12,6 @@
     "node": true
   },
   "extends": [
-    "@sanity/eslint-config-studio",
     "eslint:recommended"
   ],
   "rules": {
@@ -71,7 +73,6 @@
     "**/pnpm-lock.yaml",
     "**/package-lock.json",
     "**/yarn.lock",
-    "**/scripts/**/*.js",
-    "**/plugins/**/*.js"
+    "**/deskStructure.js"
   ]
 }

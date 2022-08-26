@@ -7,8 +7,9 @@ import author from './author';
 import post from './post';
 import project from './project';
 import tag from './tag';
+import siteSettings from './settings';
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([author, divider, post, project, tag])
+  types: schemaTypes.concat([author, divider, post, project, tag, siteSettings])
 });
