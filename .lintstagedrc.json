@@ -1,7 +1,6 @@
 {
   "**/sanity-cms/**/*.{ts,js}": [
-    "./sanity-cms/node_modules/.bin/prettier --write",
-    "./sanity-cms/node_modules/.bin/eslint --fix"
+    "./sanity-cms/node_modules/.bin/prettier --write"
   ],
   "*.scss": "npx stylelint --fix",
   "**/express-api/**/*.{ts,js}": [
