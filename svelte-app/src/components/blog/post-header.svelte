@@ -50,7 +50,7 @@
             alt="Profile picture"
           />
         </div>
-        <p>
+        <p class="w-fit whitespace-nowrap">
           By {author?.name ? author.name : 'Unknown'}
         </p>
       </button>
