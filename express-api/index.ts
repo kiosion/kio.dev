@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import request from 'request';
 import { query } from './lib';
 import type { Error, JsonError } from './types';
 
@@ -231,6 +232,50 @@ app.get(
       });
   }
 );
+
+app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
+  const reqUrlParts = req.url?.split('/'),
+    resource = reqUrlParts?.[+reqUrlParts?.length - 1]?.split('?')[0],
+    params = req.url?.split('?')[1],
+    url = `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/${
+      process.env.SANITY_STUDIO_API_DATASET
+        ? process.env.SANITY_STUDIO_API_DATASET
+        : 'production'
+    }/${resource}?${params}`;
+
+  try {
+    request(
+      {
+        url,
+        encoding: null
+      },
+      (err, resp, buffer) => {
+        if (!err && resp.statusCode === 200) {
+          res.setHeader('Content-Type', resp.headers['content-type']);
+          res.send(resp.body);
+        } else {
+          setHeaders(res);
+          res
+            .status(404)
+            .send(
+              constructError(
+                404,
+                'Not found',
+                'Requested resource does not exist or is not accessible'
+              )
+            );
+        }
+      }
+    );
+  } catch (err) {
+    setHeaders(res);
+    res
+      .status(500)
+      .send(
+        constructError(500, 'Internal server error', 'Failed to fetch resource')
+      );
+  }
+});
 
 app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
   setHeaders(res);

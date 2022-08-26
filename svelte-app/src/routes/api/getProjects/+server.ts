@@ -9,7 +9,7 @@ import Logger from '$lib/logger';
 export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/projects${url.search}`;
+  const remoteUrl = `${REMOTE_API_URL}/query/projects${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -24,8 +24,9 @@ export const GET: RequestHandler = async ({
       );
       return new Response(
         JSON.stringify({
-          status: res.status,
-          error: 'Endpoint error: Failed to fetch projects'
+          status: 500,
+          error: 'Endpoint error: Failed to fetch projects',
+          detail: `Remote API returned status code: ${res.status}`
         })
       );
     }

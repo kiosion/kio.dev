@@ -3,7 +3,7 @@ import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
 
 export const GET: RequestHandler = async (): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/about`;
+  const remoteUrl = `${REMOTE_API_URL}/query/about`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -15,8 +15,9 @@ export const GET: RequestHandler = async (): Promise<RequestHandlerOutput> => {
       Logger.error(`Failed to fetch about: ${res.status}`, 'api/fetchAbout');
       return new Response(
         JSON.stringify({
-          status: res.status,
-          error: 'Endpoint failed to fetch about'
+          status: 500,
+          error: 'Endpoint failed to fetch about',
+          detail: `Remote API returned status code: ${res.status}`
         })
       );
     }

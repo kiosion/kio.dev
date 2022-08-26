@@ -18,8 +18,6 @@
 
   export let portableText: ImageBlockComponentProps;
 
-  console.log('image:', portableText);
-
   $: ({ value } = portableText);
   $: ({ _key } = value);
   $: ({ _ref } = value.asset);

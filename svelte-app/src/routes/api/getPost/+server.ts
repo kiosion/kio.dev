@@ -9,7 +9,7 @@ import Logger from '$lib/logger';
 export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/post${url.search}`;
+  const remoteUrl = `${REMOTE_API_URL}/query/post${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -21,8 +21,9 @@ export const GET: RequestHandler = async ({
       Logger.error(`Failed to fetch post: ${res.status}`, 'api/getPost');
       return new Response(
         JSON.stringify({
-          status: res.status,
-          error: 'Endpoint error: Failed to fetch post'
+          status: 500,
+          error: 'Endpoint error: Failed to fetch post',
+          detail: `Remote API returned status code: ${res.status}`
         })
       );
     }

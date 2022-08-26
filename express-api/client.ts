@@ -1,5 +1,6 @@
 import sanityClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,7 +18,7 @@ module SanityClient {
 
   const builder = imageUrlBuilder(client);
 
-  export const urlFor = (source: unknown) => builder.image(source);
+  export const urlFor = (source: SanityImageSource) => builder.image(source);
 }
 
 export default SanityClient;

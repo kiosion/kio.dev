@@ -1,10 +1,18 @@
 import imageUrlBuilder from '@sanity/image-url';
-import { SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { REMOTE_API_URL } from '$lib/env';
+import type {
+  SanityImageSource,
+  SanityClientLike
+} from '@sanity/image-url/lib/types/types';
 
-const builder = imageUrlBuilder({
-  projectId: SANITY_PROJECT_ID,
-  dataset: SANITY_DATASET
-});
+const config: SanityClientLike = {
+  clientConfig: {
+    apiHost: `${REMOTE_API_URL}/cdn`,
+    projectId: 'dataset', // This is kinda jank, should find a workaround to not include at all
+    dataset: '0'
+  }
+};
+
+const builder = imageUrlBuilder(config);
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);

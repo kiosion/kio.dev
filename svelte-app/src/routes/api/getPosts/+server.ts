@@ -9,12 +9,12 @@ import Logger from '$lib/logger';
 export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/posts${url.search}`;
+  const remoteUrl = `${REMOTE_API_URL}/query/posts${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
       headers: {
-        authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`
+        authorization: `Bearer ${REMOTE_API_TOKEN}`
       }
     });
     if (res.status !== 200) {

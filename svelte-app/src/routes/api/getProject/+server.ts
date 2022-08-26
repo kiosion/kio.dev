@@ -4,11 +4,12 @@ import type {
   RequestHandlerOutput
 } from './types';
 import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
+import Logger from '$lib/logger';
 
 export const GET: RequestHandler = async ({
   url
 }: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}query/project${url.search}`;
+  const remoteUrl = `${REMOTE_API_URL}/query/project${url.search}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -20,8 +21,9 @@ export const GET: RequestHandler = async ({
       Logger.error(`Failed to fetch project: ${res.status}`, 'api/getProject');
       return new Response(
         JSON.stringify({
-          status: res.status,
-          error: 'Endpoint error: Failed to fetch project'
+          status: 500,
+          error: 'Endpoint error: Failed to fetch project',
+          detail: `Remote API returned status code: ${res.status}`
         })
       );
     }
