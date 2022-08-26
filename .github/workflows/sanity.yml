@@ -26,8 +26,8 @@ jobs:
       - name: Install Dependencies
         run: (cd ./sanity-cms && yarn install 2> >(grep -v warning 1>&2))
 
-      - name: Lint check
-        run: (cd ./sanity-cms && yarn lint)
+      # - name: Lint check
+      #   run: (cd ./sanity-cms && yarn lint)
 
       - name: Build for development
         run: (cd ./sanity-cms && SANITY_STUDIO_API_DATASET="dev" yarn sanity build)
