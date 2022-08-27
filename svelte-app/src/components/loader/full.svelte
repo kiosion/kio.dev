@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Diamonds } from 'svelte-loading-spinners';
   import { fly } from 'svelte/transition';
-  import { browser } from '$app/env';
   import seedrandom from 'seedrandom';
 
   let phrase = '';
