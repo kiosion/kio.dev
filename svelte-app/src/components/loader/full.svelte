@@ -2,6 +2,7 @@
   import { Diamonds } from 'svelte-loading-spinners';
   import { fly } from 'svelte/transition';
   import { browser } from '$app/env';
+  import seedrandom from 'seedrandom';
 
   let phrase = '';
 
@@ -20,8 +21,9 @@
     'Why do they call it oven when you of in the cold food of out hot eat the food'
   ];
 
-  phrase = `${phrases[Math.floor(Math.random() * phrases.length)]}`;
-  browser && (phrase = '');
+  phrase = `${
+    phrases[Math.floor(seedrandom(new Date().getMinutes())() * phrases.length)]
+  }`;
 
   export let theme = 'light';
   export let size = 38;

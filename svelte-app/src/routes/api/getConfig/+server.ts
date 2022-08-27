@@ -11,7 +11,6 @@ export const GET: RequestHandler = async (): Promise<RequestHandlerOutput> => {
         authorization: `Bearer ${REMOTE_API_TOKEN}`
       }
     });
-    console.log('endpoint res: ', res.status);
     if (res.status !== 200) {
       Logger.error(`Failed to fetch config: ${res.status}`, 'api/getConfig');
       return new Response(
