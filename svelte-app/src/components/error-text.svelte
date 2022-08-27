@@ -5,7 +5,10 @@
   export let classes = '';
 </script>
 
-<div class="flex flex-row items-center justify-center {classes}">
+<div
+  data-test-id="error-text"
+  class="flex flex-row items-center justify-center {classes}"
+>
   <Icon icon="clarity:error-standard-solid" />
   <p class="font-code text-lg ml-3">{text}</p>
 </div>

@@ -13,7 +13,7 @@
 
   let pfpCrop: ImageCrop;
 
-  $: pfpCrop = getCrop($about.data.image);
+  $: pfpCrop = getCrop($about?.data?.image);
 </script>
 
 <svelte:head>

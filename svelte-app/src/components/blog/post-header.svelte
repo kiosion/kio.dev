@@ -45,7 +45,7 @@
           {#if author?.image}
             <img
               class="rounded-full aspect-square h-full"
-              src={urlFor(author.image.asset._ref)
+              src={urlFor(author?.image?.asset?._ref)
                 .size(50, 50)
                 .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
                 .fit('crop')

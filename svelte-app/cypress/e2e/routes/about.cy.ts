@@ -3,7 +3,7 @@ import type { AboutSetupParams } from '../../types';
 
 describe('E2E | About', () => {
   const setupContext = ({ delay = 800, content = true }: AboutSetupParams) => {
-    return cy.intercept('GET', '/api/getAbout*', (req) => {
+    return cy.intercept('GET', '/api/getAbout', (req) => {
       req.reply({
         headers: {
           'Content-Type': 'application/json'
@@ -28,12 +28,12 @@ describe('E2E | About', () => {
     cy.wait('@getAbout');
 
     cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
-    cy.get('[data-test-route="about"').contains('Error loading about');
+    cy.get('[data-test-id="error-text"]').should('exist');
 
     cy.reload();
 
     cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
-    cy.get('[data-test-route="about"').contains('Error loading about');
+    cy.get('[data-test-id="error-text"]').should('exist');
   });
 
   it('should render about route and content', () => {
