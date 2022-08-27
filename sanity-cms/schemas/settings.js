@@ -15,6 +15,10 @@ export default {
     {
       name: 'links',
       title: 'Links'
+    },
+    {
+      name: 'pinned',
+      title: 'Pinned'
     }
   ],
   fields: [
@@ -34,6 +38,14 @@ export default {
       type: 'string',
       title: 'Index subheading',
       group: 'pages'
+    },
+    {
+      name: 'me',
+      title: 'Me',
+      type: 'reference',
+      to: {
+        type: 'author'
+      }
     },
     {
       name: 'socialLinks',
@@ -70,6 +82,24 @@ export default {
       type: 'text',
       title: 'PGP Key',
       group: 'pages'
+    },
+    {
+      name: 'pinnedPost',
+      type: 'reference',
+      title: 'Pinned Post',
+      group: 'pinned',
+      to: {
+        type: 'post'
+      }
+    },
+    {
+      name: 'pinnedProject',
+      type: 'reference',
+      title: 'Pinned Project',
+      group: 'pinned',
+      to: {
+        type: 'project'
+      }
     }
   ]
 };

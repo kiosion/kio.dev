@@ -1,16 +1,14 @@
 import { writable } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Cache from '$lib/cache';
-import type { RouteFetch, ResData, AuthorDocument } from '$lib/types';
+import type { RouteFetch, ResData } from '$lib/types';
 
 const Store = new Cache();
 
-export const about = writable(
-  {} as Omit<ResData, 'data'> & { data: AuthorDocument }
-);
+export const config = writable({} as ResData);
 
-export const fetchAbout = async (fetch: RouteFetch) => {
-  const url = `${API_URL}getAbout`;
+export const fetchConfig = async (fetch: RouteFetch) => {
+  const url = `${API_URL}getConfig`;
   try {
     const res = await fetch(url);
     const response = await res.json();
@@ -25,12 +23,12 @@ export const fetchAbout = async (fetch: RouteFetch) => {
   }
 };
 
-export const findAbout = async (fetch: RouteFetch) => {
-  const cacheKey = Store.getCacheKey('about', {});
+export const findConfig = async (fetch: RouteFetch) => {
+  const cacheKey = Store.getCacheKey('config', {});
   if (Store.has(cacheKey)) {
     return Store.get(cacheKey);
   } else {
-    const response = await fetchAbout(fetch);
+    const response = await fetchConfig(fetch);
     Store.set(cacheKey, response);
     return response;
   }

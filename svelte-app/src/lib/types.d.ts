@@ -4,45 +4,82 @@ import type {
   PortableTextBlock
 } from '@portabletext/types';
 
+// Sanity types
+export interface SanityAsset {
+  _id?: string;
+  _type?: string;
+  url?: string;
+  path?: string;
+  assetId?: string;
+  extension?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+export interface SanityReference {
+  _ref: string;
+}
+export interface SanityImageObject {
+  asset: SanityReference | SanityAsset;
+  crop?: SanityImageCrop;
+  hotspot?: SanityImageHotspot;
+}
+export interface SanityImageCrop {
+  _type?: string;
+  left: number;
+  bottom: number;
+  right: number;
+  top: number;
+}
+export interface SanityImageHotspot {
+  _type?: string;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
 // Data types
-export interface Document {
-  _id: string;
-  _type: string;
-  author?: {
-    _id: string;
-    _type: string;
-    name: string;
-    slug: string;
-    image: {
-      _id: string;
-      asset: {
-        _ref: string;
-      };
-    };
-  };
-  slug: {
-    _type: string;
+export interface Document extends SanityAsset {
+  author?: AuthorDocument;
+  slug:
+  | SanityAsset
+  | {
     current: string;
   };
   body: InputValue;
   date: string;
   desc?: string;
   tags?: [
-    {
-      _id?: string;
-      slug?: {
-        _type: string;
+    | SanityAsset
+    | {
+      slug:
+      | SanityAsset
+      | {
         current: string;
       };
-      title?: string;
+      title: string;
     }
   ];
   title: string;
 }
 
+export interface AuthorDocument
+  extends Omit<Document, 'tags' | 'desc' | 'title' | 'author'> {
+  _id: string;
+  _type: string;
+  name: string;
+  slug:
+  | SanityAsset
+  | {
+    current: string;
+  };
+  image: SanityImageObject;
+}
+
 // Param types
 export interface SingleDocumentQueryParams {
-  slug: string;
+  slug?: string;
+  id?: string;
 }
 
 export interface DocumentQueryParams {

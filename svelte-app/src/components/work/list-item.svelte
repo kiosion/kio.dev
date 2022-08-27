@@ -1,12 +1,23 @@
 <script lang="ts">
   import ListItemWrapper from '../list-item-wrapper.svelte';
   import { getAbsDate } from '$lib/helpers/date';
+  import { onMount } from 'svelte';
+  import { sounds } from '@/stores/features';
   import type { Document } from '$lib/types';
+  import type UIfx from 'uifx';
 
   export let project: Document;
   export let mousePos = [0, 0];
 
+  let click: UIfx;
+
   let hovered = false;
+
+  onMount(() => {
+    import('$lib/sfx').then((sfx) => {
+      click = sfx.click;
+    });
+  });
 </script>
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
@@ -15,13 +26,13 @@
       href="work/{project.slug && project.slug.current}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
+      on:click={() => $sounds === 'on' && click?.play()}
     >
       <section
-        class="flex flex-col align-center justify-center relative w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
-        tabindex="0"
       >
         <h3 class="font-sans text-base mb-2">
           {getAbsDate(project.date)}
@@ -42,14 +53,10 @@
     </a>
   {:else}
     <section
-      class="flex flex-col cursor-default items-stretch justify-stretch w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+      class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
       data-test-id="list-item"
+      aria-label="No results"
     >
-      <div
-        class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
-          ? 'opacity-10'
-          : 'opacity-0'}"
-      />
       <h3 class="text-center font-sans text-base my-2">No results found</h3>
     </section>
   {/if}

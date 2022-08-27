@@ -51,8 +51,8 @@ export const queryPost = async (
   fetch: RouteFetch,
   params: SingleDocumentQueryParams
 ) => {
-  const { slug = '' } = params;
-  const url = `${API_URL}getPost?slug=${slug}`;
+  const { slug = '', id = '' } = params;
+  const url = `${API_URL}getPost?slug=${slug}&id=${id}`;
   try {
     const res = await fetch(url);
     const response = await res.json();
@@ -102,7 +102,10 @@ export const findPosts = async (
   }
 };
 
-export const findPost = async (fetch: RouteFetch, params = { slug: '' }) => {
+export const findPost = async (
+  fetch: RouteFetch,
+  params: SingleDocumentQueryParams
+) => {
   const cacheKey = Store.getCacheKey('post', params);
   if (Store.has(cacheKey)) {
     return Store.get(cacheKey);

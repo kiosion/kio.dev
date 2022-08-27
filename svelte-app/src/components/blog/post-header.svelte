@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { urlFor } from '$lib/helpers/image';
+  import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/post';
   import type { TextBlock, Document } from '$lib/types';
@@ -25,11 +25,15 @@
   const title = post.title;
   const desc = post.desc;
   const author = post.author;
+
+  let pfpCrop: ImageCrop;
+
+  $: pfpCrop = getCrop(author?.image);
 </script>
 
-<div class="mt-12 mb-4" data-test-id="post-head">
+<div class="mb-4" data-test-id="post-head">
   <div class="flex flex-col">
-    <h1 class="font-display text-4xl mb-4 font-bold">{title}</h1>
+    <h1 class="font-display text-4xl mb-6 font-bold">{title}</h1>
 
     <div class="flex flex-row items-center justify-start">
       <button
@@ -37,18 +41,20 @@
         on:click={() => goto('/about')}
         tabindex="0"
       >
-        <div class="max-h-8 aspect-square">
-          <!-- svelte-ignore a11y-img-redundant-alt -->
-          <img
-            class="rounded-full aspect-square h-full"
-            src={urlFor(
-              author?.image?.asset?._ref ? author.image.asset._ref : ''
-            )
-              .size(150, 150)
-              .fit('crop')
-              .url()}
-            alt="Profile picture"
-          />
+        <div class="h-8 aspect-square">
+          {#if author?.image}
+            <img
+              class="rounded-full aspect-square h-full"
+              src={urlFor(author.image.asset._ref)
+                .size(50, 50)
+                .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
+                .fit('crop')
+                .format('webp')
+                .url()}
+              alt="Profile pic"
+              draggable="false"
+            />
+          {/if}
         </div>
         <p class="w-fit whitespace-nowrap">
           By {author?.name ? author.name : 'Unknown'}

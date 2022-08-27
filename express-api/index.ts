@@ -233,6 +233,30 @@ app.get(
   }
 );
 
+app.get(
+  `${queryUrl}/siteSettings`,
+  authHandler,
+  async (req: Request, res: Response) => {
+    query
+      .settings()
+      .then((data) => {
+        setHeaders(res);
+        res.json(data);
+      })
+      .catch((err: Error) => {
+        setHeaders(res);
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
+      });
+  }
+);
+
 app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
   const reqUrlParts = req.url?.split('/'),
     resource = reqUrlParts?.[+reqUrlParts?.length - 1]?.split('?')[0],

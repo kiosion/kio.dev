@@ -308,6 +308,29 @@ module query {
           reject(err);
         });
     });
+
+  // Fetch site settings
+  export const settings = () =>
+    new Promise((resolve, reject) => {
+      const query =
+        '*[!(_id in path(\'drafts.**\')) && _type == "siteSettings"][0]';
+
+      client
+        .fetch(query)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
+          resolve({
+            meta: {
+              count: data ? 1 : 0,
+              filter: 'siteSettings'
+            },
+            data
+          });
+        })
+        .catch((err: Error) => {
+          reject(err);
+        });
+    });
 }
 
 export default query;

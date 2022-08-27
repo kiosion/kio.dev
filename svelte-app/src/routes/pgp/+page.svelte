@@ -3,10 +3,11 @@
   import PageHeading from '@/components/headings/page-heading.svelte';
   import ContentWrapper from '@/components/content-wrapper.svelte';
   import CodeBlock from '@/components/code-block.svelte';
-  import { pageHeading } from '@/stores/menu';
+  import { navOptions, pageHeading } from '@/stores/menu';
 
   $: ({ pgp } = $page.data);
 
+  navOptions.set({ down: '', up: '/about' });
   pageHeading.set('PGP');
 </script>
 

@@ -20,8 +20,8 @@
     'Why do they call it oven when you of in the cold food of out hot eat the food'
   ];
 
-  browser &&
-    (phrase = `${phrases[Math.floor(Math.random() * phrases.length)]}`);
+  phrase = `${phrases[Math.floor(Math.random() * phrases.length)]}`;
+  browser && (phrase = '');
 
   export let theme = 'light';
   export let size = 38;

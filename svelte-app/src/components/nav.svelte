@@ -132,7 +132,7 @@
           on:click={() => {
             menuOpen.set(false);
             $sounds === 'on' && click?.play();
-          }}><span class="strike" tabindex="0">{link.name}</span></a
+          }}><span class="strike">{link.name}</span></a
         >
       {/each}
     </div>
@@ -148,7 +148,7 @@
         target={social?.target ? '_blank' : ''}
         on:click={() => $sounds === 'on' && click?.play()}
       >
-        <Icon icon={social.icon} rotate={social?.rotate} tabindex="0" />
+        <Icon icon={social.icon} rotate={social?.rotate} />
       </a>
     {/each}
   </div>

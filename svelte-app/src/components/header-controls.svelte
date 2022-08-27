@@ -24,16 +24,18 @@
 >
   <div class="flex flex-row justify-between items-start">
     {#if $navOptions && $navOptions.up !== ''}
-      <a
-        href={$navOptions.up}
-        class="flex flex-row items-center select-none w-52"
-        on:click={() => $sounds === 'on' && click?.play()}
-      >
-        <ArrowUp width="20" />
-        <p class="font-code text-base w-fit ml-4" tabindex="0">
-          Back ({$navOptions.up})
-        </p>
-      </a>
+      <div class="w-52">
+        <a
+          href={$navOptions.up}
+          class="w-fit flex flex-row items-center select-none"
+          on:click={() => $sounds === 'on' && click?.play()}
+        >
+          <ArrowUp width="20" />
+          <p class="font-code text-base w-fit ml-4">
+            Back ({$navOptions.up})
+          </p>
+        </a>
+      </div>
     {:else}
       <div class="w-52" />
     {/if}

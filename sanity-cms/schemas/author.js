@@ -38,8 +38,31 @@ export default {
     {
       name: 'bio',
       title: 'Bio',
-      type: 'text',
-      rows: 2,
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+              { title: 'Underline', value: 'underline' },
+              { title: 'Code', value: 'code' },
+              {
+                title: 'Highlight',
+                value: 'highlight',
+                blockEditor: {
+                  icon: () => 'H',
+                  render: highlightRender
+                }
+              }
+            ]
+          }
+        },
+        { type: 'image' },
+        { type: 'code' },
+        { type: 'divider' }
+      ],
       validation: (Rule) => Rule.required()
     },
     {

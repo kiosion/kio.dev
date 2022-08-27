@@ -29,6 +29,7 @@
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if post}
     <a
+      class="rounded-md"
       href="blog/{post.slug && post.slug.current}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
@@ -39,7 +40,6 @@
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
-        tabindex="0"
       >
         <div
           class="flex flex-row flex-wrap items-center justify-start w-full mb-1"
@@ -70,8 +70,9 @@
     </a>
   {:else}
     <section
-      class="flex flex-col cursor-default items-stretch justify-stretch w-full h-32 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+      class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
       data-test-id="list-item"
+      aria-label="No results"
     >
       <h3 class="text-center font-sans text-base my-2">No results found</h3>
     </section>
