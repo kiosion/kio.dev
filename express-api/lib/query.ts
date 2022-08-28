@@ -115,26 +115,26 @@ module query {
       const query = `*[!(_id in path('drafts.**')) && _type == "post"${
         slug !== '' ? ` && slug.current == "${slug}"` : ''
       }${id !== '' ? ` && _id == "${id}"` : ''}]{
-      _id,
-      _type,
-      "author": {
-        "_id": author->_id,
-        "_type": author->_type,
-        "name": author->name,
-        "image": author->image,
-        "slug": author->slug
-      },
-      body,
-      desc,
-      date,
-      tags[]->{
         _id,
-        title,
-        slug
-      },
-      slug,
-      title
-    }[0]`;
+        _type,
+        "author": {
+          "_id": author->_id,
+          "_type": author->_type,
+          "name": author->name,
+          "image": author->image,
+          "slug": author->slug
+        },
+        body,
+        desc,
+        date,
+        tags[]->{
+          _id,
+          title,
+          slug
+        },
+        slug,
+        title
+      }[0]`;
 
       client
         .fetch(query)
@@ -244,6 +244,58 @@ module query {
             .catch((err: Error) => {
               reject(err);
             });
+        })
+        .catch((err: Error) => {
+          reject(err);
+        });
+    });
+
+  // Fetch single project by unique slug or id
+  export const project = ({ slug = '', id = '' }: postQueryParams) =>
+    new Promise((resolve, reject) => {
+      if ((!slug && !id) || (slug === '' && id === '')) {
+        reject({
+          code: 400,
+          message:
+            'Invalid params provided. Project slug or ID must be provided.'
+        });
+      }
+
+      const query = `*[!(_id in path('drafts.**')) && _type == "project"${
+        slug !== '' ? ` && slug.current == "${slug}"` : ''
+      }${id !== '' ? ` && _id == "${id}"` : ''}]{
+          _id,
+          _type,
+          "author": {
+            "_id": author->_id,
+            "_type": author->_type,
+            "name": author->name,
+            "image": author->image,
+            "slug": author->slug
+          },
+          body,
+          desc,
+          date,
+          tags[]->{
+            _id,
+            title,
+            slug
+          },
+          slug,
+          title
+        }[0]`;
+
+      client
+        .fetch(query)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((data: any) => {
+          resolve({
+            meta: {
+              count: data ? 1 : 0,
+              filter: `${slug ? slug : id}`
+            },
+            data
+          });
         })
         .catch((err: Error) => {
           reject(err);

@@ -30,69 +30,60 @@
   <meta property="twitter:description" content="A bit about me & my work" />
 </svelte:head>
 
-<div data-test-route="about" class="w-full h-full">
-  <div class="mt-16 mb-12">
-    <ContentWrapper>
-      <div
-        class="w-full p-6 rounded-lg flex flex-col gap-6 justify-start items-start bg-slate-200 dark:bg-slate-900 transition-colors duration-150"
-      >
-        <div
-          class="flex flex-row gap-6 justify-start items-center w-full h-fit"
-        >
-          <div class="h-24 aspect-square">
-            {#if $about?.data?.image?.asset}
-              <img
-                class="rounded-full aspect-square h-full border border-slate-400 select-none"
-                src={urlFor($about.data.image.asset._ref)
-                  .size(150, 150)
-                  .rect(
-                    pfpCrop.left,
-                    pfpCrop.top,
-                    pfpCrop.width,
-                    pfpCrop.height
-                  )
-                  .fit('crop')
-                  .format('webp')
-                  .url()}
-                alt="Profile pic"
-                draggable="false"
-                in:fade={{ duration: 150 }}
-              />
-            {/if}
-          </div>
-          <div
-            class="flex-1 h-full w-full flex flex-col justify-start items-start"
-          >
-            <h3
-              class="font-display font-bold text-2xl text-slate-800 dark:text-slate-100 transition-colors"
-            >
-              Maxim
-            </h3>
-            <h4
-              class="font-mono font-bold text-xl text-slate-600 dark:text-slate-300 transition-colors"
-            >
-              @kiosion
-            </h4>
-          </div>
+<div data-test-route="about">
+  <ContentWrapper>
+    <div
+      class="w-full p-6 rounded-lg flex flex-col gap-6 justify-start items-start bg-slate-200 dark:bg-slate-900 transition-colors duration-150"
+    >
+      <div class="flex flex-row gap-6 justify-start items-center w-full h-fit">
+        <div class="h-24 aspect-square">
+          {#if $about?.data?.image?.asset}
+            <img
+              class="rounded-full aspect-square h-full border border-slate-400 select-none"
+              src={urlFor($about.data.image.asset._ref)
+                .size(150, 150)
+                .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
+                .fit('crop')
+                .format('webp')
+                .url()}
+              alt="Profile pic"
+              draggable="false"
+              in:fade={{ duration: 150 }}
+            />
+          {/if}
         </div>
-        <div>
-          <div class="flex-1 font-sans -my-4 p-2">
-            {#if $about?.data?.bio}
-              <PortableText text={$about.data.bio} />
-            {:else}
-              <ErrorText text="No data" classes="w-fit" />
-            {/if}
-          </div>
+        <div
+          class="flex-1 h-full w-full flex flex-col justify-start items-start"
+        >
+          <h3
+            class="font-display font-bold text-2xl text-slate-800 dark:text-slate-100 transition-colors"
+          >
+            Maxim
+          </h3>
+          <h4
+            class="font-mono font-bold text-xl text-slate-600 dark:text-slate-300 transition-colors"
+          >
+            @kiosion
+          </h4>
         </div>
       </div>
-      {#if $about?.data?.body}
-        <div>
-          <Divider />
-          <div class="mx-2">
-            <PortableText text={$about.data.body} />
-          </div>
+      <div>
+        <div class="flex-1 font-sans -my-4 p-2">
+          {#if $about?.data?.bio}
+            <PortableText text={$about.data.bio} />
+          {:else}
+            <ErrorText text="No data" classes="w-fit" />
+          {/if}
         </div>
-      {/if}
-    </ContentWrapper>
-  </div>
+      </div>
+    </div>
+    {#if $about?.data?.body}
+      <div>
+        <Divider />
+        <div class="mx-2">
+          <PortableText text={$about.data.body} />
+        </div>
+      </div>
+    {/if}
+  </ContentWrapper>
 </div>

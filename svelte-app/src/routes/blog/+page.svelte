@@ -2,10 +2,11 @@
   import ListItem from '@/components/blog/list-item.svelte';
   import PageHeading from '@/components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '@/stores/posts';
+  import { posts } from '@/stores/blog';
   import { highlightEffects, sounds } from '@/stores/features';
   import { navOptions, pageHeading } from '@/stores/menu';
   import ErrorText from '@/components/error-text.svelte';
+  import IconHeader from '@/components/icon-header.svelte';
   import Pin from 'pixelarticons/svg/pin.svg';
   import Clock from 'pixelarticons/svg/clock.svg';
   import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
@@ -51,31 +52,25 @@
   pageHeading.set('Blog');
 
   export let data: PageData;
+
+  $: ({ pinnedPost } = data);
 </script>
 
 <svelte:head>
   <title>kio.dev | blog</title>
 </svelte:head>
 
-<div data-test-route="blog" class="h-fit w-full">
-  <PageHeading
-    heading="Thoughts & ramblings about tech, design, and development"
-  />
+<div data-test-route="blog" class="w-full">
+  <PageHeading heading="Thoughts about (mostly) tech, design, & development" />
   <div class="mb-12">
-    {#if data.pinnedPost}
-      <div class="flex flex-row justify-start items-center gap-2 mt-8 mb-2">
-        <Pin width="20" />
-        <h3 class="font-code text-lg">Pinned</h3>
-      </div>
-      <ListItem post={data.pinnedPost.data} {mousePos} />
+    {#if pinnedPost?.data}
+      <IconHeader icon={Pin} text="Pinned" />
+      <ListItem post={pinnedPost.data} {mousePos} />
     {/if}
-    <div class="flex flex-row justify-start items-center gap-2 mt-8 mb-2">
-      <Clock width="20" />
-      <h3 class="font-code text-lg">Recent</h3>
-    </div>
+    <IconHeader icon={Clock} text="Recent" />
     {#if $posts?.data?.length}
       {#each $posts.data as post}
-        {#if post._id !== data.pinnedPost?.data?._id}
+        {#if post._id !== pinnedPost?.data?._id}
           <ListItem {post} {mousePos} />
         {/if}
       {/each}
@@ -88,10 +83,7 @@
       aria-label="View all posts"
       on:click={() => $sounds === 'on' && click?.play()}
     >
-      <div class="flex flex-row items-center justify-start gap-2">
-        <ArrowRight width="20" />
-        <h3 class="font-code text-lg w-fit">View all</h3>
-      </div>
+      <IconHeader icon={ArrowRight} text="View all" classes="" />
     </a>
   </div>
 </div>

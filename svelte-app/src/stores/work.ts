@@ -4,6 +4,7 @@ import Cache from '$lib/cache';
 import Logger from '$lib/logger';
 import type {
   RouteFetch,
+  ResData,
   ResDataMany,
   DocumentQueryParams,
   SingleDocumentQueryParams
@@ -12,6 +13,7 @@ import type {
 const Store = new Cache();
 
 export const projects = writable({} as ResDataMany);
+export const project = writable({} as ResData);
 
 export const queryProjects = async (
   fetch: RouteFetch,
@@ -98,8 +100,10 @@ export const findProjects = async (
 export const findProject = async (fetch: RouteFetch, params = { slug: '' }) => {
   const cacheKey = Store.getCacheKey('project', params);
   if (Store.has(cacheKey)) {
+    console.log('returning cached data');
     return Store.get(cacheKey);
   } else {
+    console.log('querying project');
     const response = await queryProject(fetch, params);
     Store.set(cacheKey, response);
     return response;

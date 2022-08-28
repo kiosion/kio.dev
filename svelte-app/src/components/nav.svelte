@@ -8,11 +8,12 @@
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import { sounds } from '@/stores/features';
+  import Play from 'pixelarticons/svg/play.svg';
 
   let links = [
-    { name: 'Blog', url: '/blog' },
-    { name: 'Work', url: '/work' },
-    { name: 'About', url: '/about' }
+    { name: 'Blog', url: '/blog', hovered: false },
+    { name: 'Work', url: '/work', hovered: false },
+    { name: 'About', url: '/about', hovered: false }
   ];
 
   let socials = [
@@ -56,10 +57,11 @@
 
   const onLogoClick = () => {
     clicks++;
+    $sounds === 'on' && click?.play();
     if (clicks > 3) {
-      $sounds === 'on' && ping?.play();
       goto('/secret')
         .then(() => {
+          $sounds === 'on' && ping?.play();
           clicks = 0;
         })
         .catch(() => {
@@ -67,73 +69,86 @@
         });
       return;
     }
-    $sounds === 'on' && click?.play();
     goto('/');
     setTimeout(() => {
       clicks = 0;
-    }, 2000);
+    }, 1200);
   };
 
   export let segment: string;
-  export let hovered: boolean;
 </script>
 
 <nav
   class="p-4 pt-6 md:py-8 md:px-4 w-full md:w-40 lg:w-60 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
   data-test-id="navBar"
-  on:mouseover={() => (hovered = true)}
-  on:focus={() => (hovered = true)}
-  on:mouseout={() => (hovered = false)}
-  on:blur={() => (hovered = false)}
 >
   <div class="flex-grow -mt-7 md:-mt-4 click-through">
     <button
-      class="inline-block md:hidden mx-auto w-1/3 logo-text"
+      class="inline-block md:hidden mx-auto w-1/3 logo-text dark:invert transition-[filter]"
       on:click={() => onLogoClick()}
     >
       <img class="w-full" src="/assets/logo-text.webp" alt="kiosion logo" />
     </button>
     <button
-      class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text"
+      class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
       on:click={() => onLogoClick()}
     >
       <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
     </button>
     {#if $menuOpen}
       <div
-        class="flex md:hidden text-2xl flex-col justify-center mt-4 items-center"
+        class="flex md:hidden text-2xl flex-col gap-3 justify-center mt-4 items-center"
         transition:slide|local
       >
-        {#each links as link, index}
-          <a
-            class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
-            class:active={segment === link.url}
-            class:mt-3={index > 0}
-            aria-label={link.name}
-            href={link.url}
-            on:click={() => {
-              menuOpen.set(false);
-              $sounds === 'on' && click?.play();
-            }}><span class="strike">{link.name}</span></a
-          >
+        {#each links as link}
+          <div class="relative flex flex-row justify-start items-center">
+            <a
+              class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
+              class:active={segment === link.url}
+              aria-label={link.name}
+              href={link.url}
+              on:mouseenter={() => (link.hovered = true)}
+              on:mouseleave={() => (link.hovered = false)}
+              on:focus={() => (link.hovered = true)}
+              on:blur={() => (link.hovered = false)}
+              on:click={() => {
+                menuOpen.set(false);
+                $sounds === 'on' && click?.play();
+              }}>{link.name}</a
+            >
+            <div
+              class="absolute z-0 {segment === link.url || link.hovered
+                ? 'w-full'
+                : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in"
+            />
+          </div>
         {/each}
       </div>
     {/if}
     <div
-      class="hidden md:flex text-base flex-col justify-center pt-4 items-center"
+      class="hidden md:flex text-base flex-col gap-3 justify-center pt-4 items-center"
     >
-      {#each links as link, index}
-        <a
-          class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
-          class:active={segment === link.url}
-          class:mt-3={index > 0}
-          aria-label={link.name}
-          href={link.url}
-          on:click={() => {
-            menuOpen.set(false);
-            $sounds === 'on' && click?.play();
-          }}><span class="strike">{link.name}</span></a
-        >
+      {#each links as link}
+        <div class="relative flex flex-row justify-start items-center">
+          <a
+            class="z-[1] font-mono font-normal uppercase text-base lg:text-lg"
+            aria-label={link.name}
+            href={link.url}
+            on:mouseenter={() => (link.hovered = true)}
+            on:mouseleave={() => (link.hovered = false)}
+            on:focus={() => (link.hovered = true)}
+            on:blur={() => (link.hovered = false)}
+            on:click={() => {
+              menuOpen.set(false);
+              $sounds === 'on' && click?.play();
+            }}>{link.name}</a
+          >
+          <div
+            class="absolute z-0 {segment === link.url || link.hovered
+              ? 'w-full'
+              : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in"
+          />
+        </div>
       {/each}
     </div>
   </div>
@@ -157,40 +172,3 @@
     <ThemeToggle />
   </div>
 </nav>
-
-<style lang="scss">
-  .nav-link {
-    .strike {
-      position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 0%;
-        height: 1px;
-        background-color: var(--textColour);
-        transition: width 200ms ease, background 150ms ease;
-      }
-    }
-    &:hover,
-    &:focus,
-    &:focus-within,
-    &.active {
-      .strike {
-        &:after {
-          width: 100%;
-        }
-      }
-    }
-  }
-  .logo-text {
-    img {
-      transition: filter 150ms ease;
-      .dark & {
-        filter: invert(100%);
-      }
-    }
-  }
-</style>

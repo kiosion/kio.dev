@@ -31,7 +31,7 @@
   $: pfpCrop = getCrop(author?.image);
 </script>
 
-<div class="mb-4" data-test-id="post-head">
+<div class="mb-4" data-test-id="post-header">
   <div class="flex flex-col">
     <h1 class="font-display text-4xl mb-6 font-bold">{title}</h1>
 

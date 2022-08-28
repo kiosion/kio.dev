@@ -8,6 +8,7 @@
   import ErrorText from '@/components/error-text.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
+  import IconHeader from '@/components/icon-header.svelte';
   import Pin from 'pixelarticons/svg/pin.svg';
   import Clock from 'pixelarticons/svg/clock.svg';
   import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
@@ -60,17 +61,10 @@
   <PageHeading heading="A collection of recent work and projects of mine" />
   <div class="mb-12">
     {#if data.pinnedProject}
-      <div class="flex flex-row justify-start items-center gap-2 mt-8 mb-2">
-        <Pin width="20" />
-        <h3 class="font-code text-lg">Pinned</h3>
-      </div>
+      <IconHeader icon={Pin} text="Pinned" />
       <ListItem post={data.pinnedProject.data} {mousePos} />
     {/if}
-
-    <div class="flex flex-row justify-start items-center gap-2 mt-8 mb-2">
-      <Clock width="20" />
-      <h3 class="font-code text-lg">Recent</h3>
-    </div>
+    <IconHeader icon={Clock} text="Recent" />
     {#if $projects?.data?.length}
       {#each $projects.data as project}
         <ListItem {project} {mousePos} />
@@ -84,10 +78,7 @@
       aria-label="View all projects"
       on:click={() => $sounds === 'on' && click?.play()}
     >
-      <div class="flex flex-row items-center justify-start gap-2">
-        <ArrowRight width="20" />
-        <h3 class="font-code text-lg w-fit">View all</h3>
-      </div>
+      <IconHeader icon={ArrowRight} text="View all" classes="" />
     </a>
   </div>
 </div>

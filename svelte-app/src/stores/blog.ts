@@ -12,7 +12,7 @@ import type {
 
 const Store = new Cache();
 
-export const posts = writable([] as ResDataMany);
+export const posts = writable([] as unknown as ResDataMany);
 export const post = writable({} as ResData);
 
 export const queryPosts = async (

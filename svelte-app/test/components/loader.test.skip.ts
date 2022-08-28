@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Loader from '@/components/loader/full.svelte';
+import Loader from '@/components/loading/full.svelte';
 
 // set env variables
 vi.setEnv({

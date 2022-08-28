@@ -30,11 +30,11 @@
 
 <style lang="scss">
   a {
-    background-position-y: bottom;
+    background-position-y: 105%;
     background-repeat: repeat-x;
     background-size: 12px 6px;
-    padding-bottom: 5px;
-    transition: background-position-y 150ms ease;
+    padding-bottom: 4px;
+    transition: background-position-y 120ms ease-in;
 
     &.active {
       background-position-y: center;

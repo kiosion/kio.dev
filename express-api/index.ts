@@ -210,6 +210,35 @@ app.get(`${queryUrl}/projects`, authHandler, async (req, res) => {
 });
 
 app.get(
+  `${queryUrl}/project`,
+  authHandler,
+  async (req: Request, res: Response) => {
+    let { slug = '', id = '' } = req.query;
+    slug = `${slug}`;
+    id = `${id}`;
+
+    query
+      .project({ slug, id })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((data: any) => {
+        setHeaders(res);
+        res.json(data);
+      })
+      .catch((err: Error) => {
+        setHeaders(res);
+        res
+          .status(err?.code ?? 500)
+          .send(
+            constructError(
+              err?.code ?? 500,
+              err?.message ?? 'Internal Server Error'
+            )
+          );
+      });
+  }
+);
+
+app.get(
   `${queryUrl}/about`,
   authHandler,
   async (req: Request, res: Response) => {
