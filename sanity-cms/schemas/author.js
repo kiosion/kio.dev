@@ -59,7 +59,12 @@ export default {
             ]
           }
         },
-        { type: 'image' },
+        {
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        },
         { type: 'code' },
         { type: 'divider' }
       ],
