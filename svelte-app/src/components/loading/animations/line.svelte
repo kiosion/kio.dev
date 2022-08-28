@@ -7,7 +7,7 @@
   <div data-test-id="loader-bar">
     {#each Array(7) as item}
       <div
-        class="bg-emerald-300 shadow-[0_0_20px_var(--tw-shadow)] shadow-emerald-300"
+        class="bg-emerald-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-emerald-300"
       />
     {/each}
   </div>
@@ -33,7 +33,7 @@
 
         @for $i from 1 through 8 {
           &:nth-child(#{$i}) {
-            animation-delay: -calc(700ms / 8) * (8 - $i);
+            animation-delay: -(calc(700ms / 8) * (8 - $i));
           }
         }
       }

@@ -52,13 +52,13 @@
   in:fly={{ delay: 100, duration: 100, y: -10 }}
 >
   <HeaderControls />
-  <Nav segment={$page ? $page?.url?.pathname : ''} />
+  <Nav segment={$page?.url ? $page.url.pathname : ''} />
   <div class="md:h-full md:ml-40 lg:ml-60 px-8 pb-8 md:py-8 lg:px-10 xl:px-20">
     <div
       class="h-full w-full max-w-[60rem] mx-auto grid grid-rows-1 grid-cols-1"
     >
       {#if appLoaded}
-        <PageTransition url={data.url.pathname}>
+        <PageTransition url={data?.url ? data.url.pathname : ''}>
           <slot />
         </PageTransition>
       {/if}
