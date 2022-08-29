@@ -1,10 +1,10 @@
 <script lang="ts">
-  import ListItem from '@/components/blog/list-item.svelte';
+  import ListItem from '$components/blog/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '@/stores/blog';
-  import { highlightEffects } from '@/stores/features';
-  import { navOptions, pageHeading } from '@/stores/menu';
-  import ErrorText from '@/components/error-text.svelte';
+  import { posts } from '$stores/blog';
+  import { highlightEffects } from '$stores/features';
+  import { navOptions, pageHeading } from '$stores/nav';
+  import ErrorText from '$components/error-text.svelte';
   import List from 'pixelarticons/svg/list.svg';
   import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
   import ArrowRight from 'pixelarticons/svg/arrow-right.svg';

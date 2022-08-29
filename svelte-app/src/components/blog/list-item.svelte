@@ -7,7 +7,7 @@
   import type { TextBlock } from '$lib/types';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '@/stores/features';
+  import { sounds } from '$stores/features';
 
   export let post: Document;
   export let mousePos = [0, 0];

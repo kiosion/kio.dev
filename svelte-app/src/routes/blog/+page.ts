@@ -1,6 +1,6 @@
-import { posts, findPosts, findPost } from '@/stores/blog';
+import { posts, findPosts, findPost } from '$stores/blog';
 import { get } from 'svelte/store';
-import { config } from '@/stores/config';
+import { config } from '$stores/config';
 import Logger from '$lib/logger';
 import type { ResData } from '$lib/types';
 

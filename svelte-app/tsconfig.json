@@ -12,7 +12,10 @@
       "@/*": ["src/*"],
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$logs": ["logs"]
+      "$logs": ["logs"],
+      "$components*": ["src/components*"],
+      "$helpers*": ["src/lib/helpers*"],
+      "$stores*": ["src/stores*"]
     },
     "removeComments": true,
     "rootDir": "./",

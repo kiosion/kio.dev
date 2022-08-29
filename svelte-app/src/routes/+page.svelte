@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { navOptions, pageHeading } from '@/stores/menu';
+  import { navOptions, pageHeading } from '$stores/nav';
   import { handleScrollNav } from '$lib/helpers/navigation';
-  import { sounds } from '@/stores/features';
+  import { sounds } from '$stores/features';
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
 

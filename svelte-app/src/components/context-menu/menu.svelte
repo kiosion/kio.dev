@@ -1,0 +1,65 @@
+<script lang="ts">
+  import { setContext, createEventDispatcher } from 'svelte';
+  import { fade } from 'svelte/transition';
+  import { key } from './menu';
+  import { setState } from '$lib/helpers/menu';
+
+  export let x: number;
+  export let y: number;
+
+  let menuElement: HTMLElement;
+  export let page: HTMLElement;
+  const dispatch = createEventDispatcher();
+
+  $: (() => {
+    if (!menuElement) {
+      return;
+    }
+
+    const rect = menuElement.getBoundingClientRect();
+    const pageRect = page.getBoundingClientRect();
+
+    x = Math.min(window.innerWidth - rect.width - 18, x);
+    if (
+      y >
+      Math.min(window.innerHeight, pageRect.height + pageRect.top) - rect.height
+    ) {
+      y -= rect.height;
+    }
+  })();
+
+  setContext(key, {
+    dispatchClick: () => dispatch('click')
+  });
+
+  const pageClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement | undefined;
+    if (target === menuElement || menuElement.contains(target!)) {
+      return;
+    }
+    dispatch('clickoutside');
+  };
+
+  // TODO: Remove tab from here, need to properly handle passing focus for a11y!
+  const handleKey = (e: KeyboardEvent) => {
+    if (['Escape', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.code)) {
+      return setState();
+    }
+  };
+</script>
+
+<svelte:body
+  on:click={pageClick}
+  on:mouseleave={() => setState()}
+  on:mousewheel={() => setState()}
+  on:keydown={(e) => handleKey(e)} />
+
+<div
+  class="absolute grid min-w-[14rem] py-2 z-20 shadow-slate-600/40 dark:shadow-slate-400/50 shadow-[0_0_20px_-6px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"
+  style="top: {y}px; left: {x}px"
+  in:fade={{ duration: 100 }}
+  out:fade={{ duration: 100, delay: 10 }}
+  bind:this={menuElement}
+>
+  <slot />
+</div>

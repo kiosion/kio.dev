@@ -1,9 +1,6 @@
 import { writable } from 'svelte/store';
+import type { MenuState } from '$lib/types';
 
-const menuOpen = writable(false);
+const state = writable({} as MenuState);
 
-const navOptions = writable({ down: '', up: '' });
-
-const pageHeading = writable('');
-
-export { menuOpen, navOptions, pageHeading };
+export { state };

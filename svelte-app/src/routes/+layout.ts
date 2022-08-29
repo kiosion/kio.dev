@@ -1,4 +1,4 @@
-import { config, findConfig } from '@/stores/config';
+import { config, findConfig } from '$stores/config';
 import Logger from '$lib/logger';
 
 export const load: import('./$types').LayoutLoad = async ({

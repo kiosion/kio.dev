@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { BlockComponentProps } from '@portabletext/svelte';
-  import Icon from '@iconify/svelte';
   import { fade } from 'svelte/transition';
-  import Divider from '@/components/divider.svelte';
+  import Divider from '$components/divider.svelte';
   import Link from 'pixelarticons/svg/link.svg';
 
   export let portableText: BlockComponentProps;
@@ -35,10 +34,6 @@
         out:fade={{ duration: 50 }}
       >
         <span class="sr-only">Link to this heading</span>
-        <!-- <Icon
-          icon="fa-solid:link"
-          class="relative top-1/4 text-slate-800 dark:text-slate-100"
-        /> -->
         <div class="relative top-[20%] right-[10%]">
           <Link width="20" />
         </div>

@@ -37,6 +37,31 @@ export interface SanityImageHotspot {
   x: number;
   y: number;
 }
+export interface CodeBlockComponentProps
+  extends Omit<BlockComponentProps, 'value'> {
+  value: {
+    _key: string;
+    _type: string;
+    code: string;
+    language: string;
+  };
+}
+
+// State types
+export interface MenuStateOpt {
+  disabled?: boolean;
+  icon?: SvelteComponent | string;
+  text?: string;
+  action?: () => void | Promise<void> | undefined;
+}
+export interface MenuState {
+  open: boolean;
+  pos: {
+    x: number;
+    y: number;
+  };
+  opts: MenuStateOpt[];
+}
 
 // Data types
 export interface Document extends SanityAsset {

@@ -1,8 +1,8 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { theme } from '@/stores/theme';
+  import { theme } from '$stores/theme';
   import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects } from '@/stores/features';
+  import { highlightEffects } from '$stores/features';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
 
@@ -11,6 +11,9 @@
 
   let hovered = false;
   let copied = false;
+
+  let hlComponent: unknown;
+  let hlStyles: unknown;
 
   let mousePos = [0, 0];
   let container: HTMLElement;
@@ -32,12 +35,24 @@
     }
   };
 
-  onMount(() => {
+  const unsubscribeTheme = theme.subscribe(async (res) => {
+    if (res === 'light') {
+      hlStyles = (await import('svelte-highlight/styles/ros-pine-dawn'))
+        .default;
+    } else {
+      hlStyles = (await import('svelte-highlight/styles/ros-pine-moon'))
+        .default;
+    }
+  });
+
+  onMount(async () => {
     if ($highlightEffects === 'on') {
       document.addEventListener('mousemove', (e) => {
         mousePos = [e.clientX, e.clientY];
       });
     }
+
+    hlComponent = (await import('svelte-highlight')).HighlightAuto;
   });
 
   onDestroy(() => {
@@ -46,6 +61,8 @@
         mousePos = [e.clientX, e.clientY];
       });
     }
+
+    unsubscribeTheme();
   });
 
   const mouseMove = () => {
@@ -64,6 +81,12 @@
   $: clientX, clientY, mouseMove();
 </script>
 
+<svelte:head>
+  {#if hlStyles}
+    {@html hlStyles}
+  {/if}
+</svelte:head>
+
 <div
   class="relative p-[1px] my-6 overflow-hidden rounded-md {hovered
     ? 'active'
@@ -71,6 +94,8 @@
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
+  on:focus={() => (hovered = true)}
+  on:blur={() => (hovered = false)}
 >
   {#if showClipboard && !$navigating}
     {#key copied}
@@ -88,9 +113,9 @@
   {/if}
   <div class="relative overflow-scroll rounded-md w-full text-lg md:text-md">
     <div
-      class="rounded-md min-w-full w-fit h-fit p-4 bg-slate-200 dark:bg-slate-900 is-{$theme} transition-all duration-150"
+      class="rounded-md min-w-full w-fit h-fit p-1 bg-slate-200 dark:bg-slate-900 is-{$theme} transition-all duration-150"
     >
-      <pre class="font-code w-fit">{content}</pre>
+      <svelte:component this={hlComponent} code={content} />
     </div>
   </div>
   {#if $highlightEffects === 'on' && !$navigating}
@@ -107,11 +132,25 @@
 </div>
 
 <style lang="scss">
-  pre {
-    font-size: 0.9em;
-    line-height: 1.2em;
+  :global(code.hljs) {
+    background-color: transparent;
+    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.2rem;
     max-width: 100%;
-    overflow-wrap: break-word;
+
+    &::selection {
+      background: #34d399 !important;
+      color: #1e293b !important;
+    }
+  }
+
+  :global(code.hljs *) {
+    &::selection {
+      background: #34d399 !important;
+      color: #1e293b !important;
+    }
   }
   .filled {
     z-index: -2;

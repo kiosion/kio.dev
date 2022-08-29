@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { navOptions } from '@/stores/menu';
+  import { navOptions } from '$stores/nav';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '@/stores/features';
+  import { sounds } from '$stores/features';
   import ArrowDown from 'pixelarticons/svg/arrow-down.svg';
 
   let click: UIfx;

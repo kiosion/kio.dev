@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
-  import { reduceMotion } from '@/stores/features';
+  import { reduceMotion } from '$stores/features';
 
   export let url: string;
 

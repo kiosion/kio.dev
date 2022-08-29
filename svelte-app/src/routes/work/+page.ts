@@ -1,4 +1,4 @@
-import { projects, findProjects } from '@/stores/work';
+import { projects, findProjects } from '$stores/work';
 import Logger from '@/lib/logger';
 
 export const load: import('@sveltejs/kit').Load = async ({ fetch }) => {

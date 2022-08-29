@@ -1,13 +1,13 @@
 <script lang="ts">
-  import PortableText from '@/components/portable-text/portable-text.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
   import { onMount } from 'svelte';
-  import ContentWrapper from '@/components/content-wrapper.svelte';
-  import { project } from '@/stores/work';
+  import ContentWrapper from '$components/content-wrapper.svelte';
+  import { project } from '$stores/work';
   import { parseEmoji } from '$lib/helpers/emoji';
-  import { navOptions, pageHeading } from '@/stores/menu';
-  import PostFooter from '@/components/blog/post-footer.svelte';
-  import PostHeader from '@/components/blog/post-header.svelte';
-  import IconHeader from '@/components/icon-header.svelte';
+  import { navOptions, pageHeading } from '$stores/nav';
+  import PostFooter from '$components/blog/post-footer.svelte';
+  import PostHeader from '$components/blog/post-header.svelte';
+  import IconHeader from '$components/icon-header.svelte';
   import Downasaur from 'pixelarticons/svg/downasaur.svg';
 
   let body: HTMLElement;

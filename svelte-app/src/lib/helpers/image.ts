@@ -28,7 +28,7 @@ const builder = imageUrlBuilder(config);
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
 export const getCrop = (image: SanityImageObject | undefined) => {
-  if (!image) {
+  if (!image || !image?.asset) {
     return {
       top: 0,
       left: 0,
@@ -38,7 +38,7 @@ export const getCrop = (image: SanityImageObject | undefined) => {
       height: 0
     };
   }
-  const ref = image?.asset?._ref,
+  const ref = image.asset._ref,
     dimensions = ref?.split('-')?.[2]?.split('x'),
     crop: ImageCrop = {
       top: Math.floor(dimensions[1] * (image?.crop?.top ?? 0)),

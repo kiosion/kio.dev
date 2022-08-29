@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Divider from '@/components/divider.svelte';
-  import IconHeader from '@/components/icon-header.svelte';
+  import Divider from '$components/divider.svelte';
+  import IconHeader from '$components/icon-header.svelte';
   import CardText from 'pixelarticons/svg/card-text.svg';
   import ArticleMultiple from 'pixelarticons/svg/article-multiple.svg';
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export let tags: any[] | undefined;
 </script>
 

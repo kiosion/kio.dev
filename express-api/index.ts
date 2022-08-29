@@ -305,7 +305,21 @@ app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
       (err, resp, buffer) => {
         if (!err && resp.statusCode === 200) {
           res.setHeader('Content-Type', resp.headers['content-type']);
-          res.send(resp.body);
+          if (params.indexOf('download') > 0) {
+            res.setHeader(
+              'Content-Disposition',
+              `attachment;filename="${resource.substring(
+                0,
+                resource.lastIndexOf('-')
+              )}${resource.substring(
+                resource.lastIndexOf('.'),
+                resource.length
+              )}"`
+            );
+            res.send(resp.body);
+          } else {
+            res.send(resp.body);
+          }
         } else {
           setHeaders(res);
           res

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { theme } from '@/stores/theme';
-  import { navOptions, pageHeading } from '@/stores/menu';
+  import { theme } from '$stores/theme';
+  import { navOptions, pageHeading } from '$stores/nav';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '@/stores/features';
+  import { sounds } from '$stores/features';
   import ArrowUp from 'pixelarticons/svg/arrow-up.svg';
   import MoonStars from 'pixelarticons/svg/moon-stars.svg';
   import Sun from 'pixelarticons/svg/sun.svg';
@@ -39,7 +39,11 @@
     {:else}
       <div class="w-52" />
     {/if}
-    <p class="font-code text-lg w-fit select-none -ml-52 -mr-40">
+    <p
+      class="font-code text-lg w-fit select-none -ml-52 -mr-40 cursor-pointer"
+      aria-label="Scroll to top"
+      on:click={() => window?.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
       {$pageHeading}
     </p>
     <div class="flex flex-row items-center justify-end w-40 gap-4">
@@ -53,9 +57,6 @@
           $sounds === 'on' && click?.play();
         }}
       >
-        <!-- <p class="font-code text-base w-fit mr-4">
-          {$theme === 'light' ? 'Light' : 'Dark'}
-        </p> -->
         {#if $theme === 'light'}
           <MoonStars width="20" />
         {:else}

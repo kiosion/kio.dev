@@ -23,6 +23,9 @@ export default defineConfig({
     }),
     Inspect()
   ],
+  optimizeDeps: {
+    include: ['highlight.js', 'highlight.js/lib/core']
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

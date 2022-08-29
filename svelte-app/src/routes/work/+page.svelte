@@ -1,14 +1,14 @@
 <script lang="ts">
-  import ListItem from '@/components/work/list-item.svelte';
-  import PageHeading from '@/components/headings/page-heading.svelte';
+  import ListItem from '$components/work/list-item.svelte';
+  import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects, sounds } from '@/stores/features';
-  import { projects } from '@/stores/work';
-  import { navOptions, pageHeading } from '@/stores/menu';
-  import ErrorText from '@/components/error-text.svelte';
+  import { highlightEffects, sounds } from '$stores/features';
+  import { projects } from '$stores/work';
+  import { navOptions, pageHeading } from '$stores/nav';
+  import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
-  import IconHeader from '@/components/icon-header.svelte';
+  import IconHeader from '$components/icon-header.svelte';
   import Pin from 'pixelarticons/svg/pin.svg';
   import Clock from 'pixelarticons/svg/clock.svg';
   import ArrowRight from 'pixelarticons/svg/arrow-right.svg';

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import ListItem from '@/components/blog/list-item.svelte';
-  import PageHeading from '@/components/headings/page-heading.svelte';
+  import ListItem from '$components/blog/list-item.svelte';
+  import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '@/stores/blog';
-  import { highlightEffects, sounds } from '@/stores/features';
-  import { navOptions, pageHeading } from '@/stores/menu';
-  import ErrorText from '@/components/error-text.svelte';
-  import IconHeader from '@/components/icon-header.svelte';
+  import { posts } from '$stores/blog';
+  import { highlightEffects, sounds } from '$stores/features';
+  import { navOptions, pageHeading } from '$stores/nav';
+  import ErrorText from '$components/error-text.svelte';
+  import IconHeader from '$components/icon-header.svelte';
   import Pin from 'pixelarticons/svg/pin.svg';
   import Clock from 'pixelarticons/svg/clock.svg';
   import ArrowRight from 'pixelarticons/svg/arrow-right.svg';

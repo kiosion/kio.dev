@@ -1,4 +1,4 @@
-import { project, findProject } from '@/stores/work';
+import { project, findProject } from '$stores/work';
 import { error } from '@sveltejs/kit';
 import Logger from '$lib/logger';
 

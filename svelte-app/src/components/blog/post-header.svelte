@@ -4,8 +4,8 @@
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/post';
   import type { TextBlock, Document } from '$lib/types';
-  import BulletPoint from '@/components/bullet-point.svelte';
-  import Divider from '@/components/divider.svelte';
+  import BulletPoint from '$components/bullet-point.svelte';
+  import Divider from '$components/divider.svelte';
 
   export let post: Document;
 

@@ -2,7 +2,7 @@
   import ListItemWrapper from '../list-item-wrapper.svelte';
   import { getAbsDate } from '$lib/helpers/date';
   import { onMount } from 'svelte';
-  import { sounds } from '@/stores/features';
+  import { sounds } from '$stores/features';
   import type { Document } from '$lib/types';
   import type UIfx from 'uifx';
 

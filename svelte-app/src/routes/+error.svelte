@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import ContentWrapper from '@/components/content-wrapper.svelte';
-  import { navOptions, pageHeading } from '@/stores/menu';
-  import IconHeader from '@/components/icon-header.svelte';
+  import ContentWrapper from '$components/content-wrapper.svelte';
+  import { navOptions, pageHeading } from '$stores/nav';
+  import IconHeader from '$components/icon-header.svelte';
   import Downasaur from 'pixelarticons/svg/downasaur.svg';
   import { ENV } from '$lib/env';
-  import Divider from '@/components/divider.svelte';
+  import Divider from '$components/divider.svelte';
 
   navOptions.set({ down: '', up: '/' });
   pageHeading.set(`Error ${$page.status ? `| ${$page.status}` : ''}`);

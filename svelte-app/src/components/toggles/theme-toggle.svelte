@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme } from '@/stores/theme';
+  import { theme } from '$stores/theme';
   import { fade } from 'svelte/transition';
   import MoonStars from 'pixelarticons/svg/moon-stars.svg';
   import Sun from 'pixelarticons/svg/sun.svg';

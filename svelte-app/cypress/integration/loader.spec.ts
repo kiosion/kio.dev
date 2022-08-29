@@ -1,4 +1,4 @@
-import Loader from '@/components/loading/full.svelte';
+import Loader from '$components/loading/full.svelte';
 
 describe('Component | Loader | Full', function () {
   it('renders loader', () => {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { theme } from '@/stores/theme';
+  import { theme } from '$stores/theme';
 
   const dispatch = createEventDispatcher();
 

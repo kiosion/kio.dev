@@ -1,28 +1,28 @@
 <script lang="ts">
-  import { urlFor } from '$lib/helpers/image';
-  import type {
-    CustomBlockComponentProps,
-    MarkComponentProps
-  } from '@portabletext/svelte';
+  import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
+  import type { CustomBlockComponentProps } from '@portabletext/svelte';
+  import type { SanityImageObject } from '$lib/types';
 
-  interface ImageBlockComponentProps extends CustomBlockComponentProps {
-    value: {
-      _key: string;
-      _type: 'image';
-      asset: {
-        _type: string;
-        _ref: string;
-      };
-    };
-  }
+  export let portableText: CustomBlockComponentProps & SanityImageObject;
 
-  export let portableText: ImageBlockComponentProps;
+  let imageCrop: ImageCrop;
 
   $: ({ value } = portableText);
   $: ({ _key } = value);
   $: ({ _ref } = value.asset);
+  $: (imageCrop = getCrop(value as unknown as SanityImageObject)), value;
 </script>
 
 <div class="w-full h-fit">
-  <img src={urlFor(_ref).width(500).fit('crop').url()} class="" alt={_key} />
+  <img
+    src={urlFor(_ref)
+      .width(800)
+      .rect(imageCrop.left, imageCrop.top, imageCrop.width, imageCrop.height)
+      .fit('crop')
+      .auto('format')
+      .url()}
+    class=""
+    alt={_key}
+    draggable="false"
+  />
 </div>

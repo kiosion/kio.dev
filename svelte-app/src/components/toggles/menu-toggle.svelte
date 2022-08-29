@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { menuOpen } from '@/stores/menu';
+  import { navOpen } from '$stores/nav';
   import { fade } from 'svelte/transition';
   import Menu from 'pixelarticons/svg/menu.svg';
   import CloseBox from 'pixelarticons/svg/close-box.svg';
@@ -8,9 +8,9 @@
 <button
   class="relative w-6 h-6 text-2xl hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
   aria-label="Toggle nav"
-  on:click={() => menuOpen.set(!$menuOpen)}
+  on:click={() => navOpen.set(!$navOpen)}
 >
-  {#if $menuOpen}
+  {#if $navOpen}
     <span
       class="absolute bottom-0 left-0"
       in:fade={{ delay: 100, duration: 200 }}

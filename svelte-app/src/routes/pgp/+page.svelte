@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page, navigating } from '$app/stores';
-  import PageHeading from '@/components/headings/page-heading.svelte';
-  import ContentWrapper from '@/components/content-wrapper.svelte';
-  import CodeBlock from '@/components/code-block.svelte';
-  import { navOptions, pageHeading } from '@/stores/menu';
+  import PageHeading from '$components/headings/page-heading.svelte';
+  import ContentWrapper from '$components/content-wrapper.svelte';
+  import CodeBlock from '$components/code-block.svelte';
+  import { navOptions, pageHeading } from '$stores/nav';
 
   $: ({ pgp } = $page.data);
 

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import ContentWrapper from '@/components/content-wrapper.svelte';
-  import PortableText from '@/components/portable-text/portable-text.svelte';
-  import { about } from '@/stores/about';
-  import ErrorText from '@/components/error-text.svelte';
-  import { navOptions, pageHeading } from '@/stores/menu';
+  import ContentWrapper from '$components/content-wrapper.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+  import { about } from '$stores/about';
+  import ErrorText from '$components/error-text.svelte';
+  import { navOptions, pageHeading } from '$stores/nav';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
-  import Divider from '@/components/divider.svelte';
+  import Divider from '$components/divider.svelte';
   import { fade } from 'svelte/transition';
 
   navOptions.set({ down: '', up: '/work' });

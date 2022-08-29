@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { highlightEffects } from '@/stores/features';
+  import { highlightEffects } from '$stores/features';
   import { navigating } from '$app/stores';
 
   export let mousePos = [-1000, -1000];

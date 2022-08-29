@@ -1,14 +1,14 @@
 <script lang="ts">
-  import PageHeading from '@/components/headings/page-heading.svelte';
-  import ContentWrapper from '@/components/content-wrapper.svelte';
-  import SwitchItem from '@/components/toggles/switch-item.svelte';
-  import { navOptions, pageHeading } from '@/stores/menu';
+  import PageHeading from '$components/headings/page-heading.svelte';
+  import ContentWrapper from '$components/content-wrapper.svelte';
+  import SwitchItem from '$components/toggles/switch-item.svelte';
+  import { navOptions, pageHeading } from '$stores/nav';
   import {
     svgBackground,
     highlightEffects,
     reduceMotion,
     sounds
-  } from '@/stores/features';
+  } from '$stores/features';
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$lib/helpers/emoji';

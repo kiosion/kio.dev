@@ -1,14 +1,8 @@
 <script lang="ts">
-  import type { BlockComponentProps } from '@portabletext/svelte';
-  import CodeBlock from '@/components/code-block.svelte';
+  import type { CodeBlockComponentProps } from '$lib/types';
+  import CodeBlock from '$components/code-block.svelte';
 
-  export let portableText: BlockComponentProps<{
-    value: {
-      _key: string;
-      _type: string;
-      code: string;
-    };
-  }>;
+  export let portableText: CodeBlockComponentProps;
 
   $: ({ value } = portableText);
   $: ({ code } = value);

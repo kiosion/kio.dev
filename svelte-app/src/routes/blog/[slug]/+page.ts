@@ -1,4 +1,4 @@
-import { post, findPost } from '@/stores/blog';
+import { post, findPost } from '$stores/blog';
 import { error } from '@sveltejs/kit';
 import Logger from '$lib/logger';
 

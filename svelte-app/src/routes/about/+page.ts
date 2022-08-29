@@ -1,5 +1,5 @@
-import { about, findAbout } from '@/stores/about';
-import { config } from '@/stores/config';
+import { about, findAbout } from '$stores/about';
+import { config } from '$stores/config';
 import Logger from '$lib/logger';
 
 export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {

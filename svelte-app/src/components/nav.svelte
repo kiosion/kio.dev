@@ -1,14 +1,14 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
   import Icon from '@iconify/svelte';
-  import ThemeToggle from '@/components/toggles/theme-toggle.svelte';
-  import MenuToggle from '@/components/toggles/menu-toggle.svelte';
-  import { menuOpen } from '@/stores/menu';
+  import ThemeToggle from '$components/toggles/theme-toggle.svelte';
+  import MenuToggle from '$components/toggles/menu-toggle.svelte';
+  import { navOpen } from '$stores/nav';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '@/stores/features';
-  import Play from 'pixelarticons/svg/play.svg';
+  import { sounds } from '$stores/features';
+  import { navigating } from '$app/stores';
 
   let links = [
     { name: 'Blog', url: '/blog', hovered: false },
@@ -95,7 +95,7 @@
     >
       <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
     </button>
-    {#if $menuOpen}
+    {#if $navOpen}
       <div
         class="flex md:hidden text-2xl flex-col gap-3 justify-center mt-4 items-center"
         transition:slide|local
@@ -112,7 +112,7 @@
               on:focus={() => (link.hovered = true)}
               on:blur={() => (link.hovered = false)}
               on:click={() => {
-                menuOpen.set(false);
+                navOpen.set(false);
                 $sounds === 'on' && click?.play();
               }}>{link.name}</a
             >
@@ -139,14 +139,27 @@
             on:focus={() => (link.hovered = true)}
             on:blur={() => (link.hovered = false)}
             on:click={() => {
-              menuOpen.set(false);
+              navOpen.set(false);
               $sounds === 'on' && click?.play();
-            }}>{link.name}</a
+            }}
           >
+            {link.name}
+          </a>
           <div
-            class="absolute z-0 {segment === link.url || link.hovered
-              ? 'w-full'
-              : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in"
+            class="indicator absolute z-0 {segment === link.url ||
+            $navigating?.to.pathname === link.url ||
+            link.hovered ||
+            (segment.split('/').length > 1 &&
+              segment.split('/').indexOf(link.url.slice(1)) > 0)
+              ? 'opacity-100'
+              : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
+              link.url ||
+            $navigating?.to.pathname === link.url ||
+            link.hovered
+              ? 'active'
+              : segment.split('/').length > 1 &&
+                segment.split('/').indexOf(link.url.slice(1)) > 0 &&
+                'dot'}  transition-[opacity] ease-in"
           />
         </div>
       {/each}
@@ -172,3 +185,48 @@
     <ThemeToggle />
   </div>
 </nav>
+
+<style lang="scss">
+  .indicator {
+    &:not(.dot):not(.active) {
+      animation: 300ms ease slideOut;
+    }
+    &.dot {
+      width: 4px;
+      height: 4px;
+      transform: translateX(-12px);
+      animation: 300ms ease slideOut;
+    }
+    &.active {
+      width: 100%;
+      height: 2px;
+      transform: translateX(0px);
+      animation: 300ms ease slideOver;
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      width: 100%;
+      height: 2px;
+      transform: translateX(0px);
+    }
+    to {
+      width: 4px;
+      height: 4px;
+      transform: translateX(-12px);
+    }
+  }
+  @keyframes slideOver {
+    from {
+      width: 2px;
+      height: 2px;
+      transform: translateX(-12px);
+    }
+    to {
+      width: 100%;
+      height: 2px;
+      transform: translateX(0px);
+    }
+  }
+</style>

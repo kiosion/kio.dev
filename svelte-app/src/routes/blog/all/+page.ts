@@ -1,4 +1,4 @@
-import { posts, findPosts } from '@/stores/blog';
+import { posts, findPosts } from '$stores/blog';
 import Logger from '$lib/logger';
 
 export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {

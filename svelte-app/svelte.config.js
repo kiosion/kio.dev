@@ -6,6 +6,11 @@ import preprocess from 'svelte-preprocess';
 const config = {
   preprocess: preprocess(),
   kit: {
+    alias: {
+      $components: 'src/components',
+      $helpers: 'src/lib/helpers',
+      $stores: 'src/stores'
+    },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
         ? NetlifyAdapter()
