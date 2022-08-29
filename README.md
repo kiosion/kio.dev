@@ -11,7 +11,7 @@
 
 (Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
 
-Mostly way overengineered, but done so for fun (and to showcase relevant skills) 😃
+Mostly way overengineered, but intentionally.. for fun (and to showcase relevant skills) 😃
 
 ## 📚 Tech stack
 
