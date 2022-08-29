@@ -14,7 +14,7 @@
   "author": "kiosion",
   "license": "ISC",
   "devDependencies": {
-    "@sanity/client": "^3.3.3",
+    "@sanity/client": "^3.3.5",
     "@sanity/image-url": "^1.0.1",
     "@types/express": "^4.17.13",
     "@types/node": "^18.7.13",
