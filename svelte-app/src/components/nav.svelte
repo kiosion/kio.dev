@@ -159,7 +159,7 @@
               ? 'active'
               : segment.split('/').length > 1 &&
                 segment.split('/').indexOf(link.url.slice(1)) > 0 &&
-                'dot'}  transition-[opacity] ease-in"
+                'dot'}  transition-opacity ease-in"
           />
         </div>
       {/each}
@@ -188,13 +188,12 @@
 
 <style lang="scss">
   .indicator {
+    width: 4px;
+    height: 4px;
+    transform: translateX(-12px);
+
+    &.dot,
     &:not(.dot):not(.active) {
-      animation: 300ms ease slideOut;
-    }
-    &.dot {
-      width: 4px;
-      height: 4px;
-      transform: translateX(-12px);
       animation: 300ms ease slideOut;
     }
     &.active {
