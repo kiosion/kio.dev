@@ -52,6 +52,7 @@
   on:click={pageClick}
   on:mouseleave={() => setState()}
   on:mousewheel={() => setState()}
+  on:wheel={() => setState()}
   on:keydown={(e) => handleKey(e)} />
 
 <div
