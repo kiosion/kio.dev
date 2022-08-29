@@ -1,18 +1,18 @@
 .PHONY: install, dev, backed, test, prod, cypress, vitest, netlify-deploy, sanity-deploy
 
-# only install svelte deps
+# install svelte deps
 install-web: SHELL:=/bin/bash
 install-web:
 	cd ./svelte-app;\
 	yarn install 2> >(grep -v warning 1>&2)
 
-# only install sanity deps
+# install sanity deps
 install-sanity: SHELL:=/bin/bash
 install-sanity:
 	cd ./sanity-cms;\
 	yarn install 2> >(grep -v warning 1>&2)
 
-# only install express deps
+# install express deps
 install-api: SHELL:=/bin/bash
 install-api:
 	cd ./express-api;\
@@ -20,30 +20,40 @@ install-api:
 
 # install all deps
 install: SHELL:=/bin/bash
-install: install-web
-install: install-sanity
-install: install-api
 install:
+	make -j 3 install-web install-sanity install-api
 	yarn install 2> >(grep -v warning 1>&2)
 	yarn prepare
+	clear
+
+# build & run api
+api: SHELL:=/bin/bash
+api: install-api
+api:
+	cd ./express-api &&\
+	SANITY_STUDIO_API_DATASET="dev" yarn dev
+
+# build & run sanity studio
+sanity: SHELL:=/bin/bash
+sanity: install-sanity
+sanity:
+	cd ./sanity-cms &&\
+	SANITY_STUDIO_API_DATASET="dev" yarn sanity start
 
 # build & run backends
 server: SHELL:=/bin/bash
 server:
-	(cd ./sanity-cms;\
-	SANITY_STUDIO_API_DATASET="dev" yarn sanity start) &\
-	(cd ./express-api;\
-	SANITY_STUDIO_API_DATASET="dev" yarn dev)
+	make -j 2 api sanity
 
 # build & run web ui
 web: SHELL:=/bin/bash
+web: install-web
 web:
 	cd ./svelte-app;\
 	yarn dev
 
 # run full dev stack
 dev: SHELL:=/bin/bash
-dev: install
 dev:
 	make -j 2 server web
 
@@ -71,7 +81,8 @@ sanity-upgrade:
 # deploy sanity
 sanity-deploy: sanity-upgrade
 sanity-deploy:
-	yarn sanity deploy
+	cd ./sanity-cms &&\
+	yarn netlify deploy --dir=./dist --prod
 
 # push to netlify
 netlify-deploy: SHELL:=/bin/bash

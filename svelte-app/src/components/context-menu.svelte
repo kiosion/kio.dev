@@ -17,7 +17,7 @@
 >
   {#if $state.open}
     {#each $state.opts as option, index}
-      {#if option.text}
+      {#if option.text && option.icon}
         <div
           in:fly={{ duration: 100, delay: 10, y: -5 }}
           out:fly={{ duration: 100, y: -5 }}

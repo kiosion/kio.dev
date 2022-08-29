@@ -38,10 +38,6 @@
 </svelte:head>
 
 <div data-test-route="index" class="w-full" bind:this={body}>
-  <PageHeading
-    title="secret features"
-    subtitle="You found the secret features page!"
-  />
   <div class="mt-12">
     <ContentWrapper>
       <SwitchItem

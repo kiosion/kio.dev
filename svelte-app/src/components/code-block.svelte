@@ -1,22 +1,35 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte';
   import { theme } from '$stores/theme';
   import { onMount, onDestroy } from 'svelte';
   import { highlightEffects } from '$stores/features';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
+  import type { PixelIcon } from '@/lib/types';
 
   export let content: string;
   export let showClipboard = false;
+  export let lang: string | undefined;
 
   let hovered = false;
   let copied = false;
 
-  let hlComponent: unknown;
+  let hlHighlight: unknown;
+  let hlAuto: unknown;
+  let hlLang: unknown;
   let hlStyles: unknown;
+
+  const Copy = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default);
+  const Check = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/check.svg').then((Icon) => Icon.default);
+
+  let CopyIcon: PixelIcon | undefined;
+  let CheckIcon: PixelIcon | undefined;
 
   let mousePos = [0, 0];
   let container: HTMLElement;
+  let codeContainer: HTMLElement;
+  let innerHeight: number;
   let glow: HTMLElement;
 
   $: [clientX, clientY] = mousePos;
@@ -45,21 +58,43 @@
     }
   });
 
+  const setMousePos = (x: number, y: number) => {
+    mousePos = [x, y];
+  };
+
   onMount(async () => {
     if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) => {
-        mousePos = [e.clientX, e.clientY];
-      });
+      document.addEventListener('mousemove', (e) =>
+        setMousePos(e.clientX, e.clientY)
+      );
+      document.addEventListener('mouseout', () => setMousePos(-1000, -1000));
+      document.addEventListener('blur', () => setMousePos(-1000, -1000));
     }
 
-    hlComponent = (await import('svelte-highlight')).HighlightAuto;
+    !lang
+      ? (hlAuto = (await import('svelte-highlight')).HighlightAuto)
+      : (hlHighlight = (await import('svelte-highlight')).Highlight);
+
+    hlLang = (async () => {
+      switch (lang) {
+        case 'markdown':
+          return await import('svelte-highlight/languages/markdown');
+        case 'javascript':
+          return await import('svelte-highlight/languages/javascript');
+        case 'typescript':
+          return await import('svelte-highlight/languages/typescript');
+      }
+    })();
+
+    CopyIcon = await Copy();
+    CheckIcon = await Check();
   });
 
   onDestroy(() => {
     if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', (e) => {
-        mousePos = [e.clientX, e.clientY];
-      });
+      document.removeEventListener('mousemove', () => setMousePos);
+      document.removeEventListener('mouseout', () => setMousePos);
+      document.removeEventListener('blur', () => setMousePos);
     }
 
     unsubscribeTheme();
@@ -79,6 +114,7 @@
   };
 
   $: clientX, clientY, mouseMove();
+  $: codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
 </script>
 
 <svelte:head>
@@ -104,18 +140,32 @@
           ? 'opacity-100'
           : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
         on:click={() => copy()}
-        in:fade={{ duration: 200 }}
-        out:fade={{ delay: 200, duration: 200 }}
+        in:fade={{ duration: 100, delay: 100 }}
+        out:fade={{ delay: 100, duration: 100 }}
       >
-        <Icon icon="fa-solid:{copied ? 'clipboard-check' : 'clipboard'}" />
+        {#if copied}
+          {#if CheckIcon}
+            <CheckIcon width="20" />
+          {/if}
+        {:else if CopyIcon}
+          <CopyIcon width="20" />
+        {/if}
       </button>
     {/key}
   {/if}
-  <div class="relative overflow-scroll rounded-md w-full text-lg md:text-md">
+  <div
+    class="relative overflow-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
+    bind:this={codeContainer}
+  >
     <div
       class="rounded-md min-w-full w-fit h-fit p-1 bg-slate-200 dark:bg-slate-900 is-{$theme} transition-all duration-150"
+      bind:clientHeight={innerHeight}
     >
-      <svelte:component this={hlComponent} code={content} />
+      {#if !lang}
+        <svelte:component this={hlAuto} code={content} />
+      {:else}
+        <svelte:component this={hlHighlight} code={content} lang={hlLang} />
+      {/if}
     </div>
   </div>
   {#if $highlightEffects === 'on' && !$navigating}

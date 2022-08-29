@@ -1,17 +1,25 @@
 import { get } from 'svelte/store';
 import { state } from '$stores/menu';
-import type { MenuStateOpt } from '../types';
+import type { MenuStateOpt, PixelIcon } from '$lib/types';
 
-import Reload from 'pixelarticons/svg/reload.svg';
-import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
-import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
-import Copy from 'pixelarticons/svg/copy.svg';
-import Open from 'pixelarticons/svg/open.svg';
-import Save from 'pixelarticons/svg/save.svg';
-import Code from 'pixelarticons/svg/code.svg';
-import Link from 'pixelarticons/svg/link.svg';
+const ArrowLeft = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/arrow-left.svg').then((Icon) => Icon.default);
+const ArrowRight = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
+const Open = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/open.svg').then((Icon) => Icon.default);
+const Copy = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default);
+const Link = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/link.svg').then((Icon) => Icon.default);
+const Save = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/save.svg').then((Icon) => Icon.default);
+const Code = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/code.svg').then((Icon) => Icon.default);
+const Reload = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/reload.svg').then((Icon) => Icon.default);
 
-export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
+export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
     return state.set({
       ...get(state),
@@ -24,7 +32,7 @@ export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
   target = target?.closest('button') || target;
   target = target?.closest('a') || target;
 
-  const opts = (() => {
+  const opts = (await (async () => {
     switch (target?.tagName.toUpperCase()) {
       case 'A':
         return [
@@ -112,7 +120,7 @@ export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           }
         ];
     }
-  })() as MenuStateOpt[];
+  })()) as MenuStateOpt[];
 
   const selection = window.getSelection()?.toString();
   if (selection && selection.trim() !== '') {

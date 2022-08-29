@@ -16,6 +16,6 @@
     heading="Want to send a secure message my way? Here's my public PGP key"
   />
   <ContentWrapper>
-    <CodeBlock content={`${pgp}`} showClipboard={true} />
+    <CodeBlock content={`${pgp}`} showClipboard={true} lang="markdown" />
   </ContentWrapper>
 </div>

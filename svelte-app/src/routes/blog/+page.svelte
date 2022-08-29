@@ -7,11 +7,16 @@
   import { navOptions, pageHeading } from '$stores/nav';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import Pin from 'pixelarticons/svg/pin.svg';
-  import Clock from 'pixelarticons/svg/clock.svg';
-  import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
+  import type { PixelIcon } from '$lib/types';
+
+  const Pin = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/pin.svg').then((Icon) => Icon.default);
+  const Clock = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default);
+  const ArrowRight = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
 
   let mousePos: [number, number];
 
@@ -27,15 +32,11 @@
     });
 
     if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) => {
-        setMousePos(e.clientX, e.clientY);
-      });
-      document.addEventListener('mouseout', () => {
-        setMousePos(-1000, -1000);
-      });
-      document.addEventListener('blur', () => {
-        setMousePos(-1000, -1000);
-      });
+      document.addEventListener('mousemove', (e) =>
+        setMousePos(e.clientX, e.clientY)
+      );
+      document.addEventListener('mouseout', () => setMousePos(-1000, -1000));
+      document.addEventListener('blur', () => setMousePos(-1000, -1000));
     }
     // TODO: If posts store is empty, should re-fetch from API
   });

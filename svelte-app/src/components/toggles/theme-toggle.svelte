@@ -1,8 +1,13 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
+  import type { PixelIcon } from '@/lib/types';
   import { fade } from 'svelte/transition';
-  import MoonStars from 'pixelarticons/svg/moon-stars.svg';
-  import Sun from 'pixelarticons/svg/sun.svg';
+  import SafeIcon from '../safe-icon.svelte';
+
+  const MoonStars = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/moon-stars.svg').then((Icon) => Icon.default);
+  const Sun = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/sun.svg').then((Icon) => Icon.default);
 </script>
 
 <button
@@ -17,7 +22,7 @@
       in:fade={{ delay: 100, duration: 200 }}
       out:fade={{ duration: 100 }}
     >
-      <MoonStars width="20" />
+      <SafeIcon icon={MoonStars} />
     </span>
   {:else}
     <span
@@ -25,7 +30,7 @@
       in:fade={{ delay: 100, duration: 200 }}
       out:fade={{ duration: 100 }}
     >
-      <Sun width="20" />
+      <SafeIcon icon={Sun} />
     </span>
   {/if}
 </button>

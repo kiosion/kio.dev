@@ -5,9 +5,15 @@
   import { highlightEffects } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/nav';
   import ErrorText from '$components/error-text.svelte';
-  import List from 'pixelarticons/svg/list.svg';
-  import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
-  import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
+  import type { PixelIcon } from '$lib/types';
+  import SafeIcon from '@/components/safe-icon.svelte';
+
+  const List = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/list.svg').then((Icon) => Icon.default);
+  const ArrowLeft = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/arrow-left.svg').then((Icon) => Icon.default);
+  const ArrowRight = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
 
   let mousePos: [number, number];
 
@@ -57,12 +63,12 @@
     <!-- To-be pagination component: -->
     <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
       <div class="flex flex-row justify-start items-center gap-2">
-        <List width="20" />
+        <SafeIcon icon={List} />
         <h3 class="font-code text-lg">Page 1 of 1</h3>
       </div>
       <div class="flex flex-row justify-start items-center gap-4">
-        <ArrowLeft width="20" />
-        <ArrowRight width="20" />
+        <SafeIcon icon={ArrowLeft} />
+        <SafeIcon icon={ArrowRight} />
       </div>
     </div>
   </div>

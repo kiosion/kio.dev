@@ -1,8 +1,13 @@
 <script lang="ts">
   import { navOpen } from '$stores/nav';
   import { fade } from 'svelte/transition';
-  import Menu from 'pixelarticons/svg/menu.svg';
-  import CloseBox from 'pixelarticons/svg/close-box.svg';
+  import type { PixelIcon } from '$lib/types';
+  import SafeIcon from '../safe-icon.svelte';
+
+  const Menu = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/menu.svg').then((Icon) => Icon.default);
+  const CloseBox = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/close-box.svg').then((Icon) => Icon.default);
 </script>
 
 <button
@@ -16,7 +21,7 @@
       in:fade={{ delay: 100, duration: 200 }}
       out:fade={{ duration: 100 }}
     >
-      <CloseBox width="20" />
+      <SafeIcon icon={CloseBox} />
     </span>
   {:else}
     <span
@@ -24,7 +29,7 @@
       in:fade={{ delay: 100, duration: 200 }}
       out:fade={{ duration: 100 }}
     >
-      <Menu width="20" />
+      <SafeIcon icon={Menu} />
     </span>
   {/if}
 </button>

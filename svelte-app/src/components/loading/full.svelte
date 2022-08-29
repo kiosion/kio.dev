@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { classList } from 'svelte-body';
   import Line from './animations/line.svelte';
   import { fade } from 'svelte/transition';
   import seedrandom from 'seedrandom';
@@ -29,6 +30,8 @@
   export let theme = 'light';
 </script>
 
+<svelte:body use:classList={'overflow-y-hidden'} />
+
 <div
   class="absolute w-[100vw] h-[100vh] {theme === 'light'
     ? ' bg-slate-200'
@@ -40,11 +43,14 @@
     <Line />
   </div>
   {#if phrase !== ''}
-    <div class="w-fit max-w-1/2 mx-auto mb-[8vh]" out:fade={{ duration: 200 }}>
+    <div
+      class="absolute w-fit max-w-1/2 bottom-[8vh]"
+      out:fade={{ duration: 200 }}
+    >
       <p
         class="{theme === 'light'
           ? ' text-slate-700'
-          : ' text-slate-200'} font-mono text-base"
+          : ' text-slate-200'} font-mono text-base w-fit"
         data-test-id="loader-full-phrase"
       >
         {phrase}

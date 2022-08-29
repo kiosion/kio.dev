@@ -50,7 +50,7 @@ export interface CodeBlockComponentProps
 // State types
 export interface MenuStateOpt {
   disabled?: boolean;
-  icon?: SvelteComponent | string;
+  icon?: () => Promise<PixelIcon>;
   text?: string;
   action?: () => void | Promise<void> | undefined;
 }
@@ -62,6 +62,9 @@ export interface MenuState {
   };
   opts: MenuStateOpt[];
 }
+
+// Component types
+export type PixelIcon = SvelteComponent | string | undefined;
 
 // Data types
 export interface Document extends SanityAsset {

@@ -1,11 +1,14 @@
 <script lang="ts">
-  import { getContext, createEventDispatcher, SvelteComponent } from 'svelte';
+  import type { PixelIcon } from '@/lib/types';
+  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import SafeIcon from '../safe-icon.svelte';
   import { key } from './menu';
 
   export let disabled = false;
-  export let icon: SvelteComponent | string;
+  export let icon: () => Promise<PixelIcon>;
   export let text = '';
   export let index = 0;
+  let iconSvg: PixelIcon | undefined;
 
   const dispatch = createEventDispatcher();
 
@@ -18,6 +21,10 @@
     dispatch('click');
     dispatchClick();
   };
+
+  onMount(async () => {
+    icon && (iconSvg = await icon());
+  });
 </script>
 
 <div
@@ -30,9 +37,9 @@
   on:click={handleClick}
 >
   {#if text !== ''}
-    {#if icon}
-      <svelte:component this={icon} width="20" class="mb-[2px]" />
-    {/if}
+    <div class="w-[20px] mb-[2px]">
+      <SafeIcon {icon} />
+    </div>
     <p
       class="font-sans text-base break-all line-clamp-1 overflow-ellipsis w-fit max-w-full mr-2"
     >

@@ -2,20 +2,39 @@
   import { theme } from '$stores/theme';
   import { navOptions, pageHeading } from '$stores/nav';
   import { onMount } from 'svelte';
-  import type UIfx from 'uifx';
   import { sounds } from '$stores/features';
-  import ArrowUp from 'pixelarticons/svg/arrow-up.svg';
-  import MoonStars from 'pixelarticons/svg/moon-stars.svg';
-  import Sun from 'pixelarticons/svg/sun.svg';
-  import Volume2 from 'pixelarticons/svg/volume-2.svg';
-  import VolumeX from 'pixelarticons/svg/volume-x.svg';
+  import type UIfx from 'uifx';
+  import type { PixelIcon } from '@/lib/types';
+
+  const ArrowUp = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/arrow-up.svg').then((Icon) => Icon.default);
+  const MoonStars = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/moon-stars.svg').then((Icon) => Icon.default);
+  const Sun = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/sun.svg').then((Icon) => Icon.default);
+  const Volume2 = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/volume-2.svg').then((Icon) => Icon.default);
+  const VolumeX = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/volume-x.svg').then((Icon) => Icon.default);
+
+  let ArrowUpIcon: PixelIcon | undefined;
+  let MoonStarsIcon: PixelIcon | undefined;
+  let SunIcon: PixelIcon | undefined;
+  let Volume2Icon: PixelIcon | undefined;
+  let VolumeXIcon: PixelIcon | undefined;
 
   let click: UIfx;
 
-  onMount(() => {
+  onMount(async () => {
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
+
+    ArrowUpIcon = await ArrowUp();
+    MoonStarsIcon = await MoonStars();
+    SunIcon = await Sun();
+    Volume2Icon = await Volume2();
+    VolumeXIcon = await VolumeX();
   });
 </script>
 
@@ -30,7 +49,11 @@
           class="w-fit flex flex-row items-center select-none"
           on:click={() => $sounds === 'on' && click?.play()}
         >
-          <ArrowUp width="20" />
+          <div class="w-[20px]">
+            {#if ArrowUpIcon}
+              <ArrowUpIcon width="20" />
+            {/if}
+          </div>
           <p class="font-code text-base w-fit ml-4">
             Back ({$navOptions.up})
           </p>
@@ -58,9 +81,17 @@
         }}
       >
         {#if $theme === 'light'}
-          <MoonStars width="20" />
+          <div class="w-[20px]">
+            {#if MoonStarsIcon}
+              <MoonStarsIcon width="20" />
+            {/if}
+          </div>
         {:else}
-          <Sun width="20" />
+          <div class="w-[20px]">
+            {#if SunIcon}
+              <SunIcon width="20" />
+            {/if}
+          </div>
         {/if}
       </button>
       <button
@@ -74,9 +105,17 @@
         }}
       >
         {#if $sounds === 'on'}
-          <Volume2 width="20" />
+          <div class="w-[20px]">
+            {#if Volume2Icon}
+              <Volume2Icon width="20" />
+            {/if}
+          </div>
         {:else}
-          <VolumeX width="20" />
+          <div class="w-[20px]">
+            {#if VolumeXIcon}
+              <VolumeXIcon width="20" />
+            {/if}
+          </div>
         {/if}
       </button>
     </div>

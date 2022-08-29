@@ -103,7 +103,6 @@ export const findProject = async (fetch: RouteFetch, params = { slug: '' }) => {
     console.log('returning cached data');
     return Store.get(cacheKey);
   } else {
-    console.log('querying project');
     const response = await queryProject(fetch, params);
     Store.set(cacheKey, response);
     return response;

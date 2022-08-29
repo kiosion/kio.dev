@@ -1,5 +1,6 @@
 import { browser } from '$app/env';
 import { writable } from 'svelte/store';
+import { isMobile } from '$helpers/browser';
 
 const initialSetting = (feature: string, fallback = 'off') => {
   return browser
@@ -13,7 +14,7 @@ svgBackground.subscribe((value) => {
 });
 
 const highlightEffects = writable<string>(
-  initialSetting('highlightEffects', 'on')
+  initialSetting('highlightEffects', !isMobile ? 'on' : 'off')
 );
 highlightEffects.subscribe((value) => {
   browser && window.localStorage.setItem('feature-highlightEffects', value);
@@ -24,7 +25,9 @@ reduceMotion.subscribe((value) => {
   browser && window.localStorage.setItem('feature-reduceMotion', value);
 });
 
-const sounds = writable<string>(initialSetting('sounds', 'on'));
+const sounds = writable<string>(
+  initialSetting('sounds', !isMobile ? 'on' : 'off')
+);
 sounds.subscribe((value) => {
   browser && window.localStorage.setItem('feature-sounds', value);
 });

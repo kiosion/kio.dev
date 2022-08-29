@@ -9,9 +9,14 @@
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
   import IconHeader from '$components/icon-header.svelte';
-  import Pin from 'pixelarticons/svg/pin.svg';
-  import Clock from 'pixelarticons/svg/clock.svg';
-  import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
+  import type { PixelIcon } from '$lib/types';
+
+  const Pin = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/pin.svg').then((Icon) => Icon.default);
+  const Clock = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default);
+  const ArrowRight = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
 
   let mousePos: [number, number];
 

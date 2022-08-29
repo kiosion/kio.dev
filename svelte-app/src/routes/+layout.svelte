@@ -37,9 +37,7 @@
 </script>
 
 <svelte:body
-  use:classList={`w-full h-full ${
-    appLoaded ? 'overflow-x-hidden' : 'overflow-hidden'
-  } ${$theme ?? 'dark'} ${
+  use:classList={`w-full h-full overflow-x-hidden ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)} />

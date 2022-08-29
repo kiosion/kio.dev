@@ -8,7 +8,10 @@
   import PostFooter from '$components/blog/post-footer.svelte';
   import PostHeader from '$components/blog/post-header.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import Downasaur from 'pixelarticons/svg/downasaur.svg';
+  import type { PixelIcon } from '@/lib/types';
+
+  const Downasaur = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/downasaur.svg').then((Icon) => Icon.default);
 
   let body: HTMLElement;
 
