@@ -1,8 +1,14 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import CardText from 'pixelarticons/svg/card-text.svg';
-  import ArticleMultiple from 'pixelarticons/svg/article-multiple.svg';
+  import type { PixelIcon } from '@/lib/types';
+
+  const CardText = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/card-text.svg').then((Icon) => Icon.default);
+  const ArticleMultiple = (): Promise<PixelIcon> =>
+    import('pixelarticons/svg/article-multiple.svg').then(
+      (Icon) => Icon.default
+    );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export let tags: any[] | undefined;

@@ -63,7 +63,7 @@
 </svelte:head>
 
 <div data-test-route="work" class="w-full">
-  <PageHeading heading="A collection of recent work and projects of mine" />
+  <PageHeading heading="A collection of recent work & projects" />
   <div class="mb-12">
     {#if data.pinnedProject}
       <IconHeader icon={Pin} text="Pinned" />

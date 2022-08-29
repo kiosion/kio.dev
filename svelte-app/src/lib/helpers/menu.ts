@@ -18,6 +18,8 @@ const Code = (): Promise<PixelIcon> =>
   import('pixelarticons/svg/code.svg').then((Icon) => Icon.default);
 const Reload = (): Promise<PixelIcon> =>
   import('pixelarticons/svg/reload.svg').then((Icon) => Icon.default);
+const Cast = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/cast.svg').then((Icon) => Icon.default);
 
 export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
@@ -110,6 +112,12 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
             icon: Reload,
             text: 'Reload',
             action: () => location.reload()
+          },
+          {},
+          {
+            icon: Cast,
+            text: 'Cast',
+            action: () => window.open('https://youtu.be/dQw4w9WgXcQ', '_blank')
           },
           {},
           {

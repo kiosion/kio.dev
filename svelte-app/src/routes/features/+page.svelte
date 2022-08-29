@@ -1,5 +1,4 @@
 <script lang="ts">
-  import PageHeading from '$components/headings/page-heading.svelte';
   import ContentWrapper from '$components/content-wrapper.svelte';
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/nav';
@@ -11,7 +10,7 @@
   } from '$stores/features';
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
-  import { parseEmoji } from '$lib/helpers/emoji';
+  import { parseEmoji } from '$helpers/emoji';
 
   let body: HTMLElement;
   let click: UIfx;
@@ -31,6 +30,9 @@
 
   navOptions.set({ down: '', up: '/' });
   pageHeading.set('Secret');
+
+  export const hydrate = false;
+  export const router = false;
 </script>
 
 <svelte:head>

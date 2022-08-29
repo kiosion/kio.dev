@@ -5,6 +5,8 @@
   import { sounds } from '$stores/features';
   import type UIfx from 'uifx';
   import type { PixelIcon } from '@/lib/types';
+  import SafeIcon from './safe-icon.svelte';
+  import { fade } from 'svelte/transition';
 
   const ArrowUp = (): Promise<PixelIcon> =>
     import('pixelarticons/svg/arrow-up.svg').then((Icon) => Icon.default);
@@ -17,24 +19,12 @@
   const VolumeX = (): Promise<PixelIcon> =>
     import('pixelarticons/svg/volume-x.svg').then((Icon) => Icon.default);
 
-  let ArrowUpIcon: PixelIcon | undefined;
-  let MoonStarsIcon: PixelIcon | undefined;
-  let SunIcon: PixelIcon | undefined;
-  let Volume2Icon: PixelIcon | undefined;
-  let VolumeXIcon: PixelIcon | undefined;
-
   let click: UIfx;
 
-  onMount(async () => {
+  onMount(() => {
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
-
-    ArrowUpIcon = await ArrowUp();
-    MoonStarsIcon = await MoonStars();
-    SunIcon = await Sun();
-    Volume2Icon = await Volume2();
-    VolumeXIcon = await VolumeX();
   });
 </script>
 
@@ -42,33 +32,33 @@
   class="z-10 fixed hidden md:block rounded-tl-2xl top-0 ml-[1px] md:left-40 lg:left-60 right-0 py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors duration-150 backdrop-blur-md"
 >
   <div class="flex flex-row justify-between items-start">
-    {#if $navOptions && $navOptions.up !== ''}
-      <div class="w-52">
+    <div class="w-52">
+      {#if $navOptions && $navOptions.up !== ''}
         <a
           href={$navOptions.up}
           class="w-fit flex flex-row items-center select-none"
           on:click={() => $sounds === 'on' && click?.play()}
+          transition:fade={{ duration: 100 }}
         >
-          <div class="w-[20px]">
-            {#if ArrowUpIcon}
-              <ArrowUpIcon width="20" />
-            {/if}
-          </div>
+          <SafeIcon icon={ArrowUp} />
           <p class="font-code text-base w-fit ml-4">
             Back ({$navOptions.up})
           </p>
         </a>
-      </div>
-    {:else}
-      <div class="w-52" />
-    {/if}
-    <p
-      class="font-code text-lg w-fit select-none -ml-52 -mr-40 cursor-pointer"
-      aria-label="Scroll to top"
-      on:click={() => window?.scrollTo({ top: 0, behavior: 'smooth' })}
-    >
-      {$pageHeading}
-    </p>
+      {/if}
+    </div>
+    <div class="-ml-52 -mr-40">
+      {#if $pageHeading && $pageHeading !== ''}
+        <p
+          class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[24rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
+          aria-label="Scroll to top"
+          on:click={() => window?.scrollTo({ top: 0, behavior: 'smooth' })}
+          transition:fade={{ duration: 100 }}
+        >
+          {$pageHeading}
+        </p>
+      {/if}
+    </div>
     <div class="flex flex-row items-center justify-end w-40 gap-4">
       <button
         class="flex flex-row items-center justify-end select-none"
@@ -81,17 +71,9 @@
         }}
       >
         {#if $theme === 'light'}
-          <div class="w-[20px]">
-            {#if MoonStarsIcon}
-              <MoonStarsIcon width="20" />
-            {/if}
-          </div>
+          <SafeIcon icon={MoonStars} />
         {:else}
-          <div class="w-[20px]">
-            {#if SunIcon}
-              <SunIcon width="20" />
-            {/if}
-          </div>
+          <SafeIcon icon={Sun} />
         {/if}
       </button>
       <button
@@ -105,17 +87,9 @@
         }}
       >
         {#if $sounds === 'on'}
-          <div class="w-[20px]">
-            {#if Volume2Icon}
-              <Volume2Icon width="20" />
-            {/if}
-          </div>
+          <SafeIcon icon={Volume2} />
         {:else}
-          <div class="w-[20px]">
-            {#if VolumeXIcon}
-              <VolumeXIcon width="20" />
-            {/if}
-          </div>
+          <SafeIcon icon={VolumeX} />
         {/if}
       </button>
     </div>

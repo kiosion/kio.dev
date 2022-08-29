@@ -59,7 +59,7 @@
     clicks++;
     $sounds === 'on' && click?.play();
     if (clicks > 3) {
-      goto('/secret')
+      goto('/features')
         .then(() => {
           $sounds === 'on' && ping?.play();
           clicks = 0;

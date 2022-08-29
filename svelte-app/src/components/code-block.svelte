@@ -5,6 +5,7 @@
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
   import type { PixelIcon } from '@/lib/types';
+  import SafeIcon from './safe-icon.svelte';
 
   export let content: string;
   export let showClipboard = false;
@@ -22,9 +23,6 @@
     import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default);
   const Check = (): Promise<PixelIcon> =>
     import('pixelarticons/svg/check.svg').then((Icon) => Icon.default);
-
-  let CopyIcon: PixelIcon | undefined;
-  let CheckIcon: PixelIcon | undefined;
 
   let mousePos = [0, 0];
   let container: HTMLElement;
@@ -85,9 +83,6 @@
           return await import('svelte-highlight/languages/typescript');
       }
     })();
-
-    CopyIcon = await Copy();
-    CheckIcon = await Check();
   });
 
   onDestroy(() => {
@@ -144,11 +139,9 @@
         out:fade={{ delay: 100, duration: 100 }}
       >
         {#if copied}
-          {#if CheckIcon}
-            <CheckIcon width="20" />
-          {/if}
-        {:else if CopyIcon}
-          <CopyIcon width="20" />
+          <SafeIcon icon={Check} />
+        {:else}
+          <SafeIcon icon={Copy} />
         {/if}
       </button>
     {/key}

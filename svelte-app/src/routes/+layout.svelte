@@ -23,6 +23,7 @@
 
   let appLoaded: boolean;
   let pageContainer: HTMLElement;
+  let preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
 
   onMount(() => {
     appLoaded = true;
@@ -36,6 +37,12 @@
   export let data: LayoutData;
 </script>
 
+<svelte:head>
+  {#each preloadUrls as image}
+    <link rel="preload" as="image" href={image} />
+  {/each}
+</svelte:head>
+
 <svelte:body
   use:classList={`w-full h-full overflow-x-hidden ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
@@ -47,17 +54,15 @@
 {/if}
 
 <div
-  class="w-full h-fit min-h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-[background-color,border-color,text-decoration-color,fill,stroke] motion-reduce:transition-none"
+  class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-[background-color,border-color,text-decoration-color,fill,stroke] motion-reduce:transition-none"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
   <HeaderControls />
   <Nav segment={$page?.url ? $page.url.pathname : ''} />
-  <div
-    class="h-fit md:min-h-full md:ml-40 lg:ml-60 px-8 pb-8 md:py-8 lg:px-10 xl:px-20"
-  >
+  <div class="md:h-full md:ml-40 lg:ml-60 px-8 pb-8 md:py-8 lg:px-10 xl:px-20">
     <div
-      class="h-fit min-h-full w-full max-w-[60rem] mx-auto grid grid-rows-1 grid-cols-1"
+      class="h-full w-full max-w-[60rem] mx-auto grid grid-rows-1 grid-cols-1"
     >
       {#if appLoaded}
         <PageTransition url={data?.url ? data.url.pathname : ''}>

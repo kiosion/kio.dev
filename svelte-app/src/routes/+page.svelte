@@ -29,12 +29,7 @@
   on:wheel={(e) => handleScrollNav(e, scrollContainer, { down: '/blog' })}
 >
   <div class="mt-[40vh] flex flex-col items-center">
-    <p class="font-display text-3xl font-bold mb-2 w-fit">
-      Hi, I'm <a
-        href="/about"
-        on:click={() => $sounds === 'on' && click?.play()}>Kio.</a
-      >
-    </p>
+    <p class="font-display text-3xl font-bold mb-2 w-fit">Hi, I'm Kio.</p>
     <p class="font-mono text-lg lowercase w-fit">
       software engineer / tech nerd / artist
     </p>

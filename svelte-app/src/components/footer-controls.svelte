@@ -4,20 +4,17 @@
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';
   import type { PixelIcon } from '@/lib/types';
+  import SafeIcon from './safe-icon.svelte';
 
   const ArrowDown = (): Promise<PixelIcon> =>
     import('pixelarticons/svg/arrow-down.svg').then((Icon) => Icon.default);
 
-  let ArrowDownIcon: PixelIcon | undefined;
-
   let click: UIfx;
 
-  onMount(async () => {
+  onMount(() => {
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
-
-    ArrowDownIcon = await ArrowDown();
   });
 </script>
 
@@ -27,11 +24,7 @@
     class="hidden md:flex md:ml-40 lg:ml-60 fixed bottom-6 left-8  flex-row items-center select-none"
     on:click={() => $sounds === 'on' && click?.play()}
   >
-    {#if ArrowDownIcon}
-      <div class="w-[20px]">
-        <ArrowDownIcon width="20" />
-      </div>
-    {/if}
+    <SafeIcon icon={ArrowDown} />
     <p class="font-code text-base w-fit ml-4">
       Continue ({$navOptions.down})
     </p>
