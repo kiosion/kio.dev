@@ -2863,14 +2863,14 @@
     date-fns "^2.16.1"
     lodash "^4.17.15"
 
-"@sanity/vision@^2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.31.0.tgz#ae9480e045100fc1745b693c8b3fe4a91940816d"
-  integrity sha512-TdxkBAuQHtbizbyMyZ4OfpYOTsuGlnBwBxMZ2EmCxm2+hHqv/Hltyt+AWe+GG1cyIhuXSl5DWyFGzu2Wo3hWAQ==
+"@sanity/vision@^2.31.1":
+  version "2.31.1"
+  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.31.1.tgz#f73a009dbb100b27620d11273ece118840f6f3ec"
+  integrity sha512-lyrPI5D1MqShlS+sWy7YOESAz99hrHmScfT7IC96krmq3G7ID/Yfb1soLlAiSI7wvM1vcdPJGM/9ria/xRQs2Q==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
-    "@sanity/icons" "^1.2.6"
-    "@sanity/ui" "^0.37.9"
+    "@sanity/icons" "^1.3.4"
+    "@sanity/ui" "^0.37.21"
     classnames "^2.2.5"
     codemirror "^5.47.0"
     is-hotkey "^0.1.6"
