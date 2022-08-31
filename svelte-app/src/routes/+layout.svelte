@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '../app.scss';
   import { onMount, onDestroy } from 'svelte';
   import { classList } from 'svelte-body';
   import { fade, fly } from 'svelte/transition';
@@ -108,51 +109,6 @@
 {/if}
 
 <style lang="scss">
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
-  :global(body),
-  :global(html) {
-    height: 100vh;
-    transition: background 150ms ease;
-  }
-
-  :global(body) {
-    background-color: #0f172a;
-    --textColour: #f1f5f9;
-  }
-
-  :global(body.light) {
-    background-color: #e2e8f0;
-    --textColour: #0f172a;
-  }
-
-  :global(::selection) {
-    background: #34d399;
-    color: #1e293b;
-  }
-
-  :global(body:not(.is-loaded)) {
-    cursor: wait !important;
-  }
-
-  :global(.is-loading a, .is-loading button, .is-loading [role='button']) {
-    cursor: wait !important;
-  }
-
-  :global(.pixel) {
-    image-rendering: pixelated !important;
-  }
-
-  :global(.click-through) {
-    pointer-events: none;
-  }
-
-  :global(.click-through a, .click-through button) {
-    pointer-events: visible;
-  }
-
   .grid > * {
     grid-column: 1;
     grid-row: 1;

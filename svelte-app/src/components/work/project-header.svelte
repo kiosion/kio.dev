@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
+  import { urlFor, getCrop } from '$lib/helpers/image';
   import { getAbsDate, getShortDate } from '$lib/helpers/date';
-  import type { ProjectDocument, PixelIcon } from '$lib/types';
+  import type { ProjectDocument } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
 
@@ -10,11 +10,6 @@
 
   let date = getShortDate(project.date);
   let dateFormat = 'short';
-
-  const CardText = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/card-text.svg').then((Icon) => Icon.default);
-  const InfoBox = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/info-box.svg').then((Icon) => Icon.default);
 
   const switchDate = () => {
     dateFormat === 'short'
@@ -52,16 +47,13 @@
         />
       </div>
     {/if}
-    <h1 class="w-fit h-fit font-display text-5xl mb-6 font-bold">
+    <h1 class="w-fit h-fit font-display text-5xl leading-10 mb-6 font-bold">
       {project.title}
     </h1>
     {#if project.tags}
       <div class="flex flex-row justify-start items-center gap-2">
         {#each project.tags as tag}
-          <a
-            href="/work/{tag.slug.current}"
-            class="font-code text-base capitalize px-2 py-1 bg-slate-200 dark:bg-slate-900 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-colors"
-          >
+          <a href="/work/{tag.slug.current}" class="categoryTag">
             {tag.title}
           </a>
         {/each}

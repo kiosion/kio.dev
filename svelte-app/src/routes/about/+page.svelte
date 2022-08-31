@@ -33,7 +33,7 @@
 <div data-test-route="about">
   <ContentWrapper>
     <div
-      class="w-full p-6 rounded-lg flex flex-col gap-6 justify-start items-start bg-slate-200 dark:bg-slate-900 transition-colors duration-150"
+      class="w-full p-6 roundedCard-lg flex flex-col gap-6 justify-start items-start"
     >
       <div class="flex flex-row gap-6 justify-start items-center w-full h-fit">
         <div class="h-24 aspect-square">

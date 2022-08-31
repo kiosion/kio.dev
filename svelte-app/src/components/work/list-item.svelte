@@ -40,7 +40,7 @@
       }}
     >
       <section
-        class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit max-h-60 p-4 bg-slate-200 dark:bg-slate-900 rounded-xl duration-150"
+        class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit max-h-60 p-4 roundedCard-lg"
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
@@ -75,13 +75,10 @@
           </h1>
           {#if project.tags}
             <div
-              class="flex flex-row justify-start items-center gap-2 flex-nowrap mt-1"
+              class="flex flex-row justify-start items-center gap-2 flex-wrap mt-1"
             >
               {#each project.tags as tag}
-                <a
-                  href="/work/{tag.slug.current}"
-                  class="font-code text-sm capitalize block px-2 py-1 bg-slate-300 dark:bg-slate-800 hover:bg-slate-300/50 dark:hover:bg-slate-800/50 rounded-md transition-colors"
-                >
+                <a href="/work/{tag.slug.current}" class="categoryTag-sm">
                   {tag.title}
                 </a>
               {/each}

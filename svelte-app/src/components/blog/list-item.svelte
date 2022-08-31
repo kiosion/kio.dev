@@ -42,13 +42,18 @@
       }}
     >
       <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-xl duration-150"
+        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 roundedCard-lg"
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
       >
+        <h1
+          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
+        >
+          {post.title}
+        </h1>
         <div
-          class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200"
+          class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 mt-1"
         >
           <p class="">
             {getAbsDate(post.date)}
@@ -57,15 +62,21 @@
           <p class="">
             {`${Math.floor(readingTime / 60)} min read`}
           </p>
+          {#if post.tags}
+            <BulletPoint />
+            <div
+              class="flex flex-row justify-start items-center gap-2 flex-wrap"
+            >
+              {#each post.tags as tag}
+                <a href="/work/{tag.slug.current}" class="categoryTag-sm">
+                  {tag.title}
+                </a>
+              {/each}
+            </div>
+          {/if}
         </div>
-        <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl mt-2"
-        >
-          {post.title}
-        </h1>
-
         {#if post.desc}
-          <div class="relative flex flex-row align-center justify-start mt-1">
+          <div class="relative flex flex-row align-center justify-start mt-2">
             <p
               class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-2"
             >

@@ -24,7 +24,14 @@ export default defineConfig({
     Inspect()
   ],
   optimizeDeps: {
-    include: ['highlight.js', 'highlight.js/lib/core']
+    include: [
+      'highlight.js',
+      'highlight.js/lib/core',
+      'uifx',
+      'seedrandom',
+      'moment',
+      '@sanity/image-url'
+    ]
   },
   resolve: {
     alias: {
@@ -32,6 +39,13 @@ export default defineConfig({
     },
     define: {
       ...viteEnv
+    }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
     }
   },
   test: {

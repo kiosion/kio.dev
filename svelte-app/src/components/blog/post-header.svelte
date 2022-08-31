@@ -32,14 +32,11 @@
 
 <div class="mb-4" data-test-id="post-header">
   <div class="flex flex-col">
-    <h1 class="font-display text-5xl mb-6 font-bold">{title}</h1>
+    <h1 class="font-display text-5xl leading-10 mb-6 font-bold">{title}</h1>
     {#if post.tags}
       <div class="flex flex-row justify-start items-center gap-2 mb-6">
         {#each post.tags as tag}
-          <a
-            href="/blog/{tag.slug.current}"
-            class="font-code text-base capitalize px-2 py-1 bg-slate-200 dark:bg-slate-900 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-colors"
-          >
+          <a href="/blog/{tag.slug.current}" class="categoryTag">
             {tag.title}
           </a>
         {/each}
