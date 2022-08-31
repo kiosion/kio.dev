@@ -47,7 +47,7 @@
         />
       </div>
     {/if}
-    <h1 class="w-fit h-fit font-display text-5xl leading-10 mb-6 font-bold">
+    <h1 class="w-fit h-fit font-display text-6xl leading-normal mb-1 font-bold">
       {project.title}
     </h1>
     {#if project.tags}

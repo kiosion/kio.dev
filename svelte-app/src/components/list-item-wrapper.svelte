@@ -36,7 +36,7 @@
 >
   <div
     class="cover absolute top-0 left-0 w-full h-full pointer-events-none block bg-slate-400 {hovered
-      ? 'opacity-10'
+      ? 'opacity-10 dark:opacity-5'
       : 'opacity-0'}"
   />
   <slot />
