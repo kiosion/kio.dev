@@ -46,7 +46,7 @@
         on:blur={() => (hovered = false)}
       >
         <div
-          class="flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
+          class="hidden sm:flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
         >
           {#if _ref && imageCrop}
             <img
@@ -67,31 +67,29 @@
             />
           {/if}
         </div>
-        <div class="flex flex-col items-stretch justify-between w-full">
-          <div class="flex flex-col">
-            <h1
-              class="overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
+        <div class="flex flex-col items-stretch justify-start w-full">
+          <h1
+            class="overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
+          >
+            {project.title}
+          </h1>
+          {#if project.tags}
+            <div
+              class="flex flex-row justify-start items-center gap-2 flex-nowrap mt-1"
             >
-              {project.title}
-            </h1>
-            {#if project.tags}
-              <div
-                class="flex flex-row justify-start items-center gap-2 flex-nowrap mt-1"
-              >
-                {#each project.tags as tag}
-                  <a
-                    href="/work/{tag.slug.current}"
-                    class="font-code text-sm capitalize block px-2 py-1 bg-slate-300 dark:bg-slate-800 hover:bg-slate-300/50 dark:hover:bg-slate-800/50 rounded-md transition-colors"
-                  >
-                    {tag.title}
-                  </a>
-                {/each}
-              </div>
-            {/if}
-          </div>
+              {#each project.tags as tag}
+                <a
+                  href="/work/{tag.slug.current}"
+                  class="font-code text-sm capitalize block px-2 py-1 bg-slate-300 dark:bg-slate-800 hover:bg-slate-300/50 dark:hover:bg-slate-800/50 rounded-md transition-colors"
+                >
+                  {tag.title}
+                </a>
+              {/each}
+            </div>
+          {/if}
           {#if project.desc}
             <p
-              class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base mt-1 line-clamp-2"
+              class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-2"
             >
               {project.desc}
             </p>
