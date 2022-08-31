@@ -959,20 +959,10 @@
     esbuild "^0.14.48"
     worktop "0.8.0-next.14"
 
-"@sveltejs/adapter-netlify@1.0.0-next.75":
+"@sveltejs/adapter-netlify@1.0.0-next.75", "@sveltejs/adapter-netlify@^1.0.0-next.75":
   version "1.0.0-next.75"
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.75.tgz#c47370c083a8e4d127c00a6e7dc094d22c79dedf"
   integrity sha512-1zTR/U/ceEAyqIGJ74v54G+JbIR+fSmTN9qfqGOM0gBwVoBVRUujGm4tDFJQNYzvuGzVnC7br/rhYMLZd2JluQ==
-  dependencies:
-    "@iarna/toml" "^2.2.5"
-    esbuild "^0.14.48"
-    set-cookie-parser "^2.4.8"
-    tiny-glob "^0.2.9"
-
-"@sveltejs/adapter-netlify@^1.0.0-next.74":
-  version "1.0.0-next.74"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.74.tgz#9ba4c821605996ead57945b10dafffd37822cd04"
-  integrity sha512-pT8JmmFFS378HXYogxMpUTfA/nl/DI1+hNzmSybU2i8wJxqyt2Qi59YZmdu5ewRnUWrJRoZ+CmMplp7SbLOiLQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     esbuild "^0.14.48"
