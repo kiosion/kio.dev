@@ -58,7 +58,7 @@
     "prettier-plugin-svelte": "^2.7.0",
     "randomstring": "^1.2.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.78.1",
+    "rollup": "^2.79.0",
     "sass": "^1.54.5",
     "seedrandom": "^3.0.5",
     "svelte": "^3.44.0",
