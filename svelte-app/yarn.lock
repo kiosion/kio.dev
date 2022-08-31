@@ -974,10 +974,12 @@
     set-cookie-parser "^2.4.8"
     tiny-glob "^0.2.9"
 
-"@sveltejs/adapter-node@^1.0.0-next.87":
-  version "1.0.0-next.87"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.0.0-next.87.tgz#6f194b1d37f9867ab8e8c39ec7c078a57bfeb594"
-  integrity sha512-ktvZ0+uthYH6SQMO34acbqkReeIcNMD1b7fnWqRIBj5CrgeBarvmbcj+x3/QKpOIG7s11yjwgYhOGLxZX0VMHw==
+"@sveltejs/adapter-node@^1.0.0-next.88":
+  version "1.0.0-next.88"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.0.0-next.88.tgz#3e9427eb0839b52c65743691de1cfcd5321743ba"
+  integrity sha512-N75E0tbq1+70/8lYUbttj7ry+5PDl7DB29aJqYIQQdnWMkIv0CPnH5ux4fwDuQJuhR7k1lfUbLd96JWwPBHvIg==
+  dependencies:
+    esbuild "^0.14.48"
 
 "@sveltejs/adapter-vercel@1.0.0-next.72":
   version "1.0.0-next.72"
