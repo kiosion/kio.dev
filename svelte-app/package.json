@@ -35,7 +35,7 @@
     "@testing-library/svelte": "^3.2.1",
     "@types/randomstring": "^1.1.8",
     "@types/seedrandom": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "@vitest/ui": "^0.22.1",
     "autoprefixer": "^10.4.8",
