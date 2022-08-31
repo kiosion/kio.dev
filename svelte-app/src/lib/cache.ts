@@ -32,5 +32,6 @@ export default class Cache {
       current.set(queryCacheKey, JSON.stringify(data as CacheData));
       return current;
     });
+    return data;
   };
 }

@@ -32,16 +32,7 @@ export const queryPosts = async (
   try {
     const res = await fetch(url);
     const response = await res.json();
-    if (!response.meta || response.meta.count === 0) {
-      Logger.error('Failed to get posts', 'store/queryPost');
-      return {
-        error: {
-          error: 'Posts not found',
-          status: 'Store error',
-          code: 404
-        }
-      };
-    } else if (response.error) {
+    if (response.error) {
       Logger.error('Failed to get posts', 'store/queryPost');
       throw response.error;
     }
@@ -108,7 +99,7 @@ export const findPosts = async (
     params
   );
   const cacheKey = Store.getCacheKey('posts', params);
-  if (Store.has(cacheKey)) {
+  if (Store.has(cacheKey) && Store.get(cacheKey)) {
     return Store.get(cacheKey);
   } else {
     const response = await queryPosts(fetch, params);
