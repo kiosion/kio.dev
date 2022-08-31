@@ -1,7 +1,7 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import type { PixelIcon } from '@/lib/types';
+  import type { PixelIcon, PostDocument } from '@/lib/types';
 
   const CardText = (): Promise<PixelIcon> =>
     import('pixelarticons/svg/card-text.svg').then((Icon) => Icon.default);
@@ -10,32 +10,22 @@
       (Icon) => Icon.default
     );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export let tags: any[] | undefined;
+  export let post: PostDocument;
 </script>
 
 <div class="mt-4" data-test-id="post-footer">
   <Divider />
-  {#if tags?.length}
-    <IconHeader
-      icon={CardText}
-      text="Filed under"
-      classes="mt-8 mb-4 w-full h-fit"
-    />
-    <div class="mb-6">
-      <div class="flex flex-row flex-wrap gap-2 justify-start items-start">
-        {#each tags as tag}
-          <a
-            href="/tag/{tag?.slug?.current ? tag.slug.current : '#'}"
-            class="w-fit text-base bg-slate-200 dark:bg-slate-900 rounded-md"
-            tabindex="0"
-          >
-            <div class="w-fit py-1 px-2 rounded-md" tabindex="0">
-              {tag?.title ? tag.title : 'Undefined'}
-            </div>
-          </a>
-        {/each}
-      </div>
+  {#if post.tags}
+    <IconHeader icon={CardText} text="Tags" classes="mt-8 mb-4 w-full h-fit" />
+    <div class="mb-6 flex flex-row flex-wrap gap-2 justify-start items-start">
+      {#each post.tags as tag}
+        <a
+          href="/blog/{tag.slug.current}"
+          class="font-code capitalize text-base px-2 py-1 bg-slate-200 dark:bg-slate-900 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-colors"
+        >
+          {tag.title}
+        </a>
+      {/each}
     </div>
   {/if}
   <!-- TODO: Lazy-load 4 or so recent articles or articles with similar tags (search API?) -->

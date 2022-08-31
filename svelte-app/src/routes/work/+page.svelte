@@ -56,6 +56,8 @@
   pageHeading.set('Work');
 
   export let data: PageData;
+
+  $: ({ pinnedProject } = data);
 </script>
 
 <svelte:head>
@@ -63,11 +65,14 @@
 </svelte:head>
 
 <div data-test-route="work" class="w-full">
-  <PageHeading heading="A collection of recent work & projects" />
+  <PageHeading
+    heading="Work"
+    text="A collection of my work, open-source contributions, and personal projects"
+  />
   <div class="mb-12">
-    {#if data.pinnedProject}
+    {#if pinnedProject?.data}
       <IconHeader icon={Pin} text="Pinned" />
-      <ListItem post={data.pinnedProject.data} {mousePos} />
+      <ListItem project={pinnedProject.data} {mousePos} />
     {/if}
     <IconHeader icon={Clock} text="Recent" />
     {#if $projects?.data?.length}

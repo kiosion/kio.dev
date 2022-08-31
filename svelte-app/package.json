@@ -42,6 +42,7 @@
     "c8": "^7.12.0",
     "cypress": "^10.6.0",
     "cypress-svelte-unit-test": "^3.3.4",
+    "devtools-detect": "^4.0.0",
     "dotenv": "^16.0.1",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.3.0",

@@ -12,10 +12,11 @@
 </script>
 
 <div data-test-route="pgp" class={$navigating ? 'max-h-[50%]' : ''}>
-  <PageHeading
-    heading="Want to send a secure message my way? Here's my public PGP key"
-  />
   <ContentWrapper>
+    <PageHeading
+      heading="PGP"
+      text="Want to send a secure message my way? Now you can :)"
+    />
     <CodeBlock content={`${pgp}`} showClipboard={true} lang="markdown" />
   </ContentWrapper>
 </div>

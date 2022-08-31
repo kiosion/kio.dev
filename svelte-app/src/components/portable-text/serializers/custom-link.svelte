@@ -20,10 +20,9 @@
 <a
   href={href ? href : '#'}
   target={isExt ? '_blank' : undefined}
-  class="z-10 {hovering ? 'active' : ''}"
+  class="z-10"
   style={`background-image:url("data:image/svg+xml,${svg}");`}
-  on:mouseenter={() => (hovering = true)}
-  on:mouseleave={() => (hovering = false)}
+  tabindex="0"
 >
   {plainTextContent}
 </a>
@@ -36,7 +35,8 @@
     padding-bottom: 4px;
     transition: background-position-y 120ms ease-in;
 
-    &.active {
+    &:hover,
+    &:active {
       background-position-y: center;
     }
   }

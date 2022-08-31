@@ -5,20 +5,22 @@ import Logger from '$lib/logger';
 import type {
   DocumentQueryParams,
   SingleDocumentQueryParams,
+  PostDocument,
   RouteFetch,
+  StoreRes,
   ResData,
   ResDataMany
 } from '$lib/types';
 
 const Store = new Cache();
 
-export const posts = writable([] as unknown as ResDataMany);
-export const post = writable({} as ResData);
+export const posts = writable([] as unknown as ResDataMany<PostDocument>);
+export const post = writable({} as ResData<PostDocument>);
 
 export const queryPosts = async (
   fetch: RouteFetch,
   params: DocumentQueryParams
-) => {
+): Promise<StoreRes<ResDataMany<PostDocument>>> => {
   const {
     limit = 10,
     skip = 0,
@@ -30,50 +32,63 @@ export const queryPosts = async (
   try {
     const res = await fetch(url);
     const response = await res.json();
-    if (!response.meta || response.error) {
+    if (!response.meta || response.meta.count === 0) {
       Logger.error('Failed to get posts', 'store/queryPost');
-      return JSON.stringify({
-        error: response.error,
-        status: 'Store error'
-      });
+      return {
+        error: {
+          error: 'Posts not found',
+          status: 'Store error',
+          code: 404
+        }
+      };
+    } else if (response.error) {
+      Logger.error('Failed to get posts', 'store/queryPost');
+      throw response.error;
     }
-    return response;
+    return { data: response };
   } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryPosts');
-    return JSON.stringify({
-      error: err as string,
-      status: 'Store error'
-    });
+    return {
+      error: {
+        code: 500,
+        error: err as string,
+        status: 'Store error'
+      }
+    };
   }
 };
 
 export const queryPost = async (
   fetch: RouteFetch,
   params: SingleDocumentQueryParams
-) => {
+): Promise<StoreRes<ResData<PostDocument>>> => {
   const { slug = '', id = '' } = params;
   const url = `${API_URL}getPost?slug=${slug}&id=${id}`;
   try {
     const res = await fetch(url);
     const response = await res.json();
-    if (!response.meta || response.meta?.count === 0) {
+    if (!response.meta || response.meta.count === 0) {
       Logger.error('Failed to get non-existent post', 'store/queryPost');
       return {
-        error: 'Post not found',
-        status: 'Store error',
-        code: 404
+        error: {
+          error: 'Post not found',
+          status: 'Store error',
+          code: 404
+        }
       };
     } else if (response.error) {
       Logger.error('Failed to get post', 'store/queryPost');
       throw response.error;
     }
-    return response;
+    return { data: response };
   } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryPost');
     return {
-      error: err as string,
-      status: 'Store error',
-      code: 500
+      error: {
+        error: err as string,
+        status: 'Store error',
+        code: 500
+      }
     };
   }
 };
@@ -97,8 +112,11 @@ export const findPosts = async (
     return Store.get(cacheKey);
   } else {
     const response = await queryPosts(fetch, params);
-    Store.set(cacheKey, response);
-    return response;
+    if (response.error) {
+      return response.error;
+    }
+    response.data && Store.set(cacheKey, response.data);
+    return response.data;
   }
 };
 
@@ -111,56 +129,10 @@ export const findPost = async (
     return Store.get(cacheKey);
   } else {
     const response = await queryPost(fetch, params);
-    Store.set(cacheKey, response);
-    return response;
-  }
-};
-
-// Probably doesn't work lol
-export const findReloadPosts = async (
-  fetch: RouteFetch,
-  params = {
-    limit: 10,
-    skip: 0,
-    sort: 'date',
-    order: 'desc',
-    date: ''
-  }
-) => {
-  const cacheKey = Store.getCacheKey('posts', params);
-  if (Store.has(cacheKey)) {
-    try {
-      return await findPosts(fetch, params);
-    } finally {
-      const response = await queryPosts(fetch, params);
-      Store.set(cacheKey, response);
-      posts.set(response);
+    if (response.error) {
+      return response.error;
     }
-  } else {
-    const response = await queryPosts(fetch, params);
-    Store.set(cacheKey, response);
-    posts.set(response);
-    return response;
-  }
-};
-
-export const findReloadPost = async (
-  fetch: RouteFetch,
-  params = { slug: '' }
-) => {
-  const cacheKey = Store.getCacheKey('post', params);
-  if (Store.has(cacheKey)) {
-    try {
-      return await findPost(fetch, params);
-    } finally {
-      const response = await queryPost(fetch, params);
-      Store.set(cacheKey, response);
-      post.set(response);
-    }
-  } else {
-    const response = await queryPost(fetch, params);
-    Store.set(cacheKey, response);
-    post.set(response);
-    return response;
+    response.data && Store.set(cacheKey, response.data);
+    return response.data;
   }
 };

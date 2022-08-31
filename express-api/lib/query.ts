@@ -215,6 +215,7 @@ module query {
       body,
       desc,
       date,
+      image,
       "tags": tags[]->{
         _id,
         title,
@@ -276,6 +277,7 @@ module query {
           body,
           desc,
           date,
+          image,
           tags[]->{
             _id,
             title,

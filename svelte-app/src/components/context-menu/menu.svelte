@@ -3,11 +3,13 @@
   import { fade } from 'svelte/transition';
   import { key } from './menu';
   import { setState } from '$lib/helpers/menu';
+  import { state } from '$stores/menu';
 
   export let x: number;
   export let y: number;
 
   let menuElement: HTMLElement;
+  let menuTarget: HTMLElement | undefined;
   export let page: HTMLElement;
   const dispatch = createEventDispatcher();
 
@@ -56,7 +58,7 @@
   on:keydown={(e) => handleKey(e)} />
 
 <div
-  class="absolute grid min-w-[14rem] py-2 z-20 shadow-slate-600/40 dark:shadow-slate-400/50 shadow-[0_0_20px_-6px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"
+  class="absolute grid min-w-[14rem] py-2 z-20 shadow-slate-500/50 dark:shadow-slate-500/20 shadow-[0_0_20px_-2px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"
   style="top: {y}px; left: {x}px"
   in:fade={{ duration: 100 }}
   out:fade={{ duration: 100, delay: 10 }}

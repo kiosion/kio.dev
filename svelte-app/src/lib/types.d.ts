@@ -6,20 +6,22 @@ import type {
 
 // Sanity types
 export interface SanityAsset {
-  _id?: string;
+  _id: string;
   _type?: string;
+  _createdAt?: string;
+  _rev?: string;
+  _updatedAt?: string;
   url?: string;
   path?: string;
   assetId?: string;
   extension?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
 }
 export interface SanityReference {
   _ref: string;
+  _type: string;
 }
 export interface SanityImageObject {
-  asset: SanityReference | SanityAsset;
+  asset: SanityReference;
   crop?: SanityImageCrop;
   hotspot?: SanityImageHotspot;
 }
@@ -60,6 +62,7 @@ export interface MenuState {
     x: number;
     y: number;
   };
+  target: HTMLElement;
   opts: MenuStateOpt[];
 }
 
@@ -68,40 +71,68 @@ export type PixelIcon = SvelteComponent | string | undefined;
 
 // Data types
 export interface Document extends SanityAsset {
-  author?: AuthorDocument;
-  slug:
-  | SanityAsset
-  | {
-    current: string;
-  };
+  slug: SanityAsset & { current: string };
   body: InputValue;
   date: string;
+}
+
+export interface PostDocument extends Document {
+  author?: {
+    _id: string;
+    _type: string;
+    name: string;
+    image: SanityImageObject;
+    slug: SanityAsset & { current: string };
+  };
   desc?: string;
   tags?: [
-    | SanityAsset
-    | {
-      slug:
-      | SanityAsset
-      | {
-        current: string;
-      };
+    SanityAsset & {
+      slug: SanityAsset & { current: string };
       title: string;
     }
   ];
   title: string;
 }
 
-export interface AuthorDocument
-  extends Omit<Document, 'tags' | 'desc' | 'title' | 'author'> {
-  _id: string;
-  _type: string;
+export interface AuthorDocument extends Document {
+  bio: InputValue;
   name: string;
-  slug:
-  | SanityAsset
-  | {
-    current: string;
-  };
   image: SanityImageObject;
+}
+
+export interface ProjectDocument extends Document {
+  author?: {
+    _id: string;
+    _type: string;
+    name: string;
+    image: SanityImageObject;
+    slug: SanityAsset & { current: string };
+  };
+  desc?: string;
+  image?: SanityImageObject;
+  tags?: [
+    SanityAsset & {
+      slug: SanityAsset & { current: string };
+      title: string;
+    }
+  ];
+  title: string;
+}
+
+export interface SiteConfig extends SanityAsset {
+  title: string;
+  indexHeading: string;
+  indexSubheading: string;
+  me: SanityReference;
+  pgpKey?: string;
+  pinnedPost?: SanityReference;
+  pinnedProject?: SanityReference;
+  socialLinks: {
+    _key: string;
+    internal: boolean;
+    title: string;
+    link: string;
+  }[];
 }
 
 // Param types
@@ -120,16 +151,28 @@ export interface DocumentQueryParams {
 }
 
 // Responses
-export interface ResData {
+export interface ResData<T> {
   meta: {
-    count: string;
+    count: string | number;
+    total: string | number;
     filter: string;
   };
-  data: Document;
+  data: T;
 }
 
-export interface ResDataMany extends ResData {
-  data: Document[];
+export interface ResError {
+  code: string | number;
+  error: string;
+  status: string;
+}
+
+export interface ResDataMany<T> extends Omit<ResData, 'data'> {
+  data: T[];
+}
+
+export interface StoreRes<T> {
+  error?: ResError;
+  data?: T;
 }
 
 // PortableText types

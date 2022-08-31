@@ -6,19 +6,19 @@
 
   export let portableText: BlockComponentProps;
 
+  let hovering = false;
+
   $: ({ value } = portableText);
   $: ({ style } = value);
   $: precededByHeading =
     value?.style && ['h1', 'h2', 'h3', 'h4', 'h5'].includes(value.style);
   $: anchorId = `heading-${value._key}`;
-
-  let hovering = false;
 </script>
 
 <div
   class="relative block {precededByHeading ? 'mt-6' : 'mt-4'} {style &&
   ['h1', 'h2'].indexOf(style) !== -1
-    ? '-mb-2'
+    ? 'mt-8 mb-6'
     : 'mb-2'}"
   id={anchorId}
   on:mouseover={() => (hovering = true)}
@@ -40,11 +40,11 @@
       </span>
     {/if}
     {#if style === 'h1'}
-      <h1 class="inline font-display text-3xl font-bold" tabindex="0">
+      <h1 class="inline font-display text-4xl font-bold" tabindex="0">
         <slot />
       </h1>
     {:else if style === 'h2'}
-      <h2 class="inline font-display text-2xl font-bold" tabindex="0">
+      <h2 class="inline font-display text-3xl font-bold" tabindex="0">
         <slot />
       </h2>
     {:else if style === 'h3'}
@@ -62,6 +62,6 @@
     {/if}
   </a>
 </div>
-{#if style && ['h1', 'h2'].indexOf(style) !== -1}
+<!-- {#if style && ['h1', 'h2'].indexOf(style) !== -1}
   <Divider />
-{/if}
+{/if} -->

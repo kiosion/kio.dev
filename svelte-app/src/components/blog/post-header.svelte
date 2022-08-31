@@ -3,11 +3,11 @@
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/post';
-  import type { TextBlock, Document } from '$lib/types';
+  import type { TextBlock, PostDocument } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
 
-  export let post: Document;
+  export let post: PostDocument;
 
   let date = getRelDate(post.date);
   let dateFormat = 'rel';
@@ -24,17 +24,27 @@
 
   const title = post.title;
   const desc = post.desc;
-  const author = post.author;
 
-  let pfpCrop: ImageCrop;
-
-  $: pfpCrop = getCrop(author?.image);
+  $: author = post?.author;
+  $: _ref = author?.image?.asset?._ref;
+  $: pfpCrop = author?.image && getCrop(author.image);
 </script>
 
 <div class="mb-4" data-test-id="post-header">
   <div class="flex flex-col">
-    <h1 class="font-display text-4xl mb-6 font-bold">{title}</h1>
-
+    <h1 class="font-display text-5xl mb-6 font-bold">{title}</h1>
+    {#if post.tags}
+      <div class="flex flex-row justify-start items-center gap-2 mb-6">
+        {#each post.tags as tag}
+          <a
+            href="/blog/{tag.slug.current}"
+            class="font-code text-base capitalize px-2 py-1 bg-slate-200 dark:bg-slate-900 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-colors"
+          >
+            {tag.title}
+          </a>
+        {/each}
+      </div>
+    {/if}
     <div class="flex flex-row items-center justify-start">
       <button
         class="flex flex-row gap-2 items-center font-mono text-base"
@@ -42,10 +52,10 @@
         tabindex="0"
       >
         <div class="h-8 aspect-square">
-          {#if author?.image}
+          {#if _ref && pfpCrop}
             <img
               class="rounded-full aspect-square h-full"
-              src={urlFor(author?.image?.asset?._ref)
+              src={urlFor(_ref)
                 .size(50, 50)
                 .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
                 .fit('crop')

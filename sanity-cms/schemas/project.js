@@ -32,8 +32,8 @@ export default {
       to: { type: 'author' }
     },
     {
-      name: 'himage',
-      title: 'Header Image',
+      name: 'image',
+      title: 'Project Image',
       type: 'image',
       options: {
         hotspot: true

@@ -12,6 +12,14 @@ module.exports = {
         code: ['"Ubuntu Mono"', ...defaultTheme.fontFamily.mono],
         display: ['Poppins', ...defaultTheme.fontFamily.sans]
       },
+      fontSize: {
+        '3xl': '28px',
+        '4xl': '32px',
+        '5xl': '36px'
+      },
+      borderRadius: {
+        'sm': '0.2rem'
+      },
       keyframes: {
         wave: {
           to: {
@@ -25,6 +33,9 @@ module.exports = {
       },
       animation: {
         wave: 'wave 1.5s linear infinite'
+      },
+      screens: {
+        '3xl': '1824px'
       }
     }
   },

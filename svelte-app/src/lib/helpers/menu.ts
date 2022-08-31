@@ -147,6 +147,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   const res = {
     pos: { x: e.clientX - left, y: e.clientY - top },
     opts,
+    target,
     open: true
   };
 

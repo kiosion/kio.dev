@@ -12,6 +12,7 @@
   import BackgroundWaves from '$components/background-waves.svelte';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/footer-controls.svelte';
+  import { browser } from '$app/environment';
 
   import ContextMenu from '$components/context-menu.svelte';
   import { state as menuState } from '$stores/menu';
@@ -21,17 +22,29 @@
     loading.set(!res);
   });
 
+  interface DevToolsEvent {
+    detail: {
+      isOpen: boolean;
+    };
+  }
+
   let appLoaded: boolean;
   let pageContainer: HTMLElement;
   let preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
+  const msg = (e: DevToolsEvent) =>
+    e.detail.isOpen &&
+    console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
 
-  onMount(() => {
+  onMount(async () => {
     appLoaded = true;
     loading.set(false);
+    msg({ detail: { isOpen: true } });
+    browser && window.addEventListener('devtoolschange', (e) => msg(e));
   });
 
   onDestroy(() => {
     unsubscribe();
+    browser && window.removeEventListener('devtoolschange', () => msg);
   });
 
   export let data: LayoutData;
@@ -60,9 +73,9 @@
 >
   <HeaderControls />
   <Nav segment={$page?.url ? $page.url.pathname : ''} />
-  <div class="md:h-full md:ml-40 lg:ml-60 px-8 pb-8 md:py-8 lg:px-10 xl:px-20">
+  <div class="md:h-full md:ml-40 xl:ml-60 px-8 pb-8 md:py-8 xl:px-10 2xl:px-20">
     <div
-      class="h-full w-full max-w-[60rem] mx-auto grid grid-rows-1 grid-cols-1"
+      class="h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1"
     >
       {#if appLoaded}
         <PageTransition url={data?.url ? data.url.pathname : ''}>
@@ -73,9 +86,9 @@
   </div>
   <FooterControls />
   <div
-    class="fixed overflow-hidden pointer-events-none z-[-10] top-0 left-0 h-screen w-full md:rounded-l-[24px] md:ml-40 lg:ml-60"
+    class="fixed overflow-hidden pointer-events-none z-[-10] top-0 left-0 h-screen w-full md:rounded-l-2xl xl:rounded-l-3xl md:ml-40 xl:ml-60"
   >
-    <div class="relative w-full h-full md:rounded-l-[24px]">
+    <div class="relative w-full h-full md:rounded-l-2xl xl:rounded-l-3xl">
       {#if $svgBackground === 'on'}
         <div in:fade={{ duration: 250 }} out:fade={{ duration: 250 }}>
           <BackgroundWaves
@@ -84,7 +97,7 @@
         </div>
       {/if}
       <div
-        class="md:rounded-l-[24px] absolute top-0 left-[1px] w-full h-full bg-slate-100 dark:bg-slate-800 transition-colors duration-150"
+        class="md:rounded-l-2xl xl:rounded-l-3xl absolute top-0 left-[1px] w-full h-full bg-slate-100 dark:bg-slate-800 transition-colors duration-150"
       />
     </div>
   </div>
@@ -124,7 +137,7 @@
     cursor: wait !important;
   }
 
-  :global(.is-loading a, .is-loading button) {
+  :global(.is-loading a, .is-loading button, .is-loading [role='button']) {
     cursor: wait !important;
   }
 

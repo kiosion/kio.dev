@@ -1,25 +1,28 @@
 import { writable } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Cache from '$lib/cache';
-import type { RouteFetch, ResData } from '$lib/types';
+import type { RouteFetch, ResData, StoreRes, SiteConfig } from '$lib/types';
 
 const Store = new Cache();
 
-export const config = writable({} as ResData);
+export const config = writable({} as ResData<SiteConfig>);
 
-export const fetchConfig = async (fetch: RouteFetch) => {
+export const fetchConfig = async (
+  fetch: RouteFetch
+): Promise<StoreRes<SiteConfig>> => {
   const url = `${API_URL}getConfig`;
   try {
     const res = await fetch(url);
     const response = await res.json();
-    return response;
+    return { data: response };
   } catch (err) {
-    return JSON.stringify({
+    return {
       error: {
-        message: err
-      },
-      status: 'Store error'
-    });
+        code: 500,
+        error: err as string,
+        status: 'Store error'
+      }
+    };
   }
 };
 
@@ -29,7 +32,10 @@ export const findConfig = async (fetch: RouteFetch) => {
     return Store.get(cacheKey);
   } else {
     const response = await fetchConfig(fetch);
-    Store.set(cacheKey, response);
-    return response;
+    if (response.error) {
+      return response.error;
+    }
+    response.data && Store.set(cacheKey, response.data);
+    return response.data;
   }
 };

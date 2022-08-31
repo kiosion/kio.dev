@@ -21,7 +21,7 @@
       .fit('crop')
       .auto('format')
       .url()}
-    class=""
+    class="rounded-sm select-none"
     alt={_key}
     draggable="false"
   />

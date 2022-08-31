@@ -29,7 +29,7 @@
 </script>
 
 <div
-  class="relative p-[1px] {wrapperClass} overflow-hidden rounded-md {active
+  class="relative p-[1px] {wrapperClass} overflow-hidden rounded-xl {active
     ? 'active'
     : ''}"
   bind:this={container}
@@ -46,7 +46,7 @@
   <div
     class="absolute filled top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-400 {active
       ? '!opacity-60'
-      : ''} opacity-0 rounded-md"
+      : ''} opacity-0 rounded-xl"
   />
   <div
     class="absolute top-[-4px] left-[-4px] w-[110%] h-[110%] bg-slate-200 dark:bg-slate-900 transition-colors duration-[120ms]"

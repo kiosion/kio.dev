@@ -79,7 +79,7 @@
 </script>
 
 <nav
-  class="p-4 pt-6 md:py-8 md:px-4 w-full md:w-40 lg:w-60 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
+  class="p-4 pt-6 md:py-8 md:px-4 w-full md:w-40 xl:w-60 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
   data-test-id="navBar"
 >
   <div class="flex-grow -mt-7 md:-mt-4 click-through">
@@ -131,7 +131,7 @@
       {#each links as link}
         <div class="relative flex flex-row justify-start items-center">
           <a
-            class="z-[1] font-mono font-normal uppercase text-base lg:text-lg"
+            class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
             aria-label={link.name}
             href={link.url}
             on:mouseenter={() => (link.hovered = true)}
@@ -166,7 +166,7 @@
     </div>
   </div>
   <div
-    class="text-center text-secondary align-center justify-center pt-8 mx-auto hidden md:flex md:flex-col lg:flex-row"
+    class="text-center text-secondary align-center justify-center pt-8 mx-auto hidden md:flex md:flex-col xl:flex-row"
   >
     {#each socials as social}
       <a

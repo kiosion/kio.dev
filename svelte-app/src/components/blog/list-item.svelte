@@ -3,13 +3,14 @@
   import BulletPoint from '../bullet-point.svelte';
   import { getTotalWords } from '$lib/helpers/post';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
-  import type { Document } from '@/lib/types';
+  import type { PostDocument } from '@/lib/types';
   import type { TextBlock } from '$lib/types';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';
+  import { goto } from '$app/navigation';
 
-  export let post: Document;
+  export let post: PostDocument;
   export let mousePos = [0, 0];
 
   let click: UIfx;
@@ -28,46 +29,52 @@
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if post}
-    <a
-      class="rounded-md"
-      href="blog/{post.slug && post.slug.current}"
+    <div
+      class="rounded-xl"
+      tabindex="0"
+      role="button"
+      aria-label="Post - {post.title}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
-      on:click={() => $sounds === 'on' && click?.play()}
+      on:click={() => {
+        $sounds === 'on' && click?.play();
+        goto(`/blog/${post.slug.current}`);
+      }}
     >
       <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-xl duration-150"
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
       >
         <div
-          class="flex flex-row flex-wrap items-center justify-start w-full mb-1"
+          class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200"
         >
-          <h3 class="inline-block w-fit font-sans text-base">
+          <p class="">
             {getAbsDate(post.date)}
-          </h3>
-          <BulletPoint />
-          <h3 class="inline-block w-fit font-sans text-base">
+          </p>
+          <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+          <p class="">
             {`${Math.floor(readingTime / 60)} min read`}
-          </h3>
+          </p>
         </div>
         <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
+          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl mt-2"
         >
           {post.title}
         </h1>
+
         {#if post.desc}
           <div class="relative flex flex-row align-center justify-start mt-1">
             <p
-              class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-1"
+              class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-2"
             >
               {post.desc}
             </p>
           </div>
         {/if}
       </section>
-    </a>
+    </div>
   {:else}
     <section
       class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"

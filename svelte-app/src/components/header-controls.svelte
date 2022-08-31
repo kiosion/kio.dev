@@ -29,7 +29,7 @@
 </script>
 
 <div
-  class="z-10 fixed hidden md:block rounded-tl-2xl top-0 ml-[1px] md:left-40 lg:left-60 right-0 py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors duration-150 backdrop-blur-md"
+  class="z-10 fixed hidden md:block rounded-tl-2xl xl:rounded-tl-3xl top-0 ml-[1px] md:left-40 xl:left-60 right-0 py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors duration-150 backdrop-blur-md"
 >
   <div class="flex flex-row justify-between items-start">
     <div class="w-52">

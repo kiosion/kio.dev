@@ -51,7 +51,8 @@
         'index-blog',
         'index-secret',
         'index-work',
-        'work-about'
+        'work-about',
+        'work-work/*'
       ].includes(dirs)
     ) {
       navDir = 'forward';
@@ -62,9 +63,19 @@
         'about-work',
         'blog/*-blog',
         'blog-index',
+        'pgp-about',
+        'pgp-blog',
+        'pgp-blog/*',
+        'pgp-work',
+        'pgp-work/*',
+        'pgp-index',
         'secret-index',
         'work-index',
-        'work-blog'
+        'work-blog',
+        'work/*-work',
+        'work/*-index',
+        'work/*-blog',
+        'work/*-blog/*'
       ].includes(dirs)
     ) {
       navDir = 'backward';

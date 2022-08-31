@@ -1,16 +1,18 @@
 <script lang="ts">
   import ListItemWrapper from '../list-item-wrapper.svelte';
-  import { getAbsDate } from '$lib/helpers/date';
   import { onMount } from 'svelte';
   import { sounds } from '$stores/features';
-  import type { Document } from '$lib/types';
+  import type { ProjectDocument } from '$lib/types';
   import type UIfx from 'uifx';
+  import { urlFor, getCrop, type ImageCrop } from '$helpers/image';
+  import { goto } from '$app/navigation';
 
-  export let project: Document;
+  export let project: ProjectDocument;
   export let mousePos = [0, 0];
 
   let click: UIfx;
-
+  let imageCrop: ImageCrop | undefined;
+  let _ref: string | undefined;
   let hovered = false;
 
   onMount(() => {
@@ -18,39 +20,83 @@
       click = sfx.click;
     });
   });
+
+  $: _ref = project.image?.asset?._ref;
+  $: project.image && (imageCrop = getCrop(project.image));
 </script>
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if project}
-    <a
-      href="work/{project.slug && project.slug.current}"
+    <div
+      class="rounded-xl"
+      tabindex="0"
+      role="button"
+      aria-label="Project - {project.title}"
       on:mouseenter={() => (hovered = true)}
       on:mouseleave={() => (hovered = false)}
-      on:click={() => $sounds === 'on' && click?.play()}
+      on:click={() => {
+        $sounds === 'on' && click?.play();
+        goto(`/work/${project.slug.current}`);
+      }}
     >
       <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+        class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit max-h-60 p-4 bg-slate-200 dark:bg-slate-900 rounded-xl duration-150"
         data-test-id="list-item"
         on:focus={() => (hovered = true)}
         on:blur={() => (hovered = false)}
       >
-        <h3 class="font-sans text-base mb-2">
-          {getAbsDate(project.date)}
-        </h3>
-        <h1
-          class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-lg"
+        <div
+          class="flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
         >
-          {project.title}
-        </h1>
-        {#if project.desc}
-          <p
-            class="block overflow-hidden whitespace-nowrap w-full pr-6 text-ellipsis font-sans text-base mt-1 line-clamp-1"
+          {#if _ref && imageCrop}
+            <img
+              src={urlFor(_ref)
+                .height(200)
+                .width(400)
+                .rect(
+                  imageCrop.left,
+                  imageCrop.top,
+                  imageCrop.width,
+                  imageCrop.height
+                )
+                .fit('crop')
+                .format('webp')
+                .url()}
+              class="aspect-[2/1] object-cover h-full w-full"
+              alt="Project cover"
+            />
+          {/if}
+        </div>
+        <div class="flex flex-col items-stretch justify-between w-full">
+          <h1
+            class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
           >
-            {project.desc}
-          </p>
-        {/if}
+            {project.title}
+          </h1>
+          {#if project.tags}
+            <div
+              class="flex flex-row justify-start items-center gap-2 flex-nowrap mt-1"
+            >
+              {#each project.tags as tag}
+                <a
+                  href="/work/{tag.slug.current}"
+                  class="font-code text-sm capitalize block px-2 py-1 bg-slate-300 dark:bg-slate-800 hover:bg-slate-300/50 dark:hover:bg-slate-800/50 rounded-md transition-colors"
+                >
+                  {tag.title}
+                </a>
+              {/each}
+            </div>
+          {/if}
+          {#if project.desc}
+            <p
+              class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base mt-1 line-clamp-2"
+            >
+              {project.desc}
+            </p>
+          {/if}
+        </div>
       </section>
-    </a>
+    </div>
   {:else}
     <section
       class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"

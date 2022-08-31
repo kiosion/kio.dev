@@ -119,7 +119,7 @@
 </svelte:head>
 
 <div
-  class="relative p-[1px] my-6 overflow-hidden rounded-md {hovered
+  class="z-[4] relative p-[1px] my-6 overflow-hidden rounded-md {hovered
     ? 'active'
     : ''}"
   bind:this={container}
@@ -147,7 +147,7 @@
     {/key}
   {/if}
   <div
-    class="relative overflow-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
+    class="relative z-[4] overflow-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
     bind:this={codeContainer}
   >
     <div
@@ -196,9 +196,9 @@
     }
   }
   .filled {
-    z-index: -2;
+    z-index: 2;
     + div {
-      z-index: -3;
+      z-index: 1;
     }
   }
   .cover,
@@ -206,7 +206,7 @@
     transition: opacity 150ms cubic-bezier(0.645, 0.045, 0.355, 1);
   }
   .unfilled {
-    z-index: -1;
+    z-index: 2;
     top: -9999px;
     left: -9999px;
     background: radial-gradient(#94a3b8, transparent 35%);

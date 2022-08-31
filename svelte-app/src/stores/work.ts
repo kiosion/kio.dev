@@ -4,21 +4,23 @@ import Cache from '$lib/cache';
 import Logger from '$lib/logger';
 import type {
   RouteFetch,
+  StoreRes,
   ResData,
   ResDataMany,
+  ProjectDocument,
   DocumentQueryParams,
   SingleDocumentQueryParams
 } from '$lib/types';
 
 const Store = new Cache();
 
-export const projects = writable({} as ResDataMany);
-export const project = writable({} as ResData);
+export const projects = writable({} as ResDataMany<ProjectDocument>);
+export const project = writable({} as ResData<ProjectDocument>);
 
 export const queryProjects = async (
   fetch: RouteFetch,
   params: DocumentQueryParams
-) => {
+): Promise<StoreRes<ResDataMany<ProjectDocument>>> => {
   const {
     limit = 10,
     skip = 0,
@@ -32,44 +34,59 @@ export const queryProjects = async (
     const response = await res.json();
     if (!response.meta || response.error) {
       Logger.error('Failed to get projects', 'store/queryProjects');
-      return JSON.stringify({
-        error: response.error,
-        status: 'Store error'
-      });
+      return {
+        error: {
+          code: response.code ?? 404,
+          error: response.error ?? 'Projects not found',
+          status: 'Store error'
+        }
+      };
     }
-    return response;
+    return { data: response };
   } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryProjects');
-    return JSON.stringify({
-      error: err as string,
-      status: 'Store error'
-    });
+    return {
+      error: {
+        code: 500,
+        error: err as string,
+        status: 'Store error'
+      }
+    };
   }
 };
 
 export const queryProject = async (
   fetch: RouteFetch,
   params: SingleDocumentQueryParams
-) => {
-  const { slug = '' } = params;
-  const url = `${API_URL}getProject?slug=${slug}`;
+): Promise<StoreRes<ResData<ProjectDocument>>> => {
+  const { slug = '', id = '' } = params;
+  const url = `${API_URL}getProject?slug=${slug}&id=${id}`;
   try {
     const res = await fetch(url);
     const response = await res.json();
-    if (!response.meta || response.error) {
-      Logger.error('Failed to get project', 'store/queryProject');
-      return JSON.stringify({
-        error: response.error,
-        status: 'Store error'
-      });
+    if (!response.meta || response.meta.count === 0) {
+      Logger.error('Failed to get non-existent project', 'store/queryPost');
+      return {
+        error: {
+          error: 'Project not found',
+          status: 'Store error',
+          code: 404
+        }
+      };
+    } else if (response.error) {
+      Logger.error('Failed to get project', 'store/queryPost');
+      throw response.error;
     }
-    return response;
+    return { data: response };
   } catch (err: unknown) {
     Logger.error('Failed to query endpoint', 'store/queryProject');
-    return JSON.stringify({
-      error: err as string,
-      status: 'Store error'
-    });
+    return {
+      error: {
+        code: 500,
+        error: err as string,
+        status: 'Store error'
+      }
+    };
   }
 };
 
@@ -92,19 +109,27 @@ export const findProjects = async (
     return Store.get(cacheKey);
   } else {
     const response = await queryProjects(fetch, params);
-    Store.set(cacheKey, response);
-    return response;
+    if (response.error) {
+      return response.error;
+    }
+    response.data && Store.set(cacheKey, response.data);
+    return response.data;
   }
 };
 
-export const findProject = async (fetch: RouteFetch, params = { slug: '' }) => {
+export const findProject = async (
+  fetch: RouteFetch,
+  params: SingleDocumentQueryParams
+) => {
   const cacheKey = Store.getCacheKey('project', params);
   if (Store.has(cacheKey)) {
-    console.log('returning cached data');
     return Store.get(cacheKey);
   } else {
     const response = await queryProject(fetch, params);
-    Store.set(cacheKey, response);
-    return response;
+    if (response.error) {
+      return response.error;
+    }
+    response.data && Store.set(cacheKey, response.data);
+    return response.data;
   }
 };
