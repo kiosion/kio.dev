@@ -2302,16 +2302,16 @@
     react-virtual "^2.10.4"
     rxjs "^6.5.3"
 
-"@sanity/default-login@^2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@sanity/default-login/-/default-login-2.31.0.tgz#733f3c35308c1ec5449518b93e1e012d007f8f20"
-  integrity sha512-XXZ4IrHW312gWk3eulm9mftHQoiVTrv46s1uGWDqxAPwxQtwkdJD3Yluz7tiY6bH39bIXwTHTOpzGU7R/QMKOg==
+"@sanity/default-login@^2.31.1":
+  version "2.31.1"
+  resolved "https://registry.yarnpkg.com/@sanity/default-login/-/default-login-2.31.1.tgz#acdfe18839f5260af2eadb4a7d6d349e1cc06f51"
+  integrity sha512-L6SnW9iBAgF4X84VOGJi5phc20gelOIwhYGI/AxiHqxIZf6B2R+9ubMC7fbo2O0LojlmUfN2ws0n5tjd2zBA5A==
   dependencies:
-    "@sanity/base" "2.31.0"
+    "@sanity/base" "2.31.1"
     "@sanity/client" "^3.3.3"
     "@sanity/generate-help-url" "^3.0.0"
-    "@sanity/logos" "^1.1.9"
-    "@sanity/ui" "^0.37.9"
+    "@sanity/logos" "^1.1.15"
+    "@sanity/ui" "^0.37.21"
     prop-types "^15.6.0"
     rxjs "^6.5.3"
 
@@ -2545,10 +2545,10 @@
     lodash "^4.17.15"
     oneline "^1.0.3"
 
-"@sanity/logos@^1.1.9":
-  version "1.1.10"
-  resolved "https://registry.npmjs.org/@sanity/logos/-/logos-1.1.10.tgz"
-  integrity sha512-Ms7GuPCKldvxlRpGfQ9Oluu+CgILlAzpfbNzVGgUATo/kDZRzoGs+jmD+EyW94WCdcdpg8UwLwnPqlWosQllCw==
+"@sanity/logos@^1.1.15", "@sanity/logos@^1.1.9":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@sanity/logos/-/logos-1.1.15.tgz#1d9ca1ec2101338b7fc734db2a8213f2ad2c5ff3"
+  integrity sha512-bO5kQOqOQcM2t1AAl+TREU7gRFEBCH9KmvZ0bgyCRU5VAWPnDniQyMDkgeyzb+wnJwg79+SYmLDdt8OnZrPlTQ==
 
 "@sanity/mutator@2.29.3":
   version "2.29.3"
