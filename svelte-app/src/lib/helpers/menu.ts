@@ -20,6 +20,8 @@ const Reload = (): Promise<PixelIcon> =>
   import('pixelarticons/svg/reload.svg').then((Icon) => Icon.default);
 const Cast = (): Promise<PixelIcon> =>
   import('pixelarticons/svg/cast.svg').then((Icon) => Icon.default);
+const MailArrowRight = (): Promise<PixelIcon> =>
+  import('pixelarticons/svg/mail-arrow-right.svg').then((Icon) => Icon.default);
 
 export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
@@ -31,12 +33,27 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
 
   let target = e.target as HTMLElement;
   target = target?.closest('code') || target;
-  target = target?.closest('button') || target;
-  target = target?.closest('a') || target;
+  target = (target?.closest('button') as HTMLButtonElement) || target;
+  target = (target?.closest('a') as HTMLAnchorElement) || target;
 
   const opts = (await (async () => {
     switch (target?.tagName.toUpperCase()) {
       case 'A':
+        if (target.href.indexOf('mailto:') >= 0) {
+          return [
+            {
+              icon: MailArrowRight,
+              text: `Mail ${target.href.split(':')?.[1]}`,
+              action: () => window.open(target.href, '_self')
+            },
+            {},
+            {
+              icon: Copy,
+              text: 'Copy email address',
+              action: () => navigator.clipboard.writeText(target.href)
+            }
+          ];
+        }
         return [
           {
             icon: Link,
