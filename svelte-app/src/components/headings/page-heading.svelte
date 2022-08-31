@@ -1,11 +1,9 @@
 <script lang="ts">
   import IconHeader from '$components/icon-header.svelte';
-  import type { PixelIcon } from '@/lib/types';
 
   export let heading: string;
   export let text = '';
-  export let icon = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/art-text.svg').then((Icon) => Icon.default);
+  export let icon = 'ArtText';
   export let classes = '';
 </script>
 

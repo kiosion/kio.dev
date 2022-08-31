@@ -30,7 +30,7 @@
 
 <div data-test-route="error" class="mt-12">
   <ContentWrapper>
-    <IconHeader icon={Downasaur} text={message} classes="my-8 mx-auto w-fit" />
+    <IconHeader icon="Downasaur" text={message} classes="my-8 mx-auto w-fit" />
     <div class="mx-12">
       <Divider />
     </div>

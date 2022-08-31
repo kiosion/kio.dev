@@ -5,10 +5,7 @@
   import IconHeader from '$components/icon-header.svelte';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
-  import type { PostDocument, PixelIcon } from '$lib/types';
-
-  const Downasaur = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/downasaur.svg').then((Icon) => Icon.default);
+  import type { PostDocument } from '$lib/types';
 
   let body: HTMLElement;
 
@@ -25,7 +22,7 @@
     <PortableText text={post.body} />
   {:else}
     <IconHeader
-      icon={Downasaur}
+      icon={'Downasaur'}
       text="Hm, it seems empty around here..."
       classes="my-8"
     />

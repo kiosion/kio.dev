@@ -11,13 +11,6 @@
   import type UIfx from 'uifx';
   import type { PixelIcon } from '$lib/types';
 
-  const Pin = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/pin.svg').then((Icon) => Icon.default);
-  const Clock = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default);
-  const ArrowRight = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
-
   let mousePos: [number, number];
 
   const setMousePos = (x: number, y: number) => {
@@ -68,10 +61,10 @@
   />
   <div class="mb-12">
     {#if pinnedPost?.data}
-      <IconHeader icon={Pin} text="Pinned" />
+      <IconHeader icon="Pin" text="Pinned" />
       <ListItem post={pinnedPost.data} {mousePos} />
     {/if}
-    <IconHeader icon={Clock} text="Recent" />
+    <IconHeader icon="Clock" text="Recent" />
     {#if $posts?.data?.length}
       {#each $posts.data as post}
         {#if post._id !== pinnedPost?.data?._id}
@@ -87,7 +80,7 @@
       aria-label="View all posts"
       on:click={() => $sounds === 'on' && click?.play()}
     >
-      <IconHeader icon={ArrowRight} text="View all" classes="" />
+      <IconHeader icon="ArrowRight" text="View all" classes="" />
     </a>
   </div>
 </div>

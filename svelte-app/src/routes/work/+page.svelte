@@ -11,13 +11,6 @@
   import IconHeader from '$components/icon-header.svelte';
   import type { PixelIcon } from '$lib/types';
 
-  const Pin = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/pin.svg').then((Icon) => Icon.default);
-  const Clock = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default);
-  const ArrowRight = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
-
   let mousePos: [number, number];
 
   const setMousePos = (x: number, y: number) => {
@@ -71,10 +64,10 @@
   />
   <div class="mb-12">
     {#if pinnedProject?.data}
-      <IconHeader icon={Pin} text="Pinned" />
+      <IconHeader icon="Pin" text="Pinned" />
       <ListItem project={pinnedProject.data} {mousePos} />
     {/if}
-    <IconHeader icon={Clock} text="Recent" />
+    <IconHeader icon="Clock" text="Recent" />
     {#if $projects?.data?.length}
       {#each $projects.data as project}
         <ListItem {project} {mousePos} />
@@ -88,7 +81,7 @@
       aria-label="View all projects"
       on:click={() => $sounds === 'on' && click?.play()}
     >
-      <IconHeader icon={ArrowRight} text="View all" classes="" />
+      <IconHeader icon="ArrowRight" text="View all" classes="" />
     </a>
   </div>
 </div>

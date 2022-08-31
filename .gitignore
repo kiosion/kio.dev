@@ -10,3 +10,4 @@
 **/.netlify
 **/bundle
 **/build
+**/.*-error.log

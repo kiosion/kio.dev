@@ -4,7 +4,6 @@
   import { highlightEffects } from '$stores/features';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
-  import type { PixelIcon } from '@/lib/types';
   import SafeIcon from './safe-icon.svelte';
 
   export let content: string;
@@ -18,11 +17,6 @@
   let hlAuto: unknown;
   let hlLang: unknown;
   let hlStyles: unknown;
-
-  const Copy = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default);
-  const Check = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/check.svg').then((Icon) => Icon.default);
 
   let mousePos = [0, 0];
   let container: HTMLElement;
@@ -139,9 +133,9 @@
         out:fade={{ delay: 100, duration: 100 }}
       >
         {#if copied}
-          <SafeIcon icon={Check} />
+          <SafeIcon icon={'Check'} />
         {:else}
-          <SafeIcon icon={Copy} />
+          <SafeIcon icon={'Copy'} />
         {/if}
       </button>
     {/key}

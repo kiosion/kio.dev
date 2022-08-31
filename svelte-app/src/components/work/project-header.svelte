@@ -5,7 +5,6 @@
   import type { ProjectDocument, PixelIcon } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
-  import IconHeader from '../icon-header.svelte';
 
   export let project: ProjectDocument;
 
@@ -70,7 +69,6 @@
     {/if}
     {#if project.desc}
       <div class="mt-4">
-        <!-- <IconHeader icon={InfoBox} text="About" classes="w-full h-fit mb-2" /> -->
         <p class="font-mono text-base">{project.desc}</p>
       </div>
     {/if}

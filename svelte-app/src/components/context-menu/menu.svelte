@@ -3,13 +3,11 @@
   import { fade } from 'svelte/transition';
   import { key } from './menu';
   import { setState } from '$lib/helpers/menu';
-  import { state } from '$stores/menu';
 
   export let x: number;
   export let y: number;
 
   let menuElement: HTMLElement;
-  let menuTarget: HTMLElement | undefined;
   export let page: HTMLElement;
   const dispatch = createEventDispatcher();
 

@@ -52,7 +52,7 @@ export interface CodeBlockComponentProps
 // State types
 export interface MenuStateOpt {
   disabled?: boolean;
-  icon?: () => Promise<PixelIcon>;
+  icon?: string;
   text?: string;
   action?: () => void | Promise<void> | undefined;
 }

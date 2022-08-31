@@ -1,14 +1,12 @@
 <script lang="ts">
-  import type { PixelIcon } from '@/lib/types';
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import { getContext, createEventDispatcher } from 'svelte';
   import SafeIcon from '../safe-icon.svelte';
   import { key } from './menu';
 
   export let disabled = false;
-  export let icon: () => Promise<PixelIcon>;
+  export let icon: string;
   export let text = '';
   export let index = 0;
-  let iconSvg: PixelIcon | undefined;
 
   const dispatch = createEventDispatcher();
 
@@ -21,10 +19,6 @@
     dispatch('click');
     dispatchClick();
   };
-
-  onMount(async () => {
-    icon && (iconSvg = await icon());
-  });
 </script>
 
 <div

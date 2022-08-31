@@ -1,17 +1,18 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import type { PixelIcon } from '$lib/types';
+  import { icon as loadIcon } from '$stores/icons';
 
-  export let icon: () => Promise<PixelIcon>;
-  let iconSvg: PixelIcon | undefined;
-
-  onMount(async () => {
-    iconSvg = await icon();
-  });
+  export let icon: string;
+  export let hovered = false;
 </script>
 
 <div class="w-[20px]">
-  {#if iconSvg}
-    <svelte:component this={iconSvg} width="20" />
-  {/if}
+  {#await loadIcon(icon) then svg}
+    <svelte:component
+      this={svg}
+      width="20"
+      class="{hovered
+        ? 'text-slate-600 dark:text-slate-300'
+        : ''} transition-colors"
+    />
+  {/await}
 </div>

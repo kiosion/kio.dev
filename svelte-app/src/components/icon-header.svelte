@@ -1,9 +1,8 @@
 <script lang="ts">
   import SafeIcon from './safe-icon.svelte';
-  import type { PixelIcon } from '@/lib/types';
 
   export let text: string;
-  export let icon: () => Promise<PixelIcon>;
+  export let icon: string;
   export let classes = 'mt-8 mb-2 w-full h-fit';
 </script>
 

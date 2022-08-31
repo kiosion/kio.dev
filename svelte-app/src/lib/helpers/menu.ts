@@ -1,27 +1,6 @@
 import { get } from 'svelte/store';
 import { state } from '$stores/menu';
-import type { MenuStateOpt, PixelIcon } from '$lib/types';
-
-const ArrowLeft = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/arrow-left.svg').then((Icon) => Icon.default);
-const ArrowRight = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/arrow-right.svg').then((Icon) => Icon.default);
-const Open = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/open.svg').then((Icon) => Icon.default);
-const Copy = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default);
-const Link = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/link.svg').then((Icon) => Icon.default);
-const Save = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/save.svg').then((Icon) => Icon.default);
-const Code = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/code.svg').then((Icon) => Icon.default);
-const Reload = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/reload.svg').then((Icon) => Icon.default);
-const Cast = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/cast.svg').then((Icon) => Icon.default);
-const MailArrowRight = (): Promise<PixelIcon> =>
-  import('pixelarticons/svg/mail-arrow-right.svg').then((Icon) => Icon.default);
+import type { MenuStateOpt } from '$lib/types';
 
 export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
@@ -42,13 +21,13 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         if (target.href.indexOf('mailto:') >= 0) {
           return [
             {
-              icon: MailArrowRight,
+              icon: 'MailArrowRight',
               text: `Mail ${target.href.split(':')?.[1]}`,
               action: () => window.open(target.href, '_self')
             },
             {},
             {
-              icon: Copy,
+              icon: 'Copy',
               text: 'Copy email address',
               action: () => navigator.clipboard.writeText(target.href)
             }
@@ -56,25 +35,25 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         }
         return [
           {
-            icon: Link,
+            icon: 'Link',
             text: `Go to '${target.href}'`,
             action: () => window.open(target.href, '_self')
           },
           {},
           {
-            icon: Open,
+            icon: 'Open',
             text: 'Open link in new tab',
             action: () => window.open(target.href, '_blank')
           },
           {
-            icon: Open,
+            icon: 'Open',
             text: 'Open link in new window',
             action: () =>
               window.open(target.href, '_blank', 'width=1200, height=800')
           },
           {},
           {
-            icon: Copy,
+            icon: 'Copy',
             text: 'Copy link address',
             action: () => navigator.clipboard.writeText(target.href)
           }
@@ -82,24 +61,24 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
       case 'IMG':
         return [
           {
-            icon: Open,
+            icon: 'Open',
             text: 'Open image in new tab',
             action: () => window.open(target.src, '_blank')
           },
           {
-            icon: Open,
+            icon: 'Open',
             text: 'Open image in new window',
             action: () =>
               window.open(target.src, '_blank', 'width=1200, height=800')
           },
           {},
           {
-            icon: Save,
+            icon: 'Save',
             text: 'Save image',
             action: () => window.open(`${target.src}&download`, '_blank')
           },
           {
-            icon: Copy,
+            icon: 'Copy',
             text: 'Copy image address',
             action: () => navigator.clipboard.writeText(target.src)
           }
@@ -107,7 +86,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
       case 'CODE':
         return [
           {
-            icon: Copy,
+            icon: 'Copy',
             text: 'Copy code block',
             action: () => navigator.clipboard.writeText(target.innerText)
           }
@@ -116,29 +95,29 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
       default:
         return [
           {
-            icon: ArrowLeft,
+            icon: 'ArrowLeft',
             text: 'Back',
             action: () => history.back()
           },
           {
-            icon: ArrowRight,
+            icon: 'ArrowRight',
             text: 'Forward',
             action: () => history.forward()
           },
           {
-            icon: Reload,
+            icon: 'Reload',
             text: 'Reload',
             action: () => location.reload()
           },
           {},
           {
-            icon: Cast,
+            icon: 'Cast',
             text: 'Cast',
             action: () => window.open('https://youtu.be/dQw4w9WgXcQ', '_blank')
           },
           {},
           {
-            icon: Code,
+            icon: 'Code',
             text: 'View page source',
             action: () =>
               window.open('https://github.com/kiosion/kio.dev', '_blank')
@@ -151,7 +130,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (selection && selection.trim() !== '') {
     opts.unshift({});
     opts.unshift({
-      icon: Copy,
+      icon: 'Copy',
       text: 'Copy selection',
       action: () => navigator.clipboard.writeText(selection)
     });

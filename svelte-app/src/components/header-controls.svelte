@@ -4,20 +4,8 @@
   import { onMount } from 'svelte';
   import { sounds } from '$stores/features';
   import type UIfx from 'uifx';
-  import type { PixelIcon } from '@/lib/types';
   import SafeIcon from './safe-icon.svelte';
   import { fade } from 'svelte/transition';
-
-  const ArrowUp = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/arrow-up.svg').then((Icon) => Icon.default);
-  const MoonStars = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/moon-stars.svg').then((Icon) => Icon.default);
-  const Sun = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/sun.svg').then((Icon) => Icon.default);
-  const Volume2 = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/volume-2.svg').then((Icon) => Icon.default);
-  const VolumeX = (): Promise<PixelIcon> =>
-    import('pixelarticons/svg/volume-x.svg').then((Icon) => Icon.default);
 
   let click: UIfx;
 
@@ -40,7 +28,7 @@
           on:click={() => $sounds === 'on' && click?.play()}
           transition:fade={{ duration: 100 }}
         >
-          <SafeIcon icon={ArrowUp} />
+          <SafeIcon icon={'ArrowUp'} />
           <p class="font-code text-base w-fit ml-4">
             Back ({$navOptions.up})
           </p>
@@ -71,9 +59,9 @@
         }}
       >
         {#if $theme === 'light'}
-          <SafeIcon icon={MoonStars} />
+          <SafeIcon icon={'MoonStars'} />
         {:else}
-          <SafeIcon icon={Sun} />
+          <SafeIcon icon={'Sun'} />
         {/if}
       </button>
       <button
@@ -87,9 +75,9 @@
         }}
       >
         {#if $sounds === 'on'}
-          <SafeIcon icon={Volume2} />
+          <SafeIcon icon={'Volume2'} />
         {:else}
-          <SafeIcon icon={VolumeX} />
+          <SafeIcon icon={'VolumeX'} />
         {/if}
       </button>
     </div>
