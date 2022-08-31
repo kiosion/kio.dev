@@ -29,10 +29,11 @@ export const returnPosts = ({ req, delay, num }: ReturnDocumentsParams) => {
     statusCode: 200,
     body: {
       meta: {
-        length: numPosts,
+        total: numPosts,
+        count: numPosts,
         filter: req.query
       },
-      data: posts
+      data: posts ? posts : [{}]
     },
     delay
   };
