@@ -2015,7 +2015,7 @@
   resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-1.3.0.tgz#6460cd993a2c24368a6308028f3bc57df91f131e"
   integrity sha512-uyIOtGA4Duf+68I3BSbYHY5P+WGftn3QtNJD2Pn7h9WPGYsSrWViIPebE9yRN8N0NHhYj+hDQXaMpVdjG7r+zA==
 
-"@sanity/base@2.31.0", "@sanity/base@^2.31.0":
+"@sanity/base@2.31.0":
   version "2.31.0"
   resolved "https://registry.yarnpkg.com/@sanity/base/-/base-2.31.0.tgz#5317591e4085090b50b0477d2802eef317b817e1"
   integrity sha512-e66XWEaahTvJx/MATdm+M/4phfGTqVes5xqLDWUIChzHXEx0G3xPQNI6Ws1PT5oyOjlDSatdZsx/M6GGV5Xitw==
@@ -2077,7 +2077,7 @@
     shallow-equals "^1.0.0"
     use-device-pixel-ratio "^1.1.0"
 
-"@sanity/base@2.31.1":
+"@sanity/base@2.31.1", "@sanity/base@^2.31.0":
   version "2.31.1"
   resolved "https://registry.yarnpkg.com/@sanity/base/-/base-2.31.1.tgz#8183e5c519976b7c074c95917c050087a5af1d55"
   integrity sha512-JaLlmCmc+IrogsixwRLkrTHqF9ClFXdBoxOVvsYPEfj+Jaa8pB0An97DuGIIB+eNnHmDIDJESt3kPpokXeQg2A==
@@ -2172,18 +2172,18 @@
     object-assign "^4.1.1"
     rxjs "^6.0.0"
 
-"@sanity/code-input@^2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@sanity/code-input/-/code-input-2.31.0.tgz#872d887025fbe4582d24c3e3f77f8722b6dcba3b"
-  integrity sha512-720vDRKWsFTmkMxqikBiE/J9V6yH154odnoSLVo1pRlr46XhfYfU8JVExdIca9YA6OOcWPXtHZQ+HCYX4Tqy9A==
+"@sanity/code-input@^2.31.1":
+  version "2.31.1"
+  resolved "https://registry.yarnpkg.com/@sanity/code-input/-/code-input-2.31.1.tgz#3baddaba2c17e8f7197c2fb1df14ce5b18b66eb1"
+  integrity sha512-J5I/43n8ELc9bmihkBMv844VmuUhL5zNxiSrZMQT/SdMYrXcZQdfivFJnpEW6ynh7Vd2QJY9NkbVHjZW8HctXA==
   dependencies:
     "@reach/auto-id" "^0.13.2"
-    "@sanity/base" "2.31.0"
-    "@sanity/form-builder" "2.31.0"
-    "@sanity/icons" "^1.2.6"
-    "@sanity/types" "2.31.0"
-    "@sanity/ui" "^0.37.9"
-    "@sanity/util" "2.31.0"
+    "@sanity/base" "2.31.1"
+    "@sanity/form-builder" "2.31.1"
+    "@sanity/icons" "^1.3.4"
+    "@sanity/types" "2.31.1"
+    "@sanity/ui" "^0.37.21"
+    "@sanity/util" "2.31.1"
     ace-builds "^1.4.13"
     react-ace "^9.5.0"
 
@@ -2422,47 +2422,6 @@
     lodash "^4.17.15"
     sanity-diff-patch "^1.0.9"
 
-"@sanity/form-builder@2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@sanity/form-builder/-/form-builder-2.31.0.tgz#5411da6b6b82cc9d6864bd69d2a0ae3365b18dbb"
-  integrity sha512-U3SMejTeU0v4AEc2jhnVAowDGUPcyF9qdADwzx2j+cB2Q4xDU7iArH1m99all9xTH3Mx9WuQC1D6INRO4W3Zxw==
-  dependencies:
-    "@reach/auto-id" "^0.13.2"
-    "@sanity/base" "2.31.0"
-    "@sanity/block-tools" "2.31.0"
-    "@sanity/client" "^3.3.3"
-    "@sanity/color" "^2.1.8"
-    "@sanity/generate-help-url" "^3.0.0"
-    "@sanity/icons" "^1.2.6"
-    "@sanity/image-url" "^1.0.1"
-    "@sanity/imagetool" "2.29.8"
-    "@sanity/initial-value-templates" "2.31.0"
-    "@sanity/mutator" "2.29.3"
-    "@sanity/portable-text-editor" "2.31.0"
-    "@sanity/schema" "2.31.0"
-    "@sanity/types" "2.31.0"
-    "@sanity/ui" "^0.37.9"
-    "@sanity/util" "2.31.0"
-    "@sanity/uuid" "^3.0.1"
-    attr-accept "^1.1.0"
-    date-fns "^2.16.1"
-    debug "^3.2.7"
-    diff-match-patch "^1.0.4"
-    exif-component "^1.0.1"
-    get-random-values "^1.2.2"
-    lodash "^4.17.15"
-    nano-pubsub "^2.0.1"
-    pretty-bytes "^4.0.2"
-    react-fast-compare "^3.2.0"
-    react-focus-lock "^2.5.0"
-    react-is "^17.0.2"
-    react-rx "^1.0.0-beta.6"
-    react-sortable-hoc "^1.11.0"
-    rxjs "^6.5.3"
-    scroll-into-view-if-needed "^2.2.26"
-    shallow-equals "^1.0.0"
-    speakingurl "^13.0.0"
-
 "@sanity/form-builder@2.31.1":
   version "2.31.1"
   resolved "https://registry.yarnpkg.com/@sanity/form-builder/-/form-builder-2.31.1.tgz#b0dac204e3dbdfe889406c026067030492f0bfbb"
@@ -2611,21 +2570,6 @@
     "@sanity/webpack-integration" "2.31.1"
     css-modules-require-hook "4.1.0"
     interop-require "^1.0.0"
-
-"@sanity/portable-text-editor@2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@sanity/portable-text-editor/-/portable-text-editor-2.31.0.tgz#4803b6858a68d9e9c0a59d125d2559a0c95315ba"
-  integrity sha512-HNvW1G+X3lztH9wDRmdOVfRyaQIp3u5zAxdj9efnrYe2wSq3RuVJtLgOiCbSUYpqyw0GsOsiJbtGloINoPbQzw==
-  dependencies:
-    "@sanity/block-tools" "2.31.0"
-    "@sanity/schema" "2.31.0"
-    "@sanity/slate-react" "2.30.1"
-    "@sanity/types" "2.31.0"
-    "@sanity/util" "2.31.0"
-    debug "^3.2.7"
-    is-hotkey "^0.1.6"
-    lodash "^4.17.15"
-    slate "0.81.1"
 
 "@sanity/portable-text-editor@2.31.1":
   version "2.31.1"
