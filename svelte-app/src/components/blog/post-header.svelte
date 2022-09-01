@@ -32,7 +32,7 @@
 
 <div class="mb-4" data-test-id="post-header">
   <div class="flex flex-col">
-    <h1 class="font-display text-6xl leading-normal mb-2 font-bold">{title}</h1>
+    <h1 class="font-display text-6xl leading-tight  mb-4 font-bold">{title}</h1>
     {#if post.tags}
       <div class="flex flex-row justify-start items-center gap-2 mb-6">
         {#each post.tags as tag}

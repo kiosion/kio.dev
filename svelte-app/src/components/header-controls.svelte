@@ -38,7 +38,7 @@
     <div class="-ml-52 -mr-40">
       {#if $pageHeading && $pageHeading !== ''}
         <p
-          class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[24rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
+          class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[28rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
           aria-label="Scroll to top"
           on:click={() => window?.scrollTo({ top: 0, behavior: 'smooth' })}
           transition:fade={{ duration: 100 }}

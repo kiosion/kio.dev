@@ -1,15 +1,13 @@
 import moment from 'moment';
 
-export const getAbsDate = (dateStr: string | undefined): string => {
-  return dateStr
-    ? moment(dateStr).format('MMM Do, YYYY')
-    : moment('01-01-2022').format('MMM Do, YYYY');
+export const getAbsDate = (dateStr: string | undefined): string | undefined => {
+  return dateStr ? moment(dateStr).format('MMM Do, YYYY') : undefined;
 };
 
-export const getShortDate = (dateStr: string | undefined): string => {
-  return dateStr
-    ? moment(dateStr).format('MMMM YYYY')
-    : moment('01-01-2022').format('MMMM YYYY');
+export const getShortDate = (
+  dateStr: string | undefined
+): string | undefined => {
+  return dateStr ? moment(dateStr).format('MMMM YYYY') : undefined;
 };
 
 export const getRelDate = (dateStr: string | undefined): string => {

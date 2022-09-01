@@ -29,7 +29,7 @@
     "dot-notation": ["error"],
     "eqeqeq": ["error"],
     "func-call-spacing": ["error", "never"],
-    "indent": ["error", 2],
+    "@typescript-eslint/indent": ["error", 2],
     "key-spacing": ["error"],
     "keyword-spacing": ["error"],
     "linebreak-style": ["error"],

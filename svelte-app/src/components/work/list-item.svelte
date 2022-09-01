@@ -6,6 +6,8 @@
   import type UIfx from 'uifx';
   import { urlFor, getCrop, type ImageCrop } from '$helpers/image';
   import { goto } from '$app/navigation';
+  import BulletPoint from '../bullet-point.svelte';
+  import { getShortDate } from '$helpers/date';
 
   export let project: ProjectDocument;
   export let mousePos = [0, 0];
@@ -23,6 +25,7 @@
 
   $: _ref = project.image?.asset?._ref;
   $: project.image && (imageCrop = getCrop(project.image));
+  $: date = getShortDate(project.date);
 </script>
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
@@ -73,15 +76,23 @@
           >
             {project.title}
           </h1>
-          {#if project.tags}
+          {#if date || project.tags}
             <div
-              class="flex flex-row justify-start items-center gap-2 flex-wrap mt-1"
+              class="flex flex-row items-center justify-start mt-1 font-sans text-base text-slate-700 dark:text-slate-200"
             >
-              {#each project.tags as tag}
-                <a href="/work/{tag.slug.current}" class="categoryTag-sm">
-                  {tag.title}
-                </a>
-              {/each}
+              <p class="">{date}</p>
+              {#if project.tags}
+                <BulletPoint />
+                <div
+                  class="flex flex-row justify-start items-center gap-2 flex-wrap"
+                >
+                  {#each project.tags as tag}
+                    <a href="/work/{tag.slug.current}" class="categoryTag-sm">
+                      {tag.title}
+                    </a>
+                  {/each}
+                </div>
+              {/if}
             </div>
           {/if}
           {#if project.desc}

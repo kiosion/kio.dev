@@ -14,7 +14,6 @@
   export let mousePos = [0, 0];
 
   let click: UIfx;
-
   let hovered = false;
   let readingTime = getReadingTime(
     getTotalWords(post.body as Array<TextBlock>)
@@ -25,6 +24,8 @@
       click = sfx.click;
     });
   });
+
+  $: date = getAbsDate(post.date);
 </script>
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
@@ -55,13 +56,11 @@
         <div
           class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 mt-1"
         >
-          <p class="">
-            {getAbsDate(post.date)}
-          </p>
-          <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
-          <p class="">
-            {`${Math.floor(readingTime / 60)} min read`}
-          </p>
+          {#if date}
+            <p>{date}</p>
+            <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+          {/if}
+          <p>{`${Math.floor(readingTime / 60)} min read`}</p>
           {#if post.tags}
             <BulletPoint />
             <div
