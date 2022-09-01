@@ -989,14 +989,14 @@
     "@vercel/nft" "^0.22.0"
     esbuild "^0.14.48"
 
-"@sveltejs/kit@1.0.0-next.446":
-  version "1.0.0-next.446"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.446.tgz#c776e8d883e3c382e27661317f5594fa4051238d"
-  integrity sha512-xcmkMM60OmI3rUVablbIjAiI/K9VRih62RSrNbtwZmLkf09q3irCflS8cDp2m8Z27100VRHgV0ACB0Z/JnL/0w==
+"@sveltejs/kit@1.0.0-next.449":
+  version "1.0.0-next.449"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.449.tgz#946f533ca40599be2d8a2737fe171d85911a6990"
+  integrity sha512-JcizmZHuSxj1utgKLZwm1smIVhfHCfUSvg3BwvWoOkHJudiJNkzbbZulZ2wnOR22b3LzvPHB84u08vfnhWkVcw==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.1"
     cookie "^0.5.0"
-    devalue "^2.0.1"
+    devalue "^3.1.2"
     kleur "^4.1.4"
     magic-string "^0.26.2"
     mime "^3.0.0"
@@ -3318,10 +3318,10 @@ detective@^5.2.1:
     defined "^1.0.0"
     minimist "^1.2.6"
 
-devalue@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/devalue/-/devalue-2.0.1.tgz#5d368f9adc0928e47b77eea53ca60d2f346f9762"
-  integrity sha512-I2TiqT5iWBEyB8GRfTDP0hiLZ0YeDJZ+upDxjBfOC2lebO5LezQMv7QvIUTzdb64jQyAKLf1AHADtGN+jw6v8Q==
+devalue@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/devalue/-/devalue-3.1.2.tgz#412497b63d2dc0beba2179723475c2ef4c2b1b31"
+  integrity sha512-wUXbMGPAsBx79UF14nsWSsJlC7RcwPlf2w3bGheODWxKx57e9n68ceoijbqCJCEbjyo0S79nqfPwQgyijwLaqw==
 
 devtools-detect@^4.0.0:
   version "4.0.0"
