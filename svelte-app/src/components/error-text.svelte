@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte';
+  import SafeIcon from '$components/safe-icon.svelte';
 
   export let text = 'Unknown error';
   export let classes = '';
@@ -9,6 +9,6 @@
   data-test-id="error-text"
   class="flex flex-row items-center justify-center {classes}"
 >
-  <Icon icon="clarity:error-standard-solid" />
+  <SafeIcon icon="Alert" />
   <p class="font-code text-lg ml-3">{text}</p>
 </div>

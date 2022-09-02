@@ -42,7 +42,7 @@
     }
   });
 
-  navOptions.set({ down: '/work', up: '/' });
+  navOptions.set({ down: '/art', up: '/' });
   pageHeading.set('Blog');
 
   export let data: PageData;
@@ -72,7 +72,9 @@
         {/if}
       {/each}
     {:else}
-      <ErrorText text="No data" classes="w-fit" />
+      <div class="w-full flex flex-row items-center justify-center">
+        <ErrorText text="No data" classes="w-fit" />
+      </div>
     {/if}
     <a
       href="/blog/all"

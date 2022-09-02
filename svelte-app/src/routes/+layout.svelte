@@ -60,7 +60,7 @@
 <svelte:body
   use:classList={`w-full h-full overflow-x-hidden ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  }`}
+  } ${appLoaded && 'app-loaded'}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)} />
 
 {#if !appLoaded}

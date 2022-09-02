@@ -11,9 +11,10 @@
   import { navigating } from '$app/stores';
 
   let links = [
-    { name: 'Blog', url: '/blog', hovered: false },
-    { name: 'Work', url: '/work', hovered: false },
-    { name: 'About', url: '/about', hovered: false }
+    { name: 'Blog', url: '/blog', active: false },
+    { name: 'Art', url: '/art', active: false },
+    { name: 'Work', url: '/work', active: false },
+    { name: 'About', url: '/about', active: false }
   ];
 
   let socials = [
@@ -107,17 +108,17 @@
               class:active={segment === link.url}
               aria-label={link.name}
               href={link.url}
-              on:mouseenter={() => (link.hovered = true)}
-              on:mouseleave={() => (link.hovered = false)}
-              on:focus={() => (link.hovered = true)}
-              on:blur={() => (link.hovered = false)}
+              on:mouseenter={() => (link.active = true)}
+              on:mouseleave={() => (link.active = false)}
+              on:focus={() => (link.active = true)}
+              on:blur={() => (link.active = false)}
               on:click={() => {
                 navOpen.set(false);
                 $sounds === 'on' && click?.play();
               }}>{link.name}</a
             >
             <div
-              class="absolute z-0 {segment === link.url || link.hovered
+              class="absolute z-0 {segment === link.url || link.active
                 ? 'w-full'
                 : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in"
             />
@@ -134,10 +135,10 @@
             class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
             aria-label={link.name}
             href={link.url}
-            on:mouseenter={() => (link.hovered = true)}
-            on:mouseleave={() => (link.hovered = false)}
-            on:focus={() => (link.hovered = true)}
-            on:blur={() => (link.hovered = false)}
+            on:mouseenter={() => (link.active = true)}
+            on:mouseleave={() => (link.active = false)}
+            on:focus={() => (link.active = true)}
+            on:blur={() => (link.active = false)}
             on:click={() => {
               navOpen.set(false);
               $sounds === 'on' && click?.play();
@@ -148,14 +149,14 @@
           <div
             class="indicator absolute z-0 {segment === link.url ||
             $navigating?.to.pathname === link.url ||
-            link.hovered ||
+            link.active ||
             (segment.split('/').length > 1 &&
               segment.split('/').indexOf(link.url.slice(1)) > 0)
               ? 'opacity-100'
               : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
               link.url ||
             $navigating?.to.pathname === link.url ||
-            link.hovered
+            link.active
               ? 'active'
               : segment.split('/').length > 1 &&
                 segment.split('/').indexOf(link.url.slice(1)) > 0 &&

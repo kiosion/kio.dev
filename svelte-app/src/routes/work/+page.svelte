@@ -45,7 +45,7 @@
     }
   });
 
-  navOptions.set({ down: '/about', up: '/blog' });
+  navOptions.set({ down: '/about', up: '/art' });
   pageHeading.set('Work');
 
   export let data: PageData;
@@ -73,7 +73,9 @@
         <ListItem {project} {mousePos} />
       {/each}
     {:else}
-      <ErrorText text="No data" classes="w-fit" />
+      <div class="w-full flex flex-row items-center justify-center">
+        <ErrorText text="No data" classes="w-fit" />
+      </div>
     {/if}
     <a
       href="/work/all"

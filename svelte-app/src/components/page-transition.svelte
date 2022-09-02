@@ -1,90 +1,12 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import { reduceMotion } from '$stores/features';
+  import { onNav } from '$lib/transitions';
 
   export let url: string;
-
-  let prevPath: string;
   let navDir: 'forward' | 'backward' = 'forward';
 
-  const onNav = (path: string) => {
-    if (!path) {
-      return;
-    }
-
-    let prev = prevPath ?? path;
-    prevPath = path;
-
-    const toRoute = path.startsWith('/')
-      ? path
-        .slice(1)
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/')
-      : path
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/');
-    const fromRoute = prev.startsWith('/')
-      ? prev
-        .slice(1)
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/')
-      : prev
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/');
-
-    const dirs = [
-      fromRoute === '' ? 'index' : fromRoute,
-      toRoute === '' ? 'index' : toRoute
-    ].join('-');
-
-    // TODO: Make this not-terrible, extract to a map or something
-    if (
-      [
-        'blog-about',
-        'blog-blog/*',
-        'blog-work',
-        'index-about',
-        'index-blog',
-        'index-secret',
-        'index-work',
-        'work-about',
-        'work-work/*'
-      ].includes(dirs)
-    ) {
-      navDir = 'forward';
-    } else if (
-      [
-        'about-blog',
-        'about-index',
-        'about-work',
-        'blog/*-blog',
-        'blog-index',
-        'pgp-about',
-        'pgp-blog',
-        'pgp-blog/*',
-        'pgp-work',
-        'pgp-work/*',
-        'pgp-index',
-        'secret-index',
-        'work-index',
-        'work-blog',
-        'work/*-work',
-        'work/*-index',
-        'work/*-blog',
-        'work/*-blog/*'
-      ].includes(dirs)
-    ) {
-      navDir = 'backward';
-    } else {
-      navDir = 'forward';
-    }
-  };
-
-  $: url, onNav(url);
+  $: url, (navDir = onNav(url));
 </script>
 
 {#key url}

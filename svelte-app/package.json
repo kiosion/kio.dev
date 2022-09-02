@@ -42,6 +42,7 @@
     "c8": "^7.12.0",
     "cypress": "^10.7.0",
     "cypress-svelte-unit-test": "^3.3.4",
+    "devalue": "3.1.3",
     "devtools-detect": "^4.0.0",
     "dotenv": "^16.0.2",
     "eslint": "^8.23.0",
@@ -69,7 +70,6 @@
     "svelte-preprocess": "^4.10.6",
     "tailwindcss": "^3.1.8",
     "tslib": "^2.3.1",
-    "twemoji": "^14.0.2",
     "typescript": "^4.8.2",
     "uifx": "^2.0.7",
     "vite": "^3.0.9",
@@ -79,6 +79,7 @@
   },
   "type": "module",
   "dependencies": {
-    "pixelarticons": "^1.7.0"
+    "pixelarticons": "^1.7.0",
+    "twemoji": "^14.0.2"
   }
 }

@@ -41,6 +41,9 @@ export default defineConfig({
       ...viteEnv
     }
   },
+  ssr: {
+    noExternal: ['devalue']
+  },
   build: {
     rollupOptions: {
       output: {

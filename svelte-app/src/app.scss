@@ -47,12 +47,15 @@ body {
     --textColour: #0f172a;
   }
   &:not(.is-loaded) {
-    cursor: wait !important;
+    cursor: progress !important;
+    &:not(.app-loaded) {
+      cursor: wait !important;
+    }
   }
   &.is-loading a,
   &.is-loading button,
   &.is-loading [role='button'] {
-    cursor: wait !important;
+    cursor: progress !important;
   }
 }
 
