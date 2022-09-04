@@ -1,4 +1,4 @@
-import SanityClient from '../client';
+import { client } from '../client';
 import {
   postsQueryParams,
   postsQueryFilterParams,
@@ -6,8 +6,6 @@ import {
   projectsQueryParams,
   projectsQueryFilterParams
 } from '../types';
-
-const client = SanityClient.client;
 
 module query {
   // Fetch range of posts, by date, tags, or all
@@ -56,7 +54,9 @@ module query {
           : ''
       }]{
       _id,
+      "objectID": _id,
       _type,
+      _rev,
       "author": {
         "_id": author->_id,
         "_type": author->_type,
@@ -73,7 +73,10 @@ module query {
         slug
       },
       slug,
-      title
+      title,
+      "numberOfCharacters": length(pt::text(body)),
+      "estimatedWordCount": round(length(pt::text(body)) / 5),
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 120 )
     }`;
 
       client
@@ -116,6 +119,8 @@ module query {
         slug !== '' ? ` && slug.current == "${slug}"` : ''
       }${id !== '' ? ` && _id == "${id}"` : ''}]{
         _id,
+        "objectID": _id,
+        _rev,
         _type,
         "author": {
           "_id": author->_id,
@@ -133,7 +138,10 @@ module query {
           slug
         },
         slug,
-        title
+        title,
+        "numberOfCharacters": length(pt::text(body)),
+        "estimatedWordCount": round(length(pt::text(body)) / 5),
+        "estimatedReadingTime": round(length(pt::text(body)) / 5 / 120 )
       }[0]`;
 
       client
@@ -204,7 +212,9 @@ module query {
           : ''
       }]{
       _id,
+      "objectID": _id,
       _type,
+      _rev,
       "author": {
         "_id": author->_id,
         "_type": author->_type,
@@ -266,7 +276,9 @@ module query {
         slug !== '' ? ` && slug.current == "${slug}"` : ''
       }${id !== '' ? ` && _id == "${id}"` : ''}]{
           _id,
+          "objectID": _id,
           _type,
+          _rev,
           "author": {
             "_id": author->_id,
             "_type": author->_type,
@@ -313,6 +325,8 @@ module query {
 
       const query = `*[_type == "tag"]{
       _id,
+      _rev,
+      "objectID": _id,
       _type,
       title,
       slug
@@ -339,6 +353,9 @@ module query {
     new Promise((resolve, reject) => {
       const query = `*[!(_id in path('drafts.**')) && _type == "author" && name == "Kio"]{
       _id,
+      "objectID": _id,
+      _rev,
+      _type,
       bio,
       body,
       image,

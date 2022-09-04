@@ -1,41 +1,48 @@
 import algoliasearch from 'algoliasearch';
-import sanityClient from '@sanity/client';
+import { client } from '../client';
+import { POSTS_PROJECTION } from '../queries';
 import dotenv from 'dotenv';
-import indexer, { flattenBlocks } from 'sanity-algolia';
+import indexer from 'sanity-algolia';
+import type { WebhookBody } from 'sanity-algolia/dist/types';
+import { ALGOLIA_INDEX } from './env';
 
 dotenv.config();
 
 // Config algolia client
-const algolia = algoliasearch({});
+const algolia = algoliasearch(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY
+);
 
-// Config sanity client
-const sanity = sanityClient({});
-
-const handler = (req, res) => {
+const handler = (content: WebhookBody) => {
+  console.log('handling body:', content);
+  const index = algolia.initIndex(ALGOLIA_INDEX);
   const sanityAlgolia = indexer(
     {
       post: {
-        index: algolia.initIndex('posts')
+        index,
+        projection: POSTS_PROJECTION
       }
     },
-    (document) => {
-      switch (document._type) {
-        case 'post':
-          return {
-            title: document.title,
-            path: document.slug.current,
-            date: document.date,
-            exerpt: flattenBlocks(document.desc)
-          };
-        default:
-          throw new Error(`Unknown or unsupported type: ${document._type}`);
-      }
-    }
+    (document) => document
   );
 
   return sanityAlgolia
-    .webhookSync(sanity, req.body)
-    .then(() => res.status(200).send('ok'));
+    .webhookSync(client, content)
+    .then(() => {
+      return {
+        status: 200,
+        message: 'Success',
+        detail: ''
+      };
+    })
+    .catch((err) => {
+      return {
+        status: 500,
+        message: 'Something went wrong',
+        detail: err.message ?? ''
+      };
+    });
 };
 
 export default handler;

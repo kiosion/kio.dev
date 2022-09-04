@@ -23,7 +23,7 @@ jobs:
           pm2 start all --env production --update-env
       
       - name: Build for production
-        run: (cd ./express-api && yarn build && cp -r ./bundle/bundle.js /home/kio/public/build/bundle.js)
+        run: (cd ./express-api && yarn build && cp ./bundle/bundle.js /home/kio/public/build/bundle.js)
 
       - name: Deploy for production
         run: |

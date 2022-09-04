@@ -1,11 +1,9 @@
-import express from 'express';
+import express, { type Request, Response } from 'express';
 import dotenv from 'dotenv';
 import request from 'request';
-import { query } from './lib';
+import { query, search } from './lib';
+import { MODE, PORT, SANITY_API_DATASET } from './lib/env';
 import type { Error, JsonError } from './types';
-
-// eslint-disable-next-line no-duplicate-imports
-import type { Request, Response } from 'express';
 
 dotenv.config();
 
@@ -17,11 +15,14 @@ if (ACCESS_TOKENS.length === 0) {
   throw new Error('ACCESS_TOKENS is not defined');
 }
 
-const port = process.env.SANITY_STUDIO_API_DATASET === 'dev' ? 4444 : 4000;
+const port = PORT;
 const version = 'v1';
 const baseUrl = `/api/${version}`;
 const queryUrl = `${baseUrl}/query`;
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded());
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validateQueryParams = (req: Request, res: Response): any | null => {
@@ -290,11 +291,7 @@ app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
   const reqUrlParts = req.url?.split('/'),
     resource = reqUrlParts?.[+reqUrlParts?.length - 1]?.split('?')[0],
     params = req.url?.split('?')[1],
-    url = `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/${
-      process.env.SANITY_STUDIO_API_DATASET
-        ? process.env.SANITY_STUDIO_API_DATASET
-        : 'production'
-    }/${resource}?${params}`;
+    url = `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/${SANITY_API_DATASET}/${resource}?${params}`;
 
   try {
     request(
@@ -343,6 +340,59 @@ app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
       );
   }
 });
+
+app.get(`${baseUrl}/webhooks*`, async (req: Request, res: Response) => {
+  setHeaders(res);
+  res
+    .status(400)
+    .send(constructError(400, 'Bad request', `Cannot GET ${req.path}`));
+});
+
+app.post(
+  `${baseUrl}/webhooks/index/posts`,
+  async (req: Request, res: Response) => {
+    setHeaders(res);
+
+    const body = req.body;
+
+    if (
+      !body?.ids ||
+      (!body.ids?.created?.length &&
+        !body.ids?.updated?.length &&
+        !body.ids?.deleted?.length)
+    ) {
+      return res
+        .status(400)
+        .send(
+          constructError(
+            400,
+            'Bad request',
+            'Webhook body is invalid or missing fields'
+          )
+        );
+    }
+    const status = await search(body);
+    return status.status === 200
+      ? res
+        .status(200)
+        .send(
+          JSON.stringify({
+            code: 200,
+            message: 'Success',
+            detail: 'Posts indexed'
+          })
+        )
+      : res
+        .status(500)
+        .send(
+          constructError(
+            500,
+            'Internal server error',
+            `Index failed${status.detail !== '' ? ': ' + status.detail : ''}`
+          )
+        );
+  }
+);
 
 app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
   setHeaders(res);

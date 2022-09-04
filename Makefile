@@ -31,7 +31,7 @@ api: SHELL:=/bin/bash
 api: install-api
 api:
 	cd ./express-api &&\
-	SANITY_STUDIO_API_DATASET="dev" yarn dev
+	MODE=dev yarn dev
 
 # build & run sanity studio
 sanity: SHELL:=/bin/bash
