@@ -341,17 +341,11 @@ app.get(`${baseUrl}/cdn/*`, (req: Request, res: Response) => {
   }
 });
 
-app.get(`${baseUrl}/webhooks*`, async (req: Request, res: Response) => {
-  setHeaders(res);
-  res
-    .status(400)
-    .send(constructError(400, 'Bad request', `Cannot GET ${req.path}`));
-});
-
 app.post(
   `${baseUrl}/webhooks/index/posts`,
   async (req: Request, res: Response) => {
     setHeaders(res);
+    console.log('req for posts webhook:', req.body);
 
     const body = req.body;
 
@@ -361,6 +355,7 @@ app.post(
         !body.ids?.updated?.length &&
         !body.ids?.deleted?.length)
     ) {
+      console.log('invalid body');
       return res
         .status(400)
         .send(
@@ -372,16 +367,15 @@ app.post(
         );
     }
     const status = await search(body);
+    console.log('algolia status:', status);
     return status.status === 200
-      ? res
-        .status(200)
-        .send(
-          JSON.stringify({
-            code: 200,
-            message: 'Success',
-            detail: 'Posts indexed'
-          })
-        )
+      ? res.status(200).send(
+        JSON.stringify({
+          code: 200,
+          message: 'Success',
+          detail: 'Posts indexed'
+        })
+      )
       : res
         .status(500)
         .send(
@@ -393,6 +387,13 @@ app.post(
         );
   }
 );
+
+app.get(`${baseUrl}/webhooks*`, async (req: Request, res: Response) => {
+  setHeaders(res);
+  res
+    .status(400)
+    .send(constructError(400, 'Bad request', `Cannot GET ${req.path}`));
+});
 
 app.get(`${queryUrl}`, authHandler, (req: Request, res: Response) => {
   setHeaders(res);
