@@ -345,7 +345,6 @@ app.post(
   `${baseUrl}/webhooks/index/posts`,
   async (req: Request, res: Response) => {
     setHeaders(res);
-    console.log('req for posts webhook:', req.body);
 
     const body = req.body;
 
@@ -355,7 +354,6 @@ app.post(
         !body.ids?.updated?.length &&
         !body.ids?.deleted?.length)
     ) {
-      console.log('invalid body');
       return res
         .status(400)
         .send(
@@ -367,7 +365,6 @@ app.post(
         );
     }
     const status = await search(body);
-    console.log('algolia status:', status);
     return status.status === 200
       ? res.status(200).send(
         JSON.stringify({

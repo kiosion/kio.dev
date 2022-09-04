@@ -15,7 +15,6 @@ const algolia = algoliasearch(
 );
 
 const handler = (content: WebhookBody) => {
-  console.log('handling body:', content);
   const index = algolia.initIndex(ALGOLIA_INDEX);
   const sanityAlgolia = indexer(
     {
