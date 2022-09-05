@@ -1129,6 +1129,13 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.3.tgz#3c90752792660c4b562ad73b3fbd68bf3bc7ae07"
   integrity sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==
 
+"@types/cypress@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@types/cypress/-/cypress-1.1.3.tgz#0a700c040d53e9e12b5af98e41d4a88c39f39b6a"
+  integrity sha512-OXe0Gw8LeCflkG1oPgFpyrYWJmEKqYncBsD/J0r17r0ETx/TnIGDNLwXt/pFYSYuYTpzcq1q3g62M9DrfsBL4g==
+  dependencies:
+    cypress "*"
+
 "@types/decompress@*":
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/@types/decompress/-/decompress-4.2.4.tgz#dd2715d3ac1f566d03e6e302d1a26ffab59f8c5c"
@@ -2905,7 +2912,7 @@ cypress-svelte-unit-test@^3.3.4:
     "@bahmutov/cy-rollup" "2.0.0"
     unfetch "4.1.0"
 
-cypress@^10.7.0:
+cypress@*, cypress@^10.7.0:
   version "10.7.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.7.0.tgz#2d37f8b9751c6de33ee48639cb7e67a2ce593231"
   integrity sha512-gTFvjrUoBnqPPOu9Vl5SBHuFlzx/Wxg/ZXIz2H4lzoOLFelKeF7mbwYUOzgzgF0oieU2WhJAestQdkgwJMMTvQ==

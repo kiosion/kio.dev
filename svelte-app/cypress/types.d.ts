@@ -13,4 +13,5 @@ export interface ReturnDocumentsParams {
 
 export interface AboutSetupParams {
   delay?: number;
+  content?: boolean;
 }

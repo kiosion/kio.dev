@@ -3,7 +3,7 @@ import type { AboutSetupParams } from '../../types';
 
 describe('E2E | About', () => {
   const setupContext = ({ delay = 800, content = true }: AboutSetupParams) => {
-    return cy.intercept('GET', '/api/getAbout', (req) => {
+    return cy.intercept('GET', '/api/get/about', (req) => {
       req.reply({
         headers: {
           'Content-Type': 'application/json'
