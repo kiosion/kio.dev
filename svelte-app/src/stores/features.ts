@@ -32,4 +32,9 @@ sounds.subscribe((value) => {
   browser && window.localStorage.setItem('feature-sounds', value);
 });
 
-export { svgBackground, highlightEffects, reduceMotion, sounds };
+const comicSans = writable<string>(initialSetting('comicSans', 'off'));
+comicSans.subscribe((value) => {
+  browser && window.localStorage.setItem('feature-comicSans', value);
+});
+
+export { svgBackground, highlightEffects, reduceMotion, sounds, comicSans };

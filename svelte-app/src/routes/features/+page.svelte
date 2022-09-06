@@ -6,7 +6,8 @@
     svgBackground,
     highlightEffects,
     reduceMotion,
-    sounds
+    sounds,
+    comicSans
   } from '$stores/features';
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
@@ -66,7 +67,12 @@
         state={$sounds === 'on'}
         label="UI interaction sounds"
       />
-      <SwitchItem action={onChange} label="Comic Sans 😃" disabled={true} />
+      <SwitchItem
+        action={onChange}
+        target={comicSans}
+        state={$comicSans === 'on'}
+        label="Comic Sans 😃"
+      />
     </ContentWrapper>
   </div>
 </div>

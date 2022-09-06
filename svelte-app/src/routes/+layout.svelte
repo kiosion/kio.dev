@@ -9,7 +9,7 @@
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
   import HeaderControls from '$components/header-controls.svelte';
-  import { svgBackground } from '$stores/features';
+  import { svgBackground, comicSans } from '$stores/features';
   import BackgroundWaves from '$components/background-waves.svelte';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/footer-controls.svelte';
@@ -60,7 +60,7 @@
 <svelte:body
   use:classList={`w-full h-full overflow-x-hidden ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${appLoaded && 'app-loaded'}`}
+  } ${appLoaded && 'app-loaded'} ${$comicSans === 'on' && 'comicSans'}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)} />
 
 {#if !appLoaded}

@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+// Extra font imports
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700');
+
 // Tailwind combined classes
 .categoryTag {
   @apply font-code text-base capitalize px-2 py-1 bg-slate-200 dark:bg-slate-900 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 hover:shadow-[0_0_10px_-6px_var(--tw-shadow)] hover:shadow-slate-800/60 dark:hover:shadow-[0_0_12px_-2px_var(--tw-shadow)] dark:hover:shadow-slate-500/40 rounded-md transition-[color,background-color,box-shadow];
@@ -74,5 +77,15 @@ body {
   a,
   button {
     pointer-events: visible;
+  }
+}
+
+.comicSans {
+  .font-display,
+  .font-code,
+  .font-sans,
+  .font-mono {
+    font-family: 'Comic Neue', sans-serif !important;
+    font-weight: 700;
   }
 }

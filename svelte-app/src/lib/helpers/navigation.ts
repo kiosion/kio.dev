@@ -9,13 +9,13 @@ export const handleScrollNav = (
     return;
   }
 
-  console.log('element: ', element);
+  // console.log('element: ', element);
   // const element = <HTMLElement>event.currentTarget;
   const { height } = element.getBoundingClientRect();
 
-  console.log('scroll: ', element.scrollHeight - element.offsetTop);
+  // console.log('scroll: ', element.scrollHeight - element.offsetTop);
   // console.log('scrollTop: ', element.scrollTop);
-  console.log('boundHeight: ', height);
+  // console.log('boundHeight: ', height);
 
   if (event.deltaY > 11) {
     if (element && element.scrollHeight - element.scrollTop === height) {

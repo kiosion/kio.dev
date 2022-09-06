@@ -1,3 +1,5 @@
+import type { TextBlock } from '$lib/types';
+
 export const getTotalWords = (postBody: Array<TextBlock>) => {
   if (!postBody) {
     return [];
