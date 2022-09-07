@@ -4624,6 +4624,15 @@ fs-constants@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
+fs-extra@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^8.0.1:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
@@ -9868,13 +9877,14 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite-plugin-inspect@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-inspect/-/vite-plugin-inspect-0.6.1.tgz#c8e1b72afc0dfefd8eab60f2ec13071c10d54e11"
-  integrity sha512-MQzIgMoPyiPDuHoO6p7QBOrmheBU/ntg0cgtgcnm21S/Xds5oak1CbVLSAvv4fK1ZpetLK+tlJ+2mlFO9fG3SQ==
+vite-plugin-inspect@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-inspect/-/vite-plugin-inspect-0.7.1.tgz#37339cc6bb476674c36b7ef68506bdb7cd5e49c1"
+  integrity sha512-mkTw5itsI+89WNJ6og0BpEAaV4ticrOGaoj+oWDR61W72H2mfkuw3MaAdpnnq6s6A7tKfM4nPaMtxjlmw3uXYg==
   dependencies:
     "@rollup/pluginutils" "^4.2.1"
     debug "^4.3.4"
+    fs-extra "^10.1.0"
     kolorist "^1.5.1"
     sirv "^2.0.2"
     ufo "^0.8.5"
