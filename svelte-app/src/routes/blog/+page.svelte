@@ -42,7 +42,7 @@
     }
   });
 
-  navOptions.set({ down: '/art', up: '/' });
+  navOptions.set({ down: '/work', up: '/' });
   pageHeading.set('Blog');
 
   export let data: PageData;

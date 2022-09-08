@@ -12,7 +12,7 @@
     <IconHeader icon="CardText" text="Tags" classes="mt-8 mb-4 w-full h-fit" />
     <div class="mb-6 flex flex-row flex-wrap gap-2 justify-start items-start">
       {#each post.tags as tag}
-        <a href="/blog/{tag.slug.current}" class="categoryTag">
+        <a href="/blog/t/{tag.slug.current}" class="categoryTag">
           {tag.title}
         </a>
       {/each}

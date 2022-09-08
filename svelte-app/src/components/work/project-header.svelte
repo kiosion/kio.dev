@@ -53,7 +53,7 @@
     {#if project.tags}
       <div class="flex flex-row justify-start items-center gap-2">
         {#each project.tags as tag}
-          <a href="/work/{tag.slug.current}" class="categoryTag">
+          <a href="/work/t/{tag.slug.current}" class="categoryTag">
             {tag.title}
           </a>
         {/each}

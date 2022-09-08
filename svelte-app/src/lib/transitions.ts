@@ -1,14 +1,18 @@
 let prevPath: string;
 
 const routes = [
+  'features',
   'index',
   'blog',
   'blog/*',
+  'blog/*/*',
   'art',
   'art/*',
   'work',
   'work/*',
-  'about'
+  'work/*/*',
+  'about',
+  'pgp'
 ];
 
 const forward: string[] = [];
