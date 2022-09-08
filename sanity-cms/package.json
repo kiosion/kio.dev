@@ -10,7 +10,7 @@
     "lint": "yarn format && eslint --fix './**/*.js'"
   },
   "dependencies": {
-    "@sanity/base": "^2.31.0",
+    "@sanity/base": "^2.32.0",
     "@sanity/cli": "^2.31.1",
     "@sanity/code-input": "^2.31.1",
     "@sanity/core": "^2.31.1",
