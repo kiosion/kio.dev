@@ -2145,14 +2145,14 @@
     object-assign "^4.1.1"
     rxjs "^6.0.0"
 
-"@sanity/code-input@^2.31.1":
-  version "2.31.1"
-  resolved "https://registry.yarnpkg.com/@sanity/code-input/-/code-input-2.31.1.tgz#3baddaba2c17e8f7197c2fb1df14ce5b18b66eb1"
-  integrity sha512-J5I/43n8ELc9bmihkBMv844VmuUhL5zNxiSrZMQT/SdMYrXcZQdfivFJnpEW6ynh7Vd2QJY9NkbVHjZW8HctXA==
+"@sanity/code-input@^2.32.0":
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/@sanity/code-input/-/code-input-2.32.0.tgz#79f8716e437054a63b15ae84942f7ed95ad6adc9"
+  integrity sha512-d8JZbGft/LmlBnDUuWAn4xZmW2dY9kDH7EMILctxCBXWQj0ARn/BAecO6+Eo9Z4Cuzr7SRiYKu18Vh1QeDCmdg==
   dependencies:
     "@reach/auto-id" "^0.13.2"
-    "@sanity/base" "2.31.1"
-    "@sanity/form-builder" "2.31.1"
+    "@sanity/base" "2.32.0"
+    "@sanity/form-builder" "2.32.0"
     "@sanity/icons" "^1.3.4"
     "@sanity/types" "2.31.1"
     "@sanity/ui" "^0.37.21"
@@ -2389,48 +2389,6 @@
     diff-match-patch "^1.0.4"
     lodash "^4.17.15"
     sanity-diff-patch "^1.0.9"
-
-"@sanity/form-builder@2.31.1":
-  version "2.31.1"
-  resolved "https://registry.yarnpkg.com/@sanity/form-builder/-/form-builder-2.31.1.tgz#b0dac204e3dbdfe889406c026067030492f0bfbb"
-  integrity sha512-c/eet7IaMbsMRu23OLGFLCADgwhOSK+HVig/nge9ipsOu7UJ7UrjdcoLoTkXGBff4VdyiJsOY7D7QgXE/ihdmg==
-  dependencies:
-    "@reach/auto-id" "^0.13.2"
-    "@sanity/asset-utils" "^1.2.5"
-    "@sanity/base" "2.31.1"
-    "@sanity/block-tools" "2.31.0"
-    "@sanity/client" "^3.3.3"
-    "@sanity/color" "^2.1.14"
-    "@sanity/generate-help-url" "^3.0.0"
-    "@sanity/icons" "^1.3.4"
-    "@sanity/image-url" "^1.0.1"
-    "@sanity/imagetool" "2.29.8"
-    "@sanity/initial-value-templates" "2.31.1"
-    "@sanity/mutator" "2.29.3"
-    "@sanity/portable-text-editor" "2.31.1"
-    "@sanity/schema" "2.31.0"
-    "@sanity/types" "2.31.1"
-    "@sanity/ui" "^0.37.21"
-    "@sanity/util" "2.31.1"
-    "@sanity/uuid" "^3.0.1"
-    attr-accept "^1.1.0"
-    date-fns "^2.16.1"
-    debug "^3.2.7"
-    diff-match-patch "^1.0.4"
-    exif-component "^1.0.1"
-    get-random-values "^1.2.2"
-    lodash "^4.17.15"
-    nano-pubsub "^2.0.1"
-    pretty-bytes "^4.0.2"
-    react-fast-compare "^3.2.0"
-    react-focus-lock "^2.5.0"
-    react-is "^17.0.2"
-    react-rx "^1.0.0-beta.6"
-    react-sortable-hoc "^1.11.0"
-    rxjs "^6.5.3"
-    scroll-into-view-if-needed "^2.2.26"
-    shallow-equals "^1.0.0"
-    speakingurl "^13.0.0"
 
 "@sanity/form-builder@2.32.0":
   version "2.32.0"
