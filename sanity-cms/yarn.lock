@@ -1988,10 +1988,72 @@
   resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-1.3.0.tgz#6460cd993a2c24368a6308028f3bc57df91f131e"
   integrity sha512-uyIOtGA4Duf+68I3BSbYHY5P+WGftn3QtNJD2Pn7h9WPGYsSrWViIPebE9yRN8N0NHhYj+hDQXaMpVdjG7r+zA==
 
-"@sanity/base@2.31.1", "@sanity/base@^2.31.0":
+"@sanity/base@2.31.1":
   version "2.31.1"
   resolved "https://registry.yarnpkg.com/@sanity/base/-/base-2.31.1.tgz#8183e5c519976b7c074c95917c050087a5af1d55"
   integrity sha512-JaLlmCmc+IrogsixwRLkrTHqF9ClFXdBoxOVvsYPEfj+Jaa8pB0An97DuGIIB+eNnHmDIDJESt3kPpokXeQg2A==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
+    "@popperjs/core" "^2.5.4"
+    "@reach/auto-id" "^0.13.2"
+    "@sanity/asset-utils" "^1.2.5"
+    "@sanity/bifur-client" "^0.3.0"
+    "@sanity/client" "^3.3.3"
+    "@sanity/color" "^2.1.14"
+    "@sanity/generate-help-url" "^3.0.0"
+    "@sanity/icons" "^1.3.4"
+    "@sanity/image-url" "^1.0.1"
+    "@sanity/initial-value-templates" "2.31.1"
+    "@sanity/mutator" "2.29.3"
+    "@sanity/schema" "2.31.0"
+    "@sanity/state-router" "2.29.3"
+    "@sanity/structure" "2.31.1"
+    "@sanity/transaction-collator" "2.29.3"
+    "@sanity/types" "2.31.1"
+    "@sanity/ui" "^0.37.21"
+    "@sanity/util" "2.31.1"
+    "@sanity/validation" "2.31.1"
+    boundless-arrow-key-navigation "^1.1.0"
+    circular-at "^1.0.3"
+    classnames "^2.2.5"
+    dataloader "^2.0.0"
+    date-fns "^2.16.1"
+    debug "^3.2.7"
+    dom-scroll-into-view "^1.2.1"
+    element-resize-detector "^1.1.14"
+    groq-js "^0.2.0"
+    history "^4.6.3"
+    json-reduce "^2.0.0"
+    lodash "^4.17.15"
+    nano-pubsub "^2.0.1"
+    nanoid "^3.1.30"
+    observable-callback "^1.0.1"
+    pluralize "^7.0.0"
+    polished "^4.0.5"
+    popper-max-size-modifier "^0.2.0"
+    raf "^3.4.1"
+    react-click-outside "^3.0.0"
+    react-fast-compare "^3.2.0"
+    react-icon-base "^2.1.2"
+    react-is "^17.0.2"
+    react-popper "^2.2.4"
+    react-props-stream "^1.0.0"
+    react-refractor "^2.1.6"
+    react-rx "^1.0.0-beta.6"
+    react-sortable-hoc "^1.11.0"
+    react-split-pane "^0.1.84"
+    refractor "^3.6.0"
+    rxjs "^6.5.3"
+    rxjs-etc "^10.6.0"
+    rxjs-exhaustmap-with-trailing "^1.0.0"
+    semver-compare "^1.0.0"
+    shallow-equals "^1.0.0"
+    use-device-pixel-ratio "^1.1.0"
+
+"@sanity/base@2.32.0", "@sanity/base@^2.31.0":
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/@sanity/base/-/base-2.32.0.tgz#94b8b48cba2053988f91e886f28e4396d79ec593"
+  integrity sha512-mWR2yKp2nmV3tloCh6IVs2SgUU2LwUkrhBEr6u/B8QbrjZe9GZPTf9wfSR6Ent/q0Bix9ArQUzBbbKu4WkpTRA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@popperjs/core" "^2.5.4"
@@ -2184,15 +2246,15 @@
     "@sanity/generate-help-url" "^3.0.0"
     lodash "^4.17.15"
 
-"@sanity/default-layout@^2.31.1":
-  version "2.31.1"
-  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.31.1.tgz#bd4280781e89ec1101b92ce58ae0876802fe551a"
-  integrity sha512-WI6Gks9SBHR3esqJKfb8feWPCJjBoN17COqVqiZQZ+QielJzCCx9bpVEN6zdFgYQcTlBuf+ukQh/aIA04nh3Sg==
+"@sanity/default-layout@^2.32.0":
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.32.0.tgz#abff3ffd59c3db0cd9a95d1fdb9f1ad0e56fa1b9"
+  integrity sha512-3IWd5R4ZXIB/Ip5tROJgERt3HuSiGEIGZenbihvHKIf8t77WzhjdjC6wGby4r2nfXOHL2ulwRLhqDiPo3qCoNg==
   dependencies:
     "@portabletext/react" "^1.0.0"
     "@reach/auto-id" "^0.13.2"
     "@sanity/asset-utils" "^1.2.5"
-    "@sanity/base" "2.31.1"
+    "@sanity/base" "2.32.0"
     "@sanity/client" "^3.3.3"
     "@sanity/generate-help-url" "^3.0.0"
     "@sanity/icons" "^1.3.4"
@@ -2657,10 +2719,10 @@
     date-fns "^2.16.1"
     lodash "^4.17.15"
 
-"@sanity/vision@^2.31.1":
-  version "2.31.1"
-  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.31.1.tgz#f73a009dbb100b27620d11273ece118840f6f3ec"
-  integrity sha512-lyrPI5D1MqShlS+sWy7YOESAz99hrHmScfT7IC96krmq3G7ID/Yfb1soLlAiSI7wvM1vcdPJGM/9ria/xRQs2Q==
+"@sanity/vision@^2.32.0":
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.32.0.tgz#f542fb3f1d82b2d3860aa7cc3fa8b48fc5b84f46"
+  integrity sha512-o5JtO8IO07lRN4jy8POT7FvSdhEC2VVSI89nrWVlIYSSiyieEip0CB2C64Fh/7DjY6cmV5bkFG0rVKjaXlyzzQ==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@sanity/icons" "^1.3.4"
