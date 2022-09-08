@@ -3,6 +3,9 @@ import { get } from 'svelte/store';
 import { config } from '$stores/config';
 import Logger from '$lib/logger';
 import type { PostDocument, ResData } from '$lib/types';
+import { ENV } from '$lib/env';
+
+export const ssr = !(ENV === 'testing');
 
 export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
   await parent();

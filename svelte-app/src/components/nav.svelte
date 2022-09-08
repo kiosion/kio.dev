@@ -12,7 +12,7 @@
 
   let links = [
     { name: 'Blog', url: '/blog', active: false },
-    { name: 'Art', url: '/art', active: false },
+    // { name: 'Art', url: '/art', active: false },
     { name: 'Work', url: '/work', active: false },
     { name: 'About', url: '/about', active: false }
   ];
@@ -148,14 +148,14 @@
           </a>
           <div
             class="indicator absolute z-0 {segment === link.url ||
-            $navigating?.to.pathname === link.url ||
+            $navigating?.to?.url?.pathname === link.url ||
             link.active ||
             (segment.split('/').length > 1 &&
               segment.split('/').indexOf(link.url.slice(1)) > 0)
               ? 'opacity-100'
               : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
               link.url ||
-            $navigating?.to.pathname === link.url ||
+            $navigating?.to?.url?.pathname === link.url ||
             link.active
               ? 'active'
               : segment.split('/').length > 1 &&

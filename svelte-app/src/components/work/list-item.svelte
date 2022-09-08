@@ -87,7 +87,7 @@
                   class="flex flex-row justify-start items-center gap-2 flex-wrap"
                 >
                   {#each project.tags as tag}
-                    <a href="/work/{tag.slug.current}" class="categoryTag-sm">
+                    <a href="/work/t/{tag.slug.current}" class="categoryTag-sm">
                       {tag.title}
                     </a>
                   {/each}
