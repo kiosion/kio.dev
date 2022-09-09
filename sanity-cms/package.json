@@ -16,7 +16,7 @@
     "@sanity/core": "^2.32.0",
     "@sanity/default-layout": "^2.32.0",
     "@sanity/default-login": "^2.32.0",
-    "@sanity/desk-tool": "^2.32.0",
+    "@sanity/desk-tool": "^2.33.0",
     "@sanity/eslint-config-studio": "^2.0.0",
     "@sanity/vision": "^2.32.0",
     "eslint": "^8.23.0",
