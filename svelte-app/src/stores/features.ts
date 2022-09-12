@@ -1,6 +1,5 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
-import { isMobile } from '$helpers/browser';
 
 const initialSetting = (feature: string, fallback = 'off') => {
   return browser
@@ -14,7 +13,7 @@ svgBackground.subscribe((value) => {
 });
 
 const highlightEffects = writable<string>(
-  initialSetting('highlightEffects', !isMobile ? 'on' : 'off')
+  initialSetting('highlightEffects', 'on')
 );
 highlightEffects.subscribe((value) => {
   browser && window.localStorage.setItem('feature-highlightEffects', value);
@@ -25,11 +24,14 @@ reduceMotion.subscribe((value) => {
   browser && window.localStorage.setItem('feature-reduceMotion', value);
 });
 
-const sounds = writable<string>(
-  initialSetting('sounds', !isMobile ? 'on' : 'off')
-);
+const sounds = writable<string>(initialSetting('sounds', 'on'));
 sounds.subscribe((value) => {
   browser && window.localStorage.setItem('feature-sounds', value);
+});
+
+const customCursor = writable<string>(initialSetting('customCursor', 'on'));
+customCursor.subscribe((value) => {
+  browser && window.localStorage.setItem('feature-customCursor', value);
 });
 
 const comicSans = writable<string>(initialSetting('comicSans', 'off'));
@@ -37,4 +39,11 @@ comicSans.subscribe((value) => {
   browser && window.localStorage.setItem('feature-comicSans', value);
 });
 
-export { svgBackground, highlightEffects, reduceMotion, sounds, comicSans };
+export {
+  svgBackground,
+  highlightEffects,
+  reduceMotion,
+  sounds,
+  customCursor,
+  comicSans
+};

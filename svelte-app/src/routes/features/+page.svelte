@@ -7,6 +7,7 @@
     highlightEffects,
     reduceMotion,
     sounds,
+    customCursor,
     comicSans
   } from '$stores/features';
   import type UIfx from 'uifx';
@@ -45,9 +46,15 @@
     <ContentWrapper>
       <SwitchItem
         action={onChange}
-        target={svgBackground}
-        state={$svgBackground === 'on'}
-        label="Animated waves background"
+        target={reduceMotion}
+        state={$reduceMotion === 'on'}
+        label="Reduce motion"
+      />
+      <SwitchItem
+        action={onChange}
+        target={customCursor}
+        state={$customCursor === 'on'}
+        label="Custom cursor"
       />
       <SwitchItem
         action={onChange}
@@ -57,15 +64,15 @@
       />
       <SwitchItem
         action={onChange}
-        target={reduceMotion}
-        state={$reduceMotion === 'on'}
-        label="Reduce motion"
-      />
-      <SwitchItem
-        action={onChange}
         target={sounds}
         state={$sounds === 'on'}
         label="UI interaction sounds"
+      />
+      <SwitchItem
+        action={onChange}
+        target={svgBackground}
+        state={$svgBackground === 'on'}
+        label="Animated waves background"
       />
       <SwitchItem
         action={onChange}

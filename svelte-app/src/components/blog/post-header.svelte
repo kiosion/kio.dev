@@ -36,7 +36,7 @@
     {#if post.tags}
       <div class="flex flex-row justify-start items-center gap-2 mb-6">
         {#each post.tags as tag}
-          <a href="/blog/t/{tag.slug.current}" class="categoryTag">
+          <a href="/blog/t/{tag.slug.current}" class="categoryTag hover-target">
             {tag.title}
           </a>
         {/each}
@@ -44,7 +44,7 @@
     {/if}
     <div class="flex flex-row items-center justify-start">
       <button
-        class="flex flex-row gap-2 items-center font-mono text-base"
+        class="flex flex-row gap-2 items-center font-mono text-base hover-target"
         on:click={() => goto('/about')}
         tabindex="0"
       >
@@ -69,14 +69,14 @@
       </button>
       <BulletPoint />
       <button
-        class="inline font-mono text-base cursor-pointer select-none"
+        class="inline font-mono text-base cursor-pointer select-none hover-target"
         on:click={() => switchDate()}
         tabindex="0"
       >
         {date ? date : '...'}
       </button>
       <BulletPoint />
-      <p class="font-mono text-base">
+      <p class="font-mono text-base hover-target">
         {`${Math.floor(readingTime / 60)} min read`}
       </p>
     </div>

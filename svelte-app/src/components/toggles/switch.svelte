@@ -18,7 +18,7 @@
   <label
     class="{$theme === 'light' ? 'is-light' : 'is-dark'} {disabled
       ? '!cursor-not-allowed pointer-events-none opacity-60'
-      : 'cursor-pointer'}"
+      : 'hover-target cursor-pointer'}"
   >
     <input
       type="checkbox"

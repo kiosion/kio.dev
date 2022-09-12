@@ -79,7 +79,7 @@
     {/if}
     <a
       href="/work/all"
-      class="block w-fit mt-8"
+      class="block w-fit mt-8 hover-target"
       aria-label="View all projects"
       on:click={() => $sounds === 'on' && click?.play()}
     >

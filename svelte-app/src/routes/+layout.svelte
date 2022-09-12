@@ -9,18 +9,19 @@
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
   import HeaderControls from '$components/header-controls.svelte';
-  import { svgBackground, comicSans } from '$stores/features';
+  import { svgBackground, customCursor, comicSans } from '$stores/features';
   import BackgroundWaves from '$components/background-waves.svelte';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/footer-controls.svelte';
   import { browser } from '$app/environment';
-
+  import { isMobile } from '$helpers/browser';
   import ContextMenu from '$components/context-menu.svelte';
   import { state as menuState } from '$stores/menu';
   import { setState as setMenuState } from '$lib/helpers/menu';
+  import CustomCursor from '$components/custom-cursor.svelte';
 
   const unsubscribe = navigating.subscribe((res) => {
-    loading.set(!res);
+    !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
   });
 
   interface DevToolsEvent {
@@ -38,9 +39,10 @@
 
   onMount(async () => {
     appLoaded = true;
-    loading.set(false);
     msg({ detail: { isOpen: true } });
     browser && window.addEventListener('devtoolschange', (e) => msg(e));
+    browser && isMobile() && customCursor.set('off');
+    setTimeout(() => loading.set(false), 1000);
   });
 
   onDestroy(() => {
@@ -58,13 +60,25 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`w-full h-full overflow-x-hidden ${$theme ?? 'dark'} ${
+  use:classList={`w-full h-full overflow-x-hidden ${
+    isMobile() ? 'mobile' : 'desktop'
+  } ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${appLoaded && 'app-loaded'} ${$comicSans === 'on' && 'comicSans'}`}
+  } ${appLoaded && 'app-loaded'} ${$comicSans === 'on' && 'comicSans'} ${
+    $customCursor === 'on' && 'custom-cursor'
+  }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)} />
 
 {#if !appLoaded}
   <Loader theme="dark" />
+{/if}
+
+{#if browser && $customCursor === 'on'}
+  <CustomCursor appBody={pageContainer} showLoader={$loading || !appLoaded} />
+  <!-- <CustomCursor
+    appBody={pageContainer}
+    showLoader={true}
+  /> -->
 {/if}
 
 <div

@@ -5,6 +5,13 @@
   import Option from './context-menu/option.svelte';
   import Divider from './context-menu/divider.svelte';
   import { fly } from 'svelte/transition';
+  import { onMount, createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
+
+  onMount(() => {
+    dispatch('updatecursorlinks');
+  });
 
   export let page: HTMLElement;
 </script>

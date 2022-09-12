@@ -28,7 +28,9 @@
 </script>
 
 <div
-  class="relative p-[1px] overflow-hidden rounded-md {hovered ? 'active' : ''}"
+  class="relative p-[1px] overflow-hidden rounded-md {hovered
+    ? 'active'
+    : ''} hover-target"
   bind:this={container}
 >
   <div

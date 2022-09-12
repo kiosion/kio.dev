@@ -24,7 +24,7 @@
       {#if $navOptions && $navOptions.up !== ''}
         <a
           href={$navOptions.up}
-          class="w-fit flex flex-row items-center select-none"
+          class="w-fit flex flex-row items-center select-none hover-target"
           on:click={() => $sounds === 'on' && click?.play()}
           transition:fade={{ duration: 100 }}
         >
@@ -38,7 +38,7 @@
     <div class="-ml-52 -mr-40">
       {#if $pageHeading && $pageHeading !== ''}
         <p
-          class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[28rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
+          class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[28rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1 hover-target"
           aria-label="Scroll to top"
           on:click={() => window?.scrollTo({ top: 0, behavior: 'smooth' })}
           transition:fade={{ duration: 100 }}
@@ -49,7 +49,7 @@
     </div>
     <div class="flex flex-row items-center justify-end w-40 gap-4">
       <button
-        class="flex flex-row items-center justify-end select-none"
+        class="flex flex-row items-center justify-end select-none hover-target"
         aria-label="Toggle theme"
         data-test-id="theme-toggle"
         tabindex="0"
@@ -65,7 +65,7 @@
         {/if}
       </button>
       <button
-        class="flex flex-row items-center justify-end select-none"
+        class="flex flex-row items-center justify-end select-none hover-target"
         aria-label="Toggle sfx"
         data-test-id="sfx-toggle"
         tabindex="0"

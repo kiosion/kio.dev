@@ -85,13 +85,13 @@
 >
   <div class="flex-grow -mt-7 md:-mt-4 click-through">
     <button
-      class="inline-block md:hidden mx-auto w-1/3 logo-text dark:invert transition-[filter]"
+      class="inline-block md:hidden mx-auto w-1/3 logo-text dark:invert transition-[filter] hover-target"
       on:click={() => onLogoClick()}
     >
       <img class="w-full" src="/assets/logo-text.webp" alt="kiosion logo" />
     </button>
     <button
-      class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
+      class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] hover-target"
       on:click={() => onLogoClick()}
     >
       <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
@@ -132,7 +132,7 @@
       {#each links as link}
         <div class="relative flex flex-row justify-start items-center">
           <a
-            class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
+            class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg hover-target"
             aria-label={link.name}
             href={link.url}
             on:mouseenter={() => (link.active = true)}
@@ -171,7 +171,7 @@
   >
     {#each socials as social}
       <a
-        class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
+        class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer hover-target"
         href={social.url}
         aria-label={social.name}
         target={social?.target ? '_blank' : ''}

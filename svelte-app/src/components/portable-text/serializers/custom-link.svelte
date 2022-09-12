@@ -7,7 +7,6 @@
   $: ({ href } = value);
   $: ({ plainTextContent } = portableText);
 
-  let hovering = false;
   let isExt = true;
 
   const svg = encodeURIComponent(`
@@ -15,12 +14,14 @@
       <path d='M 0,0 h 100' fill='#34d399' stroke='#34d399' stroke-width='2.8' />
     </svg>
   `);
+
+  $: href && (isExt = href.indexOf('http') >= 0);
 </script>
 
 <a
   href={href ? href : '#'}
   target={isExt ? '_blank' : undefined}
-  class="z-10"
+  class="z-10 hover-target"
   style={`background-image:url("data:image/svg+xml,${svg}");`}
   tabindex="0"
 >

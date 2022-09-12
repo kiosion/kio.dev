@@ -127,7 +127,7 @@
       <button
         class="{hovered
           ? 'opacity-100'
-          : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+          : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover-target"
         on:click={() => copy()}
         in:fade={{ duration: 100, delay: 100 }}
         out:fade={{ delay: 100, duration: 100 }}

@@ -17,7 +17,7 @@
 {#if $navOptions.down !== ''}
   <a
     href={$navOptions.down}
-    class="hidden md:flex md:ml-40 xl:ml-60 fixed bottom-6 left-8  flex-row items-center select-none"
+    class="hidden md:flex md:ml-40 xl:ml-60 fixed bottom-6 left-8  flex-row items-center select-none hover-target"
     on:click={() => $sounds === 'on' && click?.play()}
   >
     <SafeIcon icon={'ArrowDown'} />

@@ -53,7 +53,7 @@
     {#if project.tags}
       <div class="flex flex-row justify-start items-center gap-2">
         {#each project.tags as tag}
-          <a href="/work/t/{tag.slug.current}" class="categoryTag">
+          <a href="/work/t/{tag.slug.current}" class="categoryTag hover-target">
             {tag.title}
           </a>
         {/each}
@@ -66,7 +66,7 @@
     {/if}
     <div class="flex flex-row items-center justify-start mt-6">
       <button
-        class="flex flex-row gap-2 items-center font-mono text-base"
+        class="flex flex-row gap-2 items-center font-mono text-base hover-target"
         on:click={() => goto('/about')}
         tabindex="0"
       >
@@ -91,7 +91,7 @@
       </button>
       <BulletPoint />
       <button
-        class="inline font-mono text-base cursor-pointer select-none"
+        class="inline font-mono text-base cursor-pointer select-none hover-target"
         on:click={() => switchDate()}
         tabindex="0"
       >
