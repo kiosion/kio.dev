@@ -10,7 +10,7 @@
     "prettier-eslint": "^15.0.1",
     "rimraf": "^3.0.2",
     "stylelint-config-standard-scss": "^5.0.0",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.3"
   },
   "scripts": {
     "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
