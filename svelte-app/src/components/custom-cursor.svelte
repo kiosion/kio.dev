@@ -10,12 +10,11 @@
   export let showLoader = true;
 
   let cursor: HTMLElement,
-    cursorInner: HTMLElement,
-    progressPath: SVGElement,
-    loaderPath: SVGElement,
+    progressPath: SVGPathElement,
+    loaderPath: SVGPathElement,
     mousePos = { x: 0, y: 0 },
     linkHover = false,
-    hideCursor = true,
+    cursorHidden = true,
     cursorClick = false;
 
   const cursorTweenX = tweened(0, { duration: 28, easing: cubicInOut }),
@@ -31,7 +30,7 @@
   });
 
   const updateCursorPositions = (e: MouseEvent) => {
-    hideCursor = false;
+    showCursor();
     mousePos = { x: e.clientX, y: e.clientY };
   };
 
@@ -41,16 +40,13 @@
     }
     cursorTweenX.set(mousePos.x);
     cursorTweenY.set(mousePos.y);
-
     requestAnimationFrame(updateCursors);
   };
 
-  const hoverIn = () => {
-    linkHover = true;
-  };
-  const hoverOut = () => {
-    linkHover = false;
-  };
+  const hoverIn = () => (linkHover = true);
+  const hoverOut = () => (linkHover = false);
+  const hideCursor = () => (cursorHidden = true);
+  const showCursor = () => (cursorHidden = false);
 
   const addHoverEvents = () => {
     if (!document || !browser) {
@@ -76,72 +72,53 @@
       });
   };
 
-  // This is a pretty shit solution, but it works for now
-  // until I can figure how to bubble events across
-  // components w/out nesting
   const updateHoverEvents = () => {
     setTimeout(() => {
       removeHoverEvents();
       addHoverEvents();
-    }, 150);
-  };
-
-  const initProgressPath = () => {
-    if (!progressPath) {
-      return;
-    }
-    const pathLength = progressPath.getTotalLength();
-    progressPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
-    progressPath.style.strokeDashoffset = `${pathLength}`;
+    }, 100);
   };
 
   const updateProgressPath = () => {
     if (!progressPath) {
       return;
     }
-    const pathLength = progressPath.getTotalLength();
-    const scroll = appBody.scrollTop;
-    const height =
-      appBody.scrollHeight - appBody.getBoundingClientRect().height;
+    const pathLength = progressPath.getTotalLength(),
+      scroll = appBody.scrollTop,
+      height = appBody.scrollHeight - appBody.getBoundingClientRect().height;
+    progressPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
+    if (appBody.scrollHeight <= window.innerHeight) {
+      progressPath.style.strokeDashoffset = `${pathLength}`;
+      return;
+    }
     const progress = pathLength - (scroll * pathLength) / height;
     progressPath.style.strokeDashoffset = `${progress}`;
   };
 
-  $: $page.url.pathname, initProgressPath(), updateHoverEvents(), hoverOut();
-  $: appBody,
-  appBody &&
-      (appBody.removeEventListener('scroll', () => updateProgressPath),
-      appBody.addEventListener('scroll', () => updateProgressPath()));
+  $: $page.url, updateProgressPath(), updateHoverEvents(), hoverOut();
+  $: appBody &&
+    (appBody.removeEventListener('scroll', () => updateProgressPath),
+    appBody.addEventListener('scroll', () => updateProgressPath()));
+  $: appBody, updateProgressPath();
 </script>
 
 <svelte:window
   on:mousemove={updateCursorPositions}
-  on:mouseout={() => (hideCursor = true)}
-  on:mouseover={() => (hideCursor = false)}
-  on:mousedown={() => {
-    cursorClick = true;
-    updateHoverEvents();
-  }}
-  on:mouseup={() => {
-    cursorClick = false;
-    hoverOut();
-  }}
-  on:keydown={(e) => {
-    if (e.key === 'Tab') {
-      hideCursor = true;
-    }
-  }}
+  on:mouseout={hideCursor}
+  on:mouseover={showCursor}
+  on:mousedown={() => ((cursorClick = true), updateHoverEvents())}
+  on:mouseup={() => ((cursorClick = false), hoverOut())}
+  on:keydown={(e) => e.key === 'Tab' && hideCursor()}
 />
 
 <div
-  class="cursor-{$theme === 'light' ? 'light' : 'dark'} {hideCursor
-    ? 'hidden'
-    : 'block'}"
+  class="cursor-{$theme === 'light' ? 'light' : 'dark'} {cursorHidden
+    ? 'opacity-0'
+    : ''} transition-opacity duration-200"
 >
   <div
     class="dot {linkHover ? 'hovered' : ''} {cursorClick ? 'clicked' : ''}"
     style="left: {mousePos.x}px; top: {mousePos.y}px;"
-    bind:this={cursorInner}
   />
   <div
     class="cursor {linkHover ? 'hovered' : ''} {cursorClick ? 'clicked' : ''}"
@@ -175,10 +152,6 @@
         <path
           d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
           bind:this={progressPath}
-          style={`
-            stroke-dasharray: ${progressPath?.getTotalLength()} ${progressPath?.getTotalLength()};
-            stroke-dashoffset: ${progressPath?.getTotalLength()};
-          `}
         />
       </svg>
     </div>
@@ -276,12 +249,12 @@
     width: 38px;
     border-radius: 10000px;
     z-index: 1000;
-    box-shadow: inset 0 0 0 2px rgba(217, 229, 252, 0.1);
+    // box-shadow: inset 0 0 0 2px rgba(217, 229, 252, 0.1);
     transition: all 200ms ease;
 
-    .cursor-light & {
-      box-shadow: inset 0 0 0 2px rgba(56, 66, 85, 0.08);
-    }
+    // .cursor-light & {
+    //   box-shadow: inset 0 0 0 2px rgba(56, 66, 85, 0.08);
+    // }
 
     .hovered & {
       box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0);

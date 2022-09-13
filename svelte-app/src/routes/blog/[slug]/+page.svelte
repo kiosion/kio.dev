@@ -3,12 +3,16 @@
   import { post } from '$stores/blog';
   import { navOptions, pageHeading } from '$stores/nav';
   import PostContent from '@/components/blog/post-content.svelte';
+  import { onMount } from 'svelte';
 
   const pageTitle = $post?.data
     ? `Blog | ${$post.data.title.slice(0, 50)}`
     : 'Blog';
-  pageHeading.set(pageTitle);
-  navOptions.set({ down: '', up: '/blog' });
+
+  onMount(() => {
+    pageHeading.set(pageTitle);
+    navOptions.set({ down: '', up: '/blog' });
+  });
 </script>
 
 <svelte:head>

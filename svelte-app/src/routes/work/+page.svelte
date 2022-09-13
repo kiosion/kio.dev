@@ -4,12 +4,12 @@
   import { onMount, onDestroy } from 'svelte';
   import { highlightEffects, sounds } from '$stores/features';
   import { projects } from '$stores/work';
-  import { navOptions, pageHeading } from '$stores/nav';
   import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
   import IconHeader from '$components/icon-header.svelte';
-  import type { PixelIcon } from '$lib/types';
+  import { page } from '$app/stores';
+  import { setupNavigation } from '$helpers/navigation';
 
   let mousePos: [number, number];
 
@@ -45,12 +45,10 @@
     }
   });
 
-  navOptions.set({ down: '/about', up: '/blog' });
-  pageHeading.set('Work');
-
   export let data: PageData;
 
   $: ({ pinnedProject } = data);
+  $: $page, setupNavigation($page?.url?.pathname);
 </script>
 
 <svelte:head>

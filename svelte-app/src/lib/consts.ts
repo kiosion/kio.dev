@@ -7,3 +7,49 @@ export const COLOR_TEXT_LIGHT = '#1E293B';
 export const COLOR_TEXT_DARK = '#F1F5F9';
 export const COLOR_BG_LIGHT = '#F1F5F9';
 export const COLOR_BG_DARK = '#1E293B';
+
+export const TOP_LEVEL_ROUTES = [
+  { name: 'Index', path: '/' },
+  { name: 'Blog', path: '/blog' },
+  { name: 'Work', path: '/work' },
+  { name: 'About', path: '/about' }
+];
+
+export const APP_ROUTES = [
+  { name: 'Index', path: '/' },
+  {
+    name: 'Blog',
+    path: '/blog',
+    children: [
+      { name: 'Post', path: '/blog/:slug' },
+      { name: 'All Posts', path: '/blog/all' },
+      {
+        name: 'Tags',
+        path: '/blog/t',
+        children: [{ name: 'Tag', path: '/blog/t/:tag' }]
+      }
+    ]
+  },
+  {
+    name: 'Work',
+    path: '/work',
+    children: [
+      { name: 'Project', path: '/work/:slug' },
+      { name: 'All Projects', path: '/work/all' },
+      {
+        name: 'Tags',
+        path: '/work/t',
+        children: [{ name: 'Tag', path: '/work/t/:tag' }]
+      }
+    ]
+  },
+  {
+    name: 'About',
+    path: '/about',
+    children: [
+      { name: 'Resume', path: '/about/resume' },
+      { name: 'Skills', path: '/about/skills' },
+      { name: 'PGP', path: '/pgp' }
+    ]
+  }
+];

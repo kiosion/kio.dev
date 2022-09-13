@@ -19,6 +19,7 @@
   import { state as menuState } from '$stores/menu';
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
+  import { handleScrollNav } from '$lib/helpers/navigation';
 
   const unsubscribe = navigating.subscribe((res) => {
     !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
@@ -67,7 +68,8 @@
   } ${appLoaded && 'app-loaded'} ${$comicSans === 'on' && 'comicSans'} ${
     $customCursor === 'on' && 'custom-cursor'
   }`}
-  on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)} />
+  on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
+  on:wheel={(e) => handleScrollNav(e, pageContainer, $page.url.pathname)} />
 
 {#if !appLoaded}
   <Loader theme="dark" />
@@ -75,10 +77,6 @@
 
 {#if browser && $customCursor === 'on'}
   <CustomCursor appBody={pageContainer} showLoader={$loading || !appLoaded} />
-  <!-- <CustomCursor
-    appBody={pageContainer}
-    showLoader={true}
-  /> -->
 {/if}
 
 <div

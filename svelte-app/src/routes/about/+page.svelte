@@ -3,17 +3,16 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { about } from '$stores/about';
   import ErrorText from '$components/error-text.svelte';
-  import { navOptions, pageHeading } from '$stores/nav';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import Divider from '$components/divider.svelte';
   import { fade } from 'svelte/transition';
-
-  navOptions.set({ down: '', up: '/work' });
-  pageHeading.set('About');
+  import { page } from '$app/stores';
+  import { setupNavigation } from '$helpers/navigation';
 
   let pfpCrop: ImageCrop;
 
   $: pfpCrop = getCrop($about?.data?.image);
+  $: $page, setupNavigation($page?.url?.pathname);
 </script>
 
 <svelte:head>

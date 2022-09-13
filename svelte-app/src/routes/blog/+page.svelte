@@ -4,12 +4,12 @@
   import { onMount, onDestroy } from 'svelte';
   import { posts } from '$stores/blog';
   import { highlightEffects, sounds } from '$stores/features';
-  import { navOptions, pageHeading } from '$stores/nav';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
-  import type { PixelIcon } from '$lib/types';
+  import { setupNavigation } from '$helpers/navigation';
+  import { page } from '$app/stores';
 
   let mousePos: [number, number];
 
@@ -20,6 +20,8 @@
   let click: UIfx;
 
   onMount(() => {
+    setupNavigation($page?.url?.pathname);
+
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
@@ -41,9 +43,6 @@
       document.removeEventListener('blur', () => setMousePos);
     }
   });
-
-  navOptions.set({ down: '/work', up: '/' });
-  pageHeading.set('Blog');
 
   export let data: PageData;
 
