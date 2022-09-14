@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Hoverable from '$components/hoverable.svelte';
   import type { MarkComponentProps } from '@portabletext/svelte';
 
   export let portableText: MarkComponentProps;
@@ -18,15 +19,17 @@
   $: href && (isExt = href.indexOf('http') >= 0);
 </script>
 
-<a
-  href={href ? href : '#'}
-  target={isExt ? '_blank' : undefined}
-  class="z-10 hover-target"
-  style={`background-image:url("data:image/svg+xml,${svg}");`}
-  tabindex="0"
->
-  {plainTextContent}
-</a>
+<Hoverable>
+  <a
+    href={href ? href : '#'}
+    target={isExt ? '_blank' : undefined}
+    class="z-10"
+    style={`background-image:url("data:image/svg+xml,${svg}");`}
+    tabindex="0"
+  >
+    {plainTextContent}
+  </a>
+</Hoverable>
 
 <style lang="scss">
   a {

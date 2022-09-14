@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { theme } from '$stores/theme';
+  import Hoverable from '$components/hoverable.svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -14,29 +15,31 @@
   };
 </script>
 
-<div class="mt-0.5 scale-[.8]">
-  <label
-    class="{$theme === 'light' ? 'is-light' : 'is-dark'} {disabled
-      ? '!cursor-not-allowed pointer-events-none opacity-60'
-      : 'hover-target cursor-pointer'}"
-  >
-    <input
-      type="checkbox"
-      aria-label={label}
-      checked={state}
-      on:change={() => change()}
-    />
-    <div
-      class="before:bg-slate-600 after:bg-slate-600 dark:before:bg-slate-400 dark:after:bg-slate-400"
+<Hoverable>
+  <div class="mt-0.5 scale-[.8]">
+    <label
+      class="{$theme === 'light' ? 'is-light' : 'is-dark'} {disabled
+        ? '!cursor-not-allowed pointer-events-none opacity-60'
+        : ' cursor-pointer'}"
     >
-      <span
-        class="text-slate-800 dark:text-slate-100 {$theme === 'light'
-          ? 'light'
-          : 'dark'}"
+      <input
+        type="checkbox"
+        aria-label={label}
+        checked={state}
+        on:change={() => change()}
       />
-    </div>
-  </label>
-</div>
+      <div
+        class="before:bg-slate-600 after:bg-slate-600 dark:before:bg-slate-400 dark:after:bg-slate-400"
+      >
+        <span
+          class="text-slate-800 dark:text-slate-100 {$theme === 'light'
+            ? 'light'
+            : 'dark'}"
+        />
+      </div>
+    </label>
+  </div>
+</Hoverable>
 
 <style lang="scss">
   label {

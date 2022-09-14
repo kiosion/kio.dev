@@ -8,6 +8,7 @@
   import { goto } from '$app/navigation';
   import BulletPoint from '../bullet-point.svelte';
   import { getShortDate } from '$helpers/date';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let project: ProjectDocument;
   export let mousePos = [0, 0];
@@ -30,81 +31,82 @@
 
 <ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
   {#if project}
-    <div
-      class="rounded-xl"
-      tabindex="0"
-      role="button"
-      aria-label="Project - {project.title}"
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
-      on:click={() => {
-        $sounds === 'on' && click?.play();
-        goto(`/work/${project.slug.current}`);
-      }}
-    >
-      <section
-        class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit max-h-60 p-4 roundedCard-lg"
-        data-test-id="list-item"
-        on:focus={() => (hovered = true)}
-        on:blur={() => (hovered = false)}
+    <Hoverable bind:hovered>
+      <div
+        class="rounded-xl"
+        tabindex="0"
+        role="button"
+        aria-label="Project - {project.title}"
+        on:click={() => {
+          $sounds === 'on' && click?.play();
+          goto(`/work/${project.slug.current}`);
+        }}
       >
-        <div
-          class="hidden sm:flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
+        <section
+          class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit max-h-60 p-4 roundedCard-lg"
+          data-test-id="list-item"
         >
-          {#if _ref && imageCrop}
-            <img
-              src={urlFor(_ref)
-                .height(200)
-                .width(400)
-                .rect(
-                  imageCrop.left,
-                  imageCrop.top,
-                  imageCrop.width,
-                  imageCrop.height
-                )
-                .fit('crop')
-                .format('webp')
-                .url()}
-              class="aspect-[2/1] object-cover h-full w-full"
-              alt="Project cover"
-            />
-          {/if}
-        </div>
-        <div class="flex flex-col items-stretch justify-start w-full">
-          <h1
-            class="overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
+          <div
+            class="hidden sm:flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
           >
-            {project.title}
-          </h1>
-          {#if date || project.tags}
-            <div
-              class="flex flex-row items-center justify-start mt-1 font-sans text-base text-slate-700 dark:text-slate-200"
+            {#if _ref && imageCrop}
+              <img
+                src={urlFor(_ref)
+                  .height(200)
+                  .width(400)
+                  .rect(
+                    imageCrop.left,
+                    imageCrop.top,
+                    imageCrop.width,
+                    imageCrop.height
+                  )
+                  .fit('crop')
+                  .format('webp')
+                  .url()}
+                class="aspect-[2/1] object-cover h-full w-full"
+                alt="Project cover"
+              />
+            {/if}
+          </div>
+          <div class="flex flex-col items-stretch justify-start w-full">
+            <h1
+              class="overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
             >
-              <p class="">{date}</p>
-              {#if project.tags}
-                <BulletPoint />
-                <div
-                  class="flex flex-row justify-start items-center gap-2 flex-wrap"
-                >
-                  {#each project.tags as tag}
-                    <a href="/work/t/{tag.slug.current}" class="categoryTag-sm">
-                      {tag.title}
-                    </a>
-                  {/each}
-                </div>
-              {/if}
-            </div>
-          {/if}
-          {#if project.desc}
-            <p
-              class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-2"
-            >
-              {project.desc}
-            </p>
-          {/if}
-        </div>
-      </section>
-    </div>
+              {project.title}
+            </h1>
+            {#if date || project.tags}
+              <div
+                class="flex flex-row items-center justify-start mt-1 font-sans text-base text-slate-700 dark:text-slate-200"
+              >
+                <p class="">{date}</p>
+                {#if project.tags}
+                  <BulletPoint />
+                  <div
+                    class="flex flex-row justify-start items-center gap-2 flex-wrap"
+                  >
+                    {#each project.tags as tag}
+                      <a
+                        href="/work/t/{tag.slug.current}"
+                        class="categoryTag-sm"
+                      >
+                        {tag.title}
+                      </a>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            {/if}
+            {#if project.desc}
+              <p
+                class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base mt-2 line-clamp-2"
+              >
+                {project.desc}
+              </p>
+            {/if}
+          </div>
+        </section>
+      </div>
+    </Hoverable>
   {:else}
     <section
       class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"

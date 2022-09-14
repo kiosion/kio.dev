@@ -16,7 +16,7 @@ export const TOP_LEVEL_ROUTES = [
 ];
 
 export const APP_ROUTES = [
-  { name: 'Index', path: '/' },
+  { name: 'Index', path: '/', hidden: true },
   {
     name: 'Blog',
     path: '/blog',
@@ -28,7 +28,8 @@ export const APP_ROUTES = [
         path: '/blog/t',
         children: [{ name: 'Tag', path: '/blog/t/:tag' }]
       }
-    ]
+    ],
+    hidden: false
   },
   {
     name: 'Work',
@@ -41,7 +42,8 @@ export const APP_ROUTES = [
         path: '/work/t',
         children: [{ name: 'Tag', path: '/work/t/:tag' }]
       }
-    ]
+    ],
+    hidden: false
   },
   {
     name: 'About',
@@ -50,6 +52,7 @@ export const APP_ROUTES = [
       { name: 'Resume', path: '/about/resume' },
       { name: 'Skills', path: '/about/skills' },
       { name: 'PGP', path: '/pgp' }
-    ]
+    ],
+    hidden: false
   }
 ];

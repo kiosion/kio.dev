@@ -1,5 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let icon: string;
   export let href: string | undefined;
@@ -27,33 +28,33 @@
   $: clientX, clientY, mouseMove();
 </script>
 
-<div
-  class="relative p-[1px] overflow-hidden rounded-md {hovered
-    ? 'active'
-    : ''} hover-target"
-  bind:this={container}
->
+<Hoverable bind:hovered>
   <div
-    class="p-[4px] bg-slate-100 dark:bg-slate-800 rounded-md w-[26px] h-[26px]"
+    class="relative p-[1px] overflow-hidden rounded-md {hovered
+      ? 'active'
+      : ''}"
+    bind:this={container}
   >
-    <a
-      class="flex items-center justify-center w-full h-full"
-      href={href ? href : '#'}
-      {target}
-      aria-label={label}
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
+    <div
+      class="p-[4px] bg-slate-100 dark:bg-slate-800 rounded-md w-[26px] h-[26px]"
     >
-      <Icon {icon} class={classes} />
-    </a>
+      <a
+        class="flex items-center justify-center w-full h-full"
+        href={href ? href : '#'}
+        {target}
+        aria-label={label}
+      >
+        <Icon {icon} class={classes} />
+      </a>
+    </div>
+    <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
+    <div
+      class="absolute filled top-[-2px] left-[-2px] w-[140%] h-[140%] bg-slate-400 {hovered
+        ? '!opacity-60'
+        : ''} opacity-0 rounded-md"
+    />
   </div>
-  <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
-  <div
-    class="absolute filled top-[-2px] left-[-2px] w-[140%] h-[140%] bg-slate-400 {hovered
-      ? '!opacity-60'
-      : ''} opacity-0 rounded-md"
-  />
-</div>
+</Hoverable>
 
 <style lang="scss">
   .filled {

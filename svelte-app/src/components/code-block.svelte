@@ -5,6 +5,7 @@
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
   import SafeIcon from './safe-icon.svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let content: string;
   export let showClipboard = false;
@@ -123,22 +124,24 @@
   on:blur={() => (hovered = false)}
 >
   {#if showClipboard && !$navigating}
-    {#key copied}
-      <button
-        class="{hovered
-          ? 'opacity-100'
-          : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover-target"
-        on:click={() => copy()}
-        in:fade={{ duration: 100, delay: 100 }}
-        out:fade={{ delay: 100, duration: 100 }}
-      >
-        {#if copied}
-          <SafeIcon icon={'Check'} />
-        {:else}
-          <SafeIcon icon={'Copy'} />
-        {/if}
-      </button>
-    {/key}
+    <Hoverable>
+      {#key copied}
+        <button
+          class="{hovered
+            ? 'opacity-100'
+            : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+          on:click={() => copy()}
+          in:fade={{ duration: 100, delay: 100 }}
+          out:fade={{ delay: 100, duration: 100 }}
+        >
+          {#if copied}
+            <SafeIcon icon={'Check'} />
+          {:else}
+            <SafeIcon icon={'Copy'} />
+          {/if}
+        </button>
+      {/key}
+    </Hoverable>
   {/if}
   <div
     class="relative z-[4] overflow-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"

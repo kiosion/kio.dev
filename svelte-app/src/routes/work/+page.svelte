@@ -10,6 +10,7 @@
   import IconHeader from '$components/icon-header.svelte';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
+  import Hoverable from '$components/hoverable.svelte';
 
   let mousePos: [number, number];
 
@@ -76,13 +77,15 @@
         <ErrorText text="No data" classes="w-fit" />
       </div>
     {/if}
-    <a
-      href="/work/all"
-      class="block w-fit mt-8 hover-target"
-      aria-label="View all projects"
-      on:click={() => $sounds === 'on' && click?.play()}
-    >
-      <IconHeader icon="ArrowRight" text="View all" classes="" />
-    </a>
+    <Hoverable>
+      <a
+        href="/work/all"
+        class="block w-fit mt-8"
+        aria-label="View all projects"
+        on:click={() => $sounds === 'on' && click?.play()}
+      >
+        <IconHeader icon="ArrowRight" text="View all" classes="" />
+      </a>
+    </Hoverable>
   </div>
 </div>

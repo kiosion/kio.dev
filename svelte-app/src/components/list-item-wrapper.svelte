@@ -31,7 +31,7 @@
 <div
   class="relative p-[1px] {wrapperClass} overflow-hidden rounded-xl {active
     ? 'active'
-    : ''} hover-target"
+    : ''}"
   bind:this={container}
 >
   <div
