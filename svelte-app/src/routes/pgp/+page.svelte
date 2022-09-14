@@ -4,11 +4,14 @@
   import ContentWrapper from '$components/content-wrapper.svelte';
   import CodeBlock from '$components/code-block.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    navOptions.set({ down: '', up: '/about' });
+    pageHeading.set('PGP');
+  });
 
   $: ({ pgp } = $page.data);
-
-  navOptions.set({ down: '', up: '/about' });
-  pageHeading.set('PGP');
 </script>
 
 <div data-test-route="pgp" class={$navigating ? 'max-h-[50%]' : ''}>

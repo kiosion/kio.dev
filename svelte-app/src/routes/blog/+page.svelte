@@ -10,6 +10,7 @@
   import type UIfx from 'uifx';
   import { setupNavigation } from '$helpers/navigation';
   import { page } from '$app/stores';
+  import Hoverable from '$components/hoverable.svelte';
 
   let mousePos: [number, number];
 
@@ -75,13 +76,15 @@
         <ErrorText text="No data" classes="w-fit" />
       </div>
     {/if}
-    <a
-      href="/blog/all"
-      class="block w-fit mt-8 hover-target"
-      aria-label="View all posts"
-      on:click={() => $sounds === 'on' && click?.play()}
-    >
-      <IconHeader icon="ArrowRight" text="View all" classes="" />
-    </a>
+    <Hoverable>
+      <a
+        href="/blog/all"
+        class="block w-fit mt-8"
+        aria-label="View all posts"
+        on:click={() => $sounds === 'on' && click?.play()}
+      >
+        <IconHeader icon="ArrowRight" text="View all" classes="" />
+      </a>
+    </Hoverable>
   </div>
 </div>

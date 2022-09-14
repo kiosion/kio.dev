@@ -6,6 +6,7 @@
   import type { TextBlock, PostDocument } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let post: PostDocument;
 
@@ -36,49 +37,62 @@
     {#if post.tags}
       <div class="flex flex-row justify-start items-center gap-2 mb-6">
         {#each post.tags as tag}
-          <a href="/blog/t/{tag.slug.current}" class="categoryTag hover-target">
-            {tag.title}
-          </a>
+          <Hoverable>
+            <a href="/blog/t/{tag.slug.current}" class="categoryTag">
+              {tag.title}
+            </a>
+          </Hoverable>
         {/each}
       </div>
     {/if}
     <div class="flex flex-row items-center justify-start">
-      <button
-        class="flex flex-row gap-2 items-center font-mono text-base hover-target"
-        on:click={() => goto('/about')}
-        tabindex="0"
-      >
-        <div class="h-8 aspect-square">
-          {#if _ref && pfpCrop}
-            <img
-              class="rounded-full aspect-square h-full"
-              src={urlFor(_ref)
-                .size(50, 50)
-                .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
-                .fit('crop')
-                .format('webp')
-                .url()}
-              alt="Profile pic"
-              draggable="false"
-            />
-          {/if}
-        </div>
-        <p class="w-fit whitespace-nowrap">
-          By {author?.name ? author.name : 'Unknown'}
+      <Hoverable>
+        <button
+          class="flex flex-row gap-2 items-center font-mono text-base"
+          on:click={() => goto('/about')}
+          tabindex="0"
+        >
+          <div class="h-8 aspect-square">
+            {#if _ref && pfpCrop}
+              <img
+                class="rounded-full aspect-square h-full"
+                src={urlFor(_ref)
+                  .size(50, 50)
+                  .rect(
+                    pfpCrop.left,
+                    pfpCrop.top,
+                    pfpCrop.width,
+                    pfpCrop.height
+                  )
+                  .fit('crop')
+                  .format('webp')
+                  .url()}
+                alt="Profile pic"
+                draggable="false"
+              />
+            {/if}
+          </div>
+          <p class="w-fit whitespace-nowrap">
+            By {author?.name ? author.name : 'Unknown'}
+          </p>
+        </button>
+      </Hoverable>
+      <BulletPoint />
+      <Hoverable>
+        <button
+          class="inline font-mono text-base cursor-pointer select-none"
+          on:click={() => switchDate()}
+          tabindex="0"
+        >
+          {date ? date : '...'}
+        </button>
+      </Hoverable>
+      <BulletPoint />
+      <Hoverable>
+        <p class="font-mono text-base" role="button" aria-label="Reading time">
+          {`${Math.floor(readingTime / 60)} min read`}
         </p>
-      </button>
-      <BulletPoint />
-      <button
-        class="inline font-mono text-base cursor-pointer select-none hover-target"
-        on:click={() => switchDate()}
-        tabindex="0"
-      >
-        {date ? date : '...'}
-      </button>
-      <BulletPoint />
-      <p class="font-mono text-base hover-target">
-        {`${Math.floor(readingTime / 60)} min read`}
-      </p>
+      </Hoverable>
     </div>
 
     {#if desc}

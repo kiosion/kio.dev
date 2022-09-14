@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { page } from '$app/stores';
-  import { browser } from '$app/environment';
   import { theme } from '$stores/theme';
   import { tweened } from 'svelte/motion';
   import { cubicInOut } from 'svelte/easing';
+  import Store from '$stores/cursor';
 
   export let appBody: HTMLElement;
   export let showLoader = true;
@@ -13,20 +13,13 @@
     progressPath: SVGPathElement,
     loaderPath: SVGPathElement,
     mousePos = { x: 0, y: 0 },
-    linkHover = false,
-    cursorHidden = true,
-    cursorClick = false;
+    cursorHidden = true;
 
   const cursorTweenX = tweened(0, { duration: 28, easing: cubicInOut }),
     cursorTweenY = tweened(0, { duration: 28, easing: cubicInOut });
 
   onMount(() => {
-    addHoverEvents();
     updateCursors();
-  });
-
-  onDestroy(() => {
-    browser && removeHoverEvents();
   });
 
   const updateCursorPositions = (e: MouseEvent) => {
@@ -43,41 +36,15 @@
     requestAnimationFrame(updateCursors);
   };
 
-  const hoverIn = () => (linkHover = true);
-  const hoverOut = () => (linkHover = false);
+  const handleClickDown = () => {
+    Store.update((s) => ({ ...s, isPressed: true }));
+  };
+  const handleClickUp = () => {
+    Store.update((s) => ({ ...s, isPressed: false }));
+  };
+
   const hideCursor = () => (cursorHidden = true);
   const showCursor = () => (cursorHidden = false);
-
-  const addHoverEvents = () => {
-    if (!document || !browser) {
-      return;
-    }
-    const hoverables = document?.querySelectorAll('.hover-target');
-    hoverables &&
-      hoverables.forEach((hoverable) => {
-        hoverable.addEventListener('mouseover', hoverIn);
-        hoverable.addEventListener('mouseout', hoverOut);
-      });
-  };
-
-  const removeHoverEvents = () => {
-    if (!document || !browser) {
-      return;
-    }
-    const hoverables = document?.querySelectorAll('.hover-target');
-    hoverables &&
-      hoverables.forEach((hoverable) => {
-        hoverable.removeEventListener('mouseover', hoverIn);
-        hoverable.removeEventListener('mouseout', hoverOut);
-      });
-  };
-
-  const updateHoverEvents = () => {
-    setTimeout(() => {
-      removeHoverEvents();
-      addHoverEvents();
-    }, 100);
-  };
 
   const updateProgressPath = () => {
     if (!progressPath) {
@@ -95,19 +62,19 @@
     progressPath.style.strokeDashoffset = `${progress}`;
   };
 
-  $: $page.url, updateProgressPath(), updateHoverEvents(), hoverOut();
-  $: appBody &&
-    (appBody.removeEventListener('scroll', () => updateProgressPath),
-    appBody.addEventListener('scroll', () => updateProgressPath()));
-  $: appBody, updateProgressPath();
+  $: $page.url,
+  appBody &&
+      (appBody.removeEventListener('scroll', () => updateProgressPath),
+      appBody.addEventListener('scroll', () => updateProgressPath())),
+  updateProgressPath();
 </script>
 
 <svelte:window
   on:mousemove={updateCursorPositions}
   on:mouseout={hideCursor}
   on:mouseover={showCursor}
-  on:mousedown={() => ((cursorClick = true), updateHoverEvents())}
-  on:mouseup={() => ((cursorClick = false), hoverOut())}
+  on:mousedown={() => handleClickDown()}
+  on:mouseup={() => handleClickUp()}
   on:keydown={(e) => e.key === 'Tab' && hideCursor()}
 />
 
@@ -117,11 +84,15 @@
     : ''} transition-opacity duration-200"
 >
   <div
-    class="dot {linkHover ? 'hovered' : ''} {cursorClick ? 'clicked' : ''}"
+    class="dot {$Store.isHovered ? 'hovered' : ''} {$Store.isPressed
+      ? 'clicked'
+      : ''}"
     style="left: {mousePos.x}px; top: {mousePos.y}px;"
   />
   <div
-    class="cursor {linkHover ? 'hovered' : ''} {cursorClick ? 'clicked' : ''}"
+    class="cursor {$Store.isHovered ? 'hovered' : ''} {$Store.isPressed
+      ? 'clicked'
+      : ''}"
     style="left: {$cursorTweenX}px; top: {$cursorTweenY}px;"
     bind:this={cursor}
   >

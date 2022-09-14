@@ -5,6 +5,7 @@
   import type { ProjectDocument } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let project: ProjectDocument;
 
@@ -53,9 +54,11 @@
     {#if project.tags}
       <div class="flex flex-row justify-start items-center gap-2">
         {#each project.tags as tag}
-          <a href="/work/t/{tag.slug.current}" class="categoryTag hover-target">
-            {tag.title}
-          </a>
+          <Hoverable>
+            <a href="/work/t/{tag.slug.current}" class="categoryTag">
+              {tag.title}
+            </a>
+          </Hoverable>
         {/each}
       </div>
     {/if}
@@ -65,38 +68,47 @@
       </div>
     {/if}
     <div class="flex flex-row items-center justify-start mt-6">
-      <button
-        class="flex flex-row gap-2 items-center font-mono text-base hover-target"
-        on:click={() => goto('/about')}
-        tabindex="0"
-      >
-        <div class="h-8 aspect-square">
-          {#if pfpRef && pfpCrop}
-            <img
-              class="rounded-full aspect-square h-full"
-              src={urlFor(pfpRef)
-                .size(50, 50)
-                .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
-                .fit('crop')
-                .format('webp')
-                .url()}
-              alt="Profile pic"
-              draggable="false"
-            />
-          {/if}
-        </div>
-        <p class="w-fit whitespace-nowrap">
-          By {project.author?.name ? project.author.name : 'Unknown'}
-        </p>
-      </button>
+      <Hoverable>
+        <button
+          class="flex flex-row gap-2 items-center font-mono text-base"
+          on:click={() => goto('/about')}
+          tabindex="0"
+        >
+          <div class="h-8 aspect-square">
+            {#if pfpRef && pfpCrop}
+              <img
+                class="rounded-full aspect-square h-full"
+                src={urlFor(pfpRef)
+                  .size(50, 50)
+                  .rect(
+                    pfpCrop.left,
+                    pfpCrop.top,
+                    pfpCrop.width,
+                    pfpCrop.height
+                  )
+                  .fit('crop')
+                  .format('webp')
+                  .url()}
+                alt="Profile pic"
+                draggable="false"
+              />
+            {/if}
+          </div>
+          <p class="w-fit whitespace-nowrap">
+            By {project.author?.name ? project.author.name : 'Unknown'}
+          </p>
+        </button>
+      </Hoverable>
       <BulletPoint />
-      <button
-        class="inline font-mono text-base cursor-pointer select-none hover-target"
-        on:click={() => switchDate()}
-        tabindex="0"
-      >
-        {date ? date : '...'}
-      </button>
+      <Hoverable>
+        <button
+          class="inline font-mono text-base cursor-pointer select-none"
+          on:click={() => switchDate()}
+          tabindex="0"
+        >
+          {date ? date : '...'}
+        </button>
+      </Hoverable>
     </div>
   </div>
   <Divider />
