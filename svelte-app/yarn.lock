@@ -1001,10 +1001,10 @@
     "@vercel/nft" "^0.22.0"
     esbuild "^0.14.48"
 
-"@sveltejs/kit@1.0.0-next.477":
-  version "1.0.0-next.477"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.477.tgz#f1604f308de452f93f40ccb617c4995616ddcdb4"
-  integrity sha512-r9sJZy9XuM4ztn0R9l6z12+oiJ6YuX2Go0GxwqC48axtf4wevmxPLw9M2XiSj4lINpT4lZn8JFRx2e9tCCMZyQ==
+"@sveltejs/kit@1.0.0-next.481":
+  version "1.0.0-next.481"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.481.tgz#661204a206bcdc5e11a12efb8bd8c0f0d1b366fe"
+  integrity sha512-rgt6KKjUmx/S/a/duntAp+yds9F3fSm6uq8nvfWHuT1aVGSC5sOdNDrKqck7PCUc9/GPJ6WJu3et5R69hqevRw==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.5"
     cookie "^0.5.0"
@@ -2907,10 +2907,10 @@ cypress-svelte-unit-test@^3.3.4:
     "@bahmutov/cy-rollup" "2.0.0"
     unfetch "4.1.0"
 
-cypress@*, cypress@^10.7.0:
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.7.0.tgz#2d37f8b9751c6de33ee48639cb7e67a2ce593231"
-  integrity sha512-gTFvjrUoBnqPPOu9Vl5SBHuFlzx/Wxg/ZXIz2H4lzoOLFelKeF7mbwYUOzgzgF0oieU2WhJAestQdkgwJMMTvQ==
+cypress@*, cypress@^10.8.0:
+  version "10.8.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.8.0.tgz#12a681f2642b6f13d636bab65d5b71abdb1497a5"
+  integrity sha512-QVse0dnLm018hgti2enKMVZR9qbIO488YGX06nH5j3Dg1isL38DwrBtyrax02CANU6y8F4EJUuyW6HJKw1jsFA==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -2931,7 +2931,7 @@ cypress@*, cypress@^10.7.0:
     dayjs "^1.10.4"
     debug "^4.3.2"
     enquirer "^2.3.6"
-    eventemitter2 "^6.4.3"
+    eventemitter2 "6.4.7"
     execa "4.1.0"
     executable "^4.1.1"
     extract-zip "2.0.1"
@@ -4032,7 +4032,7 @@ etag@^1.8.1, etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
-eventemitter2@^6.4.3:
+eventemitter2@6.4.7:
   version "6.4.7"
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.7.tgz#a7f6c4d7abf28a14c1ef3442f21cb306a054271d"
   integrity sha512-tYUSVOGeQPKt/eC1ABfhHy5Xd96N3oIijJvN3O9+TsC28T5V9yX9oEfEK5faP0EFSNVOG97qtAS68GBrQB2hDg==
