@@ -2,7 +2,8 @@ import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
 import { APP_ROUTES, TOP_LEVEL_ROUTES } from '$lib/consts';
 import { isMobile } from '$helpers/browser';
-import { navOptions, pageHeading } from '$stores/nav';
+import { canNavigate, navOptions, pageHeading } from '$stores/navigation';
+import { get } from 'svelte/store';
 
 export const setupNavigation = (route: string): void => {
   if (!route || route === '') {
@@ -44,7 +45,15 @@ export const handleScrollNav = (
   appBody: HTMLElement,
   currentPath: string
 ) => {
-  if (!browser || !event || !appBody || !currentPath || isMobile()) {
+  console.log('canNavigate:', get(canNavigate));
+  if (
+    !browser ||
+    get(canNavigate) === false ||
+    !event ||
+    !appBody ||
+    !currentPath ||
+    isMobile()
+  ) {
     return;
   }
 
@@ -74,7 +83,11 @@ export const handleScrollNav = (
         : getClosestParent(APP_ROUTES, currentPath);
     })()?.path as string) || currentPath;
 
-  return path !== currentPath && goto(path);
+  if (path !== currentPath) {
+    canNavigate.set(false);
+    setTimeout(() => canNavigate.set(true), 500);
+    return goto(path);
+  }
 };
 
 const getClosestParent = (

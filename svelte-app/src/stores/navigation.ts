@@ -6,4 +6,6 @@ const navOptions = writable({ down: '', up: '' });
 
 const pageHeading = writable('');
 
-export { navOpen, navOptions, pageHeading };
+const canNavigate = writable(false);
+
+export { canNavigate, navOpen, navOptions, pageHeading };

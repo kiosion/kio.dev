@@ -91,6 +91,11 @@ get(icons)
       await import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default)
   )
   .set(
+    'Check',
+    async () =>
+      await import('pixelarticons/svg/check.svg').then((Icon) => Icon.default)
+  )
+  .set(
     'Code',
     async () =>
       await import('pixelarticons/svg/code.svg').then((Icon) => Icon.default)

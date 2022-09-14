@@ -1,6 +1,6 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
   import { sounds } from '$stores/features';
   import type UIfx from 'uifx';

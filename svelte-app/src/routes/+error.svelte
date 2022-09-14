@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import ContentWrapper from '$components/content-wrapper.svelte';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import IconHeader from '$components/icon-header.svelte';
   import { ENV } from '$lib/env';
   import Divider from '$components/divider.svelte';

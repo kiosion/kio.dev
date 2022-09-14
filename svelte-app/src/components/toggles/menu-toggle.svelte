@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navOpen } from '$stores/nav';
+  import { navOpen } from '$stores/navigation';
   import { fade } from 'svelte/transition';
   import SafeIcon from '../safe-icon.svelte';
 </script>

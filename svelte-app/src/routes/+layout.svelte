@@ -20,6 +20,7 @@
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
   import { handleScrollNav } from '$lib/helpers/navigation';
+  import { canNavigate } from '@/stores/navigation';
 
   const unsubscribe = navigating.subscribe((res) => {
     !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
@@ -40,6 +41,7 @@
 
   onMount(async () => {
     appLoaded = true;
+    canNavigate.set(true);
     msg({ detail: { isOpen: true } });
     browser && window.addEventListener('devtoolschange', (e) => msg(e));
     browser && isMobile() && customCursor.set('off');

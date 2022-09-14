@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import PageHeading from '$components/headings/page-heading.svelte';
 
   pageHeading.set('Work | Tags');

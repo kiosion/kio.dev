@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import PageHeading from '$components/headings/page-heading.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');

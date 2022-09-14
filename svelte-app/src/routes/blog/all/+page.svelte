@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { posts } from '$stores/blog';
   import { highlightEffects } from '$stores/features';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import SafeIcon from '@/components/safe-icon.svelte';
 

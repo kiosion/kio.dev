@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import { post } from '$stores/blog';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import PostContent from '@/components/blog/post-content.svelte';
   import { onMount } from 'svelte';
 

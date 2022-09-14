@@ -1988,7 +1988,7 @@
   resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-1.3.0.tgz#6460cd993a2c24368a6308028f3bc57df91f131e"
   integrity sha512-uyIOtGA4Duf+68I3BSbYHY5P+WGftn3QtNJD2Pn7h9WPGYsSrWViIPebE9yRN8N0NHhYj+hDQXaMpVdjG7r+zA==
 
-"@sanity/base@2.33.0", "@sanity/base@^2.31.0":
+"@sanity/base@2.33.0", "@sanity/base@^2.33.0":
   version "2.33.0"
   resolved "https://registry.yarnpkg.com/@sanity/base/-/base-2.33.0.tgz#4bf877ac52bcea164427df2f89a4e8e07eb47173"
   integrity sha512-CxAO3tCu38Yt91ysMKoa5/3y25CNJ6OBHEedweHKvymwuC0HTScCs6HliGTX6tvRwLXese0zVpCvYp9ZZfedMA==
@@ -2452,16 +2452,6 @@
   version "1.1.15"
   resolved "https://registry.yarnpkg.com/@sanity/logos/-/logos-1.1.15.tgz#1d9ca1ec2101338b7fc734db2a8213f2ad2c5ff3"
   integrity sha512-bO5kQOqOQcM2t1AAl+TREU7gRFEBCH9KmvZ0bgyCRU5VAWPnDniQyMDkgeyzb+wnJwg79+SYmLDdt8OnZrPlTQ==
-
-"@sanity/mutator@2.29.3":
-  version "2.29.3"
-  resolved "https://registry.npmjs.org/@sanity/mutator/-/mutator-2.29.3.tgz"
-  integrity sha512-ekEWu1NZ3Dysn1uGnrwe5Xj9K5ATvPrljdILGU2gxSMzyuVjAgNpM5U6FLL/kJguZrHleMM0CCmJWK8gL0aCWA==
-  dependencies:
-    "@types/diff-match-patch" "^1.0.32"
-    debug "^3.2.7"
-    diff-match-patch "^1.0.4"
-    lodash "^4.17.15"
 
 "@sanity/mutator@2.33.0":
   version "2.33.0"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navOptions } from '$stores/nav';
+  import { navOptions } from '$stores/navigation';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';

@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import SwitchItem from '$components/toggles/switch-item.svelte';
-  import { navOptions, pageHeading } from '$stores/nav';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import {
     svgBackground,
     highlightEffects,

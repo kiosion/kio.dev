@@ -20,6 +20,8 @@
   let click: UIfx;
 
   onMount(() => {
+    setupNavigation($page?.url?.pathname);
+
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
@@ -48,7 +50,6 @@
   export let data: PageData;
 
   $: ({ pinnedProject } = data);
-  $: $page, setupNavigation($page?.url?.pathname);
 </script>
 
 <svelte:head>

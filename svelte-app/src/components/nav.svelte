@@ -3,7 +3,7 @@
   import Icon from '@iconify/svelte';
   import ThemeToggle from '$components/toggles/theme-toggle.svelte';
   import MenuToggle from '$components/toggles/menu-toggle.svelte';
-  import { navOpen } from '$stores/nav';
+  import { navOpen } from '$stores/navigation';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
