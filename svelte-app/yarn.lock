@@ -976,13 +976,22 @@
     esbuild "^0.15.6"
     worktop "0.8.0-next.14"
 
-"@sveltejs/adapter-netlify@1.0.0-next.77", "@sveltejs/adapter-netlify@^1.0.0-next.75":
+"@sveltejs/adapter-netlify@1.0.0-next.77":
   version "1.0.0-next.77"
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.77.tgz#1da801c12505dd7d09da5ef8c2a9d5700e1a1a33"
   integrity sha512-g4+i8xQROxw4Olt5T0bJAj3qCDuluQ/JnvzqajEz620COuIddpa2B1xK5DmbAhxQox823jLNTxg7LOEpBqD3bw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     esbuild "^0.15.6"
+    set-cookie-parser "^2.4.8"
+
+"@sveltejs/adapter-netlify@^1.0.0-next.78":
+  version "1.0.0-next.78"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.78.tgz#a18e750ac9d146afb308c527649f24c40b746d59"
+  integrity sha512-Yyn/j/0QcLK3Db442ducLUZmyvkO74j7Gdcwu9xN0fQN3kBlCJP9Itx5o4SySrPFGc4Q8cLJ5ELNg+mWduLBAA==
+  dependencies:
+    "@iarna/toml" "^2.2.5"
+    esbuild "^0.15.7"
     set-cookie-parser "^2.4.8"
 
 "@sveltejs/adapter-node@^1.0.0-next.91":
@@ -3678,7 +3687,7 @@ esbuild-windows-arm64@0.15.7:
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.15.7.tgz#7d5e9e060a7b454cb2f57f84a3f3c23c8f30b7d2"
   integrity sha512-R06nmqBlWjKHddhRJYlqDd3Fabx9LFdKcjoOy08YLimwmsswlFBJV4rXzZCxz/b7ZJXvrZgj8DDv1ewE9+StMw==
 
-esbuild@^0.15.6:
+esbuild@^0.15.6, esbuild@^0.15.7:
   version "0.15.7"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.15.7.tgz#8a1f1aff58671a3199dd24df95314122fc1ddee8"
   integrity sha512-7V8tzllIbAQV1M4QoE52ImKu8hT/NLGlGXkiDsbEU5PS6K8Mn09ZnYoS+dcmHxOS9CRsV4IRAMdT3I67IyUNXw==
