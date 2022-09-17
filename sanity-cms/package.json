@@ -33,7 +33,7 @@
     "@babel/preset-react": "^7.18.6",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
-    "netlify-cli": "^11.7.1",
+    "netlify-cli": "^11.8.0",
     "prettier": "^2.7.1"
   }
 }
