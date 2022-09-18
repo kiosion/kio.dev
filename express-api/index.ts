@@ -84,6 +84,7 @@ const constructError = (
     code,
     message
   };
+
   detail && (res.detail = detail);
   return JSON.stringify(res);
 };
