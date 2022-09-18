@@ -11,3 +11,6 @@
 **/bundle
 **/build
 **/.*-error.log
+**/build
+**/_build
+**/deps
