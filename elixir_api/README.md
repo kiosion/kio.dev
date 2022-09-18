@@ -1,3 +1,7 @@
 # Hexerei
 
-API for my personal sites.
+Elixir API for kio.dev.
+
+## Building
+
+## Testing
