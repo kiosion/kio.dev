@@ -12,7 +12,7 @@
 
 (Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
 
-Mostly way overengineered, but intentionally.. for fun (and to showcase relevant skills) 😃
+Mostly overengineered, but intentionally so 😃
 
 ## 📚 Tech stack
 
@@ -22,14 +22,22 @@ Mostly way overengineered, but intentionally.. for fun (and to showcase relevant
 - Scss
 - Vite
 #### API
-- Express.js
-- Rust
+- Elixir
+- Plug.Cowboy web server
+- HTTPoison
 #### CMS
-- Sanity w/ Sanity studio
+- Sanity / Sanity Studio
 #### Hosting / deploys
 - Selfhosted GH runners
-- Vultr VPS w/ pm2
+- Vultr VPS
 - Netlify
+
+## 💾 Dependancies
+### SvelteKit / Sanity
+- Node >= 16.0
+- Yarn >= 3.0
+### Elixir API
+- Elixir >= 1.13
 
 ## 🛠 Building
 
