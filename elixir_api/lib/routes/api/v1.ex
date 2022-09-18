@@ -11,6 +11,8 @@ defmodule Router.Api.V1 do
     plug(Plug.Logger)
   end
 
+  @query_url "/query"
+
   plug(:match)
 
   plug(Hexerei.Plug.VerifyRequest)
@@ -45,15 +47,35 @@ defmodule Router.Api.V1 do
     end
   end
 
+  defp validate_query_params(params, expected) do
+    # 'Expected' provided as map of keys + defaults, 'params' as map of keys + values
+    Enum.reduce(expected, %{}, fn {key, default}, acc ->
+      if Map.has_key?(params, key) do
+        Map.put(acc, key, params[key])
+      else
+        Map.put(acc, key, default)
+      end
+    end)
+    # Enum.all?(expected, fn param -> Map.has_key?(params, param) end)
+  end
+
   # Routes
-  get "/query/post:params" do
-    # TODO: Implement
+  get "#{@query_url}/post:params" do
     # ID may be either url slug or document ID
     params = fetch_query_params(conn).query_params
-    # json_res(conn, 200, %{code: 200, message: "Post params: #{params["id"]}, #{params["slug"]}"})
+    |> validate_query_params(%{"id" => nil, "slug" => nil})
 
-    # Await result from sanity.fetch()
-    case Sanity.fetch(BuildQuery.singlePost(params["id"], params["slug"])) do
+    case Sanity.fetch(BuildQuery.postSingle(params["id"], params["slug"])) do
+      {:ok, result} -> parse_send_res(conn, result)
+      {:error, error} -> json_res(conn, 500, %{code: 500, message: "Something went wrong: #{error}"})
+    end
+  end
+
+  get "#{@query_url}/posts:params" do
+    params = fetch_query_params(conn).query_params
+    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "desc", "o" => "date", "date" => nil, "tags" => nil })
+
+    case Sanity.fetch(BuildQuery.postMany(params["limit"], params["skip"], params["s"], params["o"], params["date"], params["tags"])) do
       {:ok, result} -> parse_send_res(conn, result)
       {:error, error} -> json_res(conn, 500, %{code: 500, message: "Something went wrong: #{error}"})
     end

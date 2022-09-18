@@ -8,10 +8,7 @@ defmodule Hexerei.Router do
     plug(Plug.Logger)
   end
 
-  # API routes
   forward("/api", to: Router.Api)
-
-  # CDN routes
   forward("/cdn", to: Router.Cdn)
 
   plug(:match)
