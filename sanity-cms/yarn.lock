@@ -21,11 +21,6 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.19.1.tgz#72d647b4ff6a4f82878d184613353af1dd0290f9"
   integrity sha512-72a9ghR0gnESIa7jBN53U32FOVCEoztyIlKaNoU05zRhEecduGK9L9c3ww7Mp06JiR+0ls0GBPFJQwwtjn9ksg==
 
-"@babel/compat-data@^7.19.1":
-  version "7.19.1"
-  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.19.1.tgz#72d647b4ff6a4f82878d184613353af1dd0290f9"
-  integrity sha512-72a9ghR0gnESIa7jBN53U32FOVCEoztyIlKaNoU05zRhEecduGK9L9c3ww7Mp06JiR+0ls0GBPFJQwwtjn9ksg==
-
 "@babel/core@^7.11.6", "@babel/core@^7.16.7", "@babel/core@^7.19.1":
   version "7.19.1"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.19.1.tgz#c8fa615c5e88e272564ace3d42fbc8b17bfeb22b"
@@ -2146,10 +2141,10 @@
     get-random-values-esm "^1.0.0"
     lodash "^4.17.21"
 
-"@sanity/cli@^2.32.0":
-  version "2.32.0"
-  resolved "https://registry.yarnpkg.com/@sanity/cli/-/cli-2.32.0.tgz#020a590736b3c8de78ed89edd02ead896b13909b"
-  integrity sha512-iddNAZToi8kfuYlavPHIm+O8mrKYwU1tPMmEdbyocpIv8r3mdWWjH1Xe5gLRd78k4B6J0oppTeus0U1PDdsZ8Q==
+"@sanity/cli@^2.33.2":
+  version "2.33.2"
+  resolved "https://registry.yarnpkg.com/@sanity/cli/-/cli-2.33.2.tgz#c29ba252c47badd52163e762b5b972ca23e3252a"
+  integrity sha512-Ke8S8DltIGLTq7jJqIWdFe+cUh5StayDWvJj96WGVaMRApwElp5Br3i8KJYYyYNtHpDvZ/3Xz+1A3ymKvo5GxQ==
 
 "@sanity/client@^3.3.3":
   version "3.3.3"
