@@ -73,7 +73,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.8.3",
     "uifx": "^2.0.7",
-    "vite": "^3.1.1",
+    "vite": "^3.1.2",
     "vite-plugin-inspect": "^0.7.1",
     "vite-plugin-test-selectors": "0.0.2",
     "vitest": "^0.23.2"
