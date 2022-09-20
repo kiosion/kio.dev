@@ -16,7 +16,12 @@ const config = {
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
         ? NetlifyAdapter()
-        : NodeAdapter({ out: './dist' })
+        : NodeAdapter({ out: './dist' }),
+    files: {
+      lib: 'src/lib',
+      params: 'src/params',
+      routes: 'src/routes'
+    }
   }
 };
 

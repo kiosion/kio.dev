@@ -74,6 +74,18 @@ get(icons)
       )
   )
   .set(
+    'Book',
+    async () =>
+      await import('pixelarticons/svg/book.svg').then((Icon) => Icon.default)
+  )
+  .set(
+    'BulletList',
+    async () =>
+      await import('pixelarticons/svg/bulletlist.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'CardText',
     async () =>
       await import('pixelarticons/svg/card-text.svg').then(
@@ -113,9 +125,38 @@ get(icons)
       )
   )
   .set(
+    'Git-Branch',
+    async () =>
+      await import('pixelarticons/svg/git-branch.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
+    'Info-Box',
+    async () =>
+      await import('pixelarticons/svg/info-box.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
+    'Invert',
+    async () =>
+      await import('pixelarticons/svg/invert.svg').then((Icon) => Icon.default)
+  )
+  .set(
     'Link',
     async () =>
       await import('pixelarticons/svg/link.svg').then((Icon) => Icon.default)
+  )
+  .set(
+    'List',
+    async () =>
+      await import('pixelarticons/svg/list.svg').then((Icon) => Icon.default)
+  )
+  .set(
+    'Loader',
+    async () =>
+      await import('pixelarticons/svg/loader.svg').then((Icon) => Icon.default)
   )
   .set(
     'MailArrowRight',

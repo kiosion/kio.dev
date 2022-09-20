@@ -15,6 +15,9 @@
 </svelte:head>
 
 <div data-test-route="tag" class="w-full">
-  <PageHeading heading={pageTitle} text="Posts tagged with {pageTitle}" />
-  <div class="mb-12" />
+  <PageHeading
+    heading={pageTitle}
+    text="Recent posts tagged with '{pageTitle}'"
+  />
+  <div class="pb-20" />
 </div>

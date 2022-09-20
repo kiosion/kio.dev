@@ -45,7 +45,6 @@ export const handleScrollNav = (
   appBody: HTMLElement,
   currentPath: string
 ) => {
-  console.log('canNavigate:', get(canNavigate));
   if (
     !browser ||
     get(canNavigate) === false ||
@@ -69,7 +68,7 @@ export const handleScrollNav = (
     (!atBottom && deltaY > 0) ||
     (!isTopLevelRoute && deltaY > 0) ||
     !deltaY ||
-    Math.abs(deltaY) < 80
+    Math.abs(deltaY) < 40
   ) {
     return;
   }

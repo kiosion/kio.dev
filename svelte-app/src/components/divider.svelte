@@ -1,3 +1,5 @@
-<span
-  class="block my-6 h-[1px] w-full bg-slate-300 dark:bg-slate-500 transition-colors duration-150"
-/>
+<script lang="ts">
+  export let classes = '';
+</script>
+
+<span class="block my-6 h-[1px] w-full bg-slate-400 {classes}" />

@@ -56,3 +56,5 @@ export const APP_ROUTES = [
     hidden: false
   }
 ];
+
+export const PAGINATION_POSTS_PER_PAGE = 6;

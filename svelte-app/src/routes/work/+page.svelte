@@ -79,7 +79,7 @@
     {/if}
     <Hoverable>
       <a
-        href="/work/all"
+        href="/work/1"
         class="block w-fit mt-8"
         aria-label="View all projects"
         on:click={() => $sounds === 'on' && click?.play()}

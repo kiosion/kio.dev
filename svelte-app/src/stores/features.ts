@@ -13,7 +13,7 @@ svgBackground.subscribe((value) => {
 });
 
 const highlightEffects = writable<string>(
-  initialSetting('highlightEffects', 'on')
+  initialSetting('highlightEffects', 'off')
 );
 highlightEffects.subscribe((value) => {
   browser && window.localStorage.setItem('feature-highlightEffects', value);

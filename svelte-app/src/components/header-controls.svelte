@@ -9,6 +9,7 @@
   import Hoverable from '$components/hoverable.svelte';
 
   let click: UIfx;
+  let scrollNavHovered = false;
 
   onMount(() => {
     import('$lib/sfx').then((sfx) => {
@@ -23,10 +24,12 @@
   <div class="flex flex-row justify-between items-start">
     <div class="w-52">
       {#if $navOptions && $navOptions.up !== ''}
-        <Hoverable>
+        <Hoverable bind:hovered={scrollNavHovered}>
           <a
             href={$navOptions.up}
-            class="w-fit flex flex-row items-center select-none"
+            class="w-fit flex flex-row items-center select-none {scrollNavHovered
+              ? 'scroll-hover-up'
+              : ''}"
             on:click={() => $sounds === 'on' && click?.play()}
             transition:fade={{ duration: 100 }}
           >
@@ -96,3 +99,25 @@
     </div>
   </div>
 </div>
+
+<style lang="scss">
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-3px);
+    }
+    60% {
+      transform: translateY(-1.5px);
+    }
+  }
+
+  :global(.scroll-hover-up svg) {
+    animation: bounce 2s infinite;
+  }
+</style>

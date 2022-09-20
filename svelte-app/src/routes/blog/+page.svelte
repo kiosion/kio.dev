@@ -59,7 +59,7 @@
     heading="Blog"
     text="Thoughts about (mostly) tech, design, and development"
   />
-  <div class="mb-12">
+  <div class="pb-20">
     {#if pinnedPost?.data}
       <IconHeader icon="Pin" text="Pinned" />
       <ListItem post={pinnedPost.data} {mousePos} />
@@ -78,7 +78,7 @@
     {/if}
     <Hoverable>
       <a
-        href="/blog/all"
+        href="/blog/1"
         class="block w-fit mt-8"
         aria-label="View all posts"
         on:click={() => $sounds === 'on' && click?.play()}

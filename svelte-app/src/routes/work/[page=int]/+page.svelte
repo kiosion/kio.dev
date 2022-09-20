@@ -1,11 +1,17 @@
 <script lang="ts">
-  import ListItem from '$components/blog/list-item.svelte';
+  import ListItem from '$components/work/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '$stores/blog';
+  import { projects } from '$stores/work';
   import { highlightEffects } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import SafeIcon from '@/components/safe-icon.svelte';
+  import { page } from '$app/stores';
+  import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
+  import Hoverable from '$components/hoverable.svelte';
+
+  let curPage = 1,
+    totalPages = 1;
 
   let mousePos: [number, number];
 
@@ -35,32 +41,44 @@
     }
   });
 
-  navOptions.set({ down: '', up: '/blog' });
-  pageHeading.set('Blog | All posts');
+  navOptions.set({ down: '', up: '/work' });
+
+  $: $projects.meta,
+  (totalPages = Math.ceil($projects.meta.total / PAGINATION_POSTS_PER_PAGE));
+  $: $page.params, (curPage = parseInt($page.params?.page));
+  $: curPage, pageHeading.set(`Work | All work | Page ${curPage}`);
 </script>
 
 <svelte:head>
-  <title>kio.dev | blog | all posts</title>
+  <title>kio.dev | work | all work</title>
 </svelte:head>
 
-<div data-test-route="blog-all" class="h-fit w-full">
+<div data-test-route="work-all" class="h-fit w-full">
   <div class="mt-14 mb-12">
-    {#if $posts?.data?.length}
-      {#each $posts.data as post}
-        <ListItem {post} {mousePos} />
+    {#if $projects?.data?.length}
+      {#each $projects.data as project}
+        <ListItem {project} />
       {/each}
     {:else}
       <ErrorText text="No data" classes="w-fit" />
     {/if}
-    <!-- To-be pagination component: -->
+
     <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
       <div class="flex flex-row justify-start items-center gap-2">
         <SafeIcon icon={'List'} />
-        <h3 class="font-code text-lg">Page 1 of 1</h3>
+        <h3 class="font-code text-lg">Page {curPage} of {totalPages}</h3>
       </div>
       <div class="flex flex-row justify-start items-center gap-4">
-        <SafeIcon icon={'ArrowLeft'} />
-        <SafeIcon icon={'ArrowRight'} />
+        <Hoverable>
+          <a href="/work/{curPage > 1 ? curPage - 1 : 1}">
+            <SafeIcon icon={'ArrowLeft'} />
+          </a>
+        </Hoverable>
+        <Hoverable>
+          <a href="/work/{curPage < totalPages ? curPage + 1 : totalPages}">
+            <SafeIcon icon={'ArrowRight'} />
+          </a>
+        </Hoverable>
       </div>
     </div>
   </div>

@@ -113,6 +113,7 @@
               class:active={segment === link.url}
               aria-label={link.name}
               href={link.url}
+              preload={link.url}
               on:mouseenter={() => (link.active = true)}
               on:mouseleave={() => (link.active = false)}
               on:focus={() => (link.active = true)}
