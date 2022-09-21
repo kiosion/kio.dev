@@ -358,6 +358,7 @@ module query {
       _type,
       bio,
       body,
+      timeline,
       image,
       name,
       slug

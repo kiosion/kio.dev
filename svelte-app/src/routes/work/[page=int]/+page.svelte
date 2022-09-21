@@ -9,6 +9,8 @@
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
+  import PageHeading from '$components/headings/page-heading.svelte';
+  import IconHeader from '$components/icon-header.svelte';
 
   let curPage = 1,
     totalPages = 1;
@@ -20,6 +22,9 @@
   };
 
   onMount(() => {
+    pageHeading.set(`All work | Page ${curPage}`);
+    navOptions.set({ down: '', up: '/work' });
+
     if ($highlightEffects === 'on') {
       document.addEventListener('mousemove', (e) => {
         setMousePos(e.clientX, e.clientY);
@@ -41,20 +46,22 @@
     }
   });
 
-  navOptions.set({ down: '', up: '/work' });
-
   $: $projects.meta,
   (totalPages = Math.ceil($projects.meta.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
-  $: curPage, pageHeading.set(`Work | All work | Page ${curPage}`);
 </script>
 
 <svelte:head>
   <title>kio.dev | work | all work</title>
 </svelte:head>
 
-<div data-test-route="work-all" class="h-fit w-full">
-  <div class="mt-14 mb-12">
+<div data-test-route="work-all" class="w-full">
+  <PageHeading
+    heading="Work"
+    text="A collection of my work, open-source contributions, and personal projects"
+  />
+  <IconHeader icon="BulletList" text="All Work" />
+  <div class="pb-20">
     {#if $projects?.data?.length}
       {#each $projects.data as project}
         <ListItem {project} />

@@ -79,6 +79,13 @@ get(icons)
       await import('pixelarticons/svg/book.svg').then((Icon) => Icon.default)
   )
   .set(
+    'Briefcase',
+    async () =>
+      await import('pixelarticons/svg/briefcase.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'BulletList',
     async () =>
       await import('pixelarticons/svg/bulletlist.svg').then(
@@ -98,6 +105,11 @@ get(icons)
       await import('pixelarticons/svg/cast.svg').then((Icon) => Icon.default)
   )
   .set(
+    'Circle',
+    async () =>
+      await import('pixelarticons/svg/circle.svg').then((Icon) => Icon.default)
+  )
+  .set(
     'Clock',
     async () =>
       await import('pixelarticons/svg/clock.svg').then((Icon) => Icon.default)
@@ -108,6 +120,13 @@ get(icons)
       await import('pixelarticons/svg/check.svg').then((Icon) => Icon.default)
   )
   .set(
+    'ChevronDown',
+    async () =>
+      await import('pixelarticons/svg/chevron-down.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'Code',
     async () =>
       await import('pixelarticons/svg/code.svg').then((Icon) => Icon.default)
@@ -116,6 +135,13 @@ get(icons)
     'Copy',
     async () =>
       await import('pixelarticons/svg/copy.svg').then((Icon) => Icon.default)
+  )
+  .set(
+    'CornerDownRight',
+    async () =>
+      await import('pixelarticons/svg/corner-down-right.svg').then(
+        (Icon) => Icon.default
+      )
   )
   .set(
     'Downasaur',
@@ -132,7 +158,7 @@ get(icons)
       )
   )
   .set(
-    'Info-Box',
+    'InfoBox',
     async () =>
       await import('pixelarticons/svg/info-box.svg').then(
         (Icon) => Icon.default

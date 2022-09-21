@@ -2,17 +2,16 @@
   import ContentWrapper from '$components/content-wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { about } from '$stores/about';
-  import ErrorText from '$components/error-text.svelte';
-  import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
-  import Divider from '$components/divider.svelte';
-  import { fade } from 'svelte/transition';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
+  import { onMount } from 'svelte';
+  import AboutCard from '$components/about/card.svelte';
+  import AboutTimeline from '$components/about/timeline.svelte';
+  import AboutSection from '$components/about/section.svelte';
 
-  let pfpCrop: ImageCrop;
-
-  $: pfpCrop = getCrop($about?.data?.image);
-  $: $page, setupNavigation($page?.url?.pathname);
+  onMount(() => {
+    setupNavigation($page?.url?.pathname);
+  });
 </script>
 
 <svelte:head>
@@ -31,58 +30,18 @@
 
 <div data-test-route="about">
   <ContentWrapper>
-    <div
-      class="w-full p-6 roundedCard-lg flex flex-col gap-6 justify-start items-start"
-    >
-      <div class="flex flex-row gap-6 justify-start items-center w-full h-fit">
-        <div class="h-24 aspect-square">
-          {#if $about?.data?.image?.asset}
-            <img
-              class="rounded-full aspect-square h-full border border-slate-400 select-none"
-              src={urlFor($about.data.image.asset._ref)
-                .size(150, 150)
-                .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
-                .fit('crop')
-                .format('webp')
-                .url()}
-              alt="Profile pic"
-              draggable="false"
-              in:fade={{ duration: 150 }}
-            />
-          {/if}
-        </div>
-        <div
-          class="flex-1 h-full w-full flex flex-col justify-start items-start"
-        >
-          <h3
-            class="font-display font-bold text-2xl text-slate-800 dark:text-slate-100 transition-colors"
-          >
-            Maxim
-          </h3>
-          <h4
-            class="font-mono font-bold text-xl text-slate-600 dark:text-slate-300 transition-colors"
-          >
-            @kiosion
-          </h4>
-        </div>
-      </div>
-      <div>
-        <div class="flex-1 font-sans -my-4 p-2">
-          {#if $about?.data?.bio}
-            <PortableText text={$about.data.bio} />
-          {:else}
-            <ErrorText text="No data" classes="w-fit" />
-          {/if}
-        </div>
-      </div>
-    </div>
+    <AboutCard image={$about?.data?.image} body={$about?.data?.bio} />
+    {#if $about?.data?.timeline}
+      <AboutSection title="My work" icon="Briefcase">
+        <AboutTimeline data={$about.data.timeline} />
+      </AboutSection>
+    {/if}
     {#if $about?.data?.body}
-      <div>
-        <Divider />
-        <div class="mx-2">
+      <AboutSection title="More" icon="InfoBox">
+        <div class="mx-1 font-sans">
           <PortableText text={$about.data.body} />
         </div>
-      </div>
+      </AboutSection>
     {/if}
   </ContentWrapper>
 </div>

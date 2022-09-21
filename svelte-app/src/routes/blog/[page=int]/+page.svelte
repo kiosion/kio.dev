@@ -24,6 +24,9 @@
   };
 
   onMount(() => {
+    pageHeading.set(`All posts | Page ${curPage}`);
+    navOptions.set({ down: '', up: '/blog' });
+
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
@@ -49,12 +52,9 @@
     }
   });
 
-  navOptions.set({ down: '', up: '/blog' });
-
   $: $posts.meta,
   (totalPages = Math.ceil($posts.meta.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
-  $: curPage, pageHeading.set(`Blog | All posts | Page ${curPage}`);
 </script>
 
 <svelte:head>

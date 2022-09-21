@@ -6,8 +6,8 @@
   import { onMount } from 'svelte';
 
   const pageTitle = $project?.data?.title
-    ? `Project | ${$project.data.title.slice(0, 50)}`
-    : 'Project';
+    ? `Work | ${$project.data.title.slice(0, 50)}`
+    : 'Work';
 
   onMount(() => {
     pageHeading.set(pageTitle);
@@ -17,11 +17,11 @@
 
 <svelte:head>
   <title>
-    kio.dev | project {$project?.data?.title ? `| ${$project.data.title}` : ''}
+    kio.dev | work {$project?.data?.title ? `| ${$project.data.title}` : ''}
   </title>
 </svelte:head>
 
-<div data-test-route="project">
+<div data-test-route="work-item">
   {#if $project?.data}
     <ContentWrapper>
       <ProjectContent project={$project.data} />

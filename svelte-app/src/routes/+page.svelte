@@ -1,40 +1,25 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
-  // import SafeIcon from '$components/safe-icon.svelte';
-  // import Divider from '$components/divider.svelte';
-  // import { browser } from '$app/environment';
-  // import { fly } from 'svelte/transition';
-  // import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
 
-  let showScrollDown = false;
-
-  $: $page, setupNavigation($page?.url?.pathname);
-  // $: browser && setTimeout(() => goto('/blog'), 16000);
+  onMount(() => {
+    setupNavigation($page?.url?.pathname);
+  });
 </script>
 
 <svelte:head>
-  <title>kio.dev</title>
+  <title>kio.dev | blog & portfolio</title>
 </svelte:head>
 
 <div data-test-route="index">
   <div
-    class="content h-full w-80 mx-auto flex flex-col items-start justify-center gap-2 {showScrollDown
-      ? 'showMore'
-      : ''}"
+    class="mt-[20vh] md:mt-[50vh] h-fit w-80 mx-auto flex flex-col items-center md:items-start justify-center gap-2"
   >
-    <p class="font-display text-3xl font-bold w-fit mt-14 md:-mt-14 mb-4">
-      Hi, I'm Kio
+    <p class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[20vh] mb-5">
+      Hi, I'm Kio<span class="text-emerald-300 ml-[2px]">.</span>
     </p>
-    <!-- <div class="flex flex-row align-center justify-center w-60">
-      <SafeIcon icon="Info-Box" width={18} classes="text-slate-400" />
-      <Divider classes="ml-2 my-auto" />
-    </div> -->
-    <p class="font-sans text-lg lowercase mt-2">
-      Software engineer / web dev / artist
-    </p>
-    <p class="font-sans text-lg lowercase mb-2">
-      Lover of cats &amp; all things tech
-    </p>
+    <p class="font-sans text-lg -mb-1">Software engineer / web dev / artist</p>
+    <p class="font-sans text-lg">Lover of cats &amp; all things tech</p>
   </div>
 </div>

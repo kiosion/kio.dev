@@ -22,7 +22,7 @@ export const APP_ROUTES = [
     path: '/blog',
     children: [
       { name: 'Post', path: '/blog/:slug' },
-      { name: 'All Posts', path: '/blog/all' },
+      { name: 'All Posts', path: '/blog/:int' },
       {
         name: 'Tags',
         path: '/blog/t',
@@ -36,7 +36,7 @@ export const APP_ROUTES = [
     path: '/work',
     children: [
       { name: 'Project', path: '/work/:slug' },
-      { name: 'All Projects', path: '/work/all' },
+      { name: 'All Projects', path: '/work/:int' },
       {
         name: 'Tags',
         path: '/work/t',

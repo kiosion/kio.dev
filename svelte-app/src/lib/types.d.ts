@@ -98,7 +98,24 @@ export interface AuthorDocument extends Document {
   bio: InputValue;
   name: string;
   image: SanityImageObject;
+  timeline: AuthorTimelineItem[];
 }
+
+export type AuthorTimelineItem = SanityAsset & {
+  title: string;
+  subtitle?: string;
+  body?: InputValue;
+  range: {
+    start: string;
+    end?: string;
+  };
+  skills?: [
+    SanityAsset & {
+      slug: SanityAsset & { current: string };
+      title: string;
+    }
+  ];
+};
 
 export interface ProjectDocument extends Document {
   author?: {

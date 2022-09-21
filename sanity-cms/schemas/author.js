@@ -98,6 +98,90 @@ export default {
         { type: 'code' },
         { type: 'divider' }
       ]
+    },
+    {
+      name: 'timeline',
+      title: 'Timeline',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule) => Rule.required()
+            },
+            {
+              name: 'subtitle',
+              title: 'Subtitle',
+              type: 'string'
+            },
+            {
+              name: 'range',
+              title: 'Date range',
+              type: 'object',
+              fields: [
+                {
+                  name: 'start',
+                  title: 'Start',
+                  type: 'date',
+                  options: {
+                    dateFormat: 'MMMM Do, YYYY'
+                  },
+                  validation: (Rule) => Rule.required()
+                },
+                {
+                  name: 'end',
+                  title: 'End',
+                  type: 'date',
+                  options: {
+                    dateFormat: 'MMMM Do, YYYY'
+                  }
+                }
+              ]
+            },
+            {
+              name: 'skills',
+              title: 'Skills',
+              type: 'array',
+              of: [
+                {
+                  type: 'reference',
+                  to: [{ type: 'tag' }]
+                }
+              ]
+            },
+            {
+              name: 'body',
+              title: 'Body',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' },
+                      { title: 'Underline', value: 'underline' },
+                      { title: 'Code', value: 'code' },
+                      {
+                        title: 'Highlight',
+                        value: 'highlight',
+                        blockEditor: {
+                          icon: () => 'H',
+                          render: highlightRender
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   preview: {
