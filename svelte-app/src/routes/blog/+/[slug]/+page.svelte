@@ -5,7 +5,7 @@
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`Blog | Tag | ${pageTitle}`);
-  navOptions.set({ down: '', up: '/blog/t' });
+  navOptions.set({ down: '', up: '/blog/+' });
 </script>
 
 <svelte:head>

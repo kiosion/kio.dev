@@ -86,7 +86,7 @@
                   >
                     {#each project.tags as tag}
                       <a
-                        href="/work/t/{tag.slug.current}"
+                        href="/work/+/{tag.slug.current}"
                         class="categoryTag-sm"
                       >
                         {tag.title}

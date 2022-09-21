@@ -14,7 +14,7 @@
     <div class="mb-6 flex flex-row flex-wrap gap-2 justify-start items-start">
       {#each project.tags as tag}
         <Hoverable>
-          <a href="/work/t/{tag.slug.current}" class="categoryTag">
+          <a href="/work/+/{tag.slug.current}" class="categoryTag">
             {tag.title}
           </a>
         </Hoverable>

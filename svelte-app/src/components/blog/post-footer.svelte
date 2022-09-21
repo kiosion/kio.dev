@@ -14,7 +14,7 @@
     <div class="mb-6 flex flex-row flex-wrap gap-2 justify-start items-start">
       {#each post.tags as tag}
         <Hoverable>
-          <a href="/blog/t/{tag.slug.current}" class="categoryTag">
+          <a href="/blog/+/{tag.slug.current}" class="categoryTag">
             {tag.title}
           </a>
         </Hoverable>

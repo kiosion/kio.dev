@@ -73,7 +73,7 @@
                       >
                         {#each item.skills as skill}
                           <a
-                            href="/work/t/{skill.slug.current}"
+                            href="/work/+/{skill.slug.current}"
                             class="categoryTag-sm"
                           >
                             {skill.title}

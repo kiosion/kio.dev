@@ -25,8 +25,8 @@ export const APP_ROUTES = [
       { name: 'All Posts', path: '/blog/:int' },
       {
         name: 'Tags',
-        path: '/blog/t',
-        children: [{ name: 'Tag', path: '/blog/t/:tag' }]
+        path: '/blog/filter',
+        children: [{ name: 'Tag', path: '/blog/+/:tag' }]
       }
     ],
     hidden: false
@@ -39,8 +39,8 @@ export const APP_ROUTES = [
       { name: 'All Projects', path: '/work/:int' },
       {
         name: 'Tags',
-        path: '/work/t',
-        children: [{ name: 'Tag', path: '/work/t/:tag' }]
+        path: '/work/filter',
+        children: [{ name: 'Tag', path: '/work/+/:tag' }]
       }
     ],
     hidden: false

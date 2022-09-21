@@ -5,7 +5,7 @@
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`Work | Tag | ${pageTitle}`);
-  navOptions.set({ down: '', up: '/work/t' });
+  navOptions.set({ down: '', up: '/work/+' });
 </script>
 
 <svelte:head>
