@@ -13,33 +13,47 @@
   import Image from './serializers/image.svelte';
 
   export let text: InputValue;
+  export let plainText = false;
 </script>
 
 {#if text}
-  <PortableText
-    value={text}
-    components={{
-      types: {
-        code: CodeBlock,
-        divider: Divider,
-        image: Image
-      },
-      marks: {
-        link: CustomLink,
-        code: CustomCode,
-        highlight: CustomHighlight
-      },
-      block: {
-        h1: CustomHeading,
-        h2: CustomHeading,
-        h3: CustomHeading,
-        h4: CustomHeading,
-        h5: CustomHeading,
-        normal: CustomParagraph,
-        blockquote: CustomQuote
-      },
-      list: {},
-      listItem: {}
-    }}
-  />
+  {#if plainText}
+    <PortableText
+      value={text}
+      components={{
+        marks: {
+          link: CustomLink,
+          code: CustomCode,
+          highlight: CustomHighlight
+        }
+      }}
+    />
+  {:else}
+    <PortableText
+      value={text}
+      components={{
+        types: {
+          code: CodeBlock,
+          divider: Divider,
+          image: Image
+        },
+        marks: {
+          link: CustomLink,
+          code: CustomCode,
+          highlight: CustomHighlight
+        },
+        block: {
+          h1: CustomHeading,
+          h2: CustomHeading,
+          h3: CustomHeading,
+          h4: CustomHeading,
+          h5: CustomHeading,
+          normal: CustomParagraph,
+          blockquote: CustomQuote
+        },
+        list: {},
+        listItem: {}
+      }}
+    />
+  {/if}
 {/if}

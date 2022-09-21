@@ -8,6 +8,7 @@
   import AboutCard from '$components/about/card.svelte';
   import AboutTimeline from '$components/about/timeline.svelte';
   import AboutSection from '$components/about/section.svelte';
+  import { Boundary } from '$lib/error-bound';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -30,18 +31,24 @@
 
 <div data-test-route="about">
   <ContentWrapper>
-    <AboutCard image={$about?.data?.image} body={$about?.data?.bio} />
+    <Boundary onError={console.error}>
+      <AboutCard image={$about?.data?.image} body={$about?.data?.bio} />
+    </Boundary>
     {#if $about?.data?.timeline}
-      <AboutSection title="My work" icon="Briefcase">
-        <AboutTimeline data={$about.data.timeline} />
-      </AboutSection>
+      <Boundary onError={console.error}>
+        <AboutSection title="My work" icon="Briefcase">
+          <AboutTimeline data={$about.data.timeline} />
+        </AboutSection>
+      </Boundary>
     {/if}
     {#if $about?.data?.body}
-      <AboutSection title="More" icon="InfoBox">
-        <div class="mx-1 font-sans">
-          <PortableText text={$about.data.body} />
-        </div>
-      </AboutSection>
+      <Boundary onError={console.error}>
+        <AboutSection title="More" icon="InfoBox">
+          <div class="mx-1 font-sans">
+            <PortableText text={$about.data.body} />
+          </div>
+        </AboutSection>
+      </Boundary>
     {/if}
   </ContentWrapper>
 </div>

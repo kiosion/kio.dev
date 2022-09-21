@@ -5,7 +5,7 @@
   import SafeIcon from '$components/safe-icon.svelte';
   import moment from 'moment';
   import Hoverable from '$components/hoverable.svelte';
-  import { slide, fly } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
 
   let selected: number | null = null;
 
@@ -82,11 +82,11 @@
                       </div>
                     {/if}
                     <div
-                      class="-mt-2 -mb-4 line-clamp-2"
+                      class="mt-3"
                       in:slide={{ duration: 150 }}
                       out:slide={{ duration: 150 }}
                     >
-                      <PortableText text={item.body} />
+                      <PortableText text={item.body} plainText={true} />
                     </div>
                   </div>
                 {/if}

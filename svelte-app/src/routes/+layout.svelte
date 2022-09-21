@@ -21,6 +21,7 @@
   import CustomCursor from '$components/custom-cursor.svelte';
   import { handleScrollNav } from '$lib/helpers/navigation';
   import { canNavigate } from '@/stores/navigation';
+  import { Boundary } from '$lib/error-bound';
 
   const unsubscribe = navigating.subscribe((res) => {
     !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
@@ -86,20 +87,28 @@
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
-  <HeaderControls />
-  <Nav segment={$page?.url ? $page.url.pathname : ''} />
+  <Boundary onError={console.error}>
+    <HeaderControls />
+  </Boundary>
+  <Boundary onError={console.error}>
+    <Nav segment={$page?.url ? $page.url.pathname : ''} />
+  </Boundary>
   <div class="md:h-full md:ml-40 xl:ml-60 px-8 pb-8 md:py-8 xl:px-10 2xl:px-20">
     <div
       class="h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1"
     >
       {#if appLoaded}
-        <PageTransition url={data?.url ? data.url.pathname : ''}>
-          <slot />
-        </PageTransition>
+        <Boundary onError={console.error}>
+          <PageTransition url={data?.url ? data.url.pathname : ''}>
+            <slot />
+          </PageTransition>
+        </Boundary>
       {/if}
     </div>
   </div>
-  <FooterControls />
+  <Boundary onError={console.error}>
+    <FooterControls />
+  </Boundary>
   <div
     class="fixed overflow-hidden pointer-events-none z-[-10] top-0 left-0 h-screen w-full md:rounded-l-2xl xl:rounded-l-3xl md:ml-40 xl:ml-60"
   >
@@ -119,7 +128,9 @@
 </div>
 
 {#if $menuState.open}
-  <svelte:component this={ContextMenu} page={pageContainer} />
+  <Boundary onError={console.error}>
+    <svelte:component this={ContextMenu} page={pageContainer} />
+  </Boundary>
 {/if}
 
 <style lang="scss">

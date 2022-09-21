@@ -12,6 +12,7 @@
   import type UIfx from 'uifx';
   import PageHeading from '$components/headings/page-heading.svelte';
   import IconHeader from '$components/icon-header.svelte';
+  import { Boundary } from '$lib/error-bound';
 
   let curPage = 1,
     totalPages = 1;
@@ -53,7 +54,7 @@
   });
 
   $: $posts.meta,
-  (totalPages = Math.ceil($posts.meta.total / PAGINATION_POSTS_PER_PAGE));
+  (totalPages = Math.ceil($posts.meta?.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
 </script>
 
@@ -68,13 +69,15 @@
   />
   <IconHeader icon="BulletList" text="All Posts" />
   <div class="pb-20">
-    {#if $posts?.data?.length}
-      {#each $posts.data as post}
-        <ListItem {post} {mousePos} />
-      {/each}
-    {:else}
-      <ErrorText text="No data" classes="w-fit" />
-    {/if}
+    <Boundary onError={console.error}>
+      {#if $posts.data?.length}
+        {#each $posts.data as post}
+          <ListItem {post} {mousePos} />
+        {/each}
+      {:else}
+        <ErrorText text="No data" classes="w-fit" />
+      {/if}
+    </Boundary>
 
     <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
       <div class="flex flex-row justify-start items-center gap-2">

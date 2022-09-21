@@ -13,6 +13,8 @@
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
+  import PageHeading from '$components/headings/page-heading.svelte';
+  import { Boundary } from '$lib/error-bound';
 
   let body: HTMLElement;
   let click: UIfx;
@@ -42,7 +44,11 @@
 </svelte:head>
 
 <div data-test-route="index" class="w-full" bind:this={body}>
-  <div class="mt-12">
+  <PageHeading
+    heading="Secret Features"
+    text="This is where I keep all my secret options and WIP features :)"
+  />
+  <Boundary onError={console.error}>
     <ContentWrapper>
       <SwitchItem
         action={onChange}
@@ -81,5 +87,5 @@
         label="Comic Sans 😃"
       />
     </ContentWrapper>
-  </div>
+  </Boundary>
 </div>

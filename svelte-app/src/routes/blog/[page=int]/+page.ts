@@ -18,7 +18,6 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       if (res.error) {
         throw res.error;
       }
-      console.log('res', res);
       return posts.set(res);
     })
     .catch((err: unknown) => {

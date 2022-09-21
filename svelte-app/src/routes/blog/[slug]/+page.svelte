@@ -4,6 +4,7 @@
   import { navOptions, pageHeading } from '$stores/navigation';
   import PostContent from '@/components/blog/post-content.svelte';
   import { onMount } from 'svelte';
+  import { Boundary } from '$lib/error-bound';
 
   const pageTitle = $post?.data
     ? `Blog | ${$post.data.title.slice(0, 50)}`
@@ -24,7 +25,9 @@
 <div data-test-route="post">
   {#if $post?.data}
     <ContentWrapper>
-      <PostContent post={$post.data} />
+      <Boundary onError={console.error}>
+        <PostContent post={$post.data} />
+      </Boundary>
     </ContentWrapper>
   {/if}
 </div>

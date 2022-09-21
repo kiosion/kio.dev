@@ -5,6 +5,7 @@
   import CodeBlock from '$components/code-block.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
+  import { Boundary } from '$lib/error-bound';
 
   onMount(() => {
     navOptions.set({ down: '', up: '/about' });
@@ -20,6 +21,8 @@
       heading="PGP"
       text="Want to send a secure message my way? Now you can :)"
     />
-    <CodeBlock content={`${pgp}`} showClipboard={true} lang="markdown" />
+    <Boundary onError={console.error}>
+      <CodeBlock content={`${pgp}`} showClipboard={true} lang="markdown" />
+    </Boundary>
   </ContentWrapper>
 </div>
