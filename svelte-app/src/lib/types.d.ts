@@ -109,12 +109,11 @@ export type AuthorTimelineItem = SanityAsset & {
     start: string;
     end?: string;
   };
-  skills?: [
-    SanityAsset & {
-      slug: SanityAsset & { current: string };
-      title: string;
-    }
-  ];
+  skills?: SanityAsset &
+  {
+    slug: SanityAsset & { current: string };
+    title: string;
+  }[];
 };
 
 export interface ProjectDocument extends Document {

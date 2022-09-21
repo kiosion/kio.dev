@@ -358,7 +358,17 @@ module query {
       _type,
       bio,
       body,
-      timeline,
+      timeline[]{
+        title,
+        subtitle,
+        range,
+        skills[]->{
+          _id,
+          title,
+          slug
+        },
+        body
+      },
       image,
       name,
       slug

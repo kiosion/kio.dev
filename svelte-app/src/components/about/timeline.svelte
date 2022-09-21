@@ -5,9 +5,9 @@
   import SafeIcon from '$components/safe-icon.svelte';
   import moment from 'moment';
   import Hoverable from '$components/hoverable.svelte';
-  import { slide } from 'svelte/transition';
+  import { slide, fly } from 'svelte/transition';
 
-  let selected: number | null = 0;
+  let selected: number | null = null;
 
   export let data: AuthorTimelineItem[] | undefined;
 </script>
@@ -64,20 +64,40 @@
                   </div>
                 {/if}
                 {#if selected === i && item.body}
-                  <div
-                    class="font-sans text-base -mt-2 -mb-4 line-clamp-2"
-                    in:slide={{ duration: 150 }}
-                    out:slide={{ duration: 150 }}
-                  >
-                    <PortableText text={item.body} />
+                  <div class="font-sans text-base">
+                    {#if item.skills}
+                      <div
+                        class="flex flex-row justify-start items-center gap-2 my-2 select-none"
+                        in:slide={{ duration: 150 }}
+                        out:slide={{ duration: 150 }}
+                      >
+                        {#each item.skills as skill}
+                          <a
+                            href="/work/t/{skill.slug.current}"
+                            class="categoryTag-sm"
+                          >
+                            {skill.title}
+                          </a>
+                        {/each}
+                      </div>
+                    {/if}
+                    <div
+                      class="-mt-2 -mb-4 line-clamp-2"
+                      in:slide={{ duration: 150 }}
+                      out:slide={{ duration: 150 }}
+                    >
+                      <PortableText text={item.body} />
+                    </div>
                   </div>
                 {/if}
-                <SafeIcon
-                  icon="ChevronDown"
-                  classes="{selected === i
-                    ? 'rotate-0'
-                    : 'rotate-90'} transition-all absolute top-4 right-4"
-                />
+                {#if item.body}
+                  <SafeIcon
+                    icon="ChevronDown"
+                    classes="{selected === i
+                      ? 'rotate-0'
+                      : 'rotate-90'} transition-all absolute top-4 right-4"
+                  />
+                {/if}
               </div>
             </Hoverable>
           </div>
