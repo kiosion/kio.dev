@@ -2259,15 +2259,15 @@
     "@sanity/generate-help-url" "^3.0.0"
     lodash "^4.17.15"
 
-"@sanity/default-layout@^2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.33.2.tgz#a4d74ff87fffe08e861da4b5f638ba1678045fa5"
-  integrity sha512-KLNATlv5A571j/ulDvg0+h/SqvqlMxgHmoxXqMg4PgkpaDXUE/EcXRUvKBW4Go4MKLci+QQM1K4RgPDv/K5OYg==
+"@sanity/default-layout@^2.33.3":
+  version "2.33.3"
+  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-2.33.3.tgz#158c950f0546611499225349478d0cd1ff78ef92"
+  integrity sha512-dDjsTZG/2gvd6s0oTDZU2PRVHq5EcBHSKgiHZ78I8UWyz2JxEVUbPh11RJddzOzZPESx+x/ORB04+t92h2yAaw==
   dependencies:
     "@portabletext/react" "^1.0.0"
     "@reach/auto-id" "^0.13.2"
     "@sanity/asset-utils" "^1.2.5"
-    "@sanity/base" "2.33.2"
+    "@sanity/base" "2.33.3"
     "@sanity/client" "^3.3.3"
     "@sanity/generate-help-url" "^3.0.0"
     "@sanity/icons" "^1.3.4"
