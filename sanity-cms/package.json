@@ -12,7 +12,7 @@
   "dependencies": {
     "@sanity/base": "^2.33.0",
     "@sanity/cli": "^2.33.2",
-    "@sanity/code-input": "^2.33.2",
+    "@sanity/code-input": "^2.33.3",
     "@sanity/core": "^2.33.2",
     "@sanity/default-layout": "^2.33.2",
     "@sanity/default-login": "^2.33.2",
