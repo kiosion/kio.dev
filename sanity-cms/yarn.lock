@@ -2178,10 +2178,10 @@
   resolved "https://registry.yarnpkg.com/@sanity/color/-/color-2.1.14.tgz#96b486c24eecf9b657c358953a12cd5988810429"
   integrity sha512-ntCT72qUNck9XrCrMEpMrTGsNPK7edt3arou7YUBgb6IRjba6MtByTAz/LNXbRK5meMQFqYFpNKDErM351X+Ug==
 
-"@sanity/core@^2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/core/-/core-2.33.2.tgz#b3595dc9f03fa562677c0fc8f5258eb695592ded"
-  integrity sha512-ib2nIaVEH7V6ujCzGNvl59s891PVVVV0nX3Ze4zOVagijJFEiRpxI0VxWBlsFX3duyIaDhlmTarTl7Yu9CFjjQ==
+"@sanity/core@^2.33.3":
+  version "2.33.3"
+  resolved "https://registry.yarnpkg.com/@sanity/core/-/core-2.33.3.tgz#d11276f9d73d99b20d41388ce8c3907b41af0fc9"
+  integrity sha512-KeAGLHDiEuDvl6jL8qdzofDsUgCE1yBlxlo4kqeBiAMzTNNbIeThUFMyHYSeJP/a+w5xC+dXNcdNBV6CpN3bNw==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.10.4"
     "@babel/preset-env" "^7.11.5"
