@@ -11,6 +11,7 @@
   import { setupNavigation } from '$helpers/navigation';
   import { page } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
+  import { RECENT_POSTS_COUNT } from '$lib/consts';
 
   let mousePos: [number, number];
 
@@ -76,15 +77,17 @@
         <ErrorText text="No data" classes="w-fit" />
       </div>
     {/if}
-    <Hoverable>
-      <a
-        href="/blog/1"
-        class="block w-fit mt-8"
-        aria-label="View all posts"
-        on:click={() => $sounds === 'on' && click?.play()}
-      >
-        <IconHeader icon="ArrowRight" text="View all" classes="" />
-      </a>
-    </Hoverable>
+    {#if $posts?.meta?.total > RECENT_POSTS_COUNT}
+      <Hoverable>
+        <a
+          href="/blog/1"
+          class="block w-fit mt-8"
+          aria-label="View all posts"
+          on:click={() => $sounds === 'on' && click?.play()}
+        >
+          <IconHeader icon="ArrowRight" text="View all" classes="" />
+        </a>
+      </Hoverable>
+    {/if}
   </div>
 </div>

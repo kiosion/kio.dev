@@ -20,7 +20,7 @@
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
   import { handleScrollNav } from '$lib/helpers/navigation';
-  import { canNavigate } from '@/stores/navigation';
+  import { canNavigate } from '$stores/navigation';
   import { Boundary } from '$lib/error-bound';
 
   const unsubscribe = navigating.subscribe((res) => {

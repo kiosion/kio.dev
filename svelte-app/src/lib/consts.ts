@@ -23,11 +23,7 @@ export const APP_ROUTES = [
     children: [
       { name: 'Post', path: '/blog/:slug' },
       { name: 'All Posts', path: '/blog/:int' },
-      {
-        name: 'Tags',
-        path: '/blog/filter',
-        children: [{ name: 'Tag', path: '/blog/+/:tag' }]
-      }
+      { name: 'Tag', path: '/blog/+/:tag' }
     ],
     hidden: false
   },
@@ -39,7 +35,7 @@ export const APP_ROUTES = [
       { name: 'All Projects', path: '/work/:int' },
       {
         name: 'Tags',
-        path: '/work/filter',
+        path: '/work/+',
         children: [{ name: 'Tag', path: '/work/+/:tag' }]
       }
     ],
@@ -58,3 +54,4 @@ export const APP_ROUTES = [
 ];
 
 export const PAGINATION_POSTS_PER_PAGE = 6;
+export const RECENT_POSTS_COUNT = 5;

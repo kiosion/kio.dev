@@ -4,6 +4,7 @@ import { config } from '$stores/config';
 import Logger from '$lib/logger';
 import type { PostDocument, ResData } from '$lib/types';
 import { ENV } from '$lib/env';
+import { RECENT_POSTS_COUNT } from '$lib/consts';
 
 export const ssr = !(ENV === 'testing');
 
@@ -26,7 +27,7 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
       });
   }
 
-  await findPosts(fetch, { limit: 6 })
+  await findPosts(fetch, { limit: RECENT_POSTS_COUNT })
     .then((res) => {
       if (res.error) {
         throw res.error;
