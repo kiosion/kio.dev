@@ -70,6 +70,8 @@ export const handleScrollNav = (
     !deltaY ||
     Math.abs(deltaY) < 40
   ) {
+    canNavigate.set(false);
+    setTimeout(() => canNavigate.set(true), 1000);
     return;
   }
 
@@ -84,7 +86,7 @@ export const handleScrollNav = (
 
   if (path !== currentPath) {
     canNavigate.set(false);
-    setTimeout(() => canNavigate.set(true), 500);
+    setTimeout(() => canNavigate.set(true), 1000);
     return goto(path);
   }
 };
