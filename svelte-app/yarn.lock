@@ -1007,19 +1007,19 @@
     escape-string-regexp "^5.0.0"
     lodash.deburr "^4.1.0"
 
-"@sveltejs/adapter-auto@^1.0.0-next.78":
-  version "1.0.0-next.78"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-auto/-/adapter-auto-1.0.0-next.78.tgz#ae5f1b934ed7948f43eef211e478596c3b6fe233"
-  integrity sha512-kaOeJkFR5EQ6R0vsX59Pa+ITnS9PLzP6Zl7gazUltDUrBg7hcqwBRIIBj4w60OXW6IMSXShuxYUkR47MJn0H3w==
+"@sveltejs/adapter-auto@^1.0.0-next.80":
+  version "1.0.0-next.80"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-auto/-/adapter-auto-1.0.0-next.80.tgz#15d331bbfca89cb39b719c3086d134cc1a7227b1"
+  integrity sha512-352WoZr9fQgxJqgNENvxRr2gsA+wTF6V9AVaQaaatDYd3RVEBaXTYOOalFaRLSa25mRUJaLYP2aaliqczMl23g==
   dependencies:
-    "@sveltejs/adapter-cloudflare" "1.0.0-next.36"
+    "@sveltejs/adapter-cloudflare" "1.0.0-next.38"
     "@sveltejs/adapter-netlify" "1.0.0-next.78"
     "@sveltejs/adapter-vercel" "1.0.0-next.77"
 
-"@sveltejs/adapter-cloudflare@1.0.0-next.36":
-  version "1.0.0-next.36"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-cloudflare/-/adapter-cloudflare-1.0.0-next.36.tgz#e6e41ca30f43342d75dc77cddcb80ce69836dcf3"
-  integrity sha512-obxJUQLfsPknrFJlqG+Ha5HqAj8YJy+tiL5rjbHbYTsunW+bx0rePL1Z+6nP4uGwAPWcbn+3vk2tWO5bFRaEKA==
+"@sveltejs/adapter-cloudflare@1.0.0-next.38":
+  version "1.0.0-next.38"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-cloudflare/-/adapter-cloudflare-1.0.0-next.38.tgz#b4c6e7314de79f2a3ab1d8e2f88274a8c224e325"
+  integrity sha512-N6jdTomRZkdKlcNoguwYD7lpdXSt0beIyUJsp0MS/YLm/4gI83y698zFYInFKJ9t5e6DAnuEBSAXcg568z2oFA==
   dependencies:
     "@cloudflare/workers-types" "^3.14.0"
     esbuild "^0.15.7"
