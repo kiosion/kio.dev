@@ -1,4 +1,8 @@
 defmodule Router.Api.V1 do
+  @moduledoc """
+  Plug router to handle all API V1 requests
+  """
+
   use Plug.Router
   use Plug.ErrorHandler
 

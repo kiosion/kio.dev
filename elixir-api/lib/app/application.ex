@@ -11,6 +11,9 @@ defmodule Hexerei.Application do
         options: [
           port: Application.get_env(:hexerei, :port)
         ]
+      },
+      {
+        Plug.Cowboy.Drainer, refs: [Hexerei.Router]
       }
     ]
 
