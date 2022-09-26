@@ -38,7 +38,7 @@ module query {
       if (filter.tags?.length > 0 && filter.tags[0] !== '') {
         tags = filter.tags
           ?.map((tag) => {
-            return tag !== '' && `'${tag}'`;
+            return tag !== '' && `"${tag.toLowerCase()}"`;
           })
           ?.join(', ');
       }
@@ -50,7 +50,7 @@ module query {
         date ? ` && date == "${date}"` : ''
       }${
         tags
-          ? ` && references(*[_type == "tag" && title in [${tags}]]._id)`
+          ? ` && references(*[_type == "tag" && lower(slug.current) in [${tags}]]._id)`
           : ''
       }]{
       _id,
@@ -196,7 +196,7 @@ module query {
       if (filter.tags?.length > 0 && filter.tags[0] !== '') {
         tags = filter.tags
           ?.map((tag) => {
-            return tag !== '' && `'${tag}'`;
+            return tag !== '' && `"${tag.toLowerCase()}"`;
           })
           ?.join(', ');
       }
@@ -208,7 +208,7 @@ module query {
         date ? ` && date == "${date}"` : ''
       }${
         tags
-          ? ` && references(*[_type == "tag" && title in [${tags}]]._id)`
+          ? ` && references(*[_type == "tag" && lower(slug.current) in [${tags}]]._id)`
           : ''
       }]{
       _id,
@@ -317,10 +317,14 @@ module query {
     });
 
   // Fetch list of all tags
-  export const tags = ({ limit = 0 }) =>
+  export const tags = ({ limit = 0, usedOn = '' }) =>
     new Promise((resolve, reject) => {
       if (limit < 1) {
         reject({ code: 400, message: 'Invalid limit' });
+      }
+
+      if (usedOn !== '' && usedOn !== 'post' && usedOn !== 'project') {
+        reject({ code: 400, message: 'Invalid usedOn' });
       }
 
       const query = `*[_type == "tag"]{
@@ -329,7 +333,11 @@ module query {
       "objectID": _id,
       _type,
       title,
-      slug
+      slug,
+      ${
+  usedOn !== '' &&
+        `"referencedBy": *[_type == ${usedOn} && references(^._id)]._id`
+}
     } | order(title asc) [0...${limit}]`;
 
       client

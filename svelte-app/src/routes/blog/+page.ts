@@ -1,8 +1,8 @@
-import { posts, findPosts, findPost } from '$stores/blog';
+import { findPosts, findPost } from '$stores/blog';
 import { get } from 'svelte/store';
 import { config } from '$stores/config';
 import Logger from '$lib/logger';
-import type { PostDocument, ResData } from '$lib/types';
+import type { PostDocument, ResData, ResDataMany } from '$lib/types';
 import { ENV } from '$lib/env';
 import { RECENT_POSTS_COUNT } from '$lib/consts';
 
@@ -13,6 +13,7 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
 
   const currentConfig = get(config);
   let pinnedPost: ResData<PostDocument> | undefined;
+  let postsData: ResDataMany<PostDocument> | undefined;
 
   if (currentConfig?.data?.pinnedPost?._ref) {
     await findPost(fetch, { id: currentConfig.data.pinnedPost._ref })
@@ -32,13 +33,14 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
       if (res.error) {
         throw res.error;
       }
-      return posts.set(res);
+      postsData = res;
     })
     .catch((err: unknown) => {
       Logger.error(err as string, 'routes/blog');
     });
 
   return {
-    pinnedPost
+    pinned: pinnedPost,
+    posts: postsData
   };
 };

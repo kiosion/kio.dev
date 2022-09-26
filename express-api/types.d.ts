@@ -17,6 +17,7 @@ export type postsQueryParams = {
   skip?: number | string;
   sort?: 'date' | 'title';
   order?: 'asc' | 'desc';
+  tags?: string[];
 };
 
 export type postQueryParams = {
@@ -56,18 +57,18 @@ export type postQueryResult = {
   };
   body?: {
     [
-      _key?: string,
-      _type?: string,
-      children?: {
-        [_key: string, _type: string, marks?: [string], text: string];
-      },
-      markDefs?: [
-        {
-          _key: string;
-          _type: string;
-          href?: string;
-        }
-      ]
+    _key?: string,
+    _type?: string,
+    children?: {
+      [_key: string, _type: string, marks?: [string], text: string];
+    },
+    markDefs?: [
+      {
+        _key: string;
+        _type: string;
+        href?: string;
+      }
+    ]
     ];
   };
   date?: string;

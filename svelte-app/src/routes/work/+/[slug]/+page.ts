@@ -8,17 +8,18 @@ import type { ResDataMany, ProjectDocument } from '$lib/types';
 export const prerender = false;
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
-  if (parseInt(params.page) < 1) {
-    throw redirect(301, '/work/1');
+  if (params.slug === '') {
+    throw redirect(301, '/blog/');
   }
-
-  const skip = (parseInt(params?.page || '1') - 1) * PAGINATION_POSTS_PER_PAGE;
 
   await parent();
 
   let projectsData: ResDataMany<ProjectDocument> | undefined;
 
-  await findProjects(fetch, { skip, limit: skip + PAGINATION_POSTS_PER_PAGE })
+  await findProjects(fetch, {
+    limit: PAGINATION_POSTS_PER_PAGE,
+    tags: [params.slug]
+  })
     .then((res) => {
       if (res.error) {
         throw res.error;
@@ -26,7 +27,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       projectsData = res;
     })
     .catch((err: unknown) => {
-      Logger.error(err as string, 'routes/work');
+      Logger.error(err as string, 'routes/blog');
     });
 
   return {

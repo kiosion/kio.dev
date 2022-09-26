@@ -2,7 +2,6 @@
   import ListItem from '$components/blog/list-item.svelte';
   import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '$stores/blog';
   import { highlightEffects, sounds } from '$stores/features';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
@@ -35,7 +34,6 @@
       document.addEventListener('mouseout', () => setMousePos(-1000, -1000));
       document.addEventListener('blur', () => setMousePos(-1000, -1000));
     }
-    // TODO: If posts store is empty, should re-fetch from API
   });
 
   onDestroy(() => {
@@ -48,11 +46,30 @@
 
   export let data: PageData;
 
-  $: ({ pinnedPost } = data);
+  $: ({ pinned, posts } = data);
 </script>
 
 <svelte:head>
   <title>kio.dev | blog</title>
+  <meta
+    name="description"
+    content="Thoughts about (mostly) teach, design, and development"
+  />
+  <meta name="keywords" content="blog, posts, kio.dev, kio, kiosion" />
+  <meta name="author" content="Kio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kio.dev/blog" />
+  <meta property="og:title" content="kio.dev | blog" />
+  <meta
+    property="og:description"
+    content="Thoughts about (mostly) teach, design, and development"
+  />
+  <meta property="twitter:url" content="https://kio.dev/blog" />
+  <meta property="twitter:title" content="kio.dev | blog" />
+  <meta
+    property="twitter:description"
+    content="Thoughts about (mostly) teach, design, and development"
+  />
 </svelte:head>
 
 <div data-test-route="blog" class="w-full">
@@ -61,14 +78,14 @@
     text="Thoughts about (mostly) tech, design, and development"
   />
   <div class="pb-20">
-    {#if pinnedPost?.data}
+    {#if pinned?.data}
       <IconHeader icon="Pin" text="Pinned" />
-      <ListItem post={pinnedPost.data} {mousePos} />
+      <ListItem post={pinned.data} {mousePos} />
     {/if}
     <IconHeader icon="Clock" text="Recent" />
-    {#if $posts?.data?.length}
-      {#each $posts.data as post}
-        {#if post._id !== pinnedPost?.data?._id}
+    {#if posts?.data?.length}
+      {#each posts.data as post}
+        {#if post._id !== pinned?.data?._id}
           <ListItem {post} {mousePos} />
         {/if}
       {/each}
@@ -77,7 +94,7 @@
         <ErrorText text="No data" classes="w-fit" />
       </div>
     {/if}
-    {#if $posts?.meta?.total > RECENT_POSTS_COUNT}
+    {#if posts?.meta?.total > RECENT_POSTS_COUNT}
       <Hoverable>
         <a
           href="/blog/1"

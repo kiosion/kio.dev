@@ -1,14 +1,15 @@
-import { projects, findProjects, findProject } from '$stores/work';
+import { findProjects, findProject } from '$stores/work';
 import Logger from '@/lib/logger';
 import { config } from '$stores/config';
 import { get } from 'svelte/store';
-import type { ProjectDocument, ResData } from '$lib/types';
+import type { ProjectDocument, ResData, ResDataMany } from '$lib/types';
 
 export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
   await parent();
 
   const currentConfig = get(config);
   let pinnedProject: ResData<ProjectDocument> | undefined;
+  let projectsData: ResDataMany<ProjectDocument> | undefined;
 
   if (currentConfig?.data?.pinnedProject?._ref) {
     await findProject(fetch, { id: currentConfig.data.pinnedProject._ref })
@@ -28,13 +29,14 @@ export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
       if (res.error) {
         throw res.error;
       }
-      projects.set(res);
+      projectsData = res;
     })
     .catch((err: unknown) => {
       Logger.error(err as string, 'routes/work');
     });
 
   return {
-    pinnedProject
+    pinned: pinnedProject,
+    projects: projectsData
   };
 };

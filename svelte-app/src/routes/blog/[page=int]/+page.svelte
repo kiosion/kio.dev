@@ -1,7 +1,6 @@
 <script lang="ts">
   import ListItem from '$components/blog/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { posts } from '$stores/blog';
   import { highlightEffects, sounds } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
@@ -13,6 +12,7 @@
   import PageHeading from '$components/headings/page-heading.svelte';
   import IconHeader from '$components/icon-header.svelte';
   import { Boundary } from '$lib/error-bound';
+  import type { PageData } from './$types';
 
   let curPage = 1,
     totalPages = 1;
@@ -53,9 +53,12 @@
     }
   });
 
-  $: $posts.meta,
-  (totalPages = Math.ceil($posts.meta?.total / PAGINATION_POSTS_PER_PAGE));
+  export let data: PageData;
+
+  $: posts?.meta &&
+    (totalPages = Math.ceil(posts.meta?.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
+  $: ({ posts } = data);
 </script>
 
 <svelte:head>
@@ -70,8 +73,8 @@
   <IconHeader icon="BulletList" text="All Posts" />
   <div class="pb-20">
     <Boundary onError={console.error}>
-      {#if $posts.data?.length}
-        {#each $posts.data as post}
+      {#if posts?.data?.length}
+        {#each posts.data as post}
           <ListItem {post} {mousePos} />
         {/each}
       {:else}

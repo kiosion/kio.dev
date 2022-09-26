@@ -5,8 +5,8 @@
   "scripts": {
     "build": "vite build --mode production",
     "build:test": "rimraf ./dist && vite build --mode testing",
-    "dev": "vite dev --mode development",
-    "dev:backed": "vite dev --mode backed",
+    "dev": "vite dev --mode development --host",
+    "dev:backed": "vite dev --mode backed --host",
     "package": "svelte-kit package",
     "preview": "vite preview",
     "serve": "node ./dist",

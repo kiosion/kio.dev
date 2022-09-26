@@ -10,6 +10,19 @@
 
 <svelte:head>
   <title>kio.dev | blog & portfolio</title>
+  <meta name="description" content="" />
+  <meta
+    name="keywords"
+    content="about, portfolio, blog, projects, kio.dev, kio, kiosion"
+  />
+  <meta name="author" content="Kio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kio.dev/" />
+  <meta property="og:title" content="kio.dev | blog & portfolio" />
+  <meta property="og:description" content="" />
+  <meta property="twitter:url" content={$page.url.href} />
+  <meta property="twitter:title" content="kio.dev | blog & portfolio" />
+  <meta property="twitter:description" content="" />
 </svelte:head>
 
 <div data-test-route="index">

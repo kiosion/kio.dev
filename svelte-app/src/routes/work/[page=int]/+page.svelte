@@ -1,7 +1,7 @@
 <script lang="ts">
   import ListItem from '$components/work/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { projects } from '$stores/work';
+  import type { PageData } from './$types';
   import { highlightEffects } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
@@ -46,9 +46,12 @@
     }
   });
 
-  $: $projects.meta,
-  (totalPages = Math.ceil($projects.meta.total / PAGINATION_POSTS_PER_PAGE));
+  export let data: PageData;
+
+  $: projects?.meta &&
+    (totalPages = Math.ceil(projects.meta.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
+  $: ({ projects } = data);
 </script>
 
 <svelte:head>
@@ -62,8 +65,8 @@
   />
   <IconHeader icon="BulletList" text="All Work" />
   <div class="pb-20">
-    {#if $projects?.data?.length}
-      {#each $projects.data as project}
+    {#if projects?.data?.length}
+      {#each projects.data as project}
         <ListItem {project} />
       {/each}
     {:else}

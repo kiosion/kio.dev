@@ -1,4 +1,3 @@
-import { writable } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Cache from '$lib/cache';
 import Logger from '$lib/logger';
@@ -14,9 +13,6 @@ import type {
 
 const Store = new Cache();
 
-export const posts = writable([] as unknown as ResDataMany<PostDocument>);
-export const post = writable({} as ResData<PostDocument>);
-
 export const queryPosts = async (
   fetch: RouteFetch,
   params: DocumentQueryParams
@@ -26,9 +22,13 @@ export const queryPosts = async (
     skip = 0,
     sort = 'date',
     order = 'desc',
-    date = ''
+    date = '',
+    tags = []
   } = params;
-  const url = `${API_URL}getPosts?limit=${limit}&skip=${skip}&s=${sort}&o=${order}&date=${date}`;
+  const tagsStr = tags.join(',');
+  const url = `${API_URL}getPosts?limit=${limit}&skip=${skip}&s=${sort}&o=${order}&date=${date}${
+    tags.length > 0 ? `&tags=${tagsStr}` : ''
+  }`;
   try {
     const res = await fetch(url);
     const response = await res.json();
@@ -94,7 +94,8 @@ export const findPosts = async (
       skip: 0,
       sort: 'date',
       order: 'desc',
-      date: ''
+      date: '',
+      tags: []
     },
     params
   );

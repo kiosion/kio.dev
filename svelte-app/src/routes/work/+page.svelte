@@ -3,7 +3,6 @@
   import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount, onDestroy } from 'svelte';
   import { highlightEffects, sounds } from '$stores/features';
-  import { projects } from '$stores/work';
   import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
@@ -11,6 +10,7 @@
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import Hoverable from '$components/hoverable.svelte';
+  import { RECENT_PROJECTS_COUNT } from '$lib/consts';
 
   let mousePos: [number, number];
 
@@ -50,11 +50,30 @@
 
   export let data: PageData;
 
-  $: ({ pinnedProject } = data);
+  $: ({ pinned, projects } = data);
 </script>
 
 <svelte:head>
   <title>kio.dev | work</title>
+  <meta
+    name="description"
+    content="A collection of my work, open-source contributions, and personal projects"
+  />
+  <meta name="keywords" content="work, projects, kio.dev, kio, kiosion" />
+  <meta name="author" content="Kio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kio.dev/work" />
+  <meta property="og:title" content="kio.dev | work" />
+  <meta
+    property="og:description"
+    content="A collection of my work, open-source contributions, and personal projects"
+  />
+  <meta property="twitter:url" content="https://kio.dev/work" />
+  <meta property="twitter:title" content="kio.dev | work" />
+  <meta
+    property="twitter:description"
+    content="A collection of my work, open-source contributions, and personal projects"
+  />
 </svelte:head>
 
 <div data-test-route="work" class="w-full">
@@ -63,13 +82,13 @@
     text="A collection of my work, open-source contributions, and personal projects"
   />
   <div class="mb-12">
-    {#if pinnedProject?.data}
+    {#if pinned?.data}
       <IconHeader icon="Pin" text="Pinned" />
-      <ListItem project={pinnedProject.data} {mousePos} />
+      <ListItem project={pinned.data} {mousePos} />
     {/if}
     <IconHeader icon="Clock" text="Recent" />
-    {#if $projects?.data?.length}
-      {#each $projects.data as project}
+    {#if projects?.data?.length}
+      {#each projects.data as project}
         <ListItem {project} {mousePos} />
       {/each}
     {:else}
@@ -77,15 +96,17 @@
         <ErrorText text="No data" classes="w-fit" />
       </div>
     {/if}
-    <Hoverable>
-      <a
-        href="/work/1"
-        class="block w-fit mt-8"
-        aria-label="View all projects"
-        on:click={() => $sounds === 'on' && click?.play()}
-      >
-        <IconHeader icon="ArrowRight" text="View all" classes="" />
-      </a>
-    </Hoverable>
+    {#if projects?.meta?.total > RECENT_PROJECTS_COUNT}
+      <Hoverable>
+        <a
+          href="/work/1"
+          class="block w-fit mt-8"
+          aria-label="View all projects"
+          on:click={() => $sounds === 'on' && click?.play()}
+        >
+          <IconHeader icon="ArrowRight" text="View all" classes="" />
+        </a>
+      </Hoverable>
+    {/if}
   </div>
 </div>

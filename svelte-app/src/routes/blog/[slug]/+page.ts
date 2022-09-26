@@ -1,4 +1,5 @@
-import { post, findPost } from '$stores/blog';
+import { findPost } from '$stores/blog';
+import type { ResData, PostDocument } from '$lib/types';
 import { error } from '@sveltejs/kit';
 import Logger from '$lib/logger';
 
@@ -9,12 +10,14 @@ export const load: import('./$types').PageLoad = async ({
 }) => {
   await parent();
 
+  let postData: ResData<PostDocument> | undefined;
+
   await findPost(fetch, { slug: params.slug })
     .then((res) => {
       if (res.error) {
         throw error(res.code, res.error);
       }
-      post.set(res);
+      postData = res;
     })
     .catch((e) => {
       Logger.error(e, `routes/blog/${params.slug}`);
@@ -23,4 +26,8 @@ export const load: import('./$types').PageLoad = async ({
         e.message ? e.message : 'Something went wrong'
       );
     });
+
+  return {
+    post: postData
+  };
 };

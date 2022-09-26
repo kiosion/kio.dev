@@ -55,3 +55,4 @@ export const APP_ROUTES = [
 
 export const PAGINATION_POSTS_PER_PAGE = 6;
 export const RECENT_POSTS_COUNT = 5;
+export const RECENT_PROJECTS_COUNT = 5;
