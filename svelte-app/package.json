@@ -74,7 +74,7 @@
     "typescript": "^4.8.3",
     "uifx": "^2.0.7",
     "vite": "^3.1.3",
-    "vite-plugin-inspect": "^0.7.3",
+    "vite-plugin-inspect": "^0.7.4",
     "vite-plugin-test-selectors": "0.0.2",
     "vitest": "^0.23.4"
   },
