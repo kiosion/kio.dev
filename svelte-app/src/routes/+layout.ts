@@ -1,7 +1,13 @@
 import { config, findConfig } from '$stores/config';
 import Logger from '$lib/logger';
 
-export const load: import('./$types').LayoutLoad = async ({ url, fetch }) => {
+export const load: import('./$types').LayoutLoad = async ({
+  url,
+  parent,
+  fetch
+}) => {
+  await parent();
+
   await findConfig(fetch)
     .then((res) => {
       if (res.error) {

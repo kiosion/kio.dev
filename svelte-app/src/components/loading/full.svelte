@@ -13,12 +13,16 @@
     'Dusting the cobwebs',
     'Looking for missing semicolons',
     'Getting a bigger boat',
-    'Reading the docs',
-    'Doing the heavy lifting',
     ':3',
     'Waiting for the eventual heat-death of the universe',
     'Calculating the airspeed velocity of an unladen swallow',
-    'Why do they call it oven when you of in the cold food of out hot eat the food'
+    'Why do they call it oven when you of in the cold food of out hot eat the food',
+    'Brewing some coffee',
+    'Reticulating splines',
+    'Translating from English to English',
+    'Browsing StackOverflow',
+    'Warming up your CPU',
+    'Rotating the earth'
   ];
 
   phrase = `${

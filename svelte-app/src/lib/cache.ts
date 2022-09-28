@@ -2,10 +2,15 @@ import { get as value, writable } from 'svelte/store';
 import type {
   DocumentQueryParams,
   ResData,
-  SingleDocumentQueryParams
+  SingleDocumentQueryParams,
+  SiteConfig
 } from '$lib/types';
 
-type CacheData = { [key: string]: unknown } | ResData<unknown> | unknown[];
+type CacheData =
+  | { [key: string]: unknown }
+  | ResData<unknown>
+  | SiteConfig
+  | unknown[];
 type CacheQuery =
   | { [key: string]: unknown }
   | DocumentQueryParams
