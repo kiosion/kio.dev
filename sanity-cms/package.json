@@ -14,9 +14,9 @@
     "@sanity/cli": "^2.33.3",
     "@sanity/code-input": "^2.34.0",
     "@sanity/core": "^2.33.3",
-    "@sanity/default-layout": "^2.33.3",
+    "@sanity/default-layout": "^2.34.0",
     "@sanity/default-login": "^2.33.3",
-    "@sanity/desk-tool": "^2.33.3",
+    "@sanity/desk-tool": "^2.34.0",
     "@sanity/eslint-config-studio": "^2.0.0",
     "@sanity/vision": "^2.33.3",
     "eslint": "^8.24.0",
@@ -24,7 +24,7 @@
     "react": "^17.0",
     "react-dom": "^17.0",
     "react-icons": "^4.4.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
