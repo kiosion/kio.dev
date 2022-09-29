@@ -2145,10 +2145,10 @@
     get-random-values-esm "^1.0.0"
     lodash "^4.17.21"
 
-"@sanity/cli@^2.33.3":
-  version "2.33.3"
-  resolved "https://registry.yarnpkg.com/@sanity/cli/-/cli-2.33.3.tgz#c58a518ecb9a8a56d582866928258b7239ab1a9c"
-  integrity sha512-lgKsYRBqO/KAKhyPFTMVDHkrCIfbfPo16tjOyygjHrvKeLXm6Y2e+udUTPAsOr9JS1mvZZ/yOK9A4+OUgip/ow==
+"@sanity/cli@^2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/cli/-/cli-2.34.0.tgz#033dad90e66aec879f657e37edec22c46c569a9e"
+  integrity sha512-AK1LmbsFuAX7IvOQFeBntYQm7X/rR+D3BEbHJi7N8zlc794B/+cVzjUR8GIoqrtQzQ5QZPd9ADnjUni4v8SlJQ==
 
 "@sanity/client@^3.3.3":
   version "3.3.3"
