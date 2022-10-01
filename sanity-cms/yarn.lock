@@ -2182,10 +2182,10 @@
   resolved "https://registry.yarnpkg.com/@sanity/color/-/color-2.1.14.tgz#96b486c24eecf9b657c358953a12cd5988810429"
   integrity sha512-ntCT72qUNck9XrCrMEpMrTGsNPK7edt3arou7YUBgb6IRjba6MtByTAz/LNXbRK5meMQFqYFpNKDErM351X+Ug==
 
-"@sanity/core@^2.33.3":
-  version "2.33.3"
-  resolved "https://registry.yarnpkg.com/@sanity/core/-/core-2.33.3.tgz#d11276f9d73d99b20d41388ce8c3907b41af0fc9"
-  integrity sha512-KeAGLHDiEuDvl6jL8qdzofDsUgCE1yBlxlo4kqeBiAMzTNNbIeThUFMyHYSeJP/a+w5xC+dXNcdNBV6CpN3bNw==
+"@sanity/core@^2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/core/-/core-2.34.0.tgz#0a1ec1a8d906da5e22ec9a925266dd3b4e80c693"
+  integrity sha512-rb+mOZjUfgrzWKD2rbVHWeMivYMdkQGcRNxef5ieK9AT1ZBEA2fIEtUmARq3KLkcjRpiNrJ33O9KmJu9o3zW5w==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.10.4"
     "@babel/preset-env" "^7.11.5"
@@ -2196,13 +2196,13 @@
     "@sanity/export" "2.33.2"
     "@sanity/generate-help-url" "^3.0.0"
     "@sanity/import" "2.33.2"
-    "@sanity/plugin-loader" "2.33.2"
-    "@sanity/resolver" "2.33.2"
+    "@sanity/plugin-loader" "2.34.0"
+    "@sanity/resolver" "2.34.0"
     "@sanity/schema" "2.33.2"
-    "@sanity/server" "2.33.2"
-    "@sanity/util" "2.33.2"
+    "@sanity/server" "2.34.0"
+    "@sanity/util" "2.34.0"
     "@sanity/uuid" "^3.0.1"
-    "@sanity/webpack-integration" "2.33.2"
+    "@sanity/webpack-integration" "2.34.0"
     chalk "^2.4.2"
     chokidar "^3.0.0"
     configstore "^5.0.1"
@@ -2545,14 +2545,14 @@
     diff-match-patch "^1.0.4"
     lodash "^4.17.15"
 
-"@sanity/plugin-loader@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/plugin-loader/-/plugin-loader-2.33.2.tgz#564e7f76b55c93a5fd3490892929687a8dcbd0f0"
-  integrity sha512-9bNL6lN3mCATZc5e8KL/Q8+3bfZh73AUrLbVp4cXe128ZDneQjIfv091irU/7fQXqG79rVOzINEtSgVf1e3kVw==
+"@sanity/plugin-loader@2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/plugin-loader/-/plugin-loader-2.34.0.tgz#9ce8358caaac00295181f62103dca5c626994dff"
+  integrity sha512-YeWeUXi791Kd63MjtS30GP0JwWfhhSrkwubUKFFXg3471Ylj2SZ9oZh25jN6lpdfzdzTWTJbQMDAhAANupzKIg==
   dependencies:
-    "@sanity/resolver" "2.33.2"
-    "@sanity/util" "2.33.2"
-    "@sanity/webpack-integration" "2.33.2"
+    "@sanity/resolver" "2.34.0"
+    "@sanity/util" "2.34.0"
+    "@sanity/webpack-integration" "2.34.0"
     css-modules-require-hook "4.1.0"
     interop-require "^1.0.0"
 
@@ -2580,13 +2580,13 @@
     react-rx "^1.0.0-beta.6"
     rxjs "^6.5.3"
 
-"@sanity/resolver@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/resolver/-/resolver-2.33.2.tgz#4c45475020c37cd941c89e09aa3184b57c459c1a"
-  integrity sha512-eyXWpWwa8eKrrbIPPde5a3hmKrGvR3Q0nQWg0x11aH3SpvvkiPJPt7sWYuPsrxzqcrFo4Z/iiQ9dsRY3b3jenw==
+"@sanity/resolver@2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/resolver/-/resolver-2.34.0.tgz#e6f92ffc1ebfe46854f4540ab535d32285150f50"
+  integrity sha512-zt8/ZW8kUs2Ks3Tt0GBik5JaIkSJkc0E2wwKUD9z8ZLMbJp7xbKcNykvin+y8OQjH0+Sa/B1TibnzOES17r/mA==
   dependencies:
     "@sanity/generate-help-url" "^3.0.0"
-    "@sanity/util" "2.33.2"
+    "@sanity/util" "2.34.0"
     fs-extra "^7.0.0"
     lodash "^4.17.15"
     path-exists "^3.0.0"
@@ -2617,10 +2617,10 @@
     lodash "^4.17.21"
     object-inspect "^1.6.0"
 
-"@sanity/server@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/server/-/server-2.33.2.tgz#a2eb99f51d8c79a85be96c41e4191ba0f1820020"
-  integrity sha512-Ylth7qTxBKOVUaRFGIjDjEd8eEJEFghNDcPOxt3WpX9tZ29VeZtPK9bW5cVBSDwpjoYCeu2gSZzXhKu9H+4wmw==
+"@sanity/server@2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/server/-/server-2.34.0.tgz#fc0012bbd0cd5fb9dec5917b31d21636d0dad846"
+  integrity sha512-rISEnQRlu/TkwPjWoGPuiWaIDhRTUCN6E/PIASR2IElAsN+nndfKT2n58kr1HmyvFdphTNMhT1pcBWYGW59M1w==
   dependencies:
     "@babel/core" "^7.11.6"
     "@babel/plugin-proposal-class-properties" "^7.10.4"
@@ -2631,10 +2631,10 @@
     "@sanity/css-loader" "^0.28.12"
     "@sanity/eventsource" "^3.0.1"
     "@sanity/hot-loader-react-dom" "^16.14.0"
-    "@sanity/resolver" "2.33.2"
-    "@sanity/util" "2.33.2"
+    "@sanity/resolver" "2.34.0"
+    "@sanity/util" "2.34.0"
     "@sanity/webpack-dev-middleware" "^2.0.6"
-    "@sanity/webpack-integration" "2.33.2"
+    "@sanity/webpack-integration" "2.34.0"
     babel-loader "^8.0.6"
     eventsource-polyfill "^0.9.6"
     express "^4.16.1"
@@ -2855,13 +2855,13 @@
     url-join "^2.0.2"
     webpack-log "^1.0.1"
 
-"@sanity/webpack-integration@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/webpack-integration/-/webpack-integration-2.33.2.tgz#48e656db60eb5d0bff84b1a485b44b0aeeadda44"
-  integrity sha512-CQEa2NiVVgDlEtOW7lR4f0UnWI9YBmHpWyR9uyQwhSjRw8276DXXgCgMZQzdQSrEmLnprV4iqjegUtn9gLfN9Q==
+"@sanity/webpack-integration@2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/webpack-integration/-/webpack-integration-2.34.0.tgz#605113853d05712712dfe55db04fc809b8ff7fa6"
+  integrity sha512-EnCKz2v6hVRf+CNnmevViyp93/9xTLFPiBZesZqTLMnRHuqytPiRDJ8uAjunhV42qukcr5wS+O7bxEd2H+hS2w==
   dependencies:
-    "@sanity/resolver" "2.33.2"
-    "@sanity/webpack-loader" "2.33.2"
+    "@sanity/resolver" "2.34.0"
+    "@sanity/webpack-loader" "2.34.0"
     css-color-function "^1.3.3"
     dotenv "^8.2.0"
     fs.realpath "^1.0.0"
@@ -2875,13 +2875,13 @@
     postcss-url "^7.3.1"
     resolve "^1.3.3"
 
-"@sanity/webpack-loader@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/webpack-loader/-/webpack-loader-2.33.2.tgz#aac331f2747bb5bf9f951101c009d8a026f16a9d"
-  integrity sha512-eMaKqce0CqtzUzaVy1xYkk1C1cKC9MxQWd7kmUXJK7jM8VBhpDIPHpmaM3bIGZ13u1XObTReRw4079N6ZJINdg==
+"@sanity/webpack-loader@2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/webpack-loader/-/webpack-loader-2.34.0.tgz#10a2525b1ef60e91ad447b069c0ceab3855dad23"
+  integrity sha512-Usz/a4ViAX1CbYDF1f06bdvTgg8AHIaeGF38v0DNQE/dy2nhAWDHllTXHdqEzYaFG7wctjBguDn+YLvgmqjczw==
   dependencies:
-    "@sanity/resolver" "2.33.2"
-    "@sanity/util" "2.33.2"
+    "@sanity/resolver" "2.34.0"
+    "@sanity/util" "2.34.0"
     loader-utils "1.1.0"
 
 "@sindresorhus/is@^0.14.0":
