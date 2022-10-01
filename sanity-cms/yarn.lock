@@ -2728,14 +2728,14 @@
     lodash "^4.17.15"
     rxjs "^6.5.3"
 
-"@sanity/vision@^2.33.3":
-  version "2.33.3"
-  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.33.3.tgz#7bb15e976cbea5eedc99a8f79650bf054d358adf"
-  integrity sha512-5IlmChRm+IJ2xfFtRtXO0ji5gG+e7ZUDmot5vYg6xb79qJzKCU2Vi54XZ/j+dvm6dUQSnJVvz9u1chy6neRPAg==
+"@sanity/vision@^2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-2.34.0.tgz#94fe35e00cf678051aa7b77e3d04b6ea71a61eff"
+  integrity sha512-Ih4jj0Q04Q5itMj3r0o+l+gQm7GMkl51y1QECk/dfT4tGICOOxE8S51Gtwf9s/Yq0jbAw8TAZMbKARnSBbG+3w==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@sanity/icons" "^1.3.4"
-    "@sanity/ui" "^0.37.21"
+    "@sanity/ui" "^0.37.22"
     classnames "^2.2.5"
     codemirror "^5.47.0"
     is-hotkey "^0.1.6"
