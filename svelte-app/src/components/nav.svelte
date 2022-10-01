@@ -9,8 +9,11 @@
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';
   import { navigating } from '$app/stores';
-  import { APP_ROUTES } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
+  import Breakpoints from 'svelte-breakpoints';
+  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
+  import { linear } from 'svelte/easing';
 
   let links = [
     { name: 'Blog', url: '/blog', active: false },
@@ -60,6 +63,7 @@
   const onLogoClick = () => {
     clicks++;
     $sounds === 'on' && click?.play();
+    navOpen.set(false);
     if (clicks > 3) {
       goto('/features')
         .then(() => {
@@ -80,118 +84,152 @@
   export let segment: string;
 </script>
 
-<nav
-  class="p-4 pt-6 md:py-8 md:px-4 w-full md:w-40 xl:w-60 md:fixed md:h-screen text-center flex flex-col-reverse md:flex-col overflow-y-auto"
-  data-test-id="navBar"
->
-  <div class="flex-grow -mt-7 md:-mt-4 click-through">
-    <Hoverable>
-      <button
-        class="inline-block md:hidden mx-auto w-1/3 logo-text dark:invert transition-[filter]"
-        on:click={() => onLogoClick()}
-      >
-        <img class="w-full" src="/assets/logo-text.webp" alt="kiosion logo" />
-      </button>
-    </Hoverable>
-    <Hoverable>
-      <button
-        class="hidden md:inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
-        on:click={() => onLogoClick()}
-      >
-        <img class="w-full" src="/assets/logo-text--short.webp" alt="kio." />
-      </button>
-    </Hoverable>
-    {#if $navOpen}
-      <div
-        class="flex md:hidden text-2xl flex-col gap-3 justify-center mt-4 items-center"
-        transition:slide|local
-      >
-        {#each links as link}
-          <div class="relative flex flex-row justify-start items-center">
-            <a
-              class="nav-link font-mono font-normal uppercase text-base lg:text-lg"
-              class:active={segment === link.url}
-              aria-label={link.name}
-              href={link.url}
-              preload={link.url}
-              on:mouseenter={() => (link.active = true)}
-              on:mouseleave={() => (link.active = false)}
-              on:focus={() => (link.active = true)}
-              on:blur={() => (link.active = false)}
-              on:click={() => {
-                navOpen.set(false);
-                $sounds === 'on' && click?.play();
-              }}>{link.name}</a
-            >
-            <div
-              class="absolute z-0 {segment === link.url || link.active
-                ? 'w-full'
-                : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in"
+<Breakpoints queries={DEFAULT_BREAKPOINTS}>
+  <svelte:fragment slot="lg">
+    <nav
+      class="py-8 px-4 w-40 xl:w-60 fixed h-screen text-center flex flex-col overflow-y-auto"
+      data-test-id="navBar"
+    >
+      <div class="flex-grow -mt-7 md:-mt-4 click-through">
+        <!-- Logo -->
+        <Hoverable>
+          <button
+            class="inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
+            on:click={() => onLogoClick()}
+          >
+            <img
+              class="w-full"
+              src="/assets/logo-text--short.webp"
+              alt="kio."
             />
-          </div>
+          </button>
+        </Hoverable>
+        <!-- Nav links list -->
+        <div
+          class="flex text-base flex-col gap-3 justify-center pt-8 items-center"
+        >
+          {#each links as link}
+            <Hoverable bind:hovered={link.active}>
+              <div class="relative flex flex-row justify-start items-center">
+                <a
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
+                  aria-label={link.name}
+                  href={link.url}
+                  on:click={() => {
+                    navOpen.set(false);
+                    $sounds === 'on' && click?.play();
+                  }}
+                >
+                  {link.name}
+                </a>
+                <div
+                  class="indicator absolute z-0 {segment === link.url ||
+                  $navigating?.to?.url?.pathname === link.url ||
+                  link.active ||
+                  (segment.split('/').length > 1 &&
+                    segment.split('/').indexOf(link.url.slice(1)) > 0)
+                    ? 'opacity-100'
+                    : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
+                    link.url ||
+                  $navigating?.to?.url?.pathname === link.url ||
+                  link.active
+                    ? 'active'
+                    : segment.split('/').length > 1 &&
+                      segment.split('/').indexOf(link.url.slice(1)) > 0 &&
+                      'dot'}  transition-opacity ease-in"
+                />
+              </div>
+            </Hoverable>
+          {/each}
+        </div>
+      </div>
+      <!-- Social links -->
+      <div
+        class="text-center text-secondary align-center justify-center pt-8 mx-auto flex flex-col xl:flex-row"
+      >
+        {#each socials as social}
+          <Hoverable>
+            <a
+              class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
+              href={social.url}
+              aria-label={social.name}
+              target={social?.target ? '_blank' : ''}
+              on:click={() => $sounds === 'on' && click?.play()}
+            >
+              <Icon icon={social.icon} rotate={social?.rotate} />
+            </a>
+          </Hoverable>
         {/each}
       </div>
-    {/if}
-    <div
-      class="hidden md:flex text-base flex-col gap-3 justify-center pt-4 items-center"
+    </nav>
+  </svelte:fragment>
+  <svelte:fragment slot="sm">
+    <nav
+      class="fixed w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors pb-[3px] z-10"
+      data-test-id="navBar"
     >
-      {#each links as link}
-        <Hoverable bind:hovered={link.active}>
-          <div class="relative flex flex-row justify-start items-center">
-            <a
-              class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
-              aria-label={link.name}
-              href={link.url}
-              on:click={() => {
-                navOpen.set(false);
-                $sounds === 'on' && click?.play();
-              }}
-            >
-              {link.name}
-            </a>
-            <div
-              class="indicator absolute z-0 {segment === link.url ||
-              $navigating?.to?.url?.pathname === link.url ||
-              link.active ||
-              (segment.split('/').length > 1 &&
-                segment.split('/').indexOf(link.url.slice(1)) > 0)
-                ? 'opacity-100'
-                : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
-                link.url ||
-              $navigating?.to?.url?.pathname === link.url ||
-              link.active
-                ? 'active'
-                : segment.split('/').length > 1 &&
-                  segment.split('/').indexOf(link.url.slice(1)) > 0 &&
-                  'dot'}  transition-opacity ease-in"
+      <div class="relative flex flex-col m-4">
+        <!-- Logo -->
+        <Hoverable>
+          <button
+            class="mx-auto w-44 logo-text dark:invert transition-[filter]"
+            on:click={() => onLogoClick()}
+          >
+            <img
+              class="w-full"
+              src="/assets/logo-text.webp"
+              alt="kiosion logo"
             />
-          </div>
+          </button>
         </Hoverable>
-      {/each}
-    </div>
-  </div>
-  <div
-    class="text-center text-secondary align-center justify-center pt-8 mx-auto hidden md:flex md:flex-col xl:flex-row"
-  >
-    {#each socials as social}
-      <Hoverable>
-        <a
-          class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
-          href={social.url}
-          aria-label={social.name}
-          target={social?.target ? '_blank' : ''}
-          on:click={() => $sounds === 'on' && click?.play()}
+        <!-- Toggle buttons -->
+        <div
+          class="absolute px-3 top-0 left-0 w-full h-full flex items-center justify-between click-through"
         >
-          <Icon icon={social.icon} rotate={social?.rotate} />
-        </a>
-      </Hoverable>
-    {/each}
-  </div>
-  <div class="flex md:hidden align-center justify-between px-4 click-through">
-    <MenuToggle />
-    <ThemeToggle />
-  </div>
-</nav>
+          <MenuToggle />
+          <div class="w-fit flex flex-row align-center justify-start gap-4">
+            <ThemeToggle />
+            <SoundsToggle />
+          </div>
+        </div>
+      </div>
+      <!-- Nav dropdown -->
+      {#if $navOpen}
+        <div
+          class="flex text-2xl flex-col gap-3 justify-center items-center mb-[10px]"
+          transition:slide|local={{ duration: 150, easing: linear }}
+        >
+          {#each links as link}
+            <div class="relative flex flex-row justify-start items-center">
+              <a
+                class="nav-link font-mono font-normal uppercase text-base"
+                class:active={segment === link.url}
+                aria-label={link.name}
+                href={link.url}
+                preload={link.url}
+                on:mouseenter={() => (link.active = true)}
+                on:mouseleave={() => (link.active = false)}
+                on:focus={() => (link.active = true)}
+                on:blur={() => (link.active = false)}
+                on:click={() => {
+                  navOpen.set(false);
+                  $sounds === 'on' && click?.play();
+                }}
+              >
+                {link.name}
+              </a>
+              <div
+                class="absolute z-0 {segment === link.url || link.active
+                  ? 'w-full'
+                  : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in click-through select-none"
+              />
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </nav>
+  </svelte:fragment>
+</Breakpoints>
 
 <style lang="scss">
   .indicator {

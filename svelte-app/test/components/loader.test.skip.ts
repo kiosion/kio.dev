@@ -1,17 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Loader from '$components/loading/full.svelte';
-
-// set env variables
-vi.setEnv({
-  SSR: true
-});
+import Loader from '../../src/components/loading/full.svelte';
 
 describe('Components | Loader | Full', () => {
   it('should render', () => {
-    const browser = vi.fn();
-    browser.prototype.foo = bar;
-
     const { container } = render(Loader);
     expect(container).toBeTruthy();
   });

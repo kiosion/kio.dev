@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { navOpen } from '$stores/navigation';
-  import SafeIcon from '../safe-icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import { sounds } from '$stores/features';
   import { onMount } from 'svelte';
+  import SafeIcon from '$components/safe-icon.svelte';
+  import Hoverable from '$components/hoverable.svelte';
   import type UIfx from 'uifx';
 
   let click: UIfx;
@@ -18,17 +17,19 @@
 <Hoverable>
   <button
     class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
-    aria-label="Toggle navigation"
-    data-test-id="nav-toggle"
+    aria-label="Toggle sfx"
+    data-test-id="sfx-toggle"
+    data-test-state={$sounds}
+    tabindex="0"
     on:click={() => {
-      navOpen.set(!$navOpen);
+      sounds.set($sounds === 'on' ? 'off' : 'on');
       $sounds === 'on' && click?.play();
     }}
   >
-    {#if $navOpen}
-      <SafeIcon icon={'CloseBox'} />
+    {#if $sounds === 'on'}
+      <SafeIcon icon={'Volume2'} />
     {:else}
-      <SafeIcon icon={'Menu'} />
+      <SafeIcon icon={'VolumeX'} />
     {/if}
   </button>
 </Hoverable>

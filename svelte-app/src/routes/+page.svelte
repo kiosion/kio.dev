@@ -2,6 +2,8 @@
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { onMount } from 'svelte';
+  import Breakpoints from 'svelte-breakpoints';
+  import { DEFAULT_MOBILE_BREAKPOINT } from '$lib/consts';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -38,5 +40,10 @@
     <p class="font-sans text-lg text-center">
       Lover of cats &amp; all things tech
     </p>
+    <Breakpoints queries={{ sm: DEFAULT_MOBILE_BREAKPOINT }}>
+      <svelte:fragment slot="sm">
+        <p class="font-bold font-sans text-xl mt-6 text-center">Quick links</p>
+      </svelte:fragment>
+    </Breakpoints>
   </div>
 </div>

@@ -1,16 +1,10 @@
 import { defineConfig } from 'cypress';
 
-export default defineConfig({
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'vite'
-    },
-    specPattern: 'cypress/integration/**/*spec.ts'
-  },
+const mode = process.env.CYPRESS_MODE;
 
+export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: mode === 'dev' ? 'http://localhost:5173' : 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*cy.ts',
     video: false,
     retries: {
@@ -19,6 +13,13 @@ export default defineConfig({
     },
     env: {
       VITE_TESTING: 'cypress'
+    }
+  },
+
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'vite'
     }
   }
 });

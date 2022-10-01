@@ -127,6 +127,13 @@ get(icons)
       )
   )
   .set(
+    'CloseBox',
+    async () =>
+      await import('pixelarticons/svg/close-box.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'Code',
     async () =>
       await import('pixelarticons/svg/code.svg').then((Icon) => Icon.default)
@@ -190,6 +197,11 @@ get(icons)
       await import('pixelarticons/svg/mail-arrow-right.svg').then(
         (Icon) => Icon.default
       )
+  )
+  .set(
+    'Menu',
+    async () =>
+      await import('pixelarticons/svg/menu.svg').then((Icon) => Icon.default)
   )
   .set(
     'Open',

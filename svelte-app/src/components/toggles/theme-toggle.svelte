@@ -1,33 +1,36 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
-  import { fade } from 'svelte/transition';
   import SafeIcon from '../safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import { sounds } from '$stores/features';
+  import { onMount } from 'svelte';
+  import type UIfx from 'uifx';
+
+  let click: UIfx;
+
+  onMount(() => {
+    import('$lib/sfx').then((sfx) => {
+      click = sfx.click;
+    });
+  });
 </script>
 
 <Hoverable>
   <button
-    class="relative w-6 h-6 text-xl hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
+    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
     aria-label="Toggle theme"
     data-test-id="theme-toggle"
-    on:click={() => theme.set($theme === 'light' ? 'dark' : 'light')}
+    data-test-state={$theme}
+    tabindex="0"
+    on:click={() => {
+      theme.set($theme === 'light' ? 'dark' : 'light');
+      $sounds === 'on' && click?.play();
+    }}
   >
     {#if $theme === 'light'}
-      <span
-        class="absolute bottom-0 left-0"
-        in:fade={{ delay: 100, duration: 200 }}
-        out:fade={{ duration: 100 }}
-      >
-        <SafeIcon icon={'MoonStars'} />
-      </span>
+      <SafeIcon icon={'MoonStars'} />
     {:else}
-      <span
-        class="absolute bottom-0 left-0"
-        in:fade={{ delay: 100, duration: 200 }}
-        out:fade={{ duration: 100 }}
-      >
-        <SafeIcon icon={'Sun'} />
-      </span>
+      <SafeIcon icon={'Sun'} />
     {/if}
   </button>
 </Hoverable>
