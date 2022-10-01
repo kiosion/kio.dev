@@ -52,7 +52,7 @@
             {post.title}
           </h1>
           <div
-            class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 mt-1"
+            class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 mt-1 gap-y-2"
           >
             {#if date}
               <p>{date}</p>
@@ -75,7 +75,7 @@
           {#if post.desc}
             <div class="relative flex flex-row align-center justify-start mt-2">
               <p
-                class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-2"
+                class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-1 md:line-clamp-2"
               >
                 {post.desc}
               </p>

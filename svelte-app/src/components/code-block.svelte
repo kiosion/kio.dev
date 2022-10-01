@@ -144,7 +144,7 @@
     </Hoverable>
   {/if}
   <div
-    class="relative z-[4] overflow-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
+    class="relative z-[4] overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
     bind:this={codeContainer}
   >
     <div
