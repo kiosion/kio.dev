@@ -2631,16 +2631,6 @@
     "@types/lodash" "^4.14.149"
     lodash "^4.17.15"
 
-"@sanity/types@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/types/-/types-2.33.2.tgz#adc68b7463a6b32b2d7236a5032c5e5d1ff49a5e"
-  integrity sha512-vJIMhHDjJQ0FF0hZ8jS/tUxZEXl9greK0XcAFkfOizlbmgLXzME39t8/QTitgVGouE+8ddbGk2na34MbWCx7pg==
-  dependencies:
-    "@sanity/client" "^3.3.3"
-    "@sanity/color" "^2.1.14"
-    "@types/react" "^17.0.42"
-    rxjs "^6.5.3"
-
 "@sanity/types@2.34.0":
   version "2.34.0"
   resolved "https://registry.yarnpkg.com/@sanity/types/-/types-2.34.0.tgz#9e3a4d696f0bb3390d843b5ee7fdeeea768a0efe"
@@ -2659,7 +2649,7 @@
     "@sanity/client" "^3.3.3"
     "@types/react" "^17.0.42"
 
-"@sanity/ui@^0.37.21", "@sanity/ui@^0.37.22":
+"@sanity/ui@^0.37.22":
   version "0.37.22"
   resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-0.37.22.tgz#36bc54d689bc01f55103b01f6c8a571d6720df1a"
   integrity sha512-NoPfK92aXGW0miFpwYjN7ksZqO1HcXEvamPLzWWkmGjvEARr9B3Im+ooAKBkDuC9Bmufs4Jy++d5ITbPqDupJA==
@@ -2674,19 +2664,6 @@
     react-is "^17.0.2"
     react-popper "^2.2.5"
     react-refractor "^2.1.7"
-
-"@sanity/util@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@sanity/util/-/util-2.33.2.tgz#f028a4a60eb48ad8e5054beb37ffbade047820d1"
-  integrity sha512-5yContzwsmcDHsjrlXUGJihwSJUyf9rO/ste25BRoZG5nuQfSjxe5++eKyA57g+PMCJqUxDrGwYqD5JiCsTqJw==
-  dependencies:
-    "@sanity/types" "2.33.2"
-    dotenv "^8.2.0"
-    fs-extra "^7.0.0"
-    get-random-values "^1.2.2"
-    lodash "^4.17.15"
-    moment "^2.29.4"
-    resolve-from "^4.0.0"
 
 "@sanity/util@2.34.0":
   version "2.34.0"
@@ -10253,10 +10230,10 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.1.tgz#26c8a3cee6cc05fbcf1e333cd2fc3e003326c0b5"
   integrity sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==
 
-netlify-cli@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/netlify-cli/-/netlify-cli-12.0.0.tgz#7fb2a9efe7b7bb71095ce7d272bddfd3437cbbe5"
-  integrity sha512-RmIetDHVP2S+AXIX00xH4+JJaxJSrp5pjsnSGJkamx4sLrX3w+dEiYQx62Nb++t3tsBMTjAbhN7PysBYow0yrg==
+netlify-cli@^12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/netlify-cli/-/netlify-cli-12.0.2.tgz#f437f2063717912efee5556af7bef9f0ff0474d9"
+  integrity sha512-nmIsQC+aidQ8AQFTSOLM/ggBCusQu7xgcs8QC1oj9N26tX3T8Ha9DfU9hfxX+jyNQXQhXXhdDNeT92G2+CqTTw==
   dependencies:
     "@netlify/build" "^27.18.6"
     "@netlify/config" "^18.2.4"
@@ -10361,7 +10338,7 @@ netlify-cli@^12.0.0:
     unixify "^1.0.0"
     update-notifier "^5.0.0"
     uuid "^9.0.0"
-    wait-port "^0.3.0"
+    wait-port "^1.0.1"
     winston "^3.2.1"
     write-file-atomic "^4.0.0"
 
@@ -15116,10 +15093,10 @@ w3c-hr-time@^1.0.1:
   dependencies:
     browser-process-hrtime "^1.0.0"
 
-wait-port@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.3.0.tgz#b76e3d518ab9894f9448e014a0ef6c2dee5b0aa1"
-  integrity sha512-seNQ7j92tG5uaylFK3RrAajajzpNMOr96pcCsD8cWGtVn4XXsFUMf9vzNcZSXVaMEfuZT/0t/Wc0KN+m74QYkw==
+wait-port@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.1.tgz#6a002cf71e64d59fccc56cba56cd5a7641bd153c"
+  integrity sha512-JkEgxQRZqqBz449/bRVQAvl+e8LJ8fpW8J1W7WkKKo8PypoXX7EXGE47BmkNLTb5Ly/eI15IyTeAxDBwOEQ8DQ==
   dependencies:
     chalk "^4.1.2"
     commander "^9.3.0"
