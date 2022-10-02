@@ -5,7 +5,7 @@
   import { highlightEffects } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
-  import SafeIcon from '@/components/safe-icon.svelte';
+  import SafeIcon from '$components/safe-icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';

@@ -3,8 +3,7 @@
   import BulletPoint from '../bullet-point.svelte';
   import { getTotalWords } from '$lib/helpers/post';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
-  import type { PostDocument } from '@/lib/types';
-  import type { TextBlock } from '$lib/types';
+  import type { TextBlock, PostDocument } from '$lib/types';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';

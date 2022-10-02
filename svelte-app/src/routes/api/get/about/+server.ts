@@ -3,21 +3,7 @@ import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
 // import { gateRequest } from '$lib/api';
 
-export const GET: RequestHandler = async ({
-  getClientAddress
-}): Promise<Response> => {
-  // TODO
-  // if (gateRequest(getClientAddress())) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       status: 429,
-  //       error: 'Request ratelimited'
-  //     }), {
-  //       status: 429
-  //     }
-  //   );
-  // }
-
+export const GET: RequestHandler = async (): Promise<Response> => {
   const remoteUrl = `${REMOTE_API_URL}/query/about`;
   try {
     const res = await fetch(remoteUrl, {
@@ -56,7 +42,7 @@ export const GET: RequestHandler = async ({
         error: error?.message ? error.message : 'Endpoint error: Unknown error'
       }),
       {
-        status: error?.status ?? 500
+        status: (error?.status as number) ?? 500
       }
     );
   }

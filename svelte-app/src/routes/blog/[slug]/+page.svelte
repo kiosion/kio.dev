@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import PostContent from '@/components/blog/post-content.svelte';
+  import PostContent from '$components/blog/post-content.svelte';
   import { onMount } from 'svelte';
   import { Boundary } from '$lib/error-bound';
   import type { PageData } from './$types';

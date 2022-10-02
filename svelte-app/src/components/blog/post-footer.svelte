@@ -1,7 +1,7 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import type { PostDocument } from '@/lib/types';
+  import type { PostDocument } from '$lib/types';
   import Hoverable from '$components/hoverable.svelte';
 
   export let post: PostDocument;

@@ -9,7 +9,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "paths": {
-      "@/*": ["src/*"],
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$logs": ["logs"],

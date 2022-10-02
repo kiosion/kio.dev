@@ -60,7 +60,6 @@
   .filled {
     z-index: -2;
   }
-  .cover,
   .filled {
     transition: opacity 150ms cubic-bezier(0.645, 0.045, 0.355, 1);
   }

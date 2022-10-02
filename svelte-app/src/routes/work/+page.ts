@@ -1,5 +1,5 @@
 import { findProjects, findProject } from '$stores/work';
-import Logger from '@/lib/logger';
+import Logger from '$lib/logger';
 import { config } from '$stores/config';
 import { get } from 'svelte/store';
 import type { ProjectDocument, ResData, ResDataMany } from '$lib/types';

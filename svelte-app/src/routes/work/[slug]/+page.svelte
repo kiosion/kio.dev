@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import ProjectContent from '@/components/work/project-content.svelte';
+  import ProjectContent from '$components/work/project-content.svelte';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
   import { page } from '$app/stores';
