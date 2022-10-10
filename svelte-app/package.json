@@ -69,7 +69,7 @@
     "svelte-breakpoints": "^0.1.0",
     "svelte-check": "^2.9.1",
     "svelte-highlight": "^6.2.1",
-    "svelte-loading-spinners": "^0.1.7",
+    "svelte-loading-spinners": "^0.2.0",
     "svelte-preprocess": "^4.10.6",
     "tailwindcss": "^3.1.8",
     "tslib": "^2.3.1",
