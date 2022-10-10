@@ -52,7 +52,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-svelte3": "^4.0.0",
     "highlight.js": "^11.6.0",
-    "jsdom": "^20.0.0",
+    "jsdom": "^20.0.1",
     "miragejs": "^0.1.45",
     "moment": "^2.29.4",
     "netlify-cli": "^12.0.0",
