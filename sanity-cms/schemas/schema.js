@@ -4,6 +4,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type';
 import divider from './objects/divider';
 
 import author from './author';
+import comment from './comment';
 import post from './post';
 import project from './project';
 import tag from './tag';
@@ -11,5 +12,13 @@ import siteSettings from './settings';
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([author, divider, post, project, tag, siteSettings])
+  types: schemaTypes.concat([
+    author,
+    comment,
+    divider,
+    post,
+    project,
+    tag,
+    siteSettings
+  ])
 });

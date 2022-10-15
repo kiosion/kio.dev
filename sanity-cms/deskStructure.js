@@ -7,7 +7,8 @@ import {
   BsFillFileRichtextFill,
   BsFillFileImageFill,
   BsFillTagsFill,
-  BsGearFill
+  BsGearFill,
+  BsChatFill
 } from 'react-icons/bs';
 
 const JsonPreview = ({ document }) => (
@@ -55,5 +56,9 @@ export default () =>
       S.listItem()
         .title('Tags')
         .icon(BsFillTagsFill)
-        .child(S.documentTypeList('tag'))
+        .child(S.documentTypeList('tag')),
+      S.listItem()
+        .title('Comments')
+        .icon(BsChatFill)
+        .child(S.documentTypeList('comment'))
     ]);

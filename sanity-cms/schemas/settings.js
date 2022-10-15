@@ -19,6 +19,10 @@ export default {
     {
       name: 'pinned',
       title: 'Pinned'
+    },
+    {
+      name: 'comments',
+      title: 'Comments'
     }
   ],
   fields: [
@@ -100,6 +104,38 @@ export default {
       to: {
         type: 'project'
       }
+    },
+    {
+      name: 'commentsEnabled',
+      type: 'boolean',
+      title: 'Comments Enabled',
+      group: 'comments',
+      initialValue: true,
+      description: 'Enable or disable new comments on all posts'
+    },
+    {
+      name: 'commentsRequireApproval',
+      type: 'boolean',
+      title: 'Comments Require Approval',
+      group: 'comments',
+      initialValue: true,
+      description: 'Require new comments to be approved before they are visible'
+    },
+    {
+      name: 'commentsRequireAuth',
+      type: 'boolean',
+      title: 'Comments Require Auth',
+      group: 'comments',
+      initialValue: false,
+      description: 'Require users to be logged in to comment'
+    },
+    {
+      name: 'commentsVisible',
+      type: 'boolean',
+      title: 'Comments Visible',
+      group: 'comments',
+      initialValue: true,
+      description: 'Show comments on posts'
     }
   ]
 };
