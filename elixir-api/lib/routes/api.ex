@@ -12,23 +12,14 @@ defmodule Router.Api do
 
   plug(:match)
 
-  plug(Plug.Parsers,
-    parsers: [:json],
-    pass: ["application/json"],
-    json_decoder: Poison
-  )
-
   plug(:dispatch)
 
-  defp json_res(conn, status, res) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> put_resp_header("cache-control", "no-cache")
-    |> send_resp(status, Poison.encode!(res))
+  match "/v:any" do
+    Hexerei.Res.err(conn, 400, "Invalid version specified")
   end
 
   # Fallback
   match _ do
-    json_res(conn, 400, %{code: 400, message: "No version specified"})
+    Hexerei.Res.json(conn, 400, %{code: 400, message: "No version specified"})
   end
 end

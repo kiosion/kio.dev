@@ -21,33 +21,21 @@ defmodule Router.Api.V1 do
 
   plug(Hexerei.Plug.VerifyRequest)
 
-  plug(Plug.Parsers,
-    parsers: [:json],
-    pass: ["application/json"],
-    json_decoder: Poison
-  )
-
+  # TODO: Hexerei.Res as plug not module
   plug(:fetch_query_params)
 
   plug(:dispatch)
 
-  defp json_res(conn, status, res) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> put_resp_header("cache-control", "no-cache")
-    |> send_resp(status, Poison.encode!(res))
-  end
-
   defp parse_send_res(conn, result) do
     if result == nil do
-      json_res(conn, 500, %{code: 500, message: "Something went wrong"})
+      Hexerei.Res.json(conn, 500, %{code: 500, message: "Something went wrong"})
     else
       # TODO: need to check if result is JSON, or a single error string
 
       # Parse result from JSON to Elixir map
       parsed_result = Poison.decode!(result)
 
-      json_res(conn, 200, %{code: 200, message: "OK", data: parsed_result})
+      Hexerei.Res.json(conn, 200, %{code: 200, data: parsed_result})
     end
   end
 
@@ -71,7 +59,7 @@ defmodule Router.Api.V1 do
 
     case Sanity.fetch(BuildQuery.postSingle(params["id"], params["slug"])) do
       {:ok, result} -> parse_send_res(conn, result)
-      {:error, error} -> json_res(conn, 500, %{code: 500, message: "Something went wrong: #{error}"})
+      {:error, error} -> Hexerei.Res.err(conn, 500, %{message: "Something went wrong: #{error}"})
     end
   end
 
@@ -81,7 +69,7 @@ defmodule Router.Api.V1 do
 
     case Sanity.fetch(BuildQuery.postMany(params["limit"], params["skip"], params["s"], params["o"], params["date"], params["tags"])) do
       {:ok, result} -> parse_send_res(conn, result)
-      {:error, error} -> json_res(conn, 500, %{code: 500, message: "Something went wrong: #{error}"})
+      {:error, error} -> Hexerei.Res.err(conn, 500, "Something went wrong: #{error}")
     end
   end
 
@@ -90,19 +78,25 @@ defmodule Router.Api.V1 do
       {:ok, %HTTPoison.Response{status_code: 418, body: body}} ->
         :timer.sleep(1000)
         IO.inspect body
-        json_res(conn, 200, %{code: 200, message: "Pog!"})
+        Hexerei.Res.json(conn, 200, %{code: 200, message: "Pog!"})
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         :timer.sleep(1000)
-        json_res(conn, 404, %{code: 404, message: "Not found :("})
+        Hexerei.Res.err(conn, 404, "Not found :(")
       {:error, %HTTPoison.Error{reason: reason}} ->
         :timer.sleep(1000)
-        json_res(conn, 500, %{code: 500, message: "Something went wrong: #{reason}"})
+        Hexerei.Res.err(conn, 500, "Something went wrong: #{reason}")
         IO.inspect reason
     end
   end
 
   # Fallback
   match _ do
-    json_res(conn, 404, %{code: 404, message: "Not found"})
+    Hexerei.Res.err(conn, 404, "Not found")
+  end
+
+  # Handle unexpected errors
+  @impl Plug.ErrorHandler
+  def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
+    Hexerei.Res.err(conn, 500, "Something went wrong")
   end
 end

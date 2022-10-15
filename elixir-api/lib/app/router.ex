@@ -1,4 +1,8 @@
 defmodule Hexerei.Router do
+  @moduledoc """
+  Main router module
+  """
+
   use Plug.Router
   use Plug.ErrorHandler
 
@@ -23,18 +27,11 @@ defmodule Hexerei.Router do
 
   # Basic routes
   get "/" do
-    json_res(conn, 418, %{code: 418, message: "Do I look like a coffee pot to you??"})
+    Hexerei.Res.json(conn, 418, %{code: 418, message: "Do I look like a coffee pot to you??"})
   end
 
   get "/ping" do
-    json_res(conn, 200, %{code: 200, message: "pong!"})
-  end
-
-  defp json_res(conn, status, res) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> put_resp_header("cache-control", "no-cache")
-    |> send_resp(status, Poison.encode!(res))
+    Hexerei.Res.json(conn, 200, %{code: 200, message: "pong!"})
   end
 
   # Handle Webhook events
@@ -45,7 +42,7 @@ defmodule Hexerei.Router do
         _ -> {422, missing_events()}
       end
 
-    json_res(conn, status, body)
+      Hexerei.Res.json(conn, status, body)
   end
 
   defp process_events(events) when is_list(events) do
@@ -62,12 +59,12 @@ defmodule Hexerei.Router do
 
   # Fallback route
   match _ do
-    json_res(conn, 404, %{code: 404, message: "Resource not found or method not allowed"})
+    Hexerei.Res.json(conn, 404, %{code: 404, message: "Resource not found or method not allowed"})
   end
 
   # Error handling
   @impl Plug.ErrorHandler
   def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
-    json_res(conn, conn.status, %{code: conn.status, message: "Something went wrong"})
+    Hexerei.Res.err(conn, conn.status, "Something went wrong")
   end
 end
