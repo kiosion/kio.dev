@@ -1515,10 +1515,10 @@
     resolve-from "^5.0.0"
     rollup-pluginutils "^2.8.2"
 
-"@vitest/ui@^0.23.4":
-  version "0.23.4"
-  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.23.4.tgz#87b77ad9f92b18ebc50a7380b703753069dc17fa"
-  integrity sha512-lNZVTTrkHThGAwNQ1ah1qCNnm70r7OLB5LCUdSqboStve/1eKTrtt27QfDSSUTG8AVJQzU0eaN/j8UocH+CqfA==
+"@vitest/ui@^0.24.3":
+  version "0.24.3"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.24.3.tgz#8058e4c9b8a276fbfef1ef0907291f19694a722b"
+  integrity sha512-f5agYA/sdkiipq42TZayJoeUGjWx+opDjIVeNnb1SG2BNxqObFqh6GuJlzpGHerg4a2+ZSoVo4f4p2+dEyXPmg==
   dependencies:
     sirv "^2.0.2"
 
