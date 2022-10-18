@@ -9,7 +9,7 @@ on:
       - '**/.husky'
       - 'svelte-app/**'
       - 'express-api/**'
-      - 'rust-api/**'
+      - 'elixir-api/**'
 
 concurrency: 
   group: sanity

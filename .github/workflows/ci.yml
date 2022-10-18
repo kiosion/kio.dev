@@ -10,6 +10,7 @@ on:
       - 'sanity-cms/**'
       - 'express-api/**'
       - 'rust-api/**'
+      - 'elixir-api/**'
 
 concurrency: 
   group: ci

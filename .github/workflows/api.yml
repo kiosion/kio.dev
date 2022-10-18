@@ -9,7 +9,7 @@ on:
       - '**/.husky'
       - 'sanity-cms/**'
       - 'svelte-app/**'
-      - 'rust-api/**'
+      - 'elixir-api/**'
 
 concurrency: 
   group: api
