@@ -12,32 +12,27 @@ defmodule Hexerei.SanityClient do
     {"Accept", "application/json"}
   ]
 
-  # Methods
-  def fetch(query) do
-    # Send a query to the Sanity API
-    #
-    # Arguments:
-    #   query: String
-    #
-    # Returns:
-    #   {:ok, body} | {:error, reason}
+  @doc """
+  Send a query to the Sanity API and await a response
 
+  Returns body of response as string on success, error as `%{code, message}` on failure
+
+  ## Examples
+
+      iex> Hexerei.SanityClient.fetch("*[_type == 'post']{title, slug, _id}")
+      {:ok, data} | {:error, %{code, message}}
+  """
+
+  @doc since: "0.1.0"
+  def fetch(query) do
+    # Log query
+    IO.inspect("Fetching query: #{query}")
     # Return error if query is not a string or is empty
     if is_binary(query) and query != "" do
-      # Set URL
       url = "https://#{@sanity_project_id}.api.sanity.io/v#{@sanity_api_version}/data/query/#{@sanity_dataset}"
 
-      # Print url to console
-      IO.inspect(url)
-
-      # URL encode query string
       query = URI.encode_query(%{"query" => query})
-
-      # Append query to URL
       url = url <> "?" <> query
-
-      # Print url to console
-      IO.inspect(url)
 
       # Send GET request and return the body
       case HTTPoison.get(url, @headers) do
@@ -45,37 +40,40 @@ defmodule Hexerei.SanityClient do
           {:ok, body}
 
         {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
-          {:error, "Sanity API returned status code #{status_code} with body: #{body}"}
+          {:error, %{code: status_code, message: "Sanity error: #{body}"}}
 
         {:error, %HTTPoison.Error{reason: reason}} ->
-          {:error, "Sanity API returned error: #{reason}"}
+          {:error, %{code: 500, message: "Sanity error: #{reason}"}}
       end
     else
-      {:error, "Query must be a string and not empty"}
+      {:error, %{code: 400, message: "Query must be a string and not empty"}}
     end
   end
 
-  def urlFor(assetID, queryParams) do
-    # Get the API CDN URL for a given asset ID
-    #
-    # Arguments:
-    #   assetID: String
-    #   queryParams: String
-    #
-    # Returns:
-    #   String | nil
+  @doc """
+  Get CDN URL for a given Sanity image asset ID
 
+  Returns URL as string on success, nil on failure
+
+  ## Examples
+
+      iex> Hexerei.SanityClient.get_image_url("image-asset-id")
+      "https://cdn.sanity.io/images/..."
+  """
+
+  @doc since: "0.1.0"
+  def urlFor(assetID, queryParams) do
     # Return nil if asset is not a string or is empty
     if is_binary(assetID) and assetID != "" do
       url = "https://cdn.sanity.io/images/#{@sanity_project_id}/#{@sanity_dataset}/" <> assetID
 
       if not is_binary(queryParams) or queryParams == "" do
-        url
+        {:ok, url}
       end
 
-      url <> "?" <> queryParams
+      {:ok, url <> "?" <> queryParams}
     else
-      nil
+      {:error, nil}
     end
   end
 end

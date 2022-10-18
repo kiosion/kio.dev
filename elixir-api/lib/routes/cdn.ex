@@ -6,18 +6,13 @@ defmodule Router.Cdn do
   use Plug.Router
   use Plug.ErrorHandler
 
-  # @sanity_project_id Application.compile_env(:hexerei, :sanity_project_id)
-  # @sanity_dataset Application.compile_env(:hexerei, :sanity_dataset)
-
-  plug(Plug.Logger)
-
   plug(:match)
+
+  plug(:fetch_query_params)
 
   plug(:dispatch)
 
   defp parse_url(url) do
-    # Log url
-    IO.inspect("parsing url: #{url}")
     # Split url on '?' if it exists
     [url, query] = try do
       String.split(url, "?", parts: 2)
@@ -46,33 +41,39 @@ defmodule Router.Cdn do
     }
   end
 
+  ## Routes
+
   # Parse image asset URLs
   get "/images/*path" do
-
     # Get full request url including query params
     url = conn.request_path <> "?" <> conn.query_string
 
-    # Parse url
     url_parts = parse_url(url)
 
-    # filetype shouldn't be nil
     if url_parts.filetype == nil do
       Hexerei.Res.err(conn, 400, "No filetype specified")
     end
 
-    # end
-
-    # Log url_parts to console
-    IO.inspect(url_parts)
-
-    # sanityUrl = "https://cdn.sanity.io/images/#{@sanity_project_id}/#{@sanity_dataset}/#{url}"
-
-    # For now, just return the path using json_res
-    Hexerei.Res.json(conn, 200, %{code: 200, message: "OK", data: url_parts})
-  end
-
-  get "/" do
-    Hexerei.Res.json(conn, 200, %{code: 200, message: "CDN is up!"})
+    case Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string) do
+      {:ok, url} ->
+        case HTTPoison.get(url) do
+          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+            conn
+            |> put_resp_content_type("image/#{url_parts.filetype}")
+            |> send_resp(200, body)
+            |> halt()
+          {:ok, %HTTPoison.Response{status_code: 404}} ->
+            Hexerei.Res.err(conn, 404, "Image not found")
+          {:ok, %HTTPoison.Response{status_code: 400}} ->
+            Hexerei.Res.err(conn, 400, "Bad request")
+          {:ok, %HTTPoison.Response{}} ->
+            Hexerei.Res.err(conn, 500, "Something went wrong")
+          {:error, %HTTPoison.Error{reason: reason}} ->
+            Hexerei.Res.err(conn, 500, "Something went wrong: #{reason}")
+        end
+      {:error, reason} ->
+        Hexerei.Res.err(conn, 500, reason)
+    end
   end
 
   # Fallback route

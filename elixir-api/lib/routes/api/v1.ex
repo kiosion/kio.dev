@@ -9,17 +9,11 @@ defmodule Router.Api.V1 do
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.BuildQuery, as: BuildQuery
 
-  if (Application.compile_env(:hexerei, :env)) == "dev" do
-    plug(Plug.Debugger)
-  else
-    plug(Plug.Logger)
-  end
-
-  @query_url "/query"
+  @query_url Application.compile_env(:hexerei, :query_url)
 
   plug(:match)
 
-  plug(Hexerei.Plug.VerifyRequest)
+  # plug(Hexerei.Plug.VerifyRequest)
 
   # TODO: Hexerei.Res as plug not module
   plug(:fetch_query_params)
@@ -32,7 +26,6 @@ defmodule Router.Api.V1 do
     else
       # TODO: need to check if result is JSON, or a single error string
 
-      # Parse result from JSON to Elixir map
       parsed_result = Poison.decode!(result)
 
       Hexerei.Res.json(conn, 200, %{code: 200, data: parsed_result})
@@ -48,31 +41,121 @@ defmodule Router.Api.V1 do
         Map.put(acc, key, default)
       end
     end)
-    # Enum.all?(expected, fn param -> Map.has_key?(params, param) end)
   end
 
-  # Routes
-  get "#{@query_url}/post:params" do
+  ## Routes
+
+  # GET post
+  get "#{@query_url}/post/:id" do
+    # ID may be either url slug or document ID
+    params = fetch_query_params(conn).query_params
+    |> validate_query_params(%{"id" => nil})
+
+    case Sanity.fetch(BuildQuery.postSingle(params["id"])) do
+      {:ok, result} ->
+        Poison.decode!(result)
+          |> Map.put("meta", %{
+            "total" => 1,
+            "count" => 1,
+            "id" => params["id"]
+          })
+          |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+      {:error, error} -> Hexerei.Res.err(conn, error.code, %{message: "Something went wrong: #{error.message}"})
+    end
+  end
+
+  # GET posts
+  get "#{@query_url}/posts:params" do
+    # Get limit, skip, sort, order, date, tags array
+    params = fetch_query_params(conn).query_params
+    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "desc", "o" => "date", "date" => nil, "tags" => nil })
+
+    query = BuildQuery.postMany(params["limit"], params["skip"], params["s"], params["o"], params["date"], params["tags"])
+    query_limited = query <> " | order(#{params["o"]} #{params["s"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+
+    case Sanity.fetch(query_limited) do
+      {:ok, result} ->
+        case Sanity.fetch("{ 'total': count(#{query}), 'count': count(#{query_limited}) }") do
+          {:ok, counts} ->
+            parsed_counts = Poison.decode!(counts)
+
+            Poison.decode!(result)
+              |> Map.put("meta", %{
+                "total" => parsed_counts["result"]["total"],
+                "count" => parsed_counts["result"]["count"],
+                "sort" => params["s"],
+                "order" => params["o"]
+              })
+              |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+        end
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
+    end
+  end
+
+  # GET project
+  get "#{@query_url}/project/:id" do
     # ID may be either url slug or document ID
     params = fetch_query_params(conn).query_params
     |> validate_query_params(%{"id" => nil, "slug" => nil})
 
-    case Sanity.fetch(BuildQuery.postSingle(params["id"], params["slug"])) do
-      {:ok, result} -> parse_send_res(conn, result)
-      {:error, error} -> Hexerei.Res.err(conn, 500, %{message: "Something went wrong: #{error}"})
+    case Sanity.fetch(BuildQuery.projectSingle(params["id"])) do
+      {:ok, result} ->
+        Poison.decode!(result)
+          |> Map.put("meta", %{
+            "total" => 1,
+            "count" => 1,
+            "id" => params["id"]
+          })
+          |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
     end
   end
 
-  get "#{@query_url}/posts:params" do
+  # GET projects
+  get "#{@query_url}/projects:params" do
+    # Same query params available as for posts
     params = fetch_query_params(conn).query_params
     |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "desc", "o" => "date", "date" => nil, "tags" => nil })
 
-    case Sanity.fetch(BuildQuery.postMany(params["limit"], params["skip"], params["s"], params["o"], params["date"], params["tags"])) do
-      {:ok, result} -> parse_send_res(conn, result)
-      {:error, error} -> Hexerei.Res.err(conn, 500, "Something went wrong: #{error}")
+    query = BuildQuery.postMany(params["limit"], params["skip"], params["s"], params["o"], params["date"], params["tags"])
+    query_limited = query <> " | order(#{params["o"]} #{params["s"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+
+    case Sanity.fetch(query_limited) do
+      {:ok, result} ->
+        case Sanity.fetch("{ 'total': count(#{query}), 'count': count(#{query_limited}) }") do
+          {:ok, counts} ->
+            parsed_counts = Poison.decode!(counts)
+
+            Poison.decode!(result)
+              |> Map.put("meta", %{
+                "total" => parsed_counts["result"]["total"],
+                "count" => parsed_counts["result"]["count"],
+                "sort" => params["s"],
+                "order" => params["o"]
+              })
+              |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+        end
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
     end
   end
 
+  # GET about
+  get "#{@query_url}/about" do
+    case Sanity.fetch(BuildQuery.about()) do
+      {:ok, result} -> parse_send_res(conn, result)
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
+    end
+  end
+
+  # GET site config
+  get "/config" do
+    case Sanity.fetch(BuildQuery.config()) do
+      {:ok, result} -> parse_send_res(conn, result)
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
+    end
+  end
+
+  # GET test
   get "/test" do
     case HTTPoison.get("https://kio.sh/") do
       {:ok, %HTTPoison.Response{status_code: 418, body: body}} ->
