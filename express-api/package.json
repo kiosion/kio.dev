@@ -17,7 +17,7 @@
     "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
     "@types/express": "^4.17.13",
-    "@types/node": "^18.8.4",
+    "@types/node": "^18.11.0",
     "@types/passport": "^1.0.10",
     "@types/passport-http-bearer": "^1.0.37",
     "@types/request": "^2.48.8",
