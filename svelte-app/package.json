@@ -27,7 +27,7 @@
     "@portabletext/svelte": "^1.0.1",
     "@sanity/image-url": "^1.0.1",
     "@sveltejs/adapter-auto": "^1.0.0-next.80",
-    "@sveltejs/adapter-netlify": "^1.0.0-next.81",
+    "@sveltejs/adapter-netlify": "^1.0.0-next.78",
     "@sveltejs/adapter-node": "^1.0.0-next.98",
     "@sveltejs/kit": "1.0.0-next.504",
     "@tailwindcss/aspect-ratio": "^0.4.2",
