@@ -43,7 +43,7 @@ defmodule Hexerei.BuildQuery do
     end
   end
 
-  def postMany(_limit, _skip, _s, _o, date, tags) do
+  def postMany(date, tags) do
     "
       *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
         _id,
@@ -75,11 +75,36 @@ defmodule Hexerei.BuildQuery do
     " |> strip()
   end
 
-  def projectSingle(_id) do
-    # TODO
+  def projectSingle(id) do
+    "
+      *[!(_id in path('drafts.**')) && _type == 'project' && (_id == '#{id}' || slug.current == '#{id}')] {
+        _id,
+        'objectID': _id,
+        _type,
+        _rev,
+        'author': {
+          '_id': author->_id,
+          '_type': author->_type,
+          'name': author->name,
+          'image': author->image,
+          'slug': author->slug
+        },
+        body,
+        desc,
+        date,
+        image,
+        tags[]->{
+          _id,
+          title,
+          slug
+        },
+        slug,
+        title
+      }[0]
+    " |> strip()
   end
 
-  def projectMany(_limit, _skip, _s, _o, date, tags) do
+  def projectMany(date, tags) do
     "
       *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
         _id,
@@ -109,13 +134,58 @@ defmodule Hexerei.BuildQuery do
   end
 
   # Query all tag documents
-  def tags do
-    # TODO
+  def tags(type) do
+    if type not in ["post", "project"] do
+      ^type = nil
+    end
+    "
+      *[!(_id in path('drafts.**')) && _type == 'tag'] {
+        _id,
+        _rev,
+        'objectID': _id,
+        _type,
+        title,
+        slug,
+        #{if type != nil do "'referencedBy': *[_type == '#{type}' && references(^._id)]._id" end}
+      }
+    " |> strip()
   end
 
-  # Determine documents of @type referencing tag @slug
-  def tagHas(_type, _slug) do
-    # TODO
+  # Determine documents of @type referencing tag @id
+  def tag(id, type) do
+    if type not in ["post", "project"] do
+      nil
+    else
+      "
+      *[!(_id in path('drafts.**')) && _type == '#{type}' && references(*[!(_id in path('drafts.**')) && _type == 'tag' && slug.current == '#{id}']._id)] {
+        _id,
+        'objectID': _id,
+        _rev,
+        _type,
+        title,
+        publishedAt,
+        'author': {
+          '_id': author->_id,
+          '_type': author->_type,
+          'name': author->name,
+          'image': author->image,
+          'slug': author->slug
+        },
+        tags[]->{
+          _id,
+          title,
+          slug
+        },
+        slug,
+        body,
+        desc,
+        date,
+        'numberOfCharacters': length(pt::text(body)),
+        'estimatedWordCount': round(length(pt::text(body)) / 5),
+        'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120 )
+      }
+      " |> strip()
+    end
   end
 
   # Fetch 'about' page content

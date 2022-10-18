@@ -25,8 +25,6 @@ defmodule Hexerei.SanityClient do
 
   @doc since: "0.1.0"
   def fetch(query) do
-    # Log query
-    IO.inspect("Fetching query: #{query}")
     # Return error if query is not a string or is empty
     if is_binary(query) and query != "" do
       url = "https://#{@sanity_project_id}.api.sanity.io/v#{@sanity_api_version}/data/query/#{@sanity_dataset}"
