@@ -14,7 +14,11 @@ defmodule Hexerei.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :os_mon
+        ],
       mod: {Hexerei.Application, []}
     ]
   end

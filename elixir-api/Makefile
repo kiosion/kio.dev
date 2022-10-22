@@ -2,18 +2,18 @@
 
 dev: SHELL:=/bin/sh
 dev:
-	@echo "MAKE: Dev"
-	./scripts/start.sh -m dev
+	@echo "target: Development"
+	@./scripts/start.sh -m dev
 
 prod: SHELL:=/bin/sh
 prod:
-	@echo "MAKE: Production"
-	./scripts/start.sh -m prod
+	@echo "target: Production"
+	@./scripts/start.sh -m prod
 
 test: SHELL:=/bin/sh
 test:
-	@echo "Running unit tests..."
-	mix test ./test/hexerei_test.exs
+	@echo "target: Testing"
+	@mix test ./test/hexerei_test.exs
 
 cleanup: SHELL:=/bin/sh
 cleanup:

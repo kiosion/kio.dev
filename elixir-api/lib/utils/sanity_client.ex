@@ -1,4 +1,8 @@
 defmodule Hexerei.SanityClient do
+  @moduledoc """
+  Module to act as a client for Sanity.io, handling queries, responses, and errors
+  """
+
   # Set variables from env
   @sanity_project_id Application.compile_env!(:hexerei, :sanity_project_id)
   @sanity_dataset Application.compile_env!(:hexerei, :sanity_dataset)

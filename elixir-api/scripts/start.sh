@@ -34,9 +34,15 @@ fi
 
 sleep 1
 
+printf "Installing Hex & rebar3...\r"
+mix local.hex --force > /dev/null 2>&1
+mix local.rebar --force > /dev/null 2>&1
+
 # Install deps / install, hide output
-printf "Checking dependencies...\r"
-mix deps.get > /dev/null
+printf "Building dependencies...\r"
+mix deps.get > /dev/null 2>&1
+
+# Sleep for 1 second to fix some weird behavior I can't be arsed to debug rn
 sleep 1
 
 # Start server w/ mix

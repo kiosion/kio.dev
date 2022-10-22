@@ -12,6 +12,9 @@ defmodule Hexerei.Router do
     plug(Plug.Logger)
   end
 
+  @application_version Application.compile_env(:hexerei, :version)
+  @application_name Application.compile_env(:hexerei, :name)
+
   forward("/api", to: Router.Api)
   forward("/cdn", to: Router.Cdn)
 
@@ -25,36 +28,38 @@ defmodule Hexerei.Router do
 
   plug(:dispatch)
 
-  # Basic routes
   get "/" do
     Hexerei.Res.json(conn, 418, %{code: 418, message: "Do I look like a coffee pot to you??"})
   end
 
-  get "/ping" do
-    Hexerei.Res.json(conn, 200, %{code: 200, message: "pong!"})
-  end
+  # TODO: This maybe shouldn't be a public endpoint?
+  get "/healthcheck" do
+    # Call memsup with Kernel.then since it's not synchronous
+    mem = :memsup.get_system_memory_data()
+    |> Kernel.then(fn data ->
+      # memsup returns a linked list of keywords, I think either Keyword.get() or Enum.find() would work here
+      %{
+        :total => round(data[:system_total_memory] / 1024 / 1024),
+        :free => round(data[:free_memory] / 1024 / 1024),
+        :used => round((data[:system_total_memory] - data[:free_memory]) / 1024 / 1024),
+      }
+    end)
 
-  # Handle Webhook events
-  post "/events" do
-    {status, body} =
-      case conn.body_params do
-        %{"events" => events} -> {200, process_events(events)}
-        _ -> {422, missing_events()}
-      end
+    upt = System.system_time(:millisecond) - Application.get_env(:hexerei, :started_at)
 
-      Hexerei.Res.json(conn, status, body)
-  end
+    # For now, just return 'ok' for statuses until monitoring is done
+    statusInfo = %{
+      "status" => %{
+        "self" => "ok",
+        "sanity" => "ok",
+        "algolia" => "ok"
+      },
+      "version" => "#{@application_name} v#{@application_version}",
+      "uptime" => "#{upt / 1000 / 60 / 60 / 24 |> Float.floor() |> Kernel.trunc()}d #{upt / 1000 / 60 / 60 |> Float.floor() |> Kernel.trunc()}h #{upt / 1000 / 60 |> Float.floor() |> Kernel.trunc()}m",
+      "usage" => "#{Map.get(mem, :used)}/#{Map.get(mem, :total)} MB"
+    }
 
-  defp process_events(events) when is_list(events) do
-    %{code: 200, message: "ok"}
-  end
-
-  defp process_events(_) do
-    %{code: 404, message: "error"}
-  end
-
-  defp missing_events do
-    %{code: 422, message: "missing events"}
+    Hexerei.Res.json(conn, 200, %{code: 200, data: statusInfo })
   end
 
   # Fallback route
