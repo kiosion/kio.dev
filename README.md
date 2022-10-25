@@ -17,27 +17,29 @@ Mostly overengineered, but intentionally so 😃
 ## 📚 Tech stack
 
 #### Frontend
-- Svelte
+- Sveltekit
 - Typescript
 - Scss
 - Vite
 #### API
 - Elixir
-- Plug.Cowboy web server
+- CowBoy HTTP server
 - HTTPoison
-#### CMS
-- Sanity / Sanity Studio
+- Sanity
 #### Hosting / deploys
 - Selfhosted GH runners
-- Vultr VPS
+- Vultr
+- Docker
 - Netlify
 
 ## 💾 Dependancies
 ### SvelteKit / Sanity
-- Node >= 16.0
+- Node >= 16.16
 - Yarn >= 3.0
 ### Elixir API
 - Elixir >= 1.13
+- Rebar3 / Rebar
+- Hex
 
 ## 🛠 Building
 
@@ -65,5 +67,6 @@ make prod
 ```bash
 make test
 make vitest
+make api-test
 (cd ./svelte-app/; node ./dist/) & make cypress
 ```
