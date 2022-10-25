@@ -3,12 +3,12 @@
 dev: SHELL:=/bin/sh
 dev:
 	@echo "target: Development"
-	@./scripts/start.sh -m dev
+	@./bin/start -m dev
 
 prod: SHELL:=/bin/sh
 prod:
 	@echo "target: Production"
-	@./scripts/start.sh -m prod
+	@mix docker.build prod
 
 test: SHELL:=/bin/sh
 test:

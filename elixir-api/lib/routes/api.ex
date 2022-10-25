@@ -2,7 +2,7 @@ defmodule Router.Api do
   use Plug.Router
   use Plug.ErrorHandler
 
-  forward("/#{Application.compile_env(:hexerei, :api_version)}", to: Router.Api.V1)
+  forward("/v1", to: Router.Api.V1)
 
   plug(:match)
 

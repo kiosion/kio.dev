@@ -30,8 +30,13 @@ defmodule Hexerei.Plug.VerifyRequest do
   end
 
   defp verify_request({conn}) do
-    Hexerei.Res.err(conn, 401, "Missing authorization")
-    |> halt()
+    # If ENV is dev, should allow requests without token
+    if Mix.env() == :dev do
+      conn
+    else
+      Hexerei.Res.err(conn, 401, "Missing authorization")
+      |> halt()
+    end
   end
 
   defp verify_token(token) do

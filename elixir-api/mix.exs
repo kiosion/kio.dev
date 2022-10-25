@@ -8,7 +8,14 @@ defmodule Hexerei.MixProject do
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      escript: [main_module: Hexerei.MixProject]
+      escript: [main_module: Hexerei.MixProject],
+      releases: [
+        prod: [
+          include_executables_for: [:unix],
+          steps: [:assemble, :tar],
+          validate_compile_env: false
+        ]
+      ]
     ]
   end
 

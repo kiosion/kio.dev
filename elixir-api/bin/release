@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+export MIX_ENV=$1
+
+echo "Starting release build for $MIX_ENV...\r"
+cd /opt/build
+
+source ./.env
+export SANITY_PROJECT_ID
+export SANITY_TOKEN
+export API_TOKEN
+sed -i "s/\${SANITY_PROJECT_ID}/\"$SANITY_PROJECT_ID\"/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\${SANITY_TOKEN}/\"$SANITY_TOKEN\"/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\${API_TOKEN}/\"$API_TOKEN\"/g" ./config/$MIX_ENV.env.exs
+
+echo "Installing rebar3 and hex...\r"
+mix local.rebar --force
+mix local.hex --if-missing --force
+
+echo "Fetching project deps...\r"
+mix deps.get --only prod
+
+echo "Cleaning any leftover build artifacts...\r"
+mix do clean, compile --force
+
+echo "Building release for $MIX_ENV...\r"
+mix release $1 --overwrite
+
+echo "Release built successfully!\r"
+sed -i "s/\"$SANITY_PROJECT_ID\"/\${SANITY_PROJECT_ID}/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\"$SANITY_TOKEN\"/\${SANITY_TOKEN}/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\"$API_TOKEN\"/\${API_TOKEN}/g" ./config/$MIX_ENV.env.exs
+
+exit 0
