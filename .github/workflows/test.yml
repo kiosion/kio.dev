@@ -3,6 +3,14 @@ name: Tests
 on:
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '**/.husky'
+      - 'sanity-cms/**'
+      - 'express-api/**'
+      - 'rust-api/**'
+      - 'elixir-api/**'
   workflow_call:
 
 concurrency: 
