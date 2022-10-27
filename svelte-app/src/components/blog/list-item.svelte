@@ -9,12 +9,12 @@
   import { sounds } from '$stores/features';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
+  import { get } from 'svelte/store';
 
   export let post: PostDocument;
-  export let mousePos = [0, 0];
 
   let click: UIfx;
-  let hovered = false;
+  let hovered: boolean;
   let readingTime = getReadingTime(
     getTotalWords(post.body as Array<TextBlock>)
   );
@@ -25,63 +25,76 @@
     });
   });
 
+  const onClick = () => {
+    get(sounds) === 'on' && click.play();
+    goto(`/blog/${post.slug.current}`);
+  };
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onClick();
+    }
+  };
+
   $: date = getAbsDate(post.date);
 </script>
 
-<ListItemWrapper {hovered} {mousePos} wrapperClass="mt-6">
+<ListItemWrapper>
   {#if post}
+    <div
+      class="absolute top-4 left-3 h-[calc(100%_-_28px)] {hovered
+        ? 'w-[2px]'
+        : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
+      aria-hidden="true"
+    >
+      &nbsp;
+    </div>
     <Hoverable bind:hovered>
-      <div
-        class="rounded-xl"
+      <section
+        class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 {hovered
+          ? 'pl-6 bg-slate-300/50 dark:bg-slate-700/50'
+          : 'pl-5 bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
         tabindex="0"
         role="button"
         aria-label="Post - {post.title}"
-        on:click={() => {
-          $sounds === 'on' && click?.play();
-          goto(`/blog/${post.slug.current}`);
-        }}
+        data-test-id="list-item"
+        on:click={onClick}
+        on:keydown={onKey}
       >
-        <section
-          class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 roundedCard-lg"
-          data-test-id="list-item"
+        <div
+          class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 gap-y-2"
         >
-          <h1
-            class="block overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-xl"
-          >
-            {post.title}
-          </h1>
-          <div
-            class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 mt-1 gap-y-2"
-          >
-            {#if date}
-              <p>{date}</p>
-              <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
-            {/if}
-            <p>{`${Math.floor(readingTime / 60)} min read`}</p>
-            {#if post.tags}
-              <BulletPoint />
-              <div
-                class="flex flex-row justify-start items-center gap-2 flex-wrap"
-              >
-                {#each post.tags as tag}
-                  <a href="/blog/+/{tag.slug.current}" class="categoryTag-sm">
-                    {tag.title}
-                  </a>
-                {/each}
-              </div>
-            {/if}
-          </div>
-          {#if post.desc}
-            <div class="relative flex flex-row align-center justify-start mt-2">
-              <p
-                class="overflow-hidden w-fit mr-4 text-ellipsis font-sans text-base line-clamp-1 md:line-clamp-2"
-              >
-                {post.desc}
-              </p>
+          {#if date}
+            <p>{date}</p>
+            <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+          {/if}
+          <p>{`${Math.floor(readingTime / 60)} min read`}</p>
+          {#if post.tags}
+            <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+            <div
+              class="flex flex-row justify-start items-center gap-2 flex-wrap"
+            >
+              {#each post.tags as tag}
+                <a href="/blog/+/{tag.slug.current}" class="categoryTag-sm">
+                  {tag.title}
+                </a>
+              {/each}
             </div>
           {/if}
-        </section>
-      </div>
+        </div>
+        <h1
+          class="w-full text-ellipsis font-display font-bold text-2xl line-clamp-1 pt-2"
+        >
+          {post.title}
+        </h1>
+        {#if post.desc}
+          <p
+            class="overflow-hidden w-fit mr-4 pt-2 text-ellipsis font-sans text-base text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
+          >
+            {post.desc}
+          </p>
+        {/if}
+      </section>
     </Hoverable>
   {:else}
     <section

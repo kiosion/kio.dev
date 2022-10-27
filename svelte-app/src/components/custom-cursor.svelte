@@ -82,6 +82,7 @@
   class="cursor-{$theme === 'light' ? 'light' : 'dark'} {cursorHidden
     ? 'opacity-0'
     : ''} transition-opacity duration-200"
+  aria-hidden="true"
 >
   <div
     class="dot {$Store.isHovered ? 'hovered' : ''} {$Store.isPressed

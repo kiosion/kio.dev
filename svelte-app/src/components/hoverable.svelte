@@ -1,13 +1,17 @@
 <script lang="ts">
   import Store from '$stores/cursor';
-  import { onDestroy } from 'svelte';
+  import { createEventDispatcher, onDestroy } from 'svelte';
   import { get } from 'svelte/store';
 
+  const dispatch = createEventDispatcher();
+
   let target: HTMLElement;
+  export let classes = '';
   export let hovered = false;
 
   const handleHoverIn = () => {
     hovered = true;
+    dispatch('update', { state: true });
     Store.update((s) => ({
       ...s,
       isHovered: true,
@@ -19,6 +23,7 @@
 
   const handleHoverOut = () => {
     hovered = false;
+    dispatch('update', { state: false });
     Store.update((s) => ({
       ...s,
       isHovered: false,
@@ -40,12 +45,14 @@
 </script>
 
 <span
-  class="contents"
+  class="contents {classes}"
   data-test-id="hover-target"
   bind:this={target}
   on:mouseover={() => handleHoverIn()}
   on:mouseout={() => handleHoverOut()}
   on:focus={() => (hovered = true)}
+  on:focusin={() => (hovered = true)}
+  on:focusout={() => (hovered = false)}
   on:blur={() => (hovered = false)}
 >
   <slot />

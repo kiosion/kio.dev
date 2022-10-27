@@ -49,7 +49,12 @@
                 on:click={() =>
                   item.body &&
                   (selected === i ? (selected = null) : (selected = i))}
+                on:keydown={(e) =>
+                  (e.code === 'Enter' || e.key === 'Space') &&
+                  item.body &&
+                  (selected === i ? (selected = null) : (selected = i))}
                 tabindex={0}
+                role="button"
               >
                 <div
                   class="font-sans font-bold text-base line-clamp-1 select-none"

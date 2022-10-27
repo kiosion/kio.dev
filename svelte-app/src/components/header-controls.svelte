@@ -59,6 +59,12 @@
                   appBody.scrollTo({ top: 0, behavior: 'smooth' }),
                   $sounds === 'on' && click?.play()
                 )}
+                on:keydown={(e) => (
+                  e.code === 'Enter' ||
+                    (e.code === 'Space' &&
+                      appBody.scrollTo({ top: 0, behavior: 'smooth' })),
+                  $sounds === 'on' && click?.play()
+                )}
                 transition:fade={{ duration: 100 }}
               >
                 {$pageHeading}
