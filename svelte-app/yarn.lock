@@ -3361,10 +3361,10 @@ detective@^5.2.1:
     defined "^1.0.0"
     minimist "^1.2.6"
 
-devalue@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/devalue/-/devalue-4.0.0.tgz#efeadbc922894d468ad903029d4a7e65e37f4952"
-  integrity sha512-w25siwXyuMUqMr7jPlEjyNCp1vn0Jzj/fNg3qVt/r/Dpe8HjESh2V92L0jmh3uq4iJt0BvjH+Azk1pQzkcnDWA==
+devalue@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/devalue/-/devalue-4.0.1.tgz#3ac20af4e5cf1259b38aa776b0b6b03240b17317"
+  integrity sha512-Oksbel8g2rv5ivcCyImF1RXEU2FcS1OtCwVs4tJCCeVws/Dp9EE15fUbEsNr/xLD3ZxsQURBCDf56Lk1CgwCpg==
 
 devalue@^3.1.2:
   version "3.1.3"
