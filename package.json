@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "bumpp": "^8.2.1",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
