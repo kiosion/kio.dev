@@ -9,7 +9,7 @@ defmodule Router.Api.V1 do
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.BuildQuery, as: BuildQuery
 
-  @query_url Application.compile_env(:hexerei, :query_url)
+  @query_url Application.compile_env!(:hexerei, :query_url)
 
   plug(:match)
 
@@ -55,12 +55,29 @@ defmodule Router.Api.V1 do
 
   # GET posts
   get "#{@query_url}/posts" do
+    IO.inspect("GET /posts")
+    IO.inspect("")
     start = System.system_time(:millisecond)
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "desc", "o" => "date", "date" => nil, "tags" => nil })
+    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "date", "o" => "desc", "date" => nil, "tags" => nil })
+
+    # Convert 'limit' / 'skip' to integers only if they're not nil and not already integers
+    params = Enum.reduce(params, %{}, fn {key, value}, acc ->
+      if key in ["limit", "skip"] do
+        if value != nil and not is_integer(value) do
+          Map.put(acc, key, String.to_integer(value))
+        else
+          Map.put(acc, key, value)
+        end
+      else
+        Map.put(acc, key, value)
+      end
+    end)
+    # If date is '', set to nil
+    params = Map.update(params, "date", nil, &if(&1 == "", do: nil, else: &1))
 
     query = BuildQuery.postMany(params["date"], params["tags"])
-    query_limited = query <> " | order(#{params["o"]} #{params["s"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["limit"] + params["skip"]}]"
 
     case Sanity.fetch(query_limited) do
       {:ok, result} ->
@@ -79,7 +96,9 @@ defmodule Router.Api.V1 do
             |> Map.update("ms", duration, &(&1 + (duration - &1)))
             |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
         end
-      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
+      {:error, error} ->
+        IO.inspect(error)
+        Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
     end
   end
 
@@ -109,10 +128,16 @@ defmodule Router.Api.V1 do
 
     # Same query params available as for posts
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "desc", "o" => "date", "date" => nil, "tags" => nil })
+    |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "date", "o" => "desc", "date" => nil, "tags" => nil })
+
+    # Convert 'limit' / 'skip' to integers
+    params = Map.update(params, "limit", 10, &String.to_integer/1)
+    params = Map.update(params, "skip", 0, &String.to_integer/1)
+    # If date is '', set to nil
+    params = Map.update(params, "date", nil, &if(&1 == "", do: nil, else: &1))
 
     query = BuildQuery.projectMany(params["date"], params["tags"])
-    query_limited = query <> " | order(#{params["o"]} #{params["s"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
 
     case Sanity.fetch(query_limited) do
       {:ok, result} ->

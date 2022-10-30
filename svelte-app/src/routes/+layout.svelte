@@ -45,7 +45,10 @@
     appLoaded = true;
     canNavigate.set(true);
     msg({ detail: { isOpen: true } });
-    browser && window.addEventListener('devtoolschange', (e) => msg(e));
+    browser &&
+      window.addEventListener('devtoolschange', (e) =>
+        msg(e as unknown as DevToolsEvent)
+      );
     setTimeout(() => loading.set(false), 1000);
   });
 
@@ -81,7 +84,8 @@
     $customCursor === 'on' && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
-  on:wheel={(e) => handleScrollNav(e, pageContainer, $page.url.pathname)} />
+  on:wheel={(e) => handleScrollNav(e, pageContainer, $page.url.pathname)}
+/>
 
 {#if !appLoaded}
   <Loader theme="dark" />

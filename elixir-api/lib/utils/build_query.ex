@@ -44,7 +44,7 @@ defmodule Hexerei.BuildQuery do
   end
 
   def postMany(date, tags) do
-    "
+    query = """
       *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
         _id,
         'objectID': _id,
@@ -72,7 +72,8 @@ defmodule Hexerei.BuildQuery do
         'estimatedWordCount': round(length(pt::text(body)) / 5),
         'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120 )
       }
-    " |> strip()
+    """
+    query |> strip()
   end
 
   def projectSingle(id) do
@@ -106,7 +107,7 @@ defmodule Hexerei.BuildQuery do
 
   def projectMany(date, tags) do
     "
-      *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
+      *[!(_id in path('drafts.**')) && _type == 'project'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
         _id,
         'objectID': _id,
         _type,

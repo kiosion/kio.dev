@@ -1,22 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
+set -e
 MODE="prod"
 optstring=":m:"
 
 while getopts ${optstring} arg; do
   case ${arg} in
     m)
-      # check for valid mode after -m
       if [ "$OPTARG" = "dev" ] || [ "$OPTARG" = "prod" ]; then
         MODE=$OPTARG
       else
-        echo "ERR: Invalid mode: $OPTARG"
+        echo "ERR: Invalid mode: '$OPTARG'"
         exit 1
       fi
-      ;;
-    :)
-      echo "ERR: Must supply an argument to -$OPTARG."
-      exit 1
       ;;
     ?)
       echo "ERR: Invalid option: -${OPTARG}."
@@ -26,26 +22,22 @@ while getopts ${optstring} arg; do
 done
 
 printf "Starting in $MODE mode...\r"
-
-# Check if CWD path 'scripts' directory, if so, change to parent directory
-if [ "${PWD##*/}" = "scripts" ]; then
+if [ "${PWD##*/}" = "bin" ]; then
   cd ..
 fi
 
-sleep 1
+if [ "$MODE" = "dev" ]; then
+  printf "Building dependencies...\r"
+  mix local.hex --if-missing --force > /dev/null
+  mix local.rebar --if-missing --force > /dev/null
+  mix deps.get > /dev/null
 
-printf "Installing Hex & rebar3...\r"
-mix local.hex --force > /dev/null 2>&1
-mix local.rebar --force > /dev/null 2>&1
+  printf "\r"
+  source ./.env
+  MIX_ENV=$MODE mix run --no-halt
+else
+  bin="/app/hexerei"
+  exec "$bin/prod/rel/prod/bin/prod" "start"
+fi
 
-# Install deps / install, hide output
-printf "Building dependencies...\r"
-mix deps.get > /dev/null 2>&1
-
-# Sleep for 1 second to fix some weird behavior I can't be arsed to debug rn
-sleep 1
-
-# Start server w/ mix
-printf "\r"
-source ./.env
-MIX_ENV=$MODE mix run --no-halt
+exit 0

@@ -1,36 +1,55 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -e
+MIX_ENV="prod"
 
-export MIX_ENV=$1
+while getopts ":p:d:t:a:" opt; do
+  case $opt in
+    p) SANITY_PROJECT_ID="$OPTARG"
+    ;;
+    d) SANITY_DATASET="$OPTARG"
+    ;;
+    t) SANITY_TOKEN="$OPTARG"
+    ;;
+    a) API_TOKEN="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+  esac
+done
 
-echo "Starting release build for $MIX_ENV...\r"
-cd /opt/build
+printf "Starting release build for $MIX_ENV...\r"
+cd /app
 
-source ./.env
-export SANITY_PROJECT_ID
-export SANITY_TOKEN
-export API_TOKEN
+if [ "$SANITY_DATASET" = "dev" ]; then
+  PORT=4444
+else
+  PORT=4000
+fi
+
 sed -i "s/\${SANITY_PROJECT_ID}/\"$SANITY_PROJECT_ID\"/g" ./config/$MIX_ENV.env.exs
 sed -i "s/\${SANITY_TOKEN}/\"$SANITY_TOKEN\"/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\${SANITY_DATASET}/\"$SANITY_DATASET\"/g" ./config/$MIX_ENV.env.exs
 sed -i "s/\${API_TOKEN}/\"$API_TOKEN\"/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\${PORT}/$PORT/g" ./config/$MIX_ENV.env.exs
 
-echo "Installing rebar3 and hex...\r"
-mix local.rebar --force
-mix local.hex --if-missing --force
+printf "Fetching project deps...\r"
+mix local.rebar --if-missing --force > /dev/null
+mix local.hex --if-missing --force > /dev/null
+mix deps.get --only $MIX_ENV > /dev/null
 
-echo "Fetching project deps...\r"
-mix deps.get --only prod
-
-echo "Cleaning any leftover build artifacts...\r"
+printf "Cleaning any leftover build artifacts...\r"
 mix do clean, compile --force
 
-echo "Building release for $MIX_ENV...\r"
-mix release $1 --overwrite
+printf "Building release for $MIX_ENV...\r"
+export MIX_ENV=$MIX_ENV
+mix release prod --overwrite
 
-echo "Release built successfully!\r"
 sed -i "s/\"$SANITY_PROJECT_ID\"/\${SANITY_PROJECT_ID}/g" ./config/$MIX_ENV.env.exs
 sed -i "s/\"$SANITY_TOKEN\"/\${SANITY_TOKEN}/g" ./config/$MIX_ENV.env.exs
+sed -i "s/\"$SANITY_DATASET\"/\${SANITY_DATASET}/g" ./config/$MIX_ENV.env.exs
 sed -i "s/\"$API_TOKEN\"/\${API_TOKEN}/g" ./config/$MIX_ENV.env.exs
+sed -i "s/$PORT/\${PORT}/g" ./config/$MIX_ENV.env.exs
+printf "Release built successfully!\r"
 
 exit 0

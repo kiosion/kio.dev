@@ -1,11 +1,11 @@
 import Mix.Config
 
 config :hexerei,
-  port: 4000,
+  port: ${PORT},
   # TODO: Oauth bearer instead of hardcoded token
   api_token: ${API_TOKEN},
   sanity_project_id: ${SANITY_PROJECT_ID},
-  sanity_dataset: "production",
+  sanity_dataset: ${SANITY_DATASET},
   sanity_token: ${SANITY_TOKEN},
   sanity_api_version: "2021-06-07",
   query_url: "query/"

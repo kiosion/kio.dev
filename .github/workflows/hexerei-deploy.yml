@@ -1,0 +1,32 @@
+name: Deploy API
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    environment: API
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Build for production
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: (cd ./elixir-api && make prod)
+      
+      - name: Deploy for production
+        run: make run-prod
+      
+      - name: Build for development
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.DEV_API_KEY }}
+        run: (cd ./elixir-api && make prod-dev)
+      
+      - name: Deploy for development
+        run: make run-prod-dev

@@ -149,6 +149,10 @@ export interface SiteConfig extends SanityAsset {
     title: string;
     link: string;
   }[];
+  commentsVisible: boolean;
+  commentsRequireAuth: boolean;
+  commentsRequireApproval: boolean;
+  commentsEnabled: boolean;
 }
 
 // Param types
