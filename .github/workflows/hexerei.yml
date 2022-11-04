@@ -1,0 +1,59 @@
+name: CI - API
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '**/.husky'
+      - 'sanity-cms/**'
+      - 'svelte-app/**'
+      - 'express-api/**'
+
+jobs:
+  # TODO: Test job, lint job, then build + deploy
+  # test:
+  #   name: Test
+  #   environment: API
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+      
+  #     - name: Install Dependencies
+  #       run: (cd ./elixir-api && make install)
+      
+  #     - name: Run tests
+  #       run: (cd ./elixir-api && make test)
+  build:
+    name: Build
+    environment: API
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build for dev
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.DEV_API_KEY }}
+        run: (cd ./elixir-api && make prod-dev)
+
+      - name: Build for production
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: (cd ./elixir-api && make prod)
+  deploy:
+    name: Deploy
+    environment: API
+    runs-on: self-hosted
+    steps:
+      - name: Deploy for dev
+        run: make run-prod-dev
+
+      - name: Deploy for production
+        run: make run-prod

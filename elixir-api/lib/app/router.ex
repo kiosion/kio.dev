@@ -32,7 +32,6 @@ defmodule Hexerei.Router do
     Hexerei.Res.json(conn, 418, %{code: 418, message: "Do I look like a coffee pot to you??"})
   end
 
-  # TODO: This maybe shouldn't be a public endpoint?
   get "/healthcheck" do
     # Call memsup with Kernel.then since it's not synchronous
     mem = :memsup.get_system_memory_data()
