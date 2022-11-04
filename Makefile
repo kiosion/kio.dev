@@ -107,7 +107,9 @@ test:
 # vitest
 vitest: SHELL:=/bin/bash
 vitest:
-	./scripts/vitest.sh
+	@cd ./svelte-app &&\
+	yarn test:vitest
+
 
 # cypress tests
 cypress: SHELL:=/bin/bash

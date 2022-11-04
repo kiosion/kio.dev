@@ -1,7 +1,10 @@
+# Pull elixir-alpine image for build stage
 FROM elixir:1.14-alpine AS build
 
-RUN apk upgrade --no-cache && \
-    apk add --update bash openssl libgcc libstdc++ ncurses-libs
+# Install build dependencies
+RUN apk upgrade --no-cache
+
+RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 ARG ENV=prod
 ARG PORT=4000
@@ -26,15 +29,19 @@ COPY lib lib
 # Run build script, passing in 'sanity_token' and other args
 RUN ./release -p $SANITY_PROJECT_ID -d $SANITY_DATASET -t $SANITY_TOKEN -a $API_KEY -x $PORT
 
-# Prepare release image
+# Prepare release image using alpine-erlang
 FROM alpine:3.16.2 AS app
 
-RUN apk upgrade --no-cache && \
-    apk add --update bash openssl libgcc libstdc++ ncurses-libs
+# Install runtime dependencies
+# TODO: Can these be removed?
+RUN apk upgrade --no-cache
+
+RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 # If ENV is 'prod', expose port 4000, otherwise expose port 4444
 
 EXPOSE $PORT
+
 ENV MIX_ENV=$ENV
 
 # Prepare app dir
@@ -44,6 +51,7 @@ WORKDIR /app
 # Copy release from build stage
 COPY --from=build /app/_build ./hexerei
 COPY --from=build /app/start .
+
 RUN chown -R nobody: /app
 USER nobody
 
@@ -51,4 +59,6 @@ USER nobody
 ENV PORT=$PORT
 ENV HOME=/app
 ENV MIX_ENV=$ENV
+
+# Entrypoint
 ENTRYPOINT ["./start"]

@@ -2,9 +2,8 @@
 
 set -e
 MODE="prod"
-optstring=":m:"
 
-while getopts ${optstring} arg; do
+while getopts ":m:" arg; do
   case ${arg} in
     m)
       if [ "$OPTARG" = "dev" ] || [ "$OPTARG" = "prod" ]; then
@@ -33,11 +32,9 @@ if [ "$MODE" = "dev" ]; then
   mix deps.get > /dev/null
 
   printf "\r"
-  source ./.env
-  MIX_ENV=$MODE mix run --no-halt
+  source ./.env && MIX_ENV=$MODE mix run --no-halt
 else
-  bin="/app/hexerei"
-  exec "$bin/prod/rel/prod/bin/prod" "start"
+  exec "/app/hexerei/prod/rel/prod/bin/prod" "start"
 fi
 
 exit 0

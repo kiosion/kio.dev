@@ -27,30 +27,23 @@ fi
 
 printf "Starting release build for $SANITY_DATASET...\r"
 cd /app
-
 sed -i "s/\${SANITY_PROJECT_ID}/\"$SANITY_PROJECT_ID\"/g" ./config/prod.env.exs
 sed -i "s/\${SANITY_TOKEN}/\"$SANITY_TOKEN\"/g" ./config/prod.env.exs
 sed -i "s/\${SANITY_DATASET}/\"$SANITY_DATASET\"/g" ./config/prod.env.exs
 sed -i "s/\${API_TOKEN}/\"$API_TOKEN\"/g" ./config/prod.env.exs
 sed -i "s/\${PORT}/$PORT/g" ./config/prod.env.exs
-
 printf "Fetching project deps...\r"
 mix local.rebar --if-missing --force > /dev/null
 mix local.hex --if-missing --force > /dev/null
 mix deps.get --only prod > /dev/null
-
-printf "Cleaning any leftover build artifacts...\r"
 mix do clean, compile --force
-
 printf "Building release for $SANITY_DATASET...\r"
 export MIX_ENV=prod
 mix release prod --overwrite
-
 sed -i "s/\"$SANITY_PROJECT_ID\"/\${SANITY_PROJECT_ID}/g" ./config/prod.env.exs
 sed -i "s/\"$SANITY_TOKEN\"/\${SANITY_TOKEN}/g" ./config/prod.env.exs
 sed -i "s/\"$SANITY_DATASET\"/\${SANITY_DATASET}/g" ./config/prod.env.exs
 sed -i "s/\"$API_TOKEN\"/\${API_TOKEN}/g" ./config/prod.env.exs
 sed -i "s/$PORT/\${PORT}/g" ./config/prod.env.exs
 printf "Release built successfully!\r"
-
 exit 0
