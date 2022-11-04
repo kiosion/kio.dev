@@ -1,15 +1,19 @@
-import type {
-  RequestEvent,
-  RequestHandler,
-  RequestHandlerOutput
-} from './types';
+import type { RequestEvent, RequestHandler } from './$types';
 import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
+import Normalize from '$lib/data/normalize';
 
-export const GET: RequestHandler = async ({
-  url
-}: RequestEvent): Promise<RequestHandlerOutput> => {
-  const remoteUrl = `${REMOTE_API_URL}/query/project${url.search}`;
+export const GET: RequestHandler = async ({ url }: RequestEvent) => {
+  const id = url.searchParams.get('id');
+  if (!id) {
+    return new Response(
+      JSON.stringify({
+        status: 400,
+        error: 'Endpoint error: Missing required param: id'
+      })
+    );
+  }
+  const remoteUrl = `${REMOTE_API_URL}/query/project/${id}`;
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -27,20 +31,18 @@ export const GET: RequestHandler = async ({
         })
       );
     }
-    const data = await res.json();
-    return new Response(
-      JSON.stringify(data, {
-        headers: {
-          'content-type': 'application/json; charset=utf-8'
-        }
-      })
-    );
+    const data = Normalize(await res.json());
+    return new Response(JSON.stringify(data), {
+      headers: {
+        'content-type': 'application/json; charset=utf-8'
+      }
+    });
   } catch (err: unknown) {
     Logger.error(`Failed to fetch project: ${err}`, 'api/fetchProject');
     return new Response(
       JSON.stringify({
         status: 500,
-        error: (err && err?.message) || 'Endpoint error: Unknown error'
+        error: 'Endpoint error: Unknown error'
       })
     );
   }

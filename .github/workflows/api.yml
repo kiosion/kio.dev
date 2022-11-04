@@ -9,27 +9,56 @@ on:
       - '**/.husky'
       - 'sanity-cms/**'
       - 'svelte-app/**'
-      - 'elixir-api/**'
+      - 'express-api/**'
 
 concurrency: 
   group: api
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Lint check
-    runs-on: ubuntu-latest
+  # TODO: Test job, lint job, then build + deploy
+  # test:
+  #   name: Test
+  #   environment: API
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+      
+  #     - name: Install Dependencies
+  #       run: (cd ./elixir-api && make install)
+      
+  #     - name: Run tests
+  #       run: (cd ./elixir-api && make test)
+  build:
+    name: Build
+    environment: API
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: (cd ./express-api && yarn install 2> >(grep -v warning 1>&2))
-      
-      - name: Run eslint
-        run: (cd ./express-api && yarn lint)
+      - name: Build for dev
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.DEV_API_TOKEN }}
+        run: cd ./elixir-api && make prod-dev
+
+      - name: Build for production
+        env:
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          API_KEY: ${{ secrets.API_TOKEN }}
+        run: cd ./elixir-api && make prod
   deploy:
     name: Deploy
-    needs: [ lint ]
-    uses: ./.github/workflows/api-deploy.yml
-    secrets: inherit
+    needs: [ build ]
+    environment: API
+    runs-on: self-hosted
+    steps:
+      - name: Deploy for dev
+        run: cd ./elixir-api && make run-prod-dev
+
+      - name: Deploy for production
+        run: cd ./elixir-api && make run-prod

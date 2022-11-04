@@ -27,7 +27,6 @@ module.exports = {
     'dot-notation': ['error'],
     'eqeqeq': ['error'],
     'func-call-spacing': ['error', 'never'],
-    '@typescript-eslint/indent': ['error', 2],
     'key-spacing': ['error'],
     'keyword-spacing': ['error'],
     'linebreak-style': ['error'],

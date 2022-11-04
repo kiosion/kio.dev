@@ -60,7 +60,7 @@ export const queryProject = async (
   params: SingleDocumentQueryParams
 ): Promise<StoreRes<ResData<ProjectDocument>>> => {
   const { slug = '', id = '' } = params;
-  const url = `${API_URL}getProject?slug=${slug}&id=${id}`;
+  const url = `${API_URL}getProject?id=${id !== '' ? id : slug}`;
   try {
     const res = await fetch(url);
     const response = await res.json();

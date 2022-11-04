@@ -192,7 +192,7 @@ defmodule Hexerei.BuildQuery do
   # Fetch 'about' page content
   def about do
     "
-      *[!(_id in path('drafts.**')) && _type == 'author' && _id == 'd50256da-3199-4208-ad93-359a818f01df']{
+      *[!(_id in path('drafts.**')) && _type == 'author']{
         _id,
         'objectID': _id,
         _rev,

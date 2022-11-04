@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
-// import { gateRequest } from '$lib/api';
+import Normalize from '$lib/data/normalize';
 
 export const GET: RequestHandler = async (): Promise<Response> => {
   const remoteUrl = `${REMOTE_API_URL}/query/about`;
@@ -24,10 +24,10 @@ export const GET: RequestHandler = async (): Promise<Response> => {
         }
       );
     }
-    return new Response(res.body, {
+    const data = Normalize(await res.json());
+    return new Response(JSON.stringify(data), {
       headers: {
-        'content-type': 'application/json',
-        charset: 'utf-8'
+        'content-type': 'application/json; charset=utf-8'
       }
     });
   } catch (err) {

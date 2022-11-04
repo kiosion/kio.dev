@@ -4,6 +4,7 @@ RUN apk upgrade --no-cache && \
     apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 ARG ENV=prod
+ARG PORT=4000
 
 ARG SANITY_TOKEN
 ARG SANITY_PROJECT_ID
@@ -31,7 +32,9 @@ FROM alpine:3.16.2 AS app
 RUN apk upgrade --no-cache && \
     apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
-EXPOSE 4000
+# If ENV is 'prod', expose port 4000, otherwise expose port 4444
+
+EXPOSE $PORT
 ENV MIX_ENV=$ENV
 
 # Prepare app dir
@@ -45,7 +48,7 @@ RUN chown -R nobody: /app
 USER nobody
 
 # Run the app
-ENV PORT=4000
+ENV PORT=$PORT
 ENV HOME=/app
 ENV MIX_ENV=$ENV
 ENTRYPOINT ["./start"]

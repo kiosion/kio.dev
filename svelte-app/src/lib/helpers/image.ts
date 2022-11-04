@@ -1,5 +1,5 @@
 import imageUrlBuilder from '@sanity/image-url';
-import { REMOTE_API_URL } from '$lib/env';
+import { REMOTE_CDN_URL } from '$lib/env';
 import type {
   SanityImageSource,
   SanityClientLike,
@@ -17,7 +17,7 @@ export interface ImageCrop {
 
 const config: SanityClientLike = {
   clientConfig: {
-    apiHost: `${REMOTE_API_URL}/cdn`,
+    apiHost: `${REMOTE_CDN_URL}`,
     projectId: 'dataset', // This is kinda jank, should find a workaround to not include at all
     dataset: '0'
   }

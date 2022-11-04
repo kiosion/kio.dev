@@ -55,8 +55,6 @@ defmodule Router.Api.V1 do
 
   # GET posts
   get "#{@query_url}/posts" do
-    IO.inspect("GET /posts")
-    IO.inspect("")
     start = System.system_time(:millisecond)
     params = fetch_query_params(conn).query_params
     |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "date", "o" => "desc", "date" => nil, "tags" => nil })
@@ -79,6 +77,8 @@ defmodule Router.Api.V1 do
     query = BuildQuery.postMany(params["date"], params["tags"])
     query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["limit"] + params["skip"]}]"
 
+    IO.inspect("Sending query: #{query_limited}")
+
     case Sanity.fetch(query_limited) do
       {:ok, result} ->
         case Sanity.fetch("{ 'total': count(#{query}), 'count': count(#{query_limited}) }") do
@@ -95,8 +95,10 @@ defmodule Router.Api.V1 do
             })
             |> Map.update("ms", duration, &(&1 + (duration - &1)))
             |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+          {:error, error} -> Hexerei.Res.err(conn, error.code, %{message: "Something went wrong: #{error.message}"})
         end
       {:error, error} ->
+        IO.inspect("Error:")
         IO.inspect(error)
         Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
     end
@@ -133,6 +135,7 @@ defmodule Router.Api.V1 do
     # Convert 'limit' / 'skip' to integers
     params = Map.update(params, "limit", 10, &String.to_integer/1)
     params = Map.update(params, "skip", 0, &String.to_integer/1)
+
     # If date is '', set to nil
     params = Map.update(params, "date", nil, &if(&1 == "", do: nil, else: &1))
 
@@ -234,7 +237,7 @@ defmodule Router.Api.V1 do
         Poison.decode!(result)
         |> Map.delete("ms")
         |> Map.delete("query")
-        |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+        |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data }) end.()
       {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
     end
   end
@@ -243,6 +246,7 @@ defmodule Router.Api.V1 do
   get "/config" do
     case Sanity.fetch(BuildQuery.config()) do
       {:ok, result} ->
+        IO.inspect(Poison.decode!(result))
         Poison.decode!(result)
         |> Map.delete("ms")
         |> Map.delete("query")

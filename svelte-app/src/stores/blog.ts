@@ -54,7 +54,7 @@ export const queryPost = async (
   params: SingleDocumentQueryParams
 ): Promise<StoreRes<ResData<PostDocument>>> => {
   const { slug = '', id = '' } = params;
-  const url = `${API_URL}getPost?slug=${slug}&id=${id}`;
+  const url = `${API_URL}getPost?id=${id !== '' ? id : slug}`;
   try {
     const res = await fetch(url);
     const response = await res.json();
