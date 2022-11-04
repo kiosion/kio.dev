@@ -84,5 +84,6 @@
   "dependencies": {
     "pixelarticons": "^1.7.0",
     "twemoji": "^14.0.2"
-  }
+  },
+  "packageManager": "yarn@4.0.0-rc.25"
 }
