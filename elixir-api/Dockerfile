@@ -24,7 +24,7 @@ COPY config config
 COPY lib lib
 
 # Run build script, passing in 'sanity_token' and other args
-RUN ./release -p $SANITY_PROJECT_ID -d $SANITY_DATASET -t $SANITY_TOKEN -a $API_KEY
+RUN ./release -p $SANITY_PROJECT_ID -d $SANITY_DATASET -t $SANITY_TOKEN -a $API_KEY -x $PORT
 
 # Prepare release image
 FROM alpine:3.16.2 AS app
