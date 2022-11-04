@@ -1,5 +1,5 @@
-import { config, findConfig } from '$stores/config';
 import Logger from '$lib/logger';
+import Store from '$lib/store';
 
 export const load: import('./$types').LayoutLoad = async ({
   url,
@@ -8,18 +8,13 @@ export const load: import('./$types').LayoutLoad = async ({
 }) => {
   await parent();
 
-  await findConfig(fetch)
-    .then((res) => {
-      if (res.error) {
-        throw res.error;
-      }
-      config.set(res);
+  await Store.findConfig(fetch)
+    .then(() => {
+      Logger.info('Config loaded', 'routes/+layout');
     })
     .catch((err: unknown) => {
       Logger.error(err as string, 'routes/+layout');
     });
 
-  return {
-    url
-  };
+  return { url };
 };

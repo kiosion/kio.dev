@@ -3,6 +3,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json']
   },
   env: {
     browser: true,
@@ -11,10 +13,16 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
-  plugins: ['svelte3', '@typescript-eslint'],
+  plugins: ['svelte3', 'prettier', '@typescript-eslint'],
   rules: {
+    '@typescript-eslint/no-unsafe-assignment': ['off'],
+    '@typescript-eslint/no-unsafe-return': ['off'],
+    '@typescript-eslint/no-unsafe-call': ['off'],
+    '@typescript-eslint/no-unsafe-member-access': ['off'],
+    'prettier/prettier': ['error'],
     'array-bracket-spacing': ['error', 'never'],
     'arrow-spacing': ['error'],
     'block-scoped-var': ['error'],

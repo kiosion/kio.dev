@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navOptions } from '$stores/navigation';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import type UIfx from 'uifx';
   import { sounds } from '$stores/features';
   import SafeIcon from './safe-icon.svelte';
@@ -33,6 +34,12 @@
                   ? 'scroll-hover-down'
                   : ''}"
                 on:click={() => $sounds === 'on' && click?.play()}
+                on:keydown={(e) => {
+                  if (e.code === 'Enter' || e.code === 'Space') {
+                    $sounds === 'on' && click?.play();
+                    goto($navOptions.down);
+                  }
+                }}
               >
                 <SafeIcon icon={'ArrowDown'} />
                 <p class="font-code text-base w-fit ml-4">

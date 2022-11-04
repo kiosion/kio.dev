@@ -1,7 +1,7 @@
 <script lang="ts">
   import ListItem from '$components/blog/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects, sounds } from '$stores/features';
+  import { sounds } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import SafeIcon from '$components/safe-icon.svelte';
@@ -31,26 +31,6 @@
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
-
-    if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) => {
-        setMousePos(e.clientX, e.clientY);
-      });
-      document.addEventListener('mouseout', () => {
-        setMousePos(-1000, -1000);
-      });
-      document.addEventListener('blur', () => {
-        setMousePos(-1000, -1000);
-      });
-    }
-  });
-
-  onDestroy(() => {
-    if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', () => setMousePos);
-      document.removeEventListener('mouseout', () => setMousePos);
-      document.removeEventListener('blur', () => setMousePos);
-    }
   });
 
   export let data: PageData;
@@ -75,7 +55,7 @@
     <Boundary onError={console.error}>
       {#if posts?.data?.length}
         {#each posts.data as post}
-          <ListItem {post} {mousePos} />
+          <ListItem {post} />
         {/each}
       {:else}
         <ErrorText text="No data" classes="w-fit" />

@@ -1,6 +1,7 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
+    "module": "es2022",
     "allowJs": true,
     "baseUrl": ".",
     "checkJs": true,
@@ -8,13 +9,17 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "noEmit": true,
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$logs": ["logs"],
       "$components*": ["src/components*"],
+      "$components/*": ["src/components/*"],
       "$helpers*": ["src/lib/helpers*"],
-      "$stores*": ["src/stores*"]
+      "$helpers/*": ["src/lib/helpers/*"],
+      "$stores*": ["src/stores*"],
+      "$stores/*": ["src/stores/*"]
     },
     "removeComments": true,
     "rootDir": "./",
@@ -23,5 +28,15 @@
     "sourceMap": true,
     "strict": true,
     "types": ["cypress", "vitest/globals", "node"]
-  }
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "cypress/**/*",
+    "*.js",
+    "*.ts"
+  ],
+  "exclude": [
+    "**/node_modules"
+  ]
 }

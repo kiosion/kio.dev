@@ -1,8 +1,8 @@
-import { findPosts } from '$stores/blog';
-import Logger from '$lib/logger';
-import type { PageLoad } from './$types';
-import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
 import { redirect } from '@sveltejs/kit';
+import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
+import Logger from '$lib/logger';
+import Store from '$lib/store';
+import type { PageLoad } from './$types';
 import type { ResDataMany, PostDocument } from '$lib/types';
 
 export const prerender = false;
@@ -16,20 +16,14 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
-  let postsData: ResDataMany<PostDocument> | undefined;
-
-  await findPosts(fetch, { skip, limit: skip + PAGINATION_POSTS_PER_PAGE })
-    .then((res) => {
-      if (res.error) {
-        throw res.error;
-      }
-      postsData = res;
-    })
-    .catch((err: unknown) => {
-      Logger.error(err as string, 'routes/blog');
+  const posts: ResDataMany<PostDocument> | undefined =
+    await Store.find<PostDocument>(fetch, 'post', {
+      limit: PAGINATION_POSTS_PER_PAGE,
+      skip
+    }).catch((err: unknown) => {
+      Logger.error(err as string, `routes/blog/${params.page}`);
+      return undefined;
     });
 
-  return {
-    posts: postsData
-  };
+  return { posts };
 };

@@ -25,6 +25,7 @@ export const GET: RequestHandler = async ({ url }: RequestEvent) => {
         })
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = Normalize(await res.json());
     return new Response(JSON.stringify(data), {
       headers: {
@@ -32,7 +33,7 @@ export const GET: RequestHandler = async ({ url }: RequestEvent) => {
       }
     });
   } catch (err: unknown) {
-    Logger.error(`Failed to fetch projects: ${err}`, 'api/fetchProjects');
+    Logger.error('Failed to fetch projects', 'api/fetchProjects');
     return new Response(
       JSON.stringify({
         status: 500,

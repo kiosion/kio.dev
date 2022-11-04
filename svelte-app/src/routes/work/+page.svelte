@@ -1,8 +1,8 @@
 <script lang="ts">
   import ListItem from '$components/work/list-item.svelte';
   import PageHeading from '$components/headings/page-heading.svelte';
-  import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects, sounds } from '$stores/features';
+  import { onMount } from 'svelte';
+  import { sounds } from '$stores/features';
   import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
   import type UIfx from 'uifx';
@@ -12,12 +12,6 @@
   import Hoverable from '$components/hoverable.svelte';
   import { RECENT_PROJECTS_COUNT } from '$lib/consts';
 
-  let mousePos: [number, number];
-
-  const setMousePos = (x: number, y: number) => {
-    mousePos = [x, y];
-  };
-
   let click: UIfx;
 
   onMount(() => {
@@ -26,26 +20,6 @@
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });
-
-    if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) => {
-        setMousePos(e.clientX, e.clientY);
-      });
-      document.addEventListener('mouseout', () => {
-        setMousePos(-1000, -1000);
-      });
-      document.addEventListener('blur', () => {
-        setMousePos(-1000, -1000);
-      });
-    }
-  });
-
-  onDestroy(() => {
-    if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', () => setMousePos);
-      document.removeEventListener('mouseout', () => setMousePos);
-      document.removeEventListener('blur', () => setMousePos);
-    }
   });
 
   export let data: PageData;
@@ -84,12 +58,12 @@
   <div class="mb-12">
     {#if pinned?.data}
       <IconHeader icon="Pin" text="Pinned" />
-      <ListItem project={pinned.data} {mousePos} />
+      <ListItem project={pinned.data} />
     {/if}
     <IconHeader icon="Clock" text="Recent" />
     {#if projects?.data?.length}
       {#each projects.data as project}
-        <ListItem {project} {mousePos} />
+        <ListItem {project} />
       {/each}
     {:else}
       <div class="w-full flex flex-row items-center justify-center">

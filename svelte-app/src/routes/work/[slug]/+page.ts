@@ -1,7 +1,6 @@
-import { findProject } from '$stores/work';
-import type { ResData, ProjectDocument } from '$lib/types';
-import { error } from '@sveltejs/kit';
 import Logger from '$lib/logger';
+import Store from '$lib/store';
+import type { ResData, ProjectDocument } from '$lib/types';
 
 export const load: import('./$types').PageLoad = async ({
   parent,
@@ -10,24 +9,13 @@ export const load: import('./$types').PageLoad = async ({
 }) => {
   await parent();
 
-  let projectData: ResData<ProjectDocument> | undefined;
-
-  await findProject(fetch, { slug: params.slug })
-    .then((res) => {
-      if (res.error) {
-        throw error(res.code, res.error);
-      }
-      projectData = res;
-    })
-    .catch((e) => {
-      Logger.error(e, `routes/blog/${params.slug}`);
-      throw error(
-        e.status ? e.status : 500,
-        e.message ? e.message : 'Something went wrong'
-      );
+  const project: ResData<ProjectDocument> | undefined =
+    await Store.findOne<ProjectDocument>(fetch, 'project', {
+      id: params.slug
+    }).catch((err: unknown) => {
+      Logger.error(err as string, `routes/work/${params.slug}`);
+      return undefined;
     });
 
-  return {
-    project: projectData
-  };
+  return { project };
 };

@@ -15,47 +15,61 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   target = (target?.closest('button') as HTMLButtonElement) || target;
   target = (target?.closest('a') as HTMLAnchorElement) || target;
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   const opts = (await (async () => {
     switch (target?.tagName.toUpperCase()) {
       case 'A':
-        if (target.href.indexOf('mailto:') >= 0) {
+        if ((target as HTMLAnchorElement).href.indexOf('mailto:') >= 0) {
           return [
             {
               icon: 'MailArrowRight',
-              text: `Mail ${target.href.split(':')?.[1]}`,
-              action: () => window.open(target.href, '_self')
+              text: `Mail ${
+                (target as HTMLAnchorElement).href.split(':')?.[1]
+              }`,
+              action: () =>
+                window.open((target as HTMLAnchorElement).href, '_self')
             },
             {},
             {
               icon: 'Copy',
               text: 'Copy email address',
-              action: () => navigator.clipboard.writeText(target.href)
+              action: () =>
+                navigator.clipboard.writeText(
+                  (target as HTMLAnchorElement).href
+                )
             }
           ];
         }
         return [
           {
             icon: 'Link',
-            text: `Go to '${target.href}'`,
-            action: () => window.open(target.href, '_self')
+            text: `Go to '${(target as HTMLAnchorElement).href}'`,
+            action: () =>
+              window.open((target as HTMLAnchorElement).href, '_self')
           },
           {},
           {
             icon: 'Open',
             text: 'Open link in new tab',
-            action: () => window.open(target.href, '_blank')
+            action: () =>
+              window.open((target as HTMLAnchorElement).href, '_blank')
           },
           {
             icon: 'Open',
             text: 'Open link in new window',
             action: () =>
-              window.open(target.href, '_blank', 'width=1200, height=800')
+              window.open(
+                (target as HTMLAnchorElement).href,
+                '_blank',
+                'width=1200, height=800'
+              )
           },
           {},
           {
             icon: 'Copy',
             text: 'Copy link address',
-            action: () => navigator.clipboard.writeText(target.href)
+            action: () =>
+              navigator.clipboard.writeText((target as HTMLAnchorElement).href)
           }
         ];
       case 'IMG':
@@ -63,24 +77,34 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {
             icon: 'Open',
             text: 'Open image in new tab',
-            action: () => window.open(target.src, '_blank')
+            action: () =>
+              window.open((target as HTMLImageElement).src, '_blank')
           },
           {
             icon: 'Open',
             text: 'Open image in new window',
             action: () =>
-              window.open(target.src, '_blank', 'width=1200, height=800')
+              window.open(
+                (target as HTMLImageElement).src,
+                '_blank',
+                'width=1200, height=800'
+              )
           },
           {},
           {
             icon: 'Save',
             text: 'Save image',
-            action: () => window.open(`${target.src}&download`, '_blank')
+            action: () =>
+              window.open(
+                `${(target as HTMLImageElement).src}&download`,
+                '_blank'
+              )
           },
           {
             icon: 'Copy',
             text: 'Copy image address',
-            action: () => navigator.clipboard.writeText(target.src)
+            action: () =>
+              navigator.clipboard.writeText((target as HTMLImageElement).src)
           }
         ];
       case 'CODE':

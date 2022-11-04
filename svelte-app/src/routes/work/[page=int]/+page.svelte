@@ -2,7 +2,6 @@
   import ListItem from '$components/work/list-item.svelte';
   import { onMount, onDestroy } from 'svelte';
   import type { PageData } from './$types';
-  import { highlightEffects } from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import SafeIcon from '$components/safe-icon.svelte';
@@ -15,35 +14,9 @@
   let curPage = 1,
     totalPages = 1;
 
-  let mousePos: [number, number];
-
-  const setMousePos = (x: number, y: number) => {
-    mousePos = [x, y];
-  };
-
   onMount(() => {
     pageHeading.set(`All work | Page ${curPage}`);
     navOptions.set({ down: '', up: '/work' });
-
-    if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) => {
-        setMousePos(e.clientX, e.clientY);
-      });
-      document.addEventListener('mouseout', () => {
-        setMousePos(-1000, -1000);
-      });
-      document.addEventListener('blur', () => {
-        setMousePos(-1000, -1000);
-      });
-    }
-  });
-
-  onDestroy(() => {
-    if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', () => setMousePos);
-      document.removeEventListener('mouseout', () => setMousePos);
-      document.removeEventListener('blur', () => setMousePos);
-    }
   });
 
   export let data: PageData;

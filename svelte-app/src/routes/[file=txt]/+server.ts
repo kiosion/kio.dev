@@ -3,6 +3,7 @@ import PGP from '$lib/fixtures/pgp';
 
 export const GET: import('./$types').RequestHandler = async ({
   url
+  // eslint-disable-next-line @typescript-eslint/require-await
 }): Promise<Response> => {
   const filename = url.pathname.split('/').pop();
 

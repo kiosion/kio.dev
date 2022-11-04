@@ -1,7 +1,6 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import { about } from '$stores/about';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { onMount } from 'svelte';
@@ -9,10 +8,18 @@
   import AboutTimeline from '$components/about/timeline.svelte';
   import AboutSection from '$components/about/section.svelte';
   import { Boundary } from '$lib/error-bound';
+  import type { PageData } from './$types';
+  import type { AuthorDocument } from '$lib/types';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
   });
+
+  let about: AuthorDocument | undefined;
+
+  export let data: PageData;
+
+  $: about = data?.about?.data;
 </script>
 
 <svelte:head>
@@ -32,20 +39,20 @@
 <div data-test-route="about">
   <ContentWrapper>
     <Boundary onError={console.error}>
-      <AboutCard image={$about?.data?.image} body={$about?.data?.bio} />
+      <AboutCard image={about?.image} body={about?.bio} />
     </Boundary>
-    {#if $about?.data?.timeline}
+    {#if about?.timeline}
       <Boundary onError={console.error}>
         <AboutSection title="My work" icon="Briefcase">
-          <AboutTimeline data={$about.data.timeline} />
+          <AboutTimeline data={about.timeline} />
         </AboutSection>
       </Boundary>
     {/if}
-    {#if $about?.data?.body}
+    {#if about?.body}
       <Boundary onError={console.error}>
         <AboutSection title="More" icon="InfoBox">
           <div class="mx-1 font-sans">
-            <PortableText text={$about.data.body} />
+            <PortableText text={about.body} />
           </div>
         </AboutSection>
       </Boundary>

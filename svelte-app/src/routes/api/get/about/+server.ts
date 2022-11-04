@@ -24,6 +24,7 @@ export const GET: RequestHandler = async (): Promise<Response> => {
         }
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = Normalize(await res.json());
     return new Response(JSON.stringify(data), {
       headers: {
@@ -31,9 +32,9 @@ export const GET: RequestHandler = async (): Promise<Response> => {
       }
     });
   } catch (err) {
-    const error = err as Record<string, unknown>;
+    const error = err as Error;
     Logger.error(
-      `Endpoint failed to fetch about, caught: ${err}`,
+      `Endpoint failed to fetch about: ${error?.message}`,
       'api/get/about'
     );
     return new Response(
@@ -42,6 +43,7 @@ export const GET: RequestHandler = async (): Promise<Response> => {
         error: error?.message ? error.message : 'Endpoint error: Unknown error'
       }),
       {
+        // @ts-expect-error Status may exist on custom Errors
         status: (error?.status as number) ?? 500
       }
     );

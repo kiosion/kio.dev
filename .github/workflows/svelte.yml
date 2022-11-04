@@ -17,8 +17,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: make install-web
+      - name: Run lint check
+        run: make lint
   tests:
     name: Run tests
+    needs: [ lint ]
     uses: ./.github/workflows/test.yml
   deploy:
     name: Deploy

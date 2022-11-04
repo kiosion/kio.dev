@@ -8,6 +8,13 @@ export default class Logger {
     ENV === 'development' && console.log(content);
   }
 
+  static info(str: string, context?: string): void {
+    context = context ? `@ ${context}` : '';
+    const content = `Info: ${str}\n\t${context}`;
+
+    ENV === 'development' && console.info(content);
+  }
+
   static warn(str: string, context?: string): void {
     context = context ? `@ ${context}` : '';
     const content = `Warn: ${str}\n\t${context}`;

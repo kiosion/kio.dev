@@ -54,8 +54,24 @@ export const APP_ROUTES = [
 ];
 
 export const PAGINATION_POSTS_PER_PAGE = 6;
+export const PAGINATION_PROJECTS_PER_PAGE = 6;
+
 export const RECENT_POSTS_COUNT = 5;
 export const RECENT_PROJECTS_COUNT = 5;
+
+export const DEFAULT_POST_QUERY_PARAMS = {
+  limit: PAGINATION_POSTS_PER_PAGE,
+  skip: 0,
+  sort: 'date',
+  order: 'desc',
+  date: '',
+  tags: []
+};
+
+export const DEFAULT_PROJECT_QUERY_PARAMS = {
+  ...DEFAULT_POST_QUERY_PARAMS,
+  limit: PAGINATION_PROJECTS_PER_PAGE
+};
 
 export const DEFAULT_DESKTOP_WIDTH = 768;
 export const DEFAULT_MOBILE_WIDTH = DEFAULT_DESKTOP_WIDTH - 1;

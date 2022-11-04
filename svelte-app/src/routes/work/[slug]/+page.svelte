@@ -10,7 +10,7 @@
   let allTags: string | undefined;
 
   onMount(() => {
-    navOptions.set({ down: '', up: '/blog' });
+    navOptions.set({ down: '', up: '/work' });
   });
 
   export let data: PageData;
@@ -22,9 +22,9 @@
   $: project?.data?.tags?.length &&
     (allTags = project.data.tags.reduce(
       (acc, tag, i) =>
-        (i > 0
+        i > 0
           ? `${acc}, ${tag.title.toLowerCase()}`
-          : `${tag.title.toLowerCase()}`),
+          : `${tag.title.toLowerCase()}`,
       ''
     ));
   $: ({ project } = data);

@@ -1,10 +1,10 @@
-import { findPosts, findPost } from '$stores/blog';
 import { get } from 'svelte/store';
 import { config } from '$stores/config';
 import Logger from '$lib/logger';
-import type { PostDocument, ResData, ResDataMany } from '$lib/types';
 import { ENV } from '$lib/env';
 import { RECENT_POSTS_COUNT } from '$lib/consts';
+import Store from '$lib/store';
+import type { PostDocument, ResData, ResDataMany } from '$lib/types';
 
 export const ssr = !(ENV === 'testing');
 
@@ -12,35 +12,27 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
   await parent();
 
   const currentConfig = get(config);
-  let pinnedPost: ResData<PostDocument> | undefined;
-  let postsData: ResDataMany<PostDocument> | undefined;
+
+  let pinned: ResData<PostDocument> | undefined;
+
+  console.log('currentConfig', get(config));
 
   if (currentConfig?.data?.pinnedPost?._ref) {
-    await findPost(fetch, { id: currentConfig.data.pinnedPost._ref })
-      .then((res) => {
-        if (res.error) {
-          throw res.error;
-        }
-        pinnedPost = res;
-      })
-      .catch((err: Error) => {
-        Logger.error(err as unknown as string, 'routes/blog');
-      });
+    pinned = await Store.findOne<PostDocument>(fetch, 'post', {
+      id: currentConfig.data.pinnedPost._ref
+    }).catch((err: unknown) => {
+      Logger.error(err as string, 'routes/blog');
+      return undefined;
+    });
   }
 
-  await findPosts(fetch, { limit: RECENT_POSTS_COUNT })
-    .then((res) => {
-      if (res.error) {
-        throw res.error;
-      }
-      postsData = res;
-    })
-    .catch((err: unknown) => {
+  const posts: ResDataMany<PostDocument> | undefined =
+    await Store.find<PostDocument>(fetch, 'post', {
+      limit: RECENT_POSTS_COUNT
+    }).catch((err: unknown) => {
       Logger.error(err as string, 'routes/blog');
+      return undefined;
     });
 
-  return {
-    pinned: pinnedPost,
-    posts: postsData
-  };
+  return { pinned, posts };
 };

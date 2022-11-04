@@ -53,7 +53,8 @@
   on:mouseleave={() => setState()}
   on:mousewheel={() => setState()}
   on:wheel={() => setState()}
-  on:keydown={(e) => handleKey(e)} />
+  on:keydown={(e) => handleKey(e)}
+/>
 
 <div
   class="absolute grid min-w-[14rem] py-2 z-20 shadow-slate-500/50 dark:shadow-slate-500/20 shadow-[0_0_20px_-2px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"

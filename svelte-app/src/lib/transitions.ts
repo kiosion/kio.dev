@@ -33,24 +33,24 @@ export const onNav = (path: string): 'forward' | 'backward' => {
 
   const toRoute = path.startsWith('/')
     ? path
-      .slice(1)
-      .split('/')
-      .map((part, i) => (i === 0 ? part : '*'))
-      .join('/')
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
     : path
-      .split('/')
-      .map((part, i) => (i === 0 ? part : '*'))
-      .join('/');
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
   const fromRoute = prev.startsWith('/')
     ? prev
-      .slice(1)
-      .split('/')
-      .map((part, i) => (i === 0 ? part : '*'))
-      .join('/')
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
     : prev
-      .split('/')
-      .map((part, i) => (i === 0 ? part : '*'))
-      .join('/');
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
 
   const dirs = [
     fromRoute === '' ? 'index' : fromRoute,

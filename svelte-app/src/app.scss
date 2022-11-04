@@ -15,13 +15,13 @@
   }
 }
 .roundedCard {
-  @apply bg-slate-200 dark:bg-slate-900 transition-colors;
+  @apply bg-slate-200/50 dark:bg-slate-900/50 transition-colors;
 
   &-md {
-    @apply bg-slate-200 dark:bg-slate-900 transition-colors rounded-lg;
+    @apply bg-slate-200/50 dark:bg-slate-900/50 transition-colors rounded-lg;
   }
   &-lg {
-    @apply bg-slate-200 dark:bg-slate-900 transition-colors rounded-xl;
+    @apply bg-slate-200/50 dark:bg-slate-900/50 transition-colors rounded-xl;
   }
 }
 

@@ -7,18 +7,6 @@ const initialSetting = (feature: string, fallback = 'off') => {
     : fallback;
 };
 
-const svgBackground = writable<string>(initialSetting('svgBackground'));
-svgBackground.subscribe((value) => {
-  browser && window.localStorage.setItem('feature-svgBackground', value);
-});
-
-const highlightEffects = writable<string>(
-  initialSetting('highlightEffects', 'off')
-);
-highlightEffects.subscribe((value) => {
-  browser && window.localStorage.setItem('feature-highlightEffects', value);
-});
-
 const reduceMotion = writable<string>(initialSetting('reduceMotion', 'off'));
 reduceMotion.subscribe((value) => {
   browser && window.localStorage.setItem('feature-reduceMotion', value);
@@ -39,11 +27,4 @@ comicSans.subscribe((value) => {
   browser && window.localStorage.setItem('feature-comicSans', value);
 });
 
-export {
-  svgBackground,
-  highlightEffects,
-  reduceMotion,
-  sounds,
-  customCursor,
-  comicSans
-};
+export { reduceMotion, sounds, customCursor, comicSans };

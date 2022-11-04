@@ -24,6 +24,8 @@
   <div
     class="relative flex flex-col justify-start align-start py-4 px-5 border border-red-500 rounded-md"
     on:click={() => (expanded = !expanded)}
+    on:keydown={(e) =>
+      (e.code === 'Enter' || e.code === 'Space') && (expanded = !expanded)}
   >
     <h1 class="font-code font-bold text-lg">
       Component failed: <span class="font-normal">{message}</span>

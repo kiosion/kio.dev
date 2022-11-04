@@ -12767,6 +12767,7 @@ __metadata:
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
     tailwindcss: "npm:^3.2.1"
+    ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.3.1"
     twemoji: "npm:^14.0.2"
     typescript: "npm:^4.8.4"
@@ -13353,6 +13354,15 @@ __metadata:
   version: 1.3.0
   resolution: "triple-beam@npm:1.3.0"
   checksum: 112538d46be29b6213ff13ce577867c4ab3cbc28b0b9094ed6687d1a1a79f79085861b1b3cff78b1083c293a05d1437c4138522d0fa2683ae54fbe5453971521
+  languageName: node
+  linkType: hard
+
+"ts-essentials@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "ts-essentials@npm:9.3.0"
+  peerDependencies:
+    typescript: ">=4.1.0"
+  checksum: bc5d831d35d1079b0b2ffacd1c0ffd84ff9633590041b71a5a45b279b3b5846da70426a79f680230813c2c68a8d9e69ef5683af97ef2f80eb7d2b3d01654c754
   languageName: node
   linkType: hard
 

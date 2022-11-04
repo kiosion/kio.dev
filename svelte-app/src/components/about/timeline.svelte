@@ -45,12 +45,12 @@
             </h1>
             <Hoverable>
               <div
-                class="relative w-full ml-2 mt-2 rounded-md bg-slate-200 dark:bg-slate-900 px-4 py-3 transition-all overflow-hidden"
+                class="relative w-full ml-2 mt-2 rounded-md bg-slate-200/50 dark:bg-slate-900/50 px-4 py-3 transition-all overflow-hidden"
                 on:click={() =>
                   item.body &&
                   (selected === i ? (selected = null) : (selected = i))}
                 on:keydown={(e) =>
-                  (e.code === 'Enter' || e.key === 'Space') &&
+                  (e.code === 'Enter' || e.code === 'Space') &&
                   item.body &&
                   (selected === i ? (selected = null) : (selected = i))}
                 tabindex={0}

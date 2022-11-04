@@ -12,6 +12,7 @@
   <p
     class="text-center text-base -mb-2 cursor-pointer"
     on:click={() => toggle()}
+    on:keydown={(e) => (e.code === 'Enter' || e.code === 'Space') && toggle()}
   >
     Show more
   </p>

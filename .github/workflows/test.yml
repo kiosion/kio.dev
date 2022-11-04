@@ -12,7 +12,39 @@ concurrency:
 jobs:
   vitest:
     name: Vitest
-    uses: ./.github/workflows/vitest.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Install dependencies
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+        run: make install-web
+        
+      - name: Run tests
+        run: make vitest
+
   cypress:
     name: Cypress
-    uses: ./.github/workflows/cypress.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+
+      - name: Install dependencies
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+        run: make install-web
+      
+      - name: Build testing environment
+        env:
+          SVELTE_ADAPTER_ENV: 'node'
+        run: make test
+
+      - name: Run tests
+        run: make cypress

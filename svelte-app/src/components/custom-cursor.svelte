@@ -63,10 +63,10 @@
   };
 
   $: $page.url,
-  appBody &&
+    appBody &&
       (appBody.removeEventListener('scroll', () => updateProgressPath),
       appBody.addEventListener('scroll', () => updateProgressPath())),
-  updateProgressPath();
+    updateProgressPath();
 </script>
 
 <svelte:window

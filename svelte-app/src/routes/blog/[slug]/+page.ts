@@ -1,7 +1,9 @@
-import { findPost } from '$stores/blog';
-import type { ResData, PostDocument } from '$lib/types';
-import { error } from '@sveltejs/kit';
+import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
+import Store from '$lib/store';
+import type { ResData, PostDocument } from '$lib/types';
+
+export const ssr = !(ENV === 'testing');
 
 export const load: import('./$types').PageLoad = async ({
   parent,
@@ -10,24 +12,13 @@ export const load: import('./$types').PageLoad = async ({
 }) => {
   await parent();
 
-  let postData: ResData<PostDocument> | undefined;
-
-  await findPost(fetch, { slug: params.slug })
-    .then((res) => {
-      if (res.error) {
-        throw error(res.code, res.error);
-      }
-      postData = res;
-    })
-    .catch((e) => {
-      Logger.error(e, `routes/blog/${params.slug}`);
-      throw error(
-        e.status ? e.status : 500,
-        e.message ? e.message : 'Something went wrong'
-      );
+  const post: ResData<PostDocument> | undefined =
+    await Store.findOne<PostDocument>(fetch, 'post', {
+      id: params.slug
+    }).catch((err: unknown) => {
+      Logger.error(err as string, `routes/blog/${params.slug}`);
+      return undefined;
     });
 
-  return {
-    post: postData
-  };
+  return { post };
 };

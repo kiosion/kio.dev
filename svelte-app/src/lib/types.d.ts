@@ -110,10 +110,10 @@ export type AuthorTimelineItem = SanityAsset & {
     end?: string;
   };
   skills?: SanityAsset &
-  {
-    slug: SanityAsset & { current: string };
-    title: string;
-  }[];
+    {
+      slug: SanityAsset & { current: string };
+      title: string;
+    }[];
 };
 
 export interface ProjectDocument extends Document {
@@ -190,10 +190,7 @@ export interface ResDataMany<T> extends Omit<ResData, 'data'> {
   data: T[];
 }
 
-export interface StoreRes<T> {
-  error?: ResError;
-  data?: T;
-}
+export type StoreRes<T> = T | undefined;
 
 // PortableText types
 export type TextBlock = PortableTextBlock;

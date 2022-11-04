@@ -111,9 +111,9 @@ const getClosestParent = (
     if (result) {
       return result.children
         ? getClosestParent(
-          result.children as Record<string, unknown>[],
-          needle
-        ) || result
+            result.children as Record<string, unknown>[],
+            needle
+          ) || result
         : result;
     }
   }

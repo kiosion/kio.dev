@@ -33,6 +33,7 @@ export const GET: RequestHandler = async ({
         })
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = Normalize(await res.json());
     return new Response(JSON.stringify(data), {
       headers: {
@@ -40,7 +41,7 @@ export const GET: RequestHandler = async ({
       }
     });
   } catch (err: unknown) {
-    Logger.error(`Failed to fetch post: ${err}`, 'api/fetchPost');
+    Logger.error('Failed to fetch post', 'api/fetchPost');
     return new Response(
       JSON.stringify({
         status: 500,

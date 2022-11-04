@@ -23,9 +23,9 @@
   $: post?.data?.tags?.length &&
     (allTags = post.data.tags.reduce(
       (acc, tag, i) =>
-        (i > 0
+        i > 0
           ? `${acc}, ${tag.title.toLowerCase()}`
-          : `${tag.title.toLowerCase()}`),
+          : `${tag.title.toLowerCase()}`,
       ''
     ));
   $: ({ post } = data);

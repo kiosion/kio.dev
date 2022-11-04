@@ -1,11 +1,11 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
   import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects } from '$stores/features';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
   import SafeIcon from './safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import type { HighlightAuto, Highlight } from 'svelte-highlight';
 
   export let content: string;
   export let showClipboard = false;
@@ -14,18 +14,14 @@
   let hovered = false;
   let copied = false;
 
-  let hlHighlight: unknown;
-  let hlAuto: unknown;
+  let hlHighlight: Highlight;
+  let hlAuto: HighlightAuto;
   let hlLang: unknown;
   let hlStyles: unknown;
 
-  let mousePos = [0, 0];
   let container: HTMLElement;
   let codeContainer: HTMLElement;
   let innerHeight: number;
-  let glow: HTMLElement;
-
-  $: [clientX, clientY] = mousePos;
 
   const copy = () => {
     content && navigator.clipboard.writeText(content);
@@ -51,22 +47,12 @@
     }
   });
 
-  const setMousePos = (x: number, y: number) => {
-    mousePos = [x, y];
-  };
-
   onMount(async () => {
-    if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) =>
-        setMousePos(e.clientX, e.clientY)
-      );
-      document.addEventListener('mouseout', () => setMousePos(-1000, -1000));
-      document.addEventListener('blur', () => setMousePos(-1000, -1000));
-    }
-
     !lang
-      ? (hlAuto = (await import('svelte-highlight')).HighlightAuto)
-      : (hlHighlight = (await import('svelte-highlight')).Highlight);
+      ? (hlAuto = (await import('svelte-highlight'))
+          .HighlightAuto as unknown as HighlightAuto)
+      : (hlHighlight = (await import('svelte-highlight'))
+          .Highlight as unknown as Highlight);
 
     hlLang = (async () => {
       switch (lang) {
@@ -81,29 +67,9 @@
   });
 
   onDestroy(() => {
-    if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', () => setMousePos);
-      document.removeEventListener('mouseout', () => setMousePos);
-      document.removeEventListener('blur', () => setMousePos);
-    }
-
     unsubscribeTheme();
   });
 
-  const mouseMove = () => {
-    if ($highlightEffects !== 'on' && !$navigating) {
-      return;
-    }
-    try {
-      const { top, left } = container.getBoundingClientRect();
-      glow.style && (glow.style.left = `${clientX - left}px`);
-      glow.style && (glow.style.top = `${clientY - top}px`);
-    } catch {
-      () => undefined;
-    }
-  };
-
-  $: clientX, clientY, mouseMove();
   $: codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
 </script>
 
@@ -158,9 +124,6 @@
       {/if}
     </div>
   </div>
-  {#if $highlightEffects === 'on' && !$navigating}
-    <div bind:this={glow} class="absolute unfilled w-[800px] h-[800px]" />
-  {/if}
   <div
     class="absolute filled top-[-4px] left-[-4px] w-[120%] h-[120%] bg-slate-400 {hovered
       ? '!opacity-60'

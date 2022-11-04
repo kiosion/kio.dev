@@ -19,7 +19,7 @@ type CacheQuery =
 export default class Cache {
   private queryCache = writable(new Map<string, string>());
 
-  getCacheKey = (model: string, query: CacheQuery) => {
+  getCacheKey = (model: string, query: CacheQuery = {}): string => {
     return JSON.stringify({ model, query });
   };
 
@@ -29,14 +29,23 @@ export default class Cache {
 
   get = (queryCacheKey: string) => {
     const val = value(this.queryCache).get(queryCacheKey) ?? undefined;
-    return val ? JSON.parse(val) : undefined;
+    return val ? (JSON.parse(val) as Record<string, unknown>) : undefined;
   };
 
   set = (queryCacheKey: string, data: CacheData) => {
     this.queryCache.update((current) => {
-      current.set(queryCacheKey, JSON.stringify(data as CacheData));
+      current.set(queryCacheKey, JSON.stringify(data));
       return current;
     });
     return data;
+  };
+
+  delete = (queryCacheKey: string) => {
+    let deleted = false;
+    this.queryCache.update((current) => {
+      deleted = current.delete(queryCacheKey);
+      return current;
+    });
+    return deleted;
   };
 }

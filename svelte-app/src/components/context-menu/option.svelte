@@ -11,6 +11,7 @@
 
   const dispatch = createEventDispatcher();
 
+  // @ts-expect-error getContext isn't typed
   const { dispatchClick } = getContext(key);
 
   const handleClick = () => {
@@ -31,6 +32,11 @@
     role="button"
     tabindex="0"
     on:click={handleClick}
+    on:keydown={(e) => {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        handleClick();
+      }
+    }}
   >
     {#if text !== ''}
       <div class="w-[20px] mb-[2px]">

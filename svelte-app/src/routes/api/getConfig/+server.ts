@@ -22,6 +22,7 @@ export const GET: RequestHandler = async () => {
         })
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = Normalize(await res.json());
     return new Response(JSON.stringify(data), {
       headers: {
@@ -29,7 +30,7 @@ export const GET: RequestHandler = async () => {
       }
     });
   } catch (err) {
-    Logger.error(`Failed to fetch config: ${err}`, 'api/getConfig');
+    Logger.error('Failed to fetch config', 'api/getConfig');
     return new Response(
       JSON.stringify({
         status: 500,

@@ -3,8 +3,6 @@
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import {
-    svgBackground,
-    highlightEffects,
     reduceMotion,
     sounds,
     customCursor,
@@ -64,21 +62,9 @@
       />
       <SwitchItem
         action={onChange}
-        target={highlightEffects}
-        state={$highlightEffects === 'on'}
-        label="Container highlight effects"
-      />
-      <SwitchItem
-        action={onChange}
         target={sounds}
         state={$sounds === 'on'}
         label="UI interaction sounds"
-      />
-      <SwitchItem
-        action={onChange}
-        target={svgBackground}
-        state={$svgBackground === 'on'}
-        label="Animated waves background"
       />
       <SwitchItem
         action={onChange}

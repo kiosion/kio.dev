@@ -1,19 +1,27 @@
-.PHONY: dev, backed, test, prod, cypress, vitest, netlify-deploy, sanity-deploy
+.PHONY: dev, backed, test, prod, cypress, vitest, netlify-deploy, sanity-deploy, lint, install-web, install-sanity, install-api, cleanup
+
+# Install monorepo deps
+install: SHELL:=/bin/bash
+install:
+	yarn install
 
 # install svelte deps
 install-web: SHELL:=/bin/bash
+install-web: install
 install-web:
 	@cd ./svelte-app &&\
 	yarn install
 
 # install sanity deps
 install-sanity: SHELL:=/bin/bash
+install-sanity: install
 install-sanity:
 	@cd ./sanity-cms &&\
 	yarn install
 
 # Install api deps
 install-api: SHELL:=/bin/bash
+install-api: install
 install-api:
 	@cd ./elixir-api &&\
 	mix deps.get &&\
@@ -107,3 +115,18 @@ cypress:
 	@cd ./svelte-app &&\
 	yarn cypress install
 	./scripts/cypress.sh
+
+lint: SHELL:=/bin/bash
+lint:
+	@cd ./svelte-app &&\
+	yarn lint
+
+# Cleanup temp files / dirs
+cleanup: SHELL:=/bin/bash
+cleanup:
+	@echo "Cleaning up elixir-api..."
+	@rm -rf ./elixir-api/_build ./elixir-api/deps
+	@echo "Cleaning up sanity-cms..."
+	@rm -rf ./sanity-cms/dist
+	@echo "Cleaning up svelte-app..."
+	@rm -rf ./svelte-app/.netlify ./svelte-app/.svelte-kit ./svelte-app/build ./svelte-app/dist

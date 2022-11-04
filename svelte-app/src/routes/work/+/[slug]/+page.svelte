@@ -4,7 +4,6 @@
   import PageHeading from '$components/headings/page-heading.svelte';
   import type { PageData } from './$types';
   import { onMount, onDestroy } from 'svelte';
-  import { highlightEffects } from '$stores/features';
   import ListItem from '$components/work/list-item.svelte';
   import ErrorText from '$components/error-text.svelte';
 
@@ -17,24 +16,6 @@
   const setMousePos = (x: number, y: number) => {
     mousePos = [x, y];
   };
-
-  onMount(() => {
-    if ($highlightEffects === 'on') {
-      document.addEventListener('mousemove', (e) =>
-        setMousePos(e.clientX, e.clientY)
-      );
-      document.addEventListener('mouseout', () => setMousePos(-1000, -1000));
-      document.addEventListener('blur', () => setMousePos(-1000, -1000));
-    }
-  });
-
-  onDestroy(() => {
-    if ($highlightEffects === 'on') {
-      document.removeEventListener('mousemove', () => setMousePos);
-      document.removeEventListener('mouseout', () => setMousePos);
-      document.removeEventListener('blur', () => setMousePos);
-    }
-  });
 
   export let data: PageData;
 
@@ -55,7 +36,7 @@
   <div class="pb-20">
     {#if projects?.data?.length}
       {#each projects.data as project}
-        <ListItem {project} {mousePos} />
+        <ListItem {project} />
       {/each}
     {:else}
       <div class="w-full flex flex-row items-center justify-center">

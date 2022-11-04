@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import { sounds } from '$stores/features';
   import type UIfx from 'uifx';
   import SafeIcon from './safe-icon.svelte';
@@ -38,6 +39,12 @@
                   ? 'scroll-hover-up'
                   : ''}"
                 on:click={() => $sounds === 'on' && click?.play()}
+                on:keydown={(e) => {
+                  if (e.code === 'Enter' || e.code === 'Space') {
+                    $sounds === 'on' && click?.play();
+                    goto($navOptions.up);
+                  }
+                }}
                 transition:fade={{ duration: 100 }}
               >
                 <SafeIcon icon={'ArrowUp'} />
@@ -55,16 +62,15 @@
                 class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[28rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
                 aria-label="Scroll to top"
                 role="button"
-                on:click={() => (
-                  appBody.scrollTo({ top: 0, behavior: 'smooth' }),
-                  $sounds === 'on' && click?.play()
-                )}
-                on:keydown={(e) => (
-                  e.code === 'Enter' ||
-                    (e.code === 'Space' &&
-                      appBody.scrollTo({ top: 0, behavior: 'smooth' })),
-                  $sounds === 'on' && click?.play()
-                )}
+                on:click={() => {
+                  appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                  $sounds === 'on' && click?.play();
+                }}
+                on:keydown={(e) => {
+                  (e.code === 'Enter' || e.code === 'Space') &&
+                    appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                  $sounds === 'on' && click?.play();
+                }}
                 transition:fade={{ duration: 100 }}
               >
                 {$pageHeading}
