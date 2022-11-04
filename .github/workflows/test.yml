@@ -3,14 +3,6 @@ name: Tests
 on:
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '**/.husky'
-      - 'sanity-cms/**'
-      - 'express-api/**'
-      - 'rust-api/**'
-      - 'elixir-api/**'
   workflow_call:
 
 concurrency: 
@@ -23,5 +15,4 @@ jobs:
     uses: ./.github/workflows/vitest.yml
   cypress:
     name: Cypress
-    needs: [ vitest ]
     uses: ./.github/workflows/cypress.yml

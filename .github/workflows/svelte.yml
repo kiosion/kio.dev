@@ -17,15 +17,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vitest:
-    name: Run unit tests
-    uses: ./.github/workflows/vitest.yml
-  cypress:
-    name: Run Cypress tests
-    needs: [ vitest ]
-    uses: ./.github/workflows/cypress.yml
+  tests:
+    name: Run tests
+    uses: ./.github/workflows/test.yml
   deploy:
     name: Deploy
-    needs: [ cypress ]
+    needs: [ tests ]
     uses: ./.github/workflows/netlify-deploy.yml
     secrets: inherit
