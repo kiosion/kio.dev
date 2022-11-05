@@ -7,7 +7,7 @@
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import { navigating } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
@@ -23,30 +23,54 @@
 
   let socials = [
     {
-      name: 'Twitter',
-      url: 'https://twitter.com/0xKI0',
-      icon: 'fa-brands:twitter',
-      target: '_blank'
+      name: 'Mastodon',
+      url: 'https://mstdn.social/@kio',
+      icon: 'fa-brands:mastodon',
+      target: '_blank',
+      width: '20px',
+      height: '20px'
     },
     {
       name: 'Github',
       url: 'https://github.com/kiosion',
       icon: 'fa-brands:github',
-      target: '_blank'
+      target: '_blank',
+      width: '19px',
+      height: '19px'
+    },
+    {
+      name: 'Twitter',
+      url: 'https://twitter.com/0xKI0',
+      icon: 'fa-brands:twitter',
+      target: '_blank',
+      width: '18px',
+      height: '18px'
     },
     {
       name: 'Discord',
       url: 'https://discord.gg/kiosion',
       icon: 'fa-brands:discord',
-      target: '_blank'
+      target: '_blank',
+      width: '20px',
+      height: '20px'
     },
     {
       name: 'PGP',
       url: '/pgp',
       icon: 'fa:key',
-      rotate: '90deg'
+      rotate: '90deg',
+      width: '18px',
+      height: '18px'
     }
-  ];
+  ] as {
+    name: string;
+    url: string;
+    icon: string;
+    target?: string;
+    rotate?: string;
+    width?: string;
+    height?: string;
+  }[];
 
   let clicks = 0;
 
@@ -62,12 +86,12 @@
 
   const onLogoClick = () => {
     clicks++;
-    $sounds === 'on' && click?.play();
+    $CanUseSounds && click?.play();
     navOpen.set(false);
     if (clicks > 3) {
       goto('/features')
         .then(() => {
-          $sounds === 'on' && ping?.play();
+          $CanUseSounds && ping?.play();
           clicks = 0;
         })
         .catch(() => {
@@ -82,6 +106,8 @@
   };
 
   export let segment: string;
+
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -117,7 +143,7 @@
                   href={link.url}
                   on:click={() => {
                     navOpen.set(false);
-                    $sounds === 'on' && click?.play();
+                    $CanUseSounds && click?.play();
                   }}
                 >
                   {link.name}
@@ -154,9 +180,14 @@
               href={social.url}
               aria-label={social.name}
               target={social?.target ? '_blank' : ''}
-              on:click={() => $sounds === 'on' && click?.play()}
+              on:click={() => $CanUseSounds && click?.play()}
             >
-              <Icon icon={social.icon} rotate={social?.rotate} />
+              <Icon
+                icon={social.icon}
+                rotate={social?.rotate}
+                width={social?.width}
+                height={social?.height}
+              />
             </a>
           </Hoverable>
         {/each}
@@ -213,7 +244,7 @@
                 on:blur={() => (link.active = false)}
                 on:click={() => {
                   navOpen.set(false);
-                  $sounds === 'on' && click?.play();
+                  $CanUseSounds && click?.play();
                 }}
               >
                 {link.name}

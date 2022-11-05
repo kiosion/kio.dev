@@ -4,9 +4,12 @@
 
   export let portableText: MarkComponentProps;
 
+  let href: string | undefined;
+  let hovered: boolean;
+
   $: ({ value } = portableText);
-  $: ({ href } = value);
   $: ({ plainTextContent } = portableText);
+  $: href = value.href as string;
 
   let isExt = true;
 
@@ -16,14 +19,16 @@
     </svg>
   `);
 
-  $: href && (isExt = href.indexOf('http') >= 0);
+  $: href && (isExt = (href as string).indexOf('http') >= 0);
 </script>
 
-<Hoverable>
+<Hoverable bind:hovered>
   <a
     href={href ? href : '#'}
     target={isExt ? '_blank' : undefined}
-    class="z-10"
+    class="z-10 pb-[4px] bg-repeat-x {hovered
+      ? 'bg-[center_center]'
+      : 'bg-[center_105%]'} bg-[length:12px_6px]"
     style={`background-image:url("data:image/svg+xml,${svg}");`}
     tabindex="0"
   >
@@ -33,10 +38,10 @@
 
 <style lang="scss">
   a {
-    background-position-y: 105%;
-    background-repeat: repeat-x;
-    background-size: 12px 6px;
-    padding-bottom: 4px;
+    // background-position-y: 105%;
+    // background-repeat: repeat-x;
+    // background-size: 12px 6px;
+    // padding-bottom: 4px;
     transition: background-position-y 120ms ease-in;
 
     &:hover,

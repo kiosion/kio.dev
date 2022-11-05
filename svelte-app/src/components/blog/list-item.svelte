@@ -6,10 +6,9 @@
   import type { TextBlock, PostDocument } from '$lib/types';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
-  import { get } from 'svelte/store';
 
   export let post: PostDocument;
 
@@ -26,7 +25,7 @@
   });
 
   const onClick = () => {
-    get(sounds) === 'on' && click.play();
+    $CanUseSounds && click.play();
     goto(`/blog/${post.slug.current}`);
   };
 
@@ -37,6 +36,7 @@
   };
 
   $: date = getAbsDate(post.date);
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <ListItemWrapper>

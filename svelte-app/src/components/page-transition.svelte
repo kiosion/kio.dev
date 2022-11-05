@@ -1,16 +1,17 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
-  import { reduceMotion } from '$stores/features';
+  import Features from '$stores/features';
   import { onNav } from '$lib/transitions';
 
   export let url: string;
   let navDir: 'forward' | 'backward' = 'forward';
 
   $: url, (navDir = onNav(url));
+  $: CanUseReduceMotion = Features.can('use reduce motion feature');
 </script>
 
 {#key url}
-  {#if $reduceMotion === 'on'}
+  {#if $CanUseReduceMotion}
     <div>
       <slot />
     </div>

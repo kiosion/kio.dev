@@ -1,7 +1,7 @@
 <script lang="ts">
   import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount } from 'svelte';
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
@@ -17,6 +17,8 @@
 
   navOptions.set({ down: '/work', up: '/blog' });
   pageHeading.set('Art');
+
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
@@ -34,7 +36,7 @@
       href="/art/all"
       class="block w-fit mt-8"
       aria-label="View all art"
-      on:click={() => $sounds === 'on' && click?.play()}
+      on:click={() => $CanUseSounds && click?.play()}
     >
       <IconHeader icon="ArrowRight" text="View all" classes="" />
     </a>

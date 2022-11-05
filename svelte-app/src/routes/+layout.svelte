@@ -9,7 +9,7 @@
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
   import HeaderControls from '$components/header-controls.svelte';
-  import { customCursor, comicSans, sounds } from '$stores/features';
+  import Features from '$stores/features';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/footer-controls.svelte';
   import { browser } from '$app/environment';
@@ -59,14 +59,9 @@
 
   export let data: LayoutData;
 
-  $: if (isMobile) {
-    customCursor.set('off');
-    sounds.set('off');
-  } else {
-    customCursor.set('on');
-    sounds.set('on');
-  }
   $: isMobile = !$isDesktop;
+  $: CanUseCursor = Features.can('use custom cursor feature');
+  $: CanUseComicSans = Features.can('use comic sans feature');
 </script>
 
 <svelte:head>
@@ -80,8 +75,8 @@
     isMobile ? 'mobile' : 'desktop'
   } ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${appLoaded && 'app-loaded'} ${$comicSans === 'on' && 'comicSans'} ${
-    $customCursor === 'on' && 'custom-cursor'
+  } ${appLoaded && 'app-loaded'} ${$CanUseComicSans && 'comicSans'} ${
+    $CanUseCursor && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
   on:wheel={(e) => handleScrollNav(e, pageContainer, $page.url.pathname)}
@@ -91,7 +86,7 @@
   <Loader theme="dark" />
 {/if}
 
-{#if browser && $customCursor === 'on'}
+{#if browser && $CanUseCursor}
   <CustomCursor appBody={pageContainer} showLoader={$loading || !appLoaded} />
 {/if}
 

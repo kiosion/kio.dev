@@ -2,7 +2,7 @@
   import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import type UIfx from 'uifx';
   import SafeIcon from './safe-icon.svelte';
   import { fade } from 'svelte/transition';
@@ -22,6 +22,8 @@
       click = sfx.click;
     });
   });
+
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -38,10 +40,10 @@
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-up'
                   : ''}"
-                on:click={() => $sounds === 'on' && click?.play()}
+                on:click={() => $CanUseSounds && click?.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
-                    $sounds === 'on' && click?.play();
+                    $CanUseSounds && click?.play();
                     goto($navOptions.up);
                   }
                 }}
@@ -63,13 +65,14 @@
                 aria-label="Scroll to top"
                 role="button"
                 on:click={() => {
+                  $CanUseSounds && click?.play();
                   appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                  $sounds === 'on' && click?.play();
                 }}
                 on:keydown={(e) => {
-                  (e.code === 'Enter' || e.code === 'Space') &&
+                  if (e.code === 'Enter' || e.code === 'Space') {
+                    $CanUseSounds && click?.play();
                     appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                  $sounds === 'on' && click?.play();
+                  }
                 }}
                 transition:fade={{ duration: 100 }}
               >

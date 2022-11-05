@@ -1,7 +1,6 @@
 <script lang="ts">
   import ListItemWrapper from '../list-item-wrapper.svelte';
   import { onMount } from 'svelte';
-  import { sounds } from '$stores/features';
   import type { ProjectDocument } from '$lib/types';
   import type UIfx from 'uifx';
   import { urlFor, getCrop, type ImageCrop } from '$helpers/image';
@@ -9,7 +8,7 @@
   import BulletPoint from '../bullet-point.svelte';
   import { getShortDate } from '$helpers/date';
   import Hoverable from '$components/hoverable.svelte';
-  import { get } from 'svelte/store';
+  import Features from '$stores/features';
 
   export let project: ProjectDocument;
 
@@ -25,7 +24,7 @@
   });
 
   const onClick = () => {
-    get(sounds) === 'on' && click.play();
+    $CanUseSounds && click.play();
     goto(`/work/${project.slug.current}`);
   };
 
@@ -38,6 +37,7 @@
   $: _ref = project.image?.asset?._ref;
   $: project.image && (imageCrop = getCrop(project.image));
   $: date = getShortDate(project.date);
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <ListItemWrapper>

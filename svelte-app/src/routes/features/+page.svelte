@@ -2,12 +2,7 @@
   import ContentWrapper from '$components/content-wrapper.svelte';
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import {
-    reduceMotion,
-    sounds,
-    customCursor,
-    comicSans
-  } from '$stores/features';
+  import Features from '$stores/features';
   import type UIfx from 'uifx';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
@@ -24,10 +19,9 @@
     });
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange = (event: CustomEvent, target: any) => {
-    target.set(event?.detail?.state === true ? 'on' : 'off');
-    $sounds === 'on' && click?.play();
+  const onChange = (event: CustomEvent, target: string) => {
+    Features.set(target, event?.detail?.state === true ? true : false);
+    $CanUseSounds && click?.play();
   };
 
   navOptions.set({ down: '', up: '/' });
@@ -35,6 +29,11 @@
 
   export const hydrate = false;
   export const router = false;
+
+  $: CanUseReduceMotion = Features.can('use reduce motion feature');
+  $: CanUseSounds = Features.can('use sounds feature');
+  $: CanUseCustomCursor = Features.can('use custom cursor feature');
+  $: CanUseComicSans = Features.can('use comic sans feature');
 </script>
 
 <svelte:head>
@@ -50,26 +49,26 @@
     <ContentWrapper>
       <SwitchItem
         action={onChange}
-        target={reduceMotion}
-        state={$reduceMotion === 'on'}
+        target={'reduce-motion'}
+        state={$CanUseReduceMotion}
         label="Reduce motion"
       />
       <SwitchItem
         action={onChange}
-        target={customCursor}
-        state={$customCursor === 'on'}
+        target={'custom-cursor'}
+        state={$CanUseCustomCursor}
         label="Custom cursor"
       />
       <SwitchItem
         action={onChange}
-        target={sounds}
-        state={$sounds === 'on'}
+        target={'sounds'}
+        state={$CanUseSounds}
         label="UI interaction sounds"
       />
       <SwitchItem
         action={onChange}
-        target={comicSans}
-        state={$comicSans === 'on'}
+        target={'comic-sans'}
+        state={$CanUseComicSans}
         label="Comic Sans 😃"
       />
     </ContentWrapper>

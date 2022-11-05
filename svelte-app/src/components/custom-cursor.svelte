@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import { theme } from '$stores/theme';
   import { tweened } from 'svelte/motion';
-  import { cubicInOut } from 'svelte/easing';
+  import { cubicInOut, expoInOut, quintInOut } from 'svelte/easing';
   import Store from '$stores/cursor';
 
   export let appBody: HTMLElement;
@@ -15,8 +15,8 @@
     mousePos = { x: 0, y: 0 },
     cursorHidden = true;
 
-  const cursorTweenX = tweened(0, { duration: 28, easing: cubicInOut }),
-    cursorTweenY = tweened(0, { duration: 28, easing: cubicInOut });
+  const cursorTweenX = tweened(0, { duration: 22, easing: quintInOut }),
+    cursorTweenY = tweened(0, { duration: 22, easing: quintInOut });
 
   onMount(() => {
     updateCursors();
@@ -73,9 +73,11 @@
   on:mousemove={updateCursorPositions}
   on:mouseout={hideCursor}
   on:mouseover={showCursor}
-  on:mousedown={() => handleClickDown()}
-  on:mouseup={() => handleClickUp()}
+  on:mousedown={handleClickDown}
+  on:mouseup={handleClickUp}
   on:keydown={(e) => e.key === 'Tab' && hideCursor()}
+  on:keydown={(e) => e.key === 'Control' && hideCursor()}
+  on:keyup={(e) => e.key === 'Control' && showCursor()}
 />
 
 <div

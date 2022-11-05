@@ -1,7 +1,7 @@
 <script lang="ts">
   import ListItem from '$components/blog/list-item.svelte';
-  import { onMount, onDestroy } from 'svelte';
-  import { sounds } from '$stores/features';
+  import { onMount } from 'svelte';
+  import Features from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import SafeIcon from '$components/safe-icon.svelte';
@@ -20,10 +20,6 @@
   let mousePos: [number, number];
   let click: UIfx;
 
-  const setMousePos = (x: number, y: number) => {
-    mousePos = [x, y];
-  };
-
   onMount(() => {
     pageHeading.set(`All posts | Page ${curPage}`);
     navOptions.set({ down: '', up: '/blog' });
@@ -39,6 +35,7 @@
     (totalPages = Math.ceil(posts.meta?.total / PAGINATION_POSTS_PER_PAGE));
   $: $page.params, (curPage = parseInt($page.params?.page));
   $: ({ posts } = data);
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
@@ -71,7 +68,7 @@
         <Hoverable>
           <a
             href="/blog/{curPage > 1 ? curPage - 1 : 1}"
-            on:click={() => $sounds === 'on' && click?.play()}
+            on:click={() => $CanUseSounds && click?.play()}
           >
             <SafeIcon icon={'ArrowLeft'} />
           </a>
@@ -79,7 +76,7 @@
         <Hoverable>
           <a
             href="/blog/{curPage < totalPages ? curPage + 1 : totalPages}"
-            on:click={() => $sounds === 'on' && click?.play()}
+            on:click={() => $CanUseSounds && click?.play()}
           >
             <SafeIcon icon={'ArrowRight'} />
           </a>

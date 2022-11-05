@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import { onMount } from 'svelte';
   import SafeIcon from '$components/safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
@@ -12,6 +12,8 @@
       click = sfx.click;
     });
   });
+
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Hoverable>
@@ -19,14 +21,14 @@
     class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
     aria-label="Toggle sfx"
     data-test-id="sfx-toggle"
-    data-test-state={$sounds}
+    data-test-state={$CanUseSounds ? 'on' : 'off'}
     tabindex="0"
     on:click={() => {
-      sounds.set($sounds === 'on' ? 'off' : 'on');
-      $sounds === 'on' && click?.play();
+      Features.set('sounds', $CanUseSounds ? false : true);
+      $CanUseSounds && click?.play();
     }}
   >
-    {#if $sounds === 'on'}
+    {#if $CanUseSounds}
       <SafeIcon icon={'Volume2'} />
     {:else}
       <SafeIcon icon={'VolumeX'} />

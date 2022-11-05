@@ -2,7 +2,7 @@
   import ListItem from '$components/blog/list-item.svelte';
   import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount } from 'svelte';
-  import { sounds } from '$stores/features';
+  import Features from '$stores/features';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
   import type { PageData } from './$types';
@@ -25,6 +25,7 @@
   export let data: PageData;
 
   $: ({ pinned, posts } = data);
+  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
@@ -78,7 +79,7 @@
           href="/blog/1"
           class="block w-fit mt-8"
           aria-label="View all posts"
-          on:click={() => $sounds === 'on' && click?.play()}
+          on:click={() => $CanUseSounds && click?.play()}
         >
           <IconHeader icon="ArrowRight" text="View all" classes="" />
         </a>
