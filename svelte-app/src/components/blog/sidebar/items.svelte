@@ -22,14 +22,14 @@
 </script>
 
 <div
-  class="relative flex flex-col items-start justify-start w-full gap-4 h-fit {classes}"
+  class="relative flex flex-col items-start justify-start w-full gap-4 h-fit overflow-hidden text-ellipsis {classes}"
 >
   <slot />
   {#each headings as heading}
     <Hoverable>
       <a
         href={`#${heading.key}`}
-        class="block w-full px-4 text-sm font-medium whitespace-nowrap text-ellipsis line-clamp-1 {getTextSize(
+        class="block w-full px-4 text-sm font-medium overflow-hidden whitespace-nowrap text-ellipsis {getTextSize(
           heading.type
         )}"
       >
@@ -37,9 +37,9 @@
       </a>
     </Hoverable>
     {#if heading.children.length}
-      <svelte:self headings={heading.children} classes="ml-[14px]">
+      <svelte:self headings={heading.children} classes="pl-[14px]">
         <div
-          class="absolute top-0 left-[3px] w-[1px] h-full bg-slate-900/50 dark:bg-slate-200/50 rounded-full"
+          class="absolute top-0 left-[16px] w-[1px] h-full bg-slate-900/50 dark:bg-slate-200/50 rounded-full"
         />
       </svelte:self>
     {/if}

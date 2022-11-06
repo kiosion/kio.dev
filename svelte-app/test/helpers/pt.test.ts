@@ -14,18 +14,19 @@ describe('Helpers | Portable Text | getHeadings', () => {
   it('should return headings as tree array from portable text block', () => {
     const headings = getHeadings(postBody);
     expect(headings).toBeDefined();
-    // Expect 4 top-level headings
-    expect(headings).toHaveLength(4);
+    expect(headings).toHaveLength(2);
     // Expect 0 children for the first top-level heading
     expect(headings[0].children).toHaveLength(0);
-    // Expect 1 child for the second top-level heading, and its child + grandchild
-    expect(headings[1].children).toHaveLength(1);
+    // Expect 3 children for the second top-level heading
+    expect(headings[1].children).toHaveLength(3);
     expect(headings[1].children[0].children).toHaveLength(1);
     expect(headings[1].children[0].children[0].children).toHaveLength(1);
-    // Expect 1 child for the third top-level heading
-    expect(headings[2].children).toHaveLength(1);
-    // Expect no children for the fourth top-level heading
-    expect(headings[3].children).toHaveLength(0);
+    expect(
+      headings[1].children[0].children[0].children[0].children
+    ).toHaveLength(1);
+    expect(
+      headings[1].children[0].children[0].children[0].children[0].children
+    ).toHaveLength(0);
   });
 
   it('should assign correct properties to headings', () => {

@@ -29,18 +29,18 @@ export const getTotalWords = (postBody: PTBlock[]) => {
   return text.flat().filter((text: string) => text);
 };
 
-type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
-const HeadingTypes = ['h1', 'h2', 'h3', 'h4'];
+type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+const HeadingTypes = ['h1', 'h2', 'h3', 'h4', 'h5'];
 
 export type Heading = {
   text: string;
   key: string;
   type: HeadingType;
   children: Heading[];
+  parent?: Heading['key'];
 };
 
 export const getHeadings = (input: PTBlock[]): Heading[] => {
-  console.log(input);
   const headings = (
     input.filter((block) => HeadingTypes.includes(block.style)) as (Omit<
       PTBlock,
@@ -51,7 +51,8 @@ export const getHeadings = (input: PTBlock[]): Heading[] => {
       text: block.children[0].text,
       key: block._key,
       type: block.style,
-      children: [] as Heading[]
+      children: [] as Heading[],
+      parent: undefined
     };
   });
 
@@ -60,17 +61,39 @@ export const getHeadings = (input: PTBlock[]): Heading[] => {
     let current: Heading | undefined;
     headings.forEach((heading) => {
       current = current || heading;
-      const currentType = parseInt(current?.type.charAt(1) ?? '1'),
-        headingType = parseInt(heading.type.charAt(1));
+      const checkForParent = (current: Heading, heading: Heading): void => {
+        if (current.parent) {
+          const parent = headings.find((h) => h.key === current.parent);
+          if (parent) {
+            if (
+              parseInt(parent.type.charAt(1)) >=
+              parseInt(heading.type.charAt(1))
+            ) {
+              return checkForParent(parent, heading);
+            }
+            heading.parent = parent.key;
+            parent.children.push(heading);
+            return;
+          }
+        }
+        // If no parent, push to root
+        tree.push(heading);
+      };
       switch (true) {
-        case headingType === 1:
-          tree.push(heading);
-          break;
-        case headingType > currentType:
+        // If the heading is smaller than the current heading, it's a child
+        case parseInt(heading.type.charAt(1)) >
+          parseInt(current.type.charAt(1)):
+          heading.parent = current.key;
           current.children.push(heading);
           break;
+        // If the heading is the same level as the current heading, check for a parent
+        case parseInt(heading.type.charAt(1)) ===
+          parseInt(current.type.charAt(1)):
+          checkForParent(current, heading);
+          break;
+        // Fall back to checking for a parent
         default:
-          tree.push(heading);
+          checkForParent(current, heading);
           break;
       }
       current = heading;
