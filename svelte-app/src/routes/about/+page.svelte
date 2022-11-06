@@ -13,6 +13,8 @@
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
+
+    window?.scroll?.({ top: 0, behavior: 'smooth' });
   });
 
   let about: AuthorDocument | undefined;
@@ -37,7 +39,7 @@
 </svelte:head>
 
 <div data-test-route="about">
-  <ContentWrapper>
+  <ContentWrapper classes="mt-14">
     <Boundary onError={console.error}>
       <AboutCard image={about?.image} body={about?.bio} />
     </Boundary>

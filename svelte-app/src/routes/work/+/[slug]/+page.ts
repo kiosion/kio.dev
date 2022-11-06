@@ -17,6 +17,8 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
+  // TODO: Check if this is a valid tag or not before querying!
+
   const projects: ResDataMany<ProjectDocument> | undefined =
     await Store.find<ProjectDocument>(fetch, 'project', {
       ...DEFAULT_PROJECT_QUERY_PARAMS,

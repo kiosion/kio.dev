@@ -17,6 +17,8 @@
   onMount(() => {
     setupNavigation($page?.url?.pathname);
 
+    window?.scroll?.({ top: 0, behavior: 'smooth' });
+
     import('$lib/sfx').then((sfx) => {
       click = sfx.click;
     });

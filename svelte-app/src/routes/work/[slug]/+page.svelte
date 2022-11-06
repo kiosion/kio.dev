@@ -1,16 +1,17 @@
 <script lang="ts">
-  import ContentWrapper from '$components/content-wrapper.svelte';
+  import DocumentWrapper from '$components/document/route/wrapper.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import ProjectContent from '$components/work/project-content.svelte';
   import { onMount } from 'svelte';
-  import type { PageData } from './$types';
   import { page } from '$app/stores';
+  import ScrollTo from '$helpers/scrollTo';
+  import type { PageData } from './$types';
 
   let pageTitle = 'Work';
   let allTags: string | undefined;
 
   onMount(() => {
     navOptions.set({ down: '', up: '/work' });
+    ScrollTo($page);
   });
 
   export let data: PageData;
@@ -28,6 +29,7 @@
       ''
     ));
   $: ({ project } = data);
+  $: $page && ScrollTo($page);
 </script>
 
 <svelte:head>
@@ -63,10 +65,4 @@
   />
 </svelte:head>
 
-<div data-test-route="work-item">
-  {#if project?.data}
-    <ContentWrapper>
-      <ProjectContent project={project.data} />
-    </ContentWrapper>
-  {/if}
-</div>
+<DocumentWrapper model="project" data={project?.data} />

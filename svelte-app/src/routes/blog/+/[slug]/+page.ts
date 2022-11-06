@@ -14,6 +14,8 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
+  // TODO: Check if this is a valid tag or not before querying!
+
   const posts: ResDataMany<PostDocument> | undefined =
     await Store.find<PostDocument>(fetch, 'post', {
       limit: PAGINATION_POSTS_PER_PAGE,

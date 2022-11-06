@@ -15,8 +15,6 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
 
   let pinned: ResData<PostDocument> | undefined;
 
-  console.log('currentConfig', get(config));
-
   if (currentConfig?.data?.pinnedPost?._ref) {
     pinned = await Store.findOne<PostDocument>(fetch, 'post', {
       id: currentConfig.data.pinnedPost._ref

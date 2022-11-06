@@ -2,7 +2,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import { getHeadings, type Heading } from '$helpers/pt';
   import type { PostDocument } from '$lib/types';
-  import SidebarItems from '$components/blog/sidebar/items.svelte';
+  import SidebarItems from '$components/document/sidebar/items.svelte';
 
   export let post: PostDocument | undefined;
   export let show: boolean;
