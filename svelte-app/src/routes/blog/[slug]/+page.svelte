@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContentWrapper from '$components/content-wrapper.svelte';
   import PostContent from '$components/blog/post-content.svelte';
-  import PostSidebar from '$components/blog/post-sidebar.svelte';
+  import PostSidebar from '$components/blog/sidebar.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
@@ -105,12 +105,8 @@
     </div>
   </Hoverable>
   {#if post?.data}
-    <PostSidebar
-      post={post.data}
-      show={$sidebarOpen}
-      on:toggleSidebar={() => sidebarOpen.set(!$sidebarOpen)}
-    />
-    <ContentWrapper sidebarOpen={$sidebarOpen}>
+    <PostSidebar post={post.data} show={$sidebarOpen} />
+    <ContentWrapper>
       <PostContent post={post.data} showingSidebar={$sidebarOpen} />
     </ContentWrapper>
   {/if}

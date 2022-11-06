@@ -40,9 +40,11 @@ export type Heading = {
 };
 
 export const getHeadings = (input: PTBlock[]): Heading[] => {
-  const blocks = input.filter((block) => HeadingTypes.includes(block.style));
-  const headings: Heading[] = (
-    blocks as (Omit<PTBlock, 'style'> & { style: HeadingType })[]
+  const headings = (
+    input.filter((block) => HeadingTypes.includes(block.style)) as (Omit<
+      PTBlock,
+      'style'
+    > & { style: HeadingType })[]
   ).map((block) => {
     return {
       text: block.children[0].text,
@@ -51,30 +53,29 @@ export const getHeadings = (input: PTBlock[]): Heading[] => {
       children: [] as Heading[]
     };
   });
-  const getChildren = (input: Heading[]): Heading[] => {
-    return input.reduce((acc, heading, index) => {
-      for (let i = index + 1; i < input.length; i++) {
-        const nextHeading = input[i];
-        if (nextHeading.type.charAt(1) <= heading.type.charAt(1)) {
+
+  const makeTree = (headings: Heading[]): Heading[] => {
+    const tree: Heading[] = [];
+    let current: Heading | undefined;
+    headings.forEach((heading) => {
+      current = current || heading;
+      const currentType = parseInt(current?.type.charAt(1) ?? '1'),
+        headingType = parseInt(heading.type.charAt(1));
+      switch (true) {
+        case headingType === 1:
+          tree.push(heading);
           break;
-        }
-        heading.children = [
-          ...heading.children,
-          ...getChildren(input.slice(i))
-        ];
-        const remChildren = (heading: Heading) => {
-          heading.children.forEach((child) => {
-            if (child.children.length > 0) {
-              remChildren(child);
-            }
-            const childIndex = input.indexOf(child);
-            childIndex > -1 && input.splice(childIndex, 1);
-          });
-        };
-        remChildren(heading);
+        case headingType > currentType:
+          current.children.push(heading);
+          break;
+        default:
+          tree.push(heading);
+          break;
       }
-      return [...acc, heading];
-    }, [] as Heading[]);
+      current = heading;
+    });
+    return tree;
   };
-  return getChildren(headings);
+
+  return makeTree(headings);
 };
