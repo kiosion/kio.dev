@@ -26,8 +26,8 @@ const endpoints = new Map([
 class StoreClass extends CacheClass {
   constructUrl = (
     model: string,
-    many = false,
-    params: PossibleParams
+    params: PossibleParams,
+    many = false
   ): string => {
     const url = new URL(
       `http://localhost${API_URL}${endpoints.get(model)?.[many ? 1 : 0] ?? ''}`
@@ -55,7 +55,7 @@ class StoreClass extends CacheClass {
       Logger.error(`Invalid model: ${model}`, 'store/query');
       return;
     }
-    const url = this.constructUrl(model, true, params);
+    const url = this.constructUrl(model, params, true);
     try {
       const res = await fetch(url);
       const response = (await res.json()) as ResDataMany<T> & ResError;
@@ -79,7 +79,7 @@ class StoreClass extends CacheClass {
       Logger.error(`Invalid model: ${model}`, 'store/queryOne');
       return;
     }
-    const url = this.constructUrl(model, false, params);
+    const url = this.constructUrl(model, params);
     try {
       const res = await fetch(url);
       const response = (await res.json()) as ResData<T> & ResError;

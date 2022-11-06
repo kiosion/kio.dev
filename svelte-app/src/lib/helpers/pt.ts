@@ -40,6 +40,7 @@ export type Heading = {
 };
 
 export const getHeadings = (input: PTBlock[]): Heading[] => {
+  console.log(input);
   const headings = (
     input.filter((block) => HeadingTypes.includes(block.style)) as (Omit<
       PTBlock,

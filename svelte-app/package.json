@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "serve": "node ./dist",
     "test:vitest": "MODE=testing vitest --run",
+    "test:vitest:ui": "MODE=testing vitest --ui",
     "test:cypress": "MODE=testing cypress run",
     "test": "yarn test:vitest; yarn test:cypress",
     "coverage": "vitest run --coverage",
