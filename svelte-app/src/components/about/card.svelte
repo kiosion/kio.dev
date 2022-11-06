@@ -15,13 +15,13 @@
 </script>
 
 <div
-  class="w-full p-6 roundedCard-lg flex flex-col gap-6 justify-start items-start"
+  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-slate-200/50 dark:bg-slate-900/50 rounded-xl"
 >
-  <div class="flex flex-row gap-6 justify-start items-center w-full h-fit p-1">
+  <div class="flex flex-row items-center justify-start w-full gap-6 p-1 h-fit">
     <div class="h-16 md:h-24 aspect-square">
       {#if image?.asset}
         <img
-          class="rounded-full aspect-square h-full border border-slate-400 select-none"
+          class="h-full border rounded-full select-none aspect-square border-slate-400"
           src={urlFor(image.asset._ref)
             .size(150, 150)
             .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
@@ -34,20 +34,20 @@
         />
       {/if}
     </div>
-    <div class="flex-1 h-full w-full flex flex-col justify-start items-start">
+    <div class="flex flex-col items-start justify-start flex-1 w-full h-full">
       <h3
-        class="font-display font-bold text-2xl text-slate-800 dark:text-slate-100 transition-colors"
+        class="text-2xl font-bold transition-colors font-display text-slate-800 dark:text-slate-100"
       >
         Maxim
       </h3>
       <h4
-        class="font-mono font-bold text-xl text-slate-600 dark:text-slate-300 transition-colors"
+        class="font-mono text-xl font-bold transition-colors text-slate-600 dark:text-slate-300"
       >
         @kiosion
       </h4>
     </div>
   </div>
-  <div class="flex-1 font-sans -my-4 p-2">
+  <div class="flex-1 p-2 -my-4 font-sans">
     {#if body}
       <PortableText text={body} />
     {:else}
