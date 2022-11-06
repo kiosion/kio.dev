@@ -2,8 +2,8 @@
   import { goto } from '$app/navigation';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import { getAbsDate, getRelDate, getReadingTime } from '$lib/helpers/date';
-  import { getTotalWords } from '$lib/helpers/post';
-  import type { TextBlock, PostDocument } from '$lib/types';
+  import { getTotalWords } from '$lib/helpers/pt';
+  import type { PostDocument } from '$lib/types';
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
   import Hoverable from '$components/hoverable.svelte';
@@ -12,13 +12,11 @@
 
   let date = getRelDate(post.date);
   let dateFormat = 'rel';
-  let readingTime = getReadingTime(
-    getTotalWords(post.body as Array<TextBlock>)
-  );
+  let readingTime = getReadingTime(getTotalWords(post.body));
 
   const switchDate = () => {
     dateFormat === 'rel'
-      ? (date = getAbsDate(post.date))
+      ? (date = getAbsDate(post.date) ?? 'Unknown date')
       : (date = getRelDate(post.date));
     dateFormat = dateFormat === 'rel' ? 'abs' : 'rel';
   };
@@ -33,9 +31,9 @@
 
 <div class="mb-4" data-test-id="post-header">
   <div class="flex flex-col">
-    <h1 class="font-display text-6xl leading-tight  mb-4 font-bold">{title}</h1>
+    <h1 class="mb-4 text-6xl font-bold leading-tight font-display">{title}</h1>
     {#if post.tags}
-      <div class="flex flex-row justify-start items-center gap-2 mb-6">
+      <div class="flex flex-row items-center justify-start gap-2 mb-6">
         {#each post.tags as tag}
           <Hoverable>
             <a href="/blog/+/{tag.slug.current}" class="categoryTag">
@@ -48,14 +46,14 @@
     <div class="flex flex-row items-center justify-start">
       <Hoverable>
         <button
-          class="flex flex-row gap-2 items-center font-mono text-base"
+          class="flex flex-row items-center gap-2 font-mono text-base"
           on:click={() => goto('/about')}
           tabindex="0"
         >
           <div class="h-8 aspect-square">
             {#if _ref && pfpCrop}
               <img
-                class="rounded-full aspect-square h-full"
+                class="h-full rounded-full aspect-square"
                 src={urlFor(_ref)
                   .size(50, 50)
                   .rect(

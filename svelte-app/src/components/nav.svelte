@@ -15,56 +15,70 @@
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { linear } from 'svelte/easing';
 
-  let links = [
+  const links = [
     { name: 'Blog', url: '/blog', active: false },
     { name: 'Work', url: '/work', active: false },
     { name: 'About', url: '/about', active: false }
   ];
 
-  let socials = [
+  const socials = [
     {
+      attrs: {
+        href: 'https://mstdn.social/@kio',
+        target: '_blank',
+        rel: 'me'
+      },
       name: 'Mastodon',
-      url: 'https://mstdn.social/@kio',
       icon: 'fa-brands:mastodon',
-      target: '_blank',
       width: '20px',
       height: '20px'
     },
     {
+      attrs: {
+        href: 'https://github.com/kiosion',
+        target: '_blank',
+        rel: 'nofollow'
+      },
       name: 'Github',
-      url: 'https://github.com/kiosion',
       icon: 'fa-brands:github',
-      target: '_blank',
       width: '19px',
       height: '19px'
     },
     {
+      attrs: {
+        href: 'https://twitter.com/0xKI0',
+        target: '_blank',
+        rel: 'nofollow'
+      },
       name: 'Twitter',
-      url: 'https://twitter.com/0xKI0',
       icon: 'fa-brands:twitter',
-      target: '_blank',
       width: '18px',
       height: '18px'
     },
     {
+      attrs: {
+        href: 'https://discord.gg/kiosion',
+        target: '_blank',
+        rel: 'nofollow'
+      },
       name: 'Discord',
-      url: 'https://discord.gg/kiosion',
       icon: 'fa-brands:discord',
-      target: '_blank',
       width: '20px',
       height: '20px'
     },
     {
+      attrs: {
+        href: '/pgp'
+      },
       name: 'PGP',
-      url: '/pgp',
       icon: 'fa:key',
       rotate: '90deg',
       width: '18px',
       height: '18px'
     }
   ] as {
+    attrs: Record<string, string>;
     name: string;
-    url: string;
     icon: string;
     target?: string;
     rotate?: string;
@@ -175,11 +189,11 @@
       >
         {#each socials as social}
           <Hoverable>
+            <!-- svelte-ignore a11y-missing-attribute -->
             <a
               class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
-              href={social.url}
               aria-label={social.name}
-              target={social?.target ? '_blank' : ''}
+              {...social.attrs}
               on:click={() => $CanUseSounds && click?.play()}
             >
               <Icon

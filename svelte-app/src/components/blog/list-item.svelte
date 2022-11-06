@@ -1,9 +1,9 @@
 <script lang="ts">
   import ListItemWrapper from '../list-item-wrapper.svelte';
   import BulletPoint from '../bullet-point.svelte';
-  import { getTotalWords } from '$lib/helpers/post';
+  import { getTotalWords } from '$lib/helpers/pt';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
-  import type { TextBlock, PostDocument } from '$lib/types';
+  import type { PostDocument } from '$lib/types';
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import Features from '$stores/features';
@@ -14,9 +14,7 @@
 
   let click: UIfx;
   let hovered: boolean;
-  let readingTime = getReadingTime(
-    getTotalWords(post.body as Array<TextBlock>)
-  );
+  let readingTime = getReadingTime(getTotalWords(post.body));
 
   onMount(() => {
     import('$lib/sfx').then((sfx) => {
@@ -72,7 +70,7 @@
           {#if post.tags}
             <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
             <div
-              class="flex flex-row justify-start items-center gap-2 flex-wrap"
+              class="flex flex-row flex-wrap items-center justify-start gap-2"
             >
               {#each post.tags as tag}
                 <a href="/blog/+/{tag.slug.current}" class="categoryTag-sm">
@@ -83,13 +81,13 @@
           {/if}
         </div>
         <h1
-          class="w-full text-ellipsis font-display font-bold text-2xl line-clamp-1 pt-2"
+          class="w-full pt-2 text-2xl font-bold text-ellipsis font-display line-clamp-1"
         >
           {post.title}
         </h1>
         {#if post.desc}
           <p
-            class="overflow-hidden w-fit mr-4 pt-2 text-ellipsis font-sans text-base text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
+            class="pt-2 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
           >
             {post.desc}
           </p>
@@ -98,11 +96,11 @@
     </Hoverable>
   {:else}
     <section
-      class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
+      class="flex flex-col items-stretch w-full p-4 duration-150 rounded-md justify-stretch h-fit max-h-40 bg-slate-200 dark:bg-slate-900"
       data-test-id="list-item"
       aria-label="No results"
     >
-      <h3 class="text-center font-sans text-base my-2">No results found</h3>
+      <h3 class="my-2 font-sans text-base text-center">No results found</h3>
     </section>
   {/if}
 </ListItemWrapper>

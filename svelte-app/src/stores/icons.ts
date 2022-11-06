@@ -79,6 +79,13 @@ get(icons)
       await import('pixelarticons/svg/book.svg').then((Icon) => Icon.default)
   )
   .set(
+    'BookOpen',
+    async () =>
+      await import('pixelarticons/svg/book-open.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'Briefcase',
     async () =>
       await import('pixelarticons/svg/briefcase.svg').then(

@@ -1,8 +1,4 @@
 import type { InputValue } from '@portabletext/svelte/ptTypes';
-import type {
-  ArbitraryTypedObject,
-  PortableTextBlock
-} from '@portabletext/types';
 
 // Sanity types
 export interface SanityAsset {
@@ -72,7 +68,7 @@ export type PixelIcon = SvelteComponent | string | undefined;
 // Data types
 export interface Document extends SanityAsset {
   slug: SanityAsset & { current: string };
-  body: InputValue;
+  body: PTBlock[];
   date: string;
 }
 
@@ -193,9 +189,26 @@ export interface ResDataMany<T> extends Omit<ResData, 'data'> {
 export type StoreRes<T> = T | undefined;
 
 // PortableText types
-export type TextBlock = PortableTextBlock;
+export interface PTChild {
+  _type: string;
+  _key: string;
+  text: string;
+  marks: string[];
+}
 
-export type ArbTypedObject = ArbitraryTypedObject;
+export interface PTMarkDef {
+  _type: string;
+  _key: string;
+  href?: string;
+}
+
+export interface PTBlock {
+  _type: 'block';
+  _key: string;
+  style: string;
+  children: PTChild[];
+  markDefs: PTMarkDef[];
+}
 
 // Sveltekit types
 export interface RouteFetch {

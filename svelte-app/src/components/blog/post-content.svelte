@@ -7,6 +7,8 @@
   import { parseEmoji } from '$helpers/emoji';
   import type { PostDocument } from '$lib/types';
 
+  export let showingSidebar: boolean;
+
   let body: HTMLElement;
 
   onMount(async () => {

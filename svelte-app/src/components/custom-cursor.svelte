@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import { theme } from '$stores/theme';
   import { tweened } from 'svelte/motion';
-  import { cubicInOut, expoInOut, quintInOut } from 'svelte/easing';
+  import { cubicInOut } from 'svelte/easing';
   import Store from '$stores/cursor';
 
   export let appBody: HTMLElement;
@@ -12,41 +12,37 @@
   let cursor: HTMLElement,
     progressPath: SVGPathElement,
     loaderPath: SVGPathElement,
-    mousePos = { x: 0, y: 0 },
     cursorHidden = true;
+  const mousePos = { x: 0, y: 0 };
 
-  const cursorTweenX = tweened(0, { duration: 22, easing: quintInOut }),
-    cursorTweenY = tweened(0, { duration: 22, easing: quintInOut });
+  const cursorTweenX = tweened(0, { duration: 30, easing: cubicInOut }),
+    cursorTweenY = tweened(0, { duration: 30, easing: cubicInOut });
 
   onMount(() => {
     updateCursors();
   });
 
   const updateCursorPositions = (e: MouseEvent) => {
-    showCursor();
-    mousePos = { x: e.clientX, y: e.clientY };
+    (mousePos.x = e.clientX), (mousePos.y = e.clientY);
+    cursorHidden && showCursor();
   };
 
-  const updateCursors = () => {
+  const updateCursors = (): void => {
     if (!cursor) {
       return;
     }
-    cursorTweenX.set(mousePos.x);
-    cursorTweenY.set(mousePos.y);
+    cursorTweenX.set(mousePos.x), cursorTweenY.set(mousePos.y);
     requestAnimationFrame(updateCursors);
   };
 
-  const handleClickDown = () => {
-    Store.update((s) => ({ ...s, isPressed: true }));
-  };
-  const handleClickUp = () => {
-    Store.update((s) => ({ ...s, isPressed: false }));
-  };
-
+  const handleClickDown = () =>
+    Store.update((current) => ({ ...current, isPressed: true }));
+  const handleClickUp = () =>
+    Store.update((current) => ({ ...current, isPressed: false }));
   const hideCursor = () => (cursorHidden = true);
   const showCursor = () => (cursorHidden = false);
 
-  const updateProgressPath = () => {
+  const updateProgressPath = (): void => {
     if (!progressPath) {
       return;
     }
@@ -125,6 +121,7 @@
       >
         <path
           d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+          style={`stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;`}
           bind:this={progressPath}
         />
       </svg>
