@@ -1,21 +1,12 @@
 <script lang="ts">
   import Hoverable from '$components/hoverable.svelte';
-  import { getHeadings, type Heading } from '$helpers/pt';
-  import type { PostDocument } from '$lib/types';
+  import type { Heading } from '$helpers/pt';
   import SidebarItems from '$components/document/sidebar/items.svelte';
 
-  export let post: PostDocument | undefined;
+  export let headings: Heading[];
   export let show: boolean;
 
-  let headings: Heading[] = [];
   let commentsHovered = false;
-
-  $: if (post) {
-    const { body } = post;
-    if (body) {
-      headings = getHeadings(JSON.parse(JSON.stringify(body)));
-    }
-  }
 </script>
 
 <div

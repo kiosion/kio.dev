@@ -19,7 +19,7 @@
 
 <Hoverable>
   <button
-    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
+    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300"
     aria-label="Toggle theme"
     data-test-id="theme-toggle"
     data-test-state={$theme}

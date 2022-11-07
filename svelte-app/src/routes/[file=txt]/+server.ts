@@ -1,7 +1,7 @@
 import Robots from '$lib/fixtures/robots';
-import PGP from '$lib/fixtures/pgp';
+import type { RequestHandler } from './$types';
 
-export const GET: import('./$types').RequestHandler = async ({
+export const GET: RequestHandler = async ({
   url
   // eslint-disable-next-line @typescript-eslint/require-await
 }): Promise<Response> => {
@@ -15,13 +15,20 @@ export const GET: import('./$types').RequestHandler = async ({
           charset: 'utf-8'
         }
       });
-    case 'pgp.txt':
-      return new Response(PGP, {
+    case 'pgp.txt': {
+      const res = (
+        await fetch(`${url.origin}/api/getConfig`, {
+          method: 'GET'
+        })
+      ).json();
+      const { pgpKey } = (await res)?.data ?? '';
+      return new Response(pgpKey as string, {
         headers: {
           'content-type': 'text/plain',
           charset: 'utf-8'
         }
       });
+    }
     default:
       return new Response(
         JSON.stringify({

@@ -27,7 +27,7 @@
   <meta property="twitter:description" content="" />
 </svelte:head>
 
-<div data-test-route="index">
+<div class="relative" data-test-route="index">
   <div
     class="mt-[20vh] md:mt-[50vh] md:-translate-x-4 h-fit w-fit mx-auto flex flex-col items-center  justify-center gap-2"
   >
@@ -39,6 +39,11 @@
     </p>
     <p class="font-sans text-lg text-center">
       Lover of cats &amp; all things tech
+    </p>
+    <p
+      class="absolute top-0 translate-y-12 select-none transition-colors text-slate-200 dark:text-slate-800"
+    >
+      Jeez, that's bright...
     </p>
     <Breakpoints queries={{ sm: DEFAULT_MOBILE_BREAKPOINT }}>
       <svelte:fragment slot="sm">

@@ -1,9 +1,8 @@
 import { security } from '$lib/fixtures/well-known';
 import Robots from '$lib/fixtures/robots';
+import type { RequestHandler } from './$types';
 
-export const GET: import('./$types').RequestHandler = async ({
-  url
-}): Promise<Response> => {
+export const GET: RequestHandler = async ({ url }): Promise<Response> => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {

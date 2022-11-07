@@ -5,7 +5,6 @@ import Normalize from '$lib/data/normalize';
 
 export const GET: RequestHandler = async ({ url }: RequestEvent) => {
   const remoteUrl = `${REMOTE_API_URL}/query/posts${url.search}`;
-  console.log('remoteUrl', remoteUrl);
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',

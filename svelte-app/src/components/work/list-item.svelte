@@ -30,6 +30,7 @@
 
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
       onClick();
     }
   };
@@ -40,92 +41,90 @@
   $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
-<ListItemWrapper>
-  {#if project}
-    <div
-      class="absolute top-4 left-2 h-[calc(100%_-_26px)] {hovered
-        ? 'w-[2px]'
-        : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
-      aria-hidden="true"
-    >
-      &nbsp;
+<Hoverable bind:hovered>
+  <section
+    class="relative flex flex-col items-stretch justify-end gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
+      ? 'bg-slate-300/50 dark:bg-slate-700/50'
+      : 'bg-slate-200/50 dark:bg-slate-900/50'}"
+    data-test-id="list-item"
+    tabindex="0"
+    role="button"
+    aria-label="Project - {project.title}"
+    on:click={onClick}
+    on:keydown={onKey}
+  >
+    <!-- Image -->
+    <div class="w-full aspect-[4/1] lg:aspect-[2/1] overflow-hidden rounded-md">
+      {#if _ref && imageCrop}
+        <img
+          src={urlFor(_ref)
+            .height(200)
+            .width(400)
+            .rect(
+              imageCrop.left,
+              imageCrop.top,
+              imageCrop.width,
+              imageCrop.height
+            )
+            .fit('crop')
+            .format('webp')
+            .url()}
+          class="aspect-[2/1] object-cover h-full w-full"
+          alt="Project cover"
+        />
+      {/if}
     </div>
-    <Hoverable bind:hovered>
-      <section
-        class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit p-4 {hovered
-          ? 'pl-6 bg-slate-300/50 dark:bg-slate-700/50'
-          : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
-        data-test-id="list-item"
-        tabindex="0"
-        role="button"
-        aria-label="Project - {project.title}"
-        on:click={onClick}
-        on:keydown={onKey}
-      >
-        <div
-          class="hidden sm:flex basis-auto aspect-[2/1] min-w-min min-h-min rounded-md overflow-hidden"
+    <div class="flex flex-col gap-y-3 p-3">
+      <!-- Title / date / tags -->
+      <div class="w-full flex flex-col items-center justify-start">
+        <h1
+          class="w-full overflow-hidden whitespace-nowrap text-ellipsis line-clamp-1 font-display font-bold text-2xl decoration-[3px] decoration-emerald-300 {hovered
+            ? 'underline'
+            : ''}"
         >
-          {#if _ref && imageCrop}
-            <img
-              src={urlFor(_ref)
-                .height(200)
-                .width(400)
-                .rect(
-                  imageCrop.left,
-                  imageCrop.top,
-                  imageCrop.width,
-                  imageCrop.height
-                )
-                .fit('crop')
-                .format('webp')
-                .url()}
-              class="aspect-[2/1] object-cover h-full w-full"
-              alt="Project cover"
-            />
-          {/if}
-        </div>
-        <div class="flex flex-col items-stretch justify-start w-full">
-          {#if date || project.tags}
-            <div
-              class="flex flex-row items-center justify-start pb-2 font-sans text-base text-slate-700 dark:text-slate-200"
-            >
-              <p class="">{date}</p>
-              {#if project.tags}
-                <BulletPoint />
-                <div
-                  class="flex flex-row justify-start items-center gap-2 flex-wrap"
-                >
-                  {#each project.tags as tag}
-                    <a href="/work/+/{tag.slug.current}" class="categoryTag-sm">
-                      {tag.title}
-                    </a>
-                  {/each}
-                </div>
-              {/if}
-            </div>
-          {/if}
-          <h1
-            class="overflow-hidden whitespace-nowrap w-full text-ellipsis font-display font-bold text-2xl"
+          {project.title}
+        </h1>
+      </div>
+      <div class="w-full flex flex-row items-center justify-start">
+        <p class="font-sans text-base text-slate-700 dark:text-slate-200">
+          {date}
+        </p>
+        {#if project.tags}
+          <BulletPoint />
+          <div class="flex flex-row justify-start items-center gap-2 flex-wrap">
+            {#each project.tags as tag}
+              <a href="/work/+/{tag.slug.current}" class="categoryTag-sm">
+                {tag.title}
+              </a>
+            {/each}
+          </div>
+        {/if}
+      </div>
+      <!-- Description -->
+      <div class="">
+        {#if project.desc}
+          <p
+            class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base pt-2 line-clamp-2"
           >
-            {project.title}
-          </h1>
-          {#if project.desc}
-            <p
-              class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base pt-2 line-clamp-2"
-            >
-              {project.desc}
-            </p>
-          {/if}
-        </div>
-      </section>
-    </Hoverable>
-  {:else}
-    <section
-      class="flex flex-col items-stretch justify-stretch w-full h-fit max-h-40 p-4 bg-slate-200 dark:bg-slate-900 rounded-md duration-150"
-      data-test-id="list-item"
-      aria-label="No results"
-    >
-      <h3 class="text-center font-sans text-base my-2">No results found</h3>
-    </section>
-  {/if}
-</ListItemWrapper>
+            {project.desc}
+          </p>
+        {/if}
+      </div>
+    </div>
+  </section>
+</Hoverable>
+
+<!-- <Hoverable bind:hovered>
+  <section
+    class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit p-4 {hovered
+      ? 'pl-6 bg-slate-300/50 dark:bg-slate-700/50'
+      : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
+    data-test-id="list-item"
+    tabindex="0"
+    role="button"
+    aria-label="Project - {project.title}"
+    on:click={onClick}
+    on:keydown={onKey}
+  >
+  </section>
+</Hoverable> -->

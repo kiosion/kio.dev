@@ -18,7 +18,7 @@
 
 <Hoverable>
   <button
-    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150"
+    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300"
     aria-label="Toggle sfx"
     data-test-id="sfx-toggle"
     data-test-state={$CanUseSounds ? 'on' : 'off'}

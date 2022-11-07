@@ -13,12 +13,6 @@
 
   let isExt = true;
 
-  const svg = encodeURIComponent(`
-    <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 18 6'>
-      <path d='M 0,0 h 100' fill='#34d399' stroke='#34d399' stroke-width='2.8' />
-    </svg>
-  `);
-
   $: href && (isExt = (href as string).indexOf('http') >= 0);
 </script>
 
@@ -26,27 +20,11 @@
   <a
     href={href ? href : '#'}
     target={isExt ? '_blank' : undefined}
-    class="z-10 pb-[4px] bg-repeat-x {hovered
-      ? 'bg-[center_center]'
-      : 'bg-[center_105%]'} bg-[length:12px_6px]"
-    style={`background-image:url("data:image/svg+xml,${svg}");`}
+    class="decoration-emerald-400 dark:decoration-emerald-300 underline underline-offset-auto {hovered
+      ? 'decoration-4'
+      : 'decoration-2'}"
     tabindex="0"
   >
     {plainTextContent}
   </a>
 </Hoverable>
-
-<style lang="scss">
-  a {
-    // background-position-y: 105%;
-    // background-repeat: repeat-x;
-    // background-size: 12px 6px;
-    // padding-bottom: 4px;
-    transition: background-position-y 120ms ease-in;
-
-    &:hover,
-    &:active {
-      background-position-y: center;
-    }
-  }
-</style>

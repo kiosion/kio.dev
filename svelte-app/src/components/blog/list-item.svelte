@@ -39,19 +39,19 @@
 
 <ListItemWrapper>
   {#if post}
-    <div
+    <!-- <div
       class="absolute top-4 left-3 h-[calc(100%_-_28px)] {hovered
         ? 'w-[2px]'
         : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
       aria-hidden="true"
     >
       &nbsp;
-    </div>
+    </div> -->
     <Hoverable bind:hovered>
       <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 {hovered
-          ? 'pl-6 bg-slate-300/50 dark:bg-slate-700/50'
-          : 'pl-5 bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
+        class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 pl-5 {hovered
+          ? 'bg-slate-300/50 dark:bg-slate-700/50'
+          : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
         tabindex="0"
         role="button"
         aria-label="Post - {post.title}"
@@ -81,7 +81,9 @@
           {/if}
         </div>
         <h1
-          class="w-full pt-2 text-2xl font-bold text-ellipsis font-display line-clamp-1"
+          class="w-full pt-2 text-2xl font-bold text-ellipsis font-display line-clamp-1 decoration-emerald-300 decoration-[3px] {hovered
+            ? 'underline'
+            : ''}"
         >
           {post.title}
         </h1>

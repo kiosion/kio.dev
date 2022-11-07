@@ -75,14 +75,6 @@ module.exports = {
         '*.svelte'
       ], 
       processor: 'svelte3/svelte3'
-    },
-    {
-      files: [
-        'src/components/background-waves.svelte'
-      ],
-      rules: {
-        'quote': 'off'
-      }
     }
   ],
   settings: {
