@@ -10,6 +10,7 @@
   import { Boundary } from '$lib/error-bound';
   import type { PageData } from './$types';
   import type { AuthorDocument } from '$lib/types';
+  import { t } from '$i18n';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -25,15 +26,15 @@
 </script>
 
 <svelte:head>
-  <title>kio.dev | about</title>
+  <title>kio.dev | {t('About').toLowerCase()}</title>
   <meta name="description" content="A bit about me & my work" />
   <meta name="keywords" content="About, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kio.dev/about" />
+  <meta property="og:url" content={$page.url.href} />
   <meta property="og:title" content="kio.dev | about" />
   <meta property="og:description" content="A bit about me & my work" />
-  <meta property="twitter:url" content="https://kio.dev/about" />
+  <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content="kio.dev | about" />
   <meta property="twitter:description" content="A bit about me & my work" />
 </svelte:head>
@@ -45,14 +46,14 @@
     </Boundary>
     {#if about?.timeline}
       <Boundary onError={console.error}>
-        <AboutSection title="My work" icon="Briefcase">
+        <AboutSection title={t('My work')} icon="Briefcase">
           <AboutTimeline data={about.timeline} />
         </AboutSection>
       </Boundary>
     {/if}
     {#if about?.body}
       <Boundary onError={console.error}>
-        <AboutSection title="More" icon="InfoBox">
+        <AboutSection title={t('More')} icon="InfoBox">
           <div class="mx-1 font-sans">
             <PortableText text={about.body} />
           </div>

@@ -3,12 +3,11 @@
   import Sidebar from '$components/document/sidebar.svelte';
   import ContentWrapper from '$components/content-wrapper.svelte';
   import SafeIcon from '$components/safe-icon.svelte';
-  import { sidebarOpen } from '$stores/navigation';
   import Features from '$stores/features';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import { navOptions, pageHeading } from '$stores/navigation';
+  import { navOptions, pageHeading, sidebarOpen } from '$stores/navigation';
   import ScrollTo from '$helpers/scrollTo';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import type { Heading } from '$helpers/pt';
@@ -27,7 +26,7 @@
       ? data.desc
       : `A ${isPost ? 'blog post' : 'project'} on kio.dev`,
     allTags =
-      ((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
+      (((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
         if (!tags) {
           return undefined;
         }
@@ -35,7 +34,7 @@
           tag.title && acc.push(tag.title.toLowerCase());
           return acc;
         }, [] as string[]);
-      })(data?.tags)?.join(', ') + ', ' || '';
+      })(data?.tags)?.join(', ') as string) + ', ' || '';
 
   onMount(() => {
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });

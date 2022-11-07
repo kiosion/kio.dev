@@ -9,6 +9,7 @@
   import Features from '$stores/features';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
+  import { t, linkTo } from '$i18n';
 
   export let post: PostDocument;
 
@@ -17,14 +18,16 @@
   let readingTime = getReadingTime(getTotalWords(post.body));
 
   onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   const onClick = () => {
     $CanUseSounds && click.play();
-    goto(`/blog/${post.slug.current}`);
+    goto(linkTo(`/blog/${post.slug.current}`) as string).catch(() => undefined);
   };
 
   const onKey = (e: KeyboardEvent) => {
@@ -38,71 +41,62 @@
 </script>
 
 <ListItemWrapper>
-  {#if post}
-    <!-- <div
-      class="absolute top-4 left-3 h-[calc(100%_-_28px)] {hovered
-        ? 'w-[2px]'
-        : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
-      aria-hidden="true"
-    >
-      &nbsp;
-    </div> -->
-    <Hoverable bind:hovered>
-      <section
-        class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 pl-5 {hovered
-          ? 'bg-slate-300/50 dark:bg-slate-700/50'
-          : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
-        tabindex="0"
-        role="button"
-        aria-label="Post - {post.title}"
-        data-test-id="list-item"
-        on:click={onClick}
-        on:keydown={onKey}
-      >
-        <div
-          class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 gap-y-2"
-        >
-          {#if date}
-            <p>{date}</p>
-            <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
-          {/if}
-          <p>{`${Math.floor(readingTime / 60)} min read`}</p>
-          {#if post.tags}
-            <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
-            <div
-              class="flex flex-row flex-wrap items-center justify-start gap-2"
-            >
-              {#each post.tags as tag}
-                <a href="/blog/+/{tag.slug.current}" class="categoryTag-sm">
-                  {tag.title}
-                </a>
-              {/each}
-            </div>
-          {/if}
-        </div>
-        <h1
-          class="w-full pt-2 text-2xl font-bold text-ellipsis font-display line-clamp-1 decoration-emerald-300 decoration-[3px] {hovered
-            ? 'underline'
-            : ''}"
-        >
-          {post.title}
-        </h1>
-        {#if post.desc}
-          <p
-            class="pt-2 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
-          >
-            {post.desc}
-          </p>
-        {/if}
-      </section>
-    </Hoverable>
-  {:else}
+  <!-- <div
+    class="absolute top-4 left-3 h-[calc(100%_-_28px)] {hovered
+      ? 'w-[2px]'
+      : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
+    aria-hidden="true"
+  >
+    &nbsp;
+  </div> -->
+  <Hoverable bind:hovered>
     <section
-      class="flex flex-col items-stretch w-full p-4 duration-150 rounded-md justify-stretch h-fit max-h-40 bg-slate-200 dark:bg-slate-900"
+      class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 pl-5 {hovered
+        ? 'bg-slate-300/50 dark:bg-slate-700/50'
+        : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
+      tabindex="0"
+      role="button"
+      aria-label="Post - {post.title}"
       data-test-id="list-item"
-      aria-label="No results"
+      on:click={onClick}
+      on:keydown={onKey}
     >
-      <h3 class="my-2 font-sans text-base text-center">No results found</h3>
+      <div
+        class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-base text-slate-700 dark:text-slate-200 gap-y-2"
+      >
+        {#if date}
+          <p>{date}</p>
+          <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+        {/if}
+        <p>{`${Math.floor(readingTime / 60)} min read`}</p>
+        {#if post.tags}
+          <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+          <div class="flex flex-row flex-wrap items-center justify-start gap-2">
+            {#each post.tags as tag}
+              <a
+                href={linkTo(`/blog/+/${tag.slug.current}`)}
+                class="categoryTag-sm"
+              >
+                {tag.title}
+              </a>
+            {/each}
+          </div>
+        {/if}
+      </div>
+      <h1
+        class="w-full pt-2 text-2xl font-bold text-ellipsis font-display line-clamp-1 decoration-emerald-300 decoration-[3px] {hovered
+          ? 'underline'
+          : ''}"
+      >
+        {post.title}
+      </h1>
+      {#if post.desc}
+        <p
+          class="pt-2 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
+        >
+          {post.desc}
+        </p>
+      {/if}
     </section>
-  {/if}
+  </Hoverable>
 </ListItemWrapper>

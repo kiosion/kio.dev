@@ -19,7 +19,9 @@
       "$helpers*": ["src/lib/helpers*"],
       "$helpers/*": ["src/lib/helpers/*"],
       "$stores*": ["src/stores*"],
-      "$stores/*": ["src/stores/*"]
+      "$stores/*": ["src/stores/*"],
+      "$langs/*": ["src/languages/*"],
+      "$i18n": ["src/lib/helpers/i18n"]
     },
     "removeComments": true,
     "rootDir": "./",

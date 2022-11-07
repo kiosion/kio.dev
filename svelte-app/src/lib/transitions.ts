@@ -1,3 +1,7 @@
+import { APP_LANGS } from '$lib/consts';
+import { get } from 'svelte/store';
+import { page } from '$app/stores';
+
 let prevPath: string;
 
 const routes = [
@@ -24,6 +28,11 @@ routes.forEach((route, index) => {
 });
 
 export const onNav = (path: string): 'forward' | 'backward' => {
+  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
+  if (isLocalized && path) {
+    path = `/${path.slice(3)}`;
+  }
+
   if (!path) {
     return 'forward';
   }

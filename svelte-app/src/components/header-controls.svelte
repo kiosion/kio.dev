@@ -11,6 +11,7 @@
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
   import ThemeToggle from '$components/toggles/theme-toggle.svelte';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
+  import { t, linkTo } from '$i18n';
 
   let click: UIfx;
   let scrollNavHovered = false;
@@ -18,9 +19,11 @@
   export let appBody: HTMLElement;
 
   onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   $: CanUseSounds = Features.can('use sounds feature');
@@ -36,7 +39,7 @@
           {#if $navOptions && $navOptions.up !== ''}
             <Hoverable bind:hovered={scrollNavHovered}>
               <a
-                href={$navOptions.up}
+                href={linkTo($navOptions.up)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-up'
                   : ''}"
@@ -44,14 +47,14 @@
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     $CanUseSounds && click?.play();
-                    goto($navOptions.up);
+                    goto($navOptions.up).catch(() => undefined);
                   }
                 }}
                 transition:fade={{ duration: 100 }}
               >
                 <SafeIcon icon={'ArrowUp'} />
                 <p class="font-code text-base w-fit ml-4">
-                  Back ({$navOptions.up})
+                  {t('Back')} ({$navOptions.up})
                 </p>
               </a>
             </Hoverable>

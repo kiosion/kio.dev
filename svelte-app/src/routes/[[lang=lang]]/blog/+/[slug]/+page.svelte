@@ -5,9 +5,10 @@
   import type { PageData } from './$types';
   import ListItem from '$components/blog/list-item.svelte';
   import ErrorText from '$components/error-text.svelte';
+  import { t } from '$i18n';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
-  pageHeading.set(`Blog | Tag | ${pageTitle}`);
+  pageHeading.set(`${t('Blog')} | ${t('Tag')} | ${pageTitle}`);
   navOptions.set({ down: '', up: '/blog' });
 
   export let data: PageData;
@@ -17,14 +18,14 @@
 
 <svelte:head>
   <title>
-    kio.dev | blog | {pageTitle}
+    kio.dev | {t('Blog').toLowerCase()} | {pageTitle}
   </title>
 </svelte:head>
 
 <div data-test-route="tag" class="w-full">
   <PageHeading
     heading={pageTitle}
-    text="Recent posts tagged with '{pageTitle}'"
+    text={`${t('Recent posts tagged with')} '${pageTitle}'`}
   />
   <div class="pb-20">
     {#if posts?.data?.length}
@@ -33,7 +34,7 @@
       {/each}
     {:else}
       <div class="w-full flex flex-row items-center justify-center">
-        <ErrorText text="No posts found" classes="w-fit" />
+        <ErrorText text={t('No posts found')} classes="w-fit" />
       </div>
     {/if}
   </div>

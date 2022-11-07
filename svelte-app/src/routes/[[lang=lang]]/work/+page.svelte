@@ -11,6 +11,7 @@
   import { setupNavigation } from '$helpers/navigation';
   import Hoverable from '$components/hoverable.svelte';
   import { RECENT_PROJECTS_COUNT } from '$lib/consts';
+  import { t } from '$i18n';
 
   let click: UIfx;
 
@@ -19,19 +20,23 @@
 
     window?.scroll?.({ top: 0, behavior: 'smooth' });
 
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   export let data: PageData;
+
+  const pageTitle = `kio.dev | ${t('Work').toLowerCase()}`;
 
   $: ({ pinned, projects } = data);
   $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
-  <title>kio.dev | work</title>
+  <title>{pageTitle}</title>
   <meta
     name="description"
     content="A collection of my work, open-source contributions, and personal projects"
@@ -39,14 +44,14 @@
   <meta name="keywords" content="work, projects, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kio.dev/work" />
-  <meta property="og:title" content="kio.dev | work" />
+  <meta property="og:url" content={$page.url.href} />
+  <meta property="og:title" content={pageTitle} />
   <meta
     property="og:description"
     content="A collection of my work, open-source contributions, and personal projects"
   />
-  <meta property="twitter:url" content="https://kio.dev/work" />
-  <meta property="twitter:title" content="kio.dev | work" />
+  <meta property="twitter:url" content={$page.url.href} />
+  <meta property="twitter:title" content={pageTitle} />
   <meta
     property="twitter:description"
     content="A collection of my work, open-source contributions, and personal projects"
@@ -55,15 +60,17 @@
 
 <div data-test-route="work" class="w-full">
   <PageHeading
-    heading="Work"
-    text="A collection of my work, open-source contributions, and personal projects"
+    heading={t('Work')}
+    text={t(
+      'A collection of my work, open-source contributions, and personal projects'
+    )}
   />
   <div class="mb-12">
     {#if pinned?.data}
-      <IconHeader icon="Pin" text="Pinned" />
+      <IconHeader icon="Pin" text={t('Pinned')} />
       <ListItem project={pinned.data} />
     {/if}
-    <IconHeader icon="Clock" text="Recent" />
+    <IconHeader icon="Clock" text={t('Recent')} />
     {#if projects?.data?.length}
       <div
         class="w-full mt-4 flex flex-row flex-wrap items-start justify-between gap-x-3 gap-y-4"
@@ -82,10 +89,10 @@
         <a
           href="/work/1"
           class="block w-fit mt-8"
-          aria-label="View all projects"
+          aria-label={t('View more projects')}
           on:click={() => $CanUseSounds && click?.play()}
         >
-          <IconHeader icon="ArrowRight" text="View all" classes="" />
+          <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
         </a>
       </Hoverable>
     {/if}

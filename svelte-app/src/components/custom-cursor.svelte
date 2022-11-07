@@ -72,8 +72,6 @@
   on:mousedown={handleClickDown}
   on:mouseup={handleClickUp}
   on:keydown={(e) => e.key === 'Tab' && hideCursor()}
-  on:keydown={(e) => e.key === 'Control' && hideCursor()}
-  on:keyup={(e) => e.key === 'Control' && showCursor()}
 />
 
 <div

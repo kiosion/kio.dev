@@ -8,6 +8,9 @@ export const COLOR_TEXT_DARK = '#F1F5F9';
 export const COLOR_BG_LIGHT = '#F1F5F9';
 export const COLOR_BG_DARK = '#1E293B';
 
+export const APP_LANGS = ['en', 'fr'];
+export const DEFAULT_APP_LANG = 'en';
+
 export const TOP_LEVEL_ROUTES = [
   { name: 'Index', path: '/' },
   { name: 'Blog', path: '/blog' },

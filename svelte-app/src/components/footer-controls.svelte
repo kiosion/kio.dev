@@ -8,14 +8,17 @@
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import { t, linkTo } from '$i18n';
 
   let click: UIfx;
   let scrollNavHovered = false;
 
   onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   $: CanUseSounds = Features.can('use sounds feature');
@@ -31,7 +34,7 @@
           <div class="w-52">
             <Hoverable bind:hovered={scrollNavHovered}>
               <a
-                href={$navOptions.down}
+                href={linkTo($navOptions.down)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-down'
                   : ''}"
@@ -39,13 +42,13 @@
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     $CanUseSounds && click?.play();
-                    goto($navOptions.down);
+                    goto($navOptions.down).catch(() => undefined);
                   }
                 }}
               >
                 <SafeIcon icon={'ArrowDown'} />
                 <p class="font-code text-base w-fit ml-4">
-                  Continue ({$navOptions.down})
+                  {t('Continue')} ({$navOptions.down})
                 </p>
               </a>
             </Hoverable>

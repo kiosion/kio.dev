@@ -1,17 +1,28 @@
 import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
-import { APP_ROUTES, TOP_LEVEL_ROUTES } from '$lib/consts';
+import { APP_ROUTES, TOP_LEVEL_ROUTES, APP_LANGS } from '$lib/consts';
 import { isMobile } from '$helpers/browser';
 import { canNavigate, navOptions, pageHeading } from '$stores/navigation';
 import { get } from 'svelte/store';
+import { page } from '$app/stores';
+import { t, linkTo } from '$i18n';
 
 export const setupNavigation = (route: string): void => {
+  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
+
+  if (isLocalized) {
+    const sliced = route.slice(3);
+    route = sliced.startsWith('/') ? sliced : `/${sliced}`;
+  }
+
   if (!route || route === '') {
     navOptions.set({ down: '', up: '' });
     pageHeading.set('');
     return;
   }
+
   const indexOf = TOP_LEVEL_ROUTES.findIndex((r) => r.path === route);
+
   switch (indexOf) {
     case -1:
       navOptions.set({ down: '', up: '' });
@@ -37,7 +48,7 @@ export const setupNavigation = (route: string): void => {
       });
       break;
   }
-  pageHeading.set(TOP_LEVEL_ROUTES[indexOf].name);
+  pageHeading.set(t(TOP_LEVEL_ROUTES[indexOf].name));
 };
 
 export const handleScrollNav = (
@@ -54,6 +65,13 @@ export const handleScrollNav = (
     isMobile()
   ) {
     return;
+  }
+
+  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
+
+  if (isLocalized) {
+    const sliced = currentPath.slice(3);
+    currentPath = sliced.startsWith('/') ? sliced : `/${sliced}`;
   }
 
   const { scrollTop, scrollHeight } = appBody,
@@ -87,7 +105,7 @@ export const handleScrollNav = (
   if (path !== currentPath) {
     canNavigate.set(false);
     setTimeout(() => canNavigate.set(true), 1000);
-    return goto(path);
+    return goto(linkTo(path));
   }
 };
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import ListItemWrapper from '../list-item-wrapper.svelte';
   import { onMount } from 'svelte';
   import type { ProjectDocument } from '$lib/types';
   import type UIfx from 'uifx';
@@ -9,6 +8,7 @@
   import { getShortDate } from '$helpers/date';
   import Hoverable from '$components/hoverable.svelte';
   import Features from '$stores/features';
+  import { t, linkTo } from '$i18n';
 
   export let project: ProjectDocument;
 
@@ -18,14 +18,18 @@
   let hovered = false;
 
   onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   const onClick = () => {
     $CanUseSounds && click.play();
-    goto(`/work/${project.slug.current}`);
+    goto(linkTo(`/work/${project.slug.current}`) as string).catch(
+      () => undefined
+    );
   };
 
   const onKey = (e: KeyboardEvent) => {
@@ -49,7 +53,7 @@
     data-test-id="list-item"
     tabindex="0"
     role="button"
-    aria-label="Project - {project.title}"
+    aria-label="{t('Project')} - {project.title}"
     on:click={onClick}
     on:keydown={onKey}
   >
@@ -93,7 +97,10 @@
           <BulletPoint />
           <div class="flex flex-row justify-start items-center gap-2 flex-wrap">
             {#each project.tags as tag}
-              <a href="/work/+/{tag.slug.current}" class="categoryTag-sm">
+              <a
+                href={linkTo(`/work/+/${tag.slug.current}`)}
+                class="categoryTag-sm"
+              >
                 {tag.title}
               </a>
             {/each}

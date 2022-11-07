@@ -11,6 +11,7 @@
   import { page } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import { RECENT_POSTS_COUNT } from '$lib/consts';
+  import { t } from '$lib/helpers/i18n';
 
   let click: UIfx;
 
@@ -19,9 +20,11 @@
 
     window?.scroll?.({ top: 0, behavior: 'smooth' });
 
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+      })
+      .catch(() => undefined);
   });
 
   export let data: PageData;
@@ -31,10 +34,10 @@
 </script>
 
 <svelte:head>
-  <title>kio.dev | blog</title>
+  <title>kio.dev | {t('Blog').toLowerCase()}</title>
   <meta
     name="description"
-    content="Thoughts about (mostly) tech, design, and development"
+    content={t('Thoughts about (mostly) tech, design, and development')}
   />
   <meta name="keywords" content="blog, posts, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
@@ -43,27 +46,27 @@
   <meta property="og:title" content="kio.dev | blog" />
   <meta
     property="og:description"
-    content="Thoughts about (mostly) tech, design, and development"
+    content={t('Thoughts about (mostly) tech, design, and development')}
   />
   <meta property="twitter:url" content="https://kio.dev/blog" />
   <meta property="twitter:title" content="kio.dev | blog" />
   <meta
     property="twitter:description"
-    content="Thoughts about (mostly) tech, design, and development"
+    content={t('Thoughts about (mostly) tech, design, and development')}
   />
 </svelte:head>
 
 <div data-test-route="blog" class="w-full">
   <PageHeading
-    heading="Blog"
-    text="Thoughts about (mostly) tech, design, and development"
+    heading={t('Blog')}
+    text={t('Thoughts about (mostly) tech, design, and development')}
   />
   <div class="pb-20">
     {#if pinned?.data}
-      <IconHeader icon="Pin" text="Pinned" />
+      <IconHeader icon="Pin" text={t('Pinned')} />
       <ListItem post={pinned.data} />
     {/if}
-    <IconHeader icon="Clock" text="Recent" />
+    <IconHeader icon="Clock" text={t('Recent')} />
     {#if posts?.data?.length}
       {#each posts.data as post}
         {#if post._id !== pinned?.data?._id}
@@ -72,7 +75,7 @@
       {/each}
     {:else}
       <div class="w-full flex flex-row items-center justify-center">
-        <ErrorText text="No data" classes="w-fit" />
+        <ErrorText text={t('No data')} classes="w-fit" />
       </div>
     {/if}
     {#if posts?.meta?.total > RECENT_POSTS_COUNT}
@@ -80,10 +83,10 @@
         <a
           href="/blog/1"
           class="block w-fit mt-8"
-          aria-label="View all posts"
+          aria-label={t('View more posts')}
           on:click={() => $CanUseSounds && click?.play()}
         >
-          <IconHeader icon="ArrowRight" text="View all" classes="" />
+          <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
         </a>
       </Hoverable>
     {/if}

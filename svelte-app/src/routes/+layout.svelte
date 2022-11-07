@@ -5,6 +5,7 @@
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
+  import { check, t } from '$lib/helpers/i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
@@ -44,6 +45,7 @@
   onMount(async () => {
     appLoaded = true;
     canNavigate.set(true);
+    check();
     msg({ detail: { isOpen: true } });
     browser &&
       window.addEventListener('devtoolschange', (e) =>
@@ -90,6 +92,12 @@
   <CustomCursor appBody={pageContainer} showLoader={$loading || !appLoaded} />
 {/if}
 
+{#if $menuState.open}
+  <Boundary onError={console.error}>
+    <svelte:component this={ContextMenu} page={pageContainer} />
+  </Boundary>
+{/if}
+
 <div
   class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-[background-color,border-color,text-decoration-color,fill,stroke] motion-reduce:transition-none"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
@@ -103,10 +111,8 @@
   </Boundary>
   <div
     class="{isMobile
-      ? 'mt-6 p-8'
-      : 'h-full ml-40 xl:ml-60 p-8 xl:px-10 2xl:px-20'} {isMobile && $navOpen
-      ? 'mt-36'
-      : ''} transition-[margin-top] ease-linear"
+      ? `mt-6 p-8 ${$navOpen && 'mt-36'}`
+      : 'h-full ml-40 xl:ml-60 p-8 xl:px-10 2xl:px-20'} transition-[margin-top] ease-linear"
   >
     <div
       class="h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1"
@@ -146,12 +152,6 @@
     </svelte:fragment>
   </Breakpoints>
 </div>
-
-{#if $menuState.open}
-  <Boundary onError={console.error}>
-    <svelte:component this={ContextMenu} page={pageContainer} />
-  </Boundary>
-{/if}
 
 <style lang="scss">
   .grid > * {

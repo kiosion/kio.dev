@@ -11,7 +11,9 @@ const config = {
     alias: {
       $components: 'src/components',
       $helpers: 'src/lib/helpers',
-      $stores: 'src/stores'
+      $stores: 'src/stores',
+      $langs: 'src/languages',
+      $i18n: 'src/lib/helpers/i18n'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'

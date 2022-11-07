@@ -1,4 +1,5 @@
 <script lang="ts">
+  /* eslint-disable @typescript-eslint/no-unsafe-argument */
   import { slide } from 'svelte/transition';
   import Icon from '@iconify/svelte';
   import ThemeToggle from '$components/toggles/theme-toggle.svelte';
@@ -8,17 +9,20 @@
   import { onMount } from 'svelte';
   import type UIfx from 'uifx';
   import Features from '$stores/features';
-  import { navigating } from '$app/stores';
+  import { page, navigating } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import { DEFAULT_BREAKPOINTS, APP_LANGS } from '$lib/consts';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { linear } from 'svelte/easing';
+  import { t, linkTo } from '$i18n';
+
+  const isLocalized = APP_LANGS.includes($page?.params?.lang);
 
   const links = [
-    { name: 'Blog', url: '/blog', active: false },
-    { name: 'Work', url: '/work', active: false },
-    { name: 'About', url: '/about', active: false }
+    { name: 'Blog', url: linkTo('/blog'), active: false },
+    { name: 'Work', url: linkTo('/work'), active: false },
+    { name: 'About', url: linkTo('/about'), active: false }
   ];
 
   const socials = [
@@ -92,10 +96,12 @@
   let ping: UIfx;
 
   onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-      ping = sfx.ping;
-    });
+    import('$lib/sfx')
+      .then((sfx) => {
+        click = sfx.click;
+        ping = sfx.ping;
+      })
+      .catch(() => undefined);
   });
 
   const onLogoClick = () => {
@@ -103,7 +109,7 @@
     $CanUseSounds && click?.play();
     navOpen.set(false);
     if (clicks > 3) {
-      goto('/features')
+      goto(linkTo('/features'))
         .then(() => {
           $CanUseSounds && ping?.play();
           clicks = 0;
@@ -113,7 +119,7 @@
         });
       return;
     }
-    goto('/');
+    goto(linkTo('/')).catch(() => undefined);
     setTimeout(() => {
       clicks = 0;
     }, 1200);
@@ -153,21 +159,23 @@
               <div class="relative flex flex-row justify-start items-center">
                 <a
                   class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
-                  aria-label={link.name}
+                  aria-label={t(link.name)}
                   href={link.url}
                   on:click={() => {
                     navOpen.set(false);
                     $CanUseSounds && click?.play();
                   }}
                 >
-                  {link.name}
+                  {t(link.name)}
                 </a>
                 <div
                   class="indicator absolute z-0 {segment === link.url ||
                   $navigating?.to?.url?.pathname === link.url ||
                   link.active ||
                   (segment.split('/').length > 1 &&
-                    segment.split('/').indexOf(link.url.slice(1)) > 0)
+                    segment
+                      .split('/')
+                      .indexOf(link.url.slice(isLocalized ? 4 : 1)) > 0)
                     ? 'opacity-100'
                     : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
                     link.url ||
@@ -175,7 +183,9 @@
                   link.active
                     ? 'active'
                     : segment.split('/').length > 1 &&
-                      segment.split('/').indexOf(link.url.slice(1)) > 0 &&
+                      segment
+                        .split('/')
+                        .indexOf(link.url.slice(isLocalized ? 4 : 1)) > 0 &&
                       'dot'}  transition-opacity ease-in"
                 />
               </div>
