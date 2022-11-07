@@ -11,8 +11,8 @@ describe('Helpers | Portable Text | getTotalWords', () => {
 });
 
 describe('Helpers | Portable Text | getHeadings', () => {
-  it('should return headings as tree array from portable text block', () => {
-    const headings = getHeadings(postBody);
+  it('should return headings as tree array from portable text block', async () => {
+    const headings = await getHeadings(postBody);
     expect(headings).toBeDefined();
     expect(headings).toHaveLength(2);
     // Expect 0 children for the first top-level heading
@@ -29,8 +29,8 @@ describe('Helpers | Portable Text | getHeadings', () => {
     ).toHaveLength(0);
   });
 
-  it('should assign correct properties to headings', () => {
-    const headings = getHeadings(postBody);
+  it('should assign correct properties to headings', async () => {
+    const headings = await getHeadings(postBody);
     // For all headings, expect props to be defined and of correct types
     headings.forEach((heading: Heading) => {
       const checkProps = (heading: Heading) => {
