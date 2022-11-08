@@ -161,6 +161,7 @@
                   class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
                   aria-label={t(link.name)}
                   href={link.url}
+                  data-sveltekit-prefetch
                   on:click={() => {
                     navOpen.set(false);
                     $CanUseSounds && click?.play();
@@ -203,6 +204,7 @@
             <a
               class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
               aria-label={social.name}
+              data-sveltekit-prefetch
               {...social.attrs}
               on:click={() => $CanUseSounds && click?.play()}
             >
@@ -262,13 +264,14 @@
                 aria-label={link.name}
                 href={link.url}
                 preload={link.url}
+                data-sveltekit-prefetch
                 on:mouseenter={() => (link.active = true)}
                 on:mouseleave={() => (link.active = false)}
                 on:focus={() => (link.active = true)}
                 on:blur={() => (link.active = false)}
                 on:click={() => {
-                  navOpen.set(false);
                   $CanUseSounds && click?.play();
+                  navOpen.set(false);
                 }}
               >
                 {link.name}

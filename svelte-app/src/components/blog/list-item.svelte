@@ -25,14 +25,12 @@
       .catch(() => undefined);
   });
 
-  const onClick = () => {
-    $CanUseSounds && click.play();
-    goto(linkTo(`/blog/${post.slug.current}`) as string).catch(() => undefined);
-  };
-
   const onKey = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      onClick();
+    if (e.code === 'Enter' || e.code === 'Space') {
+      $CanUseSounds && click.play();
+      goto(linkTo(`/blog/${post.slug.current}`) as string).catch(
+        () => undefined
+      );
     }
   };
 
@@ -41,16 +39,8 @@
 </script>
 
 <ListItemWrapper>
-  <!-- <div
-    class="absolute top-4 left-3 h-[calc(100%_-_28px)] {hovered
-      ? 'w-[2px]'
-      : 'w-0'} bg-emerald-400 dark:bg-emerald-300 transition-[width]"
-    aria-hidden="true"
-  >
-    &nbsp;
-  </div> -->
   <Hoverable bind:hovered>
-    <section
+    <a
       class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 pl-5 {hovered
         ? 'bg-slate-300/50 dark:bg-slate-700/50'
         : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
@@ -58,7 +48,9 @@
       role="button"
       aria-label="Post - {post.title}"
       data-test-id="list-item"
-      on:click={onClick}
+      href={linkTo(`/blog/${post.slug.current}`)}
+      data-sveltekit-prefetch
+      on:click={() => $CanUseSounds && click.play()}
       on:keydown={onKey}
     >
       <div
@@ -74,6 +66,7 @@
           <div class="flex flex-row flex-wrap items-center justify-start gap-2">
             {#each post.tags as tag}
               <a
+                data-sveltekit-prefetch
                 href={linkTo(`/blog/+/${tag.slug.current}`)}
                 class="categoryTag-sm"
               >
@@ -97,6 +90,6 @@
           {post.desc}
         </p>
       {/if}
-    </section>
+    </a>
   </Hoverable>
 </ListItemWrapper>

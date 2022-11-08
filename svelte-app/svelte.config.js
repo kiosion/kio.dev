@@ -27,8 +27,16 @@ const config = {
     prerender: {
       enabled: true,
       crawl: true,
-      entries: ['*', '/about', '/blog', '/work', '/pgp', '/']
-    }
+      entries: ['*'],
+      onError: ({ status, path }) => {
+        if (status === 404) {
+          if (path.startsWith('/en') || path.startsWith('/fr')) {
+            return;
+          }
+        }
+      }
+    },
+    trailingSlash: 'ignore'
   }
 };
 

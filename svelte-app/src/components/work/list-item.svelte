@@ -46,7 +46,7 @@
 </script>
 
 <Hoverable bind:hovered>
-  <section
+  <a
     class="relative flex flex-col items-stretch justify-end gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
       ? 'bg-slate-300/50 dark:bg-slate-700/50'
       : 'bg-slate-200/50 dark:bg-slate-900/50'}"
@@ -54,7 +54,9 @@
     tabindex="0"
     role="button"
     aria-label="{t('Project')} - {project.title}"
-    on:click={onClick}
+    href={linkTo(`/work/${project.slug.current}`)}
+    data-sveltekit-prefetch
+    on:click|preventDefault={onClick}
     on:keydown={onKey}
   >
     <!-- Image -->
@@ -118,7 +120,7 @@
         {/if}
       </div>
     </div>
-  </section>
+  </a>
 </Hoverable>
 
 <!-- <Hoverable bind:hovered>

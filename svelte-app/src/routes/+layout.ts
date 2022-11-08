@@ -1,13 +1,7 @@
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
-export const load: import('./$types').LayoutLoad = async ({
-  url,
-  parent,
-  fetch
-}) => {
-  await parent();
-
+export const load: import('./$types').LayoutLoad = async ({ url, fetch }) => {
   await Store.findConfig(fetch)
     .then(() => {
       Logger.info('Config loaded', 'routes/+layout');

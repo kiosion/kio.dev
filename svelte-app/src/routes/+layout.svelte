@@ -97,7 +97,6 @@
     <svelte:component this={ContextMenu} page={pageContainer} />
   </Boundary>
 {/if}
-
 <div
   class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-[background-color,border-color,text-decoration-color,fill,stroke] motion-reduce:transition-none"
   in:fly={{ delay: 100, duration: 100, y: -10 }}

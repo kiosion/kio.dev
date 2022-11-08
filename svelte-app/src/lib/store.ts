@@ -56,7 +56,6 @@ class StoreClass extends CacheClass {
       return;
     }
     const url = this.constructUrl(model, params, true);
-    console.log('querying url:', url);
     try {
       const res = await fetch(url);
       const response = (await res.json()) as ResDataMany<T> & ResError;

@@ -34,6 +34,7 @@
           <div class="w-52">
             <Hoverable bind:hovered={scrollNavHovered}>
               <a
+                data-sveltekit-prefetch
                 href={linkTo($navOptions.down)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-down'
