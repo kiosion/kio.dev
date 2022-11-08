@@ -13,7 +13,7 @@ export const GET: RequestHandler = async () => {
       }
     });
     if (res.status !== 200) {
-      Logger.error(`Failed to fetch config: ${res.status}`, 'api/getConfig');
+      Logger.error(`Failed to fetch config: ${res.status}`, 'api/get/config');
       return new Response(
         JSON.stringify({
           status: 500,
@@ -30,7 +30,7 @@ export const GET: RequestHandler = async () => {
       }
     });
   } catch (err) {
-    Logger.error('Failed to fetch config', 'api/getConfig');
+    Logger.error('Failed to fetch config', 'api/get/config');
     return new Response(
       JSON.stringify({
         status: 500,

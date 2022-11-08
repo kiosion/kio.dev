@@ -17,10 +17,10 @@ interface PossibleParams {
 }
 
 const endpoints = new Map([
-  ['post', ['getPost', 'getPosts']],
-  ['project', ['getProject', 'getProjects']],
-  ['site', ['getConfig']],
-  ['about', ['get/about']]
+  ['post', 'get/post'],
+  ['project', 'get/project'],
+  ['site', 'get/config'],
+  ['about', 'get/about']
 ]);
 
 class StoreClass extends CacheClass {
@@ -30,7 +30,7 @@ class StoreClass extends CacheClass {
     many = false
   ): string => {
     const url = new URL(
-      `http://localhost${API_URL}${endpoints.get(model)?.[many ? 1 : 0] ?? ''}`
+      `http://localhost${API_URL}${endpoints.get(model)}${many ? '/many' : ''}`
     );
     Object.entries(params).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -56,11 +56,12 @@ class StoreClass extends CacheClass {
       return;
     }
     const url = this.constructUrl(model, params, true);
+    console.log('querying url:', url);
     try {
       const res = await fetch(url);
       const response = (await res.json()) as ResDataMany<T> & ResError;
       if (!response.meta || response.error) {
-        Logger.error('Failed to get projects', 'store/query');
+        Logger.error('Failed to get data', 'store/query');
         return;
       }
       return response as ResDataMany<T>;

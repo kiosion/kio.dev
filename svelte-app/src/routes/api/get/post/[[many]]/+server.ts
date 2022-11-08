@@ -3,8 +3,25 @@ import { REMOTE_API_URL, REMOTE_API_TOKEN } from '$lib/env';
 import Logger from '$lib/logger';
 import Normalize from '$lib/data/normalize';
 
-export const GET: RequestHandler = async ({ url }: RequestEvent) => {
-  const remoteUrl = `${REMOTE_API_URL}/query/posts${url.search}`;
+export const GET: RequestHandler = async ({
+  url,
+  params
+}: RequestEvent): Promise<Response> => {
+  const many = !!params.many;
+
+  if (!many && !url.searchParams.get('id')) {
+    return new Response(
+      JSON.stringify({
+        status: 400,
+        error: 'Endpoint error: Missing required parameter: id'
+      })
+    );
+  }
+
+  const remoteUrl = many
+    ? `${REMOTE_API_URL}/query/posts?${url.searchParams}`
+    : `${REMOTE_API_URL}/query/post/${url.searchParams.get('id')}`;
+
   try {
     const res = await fetch(remoteUrl, {
       method: 'GET',
@@ -13,12 +30,13 @@ export const GET: RequestHandler = async ({ url }: RequestEvent) => {
       }
     });
     if (res.status !== 200) {
-      Logger.error(`Failed to fetch posts: ${res.status}`, 'api/getPosts');
+      Logger.error(`Failed to fetch ${many ? 'posts' : 'post'}: ${res.status}`);
       return new Response(
         JSON.stringify({
           status: 500,
-          error: 'Endpoint error: Failed to fetch posts',
-          detail: `Remote API returned status code: ${res.status}`
+          error: `Endpoint error: Failed to fetch ${
+            many ? 'posts' : 'post'
+          }. Remote API returned status code: ${res.status}`
         })
       );
     }
@@ -30,11 +48,11 @@ export const GET: RequestHandler = async ({ url }: RequestEvent) => {
       }
     });
   } catch (err: unknown) {
-    Logger.error('Failed to fetch posts', 'api/fetchPosts');
+    Logger.error(`Failed to fetch ${many ? 'posts' : 'post'}`);
     return new Response(
       JSON.stringify({
         status: 500,
-        error: 'Endpoint error: Unknown error'
+        error: 'Endpoint error: Unhandled or unknown error'
       })
     );
   }

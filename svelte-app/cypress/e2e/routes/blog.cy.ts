@@ -3,7 +3,7 @@ import type { DocumentsSetupParams } from '../../types';
 
 describe('E2E | Blog', () => {
   const setupContext = ({ delay = 800, num }: DocumentsSetupParams) => {
-    return cy.intercept('GET', '/api/getPosts*', (req) => {
+    return cy.intercept('GET', '/api/get/post/many*', (req) => {
       req.reply(returnPosts({ req, delay, num }));
     });
   };

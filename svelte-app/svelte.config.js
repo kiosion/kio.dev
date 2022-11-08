@@ -23,6 +23,11 @@ const config = {
       lib: 'src/lib',
       params: 'src/params',
       routes: 'src/routes'
+    },
+    prerender: {
+      enabled: true,
+      crawl: true,
+      entries: ['*', '/about', '/blog', '/work', '/pgp', '/']
     }
   }
 };

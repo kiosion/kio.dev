@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({
       });
     case 'pgp.txt': {
       const res = (
-        await fetch(`${url.origin}/api/getConfig`, {
+        await fetch(`${url.origin}/api/get/config`, {
           method: 'GET'
         })
       ).json();

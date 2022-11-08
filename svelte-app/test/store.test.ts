@@ -8,17 +8,17 @@ describe('Store Class | ConstructURL', () => {
   it('should construct a proper URL', () => {
     expect(constructUrl).toBeDefined();
     const url = constructUrl('post', { id: 1 });
-    expect(url).toBe('/api/getPost?id=1');
+    expect(url).toBe('/api/get/post?id=1');
   });
 
   it('should construct a URL with multiple params', () => {
     const url = constructUrl('post', { id: 1, slug: 'test' });
-    expect(url).toBe('/api/getPost?id=1&slug=test');
+    expect(url).toBe('/api/get/post?id=1&slug=test');
   });
 
   it("should handle constructing URLs for 'many' models", () => {
     const url = constructUrl('post', { id: 1, slug: 'test' }, true);
-    expect(url).toBe('/api/getPosts?id=1&slug=test');
+    expect(url).toBe('/api/get/post/many?id=1&slug=test');
   });
 });
 
@@ -41,7 +41,7 @@ describe('Store Class | Query', () => {
 
     expect(res).toBeInstanceOf(Promise);
     expect(mock).toHaveBeenCalled();
-    expect(mock).toHaveBeenCalledWith('/api/getPosts?id=1');
+    expect(mock).toHaveBeenCalledWith('/api/get/post/many?id=1');
   });
 
   it('should wait for fetch to resolve', () => {
