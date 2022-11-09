@@ -8120,9 +8120,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^20.0.1":
-  version: 20.0.1
-  resolution: "jsdom@npm:20.0.1"
+"jsdom@npm:^20.0.2":
+  version: 20.0.2
+  resolution: "jsdom@npm:20.0.2"
   dependencies:
     abab: "npm:^2.0.6"
     acorn: "npm:^8.8.0"
@@ -8155,7 +8155,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 16e3849f854902ab27d513bb08d784a64acef2095246a96538c899fdb060010cbf661b32562f7170e1cbbd59c1bb33ac0a87c79cbee85b8b7c11fb6ad36757fa
+  checksum: 115dcdd4c773f80c0dd82a15854d16f89e63ecf9969477bdda170dd49047ed32db8f6468b07ba9af41d5bcc4003b692deadaf7565726a1a89ce858d03d3e8c63
   languageName: node
   linkType: hard
 
@@ -12746,7 +12746,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-svelte3: "npm:^4.0.0"
     highlight.js: "npm:^11.6.0"
-    jsdom: "npm:^20.0.1"
+    jsdom: "npm:^20.0.2"
     miragejs: "npm:^0.1.45"
     moment: "npm:^2.29.4"
     netlify-cli: "npm:^12.0.9"
