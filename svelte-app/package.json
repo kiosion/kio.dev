@@ -41,7 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "@vitest/ui": "^0.24.4",
-    "autoprefixer": "^10.4.12",
+    "autoprefixer": "^10.4.13",
     "c8": "^7.12.0",
     "cypress": "^10.10.0",
     "cypress-svelte-unit-test": "^3.3.4",
