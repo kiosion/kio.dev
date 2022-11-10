@@ -23,6 +23,7 @@
   import { Boundary } from '$lib/error-bound';
   import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
+  import { init as initAudio } from '$lib/sfx';
 
   const navUnsubscribe = navigating.subscribe((res) => {
     !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
@@ -45,6 +46,7 @@
   onMount(async () => {
     appLoaded = true;
     canNavigate.set(true);
+    initAudio({ volume: 0.1 });
     check();
     msg({ detail: { isOpen: true } });
     browser &&

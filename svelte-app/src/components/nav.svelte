@@ -6,9 +6,6 @@
   import MenuToggle from '$components/toggles/menu-toggle.svelte';
   import { navOpen } from '$stores/navigation';
   import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
-  import type UIfx from 'uifx';
-  import Features from '$stores/features';
   import { page, navigating } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
@@ -16,6 +13,7 @@
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { linear } from 'svelte/easing';
   import { t, linkTo } from '$i18n';
+  import SFX from '$lib/sfx';
 
   const isLocalized = APP_LANGS.includes($page?.params?.lang);
 
@@ -92,26 +90,14 @@
 
   let clicks = 0;
 
-  let click: UIfx;
-  let ping: UIfx;
-
-  onMount(() => {
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-        ping = sfx.ping;
-      })
-      .catch(() => undefined);
-  });
-
   const onLogoClick = () => {
     clicks++;
-    $CanUseSounds && click?.play();
+    SFX.click.play();
     navOpen.set(false);
     if (clicks > 3) {
       goto(linkTo('/features'))
         .then(() => {
-          $CanUseSounds && ping?.play();
+          SFX.ping.play();
           clicks = 0;
         })
         .catch(() => {
@@ -126,8 +112,6 @@
   };
 
   export let segment: string;
-
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -164,7 +148,7 @@
                   data-sveltekit-prefetch
                   on:click={() => {
                     navOpen.set(false);
-                    $CanUseSounds && click?.play();
+                    SFX.click.play();
                   }}
                 >
                   {t(link.name)}
@@ -206,7 +190,7 @@
               aria-label={social.name}
               data-sveltekit-prefetch
               {...social.attrs}
-              on:click={() => $CanUseSounds && click?.play()}
+              on:click={() => SFX.click.play()}
             >
               <Icon
                 icon={social.icon}
@@ -270,7 +254,7 @@
                 on:focus={() => (link.active = true)}
                 on:blur={() => (link.active = false)}
                 on:click={() => {
-                  $CanUseSounds && click?.play();
+                  SFX.click.play();
                   navOpen.set(false);
                 }}
               >

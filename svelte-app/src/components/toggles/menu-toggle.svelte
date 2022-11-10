@@ -2,19 +2,7 @@
   import { navOpen } from '$stores/navigation';
   import SafeIcon from '../safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import Features from '$stores/features';
-  import { onMount } from 'svelte';
-  import type UIfx from 'uifx';
-
-  let click: UIfx;
-
-  onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
-  });
-
-  $: CanUseSounds = Features.can('use sounds feature');
+  import SFX from '$lib/sfx';
 </script>
 
 <Hoverable>
@@ -24,7 +12,7 @@
     data-test-id="nav-toggle"
     on:click={() => {
       navOpen.set(!$navOpen);
-      $CanUseSounds && click?.play();
+      SFX.click.play();
     }}
   >
     {#if $navOpen}

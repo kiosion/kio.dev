@@ -1,27 +1,14 @@
 <script lang="ts">
   import { navOptions } from '$stores/navigation';
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import type UIfx from 'uifx';
-  import Features from '$stores/features';
   import SafeIcon from './safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
   import { t, linkTo } from '$i18n';
+  import SFX from '$lib/sfx';
 
-  let click: UIfx;
   let scrollNavHovered = false;
-
-  onMount(() => {
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-      })
-      .catch(() => undefined);
-  });
-
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -39,10 +26,10 @@
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-down'
                   : ''}"
-                on:click={() => $CanUseSounds && click?.play()}
+                on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
-                    $CanUseSounds && click?.play();
+                    SFX.click.play();
                     goto($navOptions.down).catch(() => undefined);
                   }
                 }}

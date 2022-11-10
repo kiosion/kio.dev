@@ -1,17 +1,8 @@
 <script lang="ts">
   import Features from '$stores/features';
-  import { onMount } from 'svelte';
   import SafeIcon from '$components/safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import type UIfx from 'uifx';
-
-  let click: UIfx;
-
-  onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
-  });
+  import SFX from '$lib/sfx';
 
   $: CanUseSounds = Features.can('use sounds feature');
 </script>
@@ -25,7 +16,7 @@
     tabindex="0"
     on:click={() => {
       Features.set('sounds', $CanUseSounds ? false : true);
-      $CanUseSounds && click?.play();
+      SFX.click.play();
     }}
   >
     {#if $CanUseSounds}

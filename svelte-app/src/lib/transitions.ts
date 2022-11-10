@@ -29,6 +29,9 @@ routes.forEach((route, index) => {
 
 export const onNav = (path: string): 'forward' | 'backward' => {
   const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
+
+  path = path.replace(/\/$/, '');
+
   if (isLocalized && path) {
     path = `/${path.slice(3)}`;
   }

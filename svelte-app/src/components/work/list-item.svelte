@@ -1,40 +1,33 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import type { ProjectDocument } from '$lib/types';
-  import type UIfx from 'uifx';
   import { urlFor, getCrop, type ImageCrop } from '$helpers/image';
   import { goto } from '$app/navigation';
   import BulletPoint from '../bullet-point.svelte';
   import { getShortDate } from '$helpers/date';
   import Hoverable from '$components/hoverable.svelte';
-  import Features from '$stores/features';
   import { t, linkTo } from '$i18n';
+  import SFX from '$lib/sfx';
 
   export let project: ProjectDocument;
 
-  let click: UIfx;
   let imageCrop: ImageCrop | undefined;
   let _ref: string | undefined;
   let hovered = false;
+  let self: HTMLAnchorElement;
 
-  onMount(() => {
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-      })
-      .catch(() => undefined);
-  });
+  const onClick = (e?: MouseEvent) => {
+    SFX.click.play();
 
-  const onClick = () => {
-    $CanUseSounds && click.play();
-    goto(linkTo(`/work/${project.slug.current}`) as string).catch(
-      () => undefined
-    );
+    if (!e || e.target === self) {
+      e?.preventDefault();
+      goto(linkTo(`/work/${project.slug.current}`) as string).catch(
+        () => undefined
+      );
+    }
   };
 
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {
-      e.preventDefault();
       onClick();
     }
   };
@@ -42,7 +35,6 @@
   $: _ref = project.image?.asset?._ref;
   $: project.image && (imageCrop = getCrop(project.image));
   $: date = getShortDate(project.date);
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Hoverable bind:hovered>
@@ -56,8 +48,9 @@
     aria-label="{t('Project')} - {project.title}"
     href={linkTo(`/work/${project.slug.current}`)}
     data-sveltekit-prefetch
-    on:click|preventDefault={onClick}
+    on:click={onClick}
     on:keydown={onKey}
+    bind:this={self}
   >
     <!-- Image -->
     <div class="w-full aspect-[4/1] lg:aspect-[2/1] overflow-hidden rounded-md">
@@ -122,18 +115,3 @@
     </div>
   </a>
 </Hoverable>
-
-<!-- <Hoverable bind:hovered>
-  <section
-    class="flex flex-row items-stretch justify-stretch gap-4 w-full min-h-[8rem] h-fit p-4 {hovered
-      ? 'pl-6 bg-slate-300/50 dark:bg-slate-700/50'
-      : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
-    data-test-id="list-item"
-    tabindex="0"
-    role="button"
-    aria-label="Project - {project.title}"
-    on:click={onClick}
-    on:keydown={onKey}
-  >
-  </section>
-</Hoverable> -->

@@ -2,19 +2,7 @@
   import { theme } from '$stores/theme';
   import SafeIcon from '../safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import Features from '$stores/features';
-  import { onMount } from 'svelte';
-  import type UIfx from 'uifx';
-
-  let click: UIfx;
-
-  onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
-  });
-
-  $: CanUseSounds = Features.can('use sounds feature');
+  import SFX from '$lib/sfx';
 </script>
 
 <Hoverable>
@@ -26,7 +14,7 @@
     tabindex="0"
     on:click={() => {
       theme.set($theme === 'light' ? 'dark' : 'light');
-      $CanUseSounds && click?.play();
+      SFX.click.play();
     }}
   >
     {#if $theme === 'light'}

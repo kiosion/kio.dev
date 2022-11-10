@@ -1,36 +1,25 @@
 <script lang="ts">
   import ListItem from '$components/blog/list-item.svelte';
-  import PageHeading from '$components/headings/page-heading.svelte';
   import { onMount } from 'svelte';
-  import Features from '$stores/features';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
   import type { PageData } from './$types';
-  import type UIfx from 'uifx';
   import { setupNavigation } from '$helpers/navigation';
   import { page } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import { RECENT_POSTS_COUNT } from '$lib/consts';
   import { t } from '$lib/helpers/i18n';
-
-  let click: UIfx;
+  import SFX from '$lib/sfx';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
 
     window?.scroll?.({ top: 0, behavior: 'smooth' });
-
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-      })
-      .catch(() => undefined);
   });
 
   export let data: PageData;
 
   $: ({ pinned, posts } = data);
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
@@ -56,39 +45,31 @@
   />
 </svelte:head>
 
-<div data-test-route="blog" class="w-full">
-  <PageHeading
-    heading={t('Blog')}
-    text={t('Thoughts about (mostly) tech, design, and development')}
-  />
-  <div class="pb-20">
-    {#if pinned?.data}
-      <IconHeader icon="Pin" text={t('Pinned')} />
-      <ListItem post={pinned.data} />
+{#if pinned?.data}
+  <IconHeader icon="Pin" text={t('Pinned')} />
+  <ListItem post={pinned.data} />
+{/if}
+<IconHeader icon="Clock" text={t('Recent')} />
+{#if posts?.data?.length}
+  {#each posts.data as post}
+    {#if post._id !== pinned?.data?._id}
+      <ListItem {post} />
     {/if}
-    <IconHeader icon="Clock" text={t('Recent')} />
-    {#if posts?.data?.length}
-      {#each posts.data as post}
-        {#if post._id !== pinned?.data?._id}
-          <ListItem {post} />
-        {/if}
-      {/each}
-    {:else}
-      <div class="w-full flex flex-row items-center justify-center">
-        <ErrorText text={t('No data')} classes="w-fit" />
-      </div>
-    {/if}
-    {#if posts?.meta?.total > RECENT_POSTS_COUNT}
-      <Hoverable>
-        <a
-          href="/blog/1"
-          class="block w-fit mt-8"
-          aria-label={t('View more posts')}
-          on:click={() => $CanUseSounds && click?.play()}
-        >
-          <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
-        </a>
-      </Hoverable>
-    {/if}
+  {/each}
+{:else}
+  <div class="w-full flex flex-row items-center justify-center">
+    <ErrorText text={t('No data')} classes="w-fit" />
   </div>
-</div>
+{/if}
+{#if posts?.meta?.total > RECENT_POSTS_COUNT}
+  <Hoverable>
+    <a
+      href="/blog/1"
+      class="block w-fit mt-8"
+      aria-label={t('View more posts')}
+      on:click={() => SFX.click.play()}
+    >
+      <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
+    </a>
+  </Hoverable>
+{/if}

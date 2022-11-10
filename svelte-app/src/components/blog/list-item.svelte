@@ -4,30 +4,19 @@
   import { getTotalWords } from '$lib/helpers/pt';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
   import type { PostDocument } from '$lib/types';
-  import { onMount } from 'svelte';
-  import type UIfx from 'uifx';
-  import Features from '$stores/features';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';
+  import SFX from '$lib/sfx';
 
   export let post: PostDocument;
 
-  let click: UIfx;
   let hovered: boolean;
   let readingTime = getReadingTime(getTotalWords(post.body));
 
-  onMount(() => {
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-      })
-      .catch(() => undefined);
-  });
-
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {
-      $CanUseSounds && click.play();
+      SFX.click.play();
       goto(linkTo(`/blog/${post.slug.current}`) as string).catch(
         () => undefined
       );
@@ -35,7 +24,6 @@
   };
 
   $: date = getAbsDate(post.date);
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <ListItemWrapper>
@@ -50,7 +38,7 @@
       data-test-id="list-item"
       href={linkTo(`/blog/${post.slug.current}`)}
       data-sveltekit-prefetch
-      on:click={() => $CanUseSounds && click.play()}
+      on:click={() => SFX.click.play()}
       on:keydown={onKey}
     >
       <div

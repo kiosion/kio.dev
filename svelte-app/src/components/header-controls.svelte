@@ -1,9 +1,6 @@
 <script lang="ts">
   import { navOptions, pageHeading } from '$stores/navigation';
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import Features from '$stores/features';
-  import type UIfx from 'uifx';
   import SafeIcon from './safe-icon.svelte';
   import { fade } from 'svelte/transition';
   import Hoverable from '$components/hoverable.svelte';
@@ -12,21 +9,11 @@
   import ThemeToggle from '$components/toggles/theme-toggle.svelte';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { t, linkTo } from '$i18n';
+  import SFX from '$lib/sfx';
 
-  let click: UIfx;
   let scrollNavHovered = false;
 
   export let appBody: HTMLElement;
-
-  onMount(() => {
-    import('$lib/sfx')
-      .then((sfx) => {
-        click = sfx.click;
-      })
-      .catch(() => undefined);
-  });
-
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -44,10 +31,10 @@
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-up'
                   : ''}"
-                on:click={() => $CanUseSounds && click?.play()}
+                on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
-                    $CanUseSounds && click?.play();
+                    SFX.click.play();
                     goto($navOptions.up).catch(() => undefined);
                   }
                 }}
@@ -69,12 +56,12 @@
                 aria-label="Scroll to top"
                 role="button"
                 on:click={() => {
-                  $CanUseSounds && click?.play();
+                  SFX.click.play();
                   appBody.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
-                    $CanUseSounds && click?.play();
+                    SFX.click.play();
                     appBody.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}

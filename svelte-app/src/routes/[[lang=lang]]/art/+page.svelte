@@ -1,24 +1,12 @@
 <script lang="ts">
   import PageHeading from '$components/headings/page-heading.svelte';
-  import { onMount } from 'svelte';
-  import Features from '$stores/features';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/icon-header.svelte';
-  import type UIfx from 'uifx';
-
-  let click: UIfx;
-
-  onMount(() => {
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
-  });
+  import SFX from '$lib/sfx';
 
   navOptions.set({ down: '/work', up: '/blog' });
   pageHeading.set('Art');
-
-  $: CanUseSounds = Features.can('use sounds feature');
 </script>
 
 <svelte:head>
@@ -36,7 +24,7 @@
       href="/art/all"
       class="block w-fit mt-8"
       aria-label="View all art"
-      on:click={() => $CanUseSounds && click?.play()}
+      on:click={() => SFX.click.play()}
     >
       <IconHeader icon="ArrowRight" text="View all" classes="" />
     </a>

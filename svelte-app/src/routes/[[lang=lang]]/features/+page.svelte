@@ -3,25 +3,19 @@
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import Features from '$stores/features';
-  import type UIfx from 'uifx';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
   import { Boundary } from '$lib/error-bound';
+  import SFX from '$lib/sfx';
 
   let body: HTMLElement;
-  let click: UIfx;
 
-  onMount(() => {
-    parseEmoji(body);
-    import('$lib/sfx').then((sfx) => {
-      click = sfx.click;
-    });
-  });
+  onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
     Features.set(target, event?.detail?.state === true ? true : false);
-    $CanUseSounds && click?.play();
+    SFX.click.play();
   };
 
   navOptions.set({ down: '', up: '/' });
