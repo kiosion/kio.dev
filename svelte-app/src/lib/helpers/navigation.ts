@@ -10,10 +10,10 @@ import { t, linkTo } from '$i18n';
 export const setupNavigation = (route: string): void => {
   const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
 
-  if (isLocalized) {
-    const sliced = route.slice(3);
-    route = sliced.startsWith('/') ? sliced : `/${sliced}`;
-  }
+  isLocalized &&
+    (route = route.slice(3).startsWith('/')
+      ? route.slice(3)
+      : `/${route.slice(3)}`);
 
   if (!route || route === '') {
     navOptions.set({ down: '', up: '' });
@@ -21,16 +21,16 @@ export const setupNavigation = (route: string): void => {
     return;
   }
 
-  const indexOf = TOP_LEVEL_ROUTES.findIndex((r) => r.path === route);
+  const index = TOP_LEVEL_ROUTES.findIndex((r) => r.path === route);
 
-  switch (indexOf) {
+  switch (index) {
     case -1:
       navOptions.set({ down: '', up: '' });
       pageHeading.set('');
       return;
     case 0:
       navOptions.set({
-        down: TOP_LEVEL_ROUTES[indexOf + 1].path,
+        down: TOP_LEVEL_ROUTES[index + 1].path,
         up: ''
       });
       pageHeading.set('');
@@ -38,17 +38,17 @@ export const setupNavigation = (route: string): void => {
     case TOP_LEVEL_ROUTES.length - 1:
       navOptions.set({
         down: '',
-        up: TOP_LEVEL_ROUTES[indexOf - 1].path
+        up: TOP_LEVEL_ROUTES[index - 1].path
       });
       break;
     default:
       navOptions.set({
-        down: TOP_LEVEL_ROUTES[indexOf + 1].path,
-        up: TOP_LEVEL_ROUTES[indexOf - 1].path
+        down: TOP_LEVEL_ROUTES[index + 1].path,
+        up: TOP_LEVEL_ROUTES[index - 1].path
       });
       break;
   }
-  pageHeading.set(t(TOP_LEVEL_ROUTES[indexOf].name));
+  pageHeading.set(t(TOP_LEVEL_ROUTES[index].name));
 };
 
 export const handleScrollNav = (
@@ -121,7 +121,7 @@ const getClosestParent = (
       haystack.find((h) => h.path === needle);
 
   let path = '',
-    result: Record<string, unknown> | undefined = undefined;
+    result: Record<string, unknown> | undefined;
 
   parts.length > 1 && parts.pop();
   for (const part of parts) {
@@ -135,4 +135,76 @@ const getClosestParent = (
         : result;
     }
   }
+};
+
+let prevPath: string;
+
+const routes = [
+  'features',
+  'index',
+  'blog',
+  'blog/*',
+  'blog/*/*',
+  'blog/+/*',
+  'art',
+  'art/*',
+  'work',
+  'work/*',
+  'work/*/*',
+  'work/+/*',
+  'about',
+  'pgp'
+];
+
+const forward: string[] = [];
+routes.forEach((route, index) => {
+  index !== routes.length - 1 &&
+    routes.forEach((subRoute, i) => {
+      !(i <= index) && forward.push(`${route}-${subRoute}`);
+    });
+});
+
+export const onNav = (path: string): 'forward' | 'backward' => {
+  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
+
+  path = path.replace(/.+\/$/, '');
+
+  if (isLocalized && path) {
+    path = `/${path.slice(3)}`;
+  }
+
+  if (!path) {
+    return 'forward';
+  }
+
+  const prev = prevPath ?? path;
+  prevPath = path;
+
+  const toRoute = path.startsWith('/')
+    ? path
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
+    : path
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
+  const fromRoute = prev.startsWith('/')
+    ? prev
+        .slice(1)
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/')
+    : prev
+        .split('/')
+        .map((part, i) => (i === 0 ? part : '*'))
+        .join('/');
+
+  const dirs = [
+    fromRoute === '' ? 'index' : fromRoute,
+    toRoute === '' ? 'index' : toRoute
+  ].join('-');
+
+  return forward.includes(dirs) ? 'forward' : 'backward';
 };

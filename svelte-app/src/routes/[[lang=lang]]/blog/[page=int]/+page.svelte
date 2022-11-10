@@ -3,12 +3,11 @@
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
-  import SafeIcon from '$components/safe-icon.svelte';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
-  import IconHeader from '$components/icon-header.svelte';
-  import { Boundary } from '$lib/error-bound';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import SFX from '$lib/sfx';
 
@@ -33,15 +32,13 @@
 </svelte:head>
 
 <IconHeader icon="BulletList" text="All Posts" />
-<Boundary onError={console.error}>
-  {#if posts?.data?.length}
-    {#each posts.data as post}
-      <ListItem {post} />
-    {/each}
-  {:else}
-    <ErrorText text="No data" classes="w-fit" />
-  {/if}
-</Boundary>
+{#if posts?.data?.length}
+  {#each posts.data as post}
+    <ListItem {post} />
+  {/each}
+{:else}
+  <ErrorText text="No data" classes="w-fit" />
+{/if}
 <!-- Pagination, TODO: Split this into its own component -->
 <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
   <div class="flex flex-row justify-start items-center gap-2">

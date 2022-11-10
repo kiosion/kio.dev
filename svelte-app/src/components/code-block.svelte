@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
-  import SafeIcon from './safe-icon.svelte';
+  import SafeIcon from './icons/safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import type { HighlightAuto, Highlight } from 'svelte-highlight';
 
@@ -75,6 +75,7 @@
 
 <svelte:head>
   {#if hlStyles}
+    <!-- @html is usually a terrible idea, in this case it should be fine since it's a stylesheet from a trusted pkg -->
     {@html hlStyles}
   {/if}
 </svelte:head>

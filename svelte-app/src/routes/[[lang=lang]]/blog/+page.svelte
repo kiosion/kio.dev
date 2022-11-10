@@ -2,7 +2,7 @@
   import ListItem from '$components/blog/list-item.svelte';
   import { onMount } from 'svelte';
   import ErrorText from '$components/error-text.svelte';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import { setupNavigation } from '$helpers/navigation';
   import { page } from '$app/stores';

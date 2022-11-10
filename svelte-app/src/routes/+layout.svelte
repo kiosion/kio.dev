@@ -5,14 +5,14 @@
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
-  import { check, t } from '$lib/helpers/i18n';
+  import { check as checkTranslations, t } from '$lib/helpers/i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
-  import HeaderControls from '$components/header-controls.svelte';
+  import HeaderControls from '$components/controls/header-controls.svelte';
   import Features from '$stores/features';
   import type { LayoutData } from './$types';
-  import FooterControls from '$components/footer-controls.svelte';
+  import FooterControls from '$components/controls/footer-controls.svelte';
   import { browser } from '$app/environment';
   import ContextMenu from '$components/context-menu.svelte';
   import { state as menuState } from '$stores/menu';
@@ -20,7 +20,6 @@
   import CustomCursor from '$components/custom-cursor.svelte';
   import { handleScrollNav } from '$lib/helpers/navigation';
   import { navOpen, canNavigate } from '$stores/navigation';
-  import { Boundary } from '$lib/error-bound';
   import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
@@ -38,21 +37,26 @@
   let appLoaded: boolean;
   let pageContainer: HTMLElement;
   let preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
+
   const msg = (e: DevToolsEvent) =>
     e.detail.isOpen &&
     console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
+
   const isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
 
   onMount(async () => {
-    appLoaded = true;
-    canNavigate.set(true);
     initAudio({ volume: 0.1 });
-    check();
+    checkTranslations();
+
     msg({ detail: { isOpen: true } });
     browser &&
       window.addEventListener('devtoolschange', (e) =>
         msg(e as unknown as DevToolsEvent)
       );
+
+    appLoaded = true;
+    canNavigate.set(true);
+
     setTimeout(() => loading.set(false), 1000);
   });
 
@@ -76,14 +80,15 @@
 
 <svelte:body
   use:classList={`w-full h-full overflow-x-hidden ${
-    isMobile ? 'mobile' : 'desktop'
+    isDesktop ? 'desktop' : 'mobile'
   } ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
   } ${appLoaded && 'app-loaded'} ${$CanUseComicSans && 'comicSans'} ${
     $CanUseCursor && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
-  on:wheel={(e) => handleScrollNav(e, pageContainer, $page.url.pathname)}
+  on:wheel={(e) =>
+    browser && handleScrollNav(e, pageContainer, $page.url.pathname)}
 />
 
 {#if !appLoaded}
@@ -95,41 +100,28 @@
 {/if}
 
 {#if $menuState.open}
-  <Boundary onError={console.error}>
-    <svelte:component this={ContextMenu} page={pageContainer} />
-  </Boundary>
+  <ContextMenu page={pageContainer} />
 {/if}
+
 <div
-  class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-[background-color,border-color,text-decoration-color,fill,stroke] motion-reduce:transition-none"
+  class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-colors"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
-  <Boundary onError={console.error}>
-    <HeaderControls appBody={pageContainer} />
-  </Boundary>
-  <Boundary onError={console.error}>
-    <Nav segment={$page?.url ? $page.url.pathname : ''} />
-  </Boundary>
+  <HeaderControls appBody={pageContainer} />
+  <Nav />
   <div
     class="{isMobile
-      ? `mt-6 p-8 ${$navOpen && 'mt-36'}`
-      : 'h-full ml-40 xl:ml-60 p-8 xl:px-10 2xl:px-20'} transition-[margin-top] ease-linear"
+      ? `p-8 pt-12 ${$navOpen && 'pt-40'}`
+      : 'h-full ml-40 xl:ml-60 p-8 xl:px-10 2xl:px-20'} h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1 transition-[padding-top] ease-linear"
   >
-    <div
-      class="h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1"
-    >
-      {#if appLoaded}
-        <Boundary onError={console.error}>
-          <PageTransition url={data?.url ? data.url.pathname : ''}>
-            <slot />
-          </PageTransition>
-        </Boundary>
-      {/if}
-    </div>
+    {#if appLoaded}
+      <PageTransition url={data?.url ? data.url.pathname : ''}>
+        <slot />
+      </PageTransition>
+    {/if}
   </div>
-  <Boundary onError={console.error}>
-    <FooterControls />
-  </Boundary>
+  <FooterControls />
   <Breakpoints queries={DEFAULT_BREAKPOINTS}>
     <svelte:fragment slot="lg">
       <div

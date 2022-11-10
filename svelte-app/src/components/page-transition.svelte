@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import Features from '$stores/features';
-  import { onNav } from '$lib/transitions';
+  import { onNav } from '$helpers/navigation';
 
   export let url: string;
   let navDir: 'forward' | 'backward' = 'forward';

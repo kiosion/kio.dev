@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, createEventDispatcher } from 'svelte';
-  import SafeIcon from '../safe-icon.svelte';
+  import SafeIcon from '../icons/safe-icon.svelte';
   import { key } from './menu';
   import Hoverable from '$components/hoverable.svelte';
 

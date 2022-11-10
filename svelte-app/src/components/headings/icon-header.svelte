@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SafeIcon from './safe-icon.svelte';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
 
   export let text: string;
   export let icon: string;

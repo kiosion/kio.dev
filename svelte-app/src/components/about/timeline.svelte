@@ -2,7 +2,7 @@
   import ErrorText from '$components/error-text.svelte';
   import type { AuthorTimelineItem } from '$lib/types';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import SafeIcon from '$components/safe-icon.svelte';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
   import moment from 'moment';
   import Hoverable from '$components/hoverable.svelte';
   import { slide } from 'svelte/transition';

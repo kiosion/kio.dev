@@ -1,6 +1,6 @@
 <script lang="ts">
   import { navOpen } from '$stores/navigation';
-  import SafeIcon from '../safe-icon.svelte';
+  import SafeIcon from '../icons/safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
 </script>

@@ -2,8 +2,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import Sidebar from '$components/document/sidebar.svelte';
   import ContentWrapper from '$components/content-wrapper.svelte';
-  import SafeIcon from '$components/safe-icon.svelte';
-  import Features from '$stores/features';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -11,8 +10,7 @@
   import ScrollTo from '$helpers/scrollTo';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import type { Heading } from '$helpers/pt';
-
-  let click = import('$lib/sfx').then((sfx) => sfx.click);
+  import SFX from '$lib/sfx';
 
   export let model: 'post' | 'project';
   export let data: ProjectDocument | PostDocument | undefined;
@@ -42,7 +40,6 @@
     ScrollTo($page);
   });
 
-  $: CanUseSounds = Features.can('use sounds feature');
   $: $page && ScrollTo($page);
 </script>
 
@@ -87,12 +84,12 @@
           class="flex flex-row items-center justify-start text-base font-code"
           aria-label={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
           on:click={() => {
-            $CanUseSounds && click.then((c) => c.play());
+            SFX.click.play();
             sidebarOpen.set(!$sidebarOpen);
           }}
           on:keydown={(e) => {
             if (e.code === 'Enter' || e.code === 'Space') {
-              $CanUseSounds && click.then((c) => c.play());
+              SFX.click.play();
               sidebarOpen.set(!$sidebarOpen);
             }
           }}

@@ -4,11 +4,11 @@
   import type { PageData } from './$types';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
-  import SafeIcon from '$components/safe-icon.svelte';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
 
   let curPage = 1,
     totalPages = 1;

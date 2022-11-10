@@ -1,6 +1,6 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
-  import SafeIcon from '../safe-icon.svelte';
+  import SafeIcon from '../icons/safe-icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
 </script>

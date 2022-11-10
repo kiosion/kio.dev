@@ -2,11 +2,14 @@
   import { page } from '$app/stores';
   import ContentWrapper from '$components/content-wrapper.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import Divider from '$components/divider.svelte';
+  import { onMount } from 'svelte';
 
-  navOptions.set({ down: '', up: '/' });
-  pageHeading.set(`Error${$page.status ? ` | ${$page.status}` : ''}`);
+  onMount(() => {
+    navOptions.set({ down: '', up: '/' });
+    pageHeading.set(`Error${$page.status ? ` | ${$page.status}` : ''}`);
+  });
 
   let message = 'Oops, something went wrong';
   let title = 'Error';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Divider from '$components/context-menu/divider.svelte';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import { linkTo } from '$i18n';

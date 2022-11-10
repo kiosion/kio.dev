@@ -2,7 +2,7 @@
   import PageHeading from '$components/headings/page-heading.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import SFX from '$lib/sfx';
 
   navOptions.set({ down: '/work', up: '/blog' });

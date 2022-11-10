@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import Hoverable from '$components/hoverable.svelte';

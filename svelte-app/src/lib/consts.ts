@@ -11,13 +11,6 @@ export const COLOR_BG_DARK = '#1E293B';
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = 'en';
 
-export const TOP_LEVEL_ROUTES = [
-  { name: 'Index', path: '/' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Work', path: '/work' },
-  { name: 'About', path: '/about' }
-];
-
 export const APP_ROUTES = [
   { name: 'Index', path: '/', hidden: true },
   {
@@ -55,6 +48,12 @@ export const APP_ROUTES = [
     hidden: false
   }
 ];
+
+export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { children, ...rest } = r;
+  return rest;
+});
 
 export const PAGINATION_POSTS_PER_PAGE = 6;
 export const PAGINATION_PROJECTS_PER_PAGE = 6;

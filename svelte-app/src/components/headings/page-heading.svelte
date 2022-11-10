@@ -1,5 +1,5 @@
 <script lang="ts">
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
 
   export let heading: string;
   export let text = '';

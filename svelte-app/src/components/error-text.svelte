@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SafeIcon from '$components/safe-icon.svelte';
+  import SafeIcon from '$components/icons/safe-icon.svelte';
 
   export let text = 'Unknown error';
   export let classes = '';

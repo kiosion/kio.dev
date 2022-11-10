@@ -4,7 +4,7 @@
   import Footer from '$components/document/content/common/footer.svelte';
 
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import IconHeader from '$components/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PostDocument, ProjectDocument } from '$lib/types';
 
   export let model: 'post' | 'project';

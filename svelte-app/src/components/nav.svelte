@@ -6,22 +6,21 @@
   import MenuToggle from '$components/toggles/menu-toggle.svelte';
   import { navOpen } from '$stores/navigation';
   import { goto } from '$app/navigation';
-  import { page, navigating } from '$app/stores';
+  import { page } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS, APP_LANGS } from '$lib/consts';
+  import { DEFAULT_BREAKPOINTS, TOP_LEVEL_ROUTES } from '$lib/consts';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { linear } from 'svelte/easing';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import LinkIndicator from '$components/nav/link-indicator.svelte';
 
-  const isLocalized = APP_LANGS.includes($page?.params?.lang);
-
-  const links = [
-    { name: 'Blog', url: linkTo('/blog'), active: false },
-    { name: 'Work', url: linkTo('/work'), active: false },
-    { name: 'About', url: linkTo('/about'), active: false }
-  ];
+  const links = TOP_LEVEL_ROUTES.map((route) => ({
+    name: route.name,
+    url: linkTo(route.path),
+    active: false
+  })).filter((link) => link.name !== 'Index');
 
   const socials = [
     {
@@ -92,7 +91,6 @@
 
   const onLogoClick = () => {
     clicks++;
-    SFX.click.play();
     navOpen.set(false);
     if (clicks > 3) {
       goto(linkTo('/features'))
@@ -100,18 +98,13 @@
           SFX.ping.play();
           clicks = 0;
         })
-        .catch(() => {
-          clicks = 0;
-        });
-      return;
+        .catch(() => (clicks = 0));
+    } else {
+      SFX.click.play();
+      goto(linkTo('/')).catch(() => undefined);
+      setTimeout(() => (clicks = 0), 1200);
     }
-    goto(linkTo('/')).catch(() => undefined);
-    setTimeout(() => {
-      clicks = 0;
-    }, 1200);
   };
-
-  export let segment: string;
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -153,28 +146,9 @@
                 >
                   {t(link.name)}
                 </a>
-                <div
-                  class="indicator absolute z-0 {segment === link.url ||
-                  $navigating?.to?.url?.pathname === link.url ||
-                  link.active ||
-                  (segment.split('/').length > 1 &&
-                    segment
-                      .split('/')
-                      .indexOf(link.url.slice(isLocalized ? 4 : 1)) > 0)
-                    ? 'opacity-100'
-                    : 'opacity-0'}  bg-emerald-400 dark:bg-emerald-300 rounded-full {segment ===
-                    link.url ||
-                  $navigating?.to?.url?.pathname === link.url ||
-                  link.active
-                    ? 'active'
-                    : segment.split('/').length > 1 &&
-                      segment
-                        .split('/')
-                        .indexOf(link.url.slice(isLocalized ? 4 : 1)) > 0 &&
-                      'dot'}  transition-opacity ease-in"
-                />
-              </div>
-            </Hoverable>
+                <LinkIndicator {link} />
+              </div></Hoverable
+            >
           {/each}
         </div>
       </div>
@@ -188,7 +162,6 @@
             <a
               class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
               aria-label={social.name}
-              data-sveltekit-prefetch
               {...social.attrs}
               on:click={() => SFX.click.play()}
             >
@@ -244,8 +217,8 @@
             <div class="relative flex flex-row justify-start items-center">
               <a
                 class="nav-link font-mono font-normal uppercase text-base"
-                class:active={segment === link.url}
-                aria-label={link.name}
+                class:active={$page.url.pathname === link.url}
+                aria-label={t(link.name)}
                 href={link.url}
                 preload={link.url}
                 data-sveltekit-prefetch
@@ -258,10 +231,11 @@
                   navOpen.set(false);
                 }}
               >
-                {link.name}
+                {t(link.name)}
               </a>
               <div
-                class="absolute z-0 {segment === link.url || link.active
+                class="absolute z-0 {$page.url.pathname === link.url ||
+                link.active
                   ? 'w-full'
                   : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in click-through select-none"
               />
@@ -272,47 +246,3 @@
     </nav>
   </svelte:fragment>
 </Breakpoints>
-
-<style lang="scss">
-  .indicator {
-    width: 4px;
-    height: 4px;
-    transform: translateX(-12px);
-
-    &.dot,
-    &:not(.dot):not(.active) {
-      animation: 300ms ease slideOut;
-    }
-    &.active {
-      width: 100%;
-      height: 2px;
-      transform: translateX(0px);
-      animation: 300ms ease slideOver;
-    }
-  }
-
-  @keyframes slideOut {
-    from {
-      width: 100%;
-      height: 2px;
-      transform: translateX(0px);
-    }
-    to {
-      width: 4px;
-      height: 4px;
-      transform: translateX(-12px);
-    }
-  }
-  @keyframes slideOver {
-    from {
-      width: 2px;
-      height: 2px;
-      transform: translateX(-12px);
-    }
-    to {
-      width: 100%;
-      height: 2px;
-      transform: translateX(0px);
-    }
-  }
-</style>
