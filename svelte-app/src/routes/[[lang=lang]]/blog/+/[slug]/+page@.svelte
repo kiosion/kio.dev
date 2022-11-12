@@ -7,7 +7,7 @@
   import ErrorText from '$components/error-text.svelte';
   import { t } from '$i18n';
 
-  const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
+  const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
   pageHeading.set(`${t('Blog')} | ${t('Tag')} | ${pageTitle}`);
   navOptions.set({ down: '', up: '/blog' });
 

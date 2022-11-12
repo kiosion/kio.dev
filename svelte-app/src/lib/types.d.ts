@@ -16,7 +16,7 @@ export interface SanityReference {
   _ref: string;
   _type: string;
 }
-export interface SanityImageObject {
+export interface SanityImageObject extends Pick<SanityAsset, '_id', '_type'> {
   asset: SanityReference;
   crop?: SanityImageCrop;
   hotspot?: SanityImageHotspot;
@@ -67,26 +67,30 @@ export type PixelIcon = SvelteComponent | string | undefined;
 
 // Data types
 export interface Document extends SanityAsset {
-  slug: SanityAsset & { current: string };
+  slug: Pick<SanityAsset, '_id'> & {
+    current: string;
+  };
   body: PTBlock[];
   date: string;
 }
 
+export interface DocumentTags extends SanityAsset {
+  slug: Pick<SanityAsset, '_id'> & {
+    current: string;
+  };
+  title: string;
+}
+
 export interface PostDocument extends Document {
-  author?: {
-    _id: string;
-    _type: string;
+  author?: Pick<SanityAsset, '_id' | '_type'> & {
     name: string;
     image: SanityImageObject;
-    slug: SanityAsset & { current: string };
+    slug: Pick<SanityAsset, '_id'> & {
+      current: string;
+    };
   };
   desc?: string;
-  tags?: [
-    SanityAsset & {
-      slug: SanityAsset & { current: string };
-      title: string;
-    }
-  ];
+  tags?: DocumentTags[];
   title: string;
 }
 
@@ -122,12 +126,7 @@ export interface ProjectDocument extends Document {
   };
   desc?: string;
   image?: SanityImageObject;
-  tags?: [
-    SanityAsset & {
-      slug: SanityAsset & { current: string };
-      title: string;
-    }
-  ];
+  tags?: DocumentTags[];
   title: string;
 }
 

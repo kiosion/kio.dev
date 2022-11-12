@@ -1,6 +1,8 @@
 defmodule Hexerei.Plug.VerifyRequest do
   import Plug.Conn
 
+  # alias Hexerei.JWT
+
   @api_token Application.compile_env!(:hexerei, :api_token)
 
   def init(options) do

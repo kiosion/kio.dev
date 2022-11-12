@@ -19,6 +19,7 @@ interface PossibleParams {
 const endpoints = new Map([
   ['post', 'get/post'],
   ['project', 'get/project'],
+  ['tag', 'get/tag'],
   ['site', 'get/config'],
   ['about', 'get/about']
 ]);

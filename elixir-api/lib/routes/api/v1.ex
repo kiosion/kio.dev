@@ -77,8 +77,6 @@ defmodule Router.Api.V1 do
     query = BuildQuery.postMany(params["date"], params["tags"])
     query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["limit"] + params["skip"]}]"
 
-    IO.inspect("Sending query: #{query_limited}")
-
     case Sanity.fetch(query_limited) do
       {:ok, result} ->
         case Sanity.fetch("{ 'total': count(#{query}), 'count': count(#{query_limited}) }") do
@@ -246,7 +244,6 @@ defmodule Router.Api.V1 do
   get "/config" do
     case Sanity.fetch(BuildQuery.config()) do
       {:ok, result} ->
-        IO.inspect(Poison.decode!(result))
         Poison.decode!(result)
         |> Map.delete("ms")
         |> Map.delete("query")

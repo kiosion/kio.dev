@@ -1,31 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-rest-params */
 import { ENV } from '$lib/env';
 
 export default class Logger {
-  static log(str: string, context?: string): void {
-    context = context ? `@ ${context}` : '';
-    const content = `Info: ${str}${context ? '\n\t' : ''}${context}`;
-
-    ['development', 'backed'].includes(ENV) && console.log(content);
+  static log(..._args: unknown[]): void {
+    ['development', 'backed'].includes(ENV) && console.log(...arguments);
   }
 
-  static info(str: string, context?: string): void {
-    context = context ? `@ ${context}` : '';
-    const content = `Info: ${str}${context ? '\n\t' : ''}${context}`;
-
-    ['development', 'backed'].includes(ENV) && console.info(content);
+  static info(..._args: unknown[]): void {
+    ['development', 'backed'].includes(ENV) && console.info(...arguments);
   }
 
-  static warn(str: string, context?: string): void {
-    context = context ? `@ ${context}` : '';
-    const content = `Warn: ${str}${context ? '\n\t' : ''}${context}`;
-
-    ['development', 'backed'].includes(ENV) && console.warn(content);
+  static warn(..._args: unknown[]): void {
+    ['development', 'backed'].includes(ENV) && console.warn(...arguments);
   }
 
-  static error(str: string, context?: string): void {
-    context = context ? `@ ${context}` : '';
-    const content = `Error: ${str}${context ? '\n\t' : ''}${context}`;
-
-    ['development', 'backed'].includes(ENV) && console.error(content);
+  static error(..._args: unknown[]): void {
+    ['development', 'backed'].includes(ENV) && console.error(...arguments);
   }
 }
