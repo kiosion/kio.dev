@@ -40,7 +40,7 @@
 </svelte:head>
 
 <div data-test-route="about">
-  <ContentWrapper classes="mt-14">
+  <ContentWrapper>
     <Boundary onError={console.error}>
       <AboutCard image={about?.image} body={about?.bio} />
     </Boundary>

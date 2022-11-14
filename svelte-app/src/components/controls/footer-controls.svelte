@@ -5,39 +5,65 @@
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
-  import { t, linkTo } from '$i18n';
+  import { t, linkTo, isLocalized, currentLang } from '$i18n';
+  import { page } from '$app/stores';
   import SFX from '$lib/sfx';
 
   let scrollNavHovered = false;
+
+  $: langLink = linkTo($page.url.pathname, $currentLang === 'en' ? 'fr' : 'en');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    {#if $navOptions.down !== ''}
+    {#if $navOptions.down !== '' || $isLocalized}
       <div
-        class="z-10 fixed rounded-bl-3xl bottom-0 ml-[1px] md:left-40 xl:left-60 right-0 py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors duration-150 backdrop-blur-md"
+        class="fixed bottom-0 left-40 xl:left-60 right-0 z-10 rounded-bl-3xl py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors backdrop-blur-md"
       >
         <div class="flex flex-row justify-between items-start">
           <div class="w-52">
-            <Hoverable bind:hovered={scrollNavHovered}>
+            {#if $navOptions.down !== ''}
+              <Hoverable bind:hovered={scrollNavHovered}>
+                <a
+                  data-sveltekit-prefetch
+                  href={linkTo($navOptions.down)}
+                  class="w-fit flex flex-row items-center select-none {scrollNavHovered
+                    ? 'scroll-hover-down'
+                    : ''}"
+                  on:click={() => SFX.click.play()}
+                  on:keydown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      SFX.click.play();
+                      goto($navOptions.down).catch(() => undefined);
+                    }
+                  }}
+                >
+                  <SafeIcon icon={'ArrowDown'} />
+                  <p class="font-code text-base w-fit ml-4">
+                    {t('Continue')} ({$navOptions.down})
+                  </p>
+                </a>
+              </Hoverable>
+            {/if}
+          </div>
+          <div class="flex flex-row justify-end items-center gap-2 w-52">
+            <Hoverable>
               <a
-                data-sveltekit-prefetch
-                href={linkTo($navOptions.down)}
-                class="w-fit flex flex-row items-center select-none {scrollNavHovered
-                  ? 'scroll-hover-down'
-                  : ''}"
+                class="font-code text-base w-fit"
+                role="button"
+                aria-label={t('Switch language')}
+                href={langLink}
+                target="_self"
                 on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
+                    e.preventDefault();
                     SFX.click.play();
-                    goto($navOptions.down).catch(() => undefined);
+                    goto(langLink).catch(() => undefined);
                   }
                 }}
               >
-                <SafeIcon icon={'ArrowDown'} />
-                <p class="font-code text-base w-fit ml-4">
-                  {t('Continue')} ({$navOptions.down})
-                </p>
+                {t('Language')} ({$currentLang})
               </a>
             </Hoverable>
           </div>

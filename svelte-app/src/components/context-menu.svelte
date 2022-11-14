@@ -6,12 +6,12 @@
   import Divider from './context-menu/divider.svelte';
   import { fly } from 'svelte/transition';
 
-  export let page: HTMLElement;
+  export let pageContainer: HTMLDivElement;
 </script>
 
 <Menu
   {...$state.pos}
-  {page}
+  {pageContainer}
   on:click={() => setState()}
   on:clickoutside={() => setState()}
 >

@@ -7,7 +7,7 @@
   export let classes = '';
 </script>
 
-<div class="mt-14 mb-8">
+<div class="mb-8">
   <IconHeader
     {icon}
     text={heading}

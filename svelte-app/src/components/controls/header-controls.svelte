@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { navOptions, pageHeading } from '$stores/navigation';
+  import {
+    showSidebarToggle,
+    navOptions,
+    pageHeading,
+    sidebarOpen
+  } from '$stores/navigation';
   import { goto } from '$app/navigation';
   import SafeIcon from '$components/icons/safe-icon.svelte';
   import { fade } from 'svelte/transition';
@@ -19,7 +24,7 @@
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <div
-      class="z-10 fixed hidden md:block rounded-tl-3xl top-0 ml-[1px] md:left-40 xl:left-60 right-0 py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors duration-150 backdrop-blur-md"
+      class="fixed top-0 left-40 xl:left-60 right-0 z-10 hidden md:block rounded-tl-3xl py-6 px-8 bg-slate-100/80 dark:bg-slate-800/80 transition-colors backdrop-blur-md"
     >
       <div class="flex flex-row justify-between items-start">
         <div class="w-52">
@@ -51,24 +56,40 @@
         <div class="-ml-52 -mr-40">
           {#if $pageHeading && $pageHeading !== ''}
             <Hoverable>
-              <p
-                class="font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[28rem] 2xl:max-w-[50rem] select-none cursor-pointer line-clamp-1"
-                aria-label="Scroll to top"
-                role="button"
+              <button
+                class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer"
+                aria-label={$showSidebarToggle
+                  ? 'Toggle sidebar'
+                  : 'Scroll to top'}
                 on:click={() => {
                   SFX.click.play();
-                  appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                  if ($showSidebarToggle) {
+                    sidebarOpen.set(!$sidebarOpen);
+                  } else {
+                    appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
                 }}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     SFX.click.play();
-                    appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                    if ($showSidebarToggle) {
+                      sidebarOpen.set(!$sidebarOpen);
+                    } else {
+                      appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                   }
                 }}
                 transition:fade={{ duration: 100 }}
               >
-                {$pageHeading}
-              </p>
+                {#if $showSidebarToggle}
+                  <SafeIcon icon={$sidebarOpen ? 'BookOpen' : 'Book'} />
+                {/if}
+                <p
+                  class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                >
+                  {$pageHeading}
+                </p>
+              </button>
             </Hoverable>
           {/if}
         </div>

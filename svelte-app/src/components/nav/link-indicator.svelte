@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page, navigating } from '$app/stores';
-  import { APP_LANGS } from '$lib/consts';
+  import { isLocalized } from '$i18n';
 
   export let link: {
     name: string;
@@ -10,9 +10,8 @@
 
   let classes = '';
 
-  $: isLocalized = APP_LANGS.includes($page?.params?.lang);
   $: splitPath = $page.url.pathname.split('/');
-  $: truePath = link.url.slice(isLocalized ? 4 : 1);
+  $: truePath = link.url.slice($isLocalized ? 4 : 1);
 
   const getOpacity = () => {
     return [$page.url.pathname, $navigating?.to?.url.pathname].includes(

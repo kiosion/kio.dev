@@ -110,7 +110,7 @@
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav
-      class="py-8 px-4 w-40 xl:w-60 fixed h-screen text-center flex flex-col overflow-y-auto"
+      class="flex-shrink-0 py-8 px-4 w-40 xl:w-60 h-screen text-center flex flex-col overflow-y-auto overflow-x-hidden"
       data-test-id="navBar"
     >
       <div class="flex-grow -mt-7 md:-mt-4 click-through">
@@ -179,7 +179,7 @@
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav
-      class="fixed w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors pb-[3px] z-10"
+      class="h-fit w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors pb-[3px] z-10"
       data-test-id="navBar"
     >
       <div class="relative flex flex-col m-4">

@@ -3,19 +3,12 @@
   import { navOptions, pageHeading } from '$stores/navigation';
   import PageHeading from '$components/headings/page-heading.svelte';
   import type { PageData } from './$types';
-  import { onMount, onDestroy } from 'svelte';
   import ListItem from '$components/work/list-item.svelte';
   import ErrorText from '$components/error-text.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`Work | Tag | ${pageTitle}`);
   navOptions.set({ down: '', up: '/work' });
-
-  let mousePos: [number, number];
-
-  const setMousePos = (x: number, y: number) => {
-    mousePos = [x, y];
-  };
 
   export let data: PageData;
 
@@ -35,9 +28,13 @@
   />
   <div class="pb-20">
     {#if projects?.data?.length}
-      {#each projects.data as project}
-        <ListItem {project} />
-      {/each}
+      <div
+        class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
+      >
+        {#each projects.data as project}
+          <ListItem {project} />
+        {/each}
+      </div>
     {:else}
       <div class="w-full flex flex-row items-center justify-center">
         <ErrorText text="No data" classes="w-fit" />

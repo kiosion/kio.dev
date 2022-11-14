@@ -5,7 +5,12 @@
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
-  import { check as checkTranslations, t } from '$lib/helpers/i18n';
+  import {
+    check as checkTranslations,
+    currentLang,
+    isLocalized,
+    t
+  } from '$lib/helpers/i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav.svelte';
@@ -19,9 +24,13 @@
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
   import { handleScrollNav } from '$lib/helpers/navigation';
-  import { navOpen, canNavigate } from '$stores/navigation';
-  import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
+  import { canNavigate } from '$stores/navigation';
+  import { useMediaQuery } from 'svelte-breakpoints';
+  import {
+    APP_LANGS,
+    DEFAULT_APP_LANG,
+    DEFAULT_DESKTOP_BREAKPOINT
+  } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
 
   const navUnsubscribe = navigating.subscribe((res) => {
@@ -35,7 +44,8 @@
   }
 
   let appLoaded: boolean;
-  let pageContainer: HTMLElement;
+  let scrollContainer: HTMLDivElement;
+  let pageContainer: HTMLDivElement;
   let preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
 
   const msg = (e: DevToolsEvent) =>
@@ -70,6 +80,12 @@
   $: isMobile = !$isDesktop;
   $: CanUseCursor = Features.can('use custom cursor feature');
   $: CanUseComicSans = Features.can('use comic sans feature');
+  $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
+  $: currentLang.set(
+    APP_LANGS.includes($page?.params?.lang)
+      ? $page?.params?.lang
+      : DEFAULT_APP_LANG
+  );
 </script>
 
 <svelte:head>
@@ -88,7 +104,7 @@
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
   on:wheel={(e) =>
-    browser && handleScrollNav(e, pageContainer, $page.url.pathname)}
+    browser && handleScrollNav(e, scrollContainer, $page.url.pathname)}
 />
 
 {#if !appLoaded}
@@ -96,59 +112,39 @@
 {/if}
 
 {#if browser && $CanUseCursor}
-  <CustomCursor appBody={pageContainer} showLoader={$loading || !appLoaded} />
+  <CustomCursor {scrollContainer} showLoader={$loading || !appLoaded} />
 {/if}
 
 {#if $menuState.open}
-  <ContextMenu page={pageContainer} />
+  <ContextMenu {pageContainer} />
 {/if}
 
 <div
-  class="w-full h-full overflow-x-hidden  text-slate-800 dark:text-white md:text-lg text-primary bg-inverse transition-colors"
+  class="flex {isMobile
+    ? 'flex-col'
+    : 'flex-row'} w-full h-full overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
-  <HeaderControls appBody={pageContainer} />
   <Nav />
   <div
-    class="{isMobile
-      ? `p-8 pt-12 ${$navOpen && 'pt-40'}`
-      : 'h-full ml-40 xl:ml-60 p-8 xl:px-10 2xl:px-20'} h-full w-full max-w-[80rem] mx-auto grid grid-rows-1 grid-cols-1 transition-[padding-top] ease-linear"
+    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-slate-100 dark:bg-slate-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none transition-colors"
+    bind:this={scrollContainer}
   >
-    {#if appLoaded}
-      <PageTransition url={data?.url ? data.url.pathname : ''}>
-        <slot />
-      </PageTransition>
-    {/if}
+    <!-- Header control bar -->
+    <HeaderControls appBody={scrollContainer} />
+    <!-- Page content -->
+    <div
+      class="relative inner h-fit w-full max-w-[80rem] mx-auto {!isMobile &&
+        'translate-y-14'}"
+    >
+      {#if appLoaded}
+        <PageTransition url={data?.url ? data.url.pathname : ''}>
+          <slot />
+        </PageTransition>
+      {/if}
+    </div>
+    <!-- Footer control bar -->
+    <FooterControls />
   </div>
-  <FooterControls />
-  <Breakpoints queries={DEFAULT_BREAKPOINTS}>
-    <svelte:fragment slot="lg">
-      <div
-        class="fixed overflow-hidden pointer-events-none z-[-10] top-0 left-0 h-screen w-full rounded-l-3xl ml-40 xl:ml-60"
-      >
-        <div
-          class="rounded-l-3xl absolute top-0 left-[1px] w-full h-full bg-slate-100 dark:bg-slate-800 transition-colors"
-        />
-      </div>
-    </svelte:fragment>
-    <svelte:fragment slot="sm">
-      <div
-        class="fixed overflow-hidden pointer-events-none z-[-10] top-0 left-0 h-screen w-full rounded-t-3xl {$navOpen
-          ? 'mt-44'
-          : 'mt-[4.4rem]'} transition-[margin-top] ease-linear"
-      >
-        <div
-          class="rounded-t-3xl absolute top-[1px] left-0 w-full h-full bg-slate-100 dark:bg-slate-800 transition-colors"
-        />
-      </div>
-    </svelte:fragment>
-  </Breakpoints>
 </div>
-
-<style lang="scss">
-  .grid > * {
-    grid-column: 1;
-    grid-row: 1;
-  }
-</style>

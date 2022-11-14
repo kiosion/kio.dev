@@ -1,16 +1,17 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
   import Sidebar from '$components/document/sidebar.svelte';
   import ContentWrapper from '$components/content-wrapper.svelte';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { navOptions, pageHeading, sidebarOpen } from '$stores/navigation';
+  import { onDestroy, onMount } from 'svelte';
+  import {
+    navOptions,
+    pageHeading,
+    showSidebarToggle
+  } from '$stores/navigation';
   import ScrollTo from '$helpers/scrollTo';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import type { Heading } from '$helpers/pt';
-  import SFX from '$lib/sfx';
 
   export let model: 'post' | 'project';
   export let data: ProjectDocument | PostDocument | undefined;
@@ -38,6 +39,11 @@
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
     pageHeading.set(pageTitle);
     ScrollTo($page);
+    showSidebarToggle.set(true);
+  });
+
+  onDestroy(() => {
+    showSidebarToggle.set(false);
   });
 
   $: $page && ScrollTo($page);
@@ -72,34 +78,11 @@
 </svelte:head>
 
 <div
-  class="flex flex-row items-stretch justify-start translate-y-14 h-fit"
+  class="flex flex-row items-stretch justify-start h-fit"
   data-test-route={isPost ? 'blog' : 'work'}
 >
   {#if data}
-    <Hoverable>
-      <div
-        class="sticky self-start w-0 top-12 xl:-translate-x-[4px] 2xl:translate-x-0"
-      >
-        <button
-          class="flex flex-row items-center justify-start text-base font-code"
-          aria-label={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
-          on:click={() => {
-            SFX.click.play();
-            sidebarOpen.set(!$sidebarOpen);
-          }}
-          on:keydown={(e) => {
-            if (e.code === 'Enter' || e.code === 'Space') {
-              SFX.click.play();
-              sidebarOpen.set(!$sidebarOpen);
-            }
-          }}
-        >
-          <SafeIcon icon={$sidebarOpen ? 'BookOpen' : 'Book'} />
-          <p class="ml-4">{$sidebarOpen ? 'Hide' : 'Show'}</p>
-        </button>
-      </div>
-    </Hoverable>
-    <Sidebar {headings} show={$sidebarOpen} />
+    <Sidebar {headings} />
     <ContentWrapper>
       <Content {model} {data} />
     </ContentWrapper>

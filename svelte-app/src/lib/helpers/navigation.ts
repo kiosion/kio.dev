@@ -5,12 +5,10 @@ import { isMobile } from '$helpers/browser';
 import { canNavigate, navOptions, pageHeading } from '$stores/navigation';
 import { get } from 'svelte/store';
 import { page } from '$app/stores';
-import { t, linkTo } from '$i18n';
+import { t, linkTo, isLocalized } from '$i18n';
 
 export const setupNavigation = (route: string): void => {
-  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
-
-  isLocalized &&
+  get(isLocalized) === true &&
     (route = route.slice(3).startsWith('/')
       ? route.slice(3)
       : `/${route.slice(3)}`);
@@ -67,9 +65,7 @@ export const handleScrollNav = (
     return;
   }
 
-  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
-
-  if (isLocalized) {
+  if (get(isLocalized) === true) {
     const sliced = currentPath.slice(3);
     currentPath = sliced.startsWith('/') ? sliced : `/${sliced}`;
   }
@@ -165,13 +161,11 @@ routes.forEach((route, index) => {
 });
 
 export const onNav = (path: string): 'forward' | 'backward' => {
-  const isLocalized = APP_LANGS.includes(get(page)?.params?.lang);
-
-  path = path.replace(/.+\/$/, '');
-
-  if (isLocalized && path) {
+  if (get(isLocalized) === true && path) {
     path = `/${path.slice(3)}`;
   }
+
+  path = path.replace(/^\/{2,}/, '/').replace(/.+\/$/, '');
 
   if (!path) {
     return 'forward';

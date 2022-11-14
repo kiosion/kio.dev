@@ -45,7 +45,7 @@ defmodule Hexerei.BuildQuery do
 
   def postMany(date, tags) do
     query = """
-      *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
+      *[!(_id in path('drafts.**')) && _type == 'post'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->slug.current match '#{tags}'" end}] {
         _id,
         'objectID': _id,
         _rev,
@@ -107,7 +107,7 @@ defmodule Hexerei.BuildQuery do
 
   def projectMany(date, tags) do
     "
-      *[!(_id in path('drafts.**')) && _type == 'project'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->title match '#{tags}'" end}] {
+      *[!(_id in path('drafts.**')) && _type == 'project'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->slug.current match '#{tags}'" end}] {
         _id,
         'objectID': _id,
         _type,

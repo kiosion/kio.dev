@@ -6,7 +6,7 @@
   import { cubicInOut } from 'svelte/easing';
   import Store from '$stores/cursor';
 
-  export let appBody: HTMLElement;
+  export let scrollContainer: HTMLElement;
   export let showLoader = true;
 
   let cursor: HTMLElement,
@@ -15,8 +15,8 @@
     cursorHidden = true;
   const mousePos = { x: 0, y: 0 };
 
-  const cursorTweenX = tweened(0, { duration: 30, easing: cubicInOut }),
-    cursorTweenY = tweened(0, { duration: 30, easing: cubicInOut });
+  const cursorTweenX = tweened(0, { duration: 22, easing: cubicInOut }),
+    cursorTweenY = tweened(0, { duration: 22, easing: cubicInOut });
 
   onMount(() => {
     updateCursors();
@@ -47,10 +47,12 @@
       return;
     }
     const pathLength = progressPath.getTotalLength(),
-      scroll = appBody.scrollTop,
-      height = appBody.scrollHeight - appBody.getBoundingClientRect().height;
+      scroll = scrollContainer.scrollTop,
+      height =
+        scrollContainer.scrollHeight -
+        scrollContainer.getBoundingClientRect().height;
     progressPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
-    if (appBody.scrollHeight <= window.innerHeight) {
+    if (scrollContainer.scrollHeight <= window.innerHeight) {
       progressPath.style.strokeDashoffset = `${pathLength}`;
       return;
     }
@@ -59,9 +61,9 @@
   };
 
   $: $page.url,
-    appBody &&
-      (appBody.removeEventListener('scroll', () => updateProgressPath),
-      appBody.addEventListener('scroll', () => updateProgressPath())),
+    scrollContainer &&
+      (scrollContainer.removeEventListener('scroll', () => updateProgressPath),
+      scrollContainer.addEventListener('scroll', () => updateProgressPath())),
     updateProgressPath();
 </script>
 

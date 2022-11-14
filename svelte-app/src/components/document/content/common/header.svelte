@@ -4,6 +4,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
+  import SidebarToggle from '$components/document/sidebar/toggle.svelte';
   import { goto } from '$app/navigation';
   import { getCrop, urlFor } from '$lib/helpers/image';
   import {
@@ -49,7 +50,7 @@
     >
       <svelte:fragment slot="title">
         <h1
-          class="w-fit h-fit font-display text-6xl leading-tight mb-4 font-bold"
+          class="w-fit h-fit font-display text-6xl leading-tight font-bold mb-4"
         >
           {data.title}
         </h1>

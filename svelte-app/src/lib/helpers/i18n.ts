@@ -1,9 +1,12 @@
 import EN from '$langs/en.json';
 import FR from '$langs/fr.json';
 import { page } from '$app/stores';
-import { get } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import Logger from '$lib/logger';
 import { DEFAULT_APP_LANG, APP_LANGS } from '$lib/consts';
+
+const isLocalized = writable(false);
+const currentLang = writable(DEFAULT_APP_LANG);
 
 const notFound = (key: string, lang: string, abbr = 0) => {
   abbr > 0
@@ -52,7 +55,7 @@ const getKey = <T extends keyof typeof EN>(
 };
 
 const translate = (key: string): string => {
-  const { lang } = get(page)?.params ?? {};
+  const lang = get(currentLang) || DEFAULT_APP_LANG;
 
   if (!lang) {
     const string = getKey('en', key as keyof typeof EN);
@@ -63,21 +66,26 @@ const translate = (key: string): string => {
   return !string && string !== '' ? notFound(key, lang) : string;
 };
 
-const linkTo = (path: string): string => {
+const linkTo = (path: string, lang?: string): string => {
   if (path.startsWith('http')) {
     return path;
   }
 
-  const { params } = get(page),
-    lang = params?.lang;
+  lang = lang || get(currentLang);
 
-  if (!lang || path.startsWith(`/${lang}/`)) {
+  if (
+    !lang ||
+    path.startsWith(`/${lang}/`) ||
+    (lang === 'en' && !get(page)?.params?.lang)
+  ) {
     return path;
   }
+
+  APP_LANGS.forEach((l) => path.startsWith(`/${l}/`) && (path = path.slice(3)));
 
   return APP_LANGS.includes(lang.toLowerCase())
     ? `/${lang}${path.startsWith('/') ? path : `/${path}`}`
     : path;
 };
 
-export { translate as t, linkTo, check };
+export { translate as t, linkTo, check, isLocalized, currentLang };

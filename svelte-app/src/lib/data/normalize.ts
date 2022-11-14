@@ -1,3 +1,5 @@
+import { ENV } from '$lib/env';
+
 /**
  * Util to serialize recieved API data to common types
  */
@@ -49,6 +51,10 @@ const normalize = (data: Response) => {
       )[key];
     }
   });
+
+  !['development', 'backed', 'test'].includes(ENV) &&
+    normalized.meta?.query &&
+    delete normalized.meta.query;
 
   return normalized;
 };

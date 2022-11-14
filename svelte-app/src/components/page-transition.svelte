@@ -17,22 +17,15 @@
     </div>
   {:else}
     <div
-      class="grid grid-cols-1 grid-rows-1"
+      class="absolute top-0 left-0 w-full h-full"
       in:fly={{
         delay: 200,
         duration: 400,
-        y: navDir === 'backward' ? -20 : 20
+        y: navDir === 'backward' ? -10 : 10
       }}
-      out:fly={{ duration: 200, y: navDir === 'backward' ? 20 : -20 }}
+      out:fly={{ duration: 200, y: navDir === 'backward' ? 10 : -10 }}
     >
       <slot />
     </div>
   {/if}
 {/key}
-
-<style lang="scss">
-  div > * {
-    grid-column: 1;
-    grid-row: 1;
-  }
-</style>

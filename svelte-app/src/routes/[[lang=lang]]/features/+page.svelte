@@ -38,6 +38,7 @@
   <PageHeading
     heading="Secret Features"
     text="This is where I keep all my secret options and WIP features :)"
+    icon="AbTesting"
   />
   <Boundary onError={console.error}>
     <ContentWrapper>

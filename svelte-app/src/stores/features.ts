@@ -5,7 +5,7 @@ import { writable, get, type Writable } from 'svelte/store';
 const defaultFlags = new Map([
   ['reduce-motion', writable(false)],
   ['sounds', writable(true)],
-  ['custom-cursor', writable(false)],
+  ['custom-cursor', writable(true)],
   ['comic-sans', writable(false)]
 ]);
 

@@ -53,7 +53,7 @@
 <IconHeader icon="Clock" text={t('Recent')} />
 {#if projects?.data?.length}
   <div
-    class="w-full mt-4 flex flex-row flex-wrap items-start justify-between gap-x-3 gap-y-4"
+    class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
   >
     {#each projects.data as project}
       <ListItem {project} />

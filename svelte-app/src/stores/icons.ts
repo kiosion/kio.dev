@@ -32,6 +32,13 @@ get(icons)
   .set('Sun', async () => Promise.resolve(Sun))
   .set('MoonStars', async () => Promise.resolve(MoonStars))
   .set(
+    'AbTesting',
+    async () =>
+      await import('pixelarticons/svg/ab-testing.svg').then(
+        (Icon) => Icon.default
+      )
+  )
+  .set(
     'ArrowUp',
     async () =>
       await import('pixelarticons/svg/arrow-up.svg').then(

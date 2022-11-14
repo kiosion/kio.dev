@@ -8,7 +8,7 @@
   export let y: number;
 
   let menuElement: HTMLElement;
-  export let page: HTMLElement;
+  export let pageContainer: HTMLElement;
   const dispatch = createEventDispatcher();
 
   $: (() => {
@@ -17,7 +17,7 @@
     }
 
     const rect = menuElement.getBoundingClientRect();
-    const pageRect = page.getBoundingClientRect();
+    const pageRect = pageContainer.getBoundingClientRect();
 
     x = Math.min(window.innerWidth - rect.width - 18, x);
     if (
@@ -51,13 +51,11 @@
 <svelte:body
   on:click={pageClick}
   on:mouseleave={() => setState()}
-  on:mousewheel={() => setState()}
-  on:wheel={() => setState()}
   on:keydown={(e) => handleKey(e)}
 />
 
 <div
-  class="absolute grid min-w-[14rem] py-2 z-20 shadow-slate-500/50 dark:shadow-slate-500/20 shadow-[0_0_20px_-2px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"
+  class="fixed grid min-w-[14rem] py-2 z-20 shadow-slate-500/50 dark:shadow-slate-500/20 shadow-[0_0_20px_-2px_var(--tw-shadow)] bg-slate-300 dark:bg-slate-700 rounded-lg overflow-hidden"
   style="top: {y}px; left: {x}px"
   in:fade={{ duration: 100 }}
   out:fade={{ duration: 100, delay: 10 }}
