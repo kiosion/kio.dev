@@ -12828,7 +12828,7 @@ __metadata:
     svelte-preprocess: "npm:^4.10.6"
     tailwindcss: "npm:^3.2.1"
     ts-essentials: "npm:^9.3.0"
-    tslib: "npm:^2.3.1"
+    tslib: "npm:^2.4.1"
     twemoji: "npm:^14.0.2"
     typescript: "npm:^4.8.4"
     uifx: "npm:^2.0.7"
@@ -13471,10 +13471,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.1.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 022a70708abbc3491734959effd9a87e6e0af5932b61d0c9f1d07b8b80cabbbfc9fc9e9c0fe86e5ab2d32d766ae30117edf00b02d170ff255ab7e60361a4b711
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "tslib@npm:2.4.1"
+  checksum: a739a21e3ff059e62c7c3c0845333fbc9c081bcc91e015f2d246a31eeaf1fb0e29b10c0913c7d22f692b3203bb469fd60ca5288aa4f27d351a969df2d0714899
   languageName: node
   linkType: hard
 
