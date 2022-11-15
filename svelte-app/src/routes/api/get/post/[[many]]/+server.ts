@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({
 }: RequestEvent): Promise<Response> => {
   const many = !!params.many;
 
-  if (!many && !url.searchParams.get('id')) {
+  if (!many && !url.searchParams.get('id') && !url.searchParams.get('idb')) {
     return new Response(
       JSON.stringify({
         status: 400,
@@ -20,7 +20,9 @@ export const GET: RequestHandler = async ({
 
   const remoteUrl = many
     ? `${REMOTE_API_URL}/query/posts?${url.searchParams}`
-    : `${REMOTE_API_URL}/query/post/${url.searchParams.get('id')}`;
+    : `${REMOTE_API_URL}/query/post/${
+        url.searchParams.get('id') || atob(url.searchParams.get('idb') || '')
+      }`;
 
   try {
     const res = await fetch(remoteUrl, {
@@ -29,7 +31,11 @@ export const GET: RequestHandler = async ({
         authorization: `Bearer ${REMOTE_API_TOKEN}`
       }
     });
-    if (res.status !== 200) {
+
+    const json = await res.json();
+
+    // If failed GET or status is 200 but no data is returned
+    if (res.status !== 200 || !json.data.result) {
       Logger.error(`Failed to fetch ${many ? 'posts' : 'post'}: ${res.status}`);
       return new Response(
         JSON.stringify({
@@ -41,7 +47,7 @@ export const GET: RequestHandler = async ({
       );
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const data = Normalize(await res.json());
+    const data = Normalize(json);
     return new Response(JSON.stringify(data), {
       headers: {
         'content-type': 'application/json; charset=utf-8'

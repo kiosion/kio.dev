@@ -5,6 +5,7 @@
   import IconHeader from '$components/headings/icon-header.svelte';
   import Divider from '$components/divider.svelte';
   import { onMount } from 'svelte';
+  import { t } from '$i18n';
 
   onMount(() => {
     navOptions.set({ down: '', up: '/' });
@@ -36,10 +37,14 @@
 
 <div data-test-route="error" class="mt-12">
   <ContentWrapper>
-    <h3 class="font-display font-bold text-3xl text-center mb-4">{title}</h3>
+    <h3 class="font-display font-bold text-3xl text-center mb-4">{t(title)}</h3>
     <div class="mx-12">
       <Divider />
     </div>
-    <IconHeader icon="Downasaur" text={message} classes="mx-auto w-fit" />
+    <IconHeader
+      icon="Downasaur"
+      text={t($page.error?.message || message)}
+      classes="mx-auto w-fit"
+    />
   </ContentWrapper>
 </div>

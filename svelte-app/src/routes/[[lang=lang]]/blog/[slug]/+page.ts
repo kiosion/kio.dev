@@ -1,6 +1,7 @@
 import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
+import { error } from '@sveltejs/kit';
 import type { ResData, PostDocument } from '$lib/types';
 import type { PageLoad } from './$types';
 
@@ -11,11 +12,17 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   const post: ResData<PostDocument> | undefined =
     await Store.findOne<PostDocument>(fetch, 'post', {
-      id: params.slug
+      idb: btoa(params.slug)
     }).catch((err: unknown) => {
       Logger.error(err as string, `routes/blog/${params.slug}`);
       return undefined;
     });
+
+  if (!post) {
+    throw error(404, {
+      message: "Sorry, that post couldn't be found or doesn't exist"
+    });
+  }
 
   const headings =
     (await (
