@@ -13,7 +13,7 @@
   } from '$lib/helpers/i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
-  import Nav from '$components/nav.svelte';
+  import Nav from '$components/nav/nav.svelte';
   import HeaderControls from '$components/controls/header-controls.svelte';
   import Features from '$stores/features';
   import type { LayoutData } from './$types';
@@ -76,6 +76,7 @@
   });
 
   export let data: LayoutData;
+  export type { LayoutData };
 
   $: isMobile = !$isDesktop;
   $: CanUseCursor = Features.can('use custom cursor feature');
@@ -108,7 +109,7 @@
 />
 
 {#if !appLoaded}
-  <Loader theme="dark" />
+  <Loader />
 {/if}
 
 {#if browser && $CanUseCursor}
@@ -122,7 +123,7 @@
 <div
   class="flex {isMobile
     ? 'flex-col'
-    : 'flex-row'} w-full h-full overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
+    : 'flex-row'} w-full h-full lg:text-lg overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
@@ -139,7 +140,7 @@
         'translate-y-14'}"
     >
       {#if appLoaded}
-        <PageTransition url={data?.url ? data.url.pathname : ''}>
+        <PageTransition url={data.url}>
           <slot />
         </PageTransition>
       {/if}

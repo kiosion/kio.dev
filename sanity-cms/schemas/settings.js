@@ -62,20 +62,67 @@ export default {
           type: 'object',
           fields: [
             {
-              name: 'title',
-              title: 'Title',
-              type: 'string'
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+              validation: (Rule) => Rule.required()
             },
             {
-              name: 'link',
-              title: 'Link',
-              type: 'url'
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              validation: (Rule) =>
+                Rule.regex(/^\/.*|^https?:\/\/.*/).required()
             },
             {
               name: 'internal',
-              title: 'Internal link?',
+              title: 'Internal',
               type: 'boolean',
-              initialValue: false
+              initialValue: false,
+              options: {
+                layout: 'checkbox'
+              },
+              description: 'Relative to the site root, e.g. /about'
+            },
+            {
+              name: 'rel',
+              title: 'Rel',
+              type: 'array',
+              of: [
+                {
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: 'nofollow', value: 'nofollow' },
+                      { title: 'noopener', value: 'noopener' },
+                      { title: 'noreferrer', value: 'noreferrer' },
+                      { title: 'me', value: 'me' }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              name: 'icon',
+              title: 'Icon',
+              type: 'string',
+              validation: (Rule) => Rule.required()
+            },
+            {
+              name: 'iconSize',
+              title: 'Icon Size',
+              type: 'number',
+              initialValue: 20,
+              validation: (Rule) => Rule.min(10).max(30).required(),
+              description: 'Size adjustment in pixels'
+            },
+            {
+              name: 'iconRotation',
+              title: 'Icon Rotation',
+              type: 'number',
+              initialValue: 0,
+              description: 'Rotation in degrees',
+              validation: (Rule) => Rule.min(0).max(360).required()
             }
           ]
         }

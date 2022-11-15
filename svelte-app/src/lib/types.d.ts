@@ -140,9 +140,13 @@ export interface SiteConfig extends SanityAsset {
   pinnedProject?: SanityReference;
   socialLinks: {
     _key: string;
+    name: string;
+    url: string;
     internal: boolean;
-    title: string;
-    link: string;
+    rel: ('noopener' | 'noreferrer' | 'me' | 'nofollow')[];
+    icon: string;
+    iconSize: number;
+    iconRotation?: number;
   }[];
   commentsVisible: boolean;
   commentsRequireAuth: boolean;

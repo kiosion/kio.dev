@@ -122,14 +122,15 @@ const getClosestParent = (
   parts.length > 1 && parts.pop();
   for (const part of parts) {
     (path += `/${part}`), (result = find(haystack, path));
-    if (result) {
-      return result.children
-        ? getClosestParent(
-            result.children as Record<string, unknown>[],
-            needle
-          ) || result
-        : result;
+    if (!result) {
+      continue;
     }
+    return result.children
+      ? getClosestParent(
+          result.children as Record<string, unknown>[],
+          needle
+        ) || result
+      : result;
   }
 };
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Nav from '../../src/components/nav.svelte';
+import Nav from '../../src/components/nav/nav.svelte';
 
 describe.skip('Components | Nav', () => {
   it.skip('should render', () => {

@@ -37,7 +37,7 @@
     }
   };
 
-  const unsubscribeTheme = theme.subscribe(async (res) => {
+  const unsubscribe = theme.subscribe(async (res) => {
     if (res === 'light') {
       hlStyles = (await import('svelte-highlight/styles/ros-pine-dawn'))
         .default;
@@ -56,19 +56,43 @@
 
     hlLang = (async () => {
       switch (lang) {
-        case 'markdown':
-          return await import('svelte-highlight/languages/markdown');
         case 'javascript':
           return await import('svelte-highlight/languages/javascript');
         case 'typescript':
           return await import('svelte-highlight/languages/typescript');
+        case 'sh':
+        case 'shell':
+          return await import('svelte-highlight/languages/shell');
+        case 'bash':
+          return await import('svelte-highlight/languages/bash');
+        case 'elixir':
+          return await import('svelte-highlight/languages/elixir');
+        case 'ruby':
+          return await import('svelte-highlight/languages/ruby');
+        case 'python':
+          return await import('svelte-highlight/languages/python');
+        case 'java':
+          return await import('svelte-highlight/languages/java');
+        case 'json':
+          return await import('svelte-highlight/languages/json');
+        case 'yaml':
+          return await import('svelte-highlight/languages/yaml');
+        case 'html':
+        case 'xml':
+          return await import('svelte-highlight/languages/xml');
+        case 'css':
+          return await import('svelte-highlight/languages/css');
+        case 'sass':
+        case 'scss':
+          return await import('svelte-highlight/languages/scss');
+        case 'markdown':
+        default:
+          return await import('svelte-highlight/languages/markdown');
       }
     })();
   });
 
-  onDestroy(() => {
-    unsubscribeTheme();
-  });
+  onDestroy(() => unsubscribe());
 
   $: codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
 </script>
@@ -130,9 +154,6 @@
       ? '!opacity-60'
       : ''} opacity-0 rounded-md"
   />
-  <div
-    class="absolute top-[-4px] left-[-4px] w-[120%] h-[120%] bg-slate-200 dark:bg-slate-900 transition-colors duration-[120ms]"
-  />
 </div>
 
 <style lang="scss">
@@ -149,21 +170,13 @@
       color: #1e293b !important;
     }
   }
-
   :global(code.hljs *) {
     &::selection {
       background: #34d399 !important;
       color: #1e293b !important;
     }
   }
-  .filled {
-    z-index: 2;
-    + div {
-      z-index: 1;
-    }
-  }
-  .cover,
-  .filled {
+  .cover {
     transition: opacity 150ms cubic-bezier(0.645, 0.045, 0.355, 1);
   }
   .unfilled {

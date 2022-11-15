@@ -14,7 +14,32 @@
   import { linear } from 'svelte/easing';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import { config as currentConfig } from '$stores/config';
   import LinkIndicator from '$components/nav/link-indicator.svelte';
+
+  interface SocialLink {
+    attrs: {
+      href: string;
+      target: string | undefined;
+      rel: string | undefined;
+    };
+    name: string;
+    icon: string;
+    iconSize: number;
+    iconRotation: number;
+  }
+
+  const socials = $currentConfig.data.socialLinks.map((link) => ({
+    attrs: {
+      href: link.url,
+      target: link.internal ? undefined : '_blank',
+      rel: link.rel?.join(' ') || undefined
+    },
+    name: link.name,
+    icon: link.icon,
+    iconSize: link.iconSize,
+    iconRotation: link.iconRotation
+  })) as SocialLink[];
 
   const links = TOP_LEVEL_ROUTES.map((route) => ({
     name: route.name,
@@ -22,77 +47,12 @@
     active: false
   })).filter((link) => link.name !== 'Index');
 
-  const socials = [
-    {
-      attrs: {
-        href: 'https://mstdn.social/@kio',
-        target: '_blank',
-        rel: 'me'
-      },
-      name: 'Mastodon',
-      icon: 'fa-brands:mastodon',
-      width: '20px',
-      height: '20px'
-    },
-    {
-      attrs: {
-        href: 'https://github.com/kiosion',
-        target: '_blank',
-        rel: 'nofollow'
-      },
-      name: 'Github',
-      icon: 'fa-brands:github',
-      width: '19px',
-      height: '19px'
-    },
-    {
-      attrs: {
-        href: 'https://twitter.com/0xKI0',
-        target: '_blank',
-        rel: 'nofollow'
-      },
-      name: 'Twitter',
-      icon: 'fa-brands:twitter',
-      width: '18px',
-      height: '18px'
-    },
-    {
-      attrs: {
-        href: 'https://discord.gg/kiosion',
-        target: '_blank',
-        rel: 'nofollow'
-      },
-      name: 'Discord',
-      icon: 'fa-brands:discord',
-      width: '20px',
-      height: '20px'
-    },
-    {
-      attrs: {
-        href: '/pgp'
-      },
-      name: 'PGP',
-      icon: 'fa:key',
-      rotate: '90deg',
-      width: '18px',
-      height: '18px'
-    }
-  ] as {
-    attrs: Record<string, string>;
-    name: string;
-    icon: string;
-    target?: string;
-    rotate?: string;
-    width?: string;
-    height?: string;
-  }[];
-
   let clicks = 0;
 
   const onLogoClick = () => {
     clicks++;
     navOpen.set(false);
-    if (clicks > 3) {
+    if (clicks >= 3) {
       goto(linkTo('/features'))
         .then(() => {
           SFX.ping.play();
@@ -147,8 +107,8 @@
                   {t(link.name)}
                 </a>
                 <LinkIndicator {link} />
-              </div></Hoverable
-            >
+              </div>
+            </Hoverable>
           {/each}
         </div>
       </div>
@@ -167,9 +127,9 @@
             >
               <Icon
                 icon={social.icon}
-                rotate={social?.rotate}
-                width={social?.width}
-                height={social?.height}
+                rotate={`${social.iconRotation}deg`}
+                width={social?.iconSize}
+                height={social?.iconSize}
               />
             </a>
           </Hoverable>

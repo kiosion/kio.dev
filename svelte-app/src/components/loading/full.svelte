@@ -1,6 +1,8 @@
 <script lang="ts">
   import { classList } from 'svelte-body';
   import Line from './animations/line.svelte';
+  // import Spinner from './animations/spinner.svelte';
+  // import Circle from '$components/loading/animations/circle.svelte';
   import { fade } from 'svelte/transition';
   import seedrandom from 'seedrandom';
 
@@ -31,20 +33,24 @@
     ]
   }`;
 
-  export let theme = 'light';
+  export let theme = 'dark';
 </script>
 
 <svelte:body use:classList={'overflow-y-hidden'} />
 
 <div
-  class="absolute w-[100vw] h-[100vh] {theme === 'light'
+  class="fixed top-0 left-0 w-[100vw] h-[100vh] {theme === 'light'
     ? ' bg-slate-200'
-    : ' bg-slate-900'} flex flex-col items-center justify-between z-40"
+    : ' bg-slate-900'} flex flex-col items-center justify-between z-[100]"
   data-test-id="loader-full"
   out:fade={{ duration: 200, delay: 400 }}
 >
   <div class="w-full h-fit mt-[calc(50vh_-_4px)]" out:fade={{ duration: 200 }}>
     <Line />
+    <div class="mx-auto w-fit">
+      <!-- <Spinner /> -->
+      <!-- <Circle /> -->
+    </div>
   </div>
   {#if phrase !== ''}
     <div
