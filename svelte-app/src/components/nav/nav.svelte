@@ -29,17 +29,18 @@
     iconRotation: number;
   }
 
-  const socials = $currentConfig.data.socialLinks.map((link) => ({
-    attrs: {
-      href: link.url,
-      target: link.internal ? undefined : '_blank',
-      rel: link.rel?.join(' ') || undefined
-    },
-    name: link.name,
-    icon: link.icon,
-    iconSize: link.iconSize,
-    iconRotation: link.iconRotation
-  })) as SocialLink[];
+  const socials =
+    $currentConfig.data?.socialLinks?.map((link) => ({
+      attrs: {
+        href: link.url,
+        target: link.internal ? undefined : '_blank',
+        rel: link.rel?.join(' ') || undefined
+      },
+      name: link.name,
+      icon: link.icon,
+      iconSize: link.iconSize,
+      iconRotation: link.iconRotation
+    })) || ([{}] as SocialLink[]);
 
   const links = TOP_LEVEL_ROUTES.map((route) => ({
     name: route.name,
@@ -116,24 +117,26 @@
       <div
         class="text-center text-secondary align-center justify-center pt-8 mx-auto flex flex-col xl:flex-row"
       >
-        {#each socials as social}
-          <Hoverable>
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <a
-              class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
-              aria-label={social.name}
-              {...social.attrs}
-              on:click={() => SFX.click.play()}
-            >
-              <Icon
-                icon={social.icon}
-                rotate={`${social.iconRotation}deg`}
-                width={social?.iconSize}
-                height={social?.iconSize}
-              />
-            </a>
-          </Hoverable>
-        {/each}
+        {#if socials?.length > 0}
+          {#each socials as social}
+            <Hoverable>
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <a
+                class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
+                aria-label={social.name}
+                {...social.attrs}
+                on:click={() => SFX.click.play()}
+              >
+                <Icon
+                  icon={social.icon}
+                  rotate={`${social.iconRotation}deg`}
+                  width={social?.iconSize}
+                  height={social?.iconSize}
+                />
+              </a>
+            </Hoverable>
+          {/each}
+        {/if}
       </div>
     </nav>
   </svelte:fragment>
