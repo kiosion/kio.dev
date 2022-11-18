@@ -12,6 +12,7 @@
   let scrollNavHovered = false;
 
   $: langLink = linkTo($page.url.pathname, $currentLang === 'en' ? 'fr' : 'en');
+  $: langText = $currentLang === 'en' ? 'Français' : 'English';
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -63,7 +64,7 @@
                   }
                 }}
               >
-                {t('Language')} ({$currentLang})
+                {t('Language')} ({langText})
               </a>
             </Hoverable>
           </div>

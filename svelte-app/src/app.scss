@@ -35,16 +35,20 @@ body {
     --textColour: #0f172a;
   }
   &:not(.is-loaded) {
-    cursor: progress !important;
+    cursor: wait !important;
     &:not(.app-loaded) {
-      cursor: default !important;
+      cursor: wait !important;
     }
   }
-  &.is-loading a,
-  &.is-loading button,
-  &.is-loading [role='button'] {
-    cursor: progress !important;
+  &.is-loading,
+  &.is-loading div {
+    cursor: wait !important;
   }
+  // &.is-loading a,
+  // &.is-loading button,
+  // &.is-loading [role='button'] {
+  //   cursor: wait !important;
+  // }
   &.custom-cursor {
     &,
     &.is-loading,

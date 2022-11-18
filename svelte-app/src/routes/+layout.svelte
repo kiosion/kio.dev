@@ -76,7 +76,6 @@
   });
 
   export let data: LayoutData;
-  export type { LayoutData };
 
   $: isMobile = !$isDesktop;
   $: CanUseCursor = Features.can('use custom cursor feature');
@@ -132,9 +131,7 @@
     class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-slate-100 dark:bg-slate-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none transition-colors"
     bind:this={scrollContainer}
   >
-    <!-- Header control bar -->
     <HeaderControls appBody={scrollContainer} />
-    <!-- Page content -->
     <div
       class="relative inner h-fit w-full max-w-[80rem] mx-auto {!isMobile &&
         'translate-y-14'}"
@@ -145,7 +142,6 @@
         </PageTransition>
       {/if}
     </div>
-    <!-- Footer control bar -->
     <FooterControls />
   </div>
 </div>

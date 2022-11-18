@@ -1,10 +1,5 @@
 <script lang="ts">
-  import {
-    showSidebarToggle,
-    navOptions,
-    pageHeading,
-    sidebarOpen
-  } from '$stores/navigation';
+  import { navOptions, pageHeading, sidebarOpen } from '$stores/navigation';
   import { goto } from '$app/navigation';
   import SafeIcon from '$components/icons/safe-icon.svelte';
   import { fade } from 'svelte/transition';
@@ -58,32 +53,19 @@
             <Hoverable>
               <button
                 class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer"
-                aria-label={$showSidebarToggle
-                  ? 'Toggle sidebar'
-                  : 'Scroll to top'}
+                aria-label="Scroll to top"
                 on:click={() => {
                   SFX.click.play();
-                  if ($showSidebarToggle) {
-                    sidebarOpen.set(!$sidebarOpen);
-                  } else {
-                    appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
+                  appBody.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     SFX.click.play();
-                    if ($showSidebarToggle) {
-                      sidebarOpen.set(!$sidebarOpen);
-                    } else {
-                      appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
+                    appBody.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
                 transition:fade={{ duration: 100 }}
               >
-                {#if $showSidebarToggle}
-                  <SafeIcon icon={$sidebarOpen ? 'BookOpen' : 'Book'} />
-                {/if}
                 <p
                   class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
                 >

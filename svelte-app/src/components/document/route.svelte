@@ -3,12 +3,8 @@
   import ContentWrapper from '$components/content-wrapper.svelte';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
-  import { onDestroy, onMount } from 'svelte';
-  import {
-    navOptions,
-    pageHeading,
-    showSidebarToggle
-  } from '$stores/navigation';
+  import { onMount } from 'svelte';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import ScrollTo from '$helpers/scrollTo';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import type { Heading } from '$helpers/pt';
@@ -39,11 +35,6 @@
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
     pageHeading.set(pageTitle);
     ScrollTo($page);
-    showSidebarToggle.set(true);
-  });
-
-  onDestroy(() => {
-    showSidebarToggle.set(false);
   });
 
   $: $page && ScrollTo($page);
@@ -82,7 +73,7 @@
   data-test-route={isPost ? 'blog' : 'work'}
 >
   {#if data}
-    <Sidebar {headings} />
+    <!-- <Sidebar {headings} /> -->
     <ContentWrapper>
       <Content {model} {data} />
     </ContentWrapper>

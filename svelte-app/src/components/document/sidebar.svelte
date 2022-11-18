@@ -3,14 +3,12 @@
   import Inner from '$components/document/sidebar/inner.svelte';
   import SidebarToggle from '$components/document/sidebar/toggle.svelte';
   import { sidebarOpen } from '$stores/navigation';
-  import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
 
   export let headings: Heading[];
 </script>
 
 <div
-  class="sticky self-start w-max top-0 h-fit {$sidebarOpen
+  class="hidden xl:block sticky self-start w-max top-0 h-fit {$sidebarOpen
     ? 'mr-8'
     : 'mr-0'} transition-[margin]"
   aria-hidden={!$sidebarOpen}
