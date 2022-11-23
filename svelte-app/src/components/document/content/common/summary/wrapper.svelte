@@ -26,7 +26,7 @@
 
 {#if !visible}
   <div
-    class="sticky h-0 top-0 md:top-14 z-[5] w-[112%] -translate-x-[5%]"
+    class="sticky h-0 top-0 md:top-12 z-[5] w-[112%] -translate-x-[5%]"
     in:fly={{ y: -60, duration: 200 }}
     out:fly={{ y: -80, duration: 200 }}
   >
