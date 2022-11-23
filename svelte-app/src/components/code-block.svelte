@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
-  import SafeIcon from './icons/safe-icon.svelte';
+  import Icon from './icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import type { HighlightAuto, Highlight } from 'svelte-highlight';
 
@@ -126,9 +126,9 @@
           out:fade={{ delay: 100, duration: 100 }}
         >
           {#if copied}
-            <SafeIcon icon={'Check'} />
+            <Icon icon={'Check'} />
           {:else}
-            <SafeIcon icon={'Copy'} />
+            <Icon icon={'Copy'} />
           {/if}
         </button>
       {/key}

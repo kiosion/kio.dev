@@ -1,6 +1,6 @@
 <script lang="ts">
   import { navOpen } from '$stores/navigation';
-  import SafeIcon from '../icons/safe-icon.svelte';
+  import Icon from '../icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
 </script>
@@ -16,9 +16,9 @@
     }}
   >
     {#if $navOpen}
-      <SafeIcon icon={'CloseBox'} />
+      <Icon icon={'CloseBox'} />
     {:else}
-      <SafeIcon icon={'Menu'} />
+      <Icon icon={'Menu'} />
     {/if}
   </button>
 </Hoverable>

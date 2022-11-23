@@ -1,6 +1,6 @@
 <script lang="ts">
   import { theme } from '$stores/theme';
-  import SafeIcon from '../icons/safe-icon.svelte';
+  import Icon from '../icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
 </script>
@@ -18,9 +18,9 @@
     }}
   >
     {#if $theme === 'light'}
-      <SafeIcon icon={'MoonStars'} />
+      <Icon icon={'MoonStars'} />
     {:else}
-      <SafeIcon icon={'Sun'} />
+      <Icon icon={'Sun'} />
     {/if}
   </button>
 </Hoverable>

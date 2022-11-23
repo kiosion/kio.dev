@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { icon as loadIcon } from '$stores/icons';
+  import icons from '$lib/icons';
 
   export let icon: string;
   export let hovered = false;
@@ -8,7 +8,7 @@
 </script>
 
 <div class="w-[{width}px] {classes}">
-  {#await loadIcon(icon) then svg}
+  {#await icons.get(icon) then svg}
     <svelte:component
       this={svg}
       {width}

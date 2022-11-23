@@ -47,7 +47,12 @@ body {
   // &.is-loading a,
   // &.is-loading button,
   // &.is-loading [role='button'] {
-  //   cursor: wait !important;
+  //   &,
+  //   & a,
+  //   & button,
+  //   & [role='button'] {
+  //     cursor: not-allowed !important;
+  //   }
   // }
   &.custom-cursor {
     &,

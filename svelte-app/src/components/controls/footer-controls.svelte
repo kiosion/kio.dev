@@ -1,7 +1,7 @@
 <script lang="ts">
   import { navOptions } from '$stores/navigation';
   import { goto } from '$app/navigation';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
@@ -39,7 +39,7 @@
                     }
                   }}
                 >
-                  <SafeIcon icon={'ArrowDown'} />
+                  <Icon icon={'ArrowDown'} />
                   <p class="font-code text-base w-fit ml-4">
                     {t('Continue')} ({$navOptions.down})
                   </p>

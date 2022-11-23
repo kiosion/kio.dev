@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ErrorText from '$components/error-text.svelte';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
@@ -42,7 +42,7 @@
 <!-- Pagination, TODO: Split this into its own component -->
 <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
   <div class="flex flex-row justify-start items-center gap-2">
-    <SafeIcon icon={'List'} />
+    <Icon icon={'List'} />
     <h3 class="font-code text-lg">Page {curPage} of {totalPages}</h3>
   </div>
   <div class="flex flex-row justify-start items-center gap-4">
@@ -51,7 +51,7 @@
         href="/blog/{curPage > 1 ? curPage - 1 : 1}"
         on:click={() => SFX.click.play()}
       >
-        <SafeIcon icon={'ArrowLeft'} />
+        <Icon icon={'ArrowLeft'} />
       </a>
     </Hoverable>
     <Hoverable>
@@ -59,7 +59,7 @@
         href="/blog/{curPage < totalPages ? curPage + 1 : totalPages}"
         on:click={() => SFX.click.play()}
       >
-        <SafeIcon icon={'ArrowRight'} />
+        <Icon icon={'ArrowRight'} />
       </a>
     </Hoverable>
   </div>

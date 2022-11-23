@@ -1,6 +1,6 @@
 <script lang="ts">
   import Features from '$stores/features';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
 
@@ -20,9 +20,9 @@
     }}
   >
     {#if $CanUseSounds}
-      <SafeIcon icon={'Volume2'} />
+      <Icon icon={'Volume2'} />
     {:else}
-      <SafeIcon icon={'VolumeX'} />
+      <Icon icon={'VolumeX'} />
     {/if}
   </button>
 </Hoverable>

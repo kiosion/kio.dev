@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
 
   export let text: string;
   export let icon: string;
@@ -9,6 +9,6 @@
 <div
   class="flex flex-row justify-start items-center gap-3 select-none {classes}"
 >
-  <SafeIcon {icon} />
+  <Icon {icon} />
   <h3 class="font-code text-lg">{text}</h3>
 </div>

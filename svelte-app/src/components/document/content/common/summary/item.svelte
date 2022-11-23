@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import sfx from '$lib/sfx';
   import Hoverable from '$components/hoverable.svelte';
   import type { Heading } from '$helpers/pt';
-  import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -17,10 +18,14 @@
       <a
         href={`#${heading.key}`}
         class="block select-none w-full px-4 text-sm font-medium overflow-hidden whitespace-nowrap text-ellipsis text-[15px]"
-        on:click={() => dispatch('click', heading)}
+        on:click={() => {
+          sfx.click.play();
+          dispatch('click', heading);
+        }}
         on:keydown={(e) => {
           if (e.code === 'Enter' || e.code === 'Space') {
             e.preventDefault();
+            sfx.click.play();
             dispatch('click', heading);
           }
         }}

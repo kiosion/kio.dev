@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, createEventDispatcher } from 'svelte';
-  import SafeIcon from '../icons/safe-icon.svelte';
+  import Icon from '../icon.svelte';
   import { key } from './menu';
   import Hoverable from '$components/hoverable.svelte';
 
@@ -40,7 +40,7 @@
   >
     {#if text !== ''}
       <div class="w-[20px] mb-[2px]">
-        <SafeIcon {icon} />
+        <Icon {icon} />
       </div>
       <p
         class="font-sans text-base break-all line-clamp-1 overflow-ellipsis w-fit max-w-full mr-2"

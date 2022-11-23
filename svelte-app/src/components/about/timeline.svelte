@@ -2,7 +2,7 @@
   import ErrorText from '$components/error-text.svelte';
   import type { AuthorTimelineItem } from '$lib/types';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
   import moment from 'moment';
   import Hoverable from '$components/hoverable.svelte';
   import { slide } from 'svelte/transition';
@@ -20,7 +20,7 @@
     <div class="flex flex-col justify-start items-start -ml-[4px] gap-4">
       {#each data as item, i}
         <div class="flex flex-row justify-start items-start gap-2 w-full">
-          <SafeIcon
+          <Icon
             width={24}
             icon="CornerDownRight"
             classes="text-slate-400 dark:text-slate-300"
@@ -96,7 +96,7 @@
                   </div>
                 {/if}
                 {#if item.body}
-                  <SafeIcon
+                  <Icon
                     icon="ChevronDown"
                     classes="{selected === i
                       ? 'rotate-0'

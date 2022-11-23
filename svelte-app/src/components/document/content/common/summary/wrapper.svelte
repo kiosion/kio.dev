@@ -4,6 +4,8 @@
   import Summary from '$components/document/content/common/summary/summary.svelte';
   import type { Heading } from '$helpers/pt';
   import { fly } from 'svelte/transition';
+  import { useMediaQuery } from 'svelte-breakpoints';
+  import { DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
 
   export let headings: Heading[];
 
@@ -31,7 +33,6 @@
     <Summary
       {headings}
       expanded={false}
-      showClose={true}
       floating={true}
       on:hide={() => (visible = true)}
     />

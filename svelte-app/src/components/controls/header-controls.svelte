@@ -1,7 +1,7 @@
 <script lang="ts">
   import { navOptions, pageHeading } from '$stores/navigation';
   import { goto } from '$app/navigation';
-  import SafeIcon from '$components/icons/safe-icon.svelte';
+  import Icon from '$components/icon.svelte';
   import { fade } from 'svelte/transition';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
@@ -40,7 +40,7 @@
                 }}
                 transition:fade={{ duration: 100 }}
               >
-                <SafeIcon icon={'ArrowUp'} />
+                <Icon icon={'ArrowUp'} />
                 <p class="font-code text-base w-fit ml-4">
                   {t('Back')} ({$navOptions.up})
                 </p>
