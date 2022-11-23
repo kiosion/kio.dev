@@ -4,7 +4,6 @@
   import Hoverable from '$components/hoverable.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
-  import SidebarToggle from '$components/document/sidebar/toggle.svelte';
   import { goto } from '$app/navigation';
   import { getCrop, urlFor } from '$lib/helpers/image';
   import {

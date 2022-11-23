@@ -134,7 +134,7 @@
     <HeaderControls appBody={scrollContainer} />
     <div
       class="relative inner h-fit w-full max-w-[80rem] mx-auto {!isMobile &&
-        'translate-y-14'}"
+        'mt-14'}"
     >
       {#if appLoaded}
         <PageTransition url={data.url}>

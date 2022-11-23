@@ -141,6 +141,11 @@ get(icons)
       )
   )
   .set(
+    'Close',
+    async () =>
+      await import('pixelarticons/svg/close.svg').then((Icon) => Icon.default)
+  )
+  .set(
     'CloseBox',
     async () =>
       await import('pixelarticons/svg/close-box.svg').then(

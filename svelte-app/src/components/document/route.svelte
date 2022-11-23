@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Sidebar from '$components/document/sidebar.svelte';
   import ContentWrapper from '$components/content-wrapper.svelte';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
@@ -73,9 +72,8 @@
   data-test-route={isPost ? 'blog' : 'work'}
 >
   {#if data}
-    <!-- <Sidebar {headings} /> -->
     <ContentWrapper>
-      <Content {model} {data} />
+      <Content {model} {data} {headings} />
     </ContentWrapper>
   {/if}
 </div>

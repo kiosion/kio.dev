@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navOptions, pageHeading, sidebarOpen } from '$stores/navigation';
+  import { navOptions, pageHeading } from '$stores/navigation';
   import { goto } from '$app/navigation';
   import SafeIcon from '$components/icons/safe-icon.svelte';
   import { fade } from 'svelte/transition';

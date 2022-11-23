@@ -2,16 +2,21 @@
   import Wrapper from '$components/document/content/wrapper.svelte';
   import Header from '$components/document/content/common/header.svelte';
   import Footer from '$components/document/content/common/footer.svelte';
-
+  import SummaryWrapper from '$components/document/content/common/summary/wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import type { PostDocument, ProjectDocument } from '$lib/types';
+  import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
+  export let headings: Heading[] | undefined;
 </script>
 
 <Header {model} {data} />
+{#if headings}
+  <SummaryWrapper {headings} />
+{/if}
 <Wrapper>
   {#if data.body}
     <PortableText text={data.body} />

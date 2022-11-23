@@ -104,6 +104,12 @@
                     navOpen.set(false);
                     SFX.click.play();
                   }}
+                  on:keydown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      navOpen.set(false);
+                      SFX.click.play();
+                    }
+                  }}
                 >
                   {t(link.name)}
                 </a>

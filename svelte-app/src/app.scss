@@ -62,6 +62,18 @@ body {
   }
 }
 
+.not-allowed,
+.not-allowed a,
+.not-allowed button,
+.not-allowed [role='button'] {
+  &,
+  & a,
+  & button,
+  & [role='button'] {
+    cursor: not-allowed !important;
+  }
+}
+
 ::selection {
   background: #34d399;
   color: #1e293b;

@@ -11,7 +11,7 @@
 
 <Hoverable>
   <a
-    class="relative block {style && ['h1', 'h2'].indexOf(style) !== -1
+    class="block {style && ['h1', 'h2'].indexOf(style) !== -1
       ? 'mt-12 mb-6'
       : 'mt-6 mb-2'}"
     id={anchorId}
