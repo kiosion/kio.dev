@@ -3218,6 +3218,75 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/base@npm:2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/base@npm:2.35.2"
+  dependencies:
+    "@juggle/resize-observer": "npm:^3.3.1"
+    "@popperjs/core": "npm:^2.5.4"
+    "@reach/auto-id": "npm:^0.13.2"
+    "@sanity/asset-utils": "npm:^1.2.5"
+    "@sanity/bifur-client": "npm:^0.3.0"
+    "@sanity/client": "npm:^3.3.3"
+    "@sanity/color": "npm:^2.1.14"
+    "@sanity/generate-help-url": "npm:^3.0.0"
+    "@sanity/icons": "npm:^1.3.4"
+    "@sanity/image-url": "npm:^1.0.1"
+    "@sanity/initial-value-templates": "npm:2.35.0"
+    "@sanity/mutator": "npm:2.33.2"
+    "@sanity/schema": "npm:2.35.0"
+    "@sanity/state-router": "npm:2.33.2"
+    "@sanity/structure": "npm:2.35.0"
+    "@sanity/transaction-collator": "npm:2.33.2"
+    "@sanity/types": "npm:2.35.0"
+    "@sanity/ui": "npm:^0.37.22"
+    "@sanity/util": "npm:2.35.0"
+    "@sanity/validation": "npm:2.35.0"
+    boundless-arrow-key-navigation: "npm:^1.1.0"
+    circular-at: "npm:^1.0.3"
+    classnames: "npm:^2.2.5"
+    dataloader: "npm:^2.0.0"
+    date-fns: "npm:^2.16.1"
+    debug: "npm:^3.2.7"
+    dom-scroll-into-view: "npm:^1.2.1"
+    element-resize-detector: "npm:^1.1.14"
+    groq-js: "npm:^0.2.0"
+    history: "npm:^4.6.3"
+    json-reduce: "npm:^2.0.0"
+    lodash: "npm:^4.17.15"
+    nano-pubsub: "npm:^2.0.1"
+    nanoid: "npm:^3.1.30"
+    observable-callback: "npm:^1.0.1"
+    pluralize: "npm:^7.0.0"
+    polished: "npm:^4.0.5"
+    popper-max-size-modifier: "npm:^0.2.0"
+    raf: "npm:^3.4.1"
+    react-click-outside: "npm:^3.0.0"
+    react-fast-compare: "npm:^3.2.0"
+    react-icon-base: "npm:^2.1.2"
+    react-is: "npm:^17.0.2"
+    react-popper: "npm:^2.2.4"
+    react-props-stream: "npm:^1.0.0"
+    react-refractor: "npm:^2.1.6"
+    react-rx: "npm:^1.0.0-beta.6"
+    react-sortable-hoc: "npm:^1.11.0"
+    react-split-pane: "npm:^0.1.84"
+    refractor: "npm:^3.6.0"
+    rxjs: "npm:^6.5.3"
+    rxjs-etc: "npm:^10.6.0"
+    rxjs-exhaustmap-with-trailing: "npm:^1.2.0"
+    semver-compare: "npm:^1.0.0"
+    shallow-equals: "npm:^1.0.0"
+    use-device-pixel-ratio: "npm:^1.1.0"
+  peerDependencies:
+    prop-types: ^15.6 || ^16
+    react: ^16.9 || ^17
+    react-dom: ^16.9 || ^17
+    styled-components: ^5.2.0
+  checksum: 60583302de57dd130ab86f045c0e5a82d234593a6498aa9a4d9f24fe02cdd6004c19c6e732cfc90eed9a99ddc3e07ed5bf576ac2f9a1cef8f340a3c8f0c5b5df
+  languageName: node
+  linkType: hard
+
 "@sanity/bifur-client@npm:^0.3.0":
   version: 0.3.0
   resolution: "@sanity/bifur-client@npm:0.3.0"
@@ -3435,19 +3504,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/desk-tool@npm:^2.35.1":
-  version: 2.35.1
-  resolution: "@sanity/desk-tool@npm:2.35.1"
+"@sanity/desk-tool@npm:^2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/desk-tool@npm:2.35.2"
   dependencies:
     "@reach/auto-id": "npm:^0.13.2"
     "@sanity/client": "npm:^3.3.3"
     "@sanity/data-aspects": "npm:2.33.2"
     "@sanity/diff": "npm:2.33.2"
-    "@sanity/field": "npm:2.35.1"
-    "@sanity/form-builder": "npm:2.35.0"
+    "@sanity/field": "npm:2.35.2"
+    "@sanity/form-builder": "npm:2.35.2"
     "@sanity/generate-help-url": "npm:^3.0.0"
     "@sanity/icons": "npm:^1.3.4"
-    "@sanity/react-hooks": "npm:2.35.1"
+    "@sanity/react-hooks": "npm:2.35.2"
     "@sanity/structure": "npm:2.35.0"
     "@sanity/types": "npm:2.35.0"
     "@sanity/ui": "npm:^0.37.22"
@@ -3470,7 +3539,7 @@ __metadata:
     "@sanity/base": ^2.0
     react: ^16.9 || ^17
     styled-components: ^5.2.0
-  checksum: 47a2bfd522b768345c66b70aae99144e83f3cfba773f314c47d056bc910190e07c553de3f80443033da6f3991c864a55193cd667720802b30ee9aec7e5223053
+  checksum: 1b3b6f7aad0308cb82b4c6e200e4d738fd31b753128bb28af5b1ad8403a11a97aa98d039aef2ccf7b7fa550d4c309085611dfdabd72b48e7a965313f980b0b70
   languageName: node
   linkType: hard
 
@@ -3538,18 +3607,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/field@npm:2.35.1":
-  version: 2.35.1
-  resolution: "@sanity/field@npm:2.35.1"
+"@sanity/field@npm:2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/field@npm:2.35.2"
   dependencies:
     "@sanity/asset-utils": "npm:^1.2.5"
-    "@sanity/base": "npm:2.35.0"
+    "@sanity/base": "npm:2.35.2"
     "@sanity/client": "npm:^3.3.3"
     "@sanity/color": "npm:^2.1.14"
     "@sanity/diff": "npm:2.33.2"
     "@sanity/icons": "npm:^1.3.4"
     "@sanity/image-url": "npm:^1.0.1"
-    "@sanity/react-hooks": "npm:2.35.1"
+    "@sanity/react-hooks": "npm:2.35.2"
     "@sanity/types": "npm:2.35.0"
     "@sanity/ui": "npm:^0.37.22"
     "@sanity/util": "npm:2.35.0"
@@ -3559,7 +3628,7 @@ __metadata:
   peerDependencies:
     react: ^16.2.0 || ^17
     styled-components: ^5.2.0
-  checksum: 4a553711b0b2aa993ddda10dcdccdbb4e36eae628c386aff7a661e434a5bdffb120f191cc03ae7f40745737467a6c555ec00f899f2b0c5a6c80b4f1d792d93a5
+  checksum: b3b8a09240ffe3bac6d775ba79c62987b9f3fdb018127b4ee96f67f923c227b92ca0a6240d2f3f521a8841fbecf064aed7399763fea16f23cc2a0c2c9986ec42
   languageName: node
   linkType: hard
 
@@ -3609,6 +3678,55 @@ __metadata:
     react-dom: ^16.9 || ^17
     styled-components: ^5.2.0
   checksum: 8aed43aa183cf06c5c8a7b00cb5c71db4e50dabdb95c25f4815c86a1d728b39adcf9dce03414ab69e7ba27dbdad293680ee5cd2682944feeedeeba840abe6d9e
+  languageName: node
+  linkType: hard
+
+"@sanity/form-builder@npm:2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/form-builder@npm:2.35.2"
+  dependencies:
+    "@reach/auto-id": "npm:^0.13.2"
+    "@sanity/asset-utils": "npm:^1.2.5"
+    "@sanity/base": "npm:2.35.2"
+    "@sanity/block-tools": "npm:2.35.0"
+    "@sanity/client": "npm:^3.3.3"
+    "@sanity/color": "npm:^2.1.14"
+    "@sanity/generate-help-url": "npm:^3.0.0"
+    "@sanity/icons": "npm:^1.3.4"
+    "@sanity/image-url": "npm:^1.0.1"
+    "@sanity/imagetool": "npm:2.33.2"
+    "@sanity/initial-value-templates": "npm:2.35.0"
+    "@sanity/mutator": "npm:2.33.2"
+    "@sanity/portable-text-editor": "npm:3.0.0-v3-pte.87+c3ac77fc8d"
+    "@sanity/schema": "npm:2.35.0"
+    "@sanity/types": "npm:2.35.0"
+    "@sanity/ui": "npm:^0.37.22"
+    "@sanity/util": "npm:2.35.0"
+    "@sanity/uuid": "npm:^3.0.1"
+    attr-accept: "npm:^1.1.0"
+    date-fns: "npm:^2.16.1"
+    debug: "npm:^3.2.7"
+    diff-match-patch: "npm:^1.0.4"
+    exif-component: "npm:^1.0.1"
+    get-random-values: "npm:^1.2.2"
+    lodash: "npm:^4.17.15"
+    nano-pubsub: "npm:^2.0.1"
+    pretty-bytes: "npm:^4.0.2"
+    react-fast-compare: "npm:^3.2.0"
+    react-focus-lock: "npm:^2.5.0"
+    react-is: "npm:^17.0.2"
+    react-rx: "npm:^1.0.0-beta.6"
+    react-sortable-hoc: "npm:^1.11.0"
+    rxjs: "npm:^6.5.3"
+    scroll-into-view-if-needed: "npm:^2.2.26"
+    shallow-equals: "npm:^1.0.0"
+    speakingurl: "npm:^13.0.0"
+  peerDependencies:
+    prop-types: ^15.6 || ^16
+    react: ^16.9 || ^17
+    react-dom: ^16.9 || ^17
+    styled-components: ^5.2.0
+  checksum: f66e99c6fc9c46b5570f21250172e580a96c86efbd443abc024fddca097e17b18adc730d136ddd540c2230654f34f7196679c584dea36114f867cee442398923
   languageName: node
   linkType: hard
 
@@ -3759,9 +3877,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/react-hooks@npm:2.35.1":
-  version: 2.35.1
-  resolution: "@sanity/react-hooks@npm:2.35.1"
+"@sanity/react-hooks@npm:2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/react-hooks@npm:2.35.2"
   dependencies:
     "@sanity/types": "npm:2.35.0"
     react-rx: "npm:^1.0.0-beta.6"
@@ -3769,7 +3887,7 @@ __metadata:
   peerDependencies:
     "@sanity/base": ^2.0
     react: ^16.9 || ^17
-  checksum: 76e15a320d142540eb18aede31148423e344b0f13875882f2b9751cedc47bb1c791cfc917e10a1f59908d92a4ad2f168fccb19794f8d9aee41621432115c6a56
+  checksum: fd6756f2f0d41628d23037d87b45586797ea4616714073b9619af553424c645bc4e3ae83cd3a9ad46188cffc4a58c351ef4cf5aa1d56b031d6d95700815b7e1b
   languageName: node
   linkType: hard
 
@@ -18802,7 +18920,7 @@ __metadata:
     "@sanity/core": "npm:^2.35.0"
     "@sanity/default-layout": "npm:^2.35.0"
     "@sanity/default-login": "npm:^2.35.0"
-    "@sanity/desk-tool": "npm:^2.35.1"
+    "@sanity/desk-tool": "npm:^2.35.2"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/vision": "npm:^2.35.0"
     "@typescript-eslint/eslint-plugin": "npm:^5.41.0"
