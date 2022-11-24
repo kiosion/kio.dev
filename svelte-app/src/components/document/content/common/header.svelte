@@ -13,6 +13,7 @@
     getReadingTime
   } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
+  import { t } from '$i18n';
   import type { PostDocument, ProjectDocument } from '$lib/types';
 
   export let model: 'post' | 'project';
@@ -107,7 +108,9 @@
                 {/if}
               </div>
               <p class="w-fit whitespace-nowrap">
-                By {data.author?.name ? data.author.name : 'Unknown'}
+                {t('By {author}', {
+                  author: data.author?.name ? data.author.name : 'Unknown'
+                })}
               </p>
             </button>
           </Hoverable>
@@ -128,7 +131,7 @@
               role="button"
               aria-label="Reading time"
             >
-              {`${Math.floor(readingTime / 60)} min read`}
+              {t('{length} min read', { length: Math.floor(readingTime / 60) })}
             </p>
           {/if}
         </div>

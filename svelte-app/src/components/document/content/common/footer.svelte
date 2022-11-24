@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Divider from '$components/context-menu/divider.svelte';
+  import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import type { PostDocument, ProjectDocument } from '$lib/types';
-  import { linkTo } from '$i18n';
+  import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
 
   export let model: 'post' | 'project';
@@ -13,7 +13,11 @@
 <div class="mt-4" data-test-id="{model}-footer">
   <Divider />
   {#if data.tags}
-    <IconHeader icon="CardText" text="Tags" classes="mt-8 mb-4 w-full h-fit" />
+    <IconHeader
+      icon="CardText"
+      text={t('Tags')}
+      classes="mt-8 mb-4 w-full h-fit"
+    />
     <div class="mb-6 flex flex-row flex-wrap gap-2 justify-start items-start">
       {#each data.tags as tag}
         <Hoverable>

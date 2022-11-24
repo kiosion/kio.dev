@@ -24,7 +24,6 @@ const iconProxy = new Proxy(
         case 'get': {
           return async (iconName: string) => {
             iconName = transformName(iconName);
-            console.log('getting icon', iconName);
             if (!target.has(iconName)) {
               const icon = await import(
                 `../../node_modules/pixelarticons/svg/${iconName}.svg`

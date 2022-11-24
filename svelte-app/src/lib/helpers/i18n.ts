@@ -54,16 +54,37 @@ const getKey = <T extends keyof typeof EN>(
   }
 };
 
-const translate = (key: string): string => {
+const translate = (key: string, params?: Record<string, unknown>): string => {
   const lang = get(currentLang) || DEFAULT_APP_LANG;
 
-  if (!lang) {
-    const string = getKey('en', key as keyof typeof EN);
-    return !string && string !== '' ? notFound(key, DEFAULT_APP_LANG) : string;
-  }
+  // For any provided params, replace the corresponding placeholders if any
+  // e.g. "Hello {name}" with { name: "World" } becomes "Hello World"
+  const replaceParams = (str: string) => {
+    if (!params) {
+      return str;
+    }
+    return Object.entries(params).reduce(
+      (acc, [key, value]) => acc.replace(`{${key}}`, value as string),
+      str
+    );
+    // return str.replace(/{([^}]+)}/g, (match, param) => {
+    //   return params[param] || match;
+    // });
+  };
 
-  const string = getKey(lang, key as keyof typeof EN);
-  return !string && string !== '' ? notFound(key, lang) : string;
+  // if (!lang) {
+  //   const string = getKey('en', key as keyof typeof EN);
+  //   if (string) {
+  //     return replaceParams(string);
+  //   }
+  //   return notFound(key, DEFAULT_APP_LANG);
+  //   // return !string && string !== '' ? notFound(key, DEFAULT_APP_LANG) : string;
+  // }
+
+  const string = getKey(lang || DEFAULT_APP_LANG, key as keyof typeof EN);
+  return string
+    ? replaceParams(string)
+    : notFound(key, lang || DEFAULT_APP_LANG);
 };
 
 const linkTo = (path: string, lang?: string): string => {

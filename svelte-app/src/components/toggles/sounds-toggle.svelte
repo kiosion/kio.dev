@@ -3,6 +3,7 @@
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
+  import { t } from '$i18n';
 
   $: CanUseSounds = Features.can('use sounds feature');
 </script>
@@ -10,7 +11,7 @@
 <Hoverable>
   <button
     class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300"
-    aria-label="Toggle sfx"
+    aria-label={t('Toggle sound effects')}
     data-test-id="sfx-toggle"
     data-test-state={$CanUseSounds ? 'on' : 'off'}
     tabindex="0"

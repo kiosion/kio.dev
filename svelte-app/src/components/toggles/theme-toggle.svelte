@@ -3,12 +3,13 @@
   import Icon from '../icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
+  import { t } from '$i18n';
 </script>
 
 <Hoverable>
   <button
     class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300"
-    aria-label="Toggle theme"
+    aria-label={t('Toggle theme')}
     data-test-id="theme-toggle"
     data-test-state={$theme}
     tabindex="0"

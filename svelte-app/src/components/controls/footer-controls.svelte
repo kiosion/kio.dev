@@ -4,7 +4,7 @@
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import { APP_LANGS, DEFAULT_BREAKPOINTS } from '$lib/consts';
   import { t, linkTo, isLocalized, currentLang } from '$i18n';
   import { page } from '$app/stores';
   import SFX from '$lib/sfx';
@@ -12,7 +12,7 @@
   let scrollNavHovered = false;
 
   $: langLink = linkTo($page.url.pathname, $currentLang === 'en' ? 'fr' : 'en');
-  $: langText = $currentLang === 'en' ? 'Français' : 'English';
+  $: langText = $currentLang === 'en' ? 'Fr' : 'En';
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -31,6 +31,8 @@
                   class="w-fit flex flex-row items-center select-none {scrollNavHovered
                     ? 'scroll-hover-down'
                     : ''}"
+                  role="button"
+                  tabindex="0"
                   on:click={() => SFX.click.play()}
                   on:keydown={(e) => {
                     if (e.code === 'Enter' || e.code === 'Space') {
@@ -47,26 +49,58 @@
               </Hoverable>
             {/if}
           </div>
-          <div class="flex flex-row justify-end items-center gap-2 w-52">
+          <div
+            class="flex flex-row justify-end items-center gap-1 w-52 font-code text-base"
+          >
+            <span class="select-none cursor-default">{t('Language')} (</span>
             <Hoverable>
               <a
-                class="font-code text-base w-fit"
-                role="button"
-                aria-label={t('Switch language')}
-                href={langLink}
+                aria-label={t('Switch language to {lang}', {
+                  lang: APP_LANGS[0]
+                })}
+                href={linkTo($page.url.pathname, APP_LANGS[0])}
                 target="_self"
+                role="button"
+                tabindex="0"
                 on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     e.preventDefault();
                     SFX.click.play();
-                    goto(langLink).catch(() => undefined);
+                    goto(linkTo($page.url.pathname, APP_LANGS[0])).catch(
+                      () => undefined
+                    );
                   }
                 }}
               >
-                {t('Language')} ({langText})
+                {APP_LANGS[0]}
               </a>
             </Hoverable>
+            <span class="select-none cursor-default">/</span>
+            <Hoverable>
+              <a
+                aria-label={t('Switch language to {lang}', {
+                  lang: APP_LANGS[1]
+                })}
+                href={linkTo($page.url.pathname, APP_LANGS[1])}
+                target="_self"
+                role="button"
+                tabindex="0"
+                on:click={() => SFX.click.play()}
+                on:keydown={(e) => {
+                  if (e.code === 'Enter' || e.code === 'Space') {
+                    e.preventDefault();
+                    SFX.click.play();
+                    goto(linkTo($page.url.pathname, APP_LANGS[1])).catch(
+                      () => undefined
+                    );
+                  }
+                }}
+              >
+                {APP_LANGS[1]}
+              </a>
+            </Hoverable>
+            <span class="select-none cursor-default">)</span>
           </div>
         </div>
       </div>

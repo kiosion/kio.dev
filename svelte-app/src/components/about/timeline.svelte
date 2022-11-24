@@ -3,13 +3,58 @@
   import type { AuthorTimelineItem } from '$lib/types';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
-  import moment from 'moment';
   import Hoverable from '$components/hoverable.svelte';
   import { slide } from 'svelte/transition';
+  import { t, currentLang } from '$i18n';
 
   let selected: number | null = null;
 
   export let data: AuthorTimelineItem[] | undefined;
+
+  const dateDisplay = (start: string, end: string | undefined) => {
+    try {
+      const startDate = new Date(start),
+        endDate = end ? new Date(end) : undefined;
+
+      // If no end date, show '<date> - now'
+      if (!endDate) {
+        return `${new Intl.DateTimeFormat($currentLang, {
+          month: 'short',
+          year: 'numeric'
+        }).format(startDate)} - ${t('now')}`;
+      }
+
+      // Else, if the dates fall within the same year
+      if (startDate.getFullYear() === endDate.getFullYear()) {
+        // If months are also the same
+        if (startDate.getMonth() === endDate.getMonth()) {
+          return `${new Intl.DateTimeFormat($currentLang, {
+            month: 'short',
+            day: 'numeric'
+          }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
+            day: 'numeric',
+            year: 'numeric'
+          }).format(endDate)}`;
+        }
+        return `${new Intl.DateTimeFormat($currentLang, {
+          month: 'short'
+        }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
+          month: 'short'
+        }).format(endDate)} ${endDate.getFullYear()}`;
+      }
+
+      // Else, if the dates fall within different years
+      return `${new Intl.DateTimeFormat($currentLang, {
+        month: 'short',
+        year: 'numeric'
+      }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
+        month: 'short',
+        year: 'numeric'
+      }).format(endDate)}`;
+    } catch (_) {
+      return t('Invalid date');
+    }
+  };
 </script>
 
 <div class="relative h-fit mx-2 mt-4">
@@ -27,32 +72,21 @@
           />
           <div class="flex flex-col justify-start items-start w-full mr-6">
             <h1 class="font-code font-bold text-lg select-none">
-              {#if !item.range.end}
-                {moment(item.range.start).format('MMM YYYY')} - now
-              {:else if moment(item.range.start).format('MMM YYYY') === moment(item.range.end).format('MMM YYYY')}
-                {moment(item.range.start).format('MMM DD')} - {moment(
-                  item.range.end
-                ).format('DD, YYYY')}
-              {:else if moment(item.range.start).format('YYYY') === moment(item.range.end).format('YYYY')}
-                {moment(item.range.start).format('MMM DD')} - {moment(
-                  item.range.end
-                ).format('MMM DD, YYYY')}
-              {:else}
-                {moment(item.range.start).format('MMM DD, YYYY')} - {moment(
-                  item.range.end
-                ).format('MMM DD, YYYY')}
-              {/if}
+              {dateDisplay(item.range.start, item.range.end)}
             </h1>
             <Hoverable>
               <div
                 class="relative w-full ml-2 mt-2 rounded-md bg-slate-200/50 dark:bg-slate-900/50 px-4 py-3 transition-all overflow-hidden"
-                on:click={() =>
-                  item.body &&
-                  (selected === i ? (selected = null) : (selected = i))}
-                on:keydown={(e) =>
-                  (e.code === 'Enter' || e.code === 'Space') &&
-                  item.body &&
-                  (selected === i ? (selected = null) : (selected = i))}
+                on:click={() => {
+                  if (item.body) {
+                    selected = selected === i ? null : i;
+                  }
+                }}
+                on:keydown={(e) => {
+                  if (item.body && (e.code === 'Enter' || e.code === 'Space')) {
+                    selected = selected === i ? null : i;
+                  }
+                }}
                 tabindex={0}
                 role="button"
               >

@@ -11,6 +11,13 @@ export const COLOR_BG_DARK = '#1E293B';
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = 'en';
 
+interface AppRoute {
+  name: string;
+  path: string;
+  children?: AppRoute[];
+  hidden?: boolean;
+}
+
 export const APP_ROUTES = [
   { name: 'Index', path: '/', hidden: true },
   {
@@ -46,14 +53,22 @@ export const APP_ROUTES = [
       { name: 'PGP', path: '/pgp' }
     ],
     hidden: false
+  },
+  {
+    name: 'PGP',
+    path: '/pgp',
+    hidden: true
   }
-];
+] as AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { children, ...rest } = r;
   return rest;
-});
+}) as Omit<AppRoute, 'children'>[];
+
+export const BASE_TRANSITION_DURATION = 200;
+export const BASE_ANIMATION_DURATION = 300;
 
 export const PAGINATION_POSTS_PER_PAGE = 6;
 export const PAGINATION_PROJECTS_PER_PAGE = 6;

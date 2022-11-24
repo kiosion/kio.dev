@@ -7,18 +7,19 @@
   import ScrollTo from '$helpers/scrollTo';
   import type { PostDocument, ProjectDocument } from '$lib/types';
   import type { Heading } from '$helpers/pt';
+  import { t } from '$lib/helpers/i18n';
 
   export let model: 'post' | 'project';
   export let data: ProjectDocument | PostDocument | undefined;
   export let headings: Heading[];
 
   const isPost = model === 'post',
-    pageTitle = `${isPost ? 'Blog' : 'Work'}${
+    pageTitle = `${isPost ? t('Blog') : t('Work')}${
       data?.title ? ` | ${data.title}` : ''
     }`,
     pageDescription = data?.desc
       ? data.desc
-      : `A ${isPost ? 'blog post' : 'project'} on kio.dev`,
+      : t(`A ${isPost ? 'blog post' : 'project'} on kio.dev`),
     allTags =
       (((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
         if (!tags) {
@@ -56,7 +57,7 @@
   <meta property="og:title" content="kio.dev | {pageTitle.toLowerCase()}" />
   <meta
     property="og:description"
-    content={data?.desc ? data.desc : 'A blog post on kio.dev'}
+    content={data?.desc ? data.desc : t('A blog post on kio.dev')}
   />
   <meta property="twitter:url" content={$page.url.href} />
   <meta

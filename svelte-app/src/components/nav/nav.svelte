@@ -9,9 +9,13 @@
   import { page } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS, TOP_LEVEL_ROUTES } from '$lib/consts';
+  import {
+    BASE_ANIMATION_DURATION,
+    DEFAULT_BREAKPOINTS,
+    TOP_LEVEL_ROUTES
+  } from '$lib/consts';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
-  import { linear } from 'svelte/easing';
+  import { circInOut } from 'svelte/easing';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
   import { config as currentConfig } from '$stores/config';
@@ -42,11 +46,13 @@
       iconRotation: link.iconRotation
     })) || ([{}] as SocialLink[]);
 
-  const links = TOP_LEVEL_ROUTES.map((route) => ({
-    name: route.name,
-    url: linkTo(route.path),
-    active: false
-  })).filter((link) => link.name !== 'Index');
+  const links = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
+    (route) => ({
+      name: route.name,
+      url: linkTo(route.path),
+      active: false
+    })
+  );
 
   let clicks = 0;
 
@@ -71,7 +77,7 @@
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav
-      class="flex-shrink-0 py-8 px-4 w-40 xl:w-60 h-screen text-center flex flex-col overflow-y-auto overflow-x-hidden"
+      class="flex flex-col flex-shrink-0 w-40 h-screen px-4 py-8 overflow-x-hidden overflow-y-auto text-center xl:w-60"
       data-test-id="navBar"
     >
       <div class="flex-grow -mt-7 md:-mt-4 click-through">
@@ -79,6 +85,7 @@
         <Hoverable>
           <button
             class="inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
+            role="menuitem"
             on:click={() => onLogoClick()}
           >
             <img
@@ -90,24 +97,28 @@
         </Hoverable>
         <!-- Nav links list -->
         <div
-          class="flex text-base flex-col gap-3 justify-center pt-8 items-center"
+          class="flex flex-col items-center justify-center gap-3 pt-8 text-base"
         >
           {#each links as link}
             <Hoverable bind:hovered={link.active}>
-              <div class="relative flex flex-row justify-start items-center">
+              <div class="relative flex flex-row items-center justify-start">
                 <a
                   class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
                   aria-label={t(link.name)}
                   href={link.url}
+                  role="menuitem"
+                  tabindex="0"
                   data-sveltekit-prefetch
                   on:click={() => {
-                    navOpen.set(false);
                     SFX.click.play();
+                    navOpen.set(false);
                   }}
                   on:keydown={(e) => {
                     if (e.code === 'Enter' || e.code === 'Space') {
-                      navOpen.set(false);
+                      e.preventDefault();
                       SFX.click.play();
+                      navOpen.set(false);
+                      goto(link.url).catch(() => undefined);
                     }
                   }}
                 >
@@ -121,17 +132,25 @@
       </div>
       <!-- Social links -->
       <div
-        class="text-center text-secondary align-center justify-center pt-8 mx-auto flex flex-col xl:flex-row"
+        class="flex flex-col justify-center pt-8 mx-auto text-center text-secondary align-center xl:flex-row"
       >
         {#if socials?.length > 0}
           {#each socials as social}
             <Hoverable>
               <!-- svelte-ignore a11y-missing-attribute -->
               <a
-                class="flex align-center justify-center p-2 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-150 cursor-pointer"
+                class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300"
+                role="menuitem"
                 aria-label={social.name}
                 {...social.attrs}
                 on:click={() => SFX.click.play()}
+                on:keydown={(e) => {
+                  if (e.code === 'Enter' || e.code === 'Space') {
+                    e.preventDefault();
+                    SFX.click.play();
+                    goto(social.attrs.href).catch(() => undefined);
+                  }
+                }}
               >
                 <Icon
                   icon={social.icon}
@@ -167,10 +186,10 @@
         </Hoverable>
         <!-- Toggle buttons -->
         <div
-          class="absolute px-3 top-0 left-0 w-full h-full flex items-center justify-between click-through"
+          class="absolute top-0 left-0 flex items-center justify-between w-full h-full px-3 click-through"
         >
           <MenuToggle />
-          <div class="w-fit flex flex-row align-center justify-start gap-4">
+          <div class="flex flex-row justify-start gap-4 w-fit align-center">
             <ThemeToggle />
             <SoundsToggle />
           </div>
@@ -180,16 +199,21 @@
       {#if $navOpen}
         <div
           class="flex text-2xl flex-col gap-3 justify-center items-center mb-[10px]"
-          transition:slide|local={{ duration: 150, easing: linear }}
+          transition:slide|local={{
+            duration: BASE_ANIMATION_DURATION,
+            easing: circInOut
+          }}
         >
           {#each links as link}
-            <div class="relative flex flex-row justify-start items-center">
+            <div class="relative flex flex-row items-center justify-start">
               <a
-                class="nav-link font-mono font-normal uppercase text-base"
+                class="font-mono text-base font-normal uppercase nav-link"
                 class:active={$page.url.pathname === link.url}
                 aria-label={t(link.name)}
                 href={link.url}
                 preload={link.url}
+                role="menuitem"
+                tabindex="0"
                 data-sveltekit-prefetch
                 on:mouseenter={() => (link.active = true)}
                 on:mouseleave={() => (link.active = false)}

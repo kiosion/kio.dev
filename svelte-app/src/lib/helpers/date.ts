@@ -1,21 +1,44 @@
-import moment from 'moment';
+// import moment from 'moment';
+import { t, currentLang } from '$i18n';
+import { get } from 'svelte/store';
 
 export const getAbsDate = (dateStr: string | undefined): string | undefined => {
-  return dateStr ? moment(dateStr).format('MMM Do, YYYY') : undefined;
+  if (!dateStr) {
+    return undefined;
+  }
+  try {
+    return new Intl.DateTimeFormat(get(currentLang), {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(new Date(dateStr));
+  } catch (_) {
+    return t('Invalid date');
+  }
 };
 
 export const getShortDate = (
   dateStr: string | undefined
 ): string | undefined => {
-  return dateStr ? moment(dateStr).format('MMMM YYYY') : undefined;
+  if (!dateStr) {
+    return undefined;
+  }
+  try {
+    return new Intl.DateTimeFormat(get(currentLang), {
+      year: 'numeric',
+      month: 'long'
+    }).format(new Date(dateStr));
+  } catch (_) {
+    return t('Invalid date');
+  }
 };
 
 export const getRelDate = (dateStr: string | undefined): string => {
   if (!dateStr) {
-    return 'Just now';
+    return t('Just now');
   }
   const date = new Date(dateStr);
-  const formatter = new Intl.RelativeTimeFormat('default', {
+  const formatter = new Intl.RelativeTimeFormat(get(currentLang), {
     numeric: 'auto'
   });
 

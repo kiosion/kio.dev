@@ -1,6 +1,6 @@
 <script lang="ts">
   import '../app.scss';
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, setContext } from 'svelte';
   import { classList } from 'svelte-body';
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
@@ -9,8 +9,8 @@
     check as checkTranslations,
     currentLang,
     isLocalized,
-    t
-  } from '$lib/helpers/i18n';
+    linkTo
+  } from '$i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav/nav.svelte';
@@ -32,10 +32,7 @@
     DEFAULT_DESKTOP_BREAKPOINT
   } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
-
-  const navUnsubscribe = navigating.subscribe((res) => {
-    !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
-  });
+  import { goto } from '$app/navigation';
 
   interface DevToolsEvent {
     detail: {
@@ -43,30 +40,36 @@
     };
   }
 
-  let appLoaded: boolean;
-  let scrollContainer: HTMLDivElement;
-  let pageContainer: HTMLDivElement;
-  let preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
+  let appLoaded: boolean,
+    scrollContainer: HTMLDivElement,
+    pageContainer: HTMLDivElement,
+    preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
 
   const msg = (e: DevToolsEvent) =>
-    e.detail.isOpen &&
+    e.detail?.isOpen &&
     console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
 
+  const navUnsubscribe = navigating.subscribe((res) => {
+    !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
+  });
+
   const isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
+
+  [
+    ['getScrollContainer', () => scrollContainer],
+    ['getPageContainer', () => pageContainer]
+  ].forEach(([k, v]) => setContext(k, v));
 
   onMount(async () => {
     initAudio({ volume: 0.1 });
     checkTranslations();
-
     msg({ detail: { isOpen: true } });
     browser &&
       window.addEventListener('devtoolschange', (e) =>
         msg(e as unknown as DevToolsEvent)
       );
-
     appLoaded = true;
     canNavigate.set(true);
-
     setTimeout(() => loading.set(false), 1000);
   });
 
@@ -103,8 +106,7 @@
     $CanUseCursor && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
-  on:wheel={(e) =>
-    browser && handleScrollNav(e, scrollContainer, $page.url.pathname)}
+  on:wheel={(e) => handleScrollNav(e, scrollContainer, $page.url.pathname)}
 />
 
 {#if !appLoaded}

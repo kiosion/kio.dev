@@ -3,22 +3,26 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import AboutCard from '$components/about/card.svelte';
   import AboutTimeline from '$components/about/timeline.svelte';
   import AboutSection from '$components/about/section.svelte';
   import { Boundary } from '$lib/error-bound';
   import type { PageData } from './$types';
-  import type { AuthorDocument } from '$lib/types';
   import { t } from '$i18n';
+  import { BASE_TRANSITION_DURATION } from '$lib/consts';
+
+  const getScrollContainer = getContext('getScrollContainer') as () =>
+    | HTMLElement
+    | undefined;
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
-
-    window?.scroll?.({ top: 0, behavior: 'smooth' });
+    setTimeout(
+      () => getScrollContainer()?.scrollTo({ top: 0, behavior: 'smooth' }),
+      BASE_TRANSITION_DURATION - 50
+    );
   });
-
-  let about: AuthorDocument | undefined;
 
   export let data: PageData;
 
