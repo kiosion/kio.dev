@@ -4,7 +4,7 @@
   "devDependencies": {
     "bumpp": "^8.2.1",
     "eslint": "^8.28.0",
-    "husky": "^8.0.0",
+    "husky": "^8.0.2",
     "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
     "prettier-eslint": "^15.0.1",
