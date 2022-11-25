@@ -1494,11 +1494,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:1.0.0-next.553":
-  version: 1.0.0-next.553
-  resolution: "@sveltejs/kit@npm:1.0.0-next.553"
+"@sveltejs/kit@npm:1.0.0-next.561":
+  version: 1.0.0-next.561
+  resolution: "@sveltejs/kit@npm:1.0.0-next.561"
   dependencies:
-    "@sveltejs/vite-plugin-svelte": "npm:^1.1.0"
+    "@sveltejs/vite-plugin-svelte": "npm:^1.3.1"
     "@types/cookie": "npm:^0.5.1"
     cookie: "npm:^0.5.0"
     devalue: "npm:^4.2.0"
@@ -1515,19 +1515,20 @@ __metadata:
     vite: ^3.2.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 555b03f818fc95c379319ef87fb93e55776e92fa449313d98b94c495ba29d6b500af240cd724ef55dc3cf62222dab33000ba34a2df8d565014a34c682069c4cd
+  checksum: 93e653acd96be6267cb0b728d55cbd6e68df74ec28d2bc930811a7166e3ce9692d92019b3ff4d3438c5bf1a679773c4cf10001253305e24efe3f6c7a2e4f8f8c
   languageName: node
   linkType: hard
 
-"@sveltejs/vite-plugin-svelte@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@sveltejs/vite-plugin-svelte@npm:1.1.0"
+"@sveltejs/vite-plugin-svelte@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "@sveltejs/vite-plugin-svelte@npm:1.3.1"
   dependencies:
     debug: "npm:^4.3.4"
     deepmerge: "npm:^4.2.2"
     kleur: "npm:^4.1.5"
     magic-string: "npm:^0.26.7"
-    svelte-hmr: "npm:^0.15.0"
+    svelte-hmr: "npm:^0.15.1"
+    vitefu: "npm:^0.2.2"
   peerDependencies:
     diff-match-patch: ^1.0.5
     svelte: ^3.44.0
@@ -1535,7 +1536,7 @@ __metadata:
   peerDependenciesMeta:
     diff-match-patch:
       optional: true
-  checksum: f1ca5167bbd63865468442d4e8ecb5a8efb8e653aecc2f3435aea0df98a79615dd4629603d0a74093d73e5cfd8142cb4e864a746de4db56a63e67b2a25625c08
+  checksum: 763e2b983cc7945d6e8d8bbc576d85ca18d889300b4670cd42c1db02e50d5c8e0ccbaff1b64dce39efc97d77b0b775a217aa31b76b397950f48ff49530a25430
   languageName: node
   linkType: hard
 
@@ -12797,7 +12798,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
     "@sveltejs/adapter-netlify": "npm:^1.0.0-next.78"
     "@sveltejs/adapter-node": "npm:^1.0.0-next.100"
-    "@sveltejs/kit": "npm:1.0.0-next.553"
+    "@sveltejs/kit": "npm:1.0.0-next.561"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^8.0.3"
@@ -12901,12 +12902,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-hmr@npm:^0.15.0":
-  version: 0.15.0
-  resolution: "svelte-hmr@npm:0.15.0"
+"svelte-hmr@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "svelte-hmr@npm:0.15.1"
   peerDependencies:
     svelte: ">=3.19.0"
-  checksum: 43b1ec1268383f29563ec47a9e79e004439fafb564468778c998683665564567462bfb313fe65b46220125aafcc45ff38144e935afca38aa141b54f11e41815a
+  checksum: 83c69fdae8aa225614a6b1a3b7ba3c131d19bc8a58315e1e6c6fe557bffeb54c370972f35664dbd31e6e41a5adb43bb1733ddfc593e142ee22c2c539c0c4ffef
   languageName: node
   linkType: hard
 
@@ -14047,6 +14048,18 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 882d571363555f5ac61fe4c39f00aeeffbaee1a086af7f60a3a5d0204ba122a47fe8ed0b9b636466f7f68270371664426f3b999ac8771e3ff882db7a9c0b1e3e
+  languageName: node
+  linkType: hard
+
+"vitefu@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "vitefu@npm:0.2.2"
+  peerDependencies:
+    vite: ^3.0.0
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 072c40e06f2a375b4a34934165447ea94094793883c570eed216d8e3478c0290b2e678a2923673ddc4b0b585807710decb3e441ba811f8369cad9188637d38f8
   languageName: node
   linkType: hard
 
