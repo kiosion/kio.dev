@@ -211,16 +211,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/vite-dev-server@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "@cypress/vite-dev-server@npm:3.3.1"
+"@cypress/vite-dev-server@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@cypress/vite-dev-server@npm:4.0.1"
   dependencies:
-    debug: "npm:4.3.3"
+    debug: "npm:^4.3.4"
     find-up: "npm:6.3.0"
-    local-pkg: "npm:0.4.1"
     node-html-parser: "npm:5.3.3"
-    pathe: "npm:0.2.0"
-  checksum: bea80777783960c585db9efff6103e412502c0c227972c5711dc61f6ecafa1c788e5c45b262b40bea80d074710b5d1be6fc408a69f4d1eec2680db67f870cdf0
+  checksum: 2bfec68804b251dec8dd7b15b4ec8d6724f415653dafa953fa3666e34e112a769413df519970f824d9489e4b5e42b883a2e72504bf6907f51c51fcf5621b60a5
   languageName: node
   linkType: hard
 
@@ -4296,18 +4294,6 @@ __metadata:
   dependencies:
     ms: "npm:^2.1.1"
   checksum: d2a5a370d13858fa8831d318a4f67d2381cf336e3eea3dcbdd4489c636ec332c4825d97e11d764593afb3caba2ca294d1f645468575826b30e00031248e0e817
-  languageName: node
-  linkType: hard
-
-"debug@npm:4.3.3":
-  version: 4.3.3
-  resolution: "debug@npm:4.3.3"
-  dependencies:
-    ms: "npm:2.1.2"
-  peerDependenciesMeta:
-    supports-color:
-      optional: true
-  checksum: 4e7b44c0e7b029dd86f110e70888161974c5523e42c19129807fc35b3962e71ed0fc75bd69826a33c629761b6071ed56492677dab92765b884e843d416577009
   languageName: node
   linkType: hard
 
@@ -8622,13 +8608,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"local-pkg@npm:0.4.1":
-  version: 0.4.1
-  resolution: "local-pkg@npm:0.4.1"
-  checksum: 2a844e850458ae2626fad41a3f5ae6a0d3621d9f8be95610d91a8b7c27a7de992bf141dc60351f6fdd90909128a4e9c074dc412f48672c24a9b82f0d7b5722d0
-  languageName: node
-  linkType: hard
-
 "local-pkg@npm:^0.4.2":
   version: 0.4.2
   resolution: "local-pkg@npm:0.4.2"
@@ -10797,13 +10776,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pathe@npm:0.2.0":
-  version: 0.2.0
-  resolution: "pathe@npm:0.2.0"
-  checksum: 424e0759bf6182ce792c1a68efa1abda7efcfa86a0f6fe96d77bf35bddf9222e229cb12814ee26d7128c5bd6460ac62dd416f08415ef5e96298f3ddaa3deaa76
-  languageName: node
-  linkType: hard
-
 "pathval@npm:^1.1.1":
   version: 1.1.1
   resolution: "pathval@npm:1.1.1"
@@ -12775,7 +12747,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "svelte-app@workspace:."
   dependencies:
-    "@cypress/vite-dev-server": "npm:^3.3.1"
+    "@cypress/vite-dev-server": "npm:^4.0.1"
     "@iconify/svelte": "npm:^3.0.0"
     "@poppanator/sveltekit-svg": "npm:^1.0.0"
     "@portabletext/svelte": "npm:^1.0.1"
