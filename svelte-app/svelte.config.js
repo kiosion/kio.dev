@@ -28,7 +28,7 @@ const config = {
       enabled: true,
       crawl: true,
       entries: ['*'],
-      onError: ({ status, path }) => {
+      handleHttpError: ({ status, path }) => {
         if (status === 404) {
           if (path.startsWith('/en') || path.startsWith('/fr')) {
             return;

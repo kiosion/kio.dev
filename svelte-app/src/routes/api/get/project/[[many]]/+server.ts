@@ -20,7 +20,13 @@ export const GET: RequestHandler = async ({
 
   const remoteUrl = many
     ? `${REMOTE_API_URL}/query/projects?${url.searchParams}`
-    : `${REMOTE_API_URL}/query/project/${url.searchParams.get('id')}`;
+    : `${REMOTE_API_URL}/query/project/${
+        url.searchParams.get('id') ||
+        Buffer.from(
+          (url.searchParams.get('idb') as string) || '',
+          'base64'
+        ).toString('utf-8')
+      }`;
 
   try {
     const res = await fetch(remoteUrl, {
@@ -29,7 +35,12 @@ export const GET: RequestHandler = async ({
         authorization: `Bearer ${REMOTE_API_TOKEN}`
       }
     });
-    if (res.status !== 200) {
+
+    const json = (await res.json()) as Record<string, unknown> & {
+      data: Record<string, unknown> | undefined;
+    };
+
+    if (res.status !== 200 || !json?.data?.result) {
       Logger.error(
         `Failed to fetch ${many ? 'projects' : 'project'}: ${res.status}`
       );
@@ -42,8 +53,7 @@ export const GET: RequestHandler = async ({
         })
       );
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const data = Normalize(await res.json());
+    const data = Normalize(json);
     return new Response(JSON.stringify(data), {
       headers: {
         'content-type': 'application/json; charset=utf-8'

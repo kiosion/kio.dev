@@ -21,7 +21,11 @@ export const GET: RequestHandler = async ({
   const remoteUrl = many
     ? `${REMOTE_API_URL}/query/posts?${url.searchParams}`
     : `${REMOTE_API_URL}/query/post/${
-        url.searchParams.get('id') || atob(url.searchParams.get('idb') || '')
+        url.searchParams.get('id') ||
+        Buffer.from(
+          (url.searchParams.get('idb') as string) || '',
+          'base64'
+        ).toString('utf-8')
       }`;
 
   try {
@@ -32,10 +36,12 @@ export const GET: RequestHandler = async ({
       }
     });
 
-    const json = await res.json();
+    const json = (await res.json()) as Record<string, unknown> & {
+      data: Record<string, unknown> | undefined;
+    };
 
     // If failed GET or status is 200 but no data is returned
-    if (res.status !== 200 || !json.data.result) {
+    if (res.status !== 200 || !json?.data?.result) {
       Logger.error(`Failed to fetch ${many ? 'posts' : 'post'}: ${res.status}`);
       return new Response(
         JSON.stringify({
@@ -46,7 +52,6 @@ export const GET: RequestHandler = async ({
         })
       );
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = Normalize(json);
     return new Response(JSON.stringify(data), {
       headers: {

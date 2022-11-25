@@ -1494,14 +1494,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:1.0.0-next.529":
-  version: 1.0.0-next.529
-  resolution: "@sveltejs/kit@npm:1.0.0-next.529"
+"@sveltejs/kit@npm:1.0.0-next.553":
+  version: 1.0.0-next.553
+  resolution: "@sveltejs/kit@npm:1.0.0-next.553"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^1.1.0"
     "@types/cookie": "npm:^0.5.1"
     cookie: "npm:^0.5.0"
-    devalue: "npm:^4.0.1"
+    devalue: "npm:^4.2.0"
     kleur: "npm:^4.1.5"
     magic-string: "npm:^0.26.7"
     mime: "npm:^3.0.0"
@@ -1512,10 +1512,10 @@ __metadata:
     undici: "npm:5.12.0"
   peerDependencies:
     svelte: ^3.44.0
-    vite: ^3.1.0
+    vite: ^3.2.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 82219acb615fe0056f4f1ada18ec44113a7e85cb6ff620d52af34c326c7564aa2dede40e0e42d4faa7ddc77774c971f15938fc87628be2ed87584dd62294d451
+  checksum: 555b03f818fc95c379319ef87fb93e55776e92fa449313d98b94c495ba29d6b500af240cd724ef55dc3cf62222dab33000ba34a2df8d565014a34c682069c4cd
   languageName: node
   linkType: hard
 
@@ -4719,10 +4719,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devalue@npm:4.0.1, devalue@npm:^4.0.1":
+"devalue@npm:4.0.1":
   version: 4.0.1
   resolution: "devalue@npm:4.0.1"
   checksum: f6aa5bbd2093ee60ee57d5a4385104c62aaac06f479a0a09b2baa94737aea77c0db446815e24264f23b6d2c82f072cdafb1133d9036c32d60269180d0786c8cd
+  languageName: node
+  linkType: hard
+
+"devalue@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "devalue@npm:4.2.0"
+  checksum: a250617b3d5d065ee0b961088b257061b7dbc658ff607260870949fd1f2b14cc814653aaee90e27c1bb1c66a5f2d990be6225148c2794b99bb0be845f0706303
   languageName: node
   linkType: hard
 
@@ -12790,7 +12797,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
     "@sveltejs/adapter-netlify": "npm:^1.0.0-next.78"
     "@sveltejs/adapter-node": "npm:^1.0.0-next.100"
-    "@sveltejs/kit": "npm:1.0.0-next.529"
+    "@sveltejs/kit": "npm:1.0.0-next.553"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^8.0.3"

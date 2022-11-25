@@ -29,16 +29,24 @@ interface Normalized extends Record<string, unknown> {
   meta?: ResData['meta'] & { [key: string]: unknown };
 }
 
-const normalize = (data: Response) => {
+const normalize = (data: Response | Record<string, unknown>) => {
+  if (!data?.code || (!data?.message && !data?.data)) {
+    return {
+      code: 500,
+      error:
+        'Endpoint error: Failed to normalize data. Remote API returned invalid data.'
+    };
+  }
+
   const normalized = {} as Normalized;
 
   if (data.message) {
-    normalized.code = data.code;
-    normalized.error = data.message;
+    normalized.code = (data as Response).code;
+    normalized.error = (data as Response).message;
     return normalized;
   }
 
-  const { data: resData } = data;
+  const { data: resData } = data as Response;
 
   normalized.data = resData?.result;
   normalized.meta = {} as Normalized['meta'];
