@@ -1,6 +1,9 @@
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
+// Ignore trailing slashes for all routes
+export const trailingSlash = 'ignore';
+
 export const load: import('./$types').LayoutLoad = async ({ url, fetch }) => {
   await Store.findConfig(fetch)
     .then(() => {

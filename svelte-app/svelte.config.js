@@ -25,7 +25,6 @@ const config = {
       routes: 'src/routes'
     },
     prerender: {
-      enabled: true,
       crawl: true,
       entries: ['*'],
       handleHttpError: ({ status, path }) => {
@@ -35,8 +34,7 @@ const config = {
           }
         }
       }
-    },
-    trailingSlash: 'ignore'
+    }
   }
 };
 
