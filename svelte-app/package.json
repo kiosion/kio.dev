@@ -72,7 +72,7 @@
     "svelte-highlight": "^6.2.1",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.6",
-    "tailwindcss": "^3.2.1",
+    "tailwindcss": "^3.2.4",
     "ts-essentials": "^9.3.0",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4",
