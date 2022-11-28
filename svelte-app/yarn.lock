@@ -6352,6 +6352,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fiona@npm:^4.1.4":
+  version: 4.1.4
+  resolution: "fiona@npm:4.1.4"
+  checksum: 168847066caf40e11b7b48bec959797efd27fd9fe94581036bcaf62ef47cebe66d191c970a661c3fdc39574b3e2bb5cef2fce35f624362e37032ac2e889b8d27
+  languageName: node
+  linkType: hard
+
 "flat-cache@npm:^3.0.4":
   version: 3.0.4
   resolution: "flat-cache@npm:3.0.4"
@@ -12820,6 +12827,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-svelte3: "npm:^4.0.0"
+    fiona: "npm:^4.1.4"
     highlight.js: "npm:^11.6.0"
     jsdom: "npm:^20.0.2"
     miragejs: "npm:^0.1.45"

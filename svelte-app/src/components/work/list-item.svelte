@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ProjectDocument } from '$lib/types';
-  import { urlFor, getCrop, type ImageCrop } from '$helpers/image';
   import { goto } from '$app/navigation';
   import BulletPoint from '../bullet-point.svelte';
   import { getShortDate } from '$helpers/date';
@@ -10,8 +9,6 @@
 
   export let project: ProjectDocument;
 
-  let imageCrop: ImageCrop | undefined;
-  let _ref: string | undefined;
   let hovered = false;
   let self: HTMLAnchorElement;
 
@@ -32,14 +29,12 @@
     }
   };
 
-  $: _ref = project.image?.asset?._ref;
-  $: project.image && (imageCrop = getCrop(project.image));
   $: date = getShortDate(project.date);
 </script>
 
 <Hoverable bind:hovered>
   <a
-    class="relative flex flex-col items-stretch justify-end gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
+    class="relative flex flex-col items-stretch justify-start gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
       ? 'bg-slate-300/50 dark:bg-slate-700/50'
       : 'bg-slate-200/50 dark:bg-slate-900/50'}"
     data-test-id="list-item"
@@ -52,27 +47,6 @@
     on:keydown={onKey}
     bind:this={self}
   >
-    <!-- Image -->
-    <div class="w-full aspect-[4/1] lg:aspect-[2/1] overflow-hidden rounded-md">
-      {#if _ref && imageCrop}
-        <img
-          src={urlFor(_ref)
-            .height(200)
-            .width(400)
-            .rect(
-              imageCrop.left,
-              imageCrop.top,
-              imageCrop.width,
-              imageCrop.height
-            )
-            .fit('crop')
-            .format('webp')
-            .url()}
-          class="aspect-[2/1] object-cover h-full w-full"
-          alt="Project cover"
-        />
-      {/if}
-    </div>
     <div class="flex flex-col gap-y-3 p-3">
       <!-- Title / date / tags -->
       <div class="w-full flex flex-col items-center justify-start">

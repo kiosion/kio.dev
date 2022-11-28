@@ -84,6 +84,7 @@
   },
   "type": "module",
   "dependencies": {
+    "fiona": "^4.1.4",
     "pixelarticons": "^1.7.0",
     "twemoji": "^14.0.2"
   },
