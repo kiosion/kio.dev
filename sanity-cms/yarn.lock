@@ -3543,11 +3543,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/default-login@npm:^2.35.0":
-  version: 2.35.0
-  resolution: "@sanity/default-login@npm:2.35.0"
+"@sanity/default-login@npm:^2.35.2":
+  version: 2.35.2
+  resolution: "@sanity/default-login@npm:2.35.2"
   dependencies:
-    "@sanity/base": "npm:2.35.0"
+    "@sanity/base": "npm:2.35.2"
     "@sanity/client": "npm:^3.3.3"
     "@sanity/generate-help-url": "npm:^3.0.0"
     "@sanity/logos": "npm:^1.1.15"
@@ -3557,7 +3557,7 @@ __metadata:
   peerDependencies:
     react: ^16.9 || ^17
     styled-components: ^5.2.0
-  checksum: 255d790bc51bfdabad93bb362656a8c1ded9e70fd3cc9b8211fee844e4825a2751a4f862756ac40e3590d6c97c609e5ae5ba64e46763e9029caec6a0f89f6c45
+  checksum: 45ec4f92ad4ba5048c748f87894e14da8a4e216bc4efbb76f03526842f06c665ba0f9128fa23250980219a86830e91f1244a6c328bd91f3e8bd9d1acd834b6c0
   languageName: node
   linkType: hard
 
@@ -19099,7 +19099,7 @@ __metadata:
     "@sanity/code-input": "npm:^2.35.0"
     "@sanity/core": "npm:^2.35.0"
     "@sanity/default-layout": "npm:^2.35.0"
-    "@sanity/default-login": "npm:^2.35.0"
+    "@sanity/default-login": "npm:^2.35.2"
     "@sanity/desk-tool": "npm:^2.35.2"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/vision": "npm:^2.35.0"
