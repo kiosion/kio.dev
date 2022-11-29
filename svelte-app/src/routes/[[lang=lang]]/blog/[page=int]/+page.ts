@@ -3,7 +3,7 @@ import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import type { PageLoad } from './$types';
-import type { ResDataMany, PostDocument } from '$lib/types';
+import type { ResDataMany, PostDocument } from '$types';
 
 export const prerender = false;
 

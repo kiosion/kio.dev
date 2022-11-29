@@ -3,7 +3,7 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import ErrorText from '$components/error-text.svelte';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
-  import type { SanityImageObject } from '$lib/types';
+  import type { SanityImageObject } from '$types/sanity';
   import type { InputValue } from '@portabletext/svelte/ptTypes';
 
   let pfpCrop: ImageCrop;

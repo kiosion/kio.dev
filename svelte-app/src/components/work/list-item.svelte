@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ProjectDocument } from '$lib/types';
+  import type { ProjectDocument } from '$types';
   import { goto } from '$app/navigation';
   import BulletPoint from '../bullet-point.svelte';
   import { getShortDate } from '$helpers/date';

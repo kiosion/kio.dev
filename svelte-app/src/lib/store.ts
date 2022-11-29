@@ -4,13 +4,13 @@ import { get } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import type {
+  SiteConfig,
   RouteFetch,
   StoreRes,
   ResData,
   ResDataMany,
-  ResError,
-  SiteConfig
-} from '$lib/types';
+  ResError
+} from '$types';
 
 interface PossibleParams {
   [key: string]: string | number | boolean | string[] | number[] | boolean[];

@@ -5,7 +5,7 @@
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ScrollTo from '$helpers/scrollTo';
-  import type { PostDocument, ProjectDocument } from '$lib/types';
+  import type { PostDocument, ProjectDocument } from '$types';
   import type { Heading } from '$helpers/pt';
   import { t } from '$lib/helpers/i18n';
 

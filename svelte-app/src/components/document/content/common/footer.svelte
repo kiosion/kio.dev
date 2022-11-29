@@ -2,7 +2,7 @@
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import type { PostDocument, ProjectDocument } from '$lib/types';
+  import type { PostDocument, ProjectDocument } from '$types';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
 

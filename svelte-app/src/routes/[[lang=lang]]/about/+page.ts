@@ -1,7 +1,7 @@
 import Logger from '$lib/logger';
 import { ENV } from '$lib/env';
 import Store from '$lib/store';
-import type { AuthorDocument } from '$lib/types';
+import type { AuthorDocument } from '$types';
 
 export const ssr = !(ENV === 'testing');
 

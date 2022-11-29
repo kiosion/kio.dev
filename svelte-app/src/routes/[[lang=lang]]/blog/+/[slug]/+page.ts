@@ -4,7 +4,7 @@ import Logger from '$lib/logger';
 import Store from '$lib/store';
 // import { linkTo } from '$i18n';
 import type { PageLoad } from './$types';
-import type { ResDataMany, PostDocument, DocumentTags } from '$lib/types';
+import type { ResDataMany, PostDocument } from '$types';
 
 export const prerender = false;
 

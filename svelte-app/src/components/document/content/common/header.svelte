@@ -14,7 +14,7 @@
   } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
   import { t } from '$i18n';
-  import type { PostDocument, ProjectDocument } from '$lib/types';
+  import type { PostDocument, ProjectDocument } from '$types';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;

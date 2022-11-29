@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 import { state } from '$stores/menu';
-import type { MenuStateOpt } from '$lib/types';
+import type { MenuStateOpt } from '$types';
 
 export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {

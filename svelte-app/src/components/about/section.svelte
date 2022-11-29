@@ -1,6 +1,6 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
-  import IconHeader from '../headings/icon-header.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
 
   export let title: string | undefined = undefined;
   export let icon: string | undefined = undefined;

@@ -1,4 +1,4 @@
-import type { PTBlock } from '$lib/types';
+import type { PTBlock } from '$types';
 
 export const postBody = [
   {

@@ -3,7 +3,7 @@
   import BulletPoint from '../bullet-point.svelte';
   import { getTotalWords } from '$lib/helpers/pt';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
-  import type { PostDocument } from '$lib/types';
+  import type { PostDocument } from '$types';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';

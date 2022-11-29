@@ -4,7 +4,7 @@ import Logger from '$lib/logger';
 import { ENV } from '$lib/env';
 import { RECENT_POSTS_COUNT } from '$lib/consts';
 import Store from '$lib/store';
-import type { PostDocument, ResData, ResDataMany } from '$lib/types';
+import type { PostDocument, ResData, ResDataMany } from '$types';
 
 export const ssr = !(ENV === 'testing');
 

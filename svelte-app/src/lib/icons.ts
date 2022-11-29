@@ -2,7 +2,7 @@ import Alert from 'pixelarticons/svg/alert.svg';
 import Sun from 'pixelarticons/svg/sun.svg';
 import MoonStars from 'pixelarticons/svg/moon-stars.svg';
 import Logger from '$lib/logger';
-import type { PixelIcon } from '$lib/types';
+import type { PixelIcon } from '$types';
 
 const transformName = (name: string) => {
   return name
@@ -28,7 +28,7 @@ const iconProxy = new Proxy(
               const icon = await import(
                 `../../node_modules/pixelarticons/svg/${iconName}.svg`
               )
-                .then((res) => {
+                .then((res: { default: PixelIcon } | undefined) => {
                   if (!res) {
                     Logger.error(`Icon ${iconName} not found`);
                     return target.get('alert');

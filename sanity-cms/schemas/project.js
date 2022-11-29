@@ -26,6 +26,25 @@ export default {
       validation: (Rule) => Rule.required()
     },
     {
+      name: 'external',
+      title: 'External',
+      type: 'boolean',
+      description: 'Is this project hosted on an external site?',
+      initialValue: false,
+      validation: (Rule) => Rule.required()
+    },
+    {
+      name: 'externalUrl',
+      title: 'External URL',
+      type: 'url',
+      description: 'Link to external project',
+      validation: (Rule) =>
+        Rule.required().when('external', {
+          is: true,
+          then: Rule.required()
+        })
+    },
+    {
       name: 'author',
       title: 'Author',
       type: 'reference',
@@ -95,6 +114,30 @@ export default {
         {
           type: 'reference',
           to: [{ type: 'tag' }]
+        }
+      ]
+    },
+    {
+      name: 'externalLinks',
+      title: 'External Links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule) => Rule.required()
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) => Rule.required()
+            }
+          ]
         }
       ]
     }

@@ -13,15 +13,14 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$logs": ["logs"],
-      "$components*": ["src/components*"],
       "$components/*": ["src/components/*"],
-      "$helpers*": ["src/lib/helpers*"],
       "$helpers/*": ["src/lib/helpers/*"],
-      "$stores*": ["src/stores*"],
       "$stores/*": ["src/stores/*"],
       "$langs/*": ["src/languages/*"],
-      "$i18n": ["src/lib/helpers/i18n"]
+      "$i18n": ["src/lib/helpers/i18n"],
+      "$types": ["types/app/index.d.ts"],
+      "$types/*": ["types/app/*"],
+      "*": ["types/*"]
     },
     "removeComments": true,
     "rootDir": "./",
@@ -29,11 +28,13 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "types": ["cypress", "vitest/globals", "node"]
+    "types": ["cypress", "vitest/globals", "node"],
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [
     "src/**/*",
     "test/**/*",
+    "types/**/*",
     "cypress/**/*",
     "*.js",
     "*.ts"

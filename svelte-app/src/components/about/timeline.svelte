@@ -1,6 +1,6 @@
 <script lang="ts">
   import ErrorText from '$components/error-text.svelte';
-  import type { AuthorTimelineItem } from '$lib/types';
+  import type { AuthorTimelineItem } from '$types';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fionaPlaceholder } from '$helpers/placeholders';
-  import type { ProjectDocument } from '$lib/types';
+  import type { ProjectDocument } from '$types';
 
   export let data: ProjectDocument;
 

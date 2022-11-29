@@ -1,18 +1,18 @@
 import { get as value, writable } from 'svelte/store';
 import type {
   DocumentQueryParams,
-  ResData,
   SingleDocumentQueryParams,
-  SiteConfig
-} from '$lib/types';
+  ResData
+} from '$types/api';
+import type { SiteConfig } from '$types/config';
 
 type CacheData =
-  | { [key: string]: unknown }
+  | Record<string, unknown>
   | ResData<unknown>
   | SiteConfig
   | unknown[];
 type CacheQuery =
-  | { [key: string]: unknown }
+  | Record<string, unknown>
   | DocumentQueryParams
   | SingleDocumentQueryParams;
 

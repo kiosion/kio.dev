@@ -6,7 +6,7 @@ import {
 } from '$lib/consts';
 import Store from '$lib/store';
 import type { PageLoad } from './$types';
-import type { ResDataMany, ProjectDocument } from '$lib/types';
+import type { ResDataMany, ProjectDocument } from '$types';
 
 export const prerender = false;
 

@@ -6,7 +6,7 @@ import {
 import { config } from '$stores/config';
 import { get } from 'svelte/store';
 import Store from '$lib/store';
-import type { ProjectDocument, ResData, ResDataMany } from '$lib/types';
+import type { ProjectDocument, ResData, ResDataMany } from '$types';
 
 export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
   await parent();

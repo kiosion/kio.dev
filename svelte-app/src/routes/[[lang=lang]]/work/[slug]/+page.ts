@@ -1,6 +1,6 @@
 import Logger from '$lib/logger';
 import Store from '$lib/store';
-import type { ResData, ProjectDocument } from '$lib/types';
+import type { ResData, ProjectDocument } from '$types';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {

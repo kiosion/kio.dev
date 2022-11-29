@@ -5,7 +5,7 @@
   import SummaryWrapper from '$components/document/content/common/summary/wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
-  import type { PostDocument, ProjectDocument } from '$lib/types';
+  import type { PostDocument, ProjectDocument } from '$types';
   import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project';

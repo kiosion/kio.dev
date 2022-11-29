@@ -2,7 +2,7 @@ import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import { error } from '@sveltejs/kit';
-import type { ResData, PostDocument } from '$lib/types';
+import type { ResData, PostDocument } from '$types';
 import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');

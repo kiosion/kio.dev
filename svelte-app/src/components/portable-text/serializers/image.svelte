@@ -1,7 +1,7 @@
 <script lang="ts">
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
-  import type { SanityImageObject } from '$lib/types';
+  import type { SanityImageObject } from '$types';
 
   export let portableText: CustomBlockComponentProps & SanityImageObject;
 

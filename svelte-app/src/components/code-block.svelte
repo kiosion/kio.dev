@@ -9,7 +9,7 @@
 
   export let content: string;
   export let showClipboard = false;
-  export let lang: string | undefined;
+  export let lang: string | undefined = undefined;
 
   let hovered = false;
   let copied = false;
