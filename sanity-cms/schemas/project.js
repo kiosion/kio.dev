@@ -37,12 +37,7 @@ export default {
       name: 'externalUrl',
       title: 'External URL',
       type: 'url',
-      description: 'Link to external project',
-      validation: (Rule) =>
-        Rule.required().when('external', {
-          is: true,
-          then: Rule.required()
-        })
+      description: 'Link to external project'
     },
     {
       name: 'author',
