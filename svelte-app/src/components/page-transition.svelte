@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition';
+  import { maybe } from '$helpers/animate';
   import { quartIn, quartOut } from 'svelte/easing';
   import Features from '$stores/features';
   import { onNav } from '$helpers/navigation';
 
   export let url: URL | undefined;
 
-  const dist = 8,
+  const dist = 10,
     duration = 200;
 
   let navDir: 'forward' | 'backward' = 'forward';
@@ -17,24 +17,24 @@
 </script>
 
 {#key pathname}
-  {#if $CanUseReduceMotion}
+  <div
+    class="absolute top-0 left-0 w-full h-full"
+    in:maybe={{
+      animate: !$CanUseReduceMotion,
+      fn: 'fly',
+      delay: duration,
+      duration: duration * 2,
+      easing: quartOut,
+      y: navDir === 'backward' ? -dist : dist
+    }}
+    out:maybe={{
+      animate: !$CanUseReduceMotion,
+      fn: 'fly',
+      duration,
+      easing: quartIn,
+      y: navDir === 'backward' ? dist : -dist
+    }}
+  >
     <slot />
-  {:else}
-    <div
-      class="absolute top-0 left-0 w-full h-full"
-      in:fly={{
-        delay: duration,
-        duration: duration * 2,
-        easing: quartOut,
-        y: navDir === 'backward' ? -dist : dist
-      }}
-      out:fly={{
-        duration,
-        easing: quartIn,
-        y: navDir === 'backward' ? dist : -dist
-      }}
-    >
-      <slot />
-    </div>
-  {/if}
+  </div>
 {/key}
