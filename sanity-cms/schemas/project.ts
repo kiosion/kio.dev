@@ -1,8 +1,9 @@
-import React from 'react';
+import type { Rule } from 'sanity';
+// import React from 'react';
 
-const highlightRender = (props) => (
-  <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
-);
+// const highlightRender = (props) => (
+//   <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
+// );
 
 export default {
   name: 'project',
@@ -13,7 +14,7 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'slug',
@@ -23,7 +24,7 @@ export default {
         source: 'title',
         maxLength: 96
       },
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'external',
@@ -31,7 +32,7 @@ export default {
       type: 'boolean',
       description: 'Is this project hosted on an external site?',
       initialValue: false,
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'externalUrl',
@@ -88,11 +89,11 @@ export default {
               { title: 'Code', value: 'code' },
               {
                 title: 'Highlight',
-                value: 'highlight',
-                blockEditor: {
-                  icon: () => 'H',
-                  render: highlightRender
-                }
+                value: 'highlight'
+                // blockEditor: {
+                //   icon: () => 'H',
+                //   render: highlightRender
+                // }
               }
             ]
           }
@@ -130,13 +131,13 @@ export default {
               name: 'title',
               title: 'Title',
               type: 'string',
-              validation: (Rule) => Rule.required()
+              validation: (Rule: Rule) => Rule.required()
             },
             {
               name: 'url',
               title: 'URL',
               type: 'url',
-              validation: (Rule) => Rule.required()
+              validation: (Rule: Rule) => Rule.required()
             }
           ]
         }

@@ -1,8 +1,10 @@
+import type { Rule } from 'sanity';
+
 export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  __experimental_actions: ['update', /* 'delete', */ 'publish'],
+  // __experimental_actions: ['update', /* 'delete', */ 'publish'],
   groups: [
     {
       name: 'pages',
@@ -65,13 +67,13 @@ export default {
               name: 'name',
               title: 'Name',
               type: 'string',
-              validation: (Rule) => Rule.required()
+              validation: (Rule: Rule) => Rule.required()
             },
             {
               name: 'url',
               title: 'URL',
               type: 'string',
-              validation: (Rule) =>
+              validation: (Rule: Rule) =>
                 Rule.regex(/^\/.*|^https?:\/\/.*/).required()
             },
             {
@@ -106,14 +108,14 @@ export default {
               name: 'icon',
               title: 'Icon',
               type: 'string',
-              validation: (Rule) => Rule.required()
+              validation: (Rule: Rule) => Rule.required()
             },
             {
               name: 'iconSize',
               title: 'Icon Size',
               type: 'number',
               initialValue: 20,
-              validation: (Rule) => Rule.min(10).max(30).required(),
+              validation: (Rule: Rule) => Rule.min(10).max(30).required(),
               description: 'Size adjustment in pixels'
             },
             {
@@ -122,7 +124,7 @@ export default {
               type: 'number',
               initialValue: 0,
               description: 'Rotation in degrees',
-              validation: (Rule) => Rule.min(0).max(360).required()
+              validation: (Rule: Rule) => Rule.min(0).max(360).required()
             }
           ]
         }

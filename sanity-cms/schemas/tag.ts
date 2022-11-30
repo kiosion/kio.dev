@@ -1,3 +1,5 @@
+import type { Rule } from 'sanity';
+
 export default {
   name: 'tag',
   title: 'Tags',
@@ -7,7 +9,7 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'slug',
@@ -17,7 +19,7 @@ export default {
         source: 'title',
         maxLength: 96
       },
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'desc',

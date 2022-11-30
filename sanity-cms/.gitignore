@@ -6,3 +6,21 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Compiled studio
+/dist
+
+# Temp runtime
+/.sanity
+
+# Logs
+/logs
+*.log
+
+# Coverage
+/coverage
+
+# Misc
+.DS_Store
+*.pem
+*.tsbuildinfo

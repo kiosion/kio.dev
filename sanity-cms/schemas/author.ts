@@ -1,9 +1,10 @@
 import { BsFillPersonFill } from 'react-icons/bs';
-import React from 'react';
+import type { Rule } from 'sanity';
+// import React from 'react';
 
-const highlightRender = (props) => (
-  <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
-);
+// const highlightRender = (props) => (
+//   <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
+// );
 
 export default {
   name: 'author',
@@ -15,7 +16,7 @@ export default {
       name: 'name',
       title: 'Name',
       type: 'string',
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'slug',
@@ -25,7 +26,7 @@ export default {
         source: 'name',
         maxLength: 96
       },
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'image',
@@ -50,11 +51,11 @@ export default {
               { title: 'Code', value: 'code' },
               {
                 title: 'Highlight',
-                value: 'highlight',
-                blockEditor: {
-                  icon: () => 'H',
-                  render: highlightRender
-                }
+                value: 'highlight'
+                // blockEditor: {
+                //   icon: () => 'H',
+                //   render: highlightRender
+                // }
               }
             ]
           }
@@ -68,7 +69,7 @@ export default {
         { type: 'code' },
         { type: 'divider' }
       ],
-      validation: (Rule) => Rule.required()
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'body',
@@ -85,11 +86,11 @@ export default {
               { title: 'Code', value: 'code' },
               {
                 title: 'Highlight',
-                value: 'highlight',
-                blockEditor: {
-                  icon: () => 'H',
-                  render: highlightRender
-                }
+                value: 'highlight'
+                // blockEditor: {
+                //   icon: () => 'H',
+                //   render: highlightRender
+                // }
               }
             ]
           }
@@ -111,7 +112,7 @@ export default {
               name: 'title',
               title: 'Title',
               type: 'string',
-              validation: (Rule) => Rule.required()
+              validation: (Rule: Rule) => Rule.required()
             },
             {
               name: 'subtitle',
@@ -130,7 +131,7 @@ export default {
                   options: {
                     dateFormat: 'MMMM Do, YYYY'
                   },
-                  validation: (Rule) => Rule.required()
+                  validation: (Rule: Rule) => Rule.required()
                 },
                 {
                   name: 'end',
@@ -168,11 +169,11 @@ export default {
                       { title: 'Code', value: 'code' },
                       {
                         title: 'Highlight',
-                        value: 'highlight',
-                        blockEditor: {
-                          icon: () => 'H',
-                          render: highlightRender
-                        }
+                        value: 'highlight'
+                        // blockEditor: {
+                        //   icon: () => 'H',
+                        //   render: highlightRender
+                        // }
                       }
                     ]
                   }
@@ -183,11 +184,5 @@ export default {
         }
       ]
     }
-  ],
-  preview: {
-    select: {
-      title: 'name',
-      media: 'image'
-    }
-  }
+  ]
 };
