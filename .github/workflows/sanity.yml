@@ -30,7 +30,7 @@ jobs:
       #   run: (cd ./sanity-cms && yarn lint)
 
       - name: Build for development
-        run: (cd ./sanity-cms && SANITY_STUDIO_API_DATASET="dev" yarn sanity build)
+        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" yarn sanity build)
       
       - name: Deploy development studio
         env:

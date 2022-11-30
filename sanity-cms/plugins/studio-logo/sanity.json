@@ -1,8 +1,0 @@
-{
-  "parts": [
-    {
-      "implements": "part:@sanity/base/brand-logo",
-      "path": "./Logo.js"
-    }
-  ]
-}
