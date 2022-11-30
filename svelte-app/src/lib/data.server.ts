@@ -1,4 +1,5 @@
-import { ENV, REMOTE_API_TOKEN } from '$lib/env';
+import { ENV } from '$lib/env';
+import { REMOTE_API_TOKEN } from '$lib/env.server';
 import Logger from '$lib/logger';
 
 export type ResponseOrError =

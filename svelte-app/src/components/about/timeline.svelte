@@ -6,6 +6,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import { slide } from 'svelte/transition';
   import { t, currentLang } from '$i18n';
+  import Tags from '$components/tags.svelte';
 
   let selected: number | null = null;
 
@@ -16,7 +17,6 @@
       const startDate = new Date(start),
         endDate = end ? new Date(end) : undefined;
 
-      // If no end date, show '<date> - now'
       if (!endDate) {
         return `${new Intl.DateTimeFormat($currentLang, {
           month: 'short',
@@ -24,9 +24,7 @@
         }).format(startDate)} - ${t('now')}`;
       }
 
-      // Else, if the dates fall within the same year
       if (startDate.getFullYear() === endDate.getFullYear()) {
-        // If months are also the same
         if (startDate.getMonth() === endDate.getMonth()) {
           return `${new Intl.DateTimeFormat($currentLang, {
             month: 'short',
@@ -43,7 +41,6 @@
         }).format(endDate)} ${endDate.getFullYear()}`;
       }
 
-      // Else, if the dates fall within different years
       return `${new Intl.DateTimeFormat($currentLang, {
         month: 'short',
         year: 'numeric'
@@ -105,20 +102,12 @@
                 {#if selected === i && item.body}
                   <div class="font-sans text-base">
                     {#if item.skills}
-                      <div
-                        class="flex flex-row justify-start items-center gap-2 my-2 select-none"
-                        in:slide={{ duration: 150 }}
-                        out:slide={{ duration: 150 }}
-                      >
-                        {#each item.skills as skill}
-                          <a
-                            href="/work/+/{skill.slug.current}"
-                            class="categoryTag-sm"
-                          >
-                            {skill.title}
-                          </a>
-                        {/each}
-                      </div>
+                      <Tags
+                        model="project"
+                        data={item.skills}
+                        classes="my-2 select-none"
+                        animate
+                      />
                     {/if}
                     <div
                       class="mt-3"

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 export const ENV: string = import.meta.env.MODE || import.meta.env.CONTEXT;
 export const BASE_URL = '/';
 export const API_URL = `${BASE_URL}api/`;
@@ -15,9 +14,3 @@ export const REMOTE_CDN_URL =
     : ENV === 'backed'
     ? 'https://dev.kio.sh/cdn'
     : 'http://localhost:4444/cdn';
-export const REMOTE_API_TOKEN: string =
-  ENV === 'production'
-    ? import.meta.env.VITE_API_TOKEN
-    : import.meta.env.VITE_DEV_API_TOKEN;
-export const SANITY_DATASET = ENV === 'production' ? 'production' : 'dev';
-export const SANITY_PROJECT_ID = 'gkgnfulv';

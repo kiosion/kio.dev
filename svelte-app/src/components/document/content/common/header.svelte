@@ -15,6 +15,7 @@
   import { getTotalWords } from '$lib/helpers/pt';
   import { t } from '$i18n';
   import type { PostDocument, ProjectDocument } from '$types';
+  import Tags from '$components/tags.svelte';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
@@ -61,19 +62,7 @@
       </svelte:fragment>
       <svelte:fragment slot="tags">
         {#if data.tags}
-          <div class="flex flex-row justify-start items-center gap-2">
-            {#each data.tags as tag}
-              <Hoverable>
-                <a
-                  href="/{model === 'post' ? 'blog' : 'work'}/+/{tag.slug
-                    .current}"
-                  class="categoryTag"
-                >
-                  {tag.title}
-                </a>
-              </Hoverable>
-            {/each}
-          </div>
+          <Tags {model} data={data.tags} size="lg" />
         {/if}
       </svelte:fragment>
       <svelte:fragment slot="desc">
@@ -88,14 +77,14 @@
           {#if data.author?.name}
             <Hoverable>
               <button
-                class="flex flex-row gap-2 items-center font-mono text-base select-none"
+                class="flex flex-row gap-2 items-center font-mono text-base"
                 on:click={() => goto('/about')}
                 tabindex="0"
               >
                 <div class="h-8 aspect-square">
                   {#if pfpRef && pfpCrop}
                     <img
-                      class="rounded-full aspect-square h-full"
+                      class="rounded-full aspect-square h-full select-none"
                       src={urlFor(pfpRef)
                         .size(50, 50)
                         .rect(
@@ -121,7 +110,7 @@
             </Hoverable>
             <BulletPoint />
           {:else if external}
-            <div class="items-center font-mono text-base select-none">
+            <div class="items-center font-mono text-base">
               <p class="w-fit whitespace-nowrap">
                 {t('By {author}', {
                   author: authorName
@@ -132,7 +121,7 @@
           {/if}
           <Hoverable>
             <button
-              class="inline font-mono text-base cursor-pointer select-none"
+              class="inline font-mono text-base cursor-pointer"
               on:click={() => switchDate()}
               tabindex="0"
             >
@@ -142,7 +131,7 @@
           {#if model === 'post'}
             <BulletPoint />
             <p
-              class="font-mono text-base"
+              class="font-mono text-base cursor-default"
               role="button"
               aria-label="Reading time"
             >

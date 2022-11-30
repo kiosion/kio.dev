@@ -7,6 +7,7 @@
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
   import Icon from '@iconify/svelte';
+  import Tags from '$components/tags.svelte';
 
   export let project: ProjectDocument;
 
@@ -101,19 +102,9 @@
         </p>
         {#if project.tags}
           <BulletPoint />
-          <div class="flex flex-row justify-start items-center gap-2 flex-wrap">
-            {#each project.tags as tag}
-              <a
-                href={linkTo(`/work/+/${tag.slug.current}`)}
-                class="categoryTag-sm"
-              >
-                {tag.title}
-              </a>
-            {/each}
-          </div>
+          <Tags model="project" data={project.tags} />
         {/if}
       </div>
-      <!-- Description -->
       <div class="">
         {#if project.desc}
           <p

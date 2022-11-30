@@ -8,6 +8,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import Tags from '$components/tags.svelte';
 
   export let post: PostDocument;
 
@@ -51,17 +52,7 @@
         <p>{`${Math.floor(readingTime / 60)} min read`}</p>
         {#if post.tags}
           <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
-          <div class="flex flex-row flex-wrap items-center justify-start gap-2">
-            {#each post.tags as tag}
-              <a
-                data-sveltekit-prefetch
-                href={linkTo(`/blog/+/${tag.slug.current}`)}
-                class="categoryTag-sm"
-              >
-                {tag.title}
-              </a>
-            {/each}
-          </div>
+          <Tags model="post" data={post.tags} />
         {/if}
       </div>
       <h1
