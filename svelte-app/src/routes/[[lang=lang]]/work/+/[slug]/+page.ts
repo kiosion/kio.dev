@@ -19,7 +19,8 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   const allTags: ResDataMany<DocumentTags> | undefined =
     await Store.find<DocumentTags>(fetch, 'tag', {
-      type: 'project'
+      type: 'project',
+      limit: 0
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;
@@ -27,11 +28,15 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   if (
     !allTags?.data?.some(
-      (tag) => tag.slug.current === params.slug || tag.title === params.slug
+      (tag) =>
+        tag.slug.current?.toLowerCase() === params.slug?.toLowerCase() ||
+        tag.title?.toLowerCase() === params.slug?.toLowerCase()
     )
   ) {
     Logger.info('Tag not found', params.slug);
-    Logger.info(allTags?.data ?? 'No tags found');
+    if (!allTags?.data) {
+      console.warn('Failed to fetch tags');
+    }
     throw error(404, {
       message: "Sorry, that tag couldn't be found or doesn't exist"
     });

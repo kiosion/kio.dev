@@ -40,6 +40,10 @@
 
   $: pfpRef = data.author?.image?.asset?._ref;
   $: pfpCrop = pfpRef && getCrop(data.author?.image);
+  $: external = model === 'project' && (data as ProjectDocument).external;
+  $: authorName = external
+    ? (data as ProjectDocument).externalAuthor ?? 'Unknown'
+    : data.author?.name ?? 'Unknown';
 </script>
 
 <div class="mb-4" data-test-id="{model}-header">
@@ -81,40 +85,51 @@
       </svelte:fragment>
       <svelte:fragment slot="meta">
         <div class="flex flex-row items-center justify-start mt-6">
-          <Hoverable>
-            <button
-              class="flex flex-row gap-2 items-center font-mono text-base select-none"
-              on:click={() => goto('/about')}
-              tabindex="0"
-            >
-              <div class="h-8 aspect-square">
-                {#if pfpRef && pfpCrop}
-                  <img
-                    class="rounded-full aspect-square h-full"
-                    src={urlFor(pfpRef)
-                      .size(50, 50)
-                      .rect(
-                        pfpCrop.left,
-                        pfpCrop.top,
-                        pfpCrop.width,
-                        pfpCrop.height
-                      )
-                      .fit('crop')
-                      .format('webp')
-                      .url()}
-                    alt="Profile pic"
-                    draggable="false"
-                  />
-                {/if}
-              </div>
+          {#if data.author?.name}
+            <Hoverable>
+              <button
+                class="flex flex-row gap-2 items-center font-mono text-base select-none"
+                on:click={() => goto('/about')}
+                tabindex="0"
+              >
+                <div class="h-8 aspect-square">
+                  {#if pfpRef && pfpCrop}
+                    <img
+                      class="rounded-full aspect-square h-full"
+                      src={urlFor(pfpRef)
+                        .size(50, 50)
+                        .rect(
+                          pfpCrop.left,
+                          pfpCrop.top,
+                          pfpCrop.width,
+                          pfpCrop.height
+                        )
+                        .fit('crop')
+                        .format('webp')
+                        .url()}
+                      alt="Profile pic"
+                      draggable="false"
+                    />
+                  {/if}
+                </div>
+                <p class="w-fit whitespace-nowrap">
+                  {t('By {author}', {
+                    author: authorName
+                  })}
+                </p>
+              </button>
+            </Hoverable>
+            <BulletPoint />
+          {:else if external}
+            <div class="items-center font-mono text-base select-none">
               <p class="w-fit whitespace-nowrap">
                 {t('By {author}', {
-                  author: data.author?.name ? data.author.name : 'Unknown'
+                  author: authorName
                 })}
               </p>
-            </button>
-          </Hoverable>
-          <BulletPoint />
+            </div>
+            <BulletPoint />
+          {/if}
           <Hoverable>
             <button
               class="inline font-mono text-base cursor-pointer select-none"

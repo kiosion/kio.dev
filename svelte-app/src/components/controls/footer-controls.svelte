@@ -9,10 +9,9 @@
   import { page } from '$app/stores';
   import SFX from '$lib/sfx';
 
-  let scrollNavHovered = false;
-
-  $: langLink = linkTo($page.url.pathname, $currentLang === 'en' ? 'fr' : 'en');
-  $: langText = $currentLang === 'en' ? 'Fr' : 'En';
+  let scrollNavHovered = false,
+    enHover = false,
+    frHover = false;
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
@@ -53,8 +52,11 @@
             class="flex flex-row justify-end items-center gap-1 w-52 font-code text-base"
           >
             <span class="select-none cursor-default">{t('Language')} (</span>
-            <Hoverable>
+            <Hoverable bind:hovered={enHover}>
               <a
+                class="{enHover
+                  ? 'underline'
+                  : ''} decoration-emerald-300 decoration-2"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[0]
                 })}
@@ -77,8 +79,11 @@
               </a>
             </Hoverable>
             <span class="select-none cursor-default">/</span>
-            <Hoverable>
+            <Hoverable bind:hovered={frHover}>
               <a
+                class="{frHover
+                  ? 'underline'
+                  : ''} decoration-emerald-300 decoration-2"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[1]
                 })}

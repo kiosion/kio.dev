@@ -6,6 +6,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import Icon from '@iconify/svelte';
 
   export let project: ProjectDocument;
 
@@ -17,9 +18,13 @@
 
     if (!e || e.target === self) {
       e?.preventDefault();
-      goto(linkTo(`/work/${project.slug.current}`) as string).catch(
-        () => undefined
-      );
+      if (external) {
+        window.open(link, '_blank');
+      } else {
+        goto(linkTo(`/work/${project.slug.current}`) as string).catch(
+          () => undefined
+        );
+      }
     }
   };
 
@@ -30,6 +35,28 @@
   };
 
   $: date = getShortDate(project.date);
+  $: external = project.external;
+  $: link = (() => {
+    return external && project.externalUrl
+      ? project.externalUrl
+      : linkTo(`/work/${project.slug.current}`);
+  })();
+  $: externalProvider = (() => {
+    if (external && project.externalUrl) {
+      const match = new RegExp(`(${['github', 'gitlab'].join('|')})\\.*`, 'i');
+      return project.externalUrl?.match(match)?.[1]?.toLowerCase();
+    }
+  })();
+  $: iconName = ((name) => {
+    switch (name) {
+      case 'github':
+        return 'fa-brands:github';
+      case 'gitlab':
+        return 'fa-brands:gitlab';
+      default:
+        return 'mdi:link-variant';
+    }
+  })(externalProvider);
 </script>
 
 <Hoverable bind:hovered>
@@ -41,15 +68,23 @@
     tabindex="0"
     role="button"
     aria-label="{t('Project')} - {project.title}"
-    href={linkTo(`/work/${project.slug.current}`)}
+    href={link}
+    target={external ? '_blank' : undefined}
     data-sveltekit-prefetch
     on:click={onClick}
     on:keydown={onKey}
     bind:this={self}
   >
     <div class="flex flex-col gap-y-3 p-3">
-      <!-- Title / date / tags -->
-      <div class="w-full flex flex-col items-center justify-start">
+      {#if external && iconName}
+        <Icon
+          class="absolute mt-5 mr-5 top-0 right-0"
+          icon={iconName}
+          width="22"
+          height="22"
+        />
+      {/if}
+      <div class="w-full flex flex-row items-center justify-start">
         <h1
           class="w-full overflow-hidden whitespace-nowrap text-ellipsis line-clamp-1 font-display font-bold text-2xl decoration-[3px] decoration-emerald-300 {hovered
             ? 'underline'
@@ -58,7 +93,9 @@
           {project.title}
         </h1>
       </div>
-      <div class="w-full flex flex-row items-center justify-start">
+      <div
+        class="w-full flex flex-row flex-wrap gap-y-2 items-center justify-start"
+      >
         <p class="font-sans text-base text-slate-700 dark:text-slate-200">
           {date}
         </p>
