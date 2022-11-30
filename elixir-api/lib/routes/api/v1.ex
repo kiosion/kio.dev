@@ -183,7 +183,7 @@ defmodule Router.Api.V1 do
   get "#{@query_url}/tags" do
     start = System.system_time(:millisecond)
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{"type" => nil, "limit" => 10, "skip" => 0, "s" => "asc", "o" => "title"})
+    |> validate_query_params(%{"type" => nil, "limit" => 10, "skip" => 0, "s" => "title", "o" => "asc"})
 
     params = Enum.reduce(params, %{}, fn {key, value}, acc ->
       if key in ["limit", "skip"] do

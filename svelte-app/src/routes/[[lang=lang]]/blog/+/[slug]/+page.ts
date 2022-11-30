@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
@@ -9,7 +9,7 @@ export const prerender = false;
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   if (params.slug === '') {
-    throw redirect(301, '/blog/');
+    throw redirect(301, params.lang === 'fr' ? '/fr/blog/' : '/blog/');
   }
 
   await parent();
@@ -22,10 +22,6 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       return undefined;
     });
 
-  if (!allTags) {
-    Logger.error('Failed to fetch tags from Store');
-  }
-
   if (
     !allTags?.data?.some(
       (tag) => tag.slug.current === params.slug || tag.title === params.slug
@@ -34,7 +30,9 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     Logger.info('Tag not found', params.slug);
     Logger.info(allTags?.data ?? 'No tags found');
     // TODO: Find i18n alternative since linkTo can't work outside client component ctx
-    throw redirect(301, params?.lang === 'fr' ? '/fr/blog' : '/blog');
+    throw error(404, {
+      message: "Sorry, that tag couldn't be found or doesn't exist"
+    });
   }
 
   const posts: ResDataMany<PostDocument> | undefined =

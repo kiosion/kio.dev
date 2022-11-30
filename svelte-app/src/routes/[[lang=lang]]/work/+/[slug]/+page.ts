@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import Logger from '$lib/logger';
 import {
   PAGINATION_PROJECTS_PER_PAGE,
@@ -12,7 +12,7 @@ export const prerender = false;
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   if (params.slug === '') {
-    throw redirect(301, '/work/');
+    throw redirect(301, params.lang === 'fr' ? '/fr/work/' : '/work/');
   }
 
   await parent();
@@ -32,7 +32,9 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
   ) {
     Logger.info('Tag not found', params.slug);
     Logger.info(allTags?.data ?? 'No tags found');
-    throw redirect(301, params?.lang === 'fr' ? '/fr/work' : '/work');
+    throw error(404, {
+      message: "Sorry, that tag couldn't be found or doesn't exist"
+    });
   }
 
   const projects: ResDataMany<ProjectDocument> | undefined =
