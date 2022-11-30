@@ -46,6 +46,12 @@ export default {
       to: { type: 'author' }
     },
     {
+      name: 'externalAuthor',
+      title: 'External Author',
+      type: 'string',
+      description: 'Name of external author, if applicable'
+    },
+    {
       name: 'image',
       title: 'Project Image',
       type: 'image',

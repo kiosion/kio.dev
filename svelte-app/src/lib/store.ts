@@ -61,6 +61,7 @@ class StoreClass extends CacheClass {
       const res = await fetch(url);
       const response = (await res.json()) as ResDataMany<T> & ResError;
       if (!response.meta || response.error) {
+        console.log('got error res:', response);
         Logger.error('Failed to get data', 'store/query');
         return;
       }
@@ -85,7 +86,7 @@ class StoreClass extends CacheClass {
       const res = await fetch(url);
       const response = (await res.json()) as ResData<T> & ResError;
       if (!response.meta || response.error) {
-        Logger.error('Failed to get projects', 'store/queryOne');
+        Logger.error('Failed to get data', 'store/queryOne');
         return;
       }
       return response as ResData<T>;

@@ -1,7 +1,19 @@
 import type { Document, DocumentTags } from '$types/documents';
 import type { SanityImageObject, SanityAsset } from '$types/sanity';
 
-export interface ProjectDocument extends Document {
+type IsExternal =
+  | {
+      external: true;
+      externalUrl: string;
+      externalAuthor: string;
+    }
+  | {
+      external: false;
+      externalUrl: never;
+      externalAuthor: never;
+    };
+
+export interface ProjectDocument extends Document, IsExternal {
   author?: {
     _id: string;
     _type: string;
@@ -13,9 +25,8 @@ export interface ProjectDocument extends Document {
   image?: SanityImageObject;
   tags?: DocumentTags[];
   title: string;
-  external?: boolean;
-  externalUrl?: string;
   externalLinks?: {
+    _key: string;
     title: string;
     url: string;
   }[];

@@ -6,13 +6,23 @@ export const GET: RequestHandler = async ({
   url,
   params
 }: RequestEvent): Promise<Response> => {
-  const many = !!params.many;
+  const many = !!params.many,
+    type = url.searchParams.get('type');
 
-  if (!many && !url.searchParams.get('id')) {
+  if (!many) {
     return new Response(
       JSON.stringify({
         status: 400,
-        error: 'Endpoint error: Missing required parameter: id'
+        error: 'Endpoint error: method not supported for single items'
+      })
+    );
+  }
+
+  if (!['project', 'post'].includes(type ?? '')) {
+    return new Response(
+      JSON.stringify({
+        status: 400,
+        error: 'Endpoint error: Missing or invalid required parameter: type'
       }),
       {
         headers: {
@@ -22,15 +32,7 @@ export const GET: RequestHandler = async ({
     );
   }
 
-  const endpoint = many
-      ? `${REMOTE_API_URL}/query/projects?${url.searchParams}`
-      : `${REMOTE_API_URL}/query/project/${
-          url.searchParams.get('id') ||
-          Buffer.from(
-            (url.searchParams.get('idb') as string) || '',
-            'base64'
-          ).toString('utf-8')
-        }`,
+  const endpoint = new URL(`${REMOTE_API_URL}/query/tags?${url.searchParams}`),
     remoteRes = await fetchRemote({ endpoint });
 
   if (remoteRes instanceof Error) {
@@ -47,5 +49,9 @@ export const GET: RequestHandler = async ({
     );
   }
 
-  return new Response(JSON.stringify(remoteRes));
+  return new Response(JSON.stringify(remoteRes), {
+    headers: {
+      'content-type': 'application/json; charset=utf-8'
+    }
+  });
 };

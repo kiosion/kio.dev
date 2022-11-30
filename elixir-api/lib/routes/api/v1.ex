@@ -60,6 +60,8 @@ defmodule Router.Api.V1 do
     |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "date", "o" => "desc", "date" => nil, "tags" => nil })
 
     # Convert 'limit' / 'skip' to integers only if they're not nil and not already integers
+    # Using String.to_int is fine here even though it throws, since without a limit/skip it's not a valid request
+    # TODO: This is a bit messy, clean it up / turn into fn (... validateInts?)
     params = Enum.reduce(params, %{}, fn {key, value}, acc ->
       if key in ["limit", "skip"] do
         if value != nil and not is_integer(value) do
@@ -75,7 +77,11 @@ defmodule Router.Api.V1 do
     params = Map.update(params, "date", nil, &if(&1 == "", do: nil, else: &1))
 
     query = BuildQuery.postMany(params["date"], params["tags"])
-    query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["limit"] + params["skip"]}]"
+    query_limited = if params["limit"] > 0 do
+      query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    else
+      query <> " | order(#{params["s"]} #{params["o"]})"
+    end
 
     case Sanity.fetch(query_limited) do
       {:ok, result} ->
@@ -130,15 +136,26 @@ defmodule Router.Api.V1 do
     params = fetch_query_params(conn).query_params
     |> validate_query_params(%{"limit" => 10, "skip" => 0, "s" => "date", "o" => "desc", "date" => nil, "tags" => nil })
 
-    # Convert 'limit' / 'skip' to integers
-    params = Map.update(params, "limit", 10, &String.to_integer/1)
-    params = Map.update(params, "skip", 0, &String.to_integer/1)
+    params = Enum.reduce(params, %{}, fn {key, value}, acc ->
+      if key in ["limit", "skip"] do
+        if value != nil and not is_integer(value) do
+          Map.put(acc, key, String.to_integer(value))
+        else
+          Map.put(acc, key, value)
+        end
+      else
+        Map.put(acc, key, value)
+      end
+    end)
 
-    # If date is '', set to nil
     params = Map.update(params, "date", nil, &if(&1 == "", do: nil, else: &1))
 
     query = BuildQuery.projectMany(params["date"], params["tags"])
-    query_limited = query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    query_limited = if params["limit"] > 0 do
+      query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    else
+      query <> " | order(#{params["s"]} #{params["o"]})"
+    end
 
     case Sanity.fetch(query_limited) do
       {:ok, result} ->
@@ -168,8 +185,24 @@ defmodule Router.Api.V1 do
     params = fetch_query_params(conn).query_params
     |> validate_query_params(%{"type" => nil, "limit" => 10, "skip" => 0, "s" => "asc", "o" => "title"})
 
+    params = Enum.reduce(params, %{}, fn {key, value}, acc ->
+      if key in ["limit", "skip"] do
+        if value != nil and not is_integer(value) do
+          Map.put(acc, key, String.to_integer(value))
+        else
+          Map.put(acc, key, value)
+        end
+      else
+        Map.put(acc, key, value)
+      end
+    end)
+
     query = BuildQuery.tags(params["type"])
-    query_limited = query <> " | order(#{params["o"]} #{params["s"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    query_limited = if params["limit"] > 0 do
+      query <> " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    else
+      query <> " | order(#{params["s"]} #{params["o"]})"
+    end
 
     case Sanity.fetch(query_limited) do
       {:ok, result} ->

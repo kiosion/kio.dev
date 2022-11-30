@@ -93,6 +93,10 @@ defmodule Hexerei.BuildQuery do
         body,
         desc,
         date,
+        external,
+        externalAuthor,
+        externalLinks,
+        externalUrl,
         image,
         tags[]->{
           _id,
@@ -122,6 +126,10 @@ defmodule Hexerei.BuildQuery do
         body,
         desc,
         date,
+        external,
+        externalAuthor,
+        externalLinks,
+        externalUrl,
         image,
         'tags': tags[]->{
           _id,

@@ -6,18 +6,34 @@ import {
 } from '$lib/consts';
 import Store from '$lib/store';
 import type { PageLoad } from './$types';
-import type { ResDataMany, ProjectDocument } from '$types';
+import type { ResDataMany, ProjectDocument, DocumentTags } from '$types';
 
 export const prerender = false;
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   if (params.slug === '') {
-    throw redirect(301, '/blog/');
+    throw redirect(301, '/work/');
   }
 
   await parent();
 
-  // TODO: Check if this is a valid tag or not before querying!
+  const allTags: ResDataMany<DocumentTags> | undefined =
+    await Store.find<DocumentTags>(fetch, 'tag', {
+      type: 'project'
+    }).catch((err: unknown) => {
+      Logger.error(err as string);
+      return undefined;
+    });
+
+  if (
+    !allTags?.data?.some(
+      (tag) => tag.slug.current === params.slug || tag.title === params.slug
+    )
+  ) {
+    Logger.info('Tag not found', params.slug);
+    Logger.info(allTags?.data ?? 'No tags found');
+    throw redirect(301, params?.lang === 'fr' ? '/fr/work' : '/work');
+  }
 
   const projects: ResDataMany<ProjectDocument> | undefined =
     await Store.find<ProjectDocument>(fetch, 'project', {
