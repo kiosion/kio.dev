@@ -200,7 +200,7 @@ defmodule Hexerei.BuildQuery do
   # Fetch 'about' page content
   def about do
     "
-      *[!(_id in path('drafts.**')) && _type == 'author']{
+      *[!(_id in path('drafts.**')) && _type == 'author' && _id == 'me']{
         _id,
         'objectID': _id,
         _rev,
@@ -219,8 +219,7 @@ defmodule Hexerei.BuildQuery do
           body
         },
         image,
-        name,
-        slug
+        name
       }[0]
     " |> strip()
   end
