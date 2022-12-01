@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PortableText } from '@portabletext/svelte';
+  import { t } from '$i18n';
   import CustomHeading from './serializers/custom-heading.svelte';
   import CustomLink from './serializers/custom-link.svelte';
   import CodeBlock from './serializers/code-block.svelte';
@@ -8,12 +9,52 @@
   import CustomQuote from './serializers/custom-quote.svelte';
   import CustomHighlight from './serializers/custom-highlight.svelte';
   import Divider from './serializers/divider.svelte';
-
-  import type { InputValue } from '@portabletext/svelte/ptTypes';
+  import OlWrapper from './serializers/ol-wrapper.svelte';
+  import UlWrapper from './serializers/ul-wrapper.svelte';
+  import OlItem from './serializers/ol-item.svelte';
+  import UlItem from './serializers/ul-item.svelte';
   import Image from './serializers/image.svelte';
+  import Footnote from './footnote.svelte';
+  import Icon from '$components/icon.svelte';
+  import type {
+    ArbitraryTypedObject,
+    PortableTextBlock,
+    PortableTextMarkDefinition
+  } from '@portabletext/types';
 
-  export let text: InputValue;
-  export let plainText = false;
+  interface FootnoteProps extends PortableTextMarkDefinition {
+    _key: string;
+    note: PortableTextBlock[];
+  }
+
+  export let text: (PortableTextBlock | ArbitraryTypedObject)[],
+    plainText = false;
+
+  const customScrollTo = (event: Event, id: string) => {
+    event.preventDefault();
+    const element = document.querySelector(`#${id}`);
+    if (element) {
+      window.history.pushState(null, '', `#${id}`);
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  $: footnotes = ((text: (PortableTextBlock | ArbitraryTypedObject)[]) => {
+    if (!text) {
+      return [];
+    }
+    return text?.reduce((notes, currentBlock): FootnoteProps[] => {
+      if (currentBlock._type !== 'block' || !currentBlock.markDefs?.length) {
+        return notes;
+      }
+      return [
+        ...notes,
+        ...currentBlock.markDefs.filter(
+          (def: PortableTextMarkDefinition) => def._type === 'footnote'
+        )
+      ];
+    }, [] as FootnoteProps[]);
+  })(text);
 </script>
 
 {#if text}
@@ -40,7 +81,8 @@
         marks: {
           link: CustomLink,
           code: CustomCode,
-          highlight: CustomHighlight
+          highlight: CustomHighlight,
+          footnote: Footnote
         },
         block: {
           h1: CustomHeading,
@@ -51,9 +93,44 @@
           normal: CustomParagraph,
           blockquote: CustomQuote
         },
-        list: {},
-        listItem: {}
+        list: {
+          bullet: UlWrapper,
+          number: OlWrapper
+        },
+        listItem: {
+          bullet: UlItem,
+          number: OlItem
+        }
+      }}
+      context={{
+        footnotes
       }}
     />
+    {#if footnotes?.length}
+      <div class="footnotes mt-8">
+        <h3 class="block font-display text-2xl font-bold mb-6">
+          {t('Footnotes')}
+        </h3>
+        <ol class="list-decimal ml-6 leading-8">
+          {#each footnotes as note}
+            <li class="list-item">
+              {note.note}
+              <a
+                class="inline ml-1"
+                id={`note-${note._key}`}
+                href={`#src-${note._key}`}
+                aria-label={t('Go to footnote source')}
+                on:click={(e) => customScrollTo(e, `src-${note._key}`)}
+                on:keydown={(e) => {
+                  if (e.code === 'Space' || e.code === 'Enter') {
+                    customScrollTo(e, `src-${note._key}`);
+                  }
+                }}><Icon icon="arrow-bar-up" width={18} inline /></a
+              >
+            </li>
+          {/each}
+        </ol>
+      </div>
+    {/if}
   {/if}
 {/if}

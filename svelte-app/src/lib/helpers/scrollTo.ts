@@ -9,12 +9,6 @@ const attemptScroll = (page: PageStore, scrollParams = {}) => {
       document.getElementById(hash.slice(1)) ||
       document.getElementById(`heading-${hash.slice(1)}`);
     if (target) {
-      // console.log('target offset:', target.offsetTop);
-      // window.scrollTo({
-      //   top: Math.min(0, target.offsetTop - 80),
-      //   behavior: 'smooth',
-      //   ...scrollParams
-      // });
       target.scrollIntoView({
         behavior: 'smooth',
         block: 'center',

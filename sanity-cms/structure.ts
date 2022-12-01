@@ -4,16 +4,15 @@ import {
   BsFillFileImageFill,
   BsFillTagsFill,
   BsGearFill,
-  BsChatFill
+  BsFillChatLeftTextFill,
+  BsListUl,
+  BsShieldFillCheck,
+  BsShieldFillExclamation,
+  BsFillFileTextFill,
+  BsFillFileEarmarkTextFill
 } from 'react-icons/bs';
+import { BiLinkExternal } from 'react-icons/bi';
 import type { StructureBuilder, StructureResolverContext } from 'sanity/desk';
-
-// export const defaultDocumentNode = (S: StructureBuilder) => {
-//   return S.document().views([
-//     S.view.form(),
-//     S.view.component(JsonPreview).title('JSON')
-//   ]);
-// }
 
 export const structure = (
   S: StructureBuilder,
@@ -22,32 +21,116 @@ export const structure = (
   S.list()
     .title('Content')
     .items([
-      S.listItem().title('Settings').icon(BsGearFill).child(
-        S.document()
-          .title('Site Settings')
-          .schemaType('siteSettings')
-          .documentId('siteSettings')
-        // .views([S.view.form(), S.view.component(JsonPreview).title('JSON')])
-      ),
+      S.listItem()
+        .title('Settings')
+        .icon(BsGearFill)
+        .child(
+          S.document()
+            .title('Site Settings')
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+        ),
       S.divider(),
       S.listItem()
         .title('People')
         .icon(BsPersonFill)
         .child(S.documentTypeList('author')),
       S.listItem()
+        .title('Me')
+        .icon(BsPersonFill)
+        .child(S.document().title('Me').schemaType('author').documentId('me')),
+      S.listItem()
         .title('Posts')
         .icon(BsFillFileRichtextFill)
-        .child(S.documentTypeList('post')),
+        .child(
+          S.list()
+            .title('Posts')
+            .items([
+              S.listItem()
+                .title('Published')
+                .icon(BsFillFileTextFill)
+                .child(
+                  S.documentTypeList('post')
+                    .title('Published')
+                    .filter('_type == "post" && !(_id in path("drafts.**"))')
+                ),
+              S.listItem()
+                .title('Drafts')
+                .icon(BsFillFileEarmarkTextFill)
+                .child(
+                  S.documentTypeList('post')
+                    .title('Drafts')
+                    .filter('_type == "post" && _id in path("drafts.**")')
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All Posts')
+                .icon(BsListUl)
+                .child(S.documentTypeList('post'))
+            ])
+        ),
       S.listItem()
         .title('Projects')
         .icon(BsFillFileImageFill)
-        .child(S.documentTypeList('project')),
+        .child(
+          S.list()
+            .title('Projects')
+            .items([
+              S.listItem()
+                .title('Writeups')
+                .icon(BsFillFileTextFill)
+                .child(
+                  S.documentTypeList('project')
+                    .title('Writeups')
+                    .filter('_type == "project" && !external')
+                ),
+              S.listItem()
+                .title('External')
+                .icon(BiLinkExternal)
+                .child(
+                  S.documentTypeList('project')
+                    .title('External')
+                    .filter('_type == "project" && external == true')
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All Projects')
+                .icon(BsListUl)
+                .child(S.documentTypeList('project'))
+            ])
+        ),
       S.listItem()
         .title('Tags')
         .icon(BsFillTagsFill)
         .child(S.documentTypeList('tag')),
       S.listItem()
         .title('Comments')
-        .icon(BsChatFill)
-        .child(S.documentTypeList('comment'))
+        .icon(BsFillChatLeftTextFill)
+        .child(
+          S.list()
+            .title('Comments')
+            .items([
+              S.listItem()
+                .title('Approved')
+                .icon(BsShieldFillCheck)
+                .child(
+                  S.documentTypeList('comment')
+                    .title('Approved')
+                    .filter('_type == "comment" && approved == true')
+                ),
+              S.listItem()
+                .title('Awaiting approval')
+                .icon(BsShieldFillExclamation)
+                .child(
+                  S.documentTypeList('comment')
+                    .title('Awaiting approval')
+                    .filter('_type == "comment" && !approved')
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All comments')
+                .icon(BsListUl)
+                .child(S.documentTypeList('comment').title('All comments'))
+            ])
+        )
     ]);

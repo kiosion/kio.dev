@@ -5,12 +5,7 @@
   import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
-  import {
-    check as checkTranslations,
-    currentLang,
-    isLocalized,
-    linkTo
-  } from '$i18n';
+  import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import Loader from '$components/loading/full.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav/nav.svelte';

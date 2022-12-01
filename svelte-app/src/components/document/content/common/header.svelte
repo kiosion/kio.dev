@@ -16,6 +16,7 @@
   import { t } from '$i18n';
   import type { PostDocument, ProjectDocument } from '$types';
   import Tags from '$components/tags.svelte';
+  import { fionaPlaceholder } from '$helpers/placeholders';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
@@ -45,6 +46,8 @@
   $: authorName = external
     ? (data as ProjectDocument).externalAuthor ?? 'Unknown'
     : data.author?.name ?? 'Unknown';
+  $: slug = data.slug.current;
+  $: imageSrc = fionaPlaceholder(slug);
 </script>
 
 <div class="mb-4" data-test-id="{model}-header">
@@ -53,6 +56,21 @@
       this={model === 'post' ? PostHeader : ProjectHeader}
       {data}
     >
+      <svelte:fragment slot="image">
+        <div
+          class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
+        >
+          <div
+            class="absolute w-full h-full gradient from-slate-100 dark:from-slate-800 transition-colors"
+          >
+            &nbsp;
+          </div>
+          <div
+            class="w-full aspect-[10/4] bg-cover bg-center"
+            style={`background-image: url("${imageSrc}");`}
+          />
+        </div>
+      </svelte:fragment>
       <svelte:fragment slot="title">
         <h1
           class="w-fit h-fit font-display text-6xl leading-tight font-bold mb-4"
@@ -144,3 +162,13 @@
   </div>
   <Divider />
 </div>
+
+<style lang="scss">
+  .gradient {
+    background: linear-gradient(
+      to top,
+      var(--tw-gradient-from) 5%,
+      var(--tw-gradient-to) 100%
+    );
+  }
+</style>

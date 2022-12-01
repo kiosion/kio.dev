@@ -22,6 +22,32 @@ const possibleColours = [
         end: '#d4e1ec'
       }
     ]
+  },
+  {
+    bg: '#131A40',
+    colors: [
+      {
+        start: '#99B7F9',
+        end: '#829FD9'
+      },
+      {
+        start: '#273273',
+        end: '#131A40'
+      }
+    ]
+  },
+  {
+    bg: '#485487',
+    colors: [
+      {
+        start: '#F593A2',
+        end: '#485487'
+      },
+      {
+        start: '#CF7A48',
+        end: '#E3371E'
+      }
+    ]
   }
 ] as PossibleColours[];
 
@@ -40,7 +66,15 @@ export const fionaPlaceholder = (
     possibleColours[
       Math.floor(Seedrandom(seed?.toString())() * possibleColours.length)
     ];
-  return Fiona(seed).img({
+  const scrambledSeed = seed
+    .toString()
+    .split('')
+    .map((char, i) => {
+      const entropy = Seedrandom(i.toString() + char.toString())();
+      return entropy > 0.4 ? char : char.toUpperCase();
+    })
+    .join('');
+  return Fiona(scrambledSeed).img({
     bg,
     colors,
     ...opts

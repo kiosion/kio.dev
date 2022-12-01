@@ -1,9 +1,5 @@
+import Body from './objects/body';
 import type { Rule } from 'sanity';
-// import React from 'react';
-
-// const highlightRender = (props) => (
-//   <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
-// );
 
 export default {
   name: 'post',
@@ -54,40 +50,7 @@ export default {
       },
       initialValue: () => new Date()
     },
-    {
-      name: 'body',
-      title: 'Body',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-              { title: 'Underline', value: 'underline' },
-              { title: 'Code', value: 'code' },
-              {
-                title: 'Highlight',
-                value: 'highlight'
-                // blockEditor: {
-                //   icon: () => 'H',
-                //   render: highlightRender
-                // }
-              }
-            ]
-          }
-        },
-        {
-          type: 'image',
-          options: {
-            hotspot: true
-          }
-        },
-        { type: 'code' },
-        { type: 'divider' }
-      ]
-    },
+    Body,
     {
       name: 'tags',
       title: 'Tags',

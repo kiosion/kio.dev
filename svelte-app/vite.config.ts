@@ -2,20 +2,20 @@ import { defineConfig } from 'vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
-import path from 'path';
 import dotenv from 'dotenv';
 import svg from '@poppanator/sveltekit-svg';
 
 dotenv.config();
-const viteEnv = {};
+const viteEnv = {} as Record<string, string>;
 Object.keys(process.env).forEach((key) => {
   if (key.startsWith('VITE_')) {
-    viteEnv[`import.meta.env.${key}`] = process.env[key];
+    viteEnv[`import.meta.env.${key}`] = process.env[key] as string;
   }
 });
 
 export default defineConfig({
   plugins: [
+    // @ts-expect-error - svg plugin is not typed properly
     svg(),
     sveltekit(),
     StripTestSelectors({
@@ -34,9 +34,7 @@ export default defineConfig({
     ]
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    },
+    // @ts-expect-error - Need to update this
     define: {
       ...viteEnv
     }

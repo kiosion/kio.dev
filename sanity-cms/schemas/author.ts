@@ -1,10 +1,6 @@
+import Body, { BodyBlocks } from './objects/body';
 import { BsFillPersonFill } from 'react-icons/bs';
 import type { Rule } from 'sanity';
-// import React from 'react';
-
-// const highlightRender = (props) => (
-//   <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
-// );
 
 export default {
   name: 'author',
@@ -19,16 +15,6 @@ export default {
       validation: (Rule: Rule) => Rule.required()
     },
     {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96
-      },
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
       name: 'image',
       title: 'Image',
       type: 'image',
@@ -40,66 +26,10 @@ export default {
       name: 'bio',
       title: 'Bio',
       type: 'array',
-      of: [
-        {
-          type: 'block',
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-              { title: 'Underline', value: 'underline' },
-              { title: 'Code', value: 'code' },
-              {
-                title: 'Highlight',
-                value: 'highlight'
-                // blockEditor: {
-                //   icon: () => 'H',
-                //   render: highlightRender
-                // }
-              }
-            ]
-          }
-        },
-        {
-          type: 'image',
-          options: {
-            hotspot: true
-          }
-        },
-        { type: 'code' },
-        { type: 'divider' }
-      ],
+      of: BodyBlocks,
       validation: (Rule: Rule) => Rule.required()
     },
-    {
-      name: 'body',
-      title: 'Body',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-              { title: 'Underline', value: 'underline' },
-              { title: 'Code', value: 'code' },
-              {
-                title: 'Highlight',
-                value: 'highlight'
-                // blockEditor: {
-                //   icon: () => 'H',
-                //   render: highlightRender
-                // }
-              }
-            ]
-          }
-        },
-        { type: 'image' },
-        { type: 'code' },
-        { type: 'divider' }
-      ]
-    },
+    Body,
     {
       name: 'timeline',
       title: 'Timeline',
@@ -154,32 +84,7 @@ export default {
                 }
               ]
             },
-            {
-              name: 'body',
-              title: 'Body',
-              type: 'array',
-              of: [
-                {
-                  type: 'block',
-                  marks: {
-                    decorators: [
-                      { title: 'Strong', value: 'strong' },
-                      { title: 'Emphasis', value: 'em' },
-                      { title: 'Underline', value: 'underline' },
-                      { title: 'Code', value: 'code' },
-                      {
-                        title: 'Highlight',
-                        value: 'highlight'
-                        // blockEditor: {
-                        //   icon: () => 'H',
-                        //   render: highlightRender
-                        // }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
+            Body
           ]
         }
       ]
