@@ -1,4 +1,4 @@
-import sanityClient from '@sanity/base';
+import { useClient } from 'sanity';
 
 const query = `
   *[ _type in ["sanity.imageAsset", "sanity.fileAsset"] ]
@@ -7,11 +7,11 @@ const query = `
   ._id
 `;
 
-const client = sanityClient.withConfig({ apiVersion: '2022-08-23' });
+const client = useClient({ apiVersion: '2022-08-23' });
 
 client
   .fetch(query)
-  .then((ids) => {
+  .then((ids: any[]) => {
     if (!ids.length) {
       console.log('No assets to delete');
       return true;
