@@ -11,6 +11,13 @@
   }
 }
 
+.focusOutline {
+  @apply focus-visible:outline outline-offset-4 outline-violet-400 dark:outline-violet-300 outline-2;
+  &-sm {
+    @apply focus-visible:outline outline-offset-2 outline-violet-400 dark:outline-violet-300 outline-2;
+  }
+}
+
 body,
 html {
   height: 100vh;
@@ -84,6 +91,13 @@ body {
   button,
   [role='button'] {
     pointer-events: visible;
+  }
+}
+
+.focus:ring-2 {
+  &,
+  &:focus {
+    outline: none !important;
   }
 }
 

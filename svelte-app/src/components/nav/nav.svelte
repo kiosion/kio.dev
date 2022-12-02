@@ -84,7 +84,7 @@
         <!-- Logo -->
         <Hoverable>
           <button
-            class="inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter]"
+            class="inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
             role="menuitem"
             on:click={() => onLogoClick()}
           >
@@ -103,7 +103,7 @@
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-start">
                 <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg"
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline"
                   aria-label={t(link.name)}
                   href={link.url}
                   role="menuitem"
@@ -139,7 +139,7 @@
             <Hoverable>
               <!-- svelte-ignore a11y-missing-attribute -->
               <a
-                class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300"
+                class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline-sm"
                 role="menuitem"
                 aria-label={social.name}
                 {...social.attrs}

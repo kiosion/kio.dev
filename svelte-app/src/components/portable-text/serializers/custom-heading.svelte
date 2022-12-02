@@ -12,7 +12,7 @@
   <a
     class="block {style && ['h1', 'h2'].indexOf(style) !== -1
       ? 'mt-12 mb-6'
-      : 'mt-6 mb-2'}"
+      : 'mt-6 mb-2'} w-fit rounded-sm focusOutline-sm"
     id={`heading-${value._key}`}
     href={`#${value._key}`}
   >

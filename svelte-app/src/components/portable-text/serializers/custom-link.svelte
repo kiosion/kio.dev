@@ -22,7 +22,7 @@
     target={isExt ? '_blank' : undefined}
     class="decoration-emerald-400 dark:decoration-emerald-300 underline underline-offset-auto {hovered
       ? 'decoration-4'
-      : 'decoration-2'}"
+      : 'decoration-2'} rounded-sm focusOutline-sm"
     tabindex="0"
   >
     {plainTextContent}

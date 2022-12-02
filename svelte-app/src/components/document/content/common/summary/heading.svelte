@@ -16,7 +16,7 @@
 
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
   <div
-    class="flex flex-row items-center justify-between py-4 px-4"
+    class="flex flex-row items-center justify-between py-4 px-4 rounded-md focusOutline-sm"
     role="button"
     tabindex="0"
     on:click={(_) => {

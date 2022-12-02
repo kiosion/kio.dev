@@ -23,7 +23,9 @@
 >
   {#each data as tag}
     <Hoverable>
-      <a href={tagLink(tag.slug.current)} class={tagClass}>{tag.title}</a>
+      <a href={tagLink(tag.slug.current)} class="{tagClass} focusOutline-sm"
+        >{tag.title}</a
+      >
     </Hoverable>
   {/each}
 </div>

@@ -39,11 +39,9 @@
 
   const unsubscribe = theme.subscribe(async (res) => {
     if (res === 'light') {
-      hlStyles = (await import('svelte-highlight/styles/ros-pine-dawn'))
-        .default;
+      hlStyles = (await import('svelte-highlight/styles/github')).default;
     } else {
-      hlStyles = (await import('svelte-highlight/styles/ros-pine-moon'))
-        .default;
+      hlStyles = (await import('svelte-highlight/styles/github-dark')).default;
     }
   });
 
@@ -111,7 +109,8 @@
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
-  on:focus={() => (hovered = true)}
+  on:focusin={() => (hovered = true)}
+  on:focusout={() => (hovered = false)}
   on:blur={() => (hovered = false)}
 >
   {#if showClipboard && !$navigating}
@@ -120,7 +119,7 @@
         <button
           class="{hovered
             ? 'opacity-100'
-            : 'opacity-0'} cursor-pointer m-2 p-2 absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+            : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 focusOutline-sm"
           on:click={() => copy()}
           in:fade={{ duration: 100, delay: 100 }}
           out:fade={{ delay: 100, duration: 100 }}
@@ -135,7 +134,7 @@
     </Hoverable>
   {/if}
   <div
-    class="relative z-[4] overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height]"
+    class="relative z-[4] overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
     bind:this={codeContainer}
   >
     <div
@@ -150,7 +149,7 @@
     </div>
   </div>
   <div
-    class="absolute filled top-[-4px] left-[-4px] w-[120%] h-[120%] bg-slate-400 {hovered
+    class="absolute filled -top-[1px] -left-[1px] -right-[1px] -bottom-[1px] w-[calc(100%_+_1px)] h-[calc(100%_+_1px)] bg-slate-400 {hovered
       ? '!opacity-60'
       : ''} opacity-0 rounded-md"
   />

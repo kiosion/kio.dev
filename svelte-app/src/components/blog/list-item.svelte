@@ -32,7 +32,7 @@
     <a
       class="flex flex-col items-stretch justify-stretch w-full h-fit p-4 pl-5 {hovered
         ? 'bg-slate-300/50 dark:bg-slate-700/50'
-        : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color]"
+        : 'bg-slate-200/50 dark:bg-slate-900/50'} rounded-2xl transition-[padding,background-color] focusOutline"
       tabindex="0"
       role="button"
       aria-label="Post - {post.title}"

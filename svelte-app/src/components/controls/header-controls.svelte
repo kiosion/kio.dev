@@ -30,7 +30,7 @@
                 href={linkTo($navOptions.up)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-up'
-                  : ''}"
+                  : ''} rounded-sm focusOutline"
                 on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
@@ -52,7 +52,7 @@
           {#if $pageHeading && $pageHeading !== ''}
             <Hoverable>
               <button
-                class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer"
+                class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline"
                 aria-label="Scroll to top"
                 on:click={() => {
                   SFX.click.play();

@@ -4,8 +4,6 @@
   import Summary from '$components/document/content/common/summary/summary.svelte';
   import type { Heading } from '$helpers/pt';
   import { fly } from 'svelte/transition';
-  import { useMediaQuery } from 'svelte-breakpoints';
-  import { DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
 
   export let headings: Heading[];
 
@@ -39,8 +37,8 @@
   </div>
 {/if}
 
-<Summary {headings} {visible} />
-
 <div class="h-[1px]" bind:this={trigger} />
+
+<Summary {headings} {visible} />
 
 <Divider />

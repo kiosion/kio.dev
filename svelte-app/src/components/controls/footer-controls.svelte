@@ -29,7 +29,7 @@
                   href={linkTo($navOptions.down)}
                   class="w-fit flex flex-row items-center select-none {scrollNavHovered
                     ? 'scroll-hover-down'
-                    : ''}"
+                    : ''} rounded-sm focusOutline"
                   role="button"
                   tabindex="0"
                   on:click={() => SFX.click.play()}
@@ -56,7 +56,7 @@
               <a
                 class="{enHover
                   ? 'underline'
-                  : ''} decoration-emerald-300 decoration-2"
+                  : ''} decoration-emerald-300 decoration-2 rounded-sm focusOutline-sm"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[0]
                 })}
@@ -83,7 +83,7 @@
               <a
                 class="{frHover
                   ? 'underline'
-                  : ''} decoration-emerald-300 decoration-2"
+                  : ''} decoration-emerald-300 decoration-2 rounded-sm focusOutline-sm"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[1]
                 })}

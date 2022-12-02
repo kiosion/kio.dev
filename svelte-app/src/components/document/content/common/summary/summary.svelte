@@ -18,7 +18,7 @@
 </script>
 
 <div
-  class="{hide && 'hidden'} {!visible && 'opacity-0'} rounded-md {floating
+  class="{hide && 'hidden'} rounded-md {floating
     ? expanded
       ? 'bg-slate-200/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-lg'
       : 'bg-slate-200/60 dark:bg-slate-900/60 backdrop-blur-md shadow-lg'

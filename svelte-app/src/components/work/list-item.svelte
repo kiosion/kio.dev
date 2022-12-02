@@ -64,7 +64,7 @@
   <a
     class="relative flex flex-col items-stretch justify-start gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
       ? 'bg-slate-300/50 dark:bg-slate-700/50'
-      : 'bg-slate-200/50 dark:bg-slate-900/50'}"
+      : 'bg-slate-200/50 dark:bg-slate-900/50'} focusOutline"
     data-test-id="list-item"
     tabindex="0"
     role="button"
@@ -79,10 +79,12 @@
     <div class="flex flex-col gap-y-3 p-3">
       {#if external && iconName}
         <Icon
-          class="absolute mt-5 mr-5 top-0 right-0"
+          class="absolute mt-5 mr-5 top-0 right-0 {hovered
+            ? 'border-emerald-300'
+            : 'border-transparent'} rounded-full border-2 p-[2px] s-m-[2px]"
           icon={iconName}
-          width="22"
-          height="22"
+          width="30"
+          height="30"
         />
       {/if}
       <div class="w-full flex flex-row items-center justify-start">

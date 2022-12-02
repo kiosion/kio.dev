@@ -95,7 +95,7 @@
           {#if data.author?.name}
             <Hoverable>
               <button
-                class="flex flex-row gap-2 items-center font-mono text-base"
+                class="flex flex-row gap-2 items-center font-mono text-base rounded-sm focusOutline"
                 on:click={() => goto('/about')}
                 tabindex="0"
               >
@@ -139,7 +139,7 @@
           {/if}
           <Hoverable>
             <button
-              class="inline font-mono text-base cursor-pointer"
+              class="inline font-mono text-base cursor-pointer rounded-sm focusOutline"
               on:click={() => switchDate()}
               tabindex="0"
             >

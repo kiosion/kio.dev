@@ -125,7 +125,7 @@
 >
   <Nav />
   <div
-    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-slate-100 dark:bg-slate-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none transition-colors"
+    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-slate-100 dark:bg-slate-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none transition-colors focusOutline"
     bind:this={scrollContainer}
   >
     <HeaderControls appBody={scrollContainer} />
