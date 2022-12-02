@@ -29,23 +29,6 @@ export default {
   ],
   fields: [
     {
-      name: 'title',
-      type: 'string',
-      title: 'Site title'
-    },
-    {
-      name: 'indexHeading',
-      type: 'string',
-      title: 'Index heading',
-      group: 'pages'
-    },
-    {
-      name: 'indexSubheading',
-      type: 'string',
-      title: 'Index subheading',
-      group: 'pages'
-    },
-    {
       name: 'me',
       title: 'Me',
       type: 'reference',

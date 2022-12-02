@@ -1,9 +1,6 @@
 import type { SanityAsset, SanityReference } from '$types/sanity';
 
 export interface SiteConfig extends SanityAsset {
-  title: string;
-  indexHeading: string;
-  indexSubheading: string;
   me: SanityReference;
   pgpKey?: string;
   pinnedPost?: SanityReference;
