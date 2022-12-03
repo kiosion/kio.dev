@@ -54,7 +54,7 @@
     "eslint-plugin-svelte3": "^4.0.0",
     "highlight.js": "^11.6.0",
     "jsdom": "^20.0.2",
-    "miragejs": "^0.1.45",
+    "miragejs": "^0.1.46",
     "moment": "^2.29.4",
     "netlify-cli": "^12.0.9",
     "node-html-to-image": "^3.2.4",

@@ -9548,9 +9548,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miragejs@npm:^0.1.45":
-  version: 0.1.45
-  resolution: "miragejs@npm:0.1.45"
+"miragejs@npm:^0.1.46":
+  version: 0.1.46
+  resolution: "miragejs@npm:0.1.46"
   dependencies:
     "@miragejs/pretender-node-polyfill": "npm:^0.1.0"
     inflected: "npm:^2.0.4"
@@ -9578,7 +9578,7 @@ __metadata:
     lodash.uniqby: "npm:^4.7.0"
     lodash.values: "npm:^4.3.0"
     pretender: "npm:^3.4.7"
-  checksum: 9c9a0abd74e5a39a82cd5011aaa6fbfa822cb2abca12606e4ea0a3906411d23dae1ee630579eef1cb2a8a3b30bebd68d20ed070f2ce1d49dcd7388ea4968e5d3
+  checksum: 5e01961969ea44692e425fed50f854ee2449c1f47c81f241b435e8ad1937b7402dce6e36b18110c0d6ae18942e5c08097c784e4b63b464e67116c8c7e8a17b6d
   languageName: node
   linkType: hard
 
@@ -12950,7 +12950,7 @@ __metadata:
     fiona: "npm:^4.1.4"
     highlight.js: "npm:^11.6.0"
     jsdom: "npm:^20.0.2"
-    miragejs: "npm:^0.1.45"
+    miragejs: "npm:^0.1.46"
     moment: "npm:^2.29.4"
     netlify-cli: "npm:^12.0.9"
     node-html-to-image: "npm:^3.2.4"
