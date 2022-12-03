@@ -11079,7 +11079,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.12, postcss@npm:^8.4.16, postcss@npm:^8.4.17, postcss@npm:^8.4.18":
+"postcss@npm:^8.4.12, postcss@npm:^8.4.16, postcss@npm:^8.4.18":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -12970,7 +12970,7 @@ __metadata:
     svelte-highlight: "npm:^6.2.1"
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
-    tailwindcss: "npm:^3.2.1"
+    tailwindcss: "npm:^3.2.4"
     ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.4.1"
     twemoji: "npm:^14.0.2"
@@ -13148,9 +13148,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "tailwindcss@npm:3.2.1"
+"tailwindcss@npm:^3.2.4":
+  version: 3.2.4
+  resolution: "tailwindcss@npm:3.2.4"
   dependencies:
     arg: "npm:^5.0.2"
     chokidar: "npm:^3.5.3"
@@ -13166,7 +13166,7 @@ __metadata:
     normalize-path: "npm:^3.0.0"
     object-hash: "npm:^3.0.0"
     picocolors: "npm:^1.0.0"
-    postcss: "npm:^8.4.17"
+    postcss: "npm:^8.4.18"
     postcss-import: "npm:^14.1.0"
     postcss-js: "npm:^4.0.0"
     postcss-load-config: "npm:^3.1.4"
@@ -13180,7 +13180,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: f172c0ee2a8497a3a256b66e5ab2b9c703d09bf5714a150b9f1d4ad24daefee8f1b4e5c2932b54509460f818c271184386b1a2072e23d32e205de1a3b6a63cde
+  checksum: 8d162a31947deb0972e4a70e04f4169c75251d7573da6df750c263d96a3d0924f955dc8dfb85f25d368dbe57612ddcff2af4af3ba88535bae41c55a5c6aa999f
   languageName: node
   linkType: hard
 
