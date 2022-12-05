@@ -334,14 +334,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@iconify/svelte@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@iconify/svelte@npm:3.0.0"
+"@iconify/svelte@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@iconify/svelte@npm:3.0.1"
   dependencies:
     "@iconify/types": "npm:^2.0.0"
   peerDependencies:
     svelte: ">=3"
-  checksum: 1d8eb1340f7717dc4050e780f01f7615d45e90026d3a0644cfa0545163efe7e7200332f6e65fbbdc8fdcac5e77fce27a8f80eae777e96fe5cea1622c7a07a709
+  checksum: d7e5c3463ad9f966831cec5c1e7356be19baa1308ef0b9298b54dd4214d2971593080560f600a5613a6906d44a13575ca487683af698fd06cd58e51ac52cd10c
   languageName: node
   linkType: hard
 
@@ -13445,7 +13445,7 @@ __metadata:
   resolution: "svelte-app@workspace:."
   dependencies:
     "@cypress/vite-dev-server": "npm:^4.0.1"
-    "@iconify/svelte": "npm:^3.0.0"
+    "@iconify/svelte": "npm:^3.0.1"
     "@poppanator/sveltekit-svg": "npm:^1.0.0"
     "@portabletext/svelte": "npm:^1.0.1"
     "@sanity/image-url": "npm:^1.0.1"
