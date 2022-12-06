@@ -71,7 +71,7 @@
     aria-label="{t('Project')} - {project.title}"
     href={link}
     target={external ? '_blank' : undefined}
-    data-sveltekit-prefetch
+    data-sveltekit-preload-data
     on:click={onClick}
     on:keydown={onKey}
     bind:this={self}

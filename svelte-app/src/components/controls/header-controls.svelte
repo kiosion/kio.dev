@@ -26,7 +26,8 @@
           {#if $navOptions && $navOptions.up !== ''}
             <Hoverable bind:hovered={scrollNavHovered}>
               <a
-                data-sveltekit-prefetch
+                data-sveltekit-preload-data
+                data-sveltekit-preload-code
                 href={linkTo($navOptions.up)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? 'scroll-hover-up'
