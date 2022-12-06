@@ -108,7 +108,8 @@
                   href={link.url}
                   role="menuitem"
                   tabindex="0"
-                  data-sveltekit-prefetch
+                  data-sveltekit-preload-data
+                  data-sveltekit-preload-code
                   on:click={() => {
                     SFX.click.play();
                     navOpen.set(false);
@@ -214,7 +215,7 @@
                 preload={link.url}
                 role="menuitem"
                 tabindex="0"
-                data-sveltekit-prefetch
+                data-sveltekit-preload-data
                 on:mouseenter={() => (link.active = true)}
                 on:mouseleave={() => (link.active = false)}
                 on:focus={() => (link.active = true)}
