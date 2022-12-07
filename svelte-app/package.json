@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^4.0.1",
-    "@iconify/svelte": "^3.0.0",
+    "@iconify/svelte": "^3.0.1",
     "@poppanator/sveltekit-svg": "^1.0.0",
     "@portabletext/svelte": "^1.0.1",
     "@sanity/image-url": "^1.0.1",
