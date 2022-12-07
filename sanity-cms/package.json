@@ -32,7 +32,7 @@
     "@typescript-eslint/parser": "^5.45.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.29.0",
-    "netlify-cli": "^12.2.7",
+    "netlify-cli": "^12.2.9",
     "prettier": "^2.8.0"
   }
 }
