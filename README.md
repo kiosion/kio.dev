@@ -12,7 +12,9 @@
 
 (Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
 
-Mostly overengineered, but intentionally so 😃
+(Temporarily) live at <a href="https://stalwart-mousse-c9c6d8.netlify.app">https://stalwart-mousse-c9c6d8.netlify.app</a> until I get around to some finishing touches :)
+
+Pretty overengineered, but intentionally so 😃
 
 ## 📚 Tech stack
 
