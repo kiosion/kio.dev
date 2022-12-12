@@ -33,6 +33,6 @@
     "dotenv": "^16.0.3",
     "eslint": "^8.29.0",
     "netlify-cli": "^12.2.9",
-    "prettier": "^2.8.0"
+    "prettier": "^2.8.1"
   }
 }
