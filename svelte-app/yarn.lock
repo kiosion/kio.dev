@@ -1334,14 +1334,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@poppanator/sveltekit-svg@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@poppanator/sveltekit-svg@npm:1.0.0"
+"@poppanator/sveltekit-svg@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@poppanator/sveltekit-svg@npm:1.1.1"
   dependencies:
     svgo: "npm:^2.3.0"
   peerDependencies:
     svelte: 3.x
-  checksum: ad5caa4d9b226177b1049ec6bb2321755f8273ce652d95a0175144d6d6b7c093db8504635e3f68c3b00f232c75f498b7a24ad504189bbcb77bc1161b7debbec4
+    vite: 3.x
+  checksum: cfaa97f6c36272376d8312fb0c88bb90080fff462b70abe77ecdfa3468c71aa3cbff430fd8c2ea976d4525ba8e2c7cd87ac90d880431f83aa88d11b937743b7c
   languageName: node
   linkType: hard
 
@@ -13450,7 +13451,7 @@ __metadata:
   dependencies:
     "@cypress/vite-dev-server": "npm:^4.0.1"
     "@iconify/svelte": "npm:^3.0.1"
-    "@poppanator/sveltekit-svg": "npm:^1.0.0"
+    "@poppanator/sveltekit-svg": "npm:^1.1.1"
     "@portabletext/svelte": "npm:^1.0.1"
     "@sanity/image-url": "npm:^1.0.1"
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
