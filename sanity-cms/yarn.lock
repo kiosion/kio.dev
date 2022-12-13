@@ -3266,9 +3266,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/code-input@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@sanity/code-input@npm:3.0.0"
+"@sanity/code-input@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@sanity/code-input@npm:3.0.1"
   dependencies:
     "@sanity/icons": "npm:^2.0.0"
     "@sanity/incompatible-plugin": "npm:^1.0.4"
@@ -3280,7 +3280,7 @@ __metadata:
     react-dom: ^18
     sanity: ^3.0.0
     styled-components: ^5.2.0
-  checksum: 3c5f1dc81000e41507dcca8790c69a4951419d98c4d1423ecd5e125c079e7d9bcebc8e9e29e2bbae9065bc2096ec8b3b3697d864969256680bbb30a84453f8fe
+  checksum: 08b0acaebd88971cdf85d273d737692290128a82a423ae063821a9d4802b4854ac03dfd9ba610a8e7b1df90fdec9817705b7dedbec710542d3a235a31a7f1769
   languageName: node
   linkType: hard
 
@@ -11365,7 +11365,7 @@ __metadata:
     "@babel/eslint-parser": "npm:^7.19.1"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
-    "@sanity/code-input": "npm:^3.0.0"
+    "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/ui": "npm:^1.0.1"
     "@sanity/vision": "npm:^3.0.0"
