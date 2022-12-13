@@ -4990,14 +4990,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devalue@npm:4.0.1":
-  version: 4.0.1
-  resolution: "devalue@npm:4.0.1"
-  checksum: f6aa5bbd2093ee60ee57d5a4385104c62aaac06f479a0a09b2baa94737aea77c0db446815e24264f23b6d2c82f072cdafb1133d9036c32d60269180d0786c8cd
-  languageName: node
-  linkType: hard
-
-"devalue@npm:^4.2.0":
+"devalue@npm:4.2.0, devalue@npm:^4.2.0":
   version: 4.2.0
   resolution: "devalue@npm:4.2.0"
   checksum: a250617b3d5d065ee0b961088b257061b7dbc658ff607260870949fd1f2b14cc814653aaee90e27c1bb1c66a5f2d990be6225148c2794b99bb0be845f0706303
@@ -13478,7 +13471,7 @@ __metadata:
     c8: "npm:^7.12.0"
     cypress: "npm:^10.10.0"
     cypress-svelte-unit-test: "npm:^3.3.4"
-    devalue: "npm:4.0.1"
+    devalue: "npm:4.2.0"
     devtools-detect: "npm:^4.0.0"
     dotenv: "npm:^16.0.3"
     eslint: "npm:^8.25.0"
