@@ -55,6 +55,9 @@
       ];
     }, [] as FootnoteProps[]);
   })(text);
+
+  $: console.log('got footnotes:', footnotes);
+  $: console.log('got pt:', text);
 </script>
 
 {#if text}
@@ -114,19 +117,22 @@
         <ol class="list-decimal ml-6 leading-8">
           {#each footnotes as note}
             <li class="list-item">
-              {note.note}
-              <a
-                class="inline ml-1"
-                id={`note-${note._key}`}
-                href={`#src-${note._key}`}
-                aria-label={t('Go to footnote source')}
-                on:click={(e) => customScrollTo(e, `src-${note._key}`)}
-                on:keydown={(e) => {
-                  if (e.code === 'Space' || e.code === 'Enter') {
-                    customScrollTo(e, `src-${note._key}`);
-                  }
-                }}><Icon icon="arrow-bar-up" width={18} inline /></a
-              >
+              <span class="flex flex-row items-center flex-wrap">
+                <!-- Allow recursion with PT styles in footnotes -->
+                <svelte:self text={note.note} plaintext />
+                <a
+                  class="inline ml-1"
+                  id={`note-${note._key}`}
+                  href={`#src-${note._key}`}
+                  aria-label={t('Go to footnote source')}
+                  on:click={(e) => customScrollTo(e, `src-${note._key}`)}
+                  on:keydown={(e) => {
+                    if (e.code === 'Space' || e.code === 'Enter') {
+                      customScrollTo(e, `src-${note._key}`);
+                    }
+                  }}><Icon icon="arrow-bar-up" width={18} inline /></a
+                >
+              </span>
             </li>
           {/each}
         </ol>
@@ -134,3 +140,12 @@
     {/if}
   {/if}
 {/if}
+
+<style lang="scss">
+  :global(.footnotes .list-item p) {
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+  }
+</style>

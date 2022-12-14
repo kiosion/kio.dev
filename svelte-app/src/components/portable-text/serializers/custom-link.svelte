@@ -20,11 +20,33 @@
   <a
     href={href ? href : '#'}
     target={isExt ? '_blank' : undefined}
-    class="decoration-emerald-400 dark:decoration-emerald-300 underline underline-offset-auto {hovered
-      ? 'decoration-4'
-      : 'decoration-2'} rounded-sm focusOutline-sm"
+    class="underlined from-emerald-400 dark:from-emerald-300 {hovered
+      ? 'active dark:text-slate-800'
+      : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
     tabindex="0"
   >
     {plainTextContent}
   </a>
 </Hoverable>
+
+<style lang="scss">
+  .underlined {
+    text-decoration: none;
+    background-image: linear-gradient(
+      to right,
+      var(--tw-gradient-from) 0%,
+      var(--tw-gradient-from) 100%
+    );
+    background-position: bottom center;
+    // background-position: 0 1rem;
+    background-repeat: no-repeat;
+    background-size: calc(100% - 4px) 2px;
+    transition: background-size 50ms ease, color 50ms ease;
+    &.active {
+      background-size: calc(100% - 4px) 100%;
+    }
+    &-dark {
+      // 6ee7b7, else 34d399
+    }
+  }
+</style>

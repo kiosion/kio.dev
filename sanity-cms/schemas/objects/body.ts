@@ -67,7 +67,18 @@ export const BodyBlocks = [
           fields: [
             {
               name: 'note',
-              type: 'text'
+              type: 'array',
+              title: 'Note',
+              of: [
+                {
+                  type: 'block',
+                  styles: [{ title: 'Normal', value: 'normal' }],
+                  marks: {
+                    decorators: CustomMarks.decorators,
+                    annotations: CustomMarks.annotations
+                  }
+                }
+              ]
             }
           ],
           blockEditor: {

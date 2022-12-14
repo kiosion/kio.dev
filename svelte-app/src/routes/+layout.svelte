@@ -18,8 +18,6 @@
   import { state as menuState } from '$stores/menu';
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
-  import { handleScrollNav } from '$lib/helpers/navigation';
-  import { canNavigate } from '$stores/navigation';
   import { useMediaQuery } from 'svelte-breakpoints';
   import {
     APP_LANGS,
@@ -27,7 +25,6 @@
     DEFAULT_DESKTOP_BREAKPOINT
   } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
-  import { goto } from '$app/navigation';
 
   interface DevToolsEvent {
     detail: {
@@ -64,7 +61,6 @@
         msg(e as unknown as DevToolsEvent)
       );
     appLoaded = true;
-    canNavigate.set(true);
     setTimeout(() => loading.set(false), 1000);
   });
 
@@ -101,7 +97,6 @@
     $CanUseCursor && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
-  on:wheel={(e) => handleScrollNav(e, scrollContainer, $page.url.pathname)}
 />
 
 {#if !appLoaded}

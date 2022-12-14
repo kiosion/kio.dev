@@ -170,5 +170,8 @@
       var(--tw-gradient-from) 5%,
       var(--tw-gradient-to) 100%
     );
+    width: calc(100% + 4px);
+    left: -2px;
+    right: -2px;
   }
 </style>
