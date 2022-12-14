@@ -6,8 +6,8 @@
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
-  import Icon from '@iconify/svelte';
-  import Tags from '$components/tags.svelte';
+  import { LANGUAGE_COLOURS } from '$lib/consts';
+  import Icon from '$components/icon.svelte';
 
   export let project: ProjectDocument;
 
@@ -42,29 +42,13 @@
       ? project.externalUrl
       : linkTo(`/work/${project.slug.current}`);
   })();
-  $: externalProvider = (() => {
-    if (external && project.externalUrl) {
-      const match = new RegExp(`(${['github', 'gitlab'].join('|')})\\.*`, 'i');
-      return project.externalUrl?.match(match)?.[1]?.toLowerCase();
-    }
-  })();
-  $: iconName = ((name) => {
-    switch (name) {
-      case 'github':
-        return 'fa-brands:github';
-      case 'gitlab':
-        return 'fa-brands:gitlab';
-      default:
-        return 'mdi:link-variant';
-    }
-  })(externalProvider);
 </script>
 
 <Hoverable bind:hovered>
   <a
-    class="relative flex flex-col items-stretch justify-start gap-y-4 p-4 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-[padding,background-color] {hovered
-      ? 'bg-slate-300/50 dark:bg-slate-700/50'
-      : 'bg-slate-200/50 dark:bg-slate-900/50'} focusOutline"
+    class="relative flex flex-col items-stretch justify-start gap-y-2 py-5 px-6 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-colors {hovered
+      ? 'bg-slate-300/25 dark:bg-slate-700/25 border-slate-300/90 dark:border-slate-700/90'
+      : 'bg-slate-200/25 dark:bg-slate-900/25 border-slate-300/60 dark:border-slate-700/60'} border-[1px] -ml-[1px] -mt-[1px] focusOutline"
     data-test-id="list-item"
     tabindex="0"
     role="button"
@@ -76,46 +60,51 @@
     on:keydown={onKey}
     bind:this={self}
   >
-    <div class="flex flex-col gap-y-3 p-3">
-      {#if external && iconName}
-        <Icon
-          class="absolute mt-5 mr-5 top-0 right-0 {hovered
-            ? 'border-emerald-300'
-            : 'border-transparent'} rounded-full border-2 p-[2px] s-m-[2px]"
-          icon={iconName}
-          width="30"
-          height="30"
-        />
-      {/if}
-      <div class="w-full flex flex-row items-center justify-start">
-        <h1
-          class="w-full overflow-hidden whitespace-nowrap text-ellipsis line-clamp-1 font-display font-bold text-2xl decoration-[3px] decoration-emerald-300 {hovered
-            ? 'underline'
-            : ''}"
-        >
-          {project.title}
-        </h1>
-      </div>
-      <div
-        class="w-full flex flex-row flex-wrap gap-y-2 items-center justify-start"
+    <div class="w-full flex flex-row items-center gap-x-3 mb-0.5">
+      <Icon
+        classes="-ml-0.5 text-slate-900 dark:text-slate-100 {project.external
+          ? 'mb-0.5'
+          : ''}"
+        icon={project.external ? 'open' : 'book-open'}
+        width={20}
+      />
+      <h1
+        class="w-full overflow-hidden whitespace-nowrap text-ellipsis line-clamp-1 font-display font-bold text-xl underline-offset-[3px] decoration-[2px] {hovered
+          ? 'underline'
+          : ''}"
       >
-        <p class="font-sans text-base text-slate-700 dark:text-slate-200">
-          {date}
+        {project.title}
+      </h1>
+    </div>
+    <div class="">
+      {#if project.desc}
+        <p
+          class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base line-clamp-2"
+        >
+          {project.desc}
         </p>
-        {#if project.tags}
-          <BulletPoint />
-          <Tags model="project" data={project.tags} />
-        {/if}
-      </div>
-      <div class="">
-        {#if project.desc}
-          <p
-            class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base pt-2 line-clamp-2"
+      {/if}
+    </div>
+    <div class="w-full flex flex-row flex-wrap gap-y-2 items-center mt-2">
+      {#if project.language}
+        <div
+          class="flex flex-row items-center gap-x-2 text-sm font-sans text-slate-700 dark:text-slate-200"
+        >
+          <span
+            class="relative block opacity-90 mb-0.5 w-3 h-3 rounded-full bg-[{LANGUAGE_COLOURS.get(
+              project.language.toLowerCase()
+            )}] border-slate-700/25 dark:border-slate-300/25 border-[0.5px] -m-[0.5px]"
+            style="background: {LANGUAGE_COLOURS.get(
+              project.language.toLowerCase()
+            )}">&nbsp;</span
           >
-            {project.desc}
-          </p>
-        {/if}
-      </div>
+          <span>{project.language}</span>
+        </div>
+        <BulletPoint />
+      {/if}
+      <p class="font-sans text-sm text-slate-700 dark:text-slate-200">
+        {date}
+      </p>
     </div>
   </a>
 </Hoverable>

@@ -8,7 +8,8 @@ config :hexerei,
   sanity_dataset: ${SANITY_DATASET},
   sanity_token: ${SANITY_TOKEN},
   sanity_api_version: "2021-06-07",
-  query_url: "query/"
+  query_url: "query/",
+  sanity_apicdn: true
 
 config :os_mon,
   disk_space_check_interval: 60,

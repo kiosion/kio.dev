@@ -31,7 +31,7 @@
   <title>kio.dev | blog | all posts</title>
 </svelte:head>
 
-<IconHeader icon="BulletList" text="All Posts" />
+<IconHeader icon="bulletlist" text="All Posts" />
 {#if posts?.data?.length}
   {#each posts.data as post}
     <ListItem {post} />

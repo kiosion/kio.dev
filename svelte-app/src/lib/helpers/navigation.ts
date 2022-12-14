@@ -54,6 +54,8 @@ export const handleScrollNav = (
   appBody: HTMLElement,
   currentPath: string
 ) => {
+  // Disable for now
+  return;
   if (
     !browser ||
     get(canNavigate) === false ||

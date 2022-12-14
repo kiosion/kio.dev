@@ -8,6 +8,7 @@ defmodule Hexerei.SanityClient do
   @sanity_dataset Application.compile_env!(:hexerei, :sanity_dataset)
   @sanity_token Application.compile_env!(:hexerei, :sanity_token)
   @sanity_api_version Application.compile_env!(:hexerei, :sanity_api_version)
+  @sanity_apicdn Application.compile_env!(:hexerei, :sanity_apicdn)
 
   # Set headers
   @headers [
@@ -31,7 +32,7 @@ defmodule Hexerei.SanityClient do
   def fetch(query) do
     # Return error if query is not a string or is empty
     if is_binary(query) and query != "" do
-      url = "https://#{@sanity_project_id}.api.sanity.io/v#{@sanity_api_version}/data/query/#{@sanity_dataset}"
+      url = "https://#{@sanity_project_id}.api#{if @sanity_apicdn == true do "cdn" end}.sanity.io/v#{@sanity_api_version}/data/query/#{@sanity_dataset}"
 
       query = URI.encode_query(%{"query" => query})
       url = url <> "?" <> query

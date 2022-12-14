@@ -62,6 +62,12 @@ export default {
       type: 'text'
     },
     {
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      description: 'Primary programming language used in project'
+    },
+    {
       name: 'date',
       title: 'Date',
       type: 'date',

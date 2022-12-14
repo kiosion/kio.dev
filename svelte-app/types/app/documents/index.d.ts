@@ -1,3 +1,5 @@
+import type { SanityAsset } from '$types/sanity';
+
 export interface Document extends SanityAsset {
   slug: Pick<SanityAsset, '_id'> & {
     current: string;

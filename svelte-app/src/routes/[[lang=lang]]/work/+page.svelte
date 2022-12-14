@@ -48,9 +48,12 @@
 
 {#if pinned?.data}
   <IconHeader icon="Pin" text={t('Pinned')} />
-  <ListItem project={pinned.data} />
+  <div class="mt-4">
+    <ListItem project={pinned.data} />
+  </div>
 {/if}
-<IconHeader icon="Clock" text={t('Recent')} />
+<!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
+<IconHeader icon="bulletlist" text={t('All projects')} />
 {#if projects?.data?.length}
   <div
     class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"

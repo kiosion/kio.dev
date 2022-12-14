@@ -98,6 +98,7 @@ defmodule Hexerei.BuildQuery do
         externalLinks,
         externalUrl,
         image,
+        language,
         tags[]->{
           _id,
           title,
@@ -131,6 +132,7 @@ defmodule Hexerei.BuildQuery do
         externalLinks,
         externalUrl,
         image,
+        language,
         'tags': tags[]->{
           _id,
           title,

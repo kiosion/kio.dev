@@ -40,7 +40,7 @@ sanity: SHELL:=/bin/bash
 sanity: install-sanity
 sanity:
 	@cd ./sanity-cms &&\
-	SANITY_STUDIO_API_DATASET="dev" yarn sanity start
+	SANITY_STUDIO_DATASET="dev" yarn sanity dev
 
 # Build & run backends
 server: SHELL:=/bin/bash

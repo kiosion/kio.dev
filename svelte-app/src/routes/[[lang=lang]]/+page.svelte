@@ -31,13 +31,16 @@
     class="mt-[20vh] md:mt-[46vh] md:-translate-x-4 h-fit w-fit mx-auto flex flex-col items-center  justify-center gap-2"
   >
     <p class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5">
-      {t("Hi, I'm Kio")}<span class="text-emerald-300 ml-[2px]">.</span>
+      {t("Hi there, I'm Kio")}<span class="text-emerald-300 ml-[2px]">.</span>
     </p>
     <p class="font-sans text-lg -mb-1 text-center">
       {t('Software engineer / web dev / artist')}
     </p>
-    <p class="font-sans text-lg text-center">
+    <p class="font-sans text-lg -mb-1 text-center">
       {t('Lover of cats & all things tech')}
+    </p>
+    <p class="font-sans text-lg text-center">
+      {t('Welcome to my little corner of the internet!')}
     </p>
   </div>
 </div>

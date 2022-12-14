@@ -42,7 +42,8 @@
   <IconHeader icon="Pin" text={t('Pinned')} />
   <ListItem post={pinned.data} />
 {/if}
-<IconHeader icon="Clock" text={t('Recent')} />
+<!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
+<IconHeader icon="bulletlist" text={t('All posts')} />
 {#if posts?.data?.length}
   {#each posts.data as post}
     {#if post._id !== pinned?.data?._id}

@@ -7,7 +7,8 @@ config :hexerei,
   sanity_dataset: "dev",
   sanity_token: System.get_env("SANITY_TOKEN") || "",
   sanity_api_version: "2021-06-07",
-  query_url: "query/"
+  query_url: "query/",
+  sanity_apicdn: false
 
 config :os_mon,
   disk_space_check_interval: 5,

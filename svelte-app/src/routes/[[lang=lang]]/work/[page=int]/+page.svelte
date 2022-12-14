@@ -30,7 +30,7 @@
   <title>kio.dev | work | all work</title>
 </svelte:head>
 
-<IconHeader icon="BulletList" text="All Work" />
+<IconHeader icon="bulletlist" text="All Work" />
 
 {#if projects?.data?.length}
   {#each projects.data as project}
