@@ -1,68 +1,56 @@
-.PHONY: dev, backed, test, prod, cypress, vitest, netlify-deploy, sanity-deploy, lint, install-web, install-sanity, install-api, cleanup
+.PHONY: install, dev, test, cypress, cleanup
 
-# Install monorepo deps
-install: SHELL:=/bin/bash
-install:
-	yarn install
+install%: SHELL:=/bin/bash
+install%:
+	@echo "Installing dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
+	@yarn install $(if $(findstring -ci,$@),--immutable)
 
-# install svelte deps
-install-web: SHELL:=/bin/bash
-install-web: install
-install-web:
+install-web%: SHELL:=/bin/bash
+install-web%: install%
+install-web%:
+	@echo "Installing svelte dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
 	@cd ./svelte-app &&\
-	yarn install
+	yarn install $(if $(findstring -ci,$@),--immutable)
 
 # install sanity deps
-install-sanity: SHELL:=/bin/bash
-install-sanity: install
-install-sanity:
+install-sanity%: SHELL:=/bin/bash
+install-sanity%: install%
+install-sanity%:
+	@echo "Installing sanity dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
 	@cd ./sanity-cms &&\
-	yarn install
+	yarn install $(if $(findstring -ci,$@),--immutable)
 
 # Install api deps
 install-api: SHELL:=/bin/bash
-install-api: install
 install-api:
 	@cd ./elixir-api &&\
 	mix deps.get &&\
 	mix local.hex --if-missing --force &&\
 	mix local.rebar --if-missing --force
 
-# Build & run api
 api: SHELL:=/bin/bash
 api: install-api
 api:
 	@cd ./elixir-api &&\
 	make dev
 
-# Build & run sanity studio
-sanity: SHELL:=/bin/bash
-sanity: install-sanity
-sanity:
+sanity%: SHELL:=/bin/bash
+sanity%: install-sanity%
+sanity%:
 	@cd ./sanity-cms &&\
-	SANITY_STUDIO_DATASET="dev" yarn sanity dev
+	SANITY_STUDIO_DATASET=$(if $(findstring -dev,$@),dev,prod) yarn sanity dev $(if $(findstring -ci,$@),--immutable)
 
-# Build & run backends
-server: SHELL:=/bin/bash
-server:
-	make -j 2 api sanity
-
-# Build & run svelte app
 web: SHELL:=/bin/bash
 web: install-web
 web:
 	@cd ./svelte-app &&\
 	yarn dev
 
-# Run api + web in dev
-dev: SHELL:=/bin/bash
-dev:
-	make -j 2 api web
-
-# Run full dev stack
-dev-full: SHELL:=/bin/bash
-dev-full:
-	make -j 2 server web
+server: SHELL:=/bin/bash
+server: install-api install-web
+server:
+	@echo "Starting dev servers..."
+	@./scripts/server.sh
 
 # run dev backed
 backed: SHELL:=/bin/bash

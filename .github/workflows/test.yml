@@ -13,15 +13,29 @@ jobs:
   vitest:
     name: Vitest
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.16, 16.18]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Get Yarn cache dir
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Use Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0
-        run: make install-web
-        
+        run: make install-web-ci
       - name: Run tests
         run: make vitest
 
@@ -31,20 +45,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: 16.16
-
+      - name: Get Yarn cache dir
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Use Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0
-        run: make install-web
-      
+        run: make install-web-ci
       - name: Build testing environment
         env:
           SVELTE_ADAPTER_ENV: 'node'
         run: make test
-
       - name: Run tests
         run: make cypress
