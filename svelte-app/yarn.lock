@@ -12443,9 +12443,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.7.3":
-  version: 3.7.3
-  resolution: "rollup@npm:3.7.3"
+"rollup@npm:^3.7.4":
+  version: 3.7.4
+  resolution: "rollup@npm:3.7.4"
   dependencies:
     fsevents: "npm:~2.3.2"
   dependenciesMeta:
@@ -12453,7 +12453,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: df60daa18163f8cfc05c864cec7bdc4d5c45bf005a59a86c2f92e35e190ea2287d52b5673c08c2bb54fe84fed17f5737fe6d39317280ce8b1875a598fae5a298
+  checksum: 4184baf153fa4cde8d842eb438c7efc16f8f1b3a1ce28b34f8b5f386dccdc76abf7d09bd1ce70f45e7dfe39feeb1734b7d856f62d8c46419f8edca12390df1bd
   languageName: node
   linkType: hard
 
@@ -13506,7 +13506,7 @@ __metadata:
     prettier-plugin-svelte: "npm:^2.8.0"
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^3.0.2"
-    rollup: "npm:^3.7.3"
+    rollup: "npm:^3.7.4"
     sass: "npm:^1.55.0"
     seedrandom: "npm:^3.0.5"
     svelte: "npm:3.54"
