@@ -11382,7 +11382,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^5.46.0"
     dotenv: "npm:^16.0.3"
     eslint: "npm:^8.29.0"
-    netlify-cli: "npm:^12.2.9"
+    netlify-cli: "npm:^12.2.10"
     prettier: "npm:^2.8.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -12501,9 +12501,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:^12.2.9":
-  version: 12.2.9
-  resolution: "netlify-cli@npm:12.2.9"
+"netlify-cli@npm:^12.2.10":
+  version: 12.2.10
+  resolution: "netlify-cli@npm:12.2.10"
   dependencies:
     "@netlify/build": "npm:^28.4.5"
     "@netlify/config": "npm:^20.0.2"
@@ -12613,7 +12613,7 @@ __metadata:
   bin:
     netlify: bin/run.mjs
     ntl: bin/run.mjs
-  checksum: 10589b3457e3952ba6be4dde2670f74900778b7fa995b99f80ddf8fb045ed887e35c9f736a5786636f768eee84edc3302b91d2e6e8acda48e0b8c8bc7b6247bc
+  checksum: ea9f1d1749db054b1fff2824c0b84adc0a52e8b0cf6dc6b0ab1f74425c07dece096f7696811e66a931b30d7c5a559502af7d4a52dfd3eee12e1a861182bc9829
   languageName: node
   linkType: hard
 
