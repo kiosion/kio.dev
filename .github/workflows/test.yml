@@ -47,15 +47,15 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Use node_modules cache
         uses: actions/cache@v3
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-18-${{ hashFiles('svelte-app/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-nm-16-
+            ${{ runner.os }}-nm-18-
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0

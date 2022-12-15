@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { ENV } from '$lib/env';
 import { writable } from 'svelte/store';
 
 const defaultTheme = 'dark',
@@ -23,7 +24,7 @@ const getInitialTheme = () => {
 const theme = writable<string>(getInitialTheme());
 
 // Watch both mql's to watch for changes in the user's OS theme
-if (browser) {
+if (browser && ENV !== 'testing') {
   window.matchMedia(prefersDark).addEventListener('change', (e) => {
     if (!window.localStorage.getItem('theme')) {
       e.matches && theme.set('dark');
@@ -40,9 +41,7 @@ if (browser) {
 theme.subscribe((value) => {
   if (browser) {
     const localStorage = window.localStorage.getItem('theme');
-    if (localStorage && ['dark', 'light'].includes(localStorage)) {
-      value !== localStorage && window.localStorage.setItem('theme', value);
-    }
+    value !== localStorage && window.localStorage.setItem('theme', value);
   }
 });
 
