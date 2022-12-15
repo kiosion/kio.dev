@@ -27,7 +27,8 @@ module.exports = {
     '@typescript-eslint/restrict-template-expressions': ['off'],
     '@typescript-eslint/no-unused-vars': [
       'error', {
-        'varsIgnorePattern': '^_*'
+        'varsIgnorePattern': '^_*',
+        'argsIgnorePattern': '^_*'
       }
     ],
     'no-unused-vars': ['off'],
