@@ -3,8 +3,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    // tsconfigRootDir: __dirname,
+    // project: ['./tsconfig.json'],
     extraFileExtensions: ['.svelte']
   },
   env: {
@@ -16,14 +16,14 @@ module.exports = {
     'eslint:recommended',
     'plugin:svelte/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   plugins: ['prettier', '@typescript-eslint'],
   rules: {
-    '@typescript-eslint/no-unsafe-assignment': ['off'],
-    '@typescript-eslint/no-unsafe-return': ['off'],
-    '@typescript-eslint/no-unsafe-call': ['off'],
-    '@typescript-eslint/no-unsafe-member-access': ['off'],
+    // '@typescript-eslint/no-unsafe-assignment': ['off'],
+    // '@typescript-eslint/no-unsafe-return': ['off'],
+    // '@typescript-eslint/no-unsafe-call': ['off'],
+    // '@typescript-eslint/no-unsafe-member-access': ['off'],
     '@typescript-eslint/restrict-template-expressions': ['off'],
     '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     'prettier/prettier': ['error'],
