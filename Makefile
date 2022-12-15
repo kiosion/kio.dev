@@ -61,7 +61,6 @@ backed:
 
 # Build svelte app for prod
 prod: SHELL:=/bin/bash
-prod: install-web
 prod:
 	@cd ./svelte-app &&\
 	SVELTE_ADAPTER_ENV=netlify yarn build
@@ -86,7 +85,6 @@ netlify-deploy:
 
 # Build svelte app for testing
 test: SHELL:=/bin/bash
-test: install-web
 test:
 	@cd ./svelte-app &&\
 	SVELTE_ADAPTER_ENV=node \
