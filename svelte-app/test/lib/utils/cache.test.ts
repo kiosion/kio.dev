@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import Cache from '../../src/lib/cache';
+import Cache from '$lib/cache';
 
 describe('Utils | Cache', () => {
   const model = 'someModel';

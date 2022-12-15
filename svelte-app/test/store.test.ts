@@ -2,6 +2,8 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import StoreClass from '$lib/store';
 
+// TODO: Stub endpoint so fetch can be properly tested
+
 describe('Store Class | ConstructURL', () => {
   const constructUrl = StoreClass.constructUrl;
 
