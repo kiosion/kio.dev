@@ -21,6 +21,7 @@
     PortableTextBlock,
     PortableTextMarkDefinition
   } from '@portabletext/types';
+  import Logger from '$lib/logger';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
@@ -40,24 +41,26 @@
   };
 
   $: footnotes = ((text: (PortableTextBlock | ArbitraryTypedObject)[]) => {
-    if (!text) {
-      return [];
+    if (!text || typeof text === 'string') {
+      return [] as FootnoteProps[];
     }
-    return text?.reduce((notes, currentBlock): FootnoteProps[] => {
-      if (currentBlock._type !== 'block' || !currentBlock.markDefs?.length) {
-        return notes;
-      }
-      return [
-        ...notes,
-        ...currentBlock.markDefs.filter(
-          (def: PortableTextMarkDefinition) => def._type === 'footnote'
-        )
-      ];
-    }, [] as FootnoteProps[]);
+    try {
+      return text?.reduce((notes, currentBlock): FootnoteProps[] => {
+        if (currentBlock._type !== 'block' || !currentBlock.markDefs?.length) {
+          return notes;
+        }
+        return [
+          ...notes,
+          ...currentBlock.markDefs.filter(
+            (def: PortableTextMarkDefinition) => def._type === 'footnote'
+          )
+        ];
+      }, [] as FootnoteProps[]);
+    } catch (e) {
+      Logger.error('Error parsing footnotes', e);
+      return [] as FootnoteProps[];
+    }
   })(text);
-
-  $: console.log('got footnotes:', footnotes);
-  $: console.log('got pt:', text);
 </script>
 
 {#if text}
@@ -121,7 +124,7 @@
                 <!-- Allow recursion with PT styles in footnotes -->
                 <svelte:self text={note.note} plaintext />
                 <a
-                  class="inline ml-1"
+                  class="inline ml-2 mb-0.5"
                   id={`note-${note._key}`}
                   href={`#src-${note._key}`}
                   aria-label={t('Go to footnote source')}

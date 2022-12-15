@@ -2,7 +2,8 @@ import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import { error } from '@sveltejs/kit';
-import type { ResData, PostDocument } from '$types';
+import { getHeadings } from '$helpers/pt';
+import type { ResData, PostDocument, PTBlock } from '$types';
 import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');
@@ -24,16 +25,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const headings =
-    (await (
-      await fetch('/api/get/parsedPt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(post?.data.body ?? [])
-      })
-    )?.json()) ?? [];
+  const headings = await getHeadings((post?.data.body ?? []) as PTBlock[]);
 
   return { post, headings };
 };

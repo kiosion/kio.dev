@@ -31,7 +31,7 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('svelte-app/yarn.lock') }}
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0
@@ -56,7 +56,7 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('svelte-app/yarn.lock') }}
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0

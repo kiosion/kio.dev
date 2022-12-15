@@ -1,6 +1,7 @@
 import Logger from '$lib/logger';
 import Store from '$lib/store';
-import type { ResData, ProjectDocument } from '$types';
+import { getHeadings } from '$helpers/pt';
+import type { ResData, ProjectDocument, PTBlock } from '$types';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
@@ -14,16 +15,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       return undefined;
     });
 
-  const headings =
-    (await (
-      await fetch('/api/get/parsedPt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(project?.data.body ?? [])
-      })
-    )?.json()) ?? [];
+  const headings = await getHeadings((project?.data.body ?? []) as PTBlock[]);
 
   return { project, headings };
 };
