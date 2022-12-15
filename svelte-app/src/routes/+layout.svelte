@@ -55,13 +55,15 @@
   onMount(() => {
     initAudio({ volume: 0.1 }).catch(() => undefined);
     checkTranslations();
-    msg({ detail: { isOpen: true } });
-    browser &&
+    if (browser) {
+      msg({ detail: { isOpen: true } });
       window.addEventListener('devtoolschange', (e) =>
         msg(e as unknown as DevToolsEvent)
       );
-    appLoaded = true;
-    setTimeout(() => loading.set(false), 1000);
+
+      appLoaded = true;
+      setTimeout(() => loading.set(false), 1000);
+    }
   });
 
   onDestroy(() => {
