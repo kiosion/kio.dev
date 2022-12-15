@@ -34,7 +34,7 @@
 
   const pageClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement | undefined;
-    if (target === menuElement || menuElement.contains(target!)) {
+    if (target === menuElement || (target && menuElement.contains(target))) {
       return;
     }
     dispatch('clickoutside');

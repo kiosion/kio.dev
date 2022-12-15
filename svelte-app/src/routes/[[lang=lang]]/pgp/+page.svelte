@@ -9,9 +9,7 @@
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
   import { t } from '$i18n';
 
-  const getScrollContainer = getContext('getScrollContainer') as () =>
-    | HTMLElement
-    | undefined;
+  const getScrollContainer = getContext('getScrollContainer');
 
   onMount(() => {
     navOptions.set({ down: '', up: '/about' });

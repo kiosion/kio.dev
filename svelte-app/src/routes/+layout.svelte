@@ -52,8 +52,8 @@
     ['getPageContainer', () => pageContainer]
   ].forEach(([k, v]) => setContext(k, v));
 
-  onMount(async () => {
-    initAudio({ volume: 0.1 });
+  onMount(() => {
+    initAudio({ volume: 0.1 }).catch(() => undefined);
     checkTranslations();
     msg({ detail: { isOpen: true } });
     browser &&

@@ -4,7 +4,7 @@
 
   let body: HTMLDivElement;
 
-  onMount(async () => parseEmoji(body));
+  onMount(() => parseEmoji(body));
 </script>
 
 <div class="mt-4 font-sans text-base" bind:this={body}>

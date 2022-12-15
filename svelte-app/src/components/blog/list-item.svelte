@@ -3,24 +3,24 @@
   import BulletPoint from '../bullet-point.svelte';
   import { getTotalWords } from '$lib/helpers/pt';
   import { getAbsDate, getReadingTime } from '$lib/helpers/date';
-  import type { PostDocument } from '$types';
+  import type { PostDocument, PTBlock } from '$types';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
-  import { t, linkTo } from '$i18n';
+  import { linkTo } from '$i18n';
   import SFX from '$lib/sfx';
   import Tags from '$components/tags.svelte';
 
   export let post: PostDocument;
 
   let hovered: boolean;
-  let readingTime = getReadingTime(getTotalWords(post.body));
+  let readingTime = getReadingTime(
+    getTotalWords((post.body ?? []) as PTBlock[])
+  );
 
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {
       SFX.click.play();
-      goto(linkTo(`/blog/${post.slug.current}`) as string).catch(
-        () => undefined
-      );
+      goto(linkTo(`/blog/${post.slug.current}`)).catch(() => undefined);
     }
   };
 

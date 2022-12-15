@@ -1,4 +1,6 @@
 <script lang="ts">
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-nocheck Need to fix typing for {data}
   import Divider from '$components/divider.svelte';
   import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
@@ -14,7 +16,7 @@
   } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
   import { t } from '$i18n';
-  import type { PostDocument, ProjectDocument } from '$types';
+  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
   import Tags from '$components/tags.svelte';
   import { fionaPlaceholder } from '$helpers/placeholders';
 
@@ -24,7 +26,9 @@
   let date =
     model === 'project' ? getShortDate(data.date) : getRelDate(data.date);
   let dateFormat = model === 'project' ? 'short' : 'rel';
-  let readingTime = getReadingTime(getTotalWords(data.body));
+  let readingTime = getReadingTime(
+    getTotalWords((data?.body ?? []) as PTBlock[])
+  );
 
   const switchDate = () => {
     if (model === 'project') {

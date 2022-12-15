@@ -5,7 +5,7 @@
 
 <div class="wrapper" style="width: {width}; height: {height};">
   <div data-test-id="loader-bar">
-    {#each Array(7) as item}
+    {#each Array(7) as _}
       <div
         class="bg-emerald-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-emerald-300"
       />

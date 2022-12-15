@@ -5,7 +5,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_BREAKPOINTS } from '$lib/consts';
-  import { t, linkTo, isLocalized, currentLang } from '$i18n';
+  import { t, linkTo, isLocalized } from '$i18n';
   import { page } from '$app/stores';
   import SFX from '$lib/sfx';
 

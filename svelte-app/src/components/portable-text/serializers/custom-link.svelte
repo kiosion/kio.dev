@@ -13,7 +13,7 @@
 
   let isExt = true;
 
-  $: href && (isExt = (href as string).indexOf('http') >= 0);
+  $: href && (isExt = href.indexOf('http') >= 0);
 </script>
 
 <Hoverable bind:hovered>

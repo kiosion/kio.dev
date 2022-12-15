@@ -22,9 +22,7 @@
       if (external) {
         window.open(link, '_blank');
       } else {
-        goto(linkTo(`/work/${project.slug.current}`) as string).catch(
-          () => undefined
-        );
+        goto(linkTo(`/work/${project.slug.current}`)).catch(() => undefined);
       }
     }
   };

@@ -5,5 +5,8 @@
   "bracketSameLine": false,
   "singleQuote": true,
   "trailingComma": "none",
-  "printWidth": 80
+  "printWidth": 80,
+  "plugins": [
+    "./node_modules/prettier-plugin-svelte"
+  ]
 }

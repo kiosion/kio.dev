@@ -31,7 +31,8 @@
     if (!cursor) {
       return;
     }
-    cursorTweenX.set(mousePos.x), cursorTweenY.set(mousePos.y);
+    cursorTweenX.set(mousePos.x).catch(() => undefined),
+      cursorTweenY.set(mousePos.y).catch(() => undefined);
     requestAnimationFrame(updateCursors);
   };
 
@@ -121,7 +122,7 @@
       >
         <path
           d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
-          style={`stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;`}
+          style={'stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;'}
           bind:this={progressPath}
         />
       </svg>

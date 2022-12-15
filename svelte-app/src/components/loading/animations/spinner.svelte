@@ -1,5 +1,5 @@
 <div>
-  {#each Array(6) as item}
+  {#each Array(6) as _}
     <div />
   {/each}
 </div>

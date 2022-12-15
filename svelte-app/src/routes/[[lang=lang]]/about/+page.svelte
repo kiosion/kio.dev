@@ -12,9 +12,7 @@
   import { t } from '$i18n';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  const getScrollContainer = getContext('getScrollContainer') as () =>
-    | HTMLElement
-    | undefined;
+  const getScrollContainer = getContext('getScrollContainer');
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);

@@ -1,9 +1,14 @@
 <script lang="ts">
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
+  import type { ArbitraryTypedObject } from '@portabletext/types';
   import type { SanityImageObject } from '$types';
 
-  export let portableText: CustomBlockComponentProps & SanityImageObject;
+  export let portableText: Omit<CustomBlockComponentProps, 'value'> & {
+    value: ArbitraryTypedObject & {
+      asset: SanityImageObject['asset'];
+    };
+  };
 
   let imageCrop: ImageCrop;
 

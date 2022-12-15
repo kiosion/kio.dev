@@ -1,4 +1,6 @@
 <script lang="ts">
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-nocheck Need to fix typings for hlAuto and hlHighlight
   import { theme } from '$stores/theme';
   import { onMount, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
@@ -28,7 +30,7 @@
     clicked();
   };
 
-  const clicked = async () => {
+  const clicked = () => {
     if (!copied && hovered) {
       copied = true;
       setTimeout(() => {
@@ -37,6 +39,7 @@
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const unsubscribe = theme.subscribe(async (res) => {
     if (res === 'light') {
       hlStyles = (await import('svelte-highlight/styles/github')).default;
@@ -98,6 +101,7 @@
 <svelte:head>
   {#if hlStyles}
     <!-- @html is usually a terrible idea, in this case it should be fine since it's a stylesheet from a trusted pkg -->
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html hlStyles}
   {/if}
 </svelte:head>

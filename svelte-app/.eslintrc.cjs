@@ -4,7 +4,8 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json']
+    project: ['./tsconfig.json'],
+    extraFileExtensions: ['.svelte']
   },
   env: {
     browser: true,
@@ -13,16 +14,18 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:svelte/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
-  plugins: ['svelte3', 'prettier', '@typescript-eslint'],
+  plugins: ['prettier', '@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-unsafe-assignment': ['off'],
     '@typescript-eslint/no-unsafe-return': ['off'],
     '@typescript-eslint/no-unsafe-call': ['off'],
     '@typescript-eslint/no-unsafe-member-access': ['off'],
     '@typescript-eslint/restrict-template-expressions': ['off'],
+    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     'prettier/prettier': ['error'],
     'array-bracket-spacing': ['error', 'never'],
     'arrow-spacing': ['error'],
@@ -75,11 +78,14 @@ module.exports = {
       files: [
         '*.svelte'
       ], 
-      processor: 'svelte3/svelte3'
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        'parser': '@typescript-eslint/parser'
+      }
     }
   ],
   settings: {
-    'svelte3/typescript': () => require('typescript')
+    'svelte3/typescript': true
   },
   ignorePatterns: [
     '**/.DS_Store',

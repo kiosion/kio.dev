@@ -3,7 +3,7 @@
   import type { Writable } from 'svelte/store';
 
   export let error: Writable<Error | undefined> | null = null;
-  export let onError: ((arg0: any) => unknown) | null = null;
+  export let onError: ((arg0: unknown) => unknown) | null = null;
 
   let errorValue: Error | null = null;
   let message = 'Something went wrong...';
