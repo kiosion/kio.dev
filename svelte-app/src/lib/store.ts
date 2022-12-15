@@ -53,7 +53,7 @@ class StoreClass extends CacheClass {
     params: PossibleParams = {}
   ): Promise<StoreRes<ResDataMany<T>>> => {
     if (!endpoints.has(model)) {
-      Logger.error(`Invalid model: ${model}`, 'store/query');
+      Logger.warn(`Invalid model: ${model}`);
       return;
     }
     const url = this.constructUrl(model, params, true);
@@ -61,13 +61,12 @@ class StoreClass extends CacheClass {
       const res = await fetch(url);
       const response = (await res.json()) as ResDataMany<T> & ResError;
       if (!response.meta || response.error) {
-        console.log('got error res:', response);
-        Logger.error('Failed to get data', 'store/query');
+        Logger.error('Failed to get data');
         return;
       }
       return response as ResDataMany<T>;
     } catch (err: unknown) {
-      Logger.error('Failed to query endpoint', 'store/query');
+      Logger.error('Failed to query endpoint');
       return;
     }
   };
@@ -78,7 +77,7 @@ class StoreClass extends CacheClass {
     params: PossibleParams = {}
   ): Promise<StoreRes<ResData<T>>> => {
     if (!endpoints.has(model)) {
-      Logger.error(`Invalid model: ${model}`, 'store/queryOne');
+      Logger.warn(`Invalid model: ${model}`);
       return;
     }
     const url = this.constructUrl(model, params);
@@ -86,12 +85,12 @@ class StoreClass extends CacheClass {
       const res = await fetch(url);
       const response = (await res.json()) as ResData<T> & ResError;
       if (!response.meta || response.error) {
-        Logger.error('Failed to get data', 'store/queryOne');
+        Logger.error('Failed to get data');
         return;
       }
       return response as ResData<T>;
     } catch (err: unknown) {
-      Logger.error('Failed to query endpoint', 'store/queryOne');
+      Logger.error('Failed to query endpoint');
       return;
     }
   };

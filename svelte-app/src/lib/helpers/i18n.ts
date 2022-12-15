@@ -10,11 +10,11 @@ const currentLang = writable(DEFAULT_APP_LANG);
 
 const notFound = (key: string, lang: string, abbr = 0) => {
   abbr > 0
-    ? Logger.error(
-        `i18n: Missing translation for key "${key}" in ${lang}.json & ${abbr} others}`
+    ? Logger.errorOnce(
+        `[i18n] Missing translation for key "${key}" in ${lang}.json & ${abbr} others}`
       )
-    : Logger.error(
-        `i18n: Missing translation for key "${key}" in ${lang}.json`
+    : Logger.errorOnce(
+        `[i18n] Missing translation for key "${key}" in ${lang}.json`
       );
   return key;
 };
@@ -67,19 +67,7 @@ const translate = (key: string, params?: Record<string, unknown>): string => {
       (acc, [key, value]) => acc.replace(`{${key}}`, value as string),
       str
     );
-    // return str.replace(/{([^}]+)}/g, (match, param) => {
-    //   return params[param] || match;
-    // });
   };
-
-  // if (!lang) {
-  //   const string = getKey('en', key as keyof typeof EN);
-  //   if (string) {
-  //     return replaceParams(string);
-  //   }
-  //   return notFound(key, DEFAULT_APP_LANG);
-  //   // return !string && string !== '' ? notFound(key, DEFAULT_APP_LANG) : string;
-  // }
 
   const string = getKey(lang || DEFAULT_APP_LANG, key as keyof typeof EN);
   return string

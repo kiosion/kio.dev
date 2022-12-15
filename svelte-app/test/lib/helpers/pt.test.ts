@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getTotalWords, getHeadings, type Heading } from '$helpers/pt';
-import { postBody } from '../fixtures/pt';
+import { postBody } from '../../fixtures/pt';
 
 describe('Helpers | Portable Text | getTotalWords', () => {
   it('should return all words as array from portable text block', () => {

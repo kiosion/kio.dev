@@ -25,7 +25,12 @@ module.exports = {
     // '@typescript-eslint/no-unsafe-call': ['off'],
     // '@typescript-eslint/no-unsafe-member-access': ['off'],
     '@typescript-eslint/restrict-template-expressions': ['off'],
-    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error', {
+        'varsIgnorePattern': '^_*'
+      }
+    ],
+    'no-unused-vars': ['off'],
     'prettier/prettier': ['error'],
     'array-bracket-spacing': ['error', 'never'],
     'arrow-spacing': ['error'],
@@ -81,6 +86,15 @@ module.exports = {
       parser: 'svelte-eslint-parser',
       parserOptions: {
         'parser': '@typescript-eslint/parser'
+      }
+    },
+    {
+      files: [
+        '*.test.ts',
+        '*.spec.ts'
+      ],
+      rules: {
+        '@typescript-eslint/no-empty-function': ['off']
       }
     }
   ],

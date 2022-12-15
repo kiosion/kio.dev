@@ -4,22 +4,21 @@
 
   export let portableText: MarkComponentProps;
 
-  let href: string | undefined;
   let hovered: boolean;
 
   $: ({ value } = portableText);
   $: ({ plainTextContent } = portableText);
   $: href = value.href as string;
-
-  let isExt = true;
-
-  $: href && (isExt = href.indexOf('http') >= 0);
+  // TODO: Eventually use 'external' to show tooltip or not.
+  $: _external = !!value.external as boolean;
+  $: newtab = !!value.newtab as boolean;
 </script>
 
 <Hoverable bind:hovered>
   <a
     href={href ? href : '#'}
-    target={isExt ? '_blank' : undefined}
+    target={newtab ? '_blank' : undefined}
+    rel={newtab ? 'noopener noreferrer' : ''}
     class="underlined from-emerald-400 dark:from-emerald-300 {hovered
       ? 'active dark:text-slate-800'
       : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
@@ -38,15 +37,11 @@
       var(--tw-gradient-from) 100%
     );
     background-position: bottom center;
-    // background-position: 0 1rem;
     background-repeat: no-repeat;
     background-size: calc(100% - 4px) 2px;
     transition: background-size 50ms ease, color 50ms ease;
     &.active {
       background-size: calc(100% - 4px) 100%;
-    }
-    &-dark {
-      // 6ee7b7, else 34d399
     }
   }
 </style>

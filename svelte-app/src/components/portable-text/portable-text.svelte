@@ -57,7 +57,7 @@
         ];
       }, [] as FootnoteProps[]);
     } catch (e) {
-      Logger.error('Error parsing footnotes', e);
+      Logger.error('Error parsing footnotes', null, e);
       return [] as FootnoteProps[];
     }
   })(text);
@@ -105,7 +105,8 @@
         },
         listItem: {
           bullet: UlItem,
-          number: OlItem
+          number: OlItem,
+          normal: UlItem
         }
       }}
       context={{
