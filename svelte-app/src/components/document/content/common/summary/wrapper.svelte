@@ -39,6 +39,6 @@
 
 <div class="h-[1px]" bind:this={trigger} />
 
-<Summary {headings} {visible} />
+<Summary {headings} />
 
 <Divider />

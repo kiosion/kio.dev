@@ -8,8 +8,7 @@
 
   export let headings: PTHeading[],
     floating = false,
-    expanded = false,
-    visible = true;
+    expanded = false;
 
   let hide = false,
     closeButton: HTMLDivElement | undefined;

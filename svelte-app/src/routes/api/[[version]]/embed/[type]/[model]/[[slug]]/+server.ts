@@ -1,6 +1,6 @@
-import type { RequestHandler, RequestEvent } from './$types';
-import { REMOTE_API_URL } from '$lib/env';
-import { fetchRemote } from '$lib/data.server';
+import type { RequestHandler /* , RequestEvent */ } from './$types';
+// import { REMOTE_API_URL } from '$lib/env';
+// import { fetchRemote } from '$lib/data.server';
 import { fionaPlaceholder } from '$helpers/placeholders';
 import nodeHtmlToImage from 'node-html-to-image';
 // import type { AuthorDocument } from '$types';
@@ -152,9 +152,9 @@ export const GET: RequestHandler = async ({
 
 const generatePageEmbed = async ({
   type,
-  page,
-  lang
-}: {
+  page
+}: // lang
+{
   type: string;
   page: string;
   lang: string;
