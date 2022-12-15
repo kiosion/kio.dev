@@ -64,7 +64,7 @@
           <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
         {/if}
         <p>{`${Math.floor(readingTime / 60)} min read`}</p>
-        {#if post.tags}
+        {#if post.tags && post.tags.length > 0}
           <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
           <Tags model="post" data={post.tags} />
         {/if}

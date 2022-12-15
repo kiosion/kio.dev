@@ -11,7 +11,7 @@
 
 <div class="mt-4" data-test-id="{model}-footer">
   <Divider />
-  {#if data.tags}
+  {#if data.tags && data.tags.length > 0}
     <IconHeader
       icon="CardText"
       text={t('Tags')}

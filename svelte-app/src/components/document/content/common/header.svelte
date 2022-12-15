@@ -83,7 +83,7 @@
         </h1>
       </svelte:fragment>
       <svelte:fragment slot="tags">
-        {#if data.tags}
+        {#if data.tags && data.tags.length > 0}
           <Tags {model} data={data.tags} size="lg" />
         {/if}
       </svelte:fragment>

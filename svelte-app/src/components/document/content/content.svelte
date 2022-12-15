@@ -14,7 +14,7 @@
 </script>
 
 <Header {model} {data} />
-{#if headings}
+{#if headings && headings.length > 0}
   <SummaryWrapper {headings} />
 {/if}
 <Wrapper>
