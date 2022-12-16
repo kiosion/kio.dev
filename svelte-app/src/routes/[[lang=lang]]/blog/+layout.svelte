@@ -4,7 +4,9 @@
   import { onMount, getContext } from 'svelte';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  const getScrollContainer = getContext('getScrollContainer');
+  const getScrollContainer = getContext(
+    'getScrollContainer'
+  ) as () => HTMLDivElement | null;
 
   onMount(() => {
     setTimeout(

@@ -13,37 +13,30 @@
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
-    window?.scroll?.({ top: 0, left: 0, behavior: 'smooth' });
   });
 
   export let data: PageData;
 
-  const pageTitle = `kio.dev | ${t('Work').toLowerCase()}`;
+  const pageTitle = `kio.dev | ${t('Work').toLowerCase()}`,
+    description = t(
+      'A collection of my work, open-source contributions, and personal projects'
+    );
 
   $: ({ pinned, projects } = data);
 </script>
 
 <svelte:head>
   <title>{pageTitle}</title>
-  <meta
-    name="description"
-    content="A collection of my work, open-source contributions, and personal projects"
-  />
+  <meta name="description" content={description} />
   <meta name="keywords" content="work, projects, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={$page.url.href} />
+  <meta property="og:url" content={$page?.url?.href} />
   <meta property="og:title" content={pageTitle} />
-  <meta
-    property="og:description"
-    content="A collection of my work, open-source contributions, and personal projects"
-  />
-  <meta property="twitter:url" content={$page.url.href} />
+  <meta property="og:description" content={description} />
+  <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:title" content={pageTitle} />
-  <meta
-    property="twitter:description"
-    content="A collection of my work, open-source contributions, and personal projects"
-  />
+  <meta property="twitter:description" content={description} />
 </svelte:head>
 
 {#if pinned?.data}

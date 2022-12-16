@@ -13,27 +13,26 @@
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
-
-    window?.scroll?.({ top: 0, left: 0, behavior: 'smooth' });
   });
 
   export let data: PageData;
 
-  const description = t('Thoughts about tech, design, and development');
+  const pageTitle = `kio.dev | ${t('Blog').toLowerCase()}`,
+    description = t('Thoughts about tech, design, and development');
 
   $: ({ pinned, posts } = data);
 </script>
 
 <svelte:head>
-  <title>kio.dev | {t('Blog').toLowerCase()}</title>
+  <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content="blog, posts, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kio.dev/blog" />
+  <meta property="og:url" content={$page?.url?.href} />
   <meta property="og:title" content="kio.dev | blog" />
   <meta property="og:description" content={description} />
-  <meta property="twitter:url" content="https://kio.dev/blog" />
+  <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:title" content="kio.dev | blog" />
   <meta property="twitter:description" content={description} />
 </svelte:head>
@@ -45,11 +44,13 @@
 <!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
 <IconHeader icon="bulletlist" text={t('All posts')} />
 {#if posts?.data?.length}
-  {#each posts.data as post}
-    {#if post._id !== pinned?.data?._id}
-      <ListItem {post} />
-    {/if}
-  {/each}
+  <div class="flex flex-col gap-4">
+    {#each posts.data as post}
+      {#if post._id !== pinned?.data?._id}
+        <ListItem {post} />
+      {/if}
+    {/each}
+  </div>
 {:else}
   <div class="w-full flex flex-row items-center justify-center">
     <ErrorText text={t('No data')} classes="w-fit" />

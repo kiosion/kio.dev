@@ -7,12 +7,13 @@
   import AboutCard from '$components/about/card.svelte';
   import AboutTimeline from '$components/about/timeline.svelte';
   import AboutSection from '$components/about/section.svelte';
-  import { Boundary } from '$lib/error-bound';
   import type { PageData } from './$types';
   import { t } from '$i18n';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  const getScrollContainer = getContext('getScrollContainer');
+  const getScrollContainer = getContext(
+    'getScrollContainer'
+  ) as () => HTMLDivElement | null;
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -43,24 +44,18 @@
 
 <div data-test-route="about">
   <ContentWrapper>
-    <Boundary onError={console.error}>
-      <AboutCard image={about?.image} body={about?.bio} />
-    </Boundary>
+    <AboutCard image={about?.image} body={about?.bio} />
     {#if about?.timeline}
-      <Boundary onError={console.error}>
-        <AboutSection title={t('My work')} icon="Briefcase">
-          <AboutTimeline data={about.timeline} />
-        </AboutSection>
-      </Boundary>
+      <AboutSection title={t('My work')} icon="Briefcase">
+        <AboutTimeline data={about.timeline} />
+      </AboutSection>
     {/if}
     {#if about?.body}
-      <Boundary onError={console.error}>
-        <AboutSection title={t('More')} icon="InfoBox">
-          <div class="mx-1 font-sans">
-            <PortableText text={about.body} />
-          </div>
-        </AboutSection>
-      </Boundary>
+      <AboutSection title={t('More')} icon="InfoBox">
+        <div class="mx-1 font-sans">
+          <PortableText text={about.body} />
+        </div>
+      </AboutSection>
     {/if}
   </ContentWrapper>
 </div>

@@ -2,8 +2,7 @@ import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import { error } from '@sveltejs/kit';
-import { getHeadings } from '$helpers/pt';
-import type { ResData, PostDocument, PTBlock } from '$types';
+import type { ResData, PostDocument } from '$types';
 import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');
@@ -15,7 +14,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     await Store.findOne<PostDocument>(fetch, 'post', {
       idb: btoa(params.slug)
     }).catch((err: unknown) => {
-      Logger.error(err as string, `routes/blog/${params.slug}`);
+      Logger.error(err as string);
       return undefined;
     });
 
@@ -25,7 +24,23 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const headings = await getHeadings((post?.data.body ?? []) as PTBlock[]);
+  const headings =
+    (await (
+      await fetch('/api/transform/parsept', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'parseHeadings',
+          data: post?.data.body ?? []
+        })
+      })
+    )?.json()) ?? [];
+
+  // Set an additional timeout to allow any other requests to fully finish
+  // TODO: Use this time to preload codeblocks and other onMount components
+  await new Promise((res) => setTimeout(res, 100));
 
   return { post, headings };
 };

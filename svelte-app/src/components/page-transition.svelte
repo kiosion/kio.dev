@@ -6,8 +6,8 @@
 
   export let url: URL | undefined;
 
-  const dist = 10,
-    duration = 200;
+  const dist = 12,
+    duration = 300;
 
   let navDir: 'forward' | 'backward' = 'forward';
 
@@ -16,6 +16,9 @@
   $: CanUseReduceMotion = Features.can('use reduce motion feature');
 </script>
 
+<!-- TODO: This method is broken (& has been for a while), see https://github.com/sveltejs/svelte/issues/6152 -->
+<!-- For now, the alternative is to not use a Key block, and simply import this component -->
+<!-- in each individual subroute... which is Not happening, lol -->
 {#key pathname}
   <div
     class="absolute top-0 left-0 w-full h-full"
