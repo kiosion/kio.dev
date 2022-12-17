@@ -5,6 +5,8 @@ import LinkRenderer from '../renderers/link';
 import { BsLink45Deg } from 'react-icons/bs';
 import { BiHighlight, BiNote } from 'react-icons/bi';
 
+import { CodeBlockExtensionOpts } from '../utils/code';
+
 export const CustomMarks = {
   decorators: [
     { title: 'Strong', value: 'strong' },
@@ -95,7 +97,7 @@ export const BodyBlocks = [
       hotspot: true
     }
   },
-  { type: 'code' },
+  { type: 'code', options: CodeBlockExtensionOpts },
   { type: 'divider' }
 ];
 

@@ -18,7 +18,7 @@
   <svelte:fragment slot="lg">
     {#if $navOptions.down !== '' || $isLocalized}
       <div
-        class="fixed bottom-0 left-40 xl:left-60 right-0 z-[5] rounded-bl-3xl py-5 px-7 bg-slate-100/80 dark:bg-slate-800/80 transition-colors backdrop-blur-md"
+        class="fixed bottom-0 left-32 lg:left-40 xl:left-60 right-0 z-[5] rounded-bl-3xl py-5 px-7 bg-slate-100/80 dark:bg-slate-800/80 transition-colors backdrop-blur-md"
       >
         <div class="flex flex-row justify-between items-start">
           <div class="w-52">

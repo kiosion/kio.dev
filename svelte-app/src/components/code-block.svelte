@@ -7,23 +7,26 @@
   import { navigating } from '$app/stores';
   import Icon from './icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import type { HighlightAuto, Highlight } from 'svelte-highlight';
+  import type {
+    HighlightAuto,
+    Highlight,
+    LanguageType
+  } from 'svelte-highlight';
 
-  export let content: string;
-  export let showClipboard = false;
-  export let lang: string | undefined = undefined;
+  export let content: string,
+    showClipboard = false,
+    lang: string | undefined = undefined;
 
   let hovered = false;
   let copied = false;
 
-  let hlHighlight: Highlight;
-  let hlAuto: HighlightAuto;
-  let hlLang: unknown;
-  let hlStyles: unknown;
-
-  let container: HTMLElement;
-  let codeContainer: HTMLElement;
-  let innerHeight: number;
+  let hlHighlight: Highlight,
+    hlAuto: HighlightAuto,
+    hlLang: LanguageType,
+    hlStyles: unknown,
+    container: HTMLElement,
+    codeContainer: HTMLElement,
+    innerHeight: number;
 
   const copy = () => {
     content && navigator.clipboard.writeText(content);
@@ -39,7 +42,6 @@
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const unsubscribe = theme.subscribe(async (res) => {
     if (res === 'light') {
       hlStyles = (await import('svelte-highlight/styles/github')).default;
@@ -50,28 +52,31 @@
 
   onMount(async () => {
     !lang
-      ? (hlAuto = (await import('svelte-highlight'))
-          .HighlightAuto as unknown as HighlightAuto)
+      ? (hlAuto = await import('svelte-highlight')).HighlightAuto
       : (hlHighlight = (await import('svelte-highlight'))
           .Highlight as unknown as Highlight);
 
-    hlLang = (async () => {
+    hlLang = await (async () => {
       switch (lang) {
         case 'javascript':
-          return await import('svelte-highlight/languages/javascript');
+          return (await import('svelte-highlight/languages/javascript'))
+            .javascript;
         case 'typescript':
-          return await import('svelte-highlight/languages/typescript');
+          return (await import('svelte-highlight/languages/typescript'))
+            .typescript;
         case 'sh':
         case 'shell':
-          return await import('svelte-highlight/languages/shell');
+          return (await import('svelte-highlight/languages/shell')).shell;
         case 'bash':
-          return await import('svelte-highlight/languages/bash');
+          return (await import('svelte-highlight/languages/bash')).bash;
         case 'elixir':
-          return await import('svelte-highlight/languages/elixir');
+          return (await import('svelte-highlight/languages/elixir')).elixir;
+        case 'haskell':
+          return (await import('svelte-highlight/languages/haskell')).haskell;
         case 'ruby':
-          return await import('svelte-highlight/languages/ruby');
+          return (await import('svelte-highlight/languages/ruby')).ruby;
         case 'python':
-          return await import('svelte-highlight/languages/python');
+          return (await import('svelte-highlight/languages/python')).python;
         case 'java':
           return await import('svelte-highlight/languages/java');
         case 'json':
@@ -80,15 +85,15 @@
           return await import('svelte-highlight/languages/yaml');
         case 'html':
         case 'xml':
-          return await import('svelte-highlight/languages/xml');
+          return (await import('svelte-highlight/languages/xml')).xml;
         case 'css':
-          return await import('svelte-highlight/languages/css');
+          return (await import('svelte-highlight/languages/css')).css;
         case 'sass':
         case 'scss':
-          return await import('svelte-highlight/languages/scss');
+          return (await import('svelte-highlight/languages/scss')).scss;
         case 'markdown':
         default:
-          return await import('svelte-highlight/languages/markdown');
+          return (await import('svelte-highlight/languages/markdown')).markdown;
       }
     })();
   });
@@ -100,7 +105,6 @@
 
 <svelte:head>
   {#if hlStyles}
-    <!-- @html is usually a terrible idea, in this case it should be fine since it's a stylesheet from a trusted pkg -->
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html hlStyles}
   {/if}
@@ -148,7 +152,7 @@
       {#if !lang}
         <svelte:component this={hlAuto} code={content} />
       {:else}
-        <svelte:component this={hlHighlight} code={content} lang={hlLang} />
+        <svelte:component this={hlHighlight} code={content} language={hlLang} />
       {/if}
     </div>
   </div>

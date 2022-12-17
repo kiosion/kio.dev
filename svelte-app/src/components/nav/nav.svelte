@@ -119,11 +119,11 @@
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-start">
                 <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline duration-[40] transition-colors {linkIsActive(
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline {linkIsActive(
                     link
                   )
                     ? 'text-slate-900'
-                    : 'dark: text-slate-100'}"
+                    : 'dark:text-slate-100'}"
                   aria-label={t(link.name)}
                   href={link.url}
                   role="menuitem"
@@ -225,7 +225,7 @@
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-center">
                 <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg duration-[40] transition-colors {linkIsActive(
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg {linkIsActive(
                     link
                   )
                     ? 'text-slate-900'
