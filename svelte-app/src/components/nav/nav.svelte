@@ -6,7 +6,7 @@
   import MenuToggle from '$components/toggles/menu-toggle.svelte';
   import { navOpen } from '$stores/navigation';
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page, navigating } from '$app/stores';
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import {
@@ -16,7 +16,7 @@
   } from '$lib/consts';
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { circInOut } from 'svelte/easing';
-  import { t, linkTo } from '$i18n';
+  import { t, linkTo, isLocalized } from '$i18n';
   import SFX from '$lib/sfx';
   import { config as currentConfig } from '$stores/config';
   import LinkIndicator from '$components/nav/link-indicator.svelte';
@@ -54,6 +54,22 @@
     })
   );
 
+  const linkIsActive = (link: {
+    url: string;
+    active: boolean;
+    name: string;
+  }) => {
+    return [$page.url.pathname, $navigating?.to?.url.pathname].includes(
+      link.url
+    ) || link.active
+      ? true
+      : false;
+  };
+
+  const urlTruePath = (url: string) => {
+    return url.slice($isLocalized ? 4 : 1);
+  };
+
   let clicks = 0;
 
   const onLogoClick = () => {
@@ -77,19 +93,19 @@
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav
-      class="flex flex-col flex-shrink-0 w-40 h-screen px-4 py-8 overflow-x-hidden overflow-y-auto text-center xl:w-60"
+      class="flex flex-col flex-shrink-0 w-32 lg:w-40 h-screen px-4 py-8 overflow-x-hidden overflow-y-auto text-center xl:w-60"
       data-test-id="navBar"
     >
       <div class="flex-grow -mt-7 md:-mt-4 click-through">
         <!-- Logo -->
         <Hoverable>
           <button
-            class="inline-block -rotate-90 mx-auto my-16 lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
+            class="inline-block -ml-2 lg:ml-0 mt-24 mb-[68px] lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
             role="menuitem"
             on:click={() => onLogoClick()}
           >
             <img
-              class="w-full"
+              class="-rotate-90"
               src="/assets/logo-text--short.webp"
               alt="kio."
             />
@@ -103,7 +119,11 @@
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-start">
                 <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline"
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline duration-[40] transition-colors {linkIsActive(
+                    link
+                  )
+                    ? 'text-slate-900'
+                    : 'dark: text-slate-100'}"
                   aria-label={t(link.name)}
                   href={link.url}
                   role="menuitem"
@@ -168,11 +188,13 @@
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav
-      class="h-fit w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors pb-[3px] z-10"
+      class="h-fit w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors z-10"
       data-test-id="navBar"
     >
-      <div class="relative flex flex-col m-4">
-        <!-- Logo -->
+      <div
+        class="relative flex flex-row justify-center items-center m-4 px-3 flex-wrap gap-4"
+      >
+        <MenuToggle />
         <Hoverable>
           <button
             class="mx-auto w-44 logo-text dark:invert transition-[filter]"
@@ -185,15 +207,9 @@
             />
           </button>
         </Hoverable>
-        <!-- Toggle buttons -->
-        <div
-          class="absolute top-0 left-0 flex items-center justify-between w-full h-full px-3 click-through"
-        >
-          <MenuToggle />
-          <div class="flex flex-row justify-start gap-4 w-fit align-center">
-            <ThemeToggle />
-            <SoundsToggle />
-          </div>
+        <div class="flex flex-row justify-start gap-4 w-fit align-center pb-1">
+          <ThemeToggle />
+          <SoundsToggle />
         </div>
       </div>
       <!-- Nav dropdown -->
@@ -206,6 +222,40 @@
           }}
         >
           {#each links as link}
+            <Hoverable bind:hovered={link.active}>
+              <div class="relative flex flex-row items-center justify-center">
+                <a
+                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg duration-[40] transition-colors {linkIsActive(
+                    link
+                  )
+                    ? 'text-slate-900'
+                    : 'dark:text-slate-100'} rounded-sm focusOutline"
+                  aria-label={t(link.name)}
+                  href={link.url}
+                  role="menuitem"
+                  tabindex="0"
+                  data-sveltekit-preload-data
+                  data-sveltekit-preload-code
+                  on:click={() => {
+                    SFX.click.play();
+                    navOpen.set(false);
+                  }}
+                  on:keydown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      e.preventDefault();
+                      SFX.click.play();
+                      navOpen.set(false);
+                      goto(link.url).catch(() => undefined);
+                    }
+                  }}
+                >
+                  {t(link.name)}
+                </a>
+                <LinkIndicator {link} />
+              </div>
+            </Hoverable>
+          {/each}
+          <!-- {#each links as link}
             <div class="relative flex flex-row items-center justify-start">
               <a
                 class="font-mono text-base font-normal uppercase nav-link"
@@ -234,7 +284,7 @@
                   : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in click-through select-none"
               />
             </div>
-          {/each}
+          {/each} -->
         </div>
       {/if}
     </nav>
