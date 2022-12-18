@@ -75,6 +75,10 @@
           case 'html':
             imp = (await import('svelte-highlight/languages/xml')).xml;
             break;
+          case 'sh':
+          case 'shell':
+            imp = (await import('svelte-highlight/languages/bash')).bash;
+            break;
           default:
             imp = (
               await import(

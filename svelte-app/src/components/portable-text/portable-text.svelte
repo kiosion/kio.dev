@@ -57,7 +57,7 @@
         ];
       }, [] as FootnoteProps[]);
     } catch (e) {
-      Logger.error('Error parsing footnotes', null, e);
+      Logger.error('Error parsing footnotes', undefined, e);
       return [] as FootnoteProps[];
     }
   })(text);
