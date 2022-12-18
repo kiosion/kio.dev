@@ -5,13 +5,19 @@
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import ScrollTo from '$helpers/scrollTo';
-  import type { PostDocument, ProjectDocument } from '$types';
+  import type {
+    PostDocument,
+    ProjectDocument,
+    ResDataMany,
+    Comment
+  } from '$types';
   import type { Heading } from '$helpers/pt';
   import { t } from '$lib/helpers/i18n';
 
-  export let model: 'post' | 'project';
-  export let data: ProjectDocument | PostDocument | undefined;
-  export let headings: Heading[];
+  export let model: 'post' | 'project',
+    data: ProjectDocument | PostDocument | undefined,
+    headings: Heading[],
+    comments: ResDataMany<Comment> | undefined = undefined;
 
   const isPost = model === 'post',
     pageName = `${isPost ? t('Blog') : t('Work')}${
@@ -70,7 +76,7 @@
 >
   {#if data}
     <ContentWrapper>
-      <Content {model} {data} {headings} />
+      <Content {model} {data} {headings} {comments} />
     </ContentWrapper>
   {/if}
 </div>

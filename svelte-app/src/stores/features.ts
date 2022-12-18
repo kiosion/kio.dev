@@ -6,7 +6,8 @@ const defaultFlags = new Map([
   ['reduce-motion', writable(false)],
   ['sounds', writable(true)],
   ['custom-cursor', writable(false)],
-  ['comic-sans', writable(false)]
+  ['comic-sans', writable(false)],
+  ['comments', writable(false)]
 ]);
 
 class FeaturesClass {
@@ -51,10 +52,7 @@ class FeaturesClass {
   set = (flag: string, value: boolean): Writable<boolean> | undefined => {
     const doesExist = get(this.flags).has(flag);
     if (!doesExist) {
-      Logger.error(
-        `Error: Feature flag '${flag}' does not exist`,
-        'stores/features'
-      );
+      Logger.error(`Error: Feature flag '${flag}' does not exist`);
     }
     get(this.flags).get(flag)?.set(value);
     return get(this.flags).get(flag);

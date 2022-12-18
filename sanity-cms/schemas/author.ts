@@ -69,7 +69,11 @@ export default {
                   type: 'date',
                   options: {
                     dateFormat: 'MMMM Do, YYYY'
-                  }
+                  },
+                  validation: (Rule: Rule) =>
+                    Rule.min(Rule.valueOfField('start')).error(
+                      'End date must be after start date'
+                    )
                 }
               ]
             },

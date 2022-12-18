@@ -62,5 +62,32 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      date: 'date',
+      subtitle: 'desc'
+    },
+    prepare({
+      title,
+      date,
+      subtitle
+    }: {
+      title: string;
+      date: string;
+      subtitle: string;
+    }) {
+      return {
+        title: title,
+        subtitle: `${
+          date
+            ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(
+                new Date(date)
+              )
+            : ''
+        }${date && subtitle ? ' - ' : ''}${subtitle ? subtitle : ''}`
+      };
+    }
+  }
 };

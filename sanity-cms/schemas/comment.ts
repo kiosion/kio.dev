@@ -23,23 +23,15 @@ export default {
       validation: (Rule: Rule) => Rule.required()
     },
     {
-      name: 'approved',
-      title: 'Approved',
-      type: 'boolean',
-      description: 'Comments will not be visible until approved',
-      initialValue: false,
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'verified',
-      title: 'Verified',
-      type: 'boolean',
-      initialValue: false,
+      name: 'date',
+      title: 'Date',
+      type: 'datetime',
+      initialValue: new Date().toISOString(),
       validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'document',
-      title: 'Post / Project',
+      title: 'On',
       type: 'reference',
       // We need these to be weakrefs so referenced docs aren't
       // blocked from deletion / unpublishing
@@ -54,19 +46,53 @@ export default {
         }
       ],
       validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'parent',
+      title: 'Parent',
+      type: 'reference',
+      to: [
+        {
+          type: 'comment',
+          weak: true
+        }
+      ]
+    },
+    {
+      name: 'approved',
+      title: 'Approved',
+      type: 'boolean',
+      description: 'Comments will not be visible until approved',
+      initialValue: false,
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'verified',
+      title: 'Verified',
+      type: 'boolean',
+      initialValue: false,
+      validation: (Rule: Rule) => Rule.required()
     }
-  ]
-  // preview: {
-  //   select: {
-  //     name: 'name',
-  //     body: 'body',
-  //     post: 'post.title'
-  //   },
-  //   prepare({ name, body, post }) {
-  //     return {
-  //       title: `${name} on ${post}`,
-  //       subtitle: body
-  //     };
-  //   }
-  // }
+  ],
+  preview: {
+    select: {
+      name: 'name',
+      body: 'body',
+      email: 'email'
+    },
+    prepare({
+      name,
+      email,
+      body
+    }: {
+      name: string;
+      email: string;
+      body: string;
+    }) {
+      return {
+        title: `${name} (${email})`,
+        subtitle: body
+      };
+    }
+  }
 };

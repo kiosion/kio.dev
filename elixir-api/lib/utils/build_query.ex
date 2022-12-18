@@ -198,6 +198,9 @@ defmodule Hexerei.BuildQuery do
       " |> strip()
     end
   end
+  def tag(_, _) do
+    nil
+  end
 
   # Fetch 'about' page content
   def about do
@@ -235,51 +238,87 @@ defmodule Hexerei.BuildQuery do
 
   # Fetch comment with '_id' of @id
   def comment(id) do
-    if id == nil || id == '' do
-      nil
-    else
-      "
-        *[!(_id in path('drafts.**')) && _type == 'comment' && _id == '#{id}']{
-          _id,
-          'objectID': _id,
-          _rev,
-          _type,
-          title,
-          body,
-          'document': {
-            '_id': document->_id,
-            'slug': document->slug,
-            'title': document->title
-          },
-          approved,
-          verified
-        }[0]
-      " |> strip()
-    end
+    "
+      *[!(_id in path('drafts.**')) && _type == 'comment' && _id == '#{id}']{
+        _id,
+        'objectID': _id,
+        _rev,
+        _type,
+        title,
+        body,
+        'document': {
+          '_id': document->_id,
+          'slug': document->slug,
+          'title': document->title
+        },
+        approved,
+        verified
+      }[0]
+    " |> strip()
+  end
+  def comment(_) do
+    nil
   end
 
   # Fetch comments on document @ref (slug || id), unless @force is provided, hide unapproved
   def commentsOn(ref, force) do
-    if ref == nil || ref == '' do
-      nil
-    else
-      "
-        *[!(_id in path('drafts.**')) && _type == 'comment' #{if force != true do " && approved == true " end}]{
+    "
+      *[!(_id in path('drafts.**')) && _type == 'comment' && (document._ref == '#{ref}' || document->slug.current == '#{ref}')#{if force != true do " && approved == true" end}]{
+        _id,
+        'objectID': _id,
+        _rev,
+        _type,
+        name,
+        email,
+        body,
+        date,
+        children[]->{
           _id,
           'objectID': _id,
-          _rev,
-          _type,
-          title,
-          body,
-          'document': {
-            '_id': document->_id,
-            'slug': document->slug,
-            'title': document->title
-          },
-          approved,
-          verified
-        }
-      " |> strip()
-    end
+          approved
+        },
+        'document': {
+          '_id': document->_id,
+          'slug': document->slug,
+          'title': document->title
+        },
+        approved,
+        verified
+      }
+    " |> strip()
+  end
+  def commentsOn(_, _) do
+    nil
+  end
+
+  # Fetch all children of comment @id
+  def commentChildren(id, force) do
+    "
+      *[!(_id in path('drafts.**')) && _type == 'comment' && parent._ref == '#{id}'#{if force != true do " && approved == true" end}]{
+        _id,
+        'objectID': _id,
+        _rev,
+        _type,
+        name,
+        email,
+        body,
+        date,
+        children[]->{
+          _id,
+          'objectID': _id,
+          approved
+        },
+        'document': {
+          '_id': document->_id,
+          'slug': document->slug,
+          'title': document->title
+        },
+        approved,
+        verified
+      }
+    "
+  end
+  def commentChildren(_, _) do
+    nil
   end
 end

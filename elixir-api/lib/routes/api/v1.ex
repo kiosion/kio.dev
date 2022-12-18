@@ -263,6 +263,33 @@ defmodule Router.Api.V1 do
     end
   end
 
+  # GET comments referencing document
+  get "#{@query_url}/comments/:id" do
+    if id == nil do
+      Hexerei.Res.err(conn, 400, "Missing document id")
+    end
+
+    start = System.system_time(:millisecond)
+
+    params = fetch_query_params(conn).query_params
+    |> validate_query_params(%{"force" => false})
+
+    query = BuildQuery.commentsOn(id, params["force"])
+
+    case Sanity.fetch(query) do
+      {:ok, result} ->
+        duration = System.system_time(:millisecond) - start
+
+        Poison.decode!(result)
+        |> Map.put("meta", %{
+          "id" => id
+        })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
+      {:error, error} -> Hexerei.Res.err(conn, error.code, "Something went wrong: #{error.message}")
+    end
+  end
+
   # GET about
   get "#{@query_url}/about" do
     case Sanity.fetch(BuildQuery.about()) do

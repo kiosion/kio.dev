@@ -26,9 +26,9 @@ export const structure = (
         .icon(BsGearFill)
         .child(
           S.document()
-            .title('Global Settings')
             .schemaType('siteSettings')
             .documentId('siteSettings')
+            .title('Global Settings')
         ),
       S.listItem()
         .title('Me')

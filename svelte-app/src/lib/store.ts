@@ -21,7 +21,8 @@ const endpoints = new Map([
   ['project', 'get/project'],
   ['tag', 'get/tag'],
   ['site', 'get/config'],
-  ['about', 'get/about']
+  ['about', 'get/about'],
+  ['comment', 'get/comment']
 ]);
 
 class StoreClass extends CacheClass {

@@ -4,10 +4,12 @@
   import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
   import { t } from '$i18n';
-  import type { PostDocument, ProjectDocument } from '$types';
+  import Features from '$stores/features';
+  import type { PostDocument, ProjectDocument, ResData, Comment } from '$types';
 
-  export let model: 'post' | 'project';
-  export let data: PostDocument | ProjectDocument;
+  export let model: 'post' | 'project',
+    data: PostDocument | ProjectDocument,
+    comments: ResData<Comment[]> | undefined = undefined;
 
   $: extLinks =
     model === 'project' &&
@@ -16,6 +18,8 @@
       {
         hovered: boolean;
       }[]);
+  $: canSeeComments = Features.can('use comments feature');
+  $: console.log('got comments:', comments);
 </script>
 
 <div class="mt-4" data-test-id="{model}-footer">
@@ -54,6 +58,33 @@
         </li>
       {/each}
     </ul>
+  {/if}
+  {#if $canSeeComments && comments}
+    <Divider />
+    <IconHeader
+      icon="comment"
+      text={t('Comments')}
+      classes="mt-8 mb-4 w-full h-fit"
+    />
+    {#await comments}
+      <div class="flex justify-center items-center h-32">
+        <p>Loading...</p>
+      </div>
+    {:then comments}
+      <div class="mt-4">
+        {#if comments.data?.length > 0}
+          {#each comments.data as comment}
+            <div class="mb-4">
+              <p>{comment.name}{comment.email ? ` (${comment.email})` : ''}</p>
+              <p>{comment.body}</p>
+            </div>
+          {/each}
+        {:else}
+          <p>No comments yet...</p>
+        {/if}
+        <!-- <CommentList {comments} /> -->
+      </div>
+    {/await}
   {/if}
 </div>
 

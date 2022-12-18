@@ -28,6 +28,7 @@
   $: CanUseSounds = Features.can('use sounds feature');
   $: CanUseCustomCursor = Features.can('use custom cursor feature');
   $: CanUseComicSans = Features.can('use comic sans feature');
+  $: CanSeeComments = Features.can('use comments feature');
 </script>
 
 <svelte:head>
@@ -65,6 +66,12 @@
       target={'comic-sans'}
       state={$CanUseComicSans}
       label="Comic Sans 😃"
+    />
+    <SwitchItem
+      action={onChange}
+      target={'comments'}
+      state={$CanSeeComments}
+      label="View Comments"
     />
   </div>
   <div class="mt-6">
