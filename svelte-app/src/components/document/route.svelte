@@ -14,9 +14,10 @@
   export let headings: Heading[];
 
   const isPost = model === 'post',
-    pageTitle = `${isPost ? t('Blog') : t('Work')}${
+    pageName = `${isPost ? t('Blog') : t('Work')}${
       data?.title ? ` | ${data.title}` : ''
     }`,
+    pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`,
     pageDescription = data?.desc
       ? data.desc
       : t(`A ${isPost ? 'blog post' : 'project'} on kio.dev`),
@@ -33,7 +34,7 @@
 
   onMount(() => {
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
-    pageHeading.set(pageTitle);
+    pageHeading.set(pageName);
     ScrollTo($page);
   });
 
@@ -41,9 +42,7 @@
 </script>
 
 <svelte:head>
-  <title>
-    kio.dev | {pageTitle.toLowerCase()}
-  </title>
+  <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
   <meta
     name="keywords"
@@ -54,16 +53,13 @@
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page.url.href} />
-  <meta property="og:title" content="kio.dev | {pageTitle.toLowerCase()}" />
+  <meta property="og:title" content={pageTitle} />
   <meta
     property="og:description"
     content={data?.desc ? data.desc : t('A blog post on kio.dev')}
   />
   <meta property="twitter:url" content={$page.url.href} />
-  <meta
-    property="twitter:title"
-    content="kio.dev | {pageTitle.toLowerCase()}"
-  />
+  <meta property="twitter:title" content={pageTitle} />
   <meta property="twitter:description" content={pageDescription} />
   <slot name="meta" />
 </svelte:head>

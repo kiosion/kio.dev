@@ -25,21 +25,24 @@
 
   export let data: PageData;
 
+  const pageTitle = `kio.dev | ${t('About').toLowerCase()}`,
+    description = t('A bit about me & my work');
+
   $: about = data?.about?.data;
 </script>
 
 <svelte:head>
-  <title>kio.dev | {t('About').toLowerCase()}</title>
-  <meta name="description" content="A bit about me & my work" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
   <meta name="keywords" content="About, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page.url.href} />
-  <meta property="og:title" content="kio.dev | about" />
-  <meta property="og:description" content="A bit about me & my work" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
   <meta property="twitter:url" content={$page.url.href} />
-  <meta property="twitter:title" content="kio.dev | about" />
-  <meta property="twitter:description" content="A bit about me & my work" />
+  <meta property="twitter:title" content={pageTitle} />
+  <meta property="twitter:description" content={description} />
 </svelte:head>
 
 <div data-test-route="about">
