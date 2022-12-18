@@ -3,7 +3,7 @@ defmodule Hexerei.Plug.VerifyRequest do
 
   # alias Hexerei.JWT
 
-  @api_token Application.compile_env!(:hexerei, :api_token)
+  @api_token Hexerei.Env.get!(:api_token)
 
   def init(options) do
     options

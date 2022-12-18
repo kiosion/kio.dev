@@ -4,11 +4,11 @@ defmodule Hexerei.SanityClient do
   """
 
   # Set variables from env
-  @sanity_project_id Application.compile_env!(:hexerei, :sanity_project_id)
-  @sanity_dataset Application.compile_env!(:hexerei, :sanity_dataset)
-  @sanity_token Application.compile_env!(:hexerei, :sanity_token)
-  @sanity_api_version Application.compile_env!(:hexerei, :sanity_api_version)
-  @sanity_apicdn Application.compile_env!(:hexerei, :sanity_apicdn)
+  @sanity_project_id Hexerei.Env.get!(:sanity_project_id)
+  @sanity_dataset Hexerei.Env.get!(:sanity_dataset)
+  @sanity_token Hexerei.Env.get!(:sanity_token)
+  @sanity_api_version Hexerei.Env.get!(:sanity_api_version)
+  @sanity_apicdn Hexerei.Env.get!(:sanity_apicdn)
 
   # Set headers
   @headers [
@@ -27,7 +27,6 @@ defmodule Hexerei.SanityClient do
       iex> Hexerei.SanityClient.fetch("*[_type == 'post']{title, slug, _id}")
       {:ok, data} | {:error, %{code, message}}
   """
-
   @doc since: "0.1.0"
   def fetch(query) do
     # Return error if query is not a string or is empty
@@ -63,7 +62,6 @@ defmodule Hexerei.SanityClient do
       iex> Hexerei.SanityClient.get_image_url("image-asset-id")
       "https://cdn.sanity.io/images/..."
   """
-
   @doc since: "0.1.0"
   def urlFor(assetID, queryParams) do
     # Return nil if asset is not a string or is empty

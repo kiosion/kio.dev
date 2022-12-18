@@ -9,7 +9,7 @@ defmodule Router.Api.V1 do
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.BuildQuery, as: BuildQuery
 
-  @query_url Application.compile_env!(:hexerei, :query_url)
+  @query_url Hexerei.Env.get!(:query_url)
 
   plug(:match)
 
@@ -99,7 +99,9 @@ defmodule Router.Api.V1 do
             })
             |> Map.update("ms", duration, &(&1 + (duration - &1)))
             |> fn data -> Hexerei.Res.json(conn, 200, %{code: 200, data: data}) end.()
-          {:error, error} -> Hexerei.Res.err(conn, error.code, %{message: "Something went wrong: #{error.message}"})
+          {:error, error} ->
+            IO.inspect("Error:")
+            Hexerei.Res.err(conn, error.code, %{message: "Something went wrong: #{error.message}"})
         end
       {:error, error} ->
         IO.inspect("Error:")

@@ -1,33 +1,49 @@
 #!/bin/bash
+
 set -e
-MIX_ENV="prod"
-while getopts ":p:d:t:a:x:" opt; do
-  case $opt in
-    p) SANITY_PROJECT_ID="$OPTARG"
-    ;;
-    d) SANITY_DATASET="$OPTARG"
-    ;;
-    t) SANITY_TOKEN="$OPTARG"
-    ;;
-    a) API_TOKEN="$OPTARG"
-    ;;
-    x) PORT="$OPTARG"
-    ;;
-    \?) echo "Invalid option -$OPTARG" >&2
-    ;;
+ARGS=$(getopt -o e:p: -l env:,project_id:,dataset:,token:,port: -- "$@")
+eval set -- "$ARGS"
+
+while [[ $1 != -- ]]; do
+  case $1 in
+    -e|--env) ENV=$2; shift 2;;
+    -p|--port) PORT=$2; shift 2;;
+    --project_id) SANITY_PROJECT_ID=$2; shift 2;;
+    --dataset) SANITY_DATASET=$2; shift 2;;
+    --token) SANITY_TOKEN=$2; shift 2;;
+    --api_key) API_TOKEN=$2; shift 2;;
+    *) echo "Invalid option: $1"; exit 1;;
   esac
 done
-if [ -z "$SANITY_PROJECT_ID" ] || [ -z "$SANITY_DATASET" ] || [ -z "$SANITY_TOKEN" ] || [ -z "$API_TOKEN" ] || [ -z "$PORT" ]; then
-  echo "ERROR: Missing arguments for release"
+
+if [ -z "$ENV" ]; then
+  echo "ERROR: Missing 'ENV' argument for release"
   exit 1
 fi
-printf "Starting release build for $SANITY_DATASET...\r"
+if [ -z "$PORT" ]; then
+  echo "ERROR: Missing 'PORT' argument for release"
+  exit 1
+fi
+REQ_ARGS=(SANITY_PROJECT_ID SANITY_DATASET SANITY_TOKEN API_TOKEN)
+for arg in "${REQ_ARGS[@]}"; do
+  if [ -z "${!arg}" ]; then
+    echo "ERROR: Missing '$arg' argument for release"
+    exit 1
+  fi
+done
+
+printf "Starting release build for $ENV...\r"
 cd /app
-sed -i "s/\${SANITY_PROJECT_ID}/\"$SANITY_PROJECT_ID\"/g" ./config/prod.env.exs && sed -i "s/\${SANITY_TOKEN}/\"$SANITY_TOKEN\"/g" ./config/prod.env.exs && sed -i "s/\${SANITY_DATASET}/\"$SANITY_DATASET\"/g" ./config/prod.env.exs && sed -i "s/\${API_TOKEN}/\"$API_TOKEN\"/g" ./config/prod.env.exs && sed -i "s/\${PORT}/$PORT/g" ./config/prod.env.exs
-printf "Fetching project deps...\r"
-mix local.rebar --if-missing --force > /dev/null && mix local.hex --if-missing --force > /dev/null && mix deps.get --only prod > /dev/null && mix do clean, compile --force
-printf "Building release for $SANITY_DATASET...\r"
-export MIX_ENV=prod
-mix release prod --overwrite
+
+mix local.hex --if-missing --force
+mix local.rebar --if-missing --force
+mix deps.get --only ${ENV}
+
+for arg in "${REQ_ARGS[@]}"; do
+  sed -i "s/{{$arg}}/\"${!arg}\"/g" ./config/${ENV}.env.exs
+done
+
+MIX_ENV=${ENV} mix release --overwrite
+
 printf "Release built successfully!\r"
 exit 0

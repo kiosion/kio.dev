@@ -37,12 +37,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Build for development
         env:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-          API_KEY: ${{ secrets.DEV_API_TOKEN }}
+          API_TOKEN: ${{ secrets.DEV_API_TOKEN }}
         run: cd ./elixir-api && make prod-dev
 
   build-prod:
@@ -52,12 +51,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Build for production
         env:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-          API_KEY: ${{ secrets.API_TOKEN }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: cd ./elixir-api && make prod
 
   deploy:
@@ -68,9 +66,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Deploy to development
         run: cd ./elixir-api && make run-prod-dev
-
       - name: Deploy to production
         run: cd ./elixir-api && make run-prod

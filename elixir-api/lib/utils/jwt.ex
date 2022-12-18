@@ -4,7 +4,8 @@ defmodule Hexerei.JWT do
   """
 
   # This is undefined for now
-  @jwt_secret Application.compile_env(:hexerei, :jwt_secret)
+  # @jwt_secret Application.compile_env(:hexerei, :jwt_secret)
+  @jwt_secret "1234567890"
   # Expiration time is 48 hours
   @jwt_exp 172800
 

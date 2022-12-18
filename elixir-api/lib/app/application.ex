@@ -9,16 +9,21 @@ defmodule Hexerei.Application do
         scheme: :http,
         plug: Hexerei.Router,
         options: [
-          port: Application.get_env(:hexerei, :port)
+          port: port()
         ]
       },
       {
-        Plug.Cowboy.Drainer, refs: [:all]
+        Plug.Cowboy.Drainer,
+        refs: [
+          :all
+        ]
       }
     ]
 
+    opts = [strategy: :one_for_one, name: __MODULE__]
+
     CliSpinners.spin_fun([frames: :simple_dots_scrolling, text: "Starting Hexerei", done: "Started Hexerei"], fn ->
-      case Supervisor.start_link(children, [strategy: :one_for_one, name: Hexerei.Supervisor]) do
+      case Supervisor.start_link(children, opts) do
         {:ok, pid} ->
           Application.put_env(:hexerei, :started_at, System.system_time(:millisecond))
           # Disable non-essential logging from SASL (erlang:alarm_handler)
@@ -30,4 +35,6 @@ defmodule Hexerei.Application do
       end
     end)
   end
+
+  defp port, do: Hexerei.Env.get!(:port)
 end

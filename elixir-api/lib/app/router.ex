@@ -6,11 +6,7 @@ defmodule Hexerei.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
-  if (Application.compile_env(:hexerei, :env)) == "dev" do
-    plug(Plug.Debugger)
-  else
-    plug(Plug.Logger)
-  end
+  plug(Plug.Logger)
 
   @application_version Application.compile_env(:hexerei, :version)
   @application_name Application.compile_env(:hexerei, :name)

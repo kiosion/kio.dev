@@ -1,9 +1,6 @@
-# Pull elixir-alpine image for build stage
 FROM elixir:1.14-alpine AS build
 
-# Install build dependencies
 RUN apk upgrade --no-cache
-
 RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 ARG ENV=prod
@@ -11,54 +8,57 @@ ARG PORT=4000
 
 ARG SANITY_TOKEN
 ARG SANITY_PROJECT_ID
-ARG SANITY_DATASET="production"
-ARG API_KEY
+ARG SANITY_DATASET
+ARG API_TOKEN
 
 RUN mkdir /app
 WORKDIR /app
 
-# Add scripts
 ADD ./bin/release .
-ADD ./bin/start .
 
-# Add source
 COPY mix.exs mix.lock ./
 COPY config config
 COPY lib lib
 
-# Run build script, passing in 'sanity_token' and other args
-RUN ./release -p $SANITY_PROJECT_ID -d $SANITY_DATASET -t $SANITY_TOKEN -a $API_KEY -x $PORT
+RUN ./release \
+        --project_id $SANITY_PROJECT_ID \
+        --dataset $SANITY_DATASET \
+        --token $SANITY_TOKEN \
+        --api_token $API_TOKEN \
+        --port $PORT \
+        --env $ENV
 
-# Prepare release image using alpine-erlang
 FROM alpine:3.16.2 AS app
 
-# Install runtime dependencies
-# TODO: Can these be removed?
 RUN apk upgrade --no-cache
-
 RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
-# If ENV is 'prod', expose port 4000, otherwise expose port 4444
+ARG ENV
+ARG SANITY_TOKEN
+ARG SANITY_PROJECT_ID
+ARG API_TOKEN
+ARG PORT
 
 EXPOSE $PORT
 
-ENV MIX_ENV=$ENV
-
-# Prepare app dir
 RUN mkdir /app
 WORKDIR /app
 
-# Copy release from build stage
-COPY --from=build /app/_build ./hexerei
-COPY --from=build /app/start .
+COPY --from=build /app/_build ./
+
+RUN echo "SANITY_TOKEN=$SANITY_TOKEN" > ./.env &&\
+    echo "SANITY_PROJECT_ID"=$SANITY_PROJECT_ID >> ./.env &&\
+    echo "API_TOKEN"=$API_TOKEN >> ./.env
 
 RUN chown -R nobody: /app
 USER nobody
 
-# Run the app
-ENV PORT=$PORT
-ENV HOME=/app
-ENV MIX_ENV=$ENV
+ARG START_PATH=/app/$ENV/rel/hexerei/bin/hexerei
 
-# Entrypoint
-ENTRYPOINT ["./start"]
+RUN echo "#!/bin/bash" > ./entrypoint.sh &&\
+    echo "exec ${START_PATH} start" >> ./entrypoint.sh
+
+RUN chown nobody: ./entrypoint.sh &&\
+    chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]

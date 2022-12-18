@@ -1,14 +1,14 @@
 import Mix.Config
 
 config :hexerei,
-  port: 4444,
-  api_token: "1234567890",
-  sanity_project_id: System.get_env("SANITY_PROJECT_ID") || "",
-  sanity_dataset: "dev",
-  sanity_token: System.get_env("SANITY_TOKEN") || "",
-  sanity_api_version: "2021-06-07",
-  query_url: "query/",
-  sanity_apicdn: false
+  port: {"PORT", "4444", :int},
+  api_token: {"DEV_API_TOKEN", "1234567890"},
+  sanity_project_id: {"SANITY_PROJECT_ID", :system},
+  sanity_dataset: {"SANITY_DATASET", "dev"},
+  sanity_token: {"SANITY_TOKEN", :system},
+  sanity_api_version: {"SANITY_API_VERSION", "2021-06-07"},
+  query_url: {"QUERY_URL", "query/"},
+  sanity_apicdn: {"SANITY_APICDN", "false", :boolean}
 
 config :os_mon,
   disk_space_check_interval: 5,
@@ -16,6 +16,5 @@ config :os_mon,
   disk_almost_full_threshold: 0.90,
   start_cpu_sup: false
 
-# TODO: Test this
 config :sasl,
   errlog_type: :info

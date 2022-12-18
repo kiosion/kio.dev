@@ -4,18 +4,12 @@ defmodule Hexerei.MixProject do
   def project do
     [
       app: :hexerei,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      escript: [main_module: Hexerei.MixProject],
-      releases: [
-        prod: [
-          include_executables_for: [:unix],
-          steps: [:assemble, :tar],
-          validate_compile_env: false
-        ]
-      ]
+      escript: escript(),
+      releases: releases()
     ]
   end
 
@@ -27,6 +21,22 @@ defmodule Hexerei.MixProject do
         :os_mon
         ],
       mod: {Hexerei.Application, []}
+    ]
+  end
+
+  defp escript do
+    [
+      main_module: Hexerei.MixProject
+    ]
+  end
+
+  defp releases do
+    [
+      hexerei: [
+        include_executables_for: [:unix],
+        steps: [:assemble, :tar],
+        validate_compile_env: false
+      ]
     ]
   end
 
