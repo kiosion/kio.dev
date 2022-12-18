@@ -20,7 +20,7 @@
       link.active ||
       (splitPath.length > 1 && splitPath.indexOf(truePath) > 0)
       ? ''
-      : 'transparent';
+      : 'h-[0%]';
   };
 
   const getActive = () => {
@@ -30,14 +30,14 @@
       ? 'h-full'
       : splitPath.length > 1 && splitPath.indexOf(truePath) > 0
       ? 'h-[10%]'
-      : 'transparent';
+      : 'h-[0%]';
   };
 
   $: (classes = `${getOpacity()} ${getActive()}`), $page.url, link.active;
 </script>
 
 <div
-  class="indicator absolute left-0 bottom-0 z-0 w-full h-full bg-emerald-400 dark:bg-emerald-300 {classes} duration-[40] transition-colors"
+  class="indicator absolute left-0 bottom-0 z-0 w-full h-full bg-emerald-400 dark:bg-emerald-300 {classes} duration-[50ms] transition-[height]"
 />
 
 <style lang="scss">
