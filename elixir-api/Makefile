@@ -11,12 +11,12 @@ dev:
 prod: SHELL:=/bin/bash
 prod: # Run docker build for 'production' dataset
 	@echo "target: Production"
-	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg SANITY_DATASET=production --build-arg PORT=4000 --build-arg API_TOKEN=$(API_TOKEN) -t hexerei:prod .
+	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg SANITY_DATASET=production --build-arg PORT=4000 --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=prod -t hexerei:prod .
 
 prod-dev: SHELL:=/bin/bash
 prod-dev: # Run docker build for 'dev' dataset
 	@echo "target: Production (dev)"
-	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg SANITY_DATASET=dev --build-arg PORT=4444 --build-arg API_TOKEN=$(API_TOKEN) -t hexerei:dev .
+	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg SANITY_DATASET=dev --build-arg PORT=4444 --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=dev -t hexerei:dev .
 
 run-prod: SHELL:=/bin/bash
 run-prod: # Run docker container for 'production' dataset build

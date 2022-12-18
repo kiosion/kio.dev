@@ -24,10 +24,8 @@ jobs:
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v3
-      
   #     - name: Install Dependencies
   #       run: (cd ./elixir-api && make install)
-      
   #     - name: Run tests
   #       run: (cd ./elixir-api && make test)
   build-dev:
@@ -44,9 +42,23 @@ jobs:
           API_TOKEN: ${{ secrets.DEV_API_TOKEN }}
         run: cd ./elixir-api && make prod-dev
 
+  deploy-dev:
+    name: Deploy Development
+    environment: API
+    needs: [ build-dev ]
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy to development
+        run: cd ./elixir-api && make run-prod-dev
+      - name: Status check
+        run: docker ps | grep hexerei:dev || exit 1
+
   build-prod:
     name: Build Production
     environment: API
+    needs: [ deploy-dev ]
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -58,15 +70,15 @@ jobs:
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: cd ./elixir-api && make prod
 
-  deploy:
-    name: Deploy
+  deploy-prod:
+    name: Deploy Production
     environment: API
-    needs: [ build-dev, build-prod ]
+    needs: [ build-prod ]
     runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Deploy to development
-        run: cd ./elixir-api && make run-prod-dev
       - name: Deploy to production
         run: cd ./elixir-api && make run-prod
+      - name: Status check
+        run: docker ps | grep hexerei:prod || exit 1

@@ -11,6 +11,9 @@ ARG SANITY_PROJECT_ID
 ARG SANITY_DATASET
 ARG API_TOKEN
 
+ENV PORT=$PORT
+ENV ENV=$ENV
+
 RUN mkdir /app
 WORKDIR /app
 
@@ -20,35 +23,34 @@ COPY mix.exs mix.lock ./
 COPY config config
 COPY lib lib
 
+RUN echo "SANITY_TOKEN=$SANITY_TOKEN" > ./.env &&\
+    echo "SANITY_PROJECT_ID"=$SANITY_PROJECT_ID >> ./.env &&\
+    echo "API_TOKEN"=$API_TOKEN >> ./.env &&\
+    echo "PORT"=$PORT >> ./.env
+
 RUN ./release \
         --project_id $SANITY_PROJECT_ID \
         --dataset $SANITY_DATASET \
-        --token $SANITY_TOKEN \
+        --sanity_token $SANITY_TOKEN \
         --api_token $API_TOKEN \
         --port $PORT \
         --env $ENV
 
 FROM alpine:3.16.2 AS app
 
+ARG PORT
+ARG ENV
+
 RUN apk upgrade --no-cache
 RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
-
-ARG ENV
-ARG SANITY_TOKEN
-ARG SANITY_PROJECT_ID
-ARG API_TOKEN
-ARG PORT
-
-EXPOSE $PORT
 
 RUN mkdir /app
 WORKDIR /app
 
 COPY --from=build /app/_build ./
+COPY --from=build /app/.env .
 
-RUN echo "SANITY_TOKEN=$SANITY_TOKEN" > ./.env &&\
-    echo "SANITY_PROJECT_ID"=$SANITY_PROJECT_ID >> ./.env &&\
-    echo "API_TOKEN"=$API_TOKEN >> ./.env
+EXPOSE $PORT
 
 RUN chown -R nobody: /app
 USER nobody

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-ARGS=$(getopt -o e:p: -l env:,project_id:,dataset:,token:,port: -- "$@")
+ARGS=$(getopt -o e:p: -l env:,project_id:,dataset:,sanity_token:,api_token:,port: -- "$@")
 eval set -- "$ARGS"
 
 while [[ $1 != -- ]]; do
@@ -10,8 +10,8 @@ while [[ $1 != -- ]]; do
     -p|--port) PORT=$2; shift 2;;
     --project_id) SANITY_PROJECT_ID=$2; shift 2;;
     --dataset) SANITY_DATASET=$2; shift 2;;
-    --token) SANITY_TOKEN=$2; shift 2;;
-    --api_key) API_TOKEN=$2; shift 2;;
+    --sanity_token) SANITY_TOKEN=$2; shift 2;;
+    --api_token) API_TOKEN=$2; shift 2;;
     *) echo "Invalid option: $1"; exit 1;;
   esac
 done
@@ -40,7 +40,7 @@ mix local.rebar --if-missing --force
 mix deps.get --only ${ENV}
 
 for arg in "${REQ_ARGS[@]}"; do
-  sed -i "s/{{$arg}}/\"${!arg}\"/g" ./config/${ENV}.env.exs
+  sed -i "s/{{$arg}}/${!arg}/g" ./config/${ENV}.env.exs
 done
 
 MIX_ENV=${ENV} mix release --overwrite
