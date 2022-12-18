@@ -5,11 +5,13 @@
   import CodeBlock from '$components/code-block.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import { onMount, getContext } from 'svelte';
-  import { Boundary } from '$lib/error-bound';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
   import { t } from '$i18n';
+  import type { PageData } from './$types';
 
-  const getScrollContainer = getContext('getScrollContainer');
+  const getScrollContainer = getContext(
+    'getScrollContainer'
+  ) as () => HTMLDivElement | null;
 
   onMount(() => {
     navOptions.set({ down: '', up: '/about' });
@@ -20,7 +22,7 @@
     );
   });
 
-  $: ({ pgp } = $page.data);
+  export let data: PageData;
 </script>
 
 <div data-test-route="pgp" class={$navigating ? 'max-h-[50%]' : ''}>
@@ -29,8 +31,6 @@
       heading="PGP"
       text={t('Want to send a secure message my way? Now you can :)')}
     />
-    <Boundary onError={console.error}>
-      <CodeBlock content={`${pgp}`} showClipboard={true} lang="markdown" />
-    </Boundary>
+    <CodeBlock content={`${data.pgp}`} showClipboard={true} lang="markdown" />
   </ContentWrapper>
 </div>

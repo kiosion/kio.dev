@@ -114,7 +114,7 @@
                       in:slide={{ duration: 150 }}
                       out:slide={{ duration: 150 }}
                     >
-                      <PortableText text={item.body} plainText={true} />
+                      <PortableText text={item.body} />
                     </div>
                   </div>
                 {/if}
