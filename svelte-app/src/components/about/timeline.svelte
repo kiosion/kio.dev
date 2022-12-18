@@ -4,7 +4,7 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import { slide } from 'svelte/transition';
+  import { slide, scale } from 'svelte/transition';
   import { t, currentLang } from '$i18n';
   import Tags from '$components/tags.svelte';
 
@@ -100,7 +100,11 @@
                   </div>
                 {/if}
                 {#if selected === i && item.body}
-                  <div class="font-sans text-base">
+                  <div
+                    class="font-sans text-base"
+                    in:slide={{ duration: 150 }}
+                    out:slide={{ duration: 150 }}
+                  >
                     {#if item.skills}
                       <Tags
                         model="project"
@@ -109,11 +113,7 @@
                         animate
                       />
                     {/if}
-                    <div
-                      class="mt-3"
-                      in:slide={{ duration: 150 }}
-                      out:slide={{ duration: 150 }}
-                    >
+                    <div class="mt-4">
                       <PortableText text={item.body} />
                     </div>
                   </div>
