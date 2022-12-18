@@ -57,44 +57,40 @@
           .Highlight as unknown as Highlight);
 
     hlLang = await (async () => {
-      switch (lang) {
-        case 'javascript':
-          return (await import('svelte-highlight/languages/javascript'))
-            .javascript;
-        case 'typescript':
-          return (await import('svelte-highlight/languages/typescript'))
-            .typescript;
-        case 'sh':
-        case 'shell':
-          return (await import('svelte-highlight/languages/shell')).shell;
-        case 'bash':
-          return (await import('svelte-highlight/languages/bash')).bash;
-        case 'elixir':
-          return (await import('svelte-highlight/languages/elixir')).elixir;
-        case 'haskell':
-          return (await import('svelte-highlight/languages/haskell')).haskell;
-        case 'ruby':
-          return (await import('svelte-highlight/languages/ruby')).ruby;
-        case 'python':
-          return (await import('svelte-highlight/languages/python')).python;
-        case 'java':
-          return await import('svelte-highlight/languages/java');
-        case 'json':
-          return await import('svelte-highlight/languages/json');
-        case 'yaml':
-          return await import('svelte-highlight/languages/yaml');
-        case 'html':
-        case 'xml':
-          return (await import('svelte-highlight/languages/xml')).xml;
-        case 'css':
-          return (await import('svelte-highlight/languages/css')).css;
-        case 'sass':
-        case 'scss':
-          return (await import('svelte-highlight/languages/scss')).scss;
-        case 'markdown':
-        default:
-          return (await import('svelte-highlight/languages/markdown')).markdown;
+      lang = lang?.toLowerCase();
+      if (!lang) {
+        return (await import('svelte-highlight/languages/markdown')).markdown;
       }
+
+      let imp: LanguageType | undefined;
+      try {
+        // First, handle some cases where the name isn't the import name
+        switch (lang) {
+          case 'c#':
+            imp = (await import('svelte-highlight/languages/csharp')).csharp;
+            break;
+          case 'c++':
+            imp = (await import('svelte-highlight/languages/cpp')).cpp;
+            break;
+          case 'html':
+            imp = (await import('svelte-highlight/languages/xml')).xml;
+            break;
+          default:
+            imp = (
+              await import(
+                `../../node_modules/svelte-highlight/languages/${lang}.js`
+              )
+            )[lang];
+            break;
+        }
+      } catch (e) {
+        imp = (
+          await import(
+            '../../node_modules/svelte-highlight/languages/markdown.js'
+          )
+        ).markdown;
+      }
+      return imp as LanguageType;
     })();
   });
 
@@ -111,9 +107,8 @@
 </svelte:head>
 
 <div
-  class="z-[4] relative p-[1px] my-6 overflow-hidden rounded-md {hovered
-    ? 'active'
-    : ''}"
+  class="relative my-6 -mx-2 overflow-hidden rounded-md shadow-sm border-[1px] border-slate-400/40 dark:border-slate-500/40"
+  class:active={hovered}
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
@@ -133,16 +128,16 @@
           out:fade={{ delay: 100, duration: 100 }}
         >
           {#if copied}
-            <Icon icon={'Check'} />
+            <Icon icon="Check" />
           {:else}
-            <Icon icon={'Copy'} />
+            <Icon icon="Copy" />
           {/if}
         </button>
       {/key}
     </Hoverable>
   {/if}
   <div
-    class="relative z-[4] overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
+    class="relative overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
     bind:this={codeContainer}
   >
     <div
@@ -156,11 +151,6 @@
       {/if}
     </div>
   </div>
-  <div
-    class="absolute filled -top-[1px] -left-[1px] -right-[1px] -bottom-[1px] w-[calc(100%_+_1px)] h-[calc(100%_+_1px)] bg-slate-400 {hovered
-      ? '!opacity-60'
-      : ''} opacity-0 rounded-md"
-  />
 </div>
 
 <style lang="scss">
@@ -182,15 +172,5 @@
       background: #34d399 !important;
       color: #1e293b !important;
     }
-  }
-  .cover {
-    transition: opacity 150ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  }
-  .unfilled {
-    z-index: 2;
-    top: -9999px;
-    left: -9999px;
-    background: radial-gradient(#94a3b8, transparent 35%);
-    transform: translate(-50%, -50%);
   }
 </style>

@@ -20,6 +20,7 @@
   import SFX from '$lib/sfx';
   import { config as currentConfig } from '$stores/config';
   import LinkIndicator from '$components/nav/link-indicator.svelte';
+  import { readable } from 'svelte/store';
 
   interface SocialLink {
     attrs: {
@@ -64,10 +65,6 @@
     ) || link.active
       ? true
       : false;
-  };
-
-  const urlTruePath = (url: string) => {
-    return url.slice($isLocalized ? 4 : 1);
   };
 
   let clicks = 0;
@@ -118,34 +115,33 @@
           {#each links as link}
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-start">
-                <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline {linkIsActive(
-                    link
-                  )
-                    ? 'text-slate-900'
-                    : 'dark:text-slate-100'}"
-                  aria-label={t(link.name)}
-                  href={link.url}
-                  role="menuitem"
-                  tabindex="0"
-                  data-sveltekit-preload-data
-                  data-sveltekit-preload-code
-                  on:click={() => {
-                    SFX.click.play();
-                    navOpen.set(false);
-                  }}
-                  on:keydown={(e) => {
-                    if (e.code === 'Enter' || e.code === 'Space') {
-                      e.preventDefault();
+                {#key $page}
+                  <a
+                    class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline"
+                    class:text-slate-900={linkIsActive(link)}
+                    aria-label={t(link.name)}
+                    href={link.url}
+                    role="menuitem"
+                    tabindex="0"
+                    data-sveltekit-preload-data
+                    data-sveltekit-preload-code
+                    on:click={() => {
                       SFX.click.play();
                       navOpen.set(false);
-                      goto(link.url).catch(() => undefined);
-                    }
-                  }}
-                >
-                  {t(link.name)}
-                </a>
-                <LinkIndicator {link} />
+                    }}
+                    on:keydown={(e) => {
+                      if (e.code === 'Enter' || e.code === 'Space') {
+                        e.preventDefault();
+                        SFX.click.play();
+                        navOpen.set(false);
+                        goto(link.url).catch(() => undefined);
+                      }
+                    }}
+                  >
+                    {t(link.name)}
+                  </a>
+                  <LinkIndicator {link} />
+                {/key}
               </div>
             </Hoverable>
           {/each}
@@ -224,67 +220,36 @@
           {#each links as link}
             <Hoverable bind:hovered={link.active}>
               <div class="relative flex flex-row items-center justify-center">
-                <a
-                  class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg {linkIsActive(
-                    link
-                  )
-                    ? 'text-slate-900'
-                    : 'dark:text-slate-100'} rounded-sm focusOutline"
-                  aria-label={t(link.name)}
-                  href={link.url}
-                  role="menuitem"
-                  tabindex="0"
-                  data-sveltekit-preload-data
-                  data-sveltekit-preload-code
-                  on:click={() => {
-                    SFX.click.play();
-                    navOpen.set(false);
-                  }}
-                  on:keydown={(e) => {
-                    if (e.code === 'Enter' || e.code === 'Space') {
-                      e.preventDefault();
+                {#key $page}
+                  <a
+                    class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline"
+                    class:text-slate-900={linkIsActive(link)}
+                    aria-label={t(link.name)}
+                    href={link.url}
+                    role="menuitem"
+                    tabindex="0"
+                    data-sveltekit-preload-data
+                    data-sveltekit-preload-code
+                    on:click={() => {
                       SFX.click.play();
                       navOpen.set(false);
-                      goto(link.url).catch(() => undefined);
-                    }
-                  }}
-                >
-                  {t(link.name)}
-                </a>
-                <LinkIndicator {link} />
+                    }}
+                    on:keydown={(e) => {
+                      if (e.code === 'Enter' || e.code === 'Space') {
+                        e.preventDefault();
+                        SFX.click.play();
+                        navOpen.set(false);
+                        goto(link.url).catch(() => undefined);
+                      }
+                    }}
+                  >
+                    {t(link.name)}
+                  </a>
+                  <LinkIndicator {link} />
+                {/key}
               </div>
             </Hoverable>
           {/each}
-          <!-- {#each links as link}
-            <div class="relative flex flex-row items-center justify-start">
-              <a
-                class="font-mono text-base font-normal uppercase nav-link"
-                class:active={$page.url.pathname === link.url}
-                aria-label={t(link.name)}
-                href={link.url}
-                preload={link.url}
-                role="menuitem"
-                tabindex="0"
-                data-sveltekit-preload-data
-                on:mouseenter={() => (link.active = true)}
-                on:mouseleave={() => (link.active = false)}
-                on:focus={() => (link.active = true)}
-                on:blur={() => (link.active = false)}
-                on:click={() => {
-                  SFX.click.play();
-                  navOpen.set(false);
-                }}
-              >
-                {t(link.name)}
-              </a>
-              <div
-                class="absolute z-0 {$page.url.pathname === link.url ||
-                link.active
-                  ? 'w-full'
-                  : 'w-0'} h-[2px] bg-emerald-400 dark:bg-emerald-300 transition-[width] ease-in click-through select-none"
-              />
-            </div>
-          {/each} -->
         </div>
       {/if}
     </nav>

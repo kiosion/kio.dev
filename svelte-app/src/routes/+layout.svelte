@@ -82,6 +82,7 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
+  // $: data?.url && updateHistory($page, data.url);
 </script>
 
 <svelte:head>
