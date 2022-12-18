@@ -53,7 +53,7 @@ jobs:
       - name: Deploy to development
         run: cd ./elixir-api && make run-prod-dev
       - name: Status check
-        run: docker ps | grep hexerei:dev || exit 1
+        run: sleep 15 && docker ps | grep hexerei:dev || exit 1
 
   build-prod:
     name: Build Production
@@ -81,4 +81,4 @@ jobs:
       - name: Deploy to production
         run: cd ./elixir-api && make run-prod
       - name: Status check
-        run: docker ps | grep hexerei:prod || exit 1
+        run: sleep 15 && docker ps | grep hexerei:prod || exit 1
