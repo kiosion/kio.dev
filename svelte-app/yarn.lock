@@ -1527,6 +1527,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rgossiaux/svelte-headlessui@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@rgossiaux/svelte-headlessui@npm:1.0.2"
+  peerDependencies:
+    svelte: ^3.44.0
+  checksum: f327e78c192a411de51c5e9e6f9ccdc31ac07cb63d51f849caaa6edc828db08e55c4ba944a837d7e0ffcff3cd16696fcd9cd3d3632ba73223a867a590fdb81aa
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-commonjs@npm:^23.0.2":
   version: 23.0.2
   resolution: "@rollup/plugin-commonjs@npm:23.0.2"
@@ -13814,6 +13823,7 @@ __metadata:
     "@iconify/svelte": "npm:^3.0.1"
     "@poppanator/sveltekit-svg": "npm:^1.1.1"
     "@portabletext/svelte": "npm:^1.0.1"
+    "@rgossiaux/svelte-headlessui": "npm:^1.0.2"
     "@sanity/image-url": "npm:^1.0.1"
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
     "@sveltejs/adapter-netlify": "npm:^1.0.0-next.78"

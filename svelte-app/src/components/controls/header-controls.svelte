@@ -10,6 +10,7 @@
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import Tooltip from '$components/tooltip.svelte';
 
   let scrollNavHovered = false;
 
@@ -67,11 +68,13 @@
                 }}
                 transition:fade={{ duration: 100 }}
               >
-                <p
-                  class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
-                >
-                  {$pageHeading}
-                </p>
+                <Tooltip text={t('Scroll to top')} position="bottom">
+                  <p
+                    class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                  >
+                    {$pageHeading}
+                  </p>
+                </Tooltip>
               </button>
             </Hoverable>
           {/if}
