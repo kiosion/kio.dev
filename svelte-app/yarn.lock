@@ -2457,12 +2457,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^0.25.3":
-  version: 0.25.3
-  resolution: "@vitest/ui@npm:0.25.3"
+"@vitest/ui@npm:^0.25.8":
+  version: 0.25.8
+  resolution: "@vitest/ui@npm:0.25.8"
   dependencies:
     sirv: "npm:^2.0.2"
-  checksum: ce6fb9a2d0736940e9b6b93ea6c5c01f3b00d04f38368228508450ba0ca4304632c42eec7b16bb9b8d4ca864c885e66a7a82b249380ce9b22f4bb759b59500f7
+  checksum: 185f8d8869de7110c59141d1f7377b339263430cceeaaf5fbe56ae2ff7a1c5431a972a5dfee9791ffb353443939064007e5eb02e7986728e1aa7f5803f9c384a
   languageName: node
   linkType: hard
 
@@ -13828,7 +13828,7 @@ __metadata:
     "@types/seedrandom": "npm:^3.0.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.42.0"
     "@typescript-eslint/parser": "npm:^5.46.1"
-    "@vitest/ui": "npm:^0.25.3"
+    "@vitest/ui": "npm:^0.25.8"
     autoprefixer: "npm:^10.4.13"
     c8: "npm:^7.12.0"
     cypress: "npm:12.0.1"
