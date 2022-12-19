@@ -31,11 +31,7 @@ const init = async (opts?: { volume: number }): Promise<void> => {
 
 const soundsProxy = new Proxy(sounds, {
   get: (target, prop: string) => {
-    if (
-      !browser ||
-      !get(Features.can('use sounds feature')) ||
-      !target.has(prop)
-    ) {
+    if (!browser || !get(Features.sounds) || !target.has(prop)) {
       return {
         play: () => undefined
       };

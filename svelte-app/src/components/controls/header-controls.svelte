@@ -10,6 +10,7 @@
   import SoundsToggle from '$components/toggles/sounds-toggle.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import Tooltip from '$components/tooltip.svelte';
 
   let scrollNavHovered = false;
 
@@ -52,27 +53,29 @@
         <div class="-ml-52 -mr-40">
           {#if $pageHeading && $pageHeading !== ''}
             <Hoverable>
-              <button
-                class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline"
-                aria-label="Scroll to top"
-                on:click={() => {
-                  SFX.click.play();
-                  appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                on:keydown={(e) => {
-                  if (e.code === 'Enter' || e.code === 'Space') {
+              <Tooltip text={t('Scroll to top')} position="bottom">
+                <button
+                  class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline"
+                  aria-label="Scroll to top"
+                  on:click={() => {
                     SFX.click.play();
                     appBody.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                transition:fade={{ duration: 100 }}
-              >
-                <p
-                  class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                  }}
+                  on:keydown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      SFX.click.play();
+                      appBody.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  transition:fade={{ duration: 100 }}
                 >
-                  {$pageHeading}
-                </p>
-              </button>
+                  <p
+                    class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                  >
+                    {$pageHeading}
+                  </p>
+                </button>
+              </Tooltip>
             </Hoverable>
           {/if}
         </div>

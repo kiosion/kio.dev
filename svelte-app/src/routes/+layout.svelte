@@ -10,7 +10,7 @@
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav/nav.svelte';
   import HeaderControls from '$components/controls/header-controls.svelte';
-  import Features from '$stores/features';
+  import Features, { setFeature } from '$stores/features';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/controls/footer-controls.svelte';
   import { browser } from '$app/environment';
@@ -47,6 +47,12 @@
 
   const isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
 
+  const unsubscribePreferReducedMotion = useMediaQuery(
+    '(prefers-reduced-motion: reduce)'
+  ).subscribe((value) => {
+    setFeature('reduce-motion', value);
+  });
+
   [
     ['getScrollContainer', () => scrollContainer],
     ['getPageContainer', () => pageContainer]
@@ -68,21 +74,20 @@
 
   onDestroy(() => {
     navUnsubscribe();
+    unsubscribePreferReducedMotion();
     browser && window.removeEventListener('devtoolschange', () => msg);
   });
 
   export let data: LayoutData;
 
-  $: isMobile = !$isDesktop;
-  $: CanUseCursor = Features.can('use custom cursor feature');
-  $: CanUseComicSans = Features.can('use comic sans feature');
+  $: useCustomCursor = Features.customCursor;
+  $: useComicSans = Features.comicSans;
   $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
   $: currentLang.set(
     APP_LANGS.includes($page?.params?.lang)
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  // $: data?.url && updateHistory($page, data.url);
 </script>
 
 <svelte:head>
@@ -96,8 +101,8 @@
     isDesktop ? 'desktop' : 'mobile'
   } ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${appLoaded && 'app-loaded'} ${$CanUseComicSans && 'comicSans'} ${
-    $CanUseCursor && 'custom-cursor'
+  } ${appLoaded && 'app-loaded'} ${$useComicSans && 'comicSans'} ${
+    $useCustomCursor && 'custom-cursor'
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
@@ -106,7 +111,7 @@
   <Loader />
 {/if}
 
-{#if browser && $CanUseCursor}
+{#if browser && $useCustomCursor}
   <CustomCursor {scrollContainer} showLoader={$loading || !appLoaded} />
 {/if}
 
@@ -115,9 +120,9 @@
 {/if}
 
 <div
-  class="flex {isMobile
-    ? 'flex-col'
-    : 'flex-row'} w-full h-full lg:text-lg overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
+  class="flex {$isDesktop
+    ? 'flex-row'
+    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
@@ -128,7 +133,7 @@
   >
     <HeaderControls appBody={scrollContainer} />
     <div
-      class="relative inner h-fit w-full max-w-[80rem] mx-auto {!isMobile &&
+      class="relative inner h-fit w-full max-w-[80rem] mx-auto {$isDesktop &&
         'mt-12'}"
     >
       {#if appLoaded}

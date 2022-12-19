@@ -20,7 +20,7 @@
   import SFX from '$lib/sfx';
   import { config as currentConfig } from '$stores/config';
   import NavLink from '$components/nav/nav-link.svelte';
-  import LinkIndicator from '$components/nav/link-indicator.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
   interface SocialLink {
     attrs: {
@@ -83,19 +83,21 @@
     >
       <div class="flex-grow -mt-7 md:-mt-4 click-through">
         <!-- Logo -->
-        <Hoverable>
-          <button
-            class="inline-block -ml-2 lg:ml-0 mt-24 mb-[68px] lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
-            role="menuitem"
-            on:click={() => onLogoClick()}
-          >
-            <img
-              class="-rotate-90"
-              src="/assets/logo-text--short.webp"
-              alt="kio."
-            />
-          </button>
-        </Hoverable>
+        <Tooltip text={t('Click me :)')} position="right">
+          <Hoverable>
+            <button
+              class="inline-block -ml-2 lg:ml-0 mt-24 mb-[68px] lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
+              role="menuitem"
+              on:click={() => onLogoClick()}
+            >
+              <img
+                class="-rotate-90"
+                src="/assets/logo-text--short.webp"
+                alt="kio."
+              />
+            </button>
+          </Hoverable>
+        </Tooltip>
         <!-- Nav links list -->
         <div
           class="flex flex-col items-center justify-center gap-3 pt-8 text-base"
@@ -112,28 +114,36 @@
         {#if socials?.length > 0}
           {#each socials as social}
             <Hoverable>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <a
-                class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline-sm"
-                role="menuitem"
-                aria-label={social.name}
-                {...social.attrs}
-                on:click={() => SFX.click.play()}
-                on:keydown={(e) => {
-                  if (e.code === 'Enter' || e.code === 'Space') {
-                    e.preventDefault();
-                    SFX.click.play();
-                    goto(social.attrs.href).catch(() => undefined);
-                  }
-                }}
+              <Tooltip
+                text={`${social.name
+                  ?.substring(0, 1)
+                  ?.toUpperCase()}${social.name?.substring(1)}`}
+                position="right-end"
+                delay={400}
               >
-                <Icon
-                  icon={social.icon}
-                  rotate={`${social.iconRotation}deg`}
-                  width={social?.iconSize}
-                  height={social?.iconSize}
-                />
-              </a>
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <a
+                  class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline-sm"
+                  role="menuitem"
+                  aria-label={social.name}
+                  {...social.attrs}
+                  on:click={() => SFX.click.play()}
+                  on:keydown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      e.preventDefault();
+                      SFX.click.play();
+                      goto(social.attrs.href).catch(() => undefined);
+                    }
+                  }}
+                >
+                  <Icon
+                    icon={social.icon}
+                    rotate={`${social.iconRotation}deg`}
+                    width={social?.iconSize}
+                    height={social?.iconSize}
+                  />
+                </a>
+              </Tooltip>
             </Hoverable>
           {/each}
         {/if}

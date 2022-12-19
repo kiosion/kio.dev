@@ -12,6 +12,8 @@
     Highlight,
     LanguageType
   } from 'svelte-highlight';
+  import Tooltip from './tooltip.svelte';
+  import { t } from '$i18n';
 
   export let content: string,
     showClipboard = false,
@@ -122,22 +124,24 @@
 >
   {#if showClipboard && !$navigating}
     <Hoverable>
-      {#key copied}
-        <button
-          class="{hovered
-            ? 'opacity-100'
-            : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 focusOutline-sm"
-          on:click={() => copy()}
-          in:fade={{ duration: 100, delay: 100 }}
-          out:fade={{ delay: 100, duration: 100 }}
-        >
-          {#if copied}
-            <Icon icon="Check" />
-          {:else}
-            <Icon icon="Copy" />
-          {/if}
-        </button>
-      {/key}
+      <Tooltip text={t('Copy to clipboard')} position="top">
+        {#key copied}
+          <button
+            class="{hovered
+              ? 'opacity-100'
+              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 focusOutline-sm"
+            on:click={() => copy()}
+            in:fade={{ duration: 100, delay: 100 }}
+            out:fade={{ delay: 100, duration: 100 }}
+          >
+            {#if copied}
+              <Icon icon="Check" />
+            {:else}
+              <Icon icon="Copy" />
+            {/if}
+          </button>
+        {/key}
+      </Tooltip>
     </Hoverable>
   {/if}
   <div
