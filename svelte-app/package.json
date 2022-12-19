@@ -65,7 +65,7 @@
     "prettier-plugin-svelte": "^2.8.0",
     "randomstring": "^1.2.2",
     "rimraf": "^3.0.2",
-    "rollup": "^3.7.4",
+    "rollup": "^3.7.5",
     "sass": "^1.55.0",
     "seedrandom": "^3.0.5",
     "svelte": "patch:svelte@npm%3A3.54.0#~/.yarn/patches/svelte-npm-3.54.0-c506099255.patch",

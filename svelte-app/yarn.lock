@@ -12806,7 +12806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.7.0, rollup@npm:^3.7.4":
+"rollup@npm:^3.7.0":
   version: 3.7.4
   resolution: "rollup@npm:3.7.4"
   dependencies:
@@ -12817,6 +12817,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 4184baf153fa4cde8d842eb438c7efc16f8f1b3a1ce28b34f8b5f386dccdc76abf7d09bd1ce70f45e7dfe39feeb1734b7d856f62d8c46419f8edca12390df1bd
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^3.7.5":
+  version: 3.7.5
+  resolution: "rollup@npm:3.7.5"
+  dependencies:
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: e3141a7789dc9cd54bb61b1da84c640512681db7008a37938b56e974af1b4971ccef0d04653403ee9e29595781d10acf487ba57948cda0cb590cfda86c609d1e
   languageName: node
   linkType: hard
 
@@ -13871,7 +13885,7 @@ __metadata:
     prettier-plugin-svelte: "npm:^2.8.0"
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^3.0.2"
-    rollup: "npm:^3.7.4"
+    rollup: "npm:^3.7.5"
     sass: "npm:^1.55.0"
     seedrandom: "npm:^3.0.5"
     svelte: "patch:svelte@npm%3A3.54.0#~/.yarn/patches/svelte-npm-3.54.0-c506099255.patch"
