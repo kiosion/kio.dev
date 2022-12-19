@@ -2,7 +2,7 @@
   import ContentWrapper from '$components/content-wrapper.svelte';
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import Features from '$stores/features';
+  import Features, { setFeature } from '$stores/features';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
@@ -14,7 +14,8 @@
   onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
-    Features.set(target, event?.detail?.state === true ? true : false);
+    // Features.set(target, event?.detail?.state === true ? true : false);
+    setFeature(target, event?.detail?.state);
     SFX.click.play();
   };
 
@@ -24,11 +25,12 @@
   export const hydrate = false;
   export const router = false;
 
-  $: CanUseReduceMotion = Features.can('use reduce motion feature');
-  $: CanUseSounds = Features.can('use sounds feature');
-  $: CanUseCustomCursor = Features.can('use custom cursor feature');
-  $: CanUseComicSans = Features.can('use comic sans feature');
-  $: CanSeeComments = Features.can('use comments feature');
+  $: CanUseReduceMotion = Features.reduceMotion;
+  $: CanUseSounds = Features.sounds;
+  $: CanUseCustomCursor = Features.customCursor;
+  $: CanUseComicSans = Features.comicSans;
+  $: CanSeeComments = Features.comments;
+  $: CanUseTooltips = Features.tooltips;
 </script>
 
 <svelte:head>
@@ -72,6 +74,12 @@
       target={'comments'}
       state={$CanSeeComments}
       label="View Comments"
+    />
+    <SwitchItem
+      action={onChange}
+      target={'tooltips'}
+      state={$CanUseTooltips}
+      label="View Tooltips"
     />
   </div>
   <div class="mt-6">

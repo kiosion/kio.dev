@@ -19,6 +19,7 @@
   import type { PostDocument, ProjectDocument, PTBlock } from '$types';
   import Tags from '$components/tags.svelte';
   import { fionaPlaceholder } from '$helpers/placeholders';
+  import Tooltip from '$components/tooltip.svelte';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
@@ -98,37 +99,39 @@
         <div class="flex flex-row items-center justify-start mt-6">
           {#if data.author?.name}
             <Hoverable>
-              <button
-                class="flex flex-row gap-2 items-center font-mono text-base rounded-sm focusOutline"
-                on:click={() => goto('/about')}
-                tabindex="0"
-              >
-                <div class="h-8 aspect-square">
-                  {#if pfpRef && pfpCrop}
-                    <img
-                      class="rounded-full aspect-square h-full select-none"
-                      src={urlFor(pfpRef)
-                        .size(50, 50)
-                        .rect(
-                          pfpCrop.left,
-                          pfpCrop.top,
-                          pfpCrop.width,
-                          pfpCrop.height
-                        )
-                        .fit('crop')
-                        .format('webp')
-                        .url()}
-                      alt="Profile pic"
-                      draggable="false"
-                    />
-                  {/if}
-                </div>
-                <p class="w-fit whitespace-nowrap">
-                  {t('By {author}', {
-                    author: authorName
-                  })}
-                </p>
-              </button>
+              <Tooltip text={t('View author')}>
+                <button
+                  class="flex flex-row gap-2 items-center font-mono text-base rounded-sm focusOutline"
+                  on:click={() => goto('/about')}
+                  tabindex="0"
+                >
+                  <div class="h-8 aspect-square">
+                    {#if pfpRef && pfpCrop}
+                      <img
+                        class="rounded-full aspect-square h-full select-none"
+                        src={urlFor(pfpRef)
+                          .size(50, 50)
+                          .rect(
+                            pfpCrop.left,
+                            pfpCrop.top,
+                            pfpCrop.width,
+                            pfpCrop.height
+                          )
+                          .fit('crop')
+                          .format('webp')
+                          .url()}
+                        alt="Profile pic"
+                        draggable="false"
+                      />
+                    {/if}
+                  </div>
+                  <p class="w-fit whitespace-nowrap">
+                    {t('By {author}', {
+                      author: authorName
+                    })}
+                  </p>
+                </button>
+              </Tooltip>
             </Hoverable>
             <BulletPoint />
           {:else if external}

@@ -113,14 +113,14 @@
       >
         {#if socials?.length > 0}
           {#each socials as social}
-            <Tooltip
-              text={`${social.name
-                .substring(0, 1)
-                .toUpperCase()}${social.name.substring(1)}`}
-              position="right"
-              delay={400}
-            >
-              <Hoverable>
+            <Hoverable>
+              <Tooltip
+                text={`${social.name
+                  ?.substring(0, 1)
+                  ?.toUpperCase()}${social.name?.substring(1)}`}
+                position="right-end"
+                delay={400}
+              >
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <a
                   class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline-sm"
@@ -143,8 +143,8 @@
                     height={social?.iconSize}
                   />
                 </a>
-              </Hoverable>
-            </Tooltip>
+              </Tooltip>
+            </Hoverable>
           {/each}
         {/if}
       </div>

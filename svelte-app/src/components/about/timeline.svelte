@@ -4,9 +4,12 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import { slide, scale } from 'svelte/transition';
+  // import { slide } from 'svelte/transition';
+  import { maybe } from '$lib/helpers/animate';
+  import Features from '$stores/features';
   import { t, currentLang } from '$i18n';
   import Tags from '$components/tags.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
   let selected: number | null = null;
 
@@ -52,6 +55,8 @@
       return t('Invalid date');
     }
   };
+
+  $: reduceMotion = Features.reduceMotion;
 </script>
 
 <div class="relative h-fit mx-2 mt-4">
@@ -72,61 +77,79 @@
               {dateDisplay(item.range.start, item.range.end)}
             </h1>
             <Hoverable>
-              <div
-                class="relative w-full ml-2 mt-2 rounded-lg bg-slate-200/50 dark:bg-slate-900/50 px-4 py-3 transition-all overflow-hidden focusOutline"
-                on:click={() => {
-                  if (item.body) {
-                    selected = selected === i ? null : i;
-                  }
-                }}
-                on:keydown={(e) => {
-                  if (item.body && (e.code === 'Enter' || e.code === 'Space')) {
-                    selected = selected === i ? null : i;
-                  }
-                }}
-                tabindex={0}
-                role="button"
+              <Tooltip
+                text={selected === i
+                  ? t('Click to hide details')
+                  : t('Click to show details')}
+                position="bottom"
+                disable={!item.body}
               >
                 <div
-                  class="font-sans font-bold text-base line-clamp-1 select-none"
+                  class="relative w-full ml-2 mt-2 rounded-lg bg-slate-200/50 dark:bg-slate-900/50 px-4 py-3 transition-all overflow-hidden focusOutline"
+                  on:click={() => {
+                    if (item.body) {
+                      selected = selected === i ? null : i;
+                    }
+                  }}
+                  on:keydown={(e) => {
+                    if (
+                      item.body &&
+                      (e.code === 'Enter' || e.code === 'Space')
+                    ) {
+                      selected = selected === i ? null : i;
+                    }
+                  }}
+                  tabindex={0}
+                  role="button"
                 >
-                  {item.title}
-                </div>
-                {#if item.subtitle}
                   <div
-                    class="font-sans italic text-base mt-1 line-clamp-1 select-none text-slate-700 dark:text-slate-200"
+                    class="font-sans font-bold text-base line-clamp-1 select-none"
                   >
-                    {item.subtitle}
+                    {item.title}
                   </div>
-                {/if}
-                {#if selected === i && item.body}
-                  <div
-                    class="font-sans text-base"
-                    in:slide={{ duration: 150 }}
-                    out:slide={{ duration: 150 }}
-                  >
-                    {#if item.skills}
-                      <Tags
-                        model="project"
-                        data={item.skills}
-                        classes="my-2 select-none"
-                        animate
-                      />
-                    {/if}
-                    <div class="mt-4">
-                      <PortableText text={item.body} />
+                  {#if item.subtitle}
+                    <div
+                      class="font-sans italic text-base mt-1 line-clamp-1 select-none text-slate-700 dark:text-slate-200"
+                    >
+                      {item.subtitle}
                     </div>
-                  </div>
-                {/if}
-                {#if item.body}
-                  <Icon
-                    icon="ChevronDown"
-                    classes="{selected === i
-                      ? 'rotate-0'
-                      : 'rotate-90'} transition-all absolute top-4 right-4"
-                  />
-                {/if}
-              </div>
+                  {/if}
+                  {#if selected === i && item.body}
+                    <div
+                      class="font-sans text-base pb-2"
+                      in:maybe={{
+                        fn: $reduceMotion ? 'fade' : 'slide',
+                        animate: true,
+                        duration: 150
+                      }}
+                      out:maybe={{
+                        fn: $reduceMotion ? 'fade' : 'slide',
+                        animate: true,
+                        duration: 150
+                      }}
+                    >
+                      {#if item.skills}
+                        <Tags
+                          model="project"
+                          data={item.skills}
+                          classes="my-2 select-none"
+                        />
+                      {/if}
+                      <div class="mt-4 -mb-5">
+                        <PortableText text={item.body} />
+                      </div>
+                    </div>
+                  {/if}
+                  {#if item.body}
+                    <Icon
+                      icon="ChevronDown"
+                      classes="{selected === i
+                        ? 'rotate-0'
+                        : 'rotate-90'} transition-all absolute top-4 right-4"
+                    />
+                  {/if}
+                </div>
+              </Tooltip>
             </Hoverable>
           </div>
         </div>

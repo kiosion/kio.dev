@@ -7,8 +7,8 @@
   import Tooltip from '$components/tooltip.svelte';
 </script>
 
-<Tooltip text={t('Toggle theme')} position="bottom">
-  <Hoverable>
+<Hoverable>
+  <Tooltip text={t('Toggle theme')} position="bottom">
     <button
       class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline"
       aria-label={t('Toggle theme')}
@@ -26,5 +26,5 @@
         <Icon icon={'Sun'} />
       {/if}
     </button>
-  </Hoverable>
-</Tooltip>
+  </Tooltip>
+</Hoverable>

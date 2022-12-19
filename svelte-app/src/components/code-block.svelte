@@ -123,8 +123,8 @@
   on:blur={() => (hovered = false)}
 >
   {#if showClipboard && !$navigating}
-    <Tooltip text={t('Copy to clipboard')} position="top">
-      <Hoverable>
+    <Hoverable>
+      <Tooltip text={t('Copy to clipboard')} position="top">
         {#key copied}
           <button
             class="{hovered
@@ -141,8 +141,8 @@
             {/if}
           </button>
         {/key}
-      </Hoverable>
-    </Tooltip>
+      </Tooltip>
+    </Hoverable>
   {/if}
   <div
     class="relative overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"

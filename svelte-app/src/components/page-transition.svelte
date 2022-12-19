@@ -13,7 +13,7 @@
 
   $: ({ pathname } = url || { pathname: '' });
   $: navDir = onNav(pathname);
-  $: CanUseReduceMotion = Features.can('use reduce motion feature');
+  $: reduceMotion = Features.reduceMotion;
 </script>
 
 <!-- TODO: This method is broken (& has been for a while), see https://github.com/sveltejs/svelte/issues/6152 -->
@@ -23,16 +23,18 @@
   <div
     class="absolute top-0 left-0 w-full h-full"
     in:maybe={{
-      animate: !$CanUseReduceMotion,
-      fn: 'fly',
+      // animate: !$CanUseReduceMotion,
+      animate: true,
+      fn: $reduceMotion ? 'fade' : 'fly',
       delay: duration,
       duration: duration * 2,
       easing: quartOut,
       y: navDir === 'backward' ? -dist : dist
     }}
     out:maybe={{
-      animate: !$CanUseReduceMotion,
-      fn: 'fly',
+      // animate: !$CanUseReduceMotion,
+      animate: true,
+      fn: $reduceMotion ? 'fade' : 'fly',
       duration,
       easing: quartIn,
       y: navDir === 'backward' ? dist : -dist

@@ -1500,6 +1500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.9.0":
+  version: 2.11.6
+  resolution: "@popperjs/core@npm:2.11.6"
+  checksum: 39ed8d02c4d16dbe90bc537f7d4702320a95276d1fd902f74a48f544c6214a89a51a13f81603cb08786156350734f54834c41e011857637ae25340519d6160df
+  languageName: node
+  linkType: hard
+
 "@portabletext/svelte@npm:^1.0.1":
   version: 1.0.1
   resolution: "@portabletext/svelte@npm:1.0.1"
@@ -13822,6 +13829,7 @@ __metadata:
     "@cypress/vite-dev-server": "npm:^4.0.1"
     "@iconify/svelte": "npm:^3.0.1"
     "@poppanator/sveltekit-svg": "npm:^1.1.1"
+    "@popperjs/core": "npm:^2.11.6"
     "@portabletext/svelte": "npm:^1.0.1"
     "@rgossiaux/svelte-headlessui": "npm:^1.0.2"
     "@sanity/image-url": "npm:^1.0.1"
@@ -13875,6 +13883,7 @@ __metadata:
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
     tailwindcss: "npm:^3.2.4"
+    tippy.js: "npm:^6.3.7"
     ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.4.1"
     twemoji: "npm:^14.0.2"
@@ -14327,6 +14336,15 @@ __metadata:
   version: 1.0.2
   resolution: "tinyspy@npm:1.0.2"
   checksum: ee528f34ff63b3209881233401d1048b69565f917772d4f899b814a2a700be1039047c3149e98a6d6a64b94055defd46256025b205969d4059c61c4ad22697c4
+  languageName: node
+  linkType: hard
+
+"tippy.js@npm:^6.3.7":
+  version: 6.3.7
+  resolution: "tippy.js@npm:6.3.7"
+  dependencies:
+    "@popperjs/core": "npm:^2.9.0"
+  checksum: b76da158f992f8889b9f05607d065ff1263d8aa3d0e2048a66d183ba35284b43ee9dd3c9be24afdc5854e4561830f44dc4836366fce6abf2f55738b029560776
   languageName: node
   linkType: hard
 

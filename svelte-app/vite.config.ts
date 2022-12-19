@@ -18,7 +18,7 @@ export default defineConfig({
     svg(),
     sveltekit(),
     StripTestSelectors({
-      dev: process.env.MODE !== 'testing'
+      dev: ['testing', 'backed', 'development'].includes(process.env.MODE || '')
     }),
     process.env.MODE === 'testing' && Inspect()
   ],

@@ -18,7 +18,7 @@
       {
         hovered: boolean;
       }[]);
-  $: canSeeComments = Features.can('use comments feature');
+  $: canSeeComments = Features.comments;
   $: console.log('got comments:', comments);
 </script>
 
