@@ -1729,9 +1729,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@sveltejs/kit@npm:1.0.0"
+"@sveltejs/kit@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@sveltejs/kit@npm:1.0.1"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.0.0"
     "@types/cookie": "npm:^0.5.1"
@@ -1751,7 +1751,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: b2476351a716770b2a7d7ee46fa261ac0ff490c24956f9d64997423516440958a331277aff5455f00fdbeb6fc2bae9ffcbf901618624627d51362890981e2f58
+  checksum: 6cea1607358f5b0665522d75ff7db4d614b0be7dbe201519138ee21e35b8ab3906efa7aab3f38b969e3bb1ea071524a09badfdde2be9981a95948dc89905f7ed
   languageName: node
   linkType: hard
 
@@ -13818,7 +13818,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
     "@sveltejs/adapter-netlify": "npm:^1.0.0-next.78"
     "@sveltejs/adapter-node": "npm:^1.0.0-next.100"
-    "@sveltejs/kit": "npm:1.0.0"
+    "@sveltejs/kit": "npm:1.0.1"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^8.0.3"
