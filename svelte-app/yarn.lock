@@ -1579,17 +1579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "@rollup/pluginutils@npm:4.2.1"
-  dependencies:
-    estree-walker: "npm:^2.0.1"
-    picomatch: "npm:^2.2.2"
-  checksum: 96f7c2ec2ca7f20178c65a6634a1d612fc3ff6d4a70ff18468d1a909218d491f0164c320dbf195fbbf932059e71c21cfa31b64813d7922f14c83e773527f8b8e
-  languageName: node
-  linkType: hard
-
-"@rollup/pluginutils@npm:^5.0.1":
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.2":
   version: 5.0.2
   resolution: "@rollup/pluginutils@npm:5.0.2"
   dependencies:
@@ -6354,7 +6344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"estree-walker@npm:2.0.2, estree-walker@npm:^2.0.1, estree-walker@npm:^2.0.2":
+"estree-walker@npm:2.0.2, estree-walker@npm:^2.0.2":
   version: 2.0.2
   resolution: "estree-walker@npm:2.0.2"
   checksum: 6fd7656e20b3c8f1fa74cd3d922e09d2cc9815ba5ea2d4cc0d5f16870b00e4c40d9aaae5efeb26299ea684a89b8e64868f42ecdddd45e8d18283f47098c9943a
@@ -7145,6 +7135,17 @@ __metadata:
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
   checksum: c397c1bfbb8976afb6758a96b9d5781c179b01ec843caa9f6613b8d95d95e17229d1ba7132dd811e112df5f2537bce1f68a3c0a722decc345947f133921fa3b3
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "fs-extra@npm:11.1.0"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 20d9909070e7d9754cb651af067ae4343b5fc9b05fa9b8765a9348dab7dfa9b78c0f1ebe791774f06d4cca4231f4be9889a916d0457e8e87097a613e6bdd1746
   languageName: node
   linkType: hard
 
@@ -11678,7 +11679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.2.2, picomatch@npm:^2.3.1":
+"picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.3.1":
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 6ba5938c24af2c5918e94b39aa0ad48d71f2c30634de69d46e0bd32feb666de4e909406db6ffb78f98d39ef450d6a41b6fa3954dc3659d7b2b750766c1261e5e
@@ -13871,7 +13872,7 @@ __metadata:
     typescript: "npm:^4.8.4"
     uifx: "npm:^2.0.7"
     vite: "npm:^4.0.0"
-    vite-plugin-inspect: "npm:^0.7.5"
+    vite-plugin-inspect: "npm:^0.7.10"
     vite-plugin-test-selectors: "npm:0.0.2"
     vitest: "npm:^0.24.3"
   languageName: unknown
@@ -14738,10 +14739,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^0.8.5":
-  version: 0.8.5
-  resolution: "ufo@npm:0.8.5"
-  checksum: 07eee1ce96b4881ce4a59bda8155ad2584633bf10cb79e3b2e701955ee4ff866c26ef604514f6d19e190f426b18e84e53bb5058f6778f2dfc298536c520b4aff
+"ufo@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "ufo@npm:1.0.1"
+  checksum: d1de3b4cb0b5081d5333ae571a3dcc93752400e8dcc8d034043766aba09937d4159ce9a1a8c4fb9899ae365986b18a77fc97bcde1eae5facec5a965f8180faf0
   languageName: node
   linkType: hard
 
@@ -15116,19 +15117,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-inspect@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "vite-plugin-inspect@npm:0.7.5"
+"vite-plugin-inspect@npm:^0.7.10":
+  version: 0.7.10
+  resolution: "vite-plugin-inspect@npm:0.7.10"
   dependencies:
-    "@rollup/pluginutils": "npm:^4.2.1"
+    "@rollup/pluginutils": "npm:^5.0.2"
     debug: "npm:^4.3.4"
-    fs-extra: "npm:^10.1.0"
+    fs-extra: "npm:^11.1.0"
     kolorist: "npm:^1.6.0"
     sirv: "npm:^2.0.2"
-    ufo: "npm:^0.8.5"
+    ufo: "npm:^1.0.1"
   peerDependencies:
-    vite: ^3.1.0
-  checksum: 5a26d0ac7df4c780be103c2ecac8bfc313a454108f3ba9aa951cc2d114b532c6c10dfd4051d439fcb412278662d09a5d206a80fba0ba838dd455b0af20548ff6
+    vite: ^3.1.0 || ^4.0.0
+  checksum: 63cbbd139f7eba1ddc828db7d12453c5e0ca92f1eb6411b9552d0dd4a850b04e968a9450cdf30ab4c531419bc20edb16d3f4fe2574953c98ca2b6a1590f27bce
   languageName: node
   linkType: hard
 
