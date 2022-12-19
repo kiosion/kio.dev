@@ -1938,7 +1938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^1.0.0":
+"@floating-ui/react-dom@npm:^1.0.0, @floating-ui/react-dom@npm:^1.0.1":
   version: 1.0.1
   resolution: "@floating-ui/react-dom@npm:1.0.1"
   dependencies:
@@ -2156,6 +2156,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@motionone/animation@npm:^10.15.1":
+  version: 10.15.1
+  resolution: "@motionone/animation@npm:10.15.1"
+  dependencies:
+    "@motionone/easing": "npm:^10.15.1"
+    "@motionone/types": "npm:^10.15.1"
+    "@motionone/utils": "npm:^10.15.1"
+    tslib: "npm:^2.3.1"
+  checksum: 841c34406cf7cdea41856c87ec5a39228c390b71b3a88e6cb5628f3ddf234aa6b3822abaf96ef8da5d9e3f95f8924ca1cde9764db1d9decd99071ff8104c0b29
+  languageName: node
+  linkType: hard
+
 "@motionone/dom@npm:10.12.0":
   version: 10.12.0
   resolution: "@motionone/dom@npm:10.12.0"
@@ -2184,6 +2196,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@motionone/dom@npm:^10.15.3":
+  version: 10.15.3
+  resolution: "@motionone/dom@npm:10.15.3"
+  dependencies:
+    "@motionone/animation": "npm:^10.15.1"
+    "@motionone/generators": "npm:^10.15.1"
+    "@motionone/types": "npm:^10.15.1"
+    "@motionone/utils": "npm:^10.15.1"
+    hey-listen: "npm:^1.0.8"
+    tslib: "npm:^2.3.1"
+  checksum: 5deb1a68317acfbbb24bf00f43e983e1ce053c626dad8a156baeb8d0295ca76c064787e47bc1127e8f5f21b86c0bb2a53b7104ac757a724ced87c14c5af60da9
+  languageName: node
+  linkType: hard
+
 "@motionone/easing@npm:^10.14.0":
   version: 10.14.0
   resolution: "@motionone/easing@npm:10.14.0"
@@ -2191,6 +2217,16 @@ __metadata:
     "@motionone/utils": "npm:^10.14.0"
     tslib: "npm:^2.3.1"
   checksum: ad96d02d96551fe1142be1cea510db1612394823c08d9f0f7070c9957f5692ff0ad91067564807ae91b09171365be4a4fe8881acf74eac238ab1efd7efe8c98c
+  languageName: node
+  linkType: hard
+
+"@motionone/easing@npm:^10.15.1":
+  version: 10.15.1
+  resolution: "@motionone/easing@npm:10.15.1"
+  dependencies:
+    "@motionone/utils": "npm:^10.15.1"
+    tslib: "npm:^2.3.1"
+  checksum: 684442a06fba7115afe43ab4774d4645549a4473ac4deab780fd3ecfb25eee7ee4ff181bf56cc30102c6eb79cab5e5e831d40bb2b75d5cbdc1566f1ee255db2e
   languageName: node
   linkType: hard
 
@@ -2205,10 +2241,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@motionone/generators@npm:^10.15.1":
+  version: 10.15.1
+  resolution: "@motionone/generators@npm:10.15.1"
+  dependencies:
+    "@motionone/types": "npm:^10.15.1"
+    "@motionone/utils": "npm:^10.15.1"
+    tslib: "npm:^2.3.1"
+  checksum: 27fd15b733497e3e2f4436869171159820ac10bf18f8ecfe4f8f95ffd0a38964536c0cb21569b0aa807ade9bdcef45af1523aa6e1ca05c407da655541dd2eb8f
+  languageName: node
+  linkType: hard
+
 "@motionone/types@npm:^10.12.0, @motionone/types@npm:^10.13.0, @motionone/types@npm:^10.14.0":
   version: 10.14.0
   resolution: "@motionone/types@npm:10.14.0"
   checksum: 2d7f02490d55a1d9394891d684af2ed8bef3aa5f26d41a8c9f3bd3d02a40a8c8d1db2ad01eade3b346d50965ff24788c888c604a371e8454e08dc26cc68c7e8c
+  languageName: node
+  linkType: hard
+
+"@motionone/types@npm:^10.15.1":
+  version: 10.15.1
+  resolution: "@motionone/types@npm:10.15.1"
+  checksum: 5d0b511d22dbede545624486c2803ddc25391ccfd892cb20365ad77f0d4bceb3cd03a2d6c2e94c51693892aac98955771b8c856526e59245e20d00184719c4cc
   languageName: node
   linkType: hard
 
@@ -2220,6 +2274,17 @@ __metadata:
     hey-listen: "npm:^1.0.8"
     tslib: "npm:^2.3.1"
   checksum: 9981b108e4a42d3b98b1c49543c7f669eb9ee941036b94611f6e9b23aab9b0a8c3d32cf2504d32f8f732edae9e470cd2ef2682445b5c3d47a7b7fce94574e430
+  languageName: node
+  linkType: hard
+
+"@motionone/utils@npm:^10.15.1":
+  version: 10.15.1
+  resolution: "@motionone/utils@npm:10.15.1"
+  dependencies:
+    "@motionone/types": "npm:^10.15.1"
+    hey-listen: "npm:^1.0.8"
+    tslib: "npm:^2.3.1"
+  checksum: b34187e1ef4b91614cfd9ff3ae388088911c4186a5330f29878547751b5c8b7039e2addd8e69bfcf41581ea14c36d3d65d1bd49683a76e15c76767041d9c1c96
   languageName: node
   linkType: hard
 
@@ -3574,22 +3639,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/ui@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@sanity/ui@npm:1.0.1"
+"@sanity/ui@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@sanity/ui@npm:1.0.2"
   dependencies:
-    "@floating-ui/react-dom": "npm:^1.0.0"
+    "@floating-ui/react-dom": "npm:^1.0.1"
     "@sanity/color": "npm:^2.1.20"
-    "@sanity/icons": "npm:^2.0.0"
+    "@sanity/icons": "npm:^2.1.0"
     csstype: "npm:^3.1.1"
-    framer-motion: "npm:^7.5.3"
+    framer-motion: "npm:^7.10.2"
     react-refractor: "npm:^2.1.7"
   peerDependencies:
     react: ^18
     react-dom: ^18
     react-is: ^18
     styled-components: ^5.2
-  checksum: 52137138d87e58cbb6aedd9a5a2e7e22725eb29478b3e0fb6747abfedfc0c2ad396313ba67cf5eca557edf27bffec1af19746273e229e98c5a89762aa5534277
+  checksum: 3e3dcbc82b6e38ad5056ed8de62b433f96c7be013dd8c280bf5349acb1a9df603b5abdcee142a4034e20dfe96a3e4972ca3f35fddfc937e7395a90be7188b5ef
   languageName: node
   linkType: hard
 
@@ -8944,6 +9009,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^7.10.2":
+  version: 7.10.2
+  resolution: "framer-motion@npm:7.10.2"
+  dependencies:
+    "@emotion/is-prop-valid": "npm:^0.8.2"
+    "@motionone/dom": "npm:^10.15.3"
+    hey-listen: "npm:^1.0.8"
+    tslib: "npm:2.4.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  dependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+  checksum: 6812f0c42b2afa80e0d2a9f4c9b6f999712b113457037e5fbdf35dd4b1da61df95da99ca6400e2511edbb297bc16aa58b22682d7bdd054f357b9d1a975493305
+  languageName: node
+  linkType: hard
+
 "framer-motion@npm:^7.5.3":
   version: 7.6.15
   resolution: "framer-motion@npm:7.6.15"
@@ -11383,7 +11466,7 @@ __metadata:
     "@babel/preset-react": "npm:^7.18.6"
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
-    "@sanity/ui": "npm:^1.0.1"
+    "@sanity/ui": "npm:^1.0.2"
     "@sanity/vision": "npm:^3.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^5.45.1"
     "@typescript-eslint/parser": "npm:^5.46.0"
