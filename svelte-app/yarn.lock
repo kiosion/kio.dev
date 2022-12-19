@@ -12931,16 +12931,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.55.0":
-  version: 1.55.0
-  resolution: "sass@npm:1.55.0"
+"sass@npm:^1.57.0":
+  version: 1.57.0
+  resolution: "sass@npm:1.57.0"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: e05c3462e4e0ec1b4dd7d6a7107768209ef02f37a9a6e9d15d1473cf9993eb2f8e69ae53cb30fca9bb416a17818d3aab9156b2622b7703e0a0d344b9eaef6128
+  checksum: b98428d48524969854e4a373579190f8a1b5b6e0f123456f76f15263c86ac2a1f4d507eadc12d0443d91bbabbf228dcde519a48f0cc94f5056bc05d67d8556e2
   languageName: node
   linkType: hard
 
@@ -13854,7 +13854,7 @@ __metadata:
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^3.0.2"
     rollup: "npm:^3.7.4"
-    sass: "npm:^1.55.0"
+    sass: "npm:^1.57.0"
     seedrandom: "npm:^3.0.5"
     svelte: "patch:svelte@npm%3A3.54.0#~/.yarn/patches/svelte-npm-3.54.0-c506099255.patch"
     svelte-body: "npm:^1.3.6"
