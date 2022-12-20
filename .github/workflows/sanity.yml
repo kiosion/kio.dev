@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  setup:
     environment: Sanity
     runs-on: ubuntu-latest
     steps:
@@ -25,31 +25,96 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Use node_modules cache
         uses: actions/cache@v3
         id: nm-cache
         with:
           path: 'sanity-cms/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('sanity-cms/yarn.lock') }}
+          key: ${{ runner.os }}-nm-18.12-${{ hashFiles('sanity-cms/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-nm-16-
+            ${{ runner.os }}-nm-18.12-
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: (cd ./sanity-cms && yarn install 2> >(grep -v warning 1>&2))
-      # - name: Lint check
-      #   run: (cd ./sanity-cms && yarn lint)
-      - name: Build for development
-        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" yarn sanity build)
-      - name: Deploy development studio
+      - name: Use Setup cache
+        uses: actions/cache@v3
+        id: setup-cache
+        with:
+          path: 'sanity-cms'
+          key: ${{ runner.os }}-setup-sanity-${{ hashFiles('sanity-cms/**.ts') }}-${{ hashFiles('sanity-cms/**.js') }}-${{ hashFiles('sanity-cms/**.json') }}
+
+  build:
+    environment: Sanity
+    needs: [ setup ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [ 'dev', 'prod' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Restore setup cache
+        uses: actions/cache@v3
+        id: nm-cache
+        with:
+          path: 'sanity-cms/node_modules'
+          key: ${{ runner.os }}-nm-18.12-${{ hashFiles('sanity-cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nm-18.12-
+      - name: Use build cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: 'sanity-cms/dist'
+          key: ${{ runner.os }}-build-sanity-${{ matrix.env }}-${{ hashFiles('sanity-cms/package.json') }}
+      - name: Build for ${{ matrix.env }}
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="${{ matrix.env }}" yarn sanity build)
+
+  deploy:
+    environment: Sanity
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [ 'dev', 'prod' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Restore setup cache
+        uses: actions/cache@v3
+        id: nm-cache
+        with:
+          path: 'sanity-cms/node_modules'
+          key: ${{ runner.os }}-nm-18.12-${{ hashFiles('sanity-cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nm-18.12-
+      - name: Use build cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: 'sanity-cms/dist'
+          key: ${{ runner.os }}-build-sanity-${{ matrix.env }}-${{ hashFiles('sanity-cms/package.json') }}
+      - name: Echo site ID for ${{ matrix.env }}
+        run: if [ "${{ matrix.env }}" = "dev" ]; then echo ${{ secrets.NETLIFY_DEV_SITE_ID }} > "./sanity-cms/.env"; else echo ${{ secrets.NETLIFY_SITE_ID }} > "./sanity-cms/.env" ; fi
+      - name: Deploy ${{ matrix.env }} studio
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
-      - name: Build for production
-        run: (cd ./sanity-cms && yarn sanity build)
-      - name: Deploy production studio
-        env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
+        run: (cd ./sanity-cms && source ./.env && yarn netlify deploy --dir=./dist --prod)
+
+      # TODO: Remove after
+      # - name: Build for development
+      #   run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" yarn sanity build)
+      # - name: Deploy development studio
+      #   env:
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #   run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
+      # - name: Build for production
+      #   run: (cd ./sanity-cms && yarn sanity build)
+      # - name: Deploy production studio
+      #   env:
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #   run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)

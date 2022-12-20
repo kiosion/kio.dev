@@ -100,9 +100,12 @@ vitest:
 # cypress tests
 cypress: SHELL:=/bin/bash
 cypress:
-	@cd ./svelte-app &&\
-	yarn cypress install
-	./scripts/cypress.sh
+	make cypress-chrome
+
+cypress-%: SHELL:=/bin/bash
+cypress-%:
+	@(cd ./svelte-app; yarn cypress install) &&\
+	(cd ./svelte-app; exec yarn serve) & (cd ./svelte-app; exec yarn test:cypress -b $*)
 
 lint: SHELL:=/bin/bash
 lint:

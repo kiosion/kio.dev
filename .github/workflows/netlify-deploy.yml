@@ -13,15 +13,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18.12
       - name: Use node_modules cache
         uses: actions/cache@v3
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-18.12-${{ hashFiles('svelte-app/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-nm-16-
+            ${{ runner.os }}-nm-18.12-
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
