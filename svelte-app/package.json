@@ -42,7 +42,7 @@
     "@types/seedrandom": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.46.1",
-    "@vitest/ui": "^0.25.3",
+    "@vitest/ui": "^0.25.8",
     "autoprefixer": "^10.4.13",
     "c8": "^7.12.0",
     "cypress": "12.0.1",
