@@ -9,12 +9,9 @@
 </div>
 
 ## 💁 Info
+Live at <a href="https://kio.dev/">https://kio.dev</a> :)
 
-(Eventually) live at <a href="https://kio.dev/">https://kio.dev</a> / <a href="https://kio.sh/">https://kio.sh</a>
-
-(Temporarily) live at <a href="https://stalwart-mousse-c9c6d8.netlify.app">https://stalwart-mousse-c9c6d8.netlify.app</a> until I get around to some finishing touches :)
-
-Pretty overengineered, but intentionally so 😃
+Pretty overengineered, but done so intentionally, trust 😃
 
 ## 📚 Tech stack
 
