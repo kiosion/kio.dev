@@ -1,12 +1,10 @@
 <script lang="ts">
-  import ContentWrapper from '$components/content-wrapper.svelte';
   import SwitchItem from '$components/toggles/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import Features, { setFeature } from '$stores/features';
+  import Features from '$stores/features';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
-  import { Boundary } from '$lib/error-bound';
   import SFX from '$lib/sfx';
 
   let body: HTMLElement;
@@ -14,8 +12,7 @@
   onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
-    // Features.set(target, event?.detail?.state === true ? true : false);
-    setFeature(target, event?.detail?.state);
+    Features.set(target, event?.detail?.state === true ? true : false);
     SFX.click.play();
   };
 
@@ -25,12 +22,12 @@
   export const hydrate = false;
   export const router = false;
 
-  $: CanUseReduceMotion = Features.reduceMotion;
-  $: CanUseSounds = Features.sounds;
-  $: CanUseCustomCursor = Features.customCursor;
-  $: CanUseComicSans = Features.comicSans;
-  $: CanSeeComments = Features.comments;
-  $: CanUseTooltips = Features.tooltips;
+  $: CanUseReduceMotion = Features.can('reduce motion');
+  $: CanUseSounds = Features.can('use sounds');
+  $: CanUseCustomCursor = Features.can('use custom cursor');
+  $: CanUseComicSans = Features.can('use comic sans');
+  $: CanSeeComments = Features.can('see comments');
+  $: CanUseTooltips = Features.can('see tooltips');
 </script>
 
 <svelte:head>

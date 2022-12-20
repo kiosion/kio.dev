@@ -4,7 +4,6 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  // import { slide } from 'svelte/transition';
   import { maybe } from '$lib/helpers/animate';
   import Features from '$stores/features';
   import { t, currentLang } from '$i18n';
@@ -56,7 +55,7 @@
     }
   };
 
-  $: reduceMotion = Features.reduceMotion;
+  $: reduceMotion = Features.can('reduce motion');
 </script>
 
 <div class="relative h-fit mx-2 mt-4">

@@ -18,8 +18,7 @@
       {
         hovered: boolean;
       }[]);
-  $: canSeeComments = Features.comments;
-  $: console.log('got comments:', comments);
+  $: canSeeComments = Features.can('see comments');
 </script>
 
 <div class="mt-4" data-test-id="{model}-footer">

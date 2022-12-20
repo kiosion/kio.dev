@@ -13,7 +13,7 @@
 
   $: ({ pathname } = url || { pathname: '' });
   $: navDir = onNav(pathname);
-  $: reduceMotion = Features.reduceMotion;
+  $: reduceMotion = Features.can('reduce motion');
 </script>
 
 <!-- TODO: This method is broken (& has been for a while), see https://github.com/sveltejs/svelte/issues/6152 -->

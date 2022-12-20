@@ -22,7 +22,7 @@
           allowHTML: true,
           duration: transitionDuration,
           delay: [delay, 0],
-          offset: [0, 24],
+          offset: [6, 24],
           animation: 'fade',
           placement: position,
           followCursor: true,
@@ -59,7 +59,7 @@
     return div;
   };
 
-  $: useTooltips = Features.useTooltips;
+  $: useTooltips = Features.can('see tooltips');
   $: if ($useTooltips === false) {
     disable = true;
   }

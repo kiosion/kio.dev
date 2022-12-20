@@ -82,8 +82,6 @@ const linkTo = (path: string, lang?: string): string => {
 
   lang = lang || get(currentLang);
 
-  console.log('linkTo page store:', get(page));
-
   if (
     !lang ||
     path.startsWith(`/${lang}/`) ||

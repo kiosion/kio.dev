@@ -10,7 +10,7 @@
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav/nav.svelte';
   import HeaderControls from '$components/controls/header-controls.svelte';
-  import Features, { setFeature } from '$stores/features';
+  import Features from '$stores/features';
   import type { LayoutData } from './$types';
   import FooterControls from '$components/controls/footer-controls.svelte';
   import { browser } from '$app/environment';
@@ -26,7 +26,7 @@
   } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
 
-  interface DevToolsEvent {
+  interface DevToolsEvent extends Event {
     detail: {
       isOpen: boolean;
     };
@@ -50,7 +50,7 @@
   const unsubscribePreferReducedMotion = useMediaQuery(
     '(prefers-reduced-motion: reduce)'
   ).subscribe((value) => {
-    setFeature('reduce-motion', value);
+    Features.set('reduce motion', value);
   });
 
   [
@@ -62,13 +62,9 @@
     initAudio({ volume: 0.1 }).catch(() => undefined);
     checkTranslations();
     if (browser) {
-      msg({ detail: { isOpen: true } });
-      window.addEventListener('devtoolschange', (e) =>
-        msg(e as unknown as DevToolsEvent)
-      );
-
-      appLoaded = true;
+      window.addEventListener('devtoolschange', (e) => msg(e as DevToolsEvent));
       setTimeout(() => loading.set(false), 1000);
+      appLoaded = true;
     }
   });
 
@@ -80,8 +76,8 @@
 
   export let data: LayoutData;
 
-  $: useCustomCursor = Features.customCursor;
-  $: useComicSans = Features.comicSans;
+  $: useCustomCursor = Features.can('use custom cursor');
+  $: useComicSans = Features.can('use comic sans');
   $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
   $: currentLang.set(
     APP_LANGS.includes($page?.params?.lang)
