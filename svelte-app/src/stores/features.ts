@@ -27,7 +27,9 @@ const defaultFeatureFlags = new Map([
 
 let featureFlags: typeof defaultFeatureFlags;
 
-if (browser) {
+if (!browser) {
+  featureFlags = defaultFeatureFlags;
+} else {
   const storedFlags = localStorage.getItem('featureFlags'),
     parsed = storedFlags
       ? (JSON.parse(atob(storedFlags)) as [string, Setting][])
@@ -52,8 +54,6 @@ if (browser) {
   );
 
   featureFlags = new Map([...defaultFeatureFlags, ...writableFlags]);
-} else {
-  featureFlags = defaultFeatureFlags;
 }
 
 class FeaturesClass {
@@ -61,11 +61,22 @@ class FeaturesClass {
 
   constructor(features: Map<string, Writable<Setting>>) {
     this.features = features;
-
     browser &&
-      featureFlags.forEach((feature) => {
-        feature.subscribe((value) => {
-          const flags = Array.from(featureFlags.entries()).map(
+      this.features.forEach((feature) => {
+        const key = Array.from(this.features.keys())
+          .find((key) => this.features.get(key) === feature)
+          ?.replace(/-/g, '_') as string;
+        Object.defineProperty(this, key, {
+          get: () =>
+            readable<boolean>(get(feature).value, (set) => {
+              const unsubscribe = feature.subscribe((value) => {
+                set(value.value);
+              });
+              return () => unsubscribe();
+            })
+        });
+        feature.subscribe((_value) => {
+          const flags = Array.from(this.features.entries()).map(
             ([key, value]) => [key, get(value)]
           );
           localStorage.setItem('featureFlags', btoa(JSON.stringify(flags)));
@@ -74,28 +85,21 @@ class FeaturesClass {
   }
 
   private normalize = (key: string): string => {
-    key = key.toString().replace(/\s+/g, '-').toLowerCase();
-    key = key.replace(/^-*(use|enable|view|see|feature)-*/i, '');
-    return key;
+    return key
+      .replace(/^\s*(use|enable|view|see)*\s*/i, '')
+      .replace(/\s+/g, '_')
+      .toLowerCase();
   };
 
   can = (key: string): Readable<boolean> => {
     key = this.normalize(key);
-    if (!this.features.has(key)) {
+    // @ts-expect-error - this[key] is a getter
+    if (!this[key]) {
       Logger.warnOnce(`Feature '${key}' does not exist`);
       return readable(false);
     }
-    return readable<boolean>(
-      get(this.features.get(key) as Writable<Setting>).value as boolean,
-      (set) => {
-        const unsubscribe = (
-          this.features.get(key) as Writable<Setting>
-        ).subscribe((value) => {
-          set(value.value);
-        });
-        return () => unsubscribe();
-      }
-    );
+    // @ts-expect-error - this[key] is a getter
+    return this[key];
   };
 
   set = (key: string, value: boolean): boolean => {
@@ -115,75 +119,5 @@ class FeaturesClass {
     return true;
   };
 }
-
-// const featuresHandler = {
-//   get: (target: typeof featureFlags, prop: string) => {
-//     let dashedProp = prop
-//       .toString()
-//       .replace(/([a-z])([A-Z])/g, '$1-$2')
-//       .toLowerCase();
-//     if (
-//       dashedProp.split('-')[0] === 'use' ||
-//       dashedProp.split('-')[0] === 'enable' ||
-//       dashedProp.split('-')[0] === 'view'
-//     ) {
-//       dashedProp = dashedProp.split('-').slice(1).join('-');
-//     }
-
-//     if (target.has(dashedProp)) {
-//       return readable<boolean>(
-//         get(target.get(dashedProp) as Writable<Setting>).value as boolean,
-//         (set) => {
-//           const unsubscribe = (
-//             target.get(dashedProp) as Writable<Setting>
-//           ).subscribe((value) => {
-//             set(value.value);
-//           });
-//           return () => unsubscribe();
-//         }
-//       );
-//     } else {
-//       Logger.error(`Error: Feature flag '${prop}' does not exist`);
-//       return readable(false);
-//     }
-//   },
-//   set: (target: typeof featureFlags, prop: string, value: boolean) => {
-//     if (typeof value !== 'boolean') {
-//       Logger.error(
-//         `Error: Feature flag '${prop}' must be set to a boolean value`
-//       );
-//       return false;
-//     }
-//     const dashedProp = prop
-//       .toString()
-//       .replace(/([a-z])([A-Z])/g, '$1-$2')
-//       .toLowerCase();
-
-//     if (target.has(dashedProp)) {
-//       (target.get(dashedProp) as Writable<Setting>).set({
-//         value,
-//         updated: Math.floor(Date.now() / 1000).toString()
-//       });
-//       return true;
-//     } else {
-//       Logger.error(`Error: Feature flag '${prop}' does not exist`);
-//       return false;
-//     }
-//   }
-// };
-
-// type FeaturesProxy = {
-//   [key: string]: Readable<boolean>;
-// };
-
-// const Features = new Proxy(
-//   featureFlags,
-//   featuresHandler
-// ) as unknown as FeaturesProxy;
-
-// This fn alias is to please Typescript since the devs have decided to not allow
-// setting different types for getters and setters, who'd ever need that!
-// const setFeature = (flag: string, value: boolean) =>
-//   ((Features[flag] as unknown as boolean) = value);
 
 export default new FeaturesClass(featureFlags);
