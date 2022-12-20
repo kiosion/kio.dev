@@ -22,7 +22,7 @@ const defaultFeatureFlags = new Map([
   ],
   ['comic-sans', writable({ value: false, updated: '1671500535' } as Setting)],
   ['comments', writable({ value: false, updated: '1671500535' } as Setting)],
-  ['tooltips', writable({ value: false, updated: '1671500535' } as Setting)]
+  ['tooltips', writable({ value: true, updated: '1671509563' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
 
 let featureFlags: typeof defaultFeatureFlags;
