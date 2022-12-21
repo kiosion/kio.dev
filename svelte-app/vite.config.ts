@@ -3,49 +3,43 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import svg from '@poppanator/sveltekit-svg';
-// import dotenv from 'dotenv';
 
-// dotenv.config();
-// const viteEnv = {} as Record<string, string>;
-// Object.keys(process.env).forEach((key) => {
-//   if (key.startsWith('VITE_')) {
-//     viteEnv[`import.meta.env.${key}`] = process.env[key] as string;
-//   }
-// });
+export default defineConfig(({ command, mode }) => {
+  const isProduction = mode === 'production' || mode === 'staging',
+    isTesting = mode === 'testing',
+    isDev = mode === 'development' || mode === 'backed';
 
-export default defineConfig({
-  plugins: [
-    svg(),
-    sveltekit(),
-    StripTestSelectors({
-      dev: ['testing', 'backed', 'development'].includes(process.env.MODE || '')
-    }),
-    process.env.MODE === 'testing' && Inspect()
-  ],
-  optimizeDeps: {
-    include: [
-      'highlight.js',
-      'highlight.js/lib/core',
-      'svelte-highlight',
-      'seedrandom',
-      'moment',
-      '@sanity/image-url'
-    ]
-  },
-  // resolve: {
-  //   define: {
-  //     ...viteEnv
-  //   }
-  // },
-  // ssr: {
-  //   noExternal: ['devalue']
-  // },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
+  console.log('isProduction', isProduction);
+  console.log('isTesting', isTesting);
+  console.log('isDev', isDev);
+
+  return {
+    plugins: [
+      svg(),
+      sveltekit(),
+      StripTestSelectors({
+        // Confusingly named, 'dev' decides whether to strip or not
+        dev: !!isProduction
+      }),
+      (isDev || isTesting) && Inspect()
+    ],
+    optimizeDeps: {
+      include: [
+        'highlight.js',
+        'highlight.js/lib/core',
+        'svelte-highlight',
+        'seedrandom',
+        'moment',
+        '@sanity/image-url'
+      ]
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: undefined
+        }
       }
-    }
-  },
-  appType: 'custom'
+    },
+    appType: 'custom'
+  };
 });
