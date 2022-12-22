@@ -33,6 +33,13 @@ export default defineConfig(({ command, mode }) => {
         '@sanity/image-url'
       ]
     },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      deps: {
+        registerNodeLoader: true
+      }
+    },
     build: {
       rollupOptions: {
         output: {
