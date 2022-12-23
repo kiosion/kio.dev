@@ -12,15 +12,15 @@ type Setting = { value: boolean; updated: string };
 
 const defaultFeatureFlags = new Map([
   [
-    'reduce-motion',
+    'reduce_motion',
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
   ['sounds', writable({ value: true, updated: '1671500535' } as Setting)],
   [
-    'custom-cursor',
+    'custom_cursor',
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
-  ['comic-sans', writable({ value: false, updated: '1671500535' } as Setting)],
+  ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)],
   ['comments', writable({ value: false, updated: '1671500535' } as Setting)],
   ['tooltips', writable({ value: true, updated: '1671509563' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
@@ -46,7 +46,7 @@ if (!browser) {
         ).updated;
         try {
           return parseInt(defaultUpdated) < parseInt(savedValue.updated);
-        } catch (_e) {
+        } catch {
           return false;
         }
       })
@@ -63,9 +63,9 @@ class FeaturesClass {
     this.features = features;
     browser &&
       this.features.forEach((feature) => {
-        const key = Array.from(this.features.keys())
-          .find((key) => this.features.get(key) === feature)
-          ?.replace(/-/g, '_') as string;
+        const key = Array.from(this.features.keys()).find(
+          (key) => this.features.get(key) === feature
+        ) as string;
         Object.defineProperty(this, key, {
           get: () =>
             readable<boolean>(get(feature).value, (set) => {
@@ -88,6 +88,7 @@ class FeaturesClass {
     return key
       .replace(/^\s*(use|enable|view|see)*\s*/i, '')
       .replace(/\s+/g, '_')
+      .replace(/-/g, '_')
       .toLowerCase();
   };
 

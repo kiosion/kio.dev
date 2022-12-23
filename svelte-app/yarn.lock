@@ -73,6 +73,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/standalone@npm:^7.20.6":
+  version: 7.20.10
+  resolution: "@babel/standalone@npm:7.20.10"
+  checksum: 9263642d3e8c6d1896f6c8d64aa04c4545761df8a75a024a839d28233f86ef2b0ba70ffa7c41549db447604a193cfa562dadb259697305f0d3908f97834dd47f
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.8.3":
   version: 7.20.0
   resolution: "@babel/types@npm:7.20.0"
@@ -545,10 +552,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jridgewell/gen-mapping@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@jridgewell/gen-mapping@npm:0.3.2"
+  dependencies:
+    "@jridgewell/set-array": "npm:^1.0.1"
+    "@jridgewell/sourcemap-codec": "npm:^1.4.10"
+    "@jridgewell/trace-mapping": "npm:^0.3.9"
+  checksum: b2c9c60a0de99e3cb296a90ef949c422537dce3c39f2b9c0451549a4b0eaecd58290c0e1ddc75538f38073dd477b728dedf3493f25c253946fcd52b0af06e561
+  languageName: node
+  linkType: hard
+
 "@jridgewell/resolve-uri@npm:^3.0.3":
   version: 3.1.0
   resolution: "@jridgewell/resolve-uri@npm:3.1.0"
   checksum: 6b641bb7e25bc92a9848898cc91a77a390f393f086297ec2336d911387bdd708919c418e74a22732cfc21d0e7300b94306f437d2e9de5ab58b33ebc6c39d6f9d
+  languageName: node
+  linkType: hard
+
+"@jridgewell/set-array@npm:^1.0.1":
+  version: 1.1.2
+  resolution: "@jridgewell/set-array@npm:1.1.2"
+  checksum: e7e3f00d10622a6e48cc59041537f99972ed110dca8bfdf575be101c5920d4e4d4fab315d601df9aebbd6b97f4ce857f0347902701ed034a0627ca554b64db0f
+  languageName: node
+  linkType: hard
+
+"@jridgewell/source-map@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@jridgewell/source-map@npm:0.3.2"
+  dependencies:
+    "@jridgewell/gen-mapping": "npm:^0.3.0"
+    "@jridgewell/trace-mapping": "npm:^0.3.9"
+  checksum: 66bb5d5cac95793717fea6cfe45c02c0e493f39c320cdaee030a39de033a961cfcb2f5bf105150eb8fada65b6654e72e33efae35349fbaca897414a17c984c34
   languageName: node
   linkType: hard
 
@@ -2463,6 +2498,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitejs/plugin-legacy@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@vitejs/plugin-legacy@npm:3.0.1"
+  dependencies:
+    "@babel/standalone": "npm:^7.20.6"
+    core-js: "npm:^3.26.1"
+    magic-string: "npm:^0.27.0"
+    regenerator-runtime: "npm:^0.13.11"
+    systemjs: "npm:^6.13.0"
+  peerDependencies:
+    terser: ^5.4.0
+    vite: ^4.0.0
+  checksum: 43ad0b456ae4d55552f646613bd83f2c1cef2b15c0dd3109f052a927b2e11086c63728484016185a782be9ff0c5ec2f3bb2c7fb2db4c258718d60fd6337f2cee
+  languageName: node
+  linkType: hard
+
 "@vitest/ui@npm:^0.25.8":
   version: 0.25.8
   resolution: "@vitest/ui@npm:0.25.8"
@@ -2555,6 +2606,15 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 15b10fb381a8a0394a718eba147e120b9d1ae6ed087e61612ee5fda94f98182e5fcd78ef6725c027dc3c5677ce920617c14c359d7777e8ef6a058d2ba113f81f
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.5.0":
+  version: 8.8.1
+  resolution: "acorn@npm:8.8.1"
+  bin:
+    acorn: bin/acorn
+  checksum: f8a84cf59173c5c07cb6b8097c716370f799244189b23d58358eadf9729e0d62660bc11339e03f08517fa33d1ef4b69b84b0bdebe0c0d783acaa8d2c44a66345
   languageName: node
   linkType: hard
 
@@ -4164,7 +4224,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^2.3.0, commander@npm:^2.8.1":
+"commander@npm:^2.20.0, commander@npm:^2.3.0, commander@npm:^2.8.1":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: a6cb7ce73cc1db74a2da4bb6b4fc4f9a655ba35beb90f32bf5831d7d3be610dafc01dcc8a17f8204cf4e3f1f434d2115b7db56dfb0b827d42b10d1ba6ae8cbb4
@@ -4369,6 +4429,13 @@ __metadata:
     readdirp: "npm:^2.0.0"
     run-parallel: "npm:^1.1.4"
   checksum: 5d4e273b67f76b7ed115abf37c5c634268dc5b2dc1baa67fc752481c7bef0e9e5d254f69bcab27bc80af93aa3bbc7fb8ddf61476bdd024059f48f155cb6e1329
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.26.1":
+  version: 3.26.1
+  resolution: "core-js@npm:3.26.1"
+  checksum: 74bf298c834701137b983f835e7fe8ac83febcbd4ae66a7adec68a85a076262c6b0c839bdd02ec5bd2f52f5e5f0feb55d66609be8594e1a3fba6e4f7885833a4
   languageName: node
   linkType: hard
 
@@ -12465,6 +12532,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 0485db63ce47760e28329590cb9f8b208365d076dbf2edaa32e551a7c0451fc6f7557b225268422c960ffa4fbc6ff86d63d6a747aacbf6b10ed6a747b432e3c8
+  languageName: node
+  linkType: hard
+
 "regenerator-runtime@npm:^0.13.4":
   version: 0.13.9
   resolution: "regenerator-runtime@npm:0.13.9"
@@ -13355,7 +13429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.19":
+"source-map-support@npm:^0.5.19, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -13861,6 +13935,7 @@ __metadata:
     "@types/seedrandom": "npm:^3.0.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.42.0"
     "@typescript-eslint/parser": "npm:^5.46.1"
+    "@vitejs/plugin-legacy": "npm:^3.0.1"
     "@vitest/ui": "npm:^0.25.8"
     autoprefixer: "npm:^10.4.13"
     c8: "npm:^7.12.0"
@@ -13898,6 +13973,7 @@ __metadata:
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
     tailwindcss: "npm:^3.2.4"
+    terser: "npm:^5.16.1"
     tippy.js: "npm:^6.3.7"
     ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.4.1"
@@ -14082,6 +14158,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"systemjs@npm:^6.13.0":
+  version: 6.13.0
+  resolution: "systemjs@npm:6.13.0"
+  checksum: cba408d57b2b0de4c40cc54c595f0ae126645e218c16795565a38ed1d55ce2c14b898119ed4ab5f7c41ed90cd23111ef6b0e98981e3754a12af35ebfb42611c7
+  languageName: node
+  linkType: hard
+
 "tabtab@npm:^3.0.2":
   version: 3.0.2
   resolution: "tabtab@npm:3.0.2"
@@ -14237,6 +14320,20 @@ __metadata:
     ansi-escapes: "npm:^5.0.0"
     supports-hyperlinks: "npm:^2.2.0"
   checksum: ca770f4281a8fb1b753372fe59ea04c9e13bea151fb25f63aec63826419bf3896b223da834a0e126137433b5541fe6bc6600025f1b0ee0c112f0ef9d259d93da
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.16.1":
+  version: 5.16.1
+  resolution: "terser@npm:5.16.1"
+  dependencies:
+    "@jridgewell/source-map": "npm:^0.3.2"
+    acorn: "npm:^8.5.0"
+    commander: "npm:^2.20.0"
+    source-map-support: "npm:~0.5.20"
+  bin:
+    terser: bin/terser
+  checksum: c18036a7958b1435147a94e4b0e36f10252466b811f4dedfa3016c90721ff973b5479108491de9ef8c6238a37b0b5359a3350fb3fc4c5ce3cb00fbef6f8e1113
   languageName: node
   linkType: hard
 

@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import legacy from '@vitejs/plugin-legacy';
 import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
@@ -17,7 +18,16 @@ export default defineConfig(({ command, mode }) => {
         // Confusingly named, 'dev' decides whether to strip or not
         dev: !!isProduction
       }),
-      (isDev || isTesting) && Inspect()
+      (isDev || isTesting) && Inspect(),
+      legacy({
+        targets: [
+          'defaults',
+          '>0.3%',
+          'supports es6-module',
+          'last 3 versions and not dead'
+        ],
+        polyfills: true
+      })
     ],
     optimizeDeps: {
       include: [

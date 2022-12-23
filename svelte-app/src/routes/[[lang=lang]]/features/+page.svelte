@@ -12,6 +12,7 @@
   onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
+    console.log('setting', target, event?.detail?.state);
     Features.set(target, event?.detail?.state === true ? true : false);
     SFX.click.play();
   };
