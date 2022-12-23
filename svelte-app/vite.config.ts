@@ -9,10 +9,6 @@ export default defineConfig(({ command, mode }) => {
     isTesting = mode === 'testing',
     isDev = mode === 'development' || mode === 'backed';
 
-  console.log('isProduction', isProduction);
-  console.log('isTesting', isTesting);
-  console.log('isDev', isDev);
-
   return {
     plugins: [
       svg(),

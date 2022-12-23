@@ -12,15 +12,15 @@ type Setting = { value: boolean; updated: string };
 
 const defaultFeatureFlags = new Map([
   [
-    'reduce_motion',
+    'reduce-motion',
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
   ['sounds', writable({ value: true, updated: '1671500535' } as Setting)],
   [
-    'custom_cursor',
+    'custom-cursor',
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
-  ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)],
+  ['comic-sans', writable({ value: false, updated: '1671500535' } as Setting)],
   ['comments', writable({ value: false, updated: '1671500535' } as Setting)],
   ['tooltips', writable({ value: true, updated: '1671509563' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
