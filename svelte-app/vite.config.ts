@@ -17,30 +17,30 @@ export default defineConfig(({ command, mode }) => {
       sveltekit(),
       StripTestSelectors({
         // confusingly named, 'dev' decides whether to strip or not
-        dev: !!isProduction
+        dev: isProduction
       }),
       (isDev || isTesting) && Inspect(),
-      // compile to good ES5-compatible code
-      commonjs(),
-      babel({
-        extensions: ['.js', '.mjs', '.html', '.svelte'],
-        runtimeHelpers: true,
-        exclude: ['node_modules/@babel/**'],
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              targets: '> 0.5%, not dead, not ie 11',
-              useBuiltIns: 'entry'
-            }
+      // compile to good ol' ES5-compatible code
+      isProduction && commonjs(),
+      isProduction &&
+        babel({
+          extensions: ['.js', '.mjs', '.html', '.svelte'],
+          runtimeHelpers: true,
+          exclude: ['node_modules/@babel/**'],
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: '> 0.5%, not dead, not ie 11'
+              }
+            ],
+            '@babel/preset-typescript'
           ],
-          '@babel/preset-typescript'
-        ],
-        plugins: [
-          '@babel/plugin-syntax-dynamic-import',
-          '@babel/plugin-transform-runtime'
-        ]
-      })
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-transform-runtime'
+          ]
+        })
     ],
     optimizeDeps: {
       include: [
@@ -51,6 +51,9 @@ export default defineConfig(({ command, mode }) => {
         'moment',
         '@sanity/image-url'
       ]
+    },
+    ssr: {
+      noExternal: ['svelte-highlight', 'highlight.js', 'highlight.js/lib/core']
     },
     test: {
       globals: true,
