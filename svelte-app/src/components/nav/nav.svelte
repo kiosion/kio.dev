@@ -156,22 +156,22 @@
       data-test-id="navBar"
     >
       <div
-        class="relative flex flex-row justify-center items-center m-4 px-3 flex-wrap gap-4"
+        class="relative flex flex-row justify-between items-center m-4 px-3 flex-wrap gap-4"
       >
         <MenuToggle />
         <Hoverable>
           <button
-            class="mx-auto w-44 logo-text dark:invert transition-[filter]"
+            class="-mr-6 h-8 logo-text dark:invert transition-[filter]"
             on:click={() => onLogoClick()}
           >
             <img
-              class="w-full"
-              src="/assets/logo-text.webp"
+              class="h-full"
+              src="/assets/logo-text--short.webp"
               alt="kiosion logo"
             />
           </button>
         </Hoverable>
-        <div class="flex flex-row justify-start gap-4 w-fit align-center pb-1">
+        <div class="flex flex-row justify-start gap-4 w-fit align-center pt-1">
           <ThemeToggle />
           <SoundsToggle />
         </div>

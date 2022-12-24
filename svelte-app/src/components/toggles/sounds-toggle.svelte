@@ -10,7 +10,7 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={t('Toggle sound effects')} position="bottom">
+  <Tooltip text={t('Toggle sound effects')} fixed>
     <button
       class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline"
       aria-label={t('Toggle sound effects')}

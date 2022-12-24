@@ -53,7 +53,7 @@
         <div class="-ml-52 -mr-40">
           {#if $pageHeading && $pageHeading !== ''}
             <Hoverable>
-              <Tooltip text={t('Scroll to top')} position="bottom">
+              <Tooltip text={t('Scroll to top')} position="bottom" fixed>
                 <button
                   class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline"
                   aria-label="Scroll to top"

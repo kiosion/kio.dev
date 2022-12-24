@@ -9,7 +9,9 @@
     position: Placement = 'bottom',
     transitionDuration = 200,
     delay = 800,
-    disable = false;
+    disable = false,
+    offset = [0, 8] as [number, number],
+    fixed = false;
 
   let container: HTMLDivElement, instance: Instance;
 
@@ -22,10 +24,10 @@
           allowHTML: true,
           duration: transitionDuration,
           delay: [delay, 0],
-          offset: [6, 24],
+          offset: fixed ? offset : [6, 24],
           animation: 'fade',
           placement: position,
-          followCursor: true,
+          followCursor: !fixed,
           plugins: [followCursor]
         });
       }

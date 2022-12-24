@@ -13,7 +13,7 @@
 </script>
 
 <div
-  class="mx-7 px-1 pb-6 h-fit overflow-hidden"
+  class="mx-7 px-1 pb-3 h-fit overflow-hidden"
   in:slide={{ duration: 400 }}
   out:slide={{ duration: 400 }}
 >

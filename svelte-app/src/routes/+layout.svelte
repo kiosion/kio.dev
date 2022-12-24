@@ -35,7 +35,7 @@
   let appLoaded: boolean,
     scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
-    preloadUrls = ['/assets/logo-text.webp', '/assets/logo-text--short.webp'];
+    preloadUrls = ['/assets/logo-text--short.webp'];
 
   const msg = (e: DevToolsEvent) =>
     e.detail?.isOpen &&

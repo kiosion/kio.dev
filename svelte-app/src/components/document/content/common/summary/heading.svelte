@@ -16,7 +16,7 @@
 </script>
 
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
-  <Tooltip text={t('Toggle summary')}>
+  <Tooltip text={t('Toggle summary')} fixed>
     <div
       class="flex flex-row items-center justify-between py-4 px-4 rounded-md focusOutline-sm"
       role="button"

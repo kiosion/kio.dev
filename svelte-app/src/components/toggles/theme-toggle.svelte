@@ -8,7 +8,7 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={t('Toggle theme')} position="bottom">
+  <Tooltip text={t('Toggle theme')} fixed>
     <button
       class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline"
       aria-label={t('Toggle theme')}
