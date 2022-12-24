@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "checkJs": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "noImplicitThis": true,

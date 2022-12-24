@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
-import legacy from '@vitejs/plugin-legacy';
 import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import svg from '@poppanator/sveltekit-svg';
+import commonjs from '@rollup/plugin-commonjs';
+import babel from 'rollup-plugin-babel';
 
 export default defineConfig(({ command, mode }) => {
   const isProduction = mode === 'production' || mode === 'staging',
@@ -15,18 +16,30 @@ export default defineConfig(({ command, mode }) => {
       svg(),
       sveltekit(),
       StripTestSelectors({
-        // Confusingly named, 'dev' decides whether to strip or not
+        // confusingly named, 'dev' decides whether to strip or not
         dev: !!isProduction
       }),
       (isDev || isTesting) && Inspect(),
-      legacy({
-        targets: [
-          'defaults',
-          '>0.3%',
-          'supports es6-module',
-          'last 3 versions and not dead'
+      // compile to good ES5-compatible code
+      commonjs(),
+      babel({
+        extensions: ['.js', '.mjs', '.html', '.svelte'],
+        runtimeHelpers: true,
+        exclude: ['node_modules/@babel/**'],
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: '> 0.5%, not dead, not ie 11',
+              useBuiltIns: 'entry'
+            }
+          ],
+          '@babel/preset-typescript'
         ],
-        polyfills: true
+        plugins: [
+          '@babel/plugin-syntax-dynamic-import',
+          '@babel/plugin-transform-runtime'
+        ]
       })
     ],
     optimizeDeps: {
