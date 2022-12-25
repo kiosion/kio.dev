@@ -21,29 +21,28 @@ Pretty overengineered, but done so intentionally, trust 😃
 #### Frontend
 - Sveltekit
 - Typescript
-- Scss
-- Vite
+- Tailwind + SCSS
+- Vite (+ Rollup)
+- Babel
 #### API
 - Elixir
-- CowBoy HTTP server
-- HTTPoison
-- Sanity
+- Poison / Cowboy / HTTPoison
+- Sanity.io
 #### Hosting / deploys
-- Selfhosted GH runners
-- Vultr
+- Selfhosted GHA runners
+- Vultr VPS'
 - Docker
 - Netlify
 
 ## 💾 Dependancies
-### SvelteKit / Sanity
 - Node >= 16.16
+- NVM
 - Yarn >= 3.0
-### Elixir API
 - Elixir >= 1.13
-- Rebar3 / Rebar
+- Rebar3
 - Hex
 
-## 🛠 Building
+## 🛠 Building / Testing
 
 #### Build for dev
 Builds & runs livereload servers for local API, sanity studio, and sveltekit
@@ -57,10 +56,10 @@ Runs sveltekit against existing dev APIs
 make backed
 ```
 
-#### Build for testing / production
-Only difference is env variables & stripping of test selectors / classes
+#### Build UI for testing / production
+Only difference between testing/prod is the stripping of test selectors
 ```bash
-make prod
+make test / prod
 ```
 
 ## 🧪 Testing
@@ -69,6 +68,5 @@ make prod
 ```bash
 make test
 make vitest
-make api-test
-(cd ./svelte-app/; node ./dist/) & make cypress
+(node ./svelte-app/dist/) & make cypress
 ```
