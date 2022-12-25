@@ -21,16 +21,16 @@ describe('E2E | features | tooltips', () => {
   });
 
   it('should follow the cursor', () => {
-    cy.get('[data-test-id="theme-toggle"]')
+    cy.get('[data-test-id="nav logo"]')
       .filter(':visible')
       .trigger('mouseenter');
     cy.wait(1000);
     cy.get('[data-tippy-root]').should('be.visible');
-    cy.get('[data-tippy-root]').should('contain', 'Toggle theme');
+    cy.get('[data-tippy-root]').should('contain', 'Click me :)');
     // check that the tooltip follows the cursor, first store the initial position
     cy.get('[data-tippy-root]').then(($el) => {
       const initialPosition = $el[0].getBoundingClientRect();
-      cy.get('[data-test-id="theme-toggle"]')
+      cy.get('[data-test-id="nav logo"]')
         .filter(':visible')
         // move mouse by 2px so it's still over the button
         .trigger('mousemove', { clientX: 2, clientY: 2 });
