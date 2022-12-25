@@ -12,13 +12,13 @@
     pageHeading.set(`Error${$page.status ? ` | ${$page.status}` : ''}`);
   });
 
-  let message = 'Oops, something went wrong';
-  let title = 'Error';
+  let message = 'Sorry, something went very wrong';
+  let title = 'Unknown Error';
 
   switch ($page.status) {
     case 400:
       title = 'Bad Request';
-      message = 'Oops, something went wrong';
+      message = 'Sorry, that request was invalid or malformed';
       break;
     case 401:
       title = 'Unauthorized';
@@ -30,11 +30,11 @@
       break;
     case 403:
       title = 'Forbidden';
-      message = "Oops, you don't have permission to access that";
+      message = "Sorry, you don't have permission to access that";
       break;
     case 500:
       title = 'Internal Server Error';
-      message = 'Oops, something went wrong';
+      message = 'Sorry, something went wrong on my end';
       break;
   }
 </script>

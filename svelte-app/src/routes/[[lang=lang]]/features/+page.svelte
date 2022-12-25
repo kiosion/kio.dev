@@ -12,7 +12,6 @@
   onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
-    console.log('setting', target, event?.detail?.state);
     Features.set(target, event?.detail?.state === true ? true : false);
     SFX.click.play();
   };
@@ -29,6 +28,7 @@
   $: CanUseComicSans = Features.can('use comic sans');
   $: CanSeeComments = Features.can('see comments');
   $: CanUseTooltips = Features.can('see tooltips');
+  $: CanSeeNewDesign = Features.can('see new design');
 </script>
 
 <svelte:head>
@@ -78,6 +78,12 @@
       target={'tooltips'}
       state={$CanUseTooltips}
       label="View Tooltips"
+    />
+    <SwitchItem
+      action={onChange}
+      target={'new-design'}
+      state={$CanSeeNewDesign}
+      label="New design"
     />
   </div>
   <div class="mt-6">
