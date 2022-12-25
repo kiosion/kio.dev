@@ -16,6 +16,14 @@
   let title = 'Error';
 
   switch ($page.status) {
+    case 400:
+      title = 'Bad Request';
+      message = 'Oops, something went wrong';
+      break;
+    case 401:
+      title = 'Unauthorized';
+      message = "You don't have permission to access that";
+      break;
     case 404:
       title = 'Not Found';
       message = "Sorry, that resource doesn't seem to exist";
