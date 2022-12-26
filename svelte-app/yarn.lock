@@ -3019,15 +3019,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-node@npm:^1.0.0-next.100":
-  version: 1.0.0-next.100
-  resolution: "@sveltejs/adapter-node@npm:1.0.0-next.100"
+"@sveltejs/adapter-node@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sveltejs/adapter-node@npm:1.0.0"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^23.0.2"
     "@rollup/plugin-json": "npm:^5.0.1"
     "@rollup/plugin-node-resolve": "npm:^15.0.1"
-    rollup: "npm:^2.79.1"
-  checksum: fa6d3a8cbd88bbe4089b33a2e179877e2540426cb255b09768edcb9684b720999e08ca2cdb0b67b05996b35fcc1ce907013801649de5b65452230da2a6806e5a
+    rollup: "npm:^3.7.0"
+  peerDependencies:
+    "@sveltejs/kit": ^1.0.0
+  checksum: a6d5de9d775d376ea4795bee27cec237483378501c54b95714296ee06706c472ff54fc6da1b81768c70aa204fc7b5249ce787665ffd0a9a0362acd474b835e8c
   languageName: node
   linkType: hard
 
@@ -14349,20 +14351,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.79.1":
-  version: 2.79.1
-  resolution: "rollup@npm:2.79.1"
-  dependencies:
-    fsevents: "npm:~2.3.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: b91c27c3b5234af864f282ffa2c13891d9caf25cad8ba7ad11f5201bdb6516f10c90a8c3402a5f72eafc74a555b1c685b6b04d107a6d6866195812a82f4aa308
-  languageName: node
-  linkType: hard
-
 "rollup@npm:^3.7.0":
   version: 3.7.4
   resolution: "rollup@npm:3.7.4"
@@ -15411,7 +15399,7 @@ __metadata:
     "@sanity/image-url": "npm:^1.0.1"
     "@sveltejs/adapter-auto": "npm:^1.0.0-next.86"
     "@sveltejs/adapter-netlify": "npm:^1.0.0-next.78"
-    "@sveltejs/adapter-node": "npm:^1.0.0-next.100"
+    "@sveltejs/adapter-node": "npm:^1.0.0"
     "@sveltejs/kit": "npm:1.0.1"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
