@@ -3255,6 +3255,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rexxars/react-split-pane@npm:^0.1.93":
+  version: 0.1.93
+  resolution: "@rexxars/react-split-pane@npm:0.1.93"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+    react-lifecycles-compat: "npm:^3.0.4"
+    react-style-proptype: "npm:^3.2.2"
+  peerDependencies:
+    react: ^18
+    react-dom: ^18
+  checksum: c35d2263a35a88bed1eb7b3c14d5f0d9aaf1741febcbaab47f73865bec2ab99ad12796999442276d0ead85d32144655e404874ad6784b9d9f5fbd4df442beb78
+  languageName: node
+  linkType: hard
+
 "@rushstack/eslint-patch@npm:^1.2.0":
   version: 1.2.0
   resolution: "@rushstack/eslint-patch@npm:1.2.0"
@@ -3693,9 +3707,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/vision@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "@sanity/vision@npm:3.0.6"
+"@sanity/vision@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@sanity/vision@npm:3.1.2"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.1.0"
     "@codemirror/commands": "npm:^6.0.1"
@@ -3706,6 +3720,7 @@ __metadata:
     "@juggle/resize-observer": "npm:^3.3.1"
     "@lezer/highlight": "npm:^1.0.0"
     "@rexxars/react-json-inspector": "npm:^8.0.1"
+    "@rexxars/react-split-pane": "npm:^0.1.93"
     "@sanity/color": "npm:^2.1.20"
     "@sanity/icons": "npm:^2.1.0"
     "@sanity/ui": "npm:^1.0.0"
@@ -3714,13 +3729,10 @@ __metadata:
     is-hotkey: "npm:^0.1.6"
     json5: "npm:^1.0.1"
     lodash: "npm:^4.17.21"
-    react-split-pane: "npm:^0.1.84"
   peerDependencies:
-    "@sanity/client": ^3.4.1
     react: ^18
-    rxjs: ^6.5.3
     styled-components: ^5.2
-  checksum: 394c0f532855b9f84584c5407d61a965e5653c61abb0f8019435c5eec78c8ccaf1bc9c78b4a5560a4c6ef7414306415ac6c8992ece3f828b6d2785e460754972
+  checksum: e6b07257c9a9478681c106cb555c8b293b316f483e32b03791d749e2c5feea8210432e054beeeaa6db113bca52f1f8127a778126565e65350207fe50fb377f18
   languageName: node
   linkType: hard
 
@@ -11467,7 +11479,7 @@ __metadata:
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/ui": "npm:^1.0.2"
-    "@sanity/vision": "npm:^3.0.6"
+    "@sanity/vision": "npm:^3.1.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.47.0"
     "@typescript-eslint/parser": "npm:^5.46.1"
     ace-builds: "npm:^1.14.0"
@@ -14583,20 +14595,6 @@ __metadata:
     react: ^16.8 || ^17 || ^18
     rxjs: ^6.5 || ^7
   checksum: 5f0249a76c00447a56608aa10f2602de488a820d4460de40fbec4d1acebbd0685e8c73da610844979a743aa81493cd4606e4761bbe8f783fed854b88f396ce0f
-  languageName: node
-  linkType: hard
-
-"react-split-pane@npm:^0.1.84":
-  version: 0.1.92
-  resolution: "react-split-pane@npm:0.1.92"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-    react-lifecycles-compat: "npm:^3.0.4"
-    react-style-proptype: "npm:^3.2.2"
-  peerDependencies:
-    react: ^16.0.0-0
-    react-dom: ^16.0.0-0
-  checksum: 1f56b3c35b1189689f6b2b154ab1d1d7e700518675d283b6340286936e1af6767c4934faa68dc64f481b0140b18aa91a47068b4c17d8ac4253174e2765d68b18
   languageName: node
   linkType: hard
 
