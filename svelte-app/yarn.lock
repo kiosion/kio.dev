@@ -15470,7 +15470,7 @@ __metadata:
     twemoji: "npm:^14.0.2"
     typescript: "npm:^4.8.4"
     uifx: "npm:^2.0.7"
-    vite: "npm:^4.0.0"
+    vite: "npm:^4.0.3"
     vite-plugin-inspect: "npm:^0.7.10"
     vite-plugin-test-selectors: "npm:0.0.2"
     vitest: "npm:^0.24.3"
@@ -16827,9 +16827,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "vite@npm:4.0.1"
+"vite@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "vite@npm:4.0.3"
   dependencies:
     esbuild: "npm:^0.16.3"
     fsevents: "npm:~2.3.2"
@@ -16861,7 +16861,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 5477988af74264374c2cbbf7ed97cfb5fcf27311cd38d55be3b914c74e7d39d7948aefb02d47946a28bc4a477244ad35efd958b1c9a66401003aae1ba8e61719
+  checksum: b6a539ef6a7f826b7d53585284896f4f4f45089a52d151baa0d956eece63b3edab4b1e5b828df59e4374dc650719c4301cc3d00833ce618c14e2b95859fdbd18
   languageName: node
   linkType: hard
 
