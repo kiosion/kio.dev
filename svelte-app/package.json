@@ -73,7 +73,7 @@
     "prettier-plugin-svelte": "^2.8.0",
     "randomstring": "^1.2.2",
     "rimraf": "^3.0.2",
-    "rollup": "^3.7.5",
+    "rollup": "^3.8.1",
     "rollup-plugin-babel": "^4.4.0",
     "sass": "^1.57.1",
     "seedrandom": "^3.0.5",
