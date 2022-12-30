@@ -124,7 +124,7 @@
               >
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <a
-                  class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline-sm"
+                  class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-violet-400 dark:hover:text-violet-300 rounded-sm focusOutline-sm"
                   role="menuitem"
                   aria-label={social.name}
                   {...social.attrs}
@@ -153,7 +153,7 @@
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav
-      class="h-fit w-full text-center flex flex-col bg-slate-200 dark:bg-slate-900 transition-colors z-10"
+      class="h-fit w-full text-center flex flex-col bg-gray-200 dark:bg-gray-900 transition-colors z-10"
       data-test-id="navBar"
     >
       <div

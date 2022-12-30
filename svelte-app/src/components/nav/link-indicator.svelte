@@ -37,7 +37,7 @@
 </script>
 
 <div
-  class="indicator absolute left-0 bottom-0 z-0 w-full h-full bg-emerald-400 dark:bg-emerald-300 {classes} duration-[50ms] transition-[height]"
+  class="indicator absolute left-0 bottom-0 z-0 w-full h-full bg-violet-400 dark:bg-violet-300 {classes} duration-[50ms] transition-[height]"
 />
 
 <style lang="scss">

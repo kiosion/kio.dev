@@ -18,7 +18,7 @@
   <svelte:fragment slot="lg">
     {#if $navOptions.down !== '' || $isLocalized}
       <div
-        class="fixed bottom-0 left-32 lg:left-40 xl:left-60 right-0 z-[5] rounded-bl-3xl py-5 px-7 bg-slate-100/80 dark:bg-slate-800/80 transition-colors backdrop-blur-md"
+        class="fixed bottom-0 left-32 lg:left-40 xl:left-60 right-0 z-[5] rounded-bl-3xl py-5 px-7 bg-gray-100/80 dark:bg-gray-800/80 transition-colors backdrop-blur-md"
       >
         <div class="flex flex-row justify-between items-start">
           <div class="w-52">
@@ -57,7 +57,7 @@
               <a
                 class="{enHover
                   ? 'underline'
-                  : ''} decoration-emerald-300 decoration-2 rounded-sm focusOutline-sm"
+                  : ''} decoration-violet-300 decoration-2 rounded-sm focusOutline-sm"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[0]
                 })}
@@ -84,7 +84,7 @@
               <a
                 class="{frHover
                   ? 'underline'
-                  : ''} decoration-emerald-300 decoration-2 rounded-sm focusOutline-sm"
+                  : ''} decoration-violet-300 decoration-2 rounded-sm focusOutline-sm"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[1]
                 })}

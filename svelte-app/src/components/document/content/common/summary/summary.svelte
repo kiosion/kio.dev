@@ -19,9 +19,9 @@
 <div
   class="{hide && 'hidden'} rounded-md {floating
     ? expanded
-      ? 'bg-slate-200/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-lg'
-      : 'bg-slate-200/60 dark:bg-slate-900/60 backdrop-blur-md shadow-lg'
-    : 'bg-slate-200 dark:bg-slate-900'} shadow-slate-300/50 dark:shadow-slate-900/50 z-[5] transition-[background-color,box-shadow,color,opacity]"
+      ? 'bg-gray-200/90 dark:bg-gray-900/90 backdrop-blur-lg shadow-lg'
+      : 'bg-gray-200/60 dark:bg-gray-900/60 backdrop-blur-md shadow-lg'
+    : 'bg-gray-200 dark:bg-gray-900'} shadow-gray-300/50 dark:shadow-gray-900/50 z-[5] transition-[background-color,box-shadow,color,opacity]"
 >
   <Heading
     {floating}

@@ -15,13 +15,13 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-slate-200/50 dark:bg-slate-900/50 rounded-xl"
+  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-gray-200/50 dark:bg-gray-900/50 rounded-xl"
 >
   <div class="flex flex-row items-center justify-start w-full gap-6 p-1 h-fit">
     <div class="h-16 md:h-24 aspect-square">
       {#if image?.asset}
         <img
-          class="h-full border rounded-full select-none aspect-square border-slate-400"
+          class="h-full border rounded-full select-none aspect-square border-gray-400"
           src={urlFor(image.asset._ref)
             .size(150, 150)
             .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
@@ -36,12 +36,12 @@
     </div>
     <div class="flex flex-col items-start justify-start flex-1 w-full h-full">
       <h3
-        class="text-2xl font-bold transition-colors font-display text-slate-800 dark:text-slate-100"
+        class="text-2xl font-bold transition-colors font-display text-gray-800 dark:text-gray-100"
       >
         Maxim
       </h3>
       <h4
-        class="font-mono text-xl font-bold transition-colors text-slate-600 dark:text-slate-300"
+        class="font-mono text-xl font-bold transition-colors text-gray-600 dark:text-gray-300"
       >
         @kiosion
       </h4>

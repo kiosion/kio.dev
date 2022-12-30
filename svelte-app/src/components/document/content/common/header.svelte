@@ -66,7 +66,7 @@
           class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
         >
           <div
-            class="absolute w-full h-full gradient from-slate-100 dark:from-slate-800 transition-colors"
+            class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
           >
             &nbsp;
           </div>

@@ -113,7 +113,7 @@
 </svelte:head>
 
 <div
-  class="relative my-6 -mx-2 overflow-hidden rounded-md shadow-sm border-[1px] border-slate-400/40 dark:border-slate-500/40"
+  class="relative my-6 -mx-2 overflow-hidden rounded-md shadow-sm border-[1px] border-gray-400/40 dark:border-gray-500/40"
   class:active={hovered}
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
@@ -129,7 +129,7 @@
           <button
             class="{hovered
               ? 'opacity-100'
-              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 focusOutline-sm"
+              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 focusOutline-sm"
             on:click={() => copy()}
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
@@ -149,7 +149,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="rounded-md min-w-full w-fit h-fit p-1 bg-slate-200 dark:bg-slate-900 is-{$theme} transition-all duration-150"
+      class="rounded-md min-w-full w-fit h-fit p-1 bg-gray-200 dark:bg-gray-900 is-{$theme} transition-all duration-150"
       bind:clientHeight={innerHeight}
     >
       {#if !lang}
@@ -162,6 +162,8 @@
 </div>
 
 <style lang="scss">
+  @import '../styles/colors';
+
   :global(code.hljs) {
     background-color: transparent;
     font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
@@ -171,14 +173,14 @@
     max-width: 100%;
 
     &::selection {
-      background: #34d399 !important;
-      color: #1e293b !important;
+      background: $violet-300 !important;
+      color: $gray-900 !important;
     }
   }
   :global(code.hljs *) {
     &::selection {
-      background: #34d399 !important;
-      color: #1e293b !important;
+      background: $violet-300 !important;
+      color: $gray-900 !important;
     }
   }
 </style>

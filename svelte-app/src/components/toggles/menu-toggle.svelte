@@ -7,7 +7,7 @@
 
 <Hoverable>
   <button
-    class="w-[20px] h-[20px] hover:text-emerald-400 dark:hover:text-emerald-300 rounded-sm focusOutline"
+    class="w-[20px] h-[20px] hover:text-violet-400 dark:hover:text-violet-300 rounded-sm focusOutline"
     aria-label="Toggle navigation"
     data-test-id="nav-toggle"
     on:click={() => {

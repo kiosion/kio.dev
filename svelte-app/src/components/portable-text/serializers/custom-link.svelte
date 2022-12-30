@@ -19,8 +19,8 @@
     href={href ? href : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
-    class="underlined from-emerald-400 dark:from-emerald-300 {hovered
-      ? 'active dark:text-slate-800'
+    class="underlined from-violet-400 dark:from-violet-300 {hovered
+      ? 'active dark:text-gray-800'
       : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
     tabindex="0"
   >

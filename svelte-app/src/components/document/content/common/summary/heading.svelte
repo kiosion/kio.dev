@@ -66,7 +66,7 @@
               <Icon
                 icon="Close"
                 classes="{closeHovered
-                  ? 'text-emerald-400 dark:text-emerald-300'
+                  ? 'text-violet-400 dark:text-violet-300'
                   : ''} transition-none"
               />
             </div>

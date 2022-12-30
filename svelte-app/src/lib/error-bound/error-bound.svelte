@@ -33,7 +33,7 @@
     <p class="font-code text-base mt-2">Click to expand</p>
     {#if expanded}
       <code
-        class="mt-4 mb-2 py-2 bg-slate-200 dark:bg-slate-900 rounded-sm overflow-scroll"
+        class="mt-4 mb-2 py-2 bg-gray-200 dark:bg-gray-900 rounded-sm overflow-scroll"
         in:slide={{ duration: 200 }}
         out:slide={{ duration: 200 }}
       >

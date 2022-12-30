@@ -118,13 +118,13 @@
 <div
   class="flex {$isDesktop
     ? 'flex-row'
-    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-slate-800 dark:text-white text-primary transition-colors"
+    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-gray-800 dark:text-white text-primary transition-colors"
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
   <Nav />
   <div
-    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-slate-100 dark:bg-slate-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none overflow-visible transition-colors focusOutline"
+    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-gray-100 dark:bg-gray-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none overflow-visible transition-colors focusOutline"
     bind:this={scrollContainer}
   >
     <HeaderControls appBody={scrollContainer} />

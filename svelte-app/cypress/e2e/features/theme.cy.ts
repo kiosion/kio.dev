@@ -17,32 +17,24 @@ describe('E2E | features | theme', () => {
         }
       })
     );
+    cy.visit('/');
+    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
   });
 
   it('should toggle between light/dark mode', () => {
-    cy.visit('/', {
-      // onBeforeLoad(win) {
-      //   cy.stub(win, 'matchMedia')
-      //     .withArgs('(prefers-color-scheme: dark)')
-      //     .apply({ matches: true });
-      // }
-    });
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
-    cy.get('body').should('have.css', 'background-color', toRGB('#0f172a'));
+    cy.get('body').should('have.css', 'background-color', toRGB('#111827'));
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('body').should('have.css', 'background-color', toRGB('#e2e8f0'));
+    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
   });
 
   it('should store preference in localStorage', () => {
-    cy.visit('/');
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
-    cy.get('body').should('have.css', 'background-color', toRGB('#0f172a'));
+    cy.get('body').should('have.css', 'background-color', toRGB('#111827'));
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('body').should('have.css', 'background-color', toRGB('#e2e8f0'));
+    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
 
     cy.reload();
 
     cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
-    cy.get('body').should('have.css', 'background-color', toRGB('#e2e8f0'));
+    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
   });
 });

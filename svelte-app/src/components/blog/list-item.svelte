@@ -29,8 +29,8 @@
 <Hoverable bind:hovered>
   <a
     class="flex flex-col items-stretch justify-stretch gap-y-2 w-full h-fit py-5 px-6 pl-5 {hovered
-      ? 'bg-slate-300/25 dark:bg-slate-700/25 border-slate-300/90 dark:border-slate-700/90'
-      : 'bg-slate-200/25 dark:bg-slate-900/25 border-slate-300/60 dark:border-slate-700/60'} border-[1px] -ml-[1px] -mt[1px] rounded-2xl transition-colors focusOutline"
+      ? 'bg-gray-300/25 dark:bg-gray-700/25 border-gray-300/90 dark:border-gray-700/90'
+      : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} border-[1px] -ml-[1px] -mt[1px] rounded-2xl transition-colors focusOutline"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
@@ -50,21 +50,21 @@
     </h1>
     {#if post.desc}
       <p
-        class="my-0.5 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-slate-700 dark:text-slate-200 line-clamp-1 md:line-clamp-2"
+        class="my-0.5 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-gray-700 dark:text-gray-200 line-clamp-1 md:line-clamp-2"
       >
         {post.desc}
       </p>
     {/if}
     <div
-      class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-sm text-slate-700 dark:text-slate-200 gap-y-2"
+      class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-sm text-gray-700 dark:text-gray-200 gap-y-2"
     >
       {#if date}
         <p>{date}</p>
-        <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+        <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
       {/if}
       <p>{`${Math.floor(readingTime / 60)} min read`}</p>
       {#if post.tags && post.tags.length > 0}
-        <BulletPoint colors="bg-slate-600 dark:bg-slate-300" />
+        <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
         <Tags model="post" data={post.tags} />
       {/if}
     </div>

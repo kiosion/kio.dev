@@ -46,8 +46,8 @@
               href={link.url}
               target={'_blank'}
               rel={'noopener noreferrer'}
-              class="underlined from-emerald-400 dark:from-emerald-300 {link.hovered
-                ? 'active dark:text-slate-800'
+              class="underlined from-violet-400 dark:from-violet-300 {link.hovered
+                ? 'active dark:text-gray-800'
                 : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
               tabindex="0"
             >

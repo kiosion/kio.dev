@@ -41,8 +41,7 @@
         <p
           class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5"
         >
-          {t("Hi there, I'm Kio")}<span class="text-emerald-300 ml-[2px]"
-            >.</span
+          {t("Hi there, I'm Kio")}<span class="text-violet-300 ml-[2px]">.</span
           >
         </p>
         <p class="font-sans text-lg -mb-1 text-center leading-9">
@@ -61,8 +60,7 @@
         <p
           class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5"
         >
-          {t("Hi there, I'm Kio")}<span class="text-emerald-300 ml-[2px]"
-            >.</span
+          {t("Hi there, I'm Kio")}<span class="text-violet-300 ml-[2px]">.</span
           >
         </p>
         <p class="font-sans text-lg -mb-1 text-center leading-9">

@@ -90,7 +90,7 @@
     <h3 class="font-bold text-xl">Other</h3>
     <div class="flex flex-col justify-start items-start mt-4">
       <button
-        class="text-sm p-2 border-2 border-violet-300 hover:bg-violet-400 hover:border-violet-400 focus-visible:bg-violet-400 focus-visible:border-violet-400 focusOutline rounded-md"
+        class="text-sm p-2 border-2 border-violet-300 hover:bg-violet-400 hover:border-violet-400 focus-visible:bg-violet-400 focus-visible:border-violet-400 focusOutline rounded-md hover:text-gray-800"
         on:click={() => {
           SFX.click.play();
         }}

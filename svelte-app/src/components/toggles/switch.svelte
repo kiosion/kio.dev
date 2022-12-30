@@ -29,10 +29,10 @@
         on:change={() => change()}
       />
       <div
-        class="before:bg-slate-600 after:bg-slate-600 dark:before:bg-slate-400 dark:after:bg-slate-400"
+        class="before:bg-gray-600 after:bg-gray-600 dark:before:bg-gray-400 dark:after:bg-gray-400"
       >
         <span
-          class="text-slate-800 dark:text-slate-100 {$theme === 'light'
+          class="text-gray-800 dark:text-gray-100 {$theme === 'light'
             ? 'light'
             : 'dark'}"
         />

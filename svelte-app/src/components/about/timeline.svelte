@@ -61,7 +61,7 @@
 <div class="relative h-fit mx-2 mt-4">
   {#if data}
     <div
-      class="rounded-full w-[2px] absolute bg-slate-400 dark:bg-slate-300 h-[calc(100%_-_4px)] left-0 top-[4px]"
+      class="rounded-full w-[2px] absolute bg-gray-400 dark:bg-gray-300 h-[calc(100%_-_4px)] left-0 top-[4px]"
     />
     <div class="flex flex-col justify-start items-start -ml-[4px] gap-4">
       {#each data as item, i}
@@ -69,7 +69,7 @@
           <Icon
             width={24}
             icon="CornerDownRight"
-            classes="text-slate-400 dark:text-slate-300"
+            classes="text-gray-400 dark:text-gray-300"
           />
           <div class="flex flex-col justify-start items-start w-full mr-6">
             <h1 class="font-code font-bold text-lg select-none">
@@ -84,7 +84,7 @@
                 disable={!item.body}
               >
                 <div
-                  class="relative w-full ml-2 mt-2 rounded-lg bg-slate-200/50 dark:bg-slate-900/50 px-4 py-3 transition-all overflow-hidden focusOutline"
+                  class="relative w-full ml-2 mt-2 rounded-lg bg-gray-200/50 dark:bg-gray-900/50 px-4 py-3 transition-all overflow-hidden focusOutline"
                   on:click={() => {
                     if (item.body) {
                       selected = selected === i ? null : i;
@@ -108,7 +108,7 @@
                   </div>
                   {#if item.subtitle}
                     <div
-                      class="font-sans italic text-base mt-1 line-clamp-1 select-none text-slate-700 dark:text-slate-200"
+                      class="font-sans italic text-base mt-1 line-clamp-1 select-none text-gray-700 dark:text-gray-200"
                     >
                       {item.subtitle}
                     </div>

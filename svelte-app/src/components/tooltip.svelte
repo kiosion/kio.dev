@@ -51,10 +51,10 @@
       'py-1',
       'px-2',
       'shadow-md',
-      'bg-slate-200',
-      'text-slate-800',
-      'dark:bg-slate-900',
-      'dark:text-slate-200',
+      'bg-gray-200',
+      'text-gray-800',
+      'dark:bg-gray-900',
+      'dark:text-gray-200',
       'font-code',
       'text-sm'
     );

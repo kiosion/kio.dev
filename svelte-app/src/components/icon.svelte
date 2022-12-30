@@ -14,7 +14,7 @@
       this={svg}
       {width}
       class="{hovered
-        ? 'text-slate-600 dark:text-slate-300'
+        ? 'text-gray-600 dark:text-gray-300'
         : ''} transition-colors {inline ? 'inline' : ''}"
     />
   {/await}

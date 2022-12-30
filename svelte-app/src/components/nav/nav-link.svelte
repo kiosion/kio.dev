@@ -18,7 +18,7 @@
   <div class="relative flex flex-row items-center justify-start">
     <a
       class="menuTarget z-[1] font-mono font-normal uppercase text-base lg:text-lg rounded-sm focusOutline transition-colors duration[40ms]"
-      class:text-slate-900={isActive}
+      class:text-gray-900={isActive}
       aria-label={t(link.name)}
       href={link.url}
       role="menuitem"
