@@ -58,7 +58,7 @@
     "devalue": "4.2.0",
     "devtools-detect": "^4.0.0",
     "dotenv": "^16.0.3",
-    "eslint": "^8.25.0",
+    "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-svelte": "^2.14.1",
