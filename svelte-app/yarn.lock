@@ -15459,7 +15459,7 @@ __metadata:
     svelte-body: "npm:^1.3.6"
     svelte-breakpoints: "npm:0.2.0"
     svelte-check: "npm:^2.9.2"
-    svelte-eslint-parser: "npm:^0.22.2"
+    svelte-eslint-parser: "npm:^0.22.3"
     svelte-highlight: "npm:^6.2.1"
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
@@ -15517,7 +15517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-eslint-parser@npm:^0.22.0, svelte-eslint-parser@npm:^0.22.2":
+"svelte-eslint-parser@npm:^0.22.0":
   version: 0.22.2
   resolution: "svelte-eslint-parser@npm:0.22.2"
   dependencies:
@@ -15527,6 +15527,19 @@ __metadata:
   peerDependencies:
     svelte: ^3.37.0
   checksum: 4ceb1ac893b50f1c66b79463d5fed7620f09164b99eada38ac6b5aef7260d391230edcf94ea4b6fd719717ac145bc25c132857ba154e80ee791d8b3dd4058ee2
+  languageName: node
+  linkType: hard
+
+"svelte-eslint-parser@npm:^0.22.3":
+  version: 0.22.3
+  resolution: "svelte-eslint-parser@npm:0.22.3"
+  dependencies:
+    eslint-scope: "npm:^7.0.0"
+    eslint-visitor-keys: "npm:^3.0.0"
+    espree: "npm:^9.0.0"
+  peerDependencies:
+    svelte: ^3.37.0
+  checksum: 52184fddfae5417797adf702b6e3c5ed25dd4cc3aa26921a44d823f4dd4cb4a4325af9d12e38e142ead2d25c289e1ab475fcfb785169a09912b25b193bccf384
   languageName: node
   linkType: hard
 
