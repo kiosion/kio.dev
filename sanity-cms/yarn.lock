@@ -3711,9 +3711,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/ui@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@sanity/ui@npm:1.0.5"
+"@sanity/ui@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@sanity/ui@npm:1.0.7"
   dependencies:
     "@floating-ui/react-dom": "npm:^1.1.0"
     "@sanity/color": "npm:^2.2.0"
@@ -3726,7 +3726,7 @@ __metadata:
     react-dom: ^18
     react-is: ^18
     styled-components: ^5.2
-  checksum: 6cf4fb9f300518ba86e1f4ef475cff400971e06b3fe20e2eb0149328c88ad858fb45856faf10c4e3075c710718345dbe1c891fbe6ddb0c2ba219293c723a22bd
+  checksum: f141c8ce78024f3a5f9b816968ca631dbde84ee8c7ee1ae655735a86042ccf2572b77b48996b63368e0dc61aa74c66d0bcc6a6beaa97b6be2b3dd580f4ca5b23
   languageName: node
   linkType: hard
 
@@ -11531,7 +11531,7 @@ __metadata:
     "@babel/preset-react": "npm:^7.18.6"
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
-    "@sanity/ui": "npm:^1.0.5"
+    "@sanity/ui": "npm:^1.0.7"
     "@sanity/vision": "npm:^3.1.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.47.0"
     "@typescript-eslint/parser": "npm:^5.47.1"
