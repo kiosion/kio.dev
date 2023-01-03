@@ -2338,7 +2338,7 @@ __metadata:
     prettier: "npm:^2.8.1"
     prettier-eslint: "npm:^15.0.1"
     rimraf: "npm:^3.0.2"
-    stylelint: "npm:^14.16.0"
+    stylelint: "npm:^14.16.1"
     stylelint-config-standard-scss: "npm:^6.1.0"
     typescript: "npm:^4.9.4"
   languageName: unknown
@@ -2657,9 +2657,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^14.16.0":
-  version: 14.16.0
-  resolution: "stylelint@npm:14.16.0"
+"stylelint@npm:^14.16.1":
+  version: 14.16.1
+  resolution: "stylelint@npm:14.16.1"
   dependencies:
     "@csstools/selector-specificity": "npm:^2.0.2"
     balanced-match: "npm:^2.0.0"
@@ -2701,7 +2701,7 @@ __metadata:
     write-file-atomic: "npm:^4.0.2"
   bin:
     stylelint: bin/stylelint.js
-  checksum: 219868d8407c5e1958c334bfa42fb0e05d0e65a874660463bcb5f708b56229c6d1200534a35768175436d519469ed1bf1c8c268bfdd1f62573a725b71d076cfa
+  checksum: 25231a01533b1bd9bfad141d5bfe91363a186c1067555e675f9c170830b286d0ca0e2c6421025d6f70a0f0c072af89192c1d1cf1f4163c7e3fdf9462b31d1bf9
   languageName: node
   linkType: hard
 
