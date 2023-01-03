@@ -3460,10 +3460,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/color@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@sanity/color@npm:2.2.0"
-  checksum: c86039f902080ebef8cc894fbbbd7ed9fa453344cb8b05df46b069e58b293a95e9108ed19b584f1d847768160efa56c6d06511c6795951cfc63454768cc43bd1
+"@sanity/color@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@sanity/color@npm:2.2.1"
+  checksum: 4b14d1cd42946349919a48981d6261ae2d61cafda4909195661956e96f2dc840d100f40329c7e48fc1b7f4076419a1cfb6fb5e09d519ae82a43a298c3a20867f
   languageName: node
   linkType: hard
 
@@ -3565,12 +3565,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/icons@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@sanity/icons@npm:2.2.0"
+"@sanity/icons@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@sanity/icons@npm:2.2.1"
   peerDependencies:
     react: ^18
-  checksum: f99f21e7eedefc25a587e8e25d5b774fd7282dc0ccaadf42752ed841316623f0a5575f73bd10ca8ecf24c763c3562620ae55fc24724bcadda85ce8425b730cd7
+  checksum: 11e84f2148e995b1085c80b725ef4dc96e75bf83f7f9b7ea0bdbc480ffe847551d3feaaff81bc6b9535cf8ca39c9b625e1ec002fb9e6b459e70ba3f9a201fd2f
   languageName: node
   linkType: hard
 
@@ -3759,22 +3759,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/ui@npm:^1.0.7":
-  version: 1.0.7
-  resolution: "@sanity/ui@npm:1.0.7"
+"@sanity/ui@npm:^1.0.11":
+  version: 1.0.11
+  resolution: "@sanity/ui@npm:1.0.11"
   dependencies:
     "@floating-ui/react-dom": "npm:^1.1.0"
-    "@sanity/color": "npm:^2.2.0"
-    "@sanity/icons": "npm:^2.2.0"
+    "@sanity/color": "npm:^2.2.1"
+    "@sanity/icons": "npm:^2.2.1"
     csstype: "npm:^3.1.1"
-    framer-motion: "npm:^7.10.3"
+    framer-motion: "npm:^8.1.4"
     react-refractor: "npm:^2.1.7"
   peerDependencies:
     react: ^18
     react-dom: ^18
     react-is: ^18
     styled-components: ^5.2
-  checksum: f141c8ce78024f3a5f9b816968ca631dbde84ee8c7ee1ae655735a86042ccf2572b77b48996b63368e0dc61aa74c66d0bcc6a6beaa97b6be2b3dd580f4ca5b23
+  checksum: 115cadca4465319884c9ece42b05461c35499a5605218bb161e39a66fda457747599caa03b622b8947e3fb35299c5994a11ca45e2a1cc0363e9e4334f12573e7
   languageName: node
   linkType: hard
 
@@ -9070,24 +9070,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^7.10.3":
-  version: 7.10.3
-  resolution: "framer-motion@npm:7.10.3"
-  dependencies:
-    "@emotion/is-prop-valid": "npm:^0.8.2"
-    "@motionone/dom": "npm:^10.15.3"
-    hey-listen: "npm:^1.0.8"
-    tslib: "npm:2.4.0"
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  dependenciesMeta:
-    "@emotion/is-prop-valid":
-      optional: true
-  checksum: c149a36dd740aa591f042676c53b9a97b0ce904e55cee499235b0dd3acaf9a20b0a80c9570f71b3619c65d498aec3bf01408fef49cb45ce85e6f0c78ecf7c755
-  languageName: node
-  linkType: hard
-
 "framer-motion@npm:^7.5.3":
   version: 7.6.15
   resolution: "framer-motion@npm:7.6.15"
@@ -9106,6 +9088,24 @@ __metadata:
     "@emotion/is-prop-valid":
       optional: true
   checksum: dfae681f4a4e834b59ddbf6e80b16ed8daae2b863cd69facbef89ea9a14854ef98f7408ce5c97ef7be88acaf291cc6307c91b00b93c8eda7dc56fd6c60dcf275
+  languageName: node
+  linkType: hard
+
+"framer-motion@npm:^8.1.4":
+  version: 8.1.4
+  resolution: "framer-motion@npm:8.1.4"
+  dependencies:
+    "@emotion/is-prop-valid": "npm:^0.8.2"
+    "@motionone/dom": "npm:^10.15.3"
+    hey-listen: "npm:^1.0.8"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  dependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+  checksum: 95016a9a50d80802e42b28baf13ee92156eabe81579dc8d5511c2afed17b6b32ed86024c6366a82cfe2e67e113836c0b8a233b5072f53806aa1792a7e774fd80
   languageName: node
   linkType: hard
 
@@ -11525,7 +11525,7 @@ __metadata:
     "@babel/preset-react": "npm:^7.18.6"
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
-    "@sanity/ui": "npm:^1.0.7"
+    "@sanity/ui": "npm:^1.0.11"
     "@sanity/vision": "npm:^3.1.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.47.1"
     "@typescript-eslint/parser": "npm:^5.47.1"
@@ -16850,7 +16850,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.0.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
   checksum: a739a21e3ff059e62c7c3c0845333fbc9c081bcc91e015f2d246a31eeaf1fb0e29b10c0913c7d22f692b3203bb469fd60ca5288aa4f27d351a969df2d0714899
