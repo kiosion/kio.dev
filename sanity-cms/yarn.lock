@@ -3711,22 +3711,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/ui@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@sanity/ui@npm:1.0.5"
+"@sanity/ui@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@sanity/ui@npm:1.0.9"
   dependencies:
     "@floating-ui/react-dom": "npm:^1.1.0"
     "@sanity/color": "npm:^2.2.0"
     "@sanity/icons": "npm:^2.2.0"
     csstype: "npm:^3.1.1"
-    framer-motion: "npm:^7.10.3"
+    framer-motion: "npm:^8.1.1"
     react-refractor: "npm:^2.1.7"
   peerDependencies:
     react: ^18
     react-dom: ^18
     react-is: ^18
     styled-components: ^5.2
-  checksum: 6cf4fb9f300518ba86e1f4ef475cff400971e06b3fe20e2eb0149328c88ad858fb45856faf10c4e3075c710718345dbe1c891fbe6ddb0c2ba219293c723a22bd
+  checksum: 2463ad89126e9ff3d0dbb3f978f9a53f7c440453ce5451b54b181719e6d8f19f0c3b0afa8f06f541961047888caf454a61d3df093b0c2dc11d55b446468414bd
   languageName: node
   linkType: hard
 
@@ -9022,24 +9022,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^7.10.3":
-  version: 7.10.3
-  resolution: "framer-motion@npm:7.10.3"
-  dependencies:
-    "@emotion/is-prop-valid": "npm:^0.8.2"
-    "@motionone/dom": "npm:^10.15.3"
-    hey-listen: "npm:^1.0.8"
-    tslib: "npm:2.4.0"
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  dependenciesMeta:
-    "@emotion/is-prop-valid":
-      optional: true
-  checksum: c149a36dd740aa591f042676c53b9a97b0ce904e55cee499235b0dd3acaf9a20b0a80c9570f71b3619c65d498aec3bf01408fef49cb45ce85e6f0c78ecf7c755
-  languageName: node
-  linkType: hard
-
 "framer-motion@npm:^7.5.3":
   version: 7.6.15
   resolution: "framer-motion@npm:7.6.15"
@@ -9058,6 +9040,24 @@ __metadata:
     "@emotion/is-prop-valid":
       optional: true
   checksum: dfae681f4a4e834b59ddbf6e80b16ed8daae2b863cd69facbef89ea9a14854ef98f7408ce5c97ef7be88acaf291cc6307c91b00b93c8eda7dc56fd6c60dcf275
+  languageName: node
+  linkType: hard
+
+"framer-motion@npm:^8.1.1":
+  version: 8.1.3
+  resolution: "framer-motion@npm:8.1.3"
+  dependencies:
+    "@emotion/is-prop-valid": "npm:^0.8.2"
+    "@motionone/dom": "npm:^10.15.3"
+    hey-listen: "npm:^1.0.8"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  dependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+  checksum: 64ec44f497c29986ceda37abbe5522105c1393ddca688cdf3bbfc2b413201bc15c7054a06e9b9f7f2d1b183a7e16d604d2a20f6f51c3efb6500576db4c29364b
   languageName: node
   linkType: hard
 
@@ -11486,7 +11486,7 @@ __metadata:
     "@babel/preset-react": "npm:^7.18.6"
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
-    "@sanity/ui": "npm:^1.0.5"
+    "@sanity/ui": "npm:^1.0.9"
     "@sanity/vision": "npm:^3.1.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.47.1"
     "@typescript-eslint/parser": "npm:^5.47.1"
@@ -16808,7 +16808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.0.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
   checksum: a739a21e3ff059e62c7c3c0845333fbc9c081bcc91e015f2d246a31eeaf1fb0e29b10c0913c7d22f692b3203bb469fd60ca5288aa4f27d351a969df2d0714899
