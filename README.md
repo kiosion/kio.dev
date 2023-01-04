@@ -1,70 +1,68 @@
 <div align="center">
-  <h1>📜 kio.dev</h1>
+  <h1>kio.dev</h1>
 
 ![Workflow Status](https://github.com/kiosion/kio.dev/actions/workflows/svelte.yml/badge.svg) 
 ![Workflow Status](https://github.com/kiosion/kio.dev/actions/workflows/api.yml/badge.svg) ![Netlify Status](https://api.netlify.com/api/v1/badges/b300e0f9-e70d-4358-b27d-09a862efbc8d/deploy-status)
-
-  <p>Frontend + backend monorepo for the site hosting my art / development portfolio, blog, and CV</p>
 </div>
 
-## 💁 Info
+Welcome to the monorepo for kio.dev, my personal website and blog featuring my art, development portfolio, and CV. It's overengineered, but intentionally, I wanted to try and pull together new / exciting tech :)
 
+You can visit the live site at https://kio.dev.
+
+## Preview
 
 <img width="49%" src="https://user-images.githubusercontent.com/34040324/208616128-687d3783-6ab8-46c4-83aa-227a3f61c7c5.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/208616135-929b4874-e38f-4fdc-93f5-a18f6e55f326.png" />
 
-Live at <a href="https://kio.dev/">https://kio.dev</a> :)
+## Tech stack
+The frontend of is built with:
+* Sveltekit
+* Typescript
+* Tailwind CSS and SCSS
+* Vite (with Rollup)
+* Babel
 
-Pretty overengineered, but done so intentionally, trust 😃
+The API powering the site is built with:
+* Elixir
+* Poison, Cowboy, and HTTPoison
+* Sanity.io
 
-## 📚 Tech stack
+For hosting and deploys, I use:
+* Self-hosted GitHub Actions runners
+* Vultr VPSs
+* Docker
+* Netlify
 
-#### Frontend
-- Sveltekit
-- Typescript
-- Tailwind + SCSS
-- Vite (+ Rollup)
-- Babel
-#### API
-- Elixir
-- Poison / Cowboy / HTTPoison
-- Sanity.io
-#### Hosting / deploys
-- Selfhosted GHA runners
-- Vultr VPS'
-- Docker
-- Netlify
+## Dependencies
+To build and test this project, you'll need the following dependencies installed:
 
-## 💾 Dependancies
-- Node >= 16.16
-- NVM
-- Yarn >= 3.0
-- Elixir >= 1.13
-- Rebar3
-- Hex
+* Node >= 16.16
+* Yarn >= 3.0
+* Elixir >= 1.13
+* Rebar3
+* Hex
+* Docker
+* docker-compose
 
-## 🛠 Building / Testing
+## Building and Testing
 
-#### Build for dev
-Builds & runs livereload servers for local API, sanity studio, and sveltekit
+To build the project for development, run:
+
 ```bash
 make dev
 ```
 
-#### Build for UI dev
-Runs sveltekit against existing dev APIs
+This will build and run livereload servers for the local API, Sanity studio, and Sveltekit.
+
+To build the UI for development against existing dev APIs, run:
+
 ```bash
 make backed
 ```
 
-#### Build UI for testing / production
-Only difference between testing/prod is the stripping of test selectors
-```bash
-make test / prod
-```
+To build the UI for testing or production, run `make test` or `make prod`. The only difference between these two builds is the stripping of test selectors and usage of [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect).
 
-## 🧪 Testing
+To run all tests, use the following commands:
 
-#### Run all tests
 ```bash
 make test
 make vitest
