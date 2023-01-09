@@ -84,7 +84,7 @@
     "svelte-eslint-parser": "^0.22.3",
     "svelte-highlight": "^6.2.1",
     "svelte-loading-spinners": "^0.1.7",
-    "svelte-preprocess": "^4.10.6",
+    "svelte-preprocess": "^5.0.0",
     "tailwindcss": "^3.2.4",
     "terser": "^5.16.1",
     "tippy.js": "^6.3.7",
