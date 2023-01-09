@@ -212,6 +212,7 @@ defmodule Hexerei.BuildQuery do
         _type,
         bio,
         body,
+        contact,
         timeline[]{
           title,
           subtitle,
