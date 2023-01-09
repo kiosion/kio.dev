@@ -28,7 +28,7 @@
 
 <Hoverable bind:hovered>
   <a
-    class="flex flex-col items-stretch justify-stretch gap-y-2 w-full h-fit py-5 px-6 pl-5 {hovered
+    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit py-5 px-6 pl-5 {hovered
       ? 'bg-gray-300/25 dark:bg-gray-700/25 border-gray-300/90 dark:border-gray-700/90'
       : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} border-[1px] -ml-[1px] -mt[1px] rounded-2xl transition-colors focusOutline"
     tabindex="0"

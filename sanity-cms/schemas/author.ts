@@ -31,6 +31,13 @@ export default {
     },
     Body,
     {
+      name: 'contact',
+      title: 'Contact',
+      type: 'array',
+      of: BodyBlocks,
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
       name: 'timeline',
       title: 'Timeline',
       type: 'array',

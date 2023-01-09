@@ -10,7 +10,7 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
 
   const about = await Store.findOne<AuthorDocument>(fetch, 'about').catch(
     (err: unknown) => {
-      Logger.error(err as string, 'routes/about');
+      Logger.error(err as string);
       return undefined;
     }
   );

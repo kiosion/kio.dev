@@ -1,4 +1,9 @@
-import type { SanityImageObject, InputValue, SanityAsset } from '$types/sanity';
+import type {
+  SanityImageObject,
+  InputValue,
+  SanityAsset,
+  PTBlock
+} from '$types/sanity';
 import type {
   PortableTextBlock,
   ArbitraryTypedObject
@@ -24,4 +29,5 @@ export interface AuthorDocument extends Omit<Document, 'slug' | 'date'> {
   name: string;
   image: SanityImageObject;
   timeline: AuthorTimelineItem[];
+  contact: InputValue;
 }
