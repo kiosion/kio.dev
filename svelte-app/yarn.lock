@@ -8806,7 +8806,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.6.0, highlight.js@npm:^11.6.0":
+"highlight.js@npm:11.7.0":
+  version: 11.7.0
+  resolution: "highlight.js@npm:11.7.0"
+  checksum: 059b24161bb950d4dd4162a92cfaf4f0fe2ea61b2edb147394a70e3abb5e0a92670307266a91d562aa5a967ea9f92561cdc5a2ab71e5fd5a7898b14bd8992c18
+  languageName: node
+  linkType: hard
+
+"highlight.js@npm:^11.6.0":
   version: 11.6.0
   resolution: "highlight.js@npm:11.6.0"
   checksum: fc1fae6767dbb3e540270a9ea054e15f87cf3316cc0cd23bcf4afe3f1098a4e38fa90a1891f1eadfcf7cb8ee1e8ff3f289a8ee44aabf520879fe8c6c73f22124
@@ -14976,7 +14983,7 @@ __metadata:
     svelte-breakpoints: "npm:0.2.0"
     svelte-check: "npm:^2.9.2"
     svelte-eslint-parser: "npm:^0.22.3"
-    svelte-highlight: "npm:^6.2.1"
+    svelte-highlight: "npm:^7.1.2"
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-preprocess: "npm:^4.10.6"
     tailwindcss: "npm:^3.2.4"
@@ -15059,12 +15066,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-highlight@npm:^6.2.1":
-  version: 6.2.1
-  resolution: "svelte-highlight@npm:6.2.1"
+"svelte-highlight@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "svelte-highlight@npm:7.1.2"
   dependencies:
-    highlight.js: "npm:11.6.0"
-  checksum: 4ca08082d53220c2c6dc2bbfbe048990049ef4bcafdb1e58d0a29eec13a9aecb94f44e4ddbd8c0098b9eae81c6f3cf4a6a344e7aa84b3708ca219d65005f01f6
+    highlight.js: "npm:11.7.0"
+  checksum: c72fc19bab799f6bfc9dc49e84f2ecaba50b72e0a365ad49b362a435e15519da07f8cc7121b78fcf397723ac6954bbff4d97a9186f7e466ac6808f6f70398024
   languageName: node
   linkType: hard
 
