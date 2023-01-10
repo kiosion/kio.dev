@@ -14995,7 +14995,7 @@ __metadata:
     typescript: "npm:^4.8.4"
     uifx: "npm:^2.0.7"
     vite: "npm:^4.0.3"
-    vite-plugin-inspect: "npm:^0.7.11"
+    vite-plugin-inspect: "npm:^0.7.12"
     vite-plugin-test-selectors: "npm:0.0.2"
     vitest: "npm:^0.26.3"
   languageName: unknown
@@ -16370,9 +16370,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-inspect@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "vite-plugin-inspect@npm:0.7.11"
+"vite-plugin-inspect@npm:^0.7.12":
+  version: 0.7.12
+  resolution: "vite-plugin-inspect@npm:0.7.12"
   dependencies:
     "@rollup/pluginutils": "npm:^5.0.2"
     debug: "npm:^4.3.4"
@@ -16382,7 +16382,7 @@ __metadata:
     ufo: "npm:^1.0.1"
   peerDependencies:
     vite: ^3.1.0 || ^4.0.0
-  checksum: 4b8bd57015efc9d9b822ba88b10ad6c5ffce4d788d7029a221964d39ce8751e9570efaf83ed236fa59b3e695d93d9bc1ff868d27ebbda290aff9f12e84db261c
+  checksum: 1e3ad40eb6a3c2d04e30827e7fa3d031727fa53e9211ec0e11dd17451615f5e569880a1eea10f440cb3d52fd249742be7ffb9ec9f6ea0be1ad0a65dc93f0ce2b
   languageName: node
   linkType: hard
 
