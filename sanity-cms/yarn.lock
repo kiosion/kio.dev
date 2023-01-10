@@ -3831,9 +3831,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/vision@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "@sanity/vision@npm:3.1.2"
+"@sanity/vision@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "@sanity/vision@npm:3.1.4"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.1.0"
     "@codemirror/commands": "npm:^6.0.1"
@@ -3851,12 +3851,12 @@ __metadata:
     "@uiw/react-codemirror": "npm:^4.11.4"
     hashlru: "npm:^2.3.0"
     is-hotkey: "npm:^0.1.6"
-    json5: "npm:^1.0.1"
+    json5: "npm:^2.2.3"
     lodash: "npm:^4.17.21"
   peerDependencies:
     react: ^18
     styled-components: ^5.2
-  checksum: e6b07257c9a9478681c106cb555c8b293b316f483e32b03791d749e2c5feea8210432e054beeeaa6db113bca52f1f8127a778126565e65350207fe50fb377f18
+  checksum: d62ab65bc1219541ed320ed2cb77f76548e8278daf0f989e02b65762cbac61c56d69020d2e6628cccf3a50904da9f063ee516d1060c4721e82c977def27300ba
   languageName: node
   linkType: hard
 
@@ -11598,7 +11598,7 @@ __metadata:
     "@sanity/code-input": "npm:^3.0.1"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/ui": "npm:^1.0.11"
-    "@sanity/vision": "npm:^3.1.2"
+    "@sanity/vision": "npm:^3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:^5.48.1"
     "@typescript-eslint/parser": "npm:^5.48.0"
     ace-builds: "npm:^1.14.0"
