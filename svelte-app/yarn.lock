@@ -14991,7 +14991,7 @@ __metadata:
     tippy.js: "npm:^6.3.7"
     ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.4.1"
-    twemoji: "npm:^14.0.2"
+    twemoji: "patch:twemoji@npm%3A14.0.2#~/.yarn/patches/twemoji-npm-14.0.2-bd5648dce6.patch"
     typescript: "npm:^4.8.4"
     uifx: "npm:^2.0.7"
     vite: "npm:^4.0.3"
@@ -15806,7 +15806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"twemoji@npm:^14.0.2":
+"twemoji@npm:14.0.2":
   version: 14.0.2
   resolution: "twemoji@npm:14.0.2"
   dependencies:
@@ -15815,6 +15815,18 @@ __metadata:
     twemoji-parser: "npm:14.0.0"
     universalify: "npm:^0.1.2"
   checksum: 16e11429d078c25d7ae502179afbc79fb605207e48f24daf3b399510706c00d579532633ac5f019589d6e3e264fd6cfa29c3cb33f21b283b3e6f6e72c2828712
+  languageName: node
+  linkType: hard
+
+"twemoji@patch:twemoji@npm%3A14.0.2#~/.yarn/patches/twemoji-npm-14.0.2-bd5648dce6.patch":
+  version: 14.0.2
+  resolution: "twemoji@patch:twemoji@npm%3A14.0.2#~/.yarn/patches/twemoji-npm-14.0.2-bd5648dce6.patch::version=14.0.2&hash=122001"
+  dependencies:
+    fs-extra: "npm:^8.0.1"
+    jsonfile: "npm:^5.0.0"
+    twemoji-parser: "npm:14.0.0"
+    universalify: "npm:^0.1.2"
+  checksum: 5fa0f42331faceb223ae4d8f8746c27c3d9f1d75582fd278dfb7c60e74286d37fd2392efecdedc823aedf29db06f20f870be4b252e0af11028bee2536174e437
   languageName: node
   linkType: hard
 

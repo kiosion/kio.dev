@@ -43,6 +43,7 @@ export default defineConfig(({ command, mode }) => {
     ],
     optimizeDeps: {
       include: [
+        'twemoji',
         'svelte-highlight',
         'highlight.js',
         'highlight.js/lib/core',
