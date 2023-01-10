@@ -3429,7 +3429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pug@npm:^2.0.4":
+"@types/pug@npm:^2.0.4, @types/pug@npm:^2.0.6":
   version: 2.0.6
   resolution: "@types/pug@npm:2.0.6"
   checksum: 78b5b53c0d80a756149a0ab6b92a2351eff73d25ded674189f972b2f9f78e8b4103c10a02ba95f9054b78af72e3b38284da77af7ee161d7c693e08176025670b
@@ -3466,7 +3466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sass@npm:^1.16.0":
+"@types/sass@npm:^1.16.0, @types/sass@npm:^1.43.1":
   version: 1.43.1
   resolution: "@types/sass@npm:1.43.1"
   dependencies:
@@ -6435,7 +6435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-indent@npm:^6.0.0":
+"detect-indent@npm:^6.0.0, detect-indent@npm:^6.1.0":
   version: 6.1.0
   resolution: "detect-indent@npm:6.1.0"
   checksum: 0f487ae80c5304387dec92ab348cf709111c2860792e2681cd42cfdda0e2242dd32431862a32e8ece7f21fa0ab3205719b69e49fc887c43d79922f0cb2cc328b
@@ -14978,7 +14978,7 @@ __metadata:
     svelte-eslint-parser: "npm:^0.22.3"
     svelte-highlight: "npm:^6.2.1"
     svelte-loading-spinners: "npm:^0.1.7"
-    svelte-preprocess: "npm:^4.10.6"
+    svelte-preprocess: "npm:^5.0.0"
     tailwindcss: "npm:^3.2.4"
     terser: "npm:^5.16.1"
     tippy.js: "npm:^6.3.7"
@@ -15084,7 +15084,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-preprocess@npm:^4.0.0, svelte-preprocess@npm:^4.10.6":
+"svelte-preprocess@npm:^4.0.0":
   version: 4.10.7
   resolution: "svelte-preprocess@npm:4.10.7"
   dependencies:
@@ -15130,6 +15130,53 @@ __metadata:
     typescript:
       optional: true
   checksum: 940c658d9968ae33315ebb82433e699a495014f46c562b9f159344d2478e01b6e32debf0754219bc895f464954393abf763e7cba5d0bf32af5b9325661adff51
+  languageName: node
+  linkType: hard
+
+"svelte-preprocess@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "svelte-preprocess@npm:5.0.0"
+  dependencies:
+    "@types/pug": "npm:^2.0.6"
+    "@types/sass": "npm:^1.43.1"
+    detect-indent: "npm:^6.1.0"
+    magic-string: "npm:^0.27.0"
+    sorcery: "npm:^0.10.0"
+    strip-indent: "npm:^3.0.0"
+  peerDependencies:
+    "@babel/core": ^7.10.2
+    coffeescript: ^2.5.1
+    less: ^3.11.3 || ^4.0.0
+    postcss: ^7 || ^8
+    postcss-load-config: ^2.1.0 || ^3.0.0 || ^4.0.0
+    pug: ^3.0.0
+    sass: ^1.26.8
+    stylus: ^0.55.0
+    sugarss: ^2.0.0 || ^3.0.0 || ^4.0.0
+    svelte: ^3.23.0
+    typescript: ^3.9.5 || ^4.0.0
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    coffeescript:
+      optional: true
+    less:
+      optional: true
+    postcss:
+      optional: true
+    postcss-load-config:
+      optional: true
+    pug:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: ea701875ee347fa34fc0c8a5e29ae0a7d992d3f3a688fe4b3fe7a40e97511afc241b5d618139a3def5437d31dc4a3134568aa3b97d5ce23228781e76b68634bf
   languageName: node
   linkType: hard
 
