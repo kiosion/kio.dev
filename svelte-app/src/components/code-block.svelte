@@ -7,10 +7,11 @@
   import { navigating } from '$app/stores';
   import Icon from './icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import type {
-    HighlightAuto,
-    Highlight,
-    LanguageType
+  import {
+    LineNumbers,
+    type HighlightAuto,
+    type Highlight,
+    type LanguageType
   } from 'svelte-highlight';
   import Tooltip from './tooltip.svelte';
   import { t } from '$i18n';
@@ -24,7 +25,7 @@
 
   let hlHighlight: Highlight,
     hlAuto: HighlightAuto,
-    hlLang: LanguageType,
+    hlLang: Promise<LanguageType>,
     hlStyles: unknown,
     container: HTMLElement,
     codeContainer: HTMLElement,
@@ -53,12 +54,13 @@
   });
 
   onMount(async () => {
+    console.log('mounting...');
     !lang
       ? (hlAuto = await import('svelte-highlight')).HighlightAuto
       : (hlHighlight = (await import('svelte-highlight'))
           .Highlight as unknown as Highlight);
 
-    hlLang = await (async () => {
+    hlLang = (async () => {
       lang = lang?.toLowerCase();
       if (!lang) {
         return (await import('svelte-highlight/languages/markdown')).markdown;
@@ -68,26 +70,33 @@
       try {
         // First, handle some cases where the name isn't the import name
         switch (lang) {
-          case 'c#':
+          case 'c#': {
             imp = (await import('svelte-highlight/languages/csharp')).csharp;
             break;
-          case 'c++':
+          }
+          case 'c++': {
             imp = (await import('svelte-highlight/languages/cpp')).cpp;
             break;
-          case 'html':
+          }
+          case 'html': {
             imp = (await import('svelte-highlight/languages/xml')).xml;
             break;
+          }
           case 'sh':
-          case 'shell':
+          case 'shell': {
             imp = (await import('svelte-highlight/languages/bash')).bash;
             break;
-          default:
+          }
+          default: {
+            console.log('lang:', lang);
             imp = (
               await import(
                 `../../node_modules/svelte-highlight/languages/${lang}.js`
               )
             )[lang];
+            console.log('imported:', imp);
             break;
+          }
         }
       } catch (e) {
         imp = (
@@ -98,6 +107,7 @@
       }
       return imp as LanguageType;
     })();
+    console.log('hllang:', hlLang);
   });
 
   onDestroy(() => unsubscribe());
@@ -152,11 +162,20 @@
       class="rounded-md min-w-full w-fit h-fit p-1 bg-gray-200 dark:bg-gray-900 is-{$theme} transition-all duration-150"
       bind:clientHeight={innerHeight}
     >
-      {#if !lang}
-        <svelte:component this={hlAuto} code={content} />
-      {:else}
-        <svelte:component this={hlHighlight} code={content} language={hlLang} />
-      {/if}
+      {#await hlLang then resolvedLang}
+        {#if !lang}
+          <svelte:component this={hlAuto} code={content} />
+        {:else}
+          <svelte:component
+            this={hlHighlight}
+            code={content}
+            language={resolvedLang}
+            let:highlighted
+          >
+            <!-- <LineNumbers {highlighted} hideBorder wrapLines /> -->
+          </svelte:component>
+        {/if}
+      {/await}
     </div>
   </div>
 </div>
@@ -176,6 +195,17 @@
       background: $violet-300 !important;
       color: $gray-900 !important;
     }
+  }
+
+  :global(tbody.hljs) {
+    background-color: transparent !important;
+    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+    font-size: 1rem;
+    line-height: 1.2rem;
+  }
+  :global(.hljs) {
+    background-color: transparent !important;
   }
   :global(code.hljs *) {
     &::selection {
