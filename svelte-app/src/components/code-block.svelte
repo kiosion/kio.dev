@@ -172,7 +172,7 @@
             language={resolvedLang}
             let:highlighted
           >
-            <!-- <LineNumbers {highlighted} hideBorder wrapLines /> -->
+            <LineNumbers {highlighted} hideBorder wrapLines />
           </svelte:component>
         {/if}
       {/await}
@@ -182,6 +182,11 @@
 
 <style lang="scss">
   @import '../styles/colors';
+
+  :global(.hljs code) {
+    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+  }
 
   :global(code.hljs) {
     background-color: transparent;
