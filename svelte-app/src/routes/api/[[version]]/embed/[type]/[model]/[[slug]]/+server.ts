@@ -14,9 +14,11 @@ export const GET: RequestHandler = async ({
   const lang = url.searchParams.get('lang') || 'en';
 
   if (
-    !['opengraph', 'twitter'].includes(type) ||
-    !['page', 'post', 'project'].includes(model) ||
-    !slug
+    !(
+      ['opengraph', 'twitter'].includes(type) &&
+      ['page', 'post', 'project'].includes(model) &&
+      slug
+    )
   ) {
     return new Response(
       JSON.stringify({ code: 400, message: 'Invalid request' }),

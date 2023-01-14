@@ -75,6 +75,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^3.8.1",
     "rollup-plugin-babel": "^4.4.0",
+    "rome": "^11.0.0",
     "sass": "^1.57.1",
     "seedrandom": "^3.0.5",
     "svelte": "patch:svelte@npm%3A3.54.0#~/.yarn/patches/svelte-npm-3.54.0-c506099255.patch",

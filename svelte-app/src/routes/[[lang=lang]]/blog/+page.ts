@@ -5,10 +5,11 @@ import { ENV } from '$lib/env';
 import { RECENT_POSTS_COUNT } from '$lib/consts';
 import Store from '$lib/store';
 import type { PostDocument, ResData, ResDataMany } from '$types';
+import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');
 
-export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
+export const load: PageLoad = async ({ parent, fetch }) => {
   await parent();
 
   const currentConfig = get(config);
@@ -19,7 +20,7 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
     pinned = await Store.findOne<PostDocument>(fetch, 'post', {
       id: currentConfig.data.pinnedPost._ref
     }).catch((err: unknown) => {
-      Logger.error(err as string, 'routes/blog');
+      Logger.error(err as string);
       return undefined;
     });
   }
@@ -28,7 +29,7 @@ export const load: import('./$types').PageLoad = async ({ parent, fetch }) => {
     await Store.find<PostDocument>(fetch, 'post', {
       limit: RECENT_POSTS_COUNT
     }).catch((err: unknown) => {
-      Logger.error(err as string, 'routes/blog');
+      Logger.error(err as string);
       return undefined;
     });
 

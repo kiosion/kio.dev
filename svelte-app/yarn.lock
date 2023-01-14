@@ -2882,6 +2882,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rometools/cli-darwin-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-darwin-arm64@npm:11.0.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rometools/cli-darwin-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-darwin-x64@npm:11.0.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rometools/cli-linux-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-linux-arm64@npm:11.0.0"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rometools/cli-linux-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-linux-x64@npm:11.0.0"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rometools/cli-win32-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-win32-arm64@npm:11.0.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rometools/cli-win32-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-win32-x64@npm:11.0.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@samverschueren/stream-to-observable@npm:^0.3.0":
   version: 0.3.1
   resolution: "@samverschueren/stream-to-observable@npm:0.3.1"
@@ -13929,6 +13971,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rome@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "rome@npm:11.0.0"
+  dependencies:
+    "@rometools/cli-darwin-arm64": "npm:11.0.0"
+    "@rometools/cli-darwin-x64": "npm:11.0.0"
+    "@rometools/cli-linux-arm64": "npm:11.0.0"
+    "@rometools/cli-linux-x64": "npm:11.0.0"
+    "@rometools/cli-win32-arm64": "npm:11.0.0"
+    "@rometools/cli-win32-x64": "npm:11.0.0"
+  dependenciesMeta:
+    "@rometools/cli-darwin-arm64":
+      optional: true
+    "@rometools/cli-darwin-x64":
+      optional: true
+    "@rometools/cli-linux-arm64":
+      optional: true
+    "@rometools/cli-linux-x64":
+      optional: true
+    "@rometools/cli-win32-arm64":
+      optional: true
+    "@rometools/cli-win32-x64":
+      optional: true
+  bin:
+    rome: bin/rome
+  checksum: 82e8ac6fc00c8212ce0cb3a8c76864f4c1d83433a454b14bb746e4af93e84bf193160115438b981ae86fc37cd2e96b2c728a7779b5a354601a39904be2280706
+  languageName: node
+  linkType: hard
+
 "route-recognizer@npm:^0.3.3":
   version: 0.3.4
   resolution: "route-recognizer@npm:0.3.4"
@@ -14976,6 +15047,7 @@ __metadata:
     rimraf: "npm:^3.0.2"
     rollup: "npm:^3.8.1"
     rollup-plugin-babel: "npm:^4.4.0"
+    rome: "npm:^11.0.0"
     sass: "npm:^1.57.1"
     seedrandom: "npm:^3.0.5"
     svelte: "patch:svelte@npm%3A3.54.0#~/.yarn/patches/svelte-npm-3.54.0-c506099255.patch"

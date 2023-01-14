@@ -28,9 +28,7 @@ const defaultFeatureFlags = new Map([
 
 let featureFlags: typeof defaultFeatureFlags;
 
-if (!browser) {
-  featureFlags = defaultFeatureFlags;
-} else {
+if (browser) {
   const storedFlags = localStorage.getItem('featureFlags'),
     parsed = storedFlags
       ? (JSON.parse(atob(storedFlags)) as [string, Setting][])
@@ -55,6 +53,8 @@ if (!browser) {
   );
 
   featureFlags = new Map([...defaultFeatureFlags, ...writableFlags]);
+} else {
+  featureFlags = defaultFeatureFlags;
 }
 
 class FeaturesClass {

@@ -30,7 +30,7 @@ interface Normalized extends Record<string, unknown> {
 }
 
 const normalize = (data: Response | Record<string, unknown>) => {
-  if (!data?.code || (!data?.message && !data?.data)) {
+  if (!(data?.code && (data?.message || data?.data))) {
     return {
       code: 500,
       error:
@@ -62,7 +62,7 @@ const normalize = (data: Response | Record<string, unknown>) => {
 
   !['development', 'backed', 'test'].includes(ENV) &&
     normalized.meta?.query &&
-    delete normalized.meta.query;
+    (normalized.meta.query = undefined);
 
   return normalized;
 };

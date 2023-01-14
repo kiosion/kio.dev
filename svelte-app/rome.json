@@ -1,0 +1,70 @@
+{
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentSize": 4,
+    "lineWidth": 80,
+    "ignore": []
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "noBlankTarget": "warn",
+        "useAltText": "warn",
+        "useButtonType": "warn"
+      },
+      "complexity": {
+        "useFlatMap": "error"
+      },
+      "correctness": {
+        "noConstAssign": "error",
+        "noEmptyPattern": "error",
+        "noUndeclaredVariables": "error",
+        "noUnnecessaryContinue": "error",
+        "noUnreachable": "error",
+        "noUnusedVariables": "error",
+        "useValidForDirection": "warn"
+      },
+      "performance": {
+        "noDelete": "error"
+      },
+      "style": {
+        "noNegationElse": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useBlockStatements": "error",
+        "useSelfClosingElements": "error",
+        "useShorthandArrayType": "error",
+        "useSingleVarDeclarator": "off",
+        "useTemplate": "error",
+        "useWhile": "error"
+      },
+      "suspicious": {
+        "noAsyncPromiseExecutor": "error",
+        "noCatchAssign": "error",
+        "noCommentText": "error",
+        "noCompareNegZero": "error",
+        "noDebugger": "error",
+        "noDoubleEquals": "error",
+        "noDuplicateParameters": "error",
+        "noExplicitAny": "error",
+        "noFunctionAssign": "error",
+        "noImportAssign": "error",
+        "noLabelVar": "error",
+        "noShadowRestrictedNames": "error",
+        "noSparseArray": "error",
+        "noUnsafeNegation": "error",
+        "useValidTypeof": "error"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingComma": "none",
+      "quoteProperties": "asNeeded"
+    }
+  }
+}

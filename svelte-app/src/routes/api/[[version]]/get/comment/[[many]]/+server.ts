@@ -6,7 +6,7 @@ export const GET: RequestHandler = async ({
   url,
   params
 }): Promise<Response> => {
-  const many = !!params.many;
+  const _many = !!params.many;
 
   // Get document ID from params
   const queryParams = url.searchParams,

@@ -42,7 +42,7 @@ interface Normalized extends Record<string, unknown> {
  * Util to serialize recieved API data to common types
  */
 const normalize = (data: ResponseOrError) => {
-  if (!data?.code || (!data?.message && !data?.data)) {
+  if (!(data?.code && (data?.message || data?.data))) {
     throw new Error(
       'Failed to normalize data: Invalid or undefined data recieved'
     );
@@ -71,7 +71,7 @@ const normalize = (data: ResponseOrError) => {
 
   !['development', 'backed', 'test'].includes(ENV) &&
     normalized.meta?.query &&
-    delete normalized.meta.query;
+    (normalized.meta.query = undefined);
 
   return normalized;
 };

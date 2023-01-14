@@ -63,7 +63,7 @@ export const APP_ROUTES = [
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { children, ...rest } = r;
+  const { children: _children, ...rest } = r;
   return rest;
 }) as Omit<AppRoute, 'children'>[];
 

@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ({
 }: RequestEvent): Promise<Response> => {
   const many = !!params.many;
 
-  if (!many && !url.searchParams.get('id')) {
+  if (!(many || url.searchParams.get('id'))) {
     return new Response(
       JSON.stringify({
         status: 400,

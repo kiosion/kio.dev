@@ -66,7 +66,7 @@ class StoreClass extends CacheClass {
         return;
       }
       return response as ResDataMany<T>;
-    } catch (err: unknown) {
+    } catch {
       Logger.error('Failed to query endpoint');
       return;
     }
@@ -90,7 +90,7 @@ class StoreClass extends CacheClass {
         return;
       }
       return response as ResData<T>;
-    } catch (err: unknown) {
+    } catch {
       Logger.error('Failed to query endpoint');
       return;
     }
