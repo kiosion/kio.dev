@@ -6,8 +6,7 @@ import type {
   ResDataMany,
   ProjectDocument,
   PTBlock,
-  Comment,
-  StoreRes
+  Comment
 } from '$types';
 import type { PageLoad } from './$types';
 

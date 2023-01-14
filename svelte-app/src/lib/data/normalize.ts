@@ -62,7 +62,7 @@ const normalize = (data: Response | Record<string, unknown>) => {
 
   !['development', 'backed', 'test'].includes(ENV) &&
     normalized.meta?.query &&
-    delete normalized.meta.query;
+    (normalized.meta.query = undefined);
 
   return normalized;
 };

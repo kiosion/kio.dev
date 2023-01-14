@@ -7,8 +7,9 @@ import { config } from '$stores/config';
 import { get } from 'svelte/store';
 import Store from '$lib/store';
 import type { ProjectDocument, ResData, ResDataMany } from '$types';
+import type { PageLoad } from './$types';
 
-export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
+export const load: PageLoad = async ({ parent, fetch }) => {
   await parent();
 
   const currentConfig = get(config);
@@ -19,7 +20,7 @@ export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
     pinned = await Store.findOne<ProjectDocument>(fetch, 'project', {
       id: currentConfig.data.pinnedProject._ref
     }).catch((err: unknown) => {
-      Logger.error(err as string, 'routes/work');
+      Logger.error(err as string);
       return undefined;
     });
   }
@@ -29,7 +30,7 @@ export const load: import('@sveltejs/kit').Load = async ({ parent, fetch }) => {
       ...DEFAULT_PROJECT_QUERY_PARAMS,
       limit: RECENT_PROJECTS_COUNT
     }).catch((err: unknown) => {
-      Logger.error(err as string, 'routes/work');
+      Logger.error(err as string);
       return undefined;
     });
 

@@ -71,7 +71,7 @@ const normalize = (data: ResponseOrError) => {
 
   !['development', 'backed', 'test'].includes(ENV) &&
     normalized.meta?.query &&
-    delete normalized.meta.query;
+    (normalized.meta.query = undefined);
 
   return normalized;
 };

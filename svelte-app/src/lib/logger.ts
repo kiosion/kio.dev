@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function, prefer-rest-params */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function, prefer-rest-params */
 import { ENV } from '$lib/env';
 import type { LogOptions } from 'vite';
 
@@ -19,7 +19,7 @@ export class LoggerClass {
     return `${new Date().toLocaleTimeString()} ${msg}`;
   }
 
-  log(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  log(msg: string, options: LogOptions = {}, ...rest: any[]) {
     if (!this.canLog) {
       return;
     }
@@ -34,7 +34,7 @@ export class LoggerClass {
     console.log(msg, ...rest);
   }
 
-  info(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  info(msg: string, options: LogOptions = {}, ...rest: any[]) {
     if (!this.canLog) {
       return;
     }
@@ -49,7 +49,7 @@ export class LoggerClass {
     console.info(msg, ...rest);
   }
 
-  warn(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  warn(msg: string, options: LogOptions = {}, ...rest: any[]) {
     if (!this.canLog) {
       return;
     }
@@ -66,7 +66,7 @@ export class LoggerClass {
     console.warn(msg, ...rest);
   }
 
-  error(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  error(msg: string, options: LogOptions = {}, ...rest: any[]) {
     const { clear, timestamp } = options ?? {
       clear: false,
       timestamp: false
@@ -79,7 +79,7 @@ export class LoggerClass {
     console.error(msg, ...rest);
   }
 
-  warnOnce(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  warnOnce(msg: string, options: LogOptions = {}, ...rest: any[]) {
     if (!this.canLog) {
       return;
     }
@@ -89,7 +89,7 @@ export class LoggerClass {
     this.warn(msg, options, ...rest);
   }
 
-  errorOnce(msg: string, options: LogOptions = {}, ...rest: unknown[]) {
+  errorOnce(msg: string, options: LogOptions = {}, ...rest: any[]) {
     if (!this.canLog) {
       return;
     }
