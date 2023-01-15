@@ -1,11 +1,13 @@
 <script lang="ts">
-  export let width = '200px';
-  export let height = '4px';
+  export let width = '200px',
+    height = '4px',
+    segments = 7,
+    classes = '';
 </script>
 
-<div class="wrapper" style="width: {width}; height: {height};">
+<div class="wrapper {classes}" style="width: {width}; height: {height};">
   <div data-test-id="loader-bar">
-    {#each Array(7) as _}
+    {#each Array(segments) as _}
       <div
         class="bg-violet-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-violet-300"
       />

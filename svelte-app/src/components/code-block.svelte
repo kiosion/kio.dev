@@ -18,6 +18,7 @@
 
   export let content: string,
     showClipboard = false,
+    showLineNumbers = true,
     lang: string | undefined = undefined;
 
   let hovered = false;
@@ -165,7 +166,7 @@
       {#await hlLang then resolvedLang}
         {#if !lang}
           <svelte:component this={hlAuto} code={content} />
-        {:else}
+        {:else if showLineNumbers === true}
           <svelte:component
             this={hlHighlight}
             code={content}
@@ -174,6 +175,12 @@
           >
             <LineNumbers {highlighted} hideBorder wrapLines />
           </svelte:component>
+        {:else}
+          <svelte:component
+            this={hlHighlight}
+            code={content}
+            language={resolvedLang}
+          />
         {/if}
       {/await}
     </div>

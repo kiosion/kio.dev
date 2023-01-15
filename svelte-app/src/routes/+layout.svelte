@@ -2,11 +2,12 @@
   import '../app.scss';
   import { onMount, onDestroy, setContext } from 'svelte';
   import { classList } from 'svelte-body';
-  import { fly } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import Loader from '$components/loading/full.svelte';
+  import BarLoader from '$components/loading/bar.svelte';
   import PageTransition from '$components/page-transition.svelte';
   import Nav from '$components/nav/nav.svelte';
   import HeaderControls from '$components/controls/header-controls.svelte';
@@ -105,6 +106,21 @@
 
 {#if !appLoaded}
   <Loader />
+{/if}
+
+{#if !$isDesktop && $loading}
+  <div
+    class="fixed top-0 left-0 w-[100vw] h-[3px] z-[50]"
+    in:fly={{ x: 0, y: 3, duration: 600 }}
+    out:fly={{ x: 0, y: -3, duration: 600 }}
+  >
+    <BarLoader
+      width="100vw"
+      height="3px"
+      segments={16}
+      classes="bg-slate-300/50 dark:bg-slate-900/50"
+    />
+  </div>
 {/if}
 
 {#if browser && $useCustomCursor}

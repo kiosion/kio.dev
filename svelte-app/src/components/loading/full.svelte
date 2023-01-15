@@ -6,6 +6,10 @@
   import { fade } from 'svelte/transition';
   import seedrandom from 'seedrandom';
 
+  export let classes = 'transparent',
+    segments = 12,
+    width = '400px';
+
   let phrase = '';
 
   const phrases = [
@@ -43,14 +47,10 @@
     ? ' bg-gray-200'
     : ' bg-gray-900'} flex flex-col items-center justify-between z-[100]"
   data-test-id="loader-full"
-  out:fade={{ duration: 200, delay: 400 }}
+  out:fade={{ duration: 200, delay: 600 }}
 >
   <div class="w-full h-fit mt-[calc(50vh_-_4px)]" out:fade={{ duration: 200 }}>
-    <Line />
-    <div class="mx-auto w-fit">
-      <!-- <Spinner /> -->
-      <!-- <Circle /> -->
-    </div>
+    <Line {width} {segments} {classes} />
   </div>
   {#if phrase !== ''}
     <div

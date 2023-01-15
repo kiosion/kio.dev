@@ -31,6 +31,11 @@
       heading="PGP"
       text={t('Want to send a secure message my way? Now you can :)')}
     />
-    <CodeBlock content={`${data.pgp}`} showClipboard={true} lang="markdown" />
+    <CodeBlock
+      content={`${data.pgp}`}
+      showClipboard={true}
+      showLineNumbers={false}
+      lang="markdown"
+    />
   </ContentWrapper>
 </div>
