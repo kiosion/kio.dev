@@ -3077,15 +3077,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "@testing-library/cypress@npm:8.0.3"
+"@testing-library/cypress@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@testing-library/cypress@npm:9.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.14.6"
     "@testing-library/dom": "npm:^8.1.0"
   peerDependencies:
-    cypress: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: a1ba68e317eab7a1fbb7e473649934ad595d238cba20391b222dbc6a2b768fddf3d970aa5292fc23a216ab3d65082ead431782c6e38239dd3b465926a9729c16
+    cypress: ^12.0.0
+  checksum: 916075e4dbfdd73a9073bb4b4ab10865559b460bada52cf54dbf53f7483bfb7665c27a21f207b71f3e3127d46958cb0d93de5218f1416b2c09c1c86cfa781a8f
   languageName: node
   linkType: hard
 
@@ -14939,7 +14939,7 @@ __metadata:
     "@sveltejs/kit": "npm:1.0.1"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
-    "@testing-library/cypress": "npm:^8.0.3"
+    "@testing-library/cypress": "npm:^9.0.0"
     "@testing-library/svelte": "npm:^3.2.2"
     "@types/babel__core": "npm:^7"
     "@types/babel__plugin-transform-runtime": "npm:^7"
