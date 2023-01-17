@@ -20,6 +20,8 @@
   import Tags from '$components/tags.svelte';
   import { fionaPlaceholder } from '$helpers/placeholders';
   import Tooltip from '$components/tooltip.svelte';
+  import Breakpoints from 'svelte-breakpoints';
+  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
@@ -62,19 +64,38 @@
       {data}
     >
       <svelte:fragment slot="image">
-        <div
-          class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
-        >
-          <div
-            class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
-          >
-            &nbsp;
-          </div>
-          <div
-            class="w-full aspect-[10/4] bg-cover bg-center"
-            style={`background-image: url("${imageSrc}");`}
-          />
-        </div>
+        <Breakpoints queries={DEFAULT_BREAKPOINTS}>
+          <svelte:fragment slot="sm">
+            <div
+              class="absolute overflow-hidden -mt-16 -mb-20 z-[0] top-0 left-0 w-[112%] -translate-x-[5.2%]"
+            >
+              <div
+                class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
+              >
+                &nbsp;
+              </div>
+              <div
+                class="w-full aspect-[10/4] bg-cover bg-center"
+                style={`background-image: url("${imageSrc}");`}
+              />
+            </div>
+          </svelte:fragment>
+          <svelte:fragment slot="lg">
+            <div
+              class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
+            >
+              <div
+                class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
+              >
+                &nbsp;
+              </div>
+              <div
+                class="w-full aspect-[10/4] bg-cover bg-center"
+                style={`background-image: url("${imageSrc}");`}
+              />
+            </div>
+          </svelte:fragment>
+        </Breakpoints>
       </svelte:fragment>
       <svelte:fragment slot="title">
         <h1

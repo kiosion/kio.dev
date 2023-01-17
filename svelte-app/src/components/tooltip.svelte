@@ -8,7 +8,7 @@
   export let text = '',
     position: Placement = 'bottom',
     transitionDuration = 200,
-    delay = 800,
+    delay = 1400,
     disable = false,
     offset = [0, 8] as [number, number],
     fixed = false;
@@ -24,6 +24,7 @@
           allowHTML: true,
           duration: transitionDuration,
           delay: [delay, 0],
+          touch: ['hold', 500],
           offset: fixed ? offset : [6, 24],
           animation: 'fade',
           placement: position,

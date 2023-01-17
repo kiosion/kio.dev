@@ -10,6 +10,8 @@
   import { RECENT_POSTS_COUNT } from '$lib/consts';
   import { t } from '$lib/helpers/i18n';
   import SFX from '$lib/sfx';
+  import type { PostDocument } from '$types';
+  import ListSection from '$components/blog/list-section.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -17,10 +19,16 @@
 
   export let data: PageData;
 
+  let postsExceptPinned: PostDocument[] = [];
+
   const pageTitle = `kio.dev | ${t('Blog').toLowerCase()}`,
     description = t('Thoughts about tech, design, and development');
 
   $: ({ pinned, posts } = data);
+  $: posts?.data &&
+    (postsExceptPinned = posts?.data?.filter(
+      (post) => post._id !== pinned?.data?._id
+    ));
 </script>
 
 <svelte:head>
@@ -44,12 +52,8 @@
 <!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
 <IconHeader icon="bulletlist" text={t('All posts')} />
 {#if posts?.data?.length}
-  <div class="flex flex-col gap-4">
-    {#each posts.data as post}
-      {#if post._id !== pinned?.data?._id}
-        <ListItem {post} />
-      {/if}
-    {/each}
+  <div class="flex flex-col">
+    <ListSection posts={postsExceptPinned} />
   </div>
 {:else}
   <div class="w-full flex flex-row items-center justify-center">
