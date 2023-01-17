@@ -27,13 +27,13 @@
   const getClassNames = (pos: typeof position) => {
     switch (pos) {
       case 'first':
-        return 'rounded-t-2xl mt-2 pb-4 pt-5 border-t-[1px] border-x-[1px]';
+        return 'rounded-t-2xl mt-2 pb-4 pt-5';
       case 'middle':
-        return 'py-4 border-t-[1px] border-x-[1px]';
+        return 'py-4 -mt-[1px]';
       case 'last':
-        return 'rounded-b-2xl mb-2 pt-4 pb-5 border-[1px]';
+        return 'rounded-b-2xl mb-2 pt-4 pb-5 -mt-[1px]';
       case 'solo':
-        return 'rounded-2xl my-2 py-4 border-[1px]';
+        return 'rounded-2xl my-2 py-4';
     }
   };
 
@@ -43,9 +43,11 @@
 
 <Hoverable bind:hovered>
   <a
-    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit px-6 pl-5 {posClasses} {hovered
+    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit px-6 pl-5 border-[1px] {getClassNames(
+      position
+    )} {hovered
       ? 'bg-gray-300/25 dark:bg-gray-700/25 border-gray-300/90 dark:border-gray-700/90'
-      : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} -ml-[1px] -mt[1px] transition-colors focusOutline"
+      : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} -ml-[1px] transition-colors focusOutline"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
