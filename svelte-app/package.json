@@ -40,7 +40,7 @@
     "@sveltejs/kit": "1.0.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@testing-library/cypress": "^8.0.3",
+    "@testing-library/cypress": "^9.0.0",
     "@testing-library/svelte": "^3.2.2",
     "@types/babel__core": "^7",
     "@types/babel__plugin-transform-runtime": "^7",
