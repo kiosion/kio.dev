@@ -2326,6 +2326,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rimraf@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "rimraf@npm:4.0.7"
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: 16f14f41fa63571754f6cea0982e07bf1d05c2ce6ae6f64e663d0a3b57c8dbf4cd3a27deb42ea73862041918c9f56d9f8c6ff44689a939752d659505179ea67f
+  languageName: node
+  linkType: hard
+
 "root-workspace-0b6124@workspace:.":
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
@@ -2337,7 +2346,7 @@ __metadata:
     lint-staged: "npm:^13.1.0"
     prettier: "npm:^2.8.2"
     prettier-eslint: "npm:^15.0.1"
-    rimraf: "npm:^3.0.2"
+    rimraf: "npm:^4.0.7"
     stylelint: "npm:^14.16.1"
     stylelint-config-standard-scss: "npm:^6.1.0"
     typescript: "npm:^4.9.4"
