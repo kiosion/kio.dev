@@ -27,7 +27,7 @@
     return [$page.url.pathname, $navigating?.to?.url.pathname].includes(
       link.url
     ) || link.active
-      ? 'h-full'
+      ? 'h-full w-[115%] translate-x-[-6%]'
       : splitPath.length > 1 && splitPath.indexOf(truePath) > 0
       ? 'h-[10%]'
       : 'h-[0%]';

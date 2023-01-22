@@ -10,7 +10,19 @@ export default {
   fields: [
     {
       name: 'name',
-      title: 'Name',
+      title: 'Short name',
+      type: 'string',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'fullname',
+      title: 'Full name',
+      type: 'string',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'at',
+      title: '@username',
       type: 'string',
       validation: (Rule: Rule) => Rule.required()
     },

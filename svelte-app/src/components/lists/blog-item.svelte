@@ -5,7 +5,7 @@
   import type { PostDocument, PTBlock } from '$types';
   import { goto } from '$app/navigation';
   import Hoverable from '$components/hoverable.svelte';
-  import { linkTo } from '$i18n';
+  import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
   import Tags from '$components/tags.svelte';
 
@@ -38,16 +38,15 @@
   };
 
   $: date = getAbsDate(post.date);
-  $: posClasses = getClassNames(position);
 </script>
 
 <Hoverable bind:hovered>
   <a
-    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit px-6 pl-5 border-[1px] {getClassNames(
+    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit px-6 pl-5 border {getClassNames(
       position
     )} {hovered
-      ? 'bg-gray-300/25 dark:bg-gray-700/25 border-gray-300/90 dark:border-gray-700/90'
-      : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} -ml-[1px] transition-colors focusOutline"
+      ? 'bg-stone-300/60 dark:bg-stone-700/20 border-stone-400/80 dark:border-stone-500/80'
+      : 'bg-stone-300/20 dark:bg-stone-900/40 border-stone-400/60 dark:border-stone-500/60'} -ml-[1px] transition-colors focusOutline"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
@@ -79,7 +78,7 @@
         <p>{date}</p>
         <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
       {/if}
-      <p>{`${Math.floor(readingTime / 60)} min read`}</p>
+      <p>{t('{length} min read', { length: Math.floor(readingTime / 60) })}</p>
       {#if post.tags && post.tags.length > 0}
         <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
         <Tags model="post" data={post.tags} />

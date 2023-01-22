@@ -124,7 +124,9 @@
 </svelte:head>
 
 <div
-  class="relative my-6 -mx-2 overflow-hidden rounded-md shadow-sm border-[1px] border-gray-400/40 dark:border-gray-500/40"
+  class="relative my-6 -mx-2 overflow-hidden rounded-md {hovered
+    ? 'border-stone-400 dark:border-stone-500/60'
+    : 'border-stone-400/40 dark:border-stone-500/20'} border transition-colors"
   class:active={hovered}
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
@@ -140,7 +142,7 @@
           <button
             class="{hovered
               ? 'opacity-100'
-              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 focusOutline-sm"
+              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-stone-600 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200 focusOutline-sm"
             on:click={() => copy()}
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
@@ -156,11 +158,13 @@
     </Hoverable>
   {/if}
   <div
-    class="relative overflow-y-hidden overflow-x-scroll rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
+    class="relative overflow-hidden rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
     bind:this={codeContainer}
   >
     <div
-      class="rounded-md min-w-full w-fit h-fit p-1 bg-gray-200 dark:bg-gray-900 is-{$theme} transition-all duration-150"
+      class="rounded-md min-w-full w-fit h-fit p-1 {hovered
+        ? 'bg-stone-300 dark:bg-stone-900/60'
+        : 'bg-stone-300/40 dark:bg-stone-900'} is-{$theme} transition-all"
       bind:clientHeight={innerHeight}
     >
       {#await hlLang then resolvedLang}

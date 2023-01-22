@@ -1,5 +1,6 @@
 <script lang="ts">
   import Hoverable from '$components/hoverable.svelte';
+  import { linkTo } from '$i18n';
   import type { MarkComponentProps } from '@portabletext/svelte';
 
   export let portableText: MarkComponentProps;
@@ -16,11 +17,11 @@
 
 <Hoverable bind:hovered>
   <a
-    href={href ? href : '#'}
+    href={href ? linkTo(href) : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
-    class="underlined from-violet-400 dark:from-violet-300 {hovered
-      ? 'active dark:text-gray-800'
+    class="underlined from-violet-300 {hovered
+      ? 'active dark:text-stone-800'
       : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
     tabindex="0"
   >

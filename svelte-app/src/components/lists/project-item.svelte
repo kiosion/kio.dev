@@ -45,8 +45,8 @@
 <Hoverable bind:hovered>
   <a
     class="relative flex flex-col items-stretch justify-start gap-y-1.5 py-5 px-6 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-colors {hovered
-      ? 'bg-gray-300/25 dark:bg-gray-700/25 border-gray-300/90 dark:border-gray-700/90'
-      : 'bg-gray-200/25 dark:bg-gray-900/25 border-gray-300/60 dark:border-gray-700/60'} border-[1px] -ml-[1px] -mt-[1px] focusOutline"
+      ? 'bg-stone-300/60 dark:bg-stone-700/20 border-stone-400/80 dark:border-stone-500/80'
+      : 'bg-stone-300/20 dark:bg-stone-900/40 border-stone-400/60 dark:border-stone-500/60'} border -ml-[1px] -mt-[1px] focusOutline"
     data-test-id="list-item"
     tabindex="0"
     role="button"
@@ -60,7 +60,7 @@
   >
     <div class="w-full flex flex-row items-center gap-x-3 mb-0.5">
       <Icon
-        classes="-ml-0.5 text-gray-900 dark:text-gray-100 {project.external
+        classes="-ml-0.5 text-stone-900 dark:text-stone-100 {project.external
           ? 'mb-0.5'
           : ''}"
         icon={project.external ? 'open' : 'book-open'}

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import ErrorText from '$components/error-text.svelte';
   import type { AuthorTimelineItem } from '$types';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
@@ -9,10 +8,13 @@
   import { t, currentLang } from '$i18n';
   import Tags from '$components/tags.svelte';
   import Tooltip from '$components/tooltip.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
 
   let selected: number | null = null;
 
-  export let data: AuthorTimelineItem[] | undefined;
+  export let data:
+    | (AuthorTimelineItem & { hovered: boolean | undefined })[]
+    | undefined;
 
   const dateDisplay = (start: string, end: string | undefined) => {
     try {
@@ -21,33 +23,39 @@
 
       if (!endDate) {
         return `${new Intl.DateTimeFormat($currentLang, {
-          month: 'short',
+          month: 'long',
           year: 'numeric'
-        }).format(startDate)} - ${t('now')}`;
+        }).format(startDate)} ${t('to')} ${t('now')}`;
       }
 
       if (startDate.getFullYear() === endDate.getFullYear()) {
         if (startDate.getMonth() === endDate.getMonth()) {
           return `${new Intl.DateTimeFormat($currentLang, {
-            month: 'short',
+            month: 'long',
             day: 'numeric'
-          }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
-            day: 'numeric',
-            year: 'numeric'
-          }).format(endDate)}`;
+          }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat(
+            $currentLang,
+            {
+              day: 'numeric',
+              year: 'numeric'
+            }
+          ).format(endDate)}`;
         }
         return `${new Intl.DateTimeFormat($currentLang, {
-          month: 'short'
-        }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
-          month: 'short'
-        }).format(endDate)} ${endDate.getFullYear()}`;
+          month: 'long'
+        }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat(
+          $currentLang,
+          {
+            month: 'long'
+          }
+        ).format(endDate)} ${endDate.getFullYear()}`;
       }
 
       return `${new Intl.DateTimeFormat($currentLang, {
-        month: 'short',
+        month: 'long',
         year: 'numeric'
-      }).format(startDate)} - ${new Intl.DateTimeFormat($currentLang, {
-        month: 'short',
+      }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat($currentLang, {
+        month: 'long',
         year: 'numeric'
       }).format(endDate)}`;
     } catch (_) {
@@ -58,24 +66,28 @@
   $: reduceMotion = Features.can('reduce motion');
 </script>
 
-<div class="relative h-fit mx-2 mt-4">
+<div class="relative h-fit ml-0 mr-2 mt-4">
   {#if data}
     <div
-      class="rounded-full w-[2px] absolute bg-gray-400 dark:bg-gray-300 h-[calc(100%_-_4px)] left-0 top-[4px]"
+      class="rounded-full w-[1px] absolute bg-stone-400 dark:bg-stone-400/40 h-[calc(100%_-_14px)] left-0 top-[14px]"
     />
     <div class="flex flex-col justify-start items-start -ml-[4px] gap-4">
       {#each data as item, i}
         <div class="flex flex-row justify-start items-start gap-2 w-full">
           <Icon
             width={24}
+            height={24}
             icon="CornerDownRight"
-            classes="text-gray-400 dark:text-gray-300"
+            classes="text-stone-400 dark:text-stone-400/40 -translate-x-[1px]"
+            style="clip-path: inset(24px 18px 24px 24px)"
           />
           <div class="flex flex-col justify-start items-start w-full mr-6">
-            <h1 class="font-code font-bold text-lg select-none">
+            <h1
+              class="font-code font-bold text-lg select-none text-stone-800 dark:text-stone-50/90"
+            >
               {dateDisplay(item.range.start, item.range.end)}
             </h1>
-            <Hoverable>
+            <Hoverable bind:hovered={data[i].hovered}>
               <Tooltip
                 text={selected === i
                   ? t('Click to hide details')
@@ -84,7 +96,9 @@
                 disable={!item.body}
               >
                 <div
-                  class="relative w-full ml-2 mt-2 rounded-lg bg-gray-200/50 dark:bg-gray-900/50 px-4 py-3 transition-all overflow-hidden focusOutline"
+                  class="relative w-full ml-2 mt-2 rounded-lg {data[i].hovered
+                    ? 'bg-stone-300/60 dark:bg-stone-700/20 border-stone-400/80 dark:border-stone-500/80'
+                    : 'bg-stone-300/20 dark:bg-stone-900/40 border-stone-400/60 dark:border-stone-500/60'} border px-4 py-3 transition-all overflow-hidden focusOutline"
                   on:click={() => {
                     if (item.body) {
                       selected = selected === i ? null : i;
@@ -98,6 +112,7 @@
                       selected = selected === i ? null : i;
                     }
                   }}
+                  aria-expanded={selected === i}
                   tabindex={0}
                   role="button"
                 >
@@ -155,6 +170,6 @@
       {/each}
     </div>
   {:else}
-    <ErrorText text="No data" classes="w-fit" />
+    <EmptyContent />
   {/if}
 </div>

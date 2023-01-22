@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ContentWrapper from '$components/content-wrapper.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import Content from '$components/document/content/content.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -45,6 +45,7 @@
   });
 
   $: $page && ScrollTo($page);
+  $: comments ??= { data: [], meta: {} } as ResDataMany<Comment>;
 </script>
 
 <svelte:head>

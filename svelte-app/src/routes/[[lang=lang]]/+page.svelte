@@ -5,7 +5,6 @@
   import { onMount } from 'svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
-  import IconHeader from '$components/headings/icon-header.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -55,7 +54,7 @@
     </svelte:fragment>
     <svelte:fragment slot="sm">
       <div
-        class="mt-[12vh] flex flex-col mx-auto items-center justify-center gap-2"
+        class="mt-[4vh] flex flex-col mx-auto items-center justify-center gap-2"
       >
         <p
           class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5"

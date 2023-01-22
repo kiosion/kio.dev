@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PostDocument } from '$types';
-  import ListItem from '$components/blog/list-item.svelte';
+  import ListItem from '$components/lists/blog-item.svelte';
 
   export let posts: PostDocument[];
 </script>

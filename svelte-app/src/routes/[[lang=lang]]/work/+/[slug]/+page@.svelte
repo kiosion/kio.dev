@@ -3,8 +3,8 @@
   import { navOptions, pageHeading } from '$stores/navigation';
   import PageHeading from '$components/headings/page-heading.svelte';
   import type { PageData } from './$types';
-  import ListItem from '$components/work/list-item.svelte';
-  import ErrorText from '$components/error-text.svelte';
+  import ListItem from '$components/lists/project-item.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`Work | Tag | ${pageTitle}`);
@@ -37,7 +37,7 @@
       </div>
     {:else}
       <div class="w-full flex flex-row items-center justify-center">
-        <ErrorText text="No data" classes="w-fit" />
+        <EmptyContent />
       </div>
     {/if}
   </div>

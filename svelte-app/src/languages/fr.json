@@ -18,7 +18,6 @@
   "Lover of cats & all things tech": "J'adore les chats et tout ce qui touche à la technologie",
   "More": "Plus",
   "My work": "Mon travail",
-  "No data": "Aucune informations",
   "now": "maintenant",
   "Pinned": "Épinglé",
   "Project": "Projet",
@@ -54,5 +53,7 @@
   "Open link in new window": "Ouvre le lien dans une nouvelle fenêtre",
   "Go to": "Aller à",
   "Copy email address": "Copier l'adresse e-mail",
-  "Mail": "Envoyer un e-mail"
+  "Mail": "Envoyer un e-mail",
+  "to": "à",
+  "Welcome to my little corner of the internet!": "Bienvenue dans mon petit coin de l'internet!"
 }

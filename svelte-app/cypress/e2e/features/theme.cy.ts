@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { toRGB } from '../helpers/colors';
-
 describe('E2E | features | theme', () => {
   beforeEach(() => {
     cy.wrap(
@@ -22,19 +19,19 @@ describe('E2E | features | theme', () => {
   });
 
   it('should toggle between light/dark mode', () => {
-    cy.get('body').should('have.css', 'background-color', toRGB('#111827'));
+    cy.get('[data-test-theme="dark"]').should('exist');
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
+    cy.get('[data-test-theme="light"]').should('exist');
   });
 
   it('should store preference in localStorage', () => {
-    cy.get('body').should('have.css', 'background-color', toRGB('#111827'));
+    cy.get('[data-test-theme="dark"]').should('exist');
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
+    cy.get('[data-test-theme="light"]').should('exist');
 
     cy.reload();
 
     cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
-    cy.get('body').should('have.css', 'background-color', toRGB('#e5e7eb'));
+    cy.get('[data-test-theme="light"]').should('exist');
   });
 });

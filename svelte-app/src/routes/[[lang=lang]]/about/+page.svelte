@@ -1,26 +1,18 @@
 <script lang="ts">
-  import ContentWrapper from '$components/content-wrapper.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
-  import { onMount, getContext } from 'svelte';
+  import { onMount } from 'svelte';
   import AboutCard from '$components/about/card.svelte';
   import AboutTimeline from '$components/about/timeline.svelte';
   import AboutSection from '$components/about/section.svelte';
   import type { PageData } from './$types';
   import { t } from '$i18n';
-  import { BASE_TRANSITION_DURATION } from '$lib/consts';
-
-  const getScrollContainer = getContext(
-    'getScrollContainer'
-  ) as () => HTMLDivElement | null;
+  import Divider from '$components/divider.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
-    setTimeout(
-      () => getScrollContainer()?.scrollTo({ top: 0, behavior: 'smooth' }),
-      BASE_TRANSITION_DURATION - 50
-    );
   });
 
   export let data: PageData;
@@ -52,6 +44,9 @@
       <AboutSection title={t('My work')} icon="Briefcase">
         <AboutTimeline data={about.timeline} />
       </AboutSection>
+    {/if}
+    {#if about?.timeline && about?.body}
+      <Divider />
     {/if}
     {#if about?.body}
       <AboutSection title={t('More')} icon="InfoBox">

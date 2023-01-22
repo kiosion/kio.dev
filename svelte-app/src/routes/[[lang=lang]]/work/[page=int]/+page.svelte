@@ -1,14 +1,13 @@
 <script lang="ts">
-  import ListItem from '$components/work/list-item.svelte';
+  import ListItem from '$components/lists/project-item.svelte';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import ErrorText from '$components/error-text.svelte';
   import Icon from '$components/icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
 
   let curPage = 1,
     totalPages = 1;
@@ -30,16 +29,6 @@
   <title>kio.dev | work | all work</title>
 </svelte:head>
 
-<IconHeader icon="bulletlist" text="All Work" />
-
-{#if projects?.data?.length}
-  {#each projects.data as project}
-    <ListItem {project} />
-  {/each}
-{:else}
-  <ErrorText text="No data" classes="w-fit" />
-{/if}
-
 <div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
   <div class="flex flex-row justify-start items-center gap-2">
     <Icon icon={'List'} />
@@ -58,3 +47,11 @@
     </Hoverable>
   </div>
 </div>
+
+{#if projects?.data?.length}
+  {#each projects.data as project}
+    <ListItem {project} />
+  {/each}
+{:else}
+  <EmptyContent />
+{/if}

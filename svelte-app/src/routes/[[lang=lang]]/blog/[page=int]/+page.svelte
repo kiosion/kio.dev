@@ -1,15 +1,14 @@
 <script lang="ts">
-  import ListItem from '$components/blog/list-item.svelte';
+  import ListSection from '$components/lists/blog-section.svelte';
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import ErrorText from '$components/error-text.svelte';
   import Icon from '$components/icon.svelte';
   import { page } from '$app/stores';
   import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
   import Hoverable from '$components/hoverable.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import SFX from '$lib/sfx';
+  import EmptyContent from '$components/empty-content.svelte';
 
   let curPage = 1,
     totalPages = 1;
@@ -31,16 +30,8 @@
   <title>kio.dev | blog | all posts</title>
 </svelte:head>
 
-<IconHeader icon="bulletlist" text="All Posts" />
-{#if posts?.data?.length}
-  {#each posts.data as post}
-    <ListItem {post} />
-  {/each}
-{:else}
-  <ErrorText text="No data" classes="w-fit" />
-{/if}
-<!-- Pagination, TODO: Split this into its own component -->
-<div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
+<!-- TODO: Split pagination into its own component -->
+<div class="w-full flex flex-row justify-between items-center mb-4">
   <div class="flex flex-row justify-start items-center gap-2">
     <Icon icon={'List'} />
     <h3 class="font-code text-lg">Page {curPage} of {totalPages}</h3>
@@ -64,3 +55,8 @@
     </Hoverable>
   </div>
 </div>
+{#if posts?.data?.length}
+  <ListSection posts={posts.data} />
+{:else}
+  <EmptyContent />
+{/if}

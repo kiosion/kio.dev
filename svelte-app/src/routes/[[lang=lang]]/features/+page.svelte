@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SwitchItem from '$components/toggles/switch-item.svelte';
+  import SwitchItem from '$components/controls/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import Features from '$stores/features';
   import { onMount } from 'svelte';

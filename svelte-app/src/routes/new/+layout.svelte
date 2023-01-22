@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PageTransition from '$components/page-transition.svelte';
+  import PageTransition from '$components/layouts/page-transition.svelte';
   import type { LayoutData } from './$types';
 
   export let data: LayoutData;

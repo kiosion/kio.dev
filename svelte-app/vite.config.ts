@@ -6,16 +6,18 @@ import svg from '@poppanator/sveltekit-svg';
 import babel from 'rollup-plugin-babel';
 
 export default defineConfig(({ command, mode }) => {
-  const isProduction = mode === 'production' || mode === 'staging',
+  const isProduction = ['production', 'staging', 'build'].some(
+      (m) => m === mode
+    ),
     isTesting = mode === 'testing',
-    isDev = mode === 'development' || mode === 'backed';
+    isDev = ['development', 'backed'].some((m) => m === mode);
 
   return {
     plugins: [
       svg(),
       sveltekit(),
       StripTestSelectors({
-        // confusingly named, 'dev' decides whether to strip or not
+        // confusingly named, 'dev' decides whether to strip or not for build or dev server
         dev: isProduction
       }),
       (isDev || isTesting) && Inspect(),

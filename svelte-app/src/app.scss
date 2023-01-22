@@ -5,16 +5,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700');
 
 .categoryTag {
-  @apply font-code text-base capitalize px-2 py-0.5 bg-gray-200 dark:bg-gray-900 hover:bg-gray-300/80 dark:hover:bg-gray-700/80 hover:shadow-[0_0_10px_-6px_var(--tw-shadow)] hover:shadow-gray-800/60 dark:hover:shadow-[0_0_12px_-2px_var(--tw-shadow)] dark:hover:shadow-gray-500/30 rounded-md transition-[color,background-color,box-shadow];
+  @apply font-code text-base capitalize px-2 py-0.5 bg-stone-300/60 dark:bg-stone-900/60 hover:bg-stone-400/40 dark:hover:bg-stone-700/80 rounded-md transition-colors border border-stone-400/60 dark:border-stone-500/60;
   &-sm {
-    @apply font-code text-sm capitalize px-2 py-0.5 bg-gray-300/50 dark:bg-gray-700/50 hover:bg-gray-400/40 dark:hover:bg-gray-600/60 hover:shadow-[0_0_10px_-6px_var(--tw-shadow)] hover:shadow-gray-500/40 dark:hover:shadow-[0_0_12px_-2px_var(--tw-shadow)] dark:hover:shadow-gray-600/20 rounded-md transition-[color,background-color,box-shadow];
+    @apply font-code text-sm capitalize px-2 py-0.5 bg-stone-400/20 dark:bg-stone-700/50 hover:bg-stone-400/40 dark:hover:bg-stone-600/60 border border-stone-400/60 dark:border-stone-500/60 rounded-md transition-colors;
   }
 }
 
 .focusOutline {
-  @apply focus-visible:outline outline-offset-4 outline-violet-400 dark:outline-violet-300 outline-2;
+  @apply focus-visible:outline outline-offset-4 outline-violet-400 outline-2;
   &-sm {
-    @apply focus-visible:outline outline-offset-2 outline-violet-400 dark:outline-violet-300 outline-2;
+    @apply focus-visible:outline outline-offset-2 outline-violet-400 outline-2;
   }
 }
 
@@ -36,12 +36,22 @@ img {
 }
 
 body {
-  background-color: $gray-900;
-  --textColour: $gray-100;
+  @media (min-width: 0px) {
+    background-color: $stone-900;
+  }
+  @media (min-width: 768px) {
+    background-color: $stone-800;
+  }
+  --textColour: $stone-50;
 
   &.light {
-    background-color: $gray-200;
-    --textColour: $gray-900;
+    @media (min-width: 0px) {
+      background-color: $stone-300;
+    }
+    @media (min-width: 768px) {
+      background-color: $stone-200;
+    }
+    --textColour: $stone-900;
   }
   &:not(.is-loaded) {
     &,
@@ -82,8 +92,8 @@ body {
 }
 
 ::selection {
-  background: $violet-300;
-  color: $gray-900;
+  background: rgba($violet-300, 0.8);
+  color: $stone-900;
 }
 
 .click-through {
