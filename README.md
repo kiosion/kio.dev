@@ -14,10 +14,10 @@ You can visit the live site at https://kio.dev.
 <img width="49%" src="https://user-images.githubusercontent.com/34040324/208616128-687d3783-6ab8-46c4-83aa-227a3f61c7c5.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/208616135-929b4874-e38f-4fdc-93f5-a18f6e55f326.png" />
 
 ## Tech stack
-The frontend of is built with:
+The frontend is built with:
 * Sveltekit
 * Typescript
-* Tailwind CSS and SCSS
+* Tailwindcss + some SCSS utils/scoped styles
 * Vite (with Rollup)
 * Babel
 
