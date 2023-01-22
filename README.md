@@ -11,7 +11,7 @@ You can visit the live site at https://kio.dev.
 
 ## Preview
 
-<img width="49%" src="https://user-images.githubusercontent.com/34040324/208616128-687d3783-6ab8-46c4-83aa-227a3f61c7c5.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/208616135-929b4874-e38f-4fdc-93f5-a18f6e55f326.png" />
+<img width="49%" src="https://user-images.githubusercontent.com/34040324/213913077-8a006ab8-70b5-405d-9ac0-69bf1188a006.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/213913110-6f3ee3c7-b6ac-404b-97ad-fc859404c66e.png" />
 
 ## Tech stack
 The frontend is built with:
