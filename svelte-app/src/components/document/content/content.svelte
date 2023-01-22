@@ -4,14 +4,19 @@
   import Footer from '$components/document/content/common/footer.svelte';
   import SummaryWrapper from '$components/document/content/common/summary/wrapper.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import type { PostDocument, ProjectDocument, ResData, Comment } from '$types';
+  import EmptyContent from '$components/empty-content.svelte';
+  import type {
+    PostDocument,
+    ProjectDocument,
+    Comment,
+    ResDataMany
+  } from '$types';
   import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
     headings: Heading[] | undefined,
-    comments: ResData<Comment[]> | undefined = undefined;
+    comments: ResDataMany<Comment> | undefined = undefined;
 </script>
 
 <Header {model} {data} />
@@ -22,11 +27,7 @@
   {#if data.body}
     <PortableText text={data.body} />
   {:else}
-    <IconHeader
-      icon={'Downasaur'}
-      text="Hm, it seems empty around here..."
-      classes="my-8"
-    />
+    <EmptyContent />
   {/if}
 </Wrapper>
 <Footer {model} {data} {comments} />

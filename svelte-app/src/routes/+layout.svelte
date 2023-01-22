@@ -2,18 +2,18 @@
   import '../app.scss';
   import { onMount, onDestroy, setContext } from 'svelte';
   import { classList } from 'svelte-body';
-  import { fade, fly } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import Loader from '$components/loading/full.svelte';
   import BarLoader from '$components/loading/bar.svelte';
-  import PageTransition from '$components/page-transition.svelte';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import Nav from '$components/nav/nav.svelte';
-  import HeaderControls from '$components/controls/header-controls.svelte';
+  import PageControls from '$components/controls/page-controls.svelte';
   import Features from '$stores/features';
   import type { LayoutData } from './$types';
-  import FooterControls from '$components/controls/footer-controls.svelte';
   import { browser } from '$app/environment';
   import ContextMenu from '$components/context-menu.svelte';
   import { state as menuState } from '$stores/menu';
@@ -94,7 +94,7 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`w-full h-full overflow-x-hidden ${
+  use:classList={`w-full h-full overflow-x-hidden transition-colors ${
     isDesktop ? 'desktop' : 'mobile'
   } ${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
@@ -118,7 +118,7 @@
       width="100vw"
       height="3px"
       segments={16}
-      classes="bg-slate-300/50 dark:bg-slate-900/50"
+      classes="bg-stone-300/50 dark:bg-stone-900/50"
     />
   </div>
 {/if}
@@ -134,16 +134,15 @@
 <div
   class="flex {$isDesktop
     ? 'flex-row'
-    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-gray-800 dark:text-white text-primary transition-colors"
+    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-stone-900 dark:text-stone-50 text-primary transition-colors"
+  data-test-app-root
+  data-test-theme={$theme}
   in:fly={{ delay: 100, duration: 100, y: -10 }}
   bind:this={pageContainer}
 >
   <Nav />
-  <div
-    class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-gray-100 dark:bg-gray-800 rounded-t-3xl p-8 md:rounded-l-3xl md:rounded-tr-none overflow-visible transition-colors focusOutline"
-    bind:this={scrollContainer}
-  >
-    <HeaderControls appBody={scrollContainer} />
+  <ScrollContainer bind:element={scrollContainer}>
+    <PageControls appBody={scrollContainer} position="top" />
     <div
       class="relative inner h-fit w-full max-w-[80rem] mx-auto {$isDesktop &&
         'mt-12'}"
@@ -154,6 +153,6 @@
         </PageTransition>
       {/if}
     </div>
-    <FooterControls />
-  </div>
+    <PageControls position="bottom" />
+  </ScrollContainer>
 </div>

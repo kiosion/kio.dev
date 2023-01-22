@@ -1,10 +1,10 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import ErrorText from '$components/error-text.svelte';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
   import type { SanityImageObject } from '$types/sanity';
   import type { InputValue } from '@portabletext/svelte/ptTypes';
+  import EmptyContent from '$components/empty-content.svelte';
 
   let pfpCrop: ImageCrop;
 
@@ -15,13 +15,15 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-gray-200/50 dark:bg-gray-900/50 rounded-xl"
+  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-stone-300/60 dark:bg-stone-900/50 border border-stone-400/60 dark:border-stone-500/60 rounded-xl"
 >
-  <div class="flex flex-row items-center justify-start w-full gap-6 p-1 h-fit">
-    <div class="h-16 md:h-24 aspect-square">
+  <div
+    class="flex flex-row items-center justify-start w-full gap-6 md:gap-7 p-3 md:p-4 pb-1 md:pb-2 h-fit"
+  >
+    <div class="h-20 md:h-24 aspect-square">
       {#if image?.asset}
         <img
-          class="h-full border rounded-full select-none aspect-square border-gray-400"
+          class="h-full outline outline-offset-2 outline-2 outline-stone-600 dark:outline-stone-300/90 rounded-full select-none aspect-square transition-[outline]"
           src={urlFor(image.asset._ref)
             .size(150, 150)
             .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
@@ -36,22 +38,22 @@
     </div>
     <div class="flex flex-col items-start justify-start flex-1 w-full h-full">
       <h3
-        class="text-2xl font-bold transition-colors font-display text-gray-800 dark:text-gray-100"
+        class="text-2xl font-bold transition-colors font-display text-stone-800 dark:text-stone-100"
       >
         Maxim
       </h3>
       <h4
-        class="font-mono text-xl font-bold transition-colors text-gray-600 dark:text-gray-300"
+        class="font-mono text-xl font-bold transition-colors text-stone-600 dark:text-stone-300"
       >
         @kiosion
       </h4>
     </div>
   </div>
-  <div class="flex-1 p-2 -my-4 font-sans">
+  <div class="flex-1 p-2 pt-0 -my-4 font-sans">
     {#if body}
       <PortableText text={body} />
     {:else}
-      <ErrorText text="No data" classes="w-fit" />
+      <EmptyContent />
     {/if}
   </div>
 </div>

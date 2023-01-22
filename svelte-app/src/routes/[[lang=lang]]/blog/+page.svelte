@@ -1,7 +1,6 @@
 <script lang="ts">
-  import ListItem from '$components/blog/list-item.svelte';
+  import ListItem from '$components/lists/blog-item.svelte';
   import { onMount } from 'svelte';
-  import ErrorText from '$components/error-text.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import { setupNavigation } from '$helpers/navigation';
@@ -11,7 +10,8 @@
   import { t } from '$lib/helpers/i18n';
   import SFX from '$lib/sfx';
   import type { PostDocument } from '$types';
-  import ListSection from '$components/blog/list-section.svelte';
+  import ListSection from '$components/lists/blog-section.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -50,14 +50,14 @@
   <ListItem post={pinned.data} />
 {/if}
 <!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
-<IconHeader icon="bulletlist" text={t('All posts')} />
+<IconHeader icon="bulletlist" text={t('Recent posts')} />
 {#if posts?.data?.length}
   <div class="flex flex-col">
     <ListSection posts={postsExceptPinned} />
   </div>
 {:else}
   <div class="w-full flex flex-row items-center justify-center">
-    <ErrorText text={t('No data')} classes="w-fit" />
+    <EmptyContent />
   </div>
 {/if}
 {#if posts?.meta?.total > RECENT_POSTS_COUNT}

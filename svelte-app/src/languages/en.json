@@ -18,7 +18,6 @@
   "Lover of cats & all things tech": "Lover of cats & all things tech",
   "More": "More",
   "My work": "My work",
-  "No data": "No data",
   "now": "now",
   "Pinned": "Pinned",
   "Project": "Project",
@@ -54,5 +53,7 @@
   "Open link in new window": "Open link in new window",
   "Go to": "Go to",
   "Copy email address": "Copy email address",
-  "Mail": "Mail"
+  "Mail": "Mail",
+  "to": "to",
+  "Welcome to my little corner of the internet!": "Welcome to my little corner of the internet!"
 }

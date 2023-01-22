@@ -27,6 +27,8 @@ export type AuthorTimelineItem = SanityAsset & {
 export interface AuthorDocument extends Omit<Document, 'slug' | 'date'> {
   bio: InputValue;
   name: string;
+  fullname: string;
+  at: string;
   image: SanityImageObject;
   timeline: AuthorTimelineItem[];
   contact: InputValue;

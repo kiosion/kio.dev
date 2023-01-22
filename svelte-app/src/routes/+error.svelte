@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import ContentWrapper from '$components/content-wrapper.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import IconHeader from '$components/headings/icon-header.svelte';
   import Divider from '$components/divider.svelte';

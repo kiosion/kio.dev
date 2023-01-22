@@ -44,8 +44,8 @@
 
 <div
   class="fixed top-0 left-0 w-[100vw] h-[100vh] {theme === 'light'
-    ? ' bg-gray-200'
-    : ' bg-gray-900'} flex flex-col items-center justify-between z-[100]"
+    ? ' bg-stone-200'
+    : ' bg-stone-900'} flex flex-col items-center justify-between z-[100]"
   data-test-id="loader-full"
   out:fade={{ duration: 200, delay: 600 }}
 >
@@ -59,8 +59,8 @@
     >
       <p
         class="{theme === 'light'
-          ? ' text-gray-700'
-          : ' text-gray-200'} font-mono text-base w-fit"
+          ? ' text-stone-700'
+          : ' text-stone-200'} font-mono text-base w-fit"
         data-test-id="loader-full-phrase"
       >
         {phrase}

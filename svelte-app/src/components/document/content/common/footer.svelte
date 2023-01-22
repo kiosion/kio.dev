@@ -5,11 +5,16 @@
   import Tags from '$components/tags.svelte';
   import { t } from '$i18n';
   import Features from '$stores/features';
-  import type { PostDocument, ProjectDocument, ResData, Comment } from '$types';
+  import type {
+    PostDocument,
+    ProjectDocument,
+    ResDataMany,
+    Comment
+  } from '$types';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
-    comments: ResData<Comment[]> | undefined = undefined;
+    comments: ResDataMany<Comment> | undefined = undefined;
 
   $: extLinks =
     model === 'project' &&
@@ -46,7 +51,7 @@
               href={link.url}
               target={'_blank'}
               rel={'noopener noreferrer'}
-              class="underlined from-violet-400 dark:from-violet-300 {link.hovered
+              class="underlined from-violet-300 {link.hovered
                 ? 'active dark:text-gray-800'
                 : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
               tabindex="0"

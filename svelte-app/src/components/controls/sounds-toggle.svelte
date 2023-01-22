@@ -12,7 +12,7 @@
 <Hoverable>
   <Tooltip text={t('Toggle sound effects')} fixed>
     <button
-      class="w-[20px] h-[20px] hover:text-violet-400 dark:hover:text-violet-300 rounded-sm focusOutline"
+      class="w-[20px] h-[20px] hover:text-violet-400 rounded-sm focusOutline"
       aria-label={t('Toggle sound effects')}
       data-test-id="sfx-toggle"
       data-test-state={$CanUseSounds ? 'on' : 'off'}

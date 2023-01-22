@@ -6,8 +6,9 @@
   const dispatch = createEventDispatcher();
 
   let target: HTMLElement;
-  export let classes = '';
-  export let hovered = false;
+  export let classes = '',
+    hovered = false,
+    setPointer = true;
 
   const handleHoverIn = () => {
     hovered = true;
@@ -45,7 +46,7 @@
 </script>
 
 <span
-  class="contents cursor-pointer {classes}"
+  class="contents {setPointer && 'cursor-pointer'} {classes}"
   data-test-id="hover-target"
   bind:this={target}
   on:mouseover={() => handleHoverIn()}

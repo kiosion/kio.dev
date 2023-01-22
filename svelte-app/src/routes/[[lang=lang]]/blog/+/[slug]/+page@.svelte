@@ -3,9 +3,9 @@
   import { navOptions, pageHeading } from '$stores/navigation';
   import PageHeading from '$components/headings/page-heading.svelte';
   import type { PageData } from './$types';
-  import ListItem from '$components/blog/list-item.svelte';
-  import ErrorText from '$components/error-text.svelte';
+  import ListItem from '$components/lists/blog-item.svelte';
   import { t } from '$i18n';
+  import EmptyContent from '$components/empty-content.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
   pageHeading.set(`${t('Blog')} | ${t('Tag')} | ${pageTitle}`);
@@ -34,7 +34,7 @@
       {/each}
     {:else}
       <div class="w-full flex flex-row items-center justify-center">
-        <ErrorText text={t('No posts found')} classes="w-fit" />
+        <EmptyContent />
       </div>
     {/if}
   </div>

@@ -76,7 +76,7 @@ const translate = (key: string, params?: Record<string, unknown>): string => {
 };
 
 const linkTo = (path: string, lang?: string): string => {
-  if (path.startsWith('http')) {
+  if (path.match(/(?:^(http|https|ftp|ssh)|^[^/].*\.([a-z]{2,6})).*?$/gim)) {
     return path;
   }
 

@@ -10,7 +10,7 @@
 <Hoverable>
   <Tooltip text={t('Toggle theme')} fixed>
     <button
-      class="w-[20px] h-[20px] hover:text-violet-400 dark:hover:text-violet-300 rounded-sm focusOutline"
+      class="w-[20px] h-[20px] hover:text-violet-400 rounded-sm focusOutline"
       aria-label={t('Toggle theme')}
       data-test-id="theme-toggle"
       data-test-state={$theme}

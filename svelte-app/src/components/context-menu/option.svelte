@@ -25,9 +25,9 @@
 
 <Hoverable>
   <div
-    class="w-full max-w-[460px] flex justify-start items-center gap-4 px-4 py-2  dark:text-gray-100 {disabled
-      ? 'bg-gray-400/50 cursor-not-allowed'
-      : 'hover:bg-gray-400/50 cursor-pointer'} transition-colors duration-75"
+    class="w-full max-w-[460px] flex justify-start items-center gap-4 px-4 py-2 {disabled
+      ? 'bg-stone-400/50 dark:bg-stone-500/50 text-stone-800 cursor-not-allowed'
+      : 'hover:bg-stone-200/50 dark:hover:bg-stone-300/50 cursor-pointer'} transition-colors duration-75"
     data-test-option-index={index}
     role="button"
     tabindex="0"

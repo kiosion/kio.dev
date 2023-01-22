@@ -1,7 +1,6 @@
 <script lang="ts">
-  import ListItem from '$components/work/list-item.svelte';
+  import ListItem from '$components/lists/project-item.svelte';
   import { onMount } from 'svelte';
-  import ErrorText from '$components/error-text.svelte';
   import type { PageData } from './$types';
   import IconHeader from '$components/headings/icon-header.svelte';
   import { page } from '$app/stores';
@@ -10,6 +9,7 @@
   import { RECENT_PROJECTS_COUNT } from '$lib/consts';
   import { t } from '$i18n';
   import SFX from '$lib/sfx';
+  import EmptyContent from '$components/empty-content.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -46,10 +46,10 @@
   </div>
 {/if}
 <!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
-<IconHeader icon="bulletlist" text={t('All projects')} />
+<IconHeader icon="bulletlist" text={t('Recent projects')} />
 {#if projects?.data?.length}
   <div
-    class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
+    class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
   >
     {#each projects.data as project}
       {#if project._id !== pinned?.data?._id}
@@ -59,7 +59,7 @@
   </div>
 {:else}
   <div class="w-full flex flex-row items-center justify-center">
-    <ErrorText text="No data" classes="w-fit" />
+    <EmptyContent />
   </div>
 {/if}
 {#if projects?.meta?.total > RECENT_PROJECTS_COUNT}

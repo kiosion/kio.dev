@@ -15,7 +15,7 @@
     getReadingTime
   } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
-  import { t } from '$i18n';
+  import { t, linkTo } from '$i18n';
   import type { PostDocument, ProjectDocument, PTBlock } from '$types';
   import Tags from '$components/tags.svelte';
   import { fionaPlaceholder } from '$helpers/placeholders';
@@ -65,32 +65,17 @@
     >
       <svelte:fragment slot="image">
         <Breakpoints queries={DEFAULT_BREAKPOINTS}>
-          <svelte:fragment slot="sm">
-            <div
-              class="absolute overflow-hidden -mt-16 -mb-20 z-[0] top-0 left-0 w-[112%] -translate-x-[5.2%]"
-            >
-              <div
-                class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
-              >
-                &nbsp;
-              </div>
-              <div
-                class="w-full aspect-[10/4] bg-cover bg-center"
-                style={`background-image: url("${imageSrc}");`}
-              />
-            </div>
-          </svelte:fragment>
           <svelte:fragment slot="lg">
             <div
               class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
             >
               <div
-                class="absolute w-full h-full gradient from-gray-100 dark:from-gray-800 transition-colors"
+                class="absolute w-full h-full gradient from-stone-200 dark:from-stone-800 transition-colors"
               >
                 &nbsp;
               </div>
               <div
-                class="w-full aspect-[10/4] bg-cover bg-center"
+                class="w-full aspect-[10/4] bg-cover bg-center border border-stone-400 dark:border-stone-400/40 border-b-0 rounded-t-2xl"
                 style={`background-image: url("${imageSrc}");`}
               />
             </div>
@@ -123,13 +108,13 @@
               <Tooltip text={t('View author')}>
                 <button
                   class="flex flex-row gap-2 items-center font-mono text-base rounded-sm focusOutline"
-                  on:click={() => goto('/about')}
+                  on:click={() => goto(linkTo('/about'))}
                   tabindex="0"
                 >
                   <div class="h-8 aspect-square">
                     {#if pfpRef && pfpCrop}
                       <img
-                        class="rounded-full aspect-square h-full select-none"
+                        class="rounded-full aspect-square h-full select-none border border-stone-500 dark:border-stone-400"
                         src={urlFor(pfpRef)
                           .size(50, 50)
                           .rect(
