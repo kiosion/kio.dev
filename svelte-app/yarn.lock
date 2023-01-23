@@ -3033,14 +3033,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-auto@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@sveltejs/adapter-auto@npm:1.0.0"
+"@sveltejs/adapter-auto@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@sveltejs/adapter-auto@npm:1.0.2"
   dependencies:
     import-meta-resolve: "npm:^2.2.0"
   peerDependencies:
     "@sveltejs/kit": ^1.0.0
-  checksum: a72ef593d93734d0416d3113078a3beb9676140b9c5029e319f7164b60c372a0d78f019a6606fde3a8b8153b56b02deb7cadc72d928c6d925396871ae5392e2d
+  checksum: 910ad43c73ce10b24a2725449cda109a9c11f02aea6ec257aae30467ee5062c12e3894b998a960236ebbec69cdea14786025a6829892d7aa0e382a80824def13
   languageName: node
   linkType: hard
 
@@ -15220,7 +15220,7 @@ __metadata:
     "@portabletext/svelte": "npm:^1.0.1"
     "@rgossiaux/svelte-headlessui": "npm:^1.0.2"
     "@sanity/image-url": "npm:^1.0.1"
-    "@sveltejs/adapter-auto": "npm:^1.0.0"
+    "@sveltejs/adapter-auto": "npm:^1.0.2"
     "@sveltejs/adapter-netlify": "npm:^1.0.0"
     "@sveltejs/adapter-node": "npm:^1.0.0"
     "@sveltejs/kit": "npm:1.0.1"
