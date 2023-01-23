@@ -2326,12 +2326,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^4.0.7":
-  version: 4.0.7
-  resolution: "rimraf@npm:4.0.7"
+"rimraf@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "rimraf@npm:4.1.1"
   bin:
     rimraf: dist/cjs/src/bin.js
-  checksum: 16f14f41fa63571754f6cea0982e07bf1d05c2ce6ae6f64e663d0a3b57c8dbf4cd3a27deb42ea73862041918c9f56d9f8c6ff44689a939752d659505179ea67f
+  checksum: a6d128f5196403da4f053a507109858098d011532ff7444ddd29d4f6783366183675f1993300ce76d5968c1bc81a645b995d8ce78cc2647eb4c13c984bffc21c
   languageName: node
   linkType: hard
 
@@ -2346,7 +2346,7 @@ __metadata:
     lint-staged: "npm:^13.1.0"
     prettier: "npm:^2.8.3"
     prettier-eslint: "npm:^15.0.1"
-    rimraf: "npm:^4.0.7"
+    rimraf: "npm:^4.1.1"
     stylelint: "npm:^14.16.1"
     stylelint-config-standard-scss: "npm:^6.1.0"
     typescript: "npm:^4.9.4"
