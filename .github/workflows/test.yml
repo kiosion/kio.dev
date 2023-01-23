@@ -35,7 +35,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: make install-web-ci
+        run: make install-web
       - name: Run tests
         run: make vitest
 
@@ -60,7 +60,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: make install-web-ci
+        run: make install-web
       - name: Build testing environment
         env:
           SVELTE_ADAPTER_ENV: 'node'

@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-nm-18-
       - name: Install dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: make install-web-ci
+        run: make install-web
       - name: Run lint check
         run: make lint
   tests:

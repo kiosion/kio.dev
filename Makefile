@@ -38,7 +38,7 @@ sanity-%: SHELL:=/bin/bash
 sanity-%: install-sanity
 sanity-%:
 	@cd ./sanity-cms &&\
-	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) yarn dev $(if $(findstring -ci,$@),--immutable)
+	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) yarn dev
 
 web: SHELL:=/bin/bash
 web: install-web
