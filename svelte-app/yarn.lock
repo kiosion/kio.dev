@@ -3840,12 +3840,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^0.25.8":
-  version: 0.25.8
-  resolution: "@vitest/ui@npm:0.25.8"
+"@vitest/ui@npm:^0.28.1":
+  version: 0.28.1
+  resolution: "@vitest/ui@npm:0.28.1"
   dependencies:
+    fast-glob: "npm:^3.2.12"
+    flatted: "npm:^3.2.7"
+    pathe: "npm:^1.1.0"
+    picocolors: "npm:^1.0.0"
     sirv: "npm:^2.0.2"
-  checksum: 185f8d8869de7110c59141d1f7377b339263430cceeaaf5fbe56ae2ff7a1c5431a972a5dfee9791ffb353443939064007e5eb02e7986728e1aa7f5803f9c384a
+  checksum: ca1103d98e50dbe3462d013964a83119ba452dcd85474bd61b28947fa2c9ee59d081bcf10a58f2923b3cad0d0d28a87b513ef042bcb0f8dd3337e718ff70e819
   languageName: node
   linkType: hard
 
@@ -8119,6 +8123,13 @@ __metadata:
   version: 3.2.6
   resolution: "flatted@npm:3.2.6"
   checksum: 258feebea8962c3632e9bbd5a565257a802ebea99d0a6f999503c6fa7f6ed1830566b0da4854c9933a4d3a6f1ecb21ce4d26eca6ac28624478f08b8d2a8c1f43
+  languageName: node
+  linkType: hard
+
+"flatted@npm:^3.2.7":
+  version: 3.2.7
+  resolution: "flatted@npm:3.2.7"
+  checksum: d57a559a56f8743f48067b992e70f222921bec6656de4617ee60dab5e531c2aeba67ace287965b759cca80fa0d3f0c7ffc39341ccc9bc874594f4b73c0fea48c
   languageName: node
   linkType: hard
 
@@ -12894,6 +12905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pathe@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pathe@npm:1.1.0"
+  checksum: 467cb4c0813dc810c8cd056c7c54ef628eb8ff4801057cd9861a8ff2e30143dbdf7e5765e2bd69c7ea65c151b84bbb9956afa9f1802683da2e3ce6565eadaae4
+  languageName: node
+  linkType: hard
+
 "pathval@npm:^1.1.1":
   version: 1.1.1
   resolution: "pathval@npm:1.1.1"
@@ -15218,7 +15236,7 @@ __metadata:
     "@types/seedrandom": "npm:^3.0.4"
     "@typescript-eslint/eslint-plugin": "npm:^5.42.0"
     "@typescript-eslint/parser": "npm:^5.47.1"
-    "@vitest/ui": "npm:^0.25.8"
+    "@vitest/ui": "npm:^0.28.1"
     autoprefixer: "npm:^10.4.13"
     c8: "npm:^7.12.0"
     cypress: "npm:12.0.1"
