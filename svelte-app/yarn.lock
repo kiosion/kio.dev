@@ -3248,15 +3248,15 @@ __metadata:
   linkType: hard
 
 "@types/babel__core@npm:^7":
-  version: 7.1.20
-  resolution: "@types/babel__core@npm:7.1.20"
+  version: 7.20.0
+  resolution: "@types/babel__core@npm:7.20.0"
   dependencies:
-    "@babel/parser": "npm:^7.1.0"
-    "@babel/types": "npm:^7.0.0"
+    "@babel/parser": "npm:^7.20.7"
+    "@babel/types": "npm:^7.20.7"
     "@types/babel__generator": "npm:*"
     "@types/babel__template": "npm:*"
     "@types/babel__traverse": "npm:*"
-  checksum: 4667028c09cfedb3aafdd08fa9efc20ed62275b65a7bfdbf724e9901babcc75904f6a2807e2ccafbf6acbad855f8a844e6603d4185cd5e478fa279a1b10ca1f2
+  checksum: bf92f75954f36771eec94945ec0b38add06f3fb4605b67b7652d641604d60e9c6fd074810746f654bb3414efcc7fad648da4092ae7975d1b44dd2de59f86a577
   languageName: node
   linkType: hard
 
