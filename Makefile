@@ -1,24 +1,24 @@
 .PHONY: install, dev, test, cypress, cleanup
 
-install%: SHELL:=/bin/bash
-install%:
-	@echo "Installing dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
-	@yarn install $(if $(findstring -ci,$@),--immutable)
+install: SHELL:=/bin/bash
+install:
+	@echo "Installing dependencies..."
+	@yarn install
 
-install-web%: SHELL:=/bin/bash
-install-web%: install%
-install-web%:
-	@echo "Installing svelte dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
+install-web: SHELL:=/bin/bash
+install-web: install
+install-web:
+	@echo "Installing svelte dependencies..."
 	@cd ./svelte-app &&\
-	yarn install $(if $(findstring -ci,$@),--immutable)
+	yarn install
 
 # install sanity deps
-install-sanity%: SHELL:=/bin/bash
-install-sanity%: install%
-install-sanity%:
-	@echo "Installing sanity dependencies$(if $(findstring -ci,$@)," \(CI\)")..."
+install-sanity: SHELL:=/bin/bash
+install-sanity: install
+install-sanity:
+	@echo "Installing sanity dependencies..."
 	@cd ./sanity-cms &&\
-	yarn install $(if $(findstring -ci,$@),--immutable)
+	yarn install
 
 # Install api deps
 install-api: SHELL:=/bin/bash
@@ -34,11 +34,11 @@ api:
 	@cd ./elixir-api &&\
 	make dev
 
-sanity%: SHELL:=/bin/bash
-sanity%: install-sanity%
-sanity%:
+sanity-%: SHELL:=/bin/bash
+sanity-%: install-sanity
+sanity-%:
 	@cd ./sanity-cms &&\
-	SANITY_STUDIO_DATASET=$(if $(findstring -dev,$@),dev,prod) yarn sanity dev $(if $(findstring -ci,$@),--immutable)
+	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) yarn dev $(if $(findstring -ci,$@),--immutable)
 
 web: SHELL:=/bin/bash
 web: install-web
