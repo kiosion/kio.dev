@@ -13,7 +13,7 @@
     "lint": "yarn format && eslint --fix './**/*.js'"
   },
   "dependencies": {
-    "@sanity/code-input": "^3.0.1",
+    "@sanity/code-input": "^4.0.0",
     "@sanity/ui": "^1.0.14",
     "@sanity/vision": "^3.2.4",
     "ace-builds": "^1.14.0",
