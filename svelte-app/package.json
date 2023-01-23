@@ -69,7 +69,7 @@
     "netlify-cli": "^12.7.2",
     "node-html-to-image": "^3.2.4",
     "postcss": "^8.4.19",
-    "prettier": "^2.8.0",
+    "prettier": "^2.8.3",
     "prettier-plugin-svelte": "^2.8.0",
     "randomstring": "^1.2.2",
     "rimraf": "^3.0.2",
