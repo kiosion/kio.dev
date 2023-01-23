@@ -1,11 +1,10 @@
 import HightlightRenderer from '../renderers/highlight';
 import FootnoteRenderer from '../renderers/footnote';
 import LinkRenderer from '../renderers/link';
+import Code from '../fields/code';
 
 import { BsLink45Deg } from 'react-icons/bs';
 import { BiHighlight, BiNote } from 'react-icons/bi';
-
-import { CodeBlockExtensionOpts } from '../utils/code';
 
 export const CustomMarks = {
   decorators: [
@@ -17,10 +16,8 @@ export const CustomMarks = {
     {
       title: 'Highlight',
       value: 'highlight',
-      blockEditor: {
-        icon: BiHighlight,
-        render: HightlightRenderer
-      }
+      icon: BiHighlight,
+      component: HightlightRenderer
     }
   ],
   annotations: [
@@ -47,10 +44,8 @@ export const CustomMarks = {
           initialValue: true
         }
       ],
-      blockEditor: {
-        icon: BsLink45Deg,
-        render: LinkRenderer
-      }
+      icon: BsLink45Deg,
+      component: LinkRenderer
     }
   ]
 };
@@ -83,10 +78,8 @@ export const BodyBlocks = [
               ]
             }
           ],
-          blockEditor: {
-            icon: BiNote,
-            render: FootnoteRenderer
-          }
+          icon: BiNote,
+          component: FootnoteRenderer
         }
       ]
     }
@@ -97,7 +90,7 @@ export const BodyBlocks = [
       hotspot: true
     }
   },
-  { type: 'code', options: CodeBlockExtensionOpts },
+  Code,
   { type: 'divider' }
 ];
 
