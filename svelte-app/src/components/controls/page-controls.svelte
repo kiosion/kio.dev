@@ -37,7 +37,7 @@
               <a
                 data-sveltekit-preload-data
                 data-sveltekit-preload-code
-                href={linkTo($navOptions.up)}
+                href={linkTo(navOption)}
                 class="w-fit flex flex-row items-center select-none {scrollNavHovered
                   ? `scroll-hover-${position === 'bottom' ? 'down' : 'up'}`
                   : ''} rounded-sm focusOutline"
@@ -46,13 +46,13 @@
                 on:keydown={(e) => {
                   if (e.code === 'Enter' || e.code === 'Space') {
                     SFX.click.play();
-                    goto($navOptions.up).catch(() => undefined);
+                    goto(navOption).catch(() => undefined);
                   }
                 }}
               >
                 <Icon icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'} />
                 <p class="font-code text-base w-fit ml-4">
-                  {t(actionText)} ({$navOptions.up})
+                  {t(actionText)} ({navOption})
                 </p>
               </a>
             {:else}
