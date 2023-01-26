@@ -5,11 +5,11 @@ defmodule Hexerei.Router do
 
   use Plug.Router
   use Plug.ErrorHandler
+  use Hexerei.Response
 
   plug(Plug.Logger)
 
-  @application_version Application.compile_env(:hexerei, :version)
-  @application_name Application.compile_env(:hexerei, :name)
+  @application_version Application.spec(:hexerei, :vsn) |> to_string()
 
   forward("/api", to: Router.Api)
   forward("/cdn", to: Router.Cdn)
@@ -25,10 +25,9 @@ defmodule Hexerei.Router do
   plug(:dispatch)
 
   get "/" do
-    Hexerei.Res.json(conn, 418, %{code: 418, message: "Do I look like a coffee pot to you??"})
+    conn |> json_res(418, %{code: 418, message: "Do I look like a coffee pot to you??"})
   end
 
-  # TODO: Shouldn't be a public endpoint?
   get "/healthcheck" do
     # Call memsup with Kernel.then since it's not synchronous
     mem = :memsup.get_system_memory_data()
@@ -42,30 +41,38 @@ defmodule Hexerei.Router do
     end)
 
     upt = System.system_time(:millisecond) - Application.get_env(:hexerei, :started_at)
+    elixir = to_string(System.version())
+    otp = to_string(:erlang.system_info(:otp_release))
+    spec = Application.spec(:hexerei) |> Enum.into(%{})
+    app_name = to_string(spec.description)
+    app_version = to_string(spec.vsn)
 
     # For now, just return 'ok' for statuses until monitoring is done
     statusInfo = %{
       "status" => %{
         "self" => "ok",
-        "sanity" => "ok",
-        "algolia" => "ok"
+        "sanity" => "ok"
       },
-      "version" => "#{@application_name} v#{@application_version}",
+      "runtime" => %{
+        "self" => "#{app_name} v#{app_version}",
+        "elixir" => elixir,
+        "otp" => otp,
+      },
+      "usage" => "#{Map.get(mem, :used)}/#{Map.get(mem, :total)} MB",
       "uptime" => "#{upt / 1000 / 60 / 60 / 24 |> Float.floor() |> Kernel.trunc()}d #{upt / 1000 / 60 / 60 |> Float.floor() |> Kernel.trunc()}h #{upt / 1000 / 60 |> Float.floor() |> Kernel.trunc()}m",
-      "usage" => "#{Map.get(mem, :used)}/#{Map.get(mem, :total)} MB"
     }
 
-    Hexerei.Res.json(conn, 200, %{code: 200, data: statusInfo })
+    conn |> json_res(200, %{code: 200, data: statusInfo })
   end
 
   # Fallback route
   match _ do
-    Hexerei.Res.json(conn, 404, %{code: 404, message: "Resource not found or method not allowed"})
+    conn |> json_res(404, %{code: 404, message: "Resource not found or method not allowed"})
   end
 
   # Error handling
   @impl Plug.ErrorHandler
   def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
-    Hexerei.Res.err(conn, conn.status, "Something went wrong")
+    conn |> generic_error()
   end
 end

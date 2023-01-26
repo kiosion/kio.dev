@@ -5,6 +5,7 @@ defmodule Router.Cdn do
 
   use Plug.Router
   use Plug.ErrorHandler
+  use Hexerei.Response
 
   plug(:match)
 
@@ -45,45 +46,41 @@ defmodule Router.Cdn do
 
   # Parse image asset URLs
   get "/images/*path" do
-    # Get full request url including query params
     url = conn.request_path <> "?" <> conn.query_string
+    url_parts = url |> parse_url()
 
-    url_parts = parse_url(url)
-
-    if url_parts.filetype == nil do
-      Hexerei.Res.err(conn, 400, "No filetype specified")
-    end
-
-    case Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string) do
-      {:ok, url} ->
+    with true <- is_binary(url_parts.filetype) do
+      with {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string) do
         case HTTPoison.get(url) do
           {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
             conn
             |> put_resp_content_type("image/#{url_parts.filetype}")
             |> send_resp(200, body)
-            |> halt()
           {:ok, %HTTPoison.Response{status_code: 404}} ->
-            Hexerei.Res.err(conn, 404, "Image not found")
+            error_res(conn, 404, "Image not found")
           {:ok, %HTTPoison.Response{status_code: 400}} ->
-            Hexerei.Res.err(conn, 400, "Bad request")
+            error_res(conn, 400, "Bad request")
           {:ok, %HTTPoison.Response{}} ->
-            Hexerei.Res.err(conn, 500, "Something went wrong")
+            error_res(conn, 500, "Something went wrong")
           {:error, %HTTPoison.Error{reason: reason}} ->
-            Hexerei.Res.err(conn, 500, "Something went wrong: #{reason}")
+            error_res(conn, 500, "Something went wrong: #{reason}")
         end
-      {:error, reason} ->
-        Hexerei.Res.err(conn, 500, reason)
+      else
+        {:error, reason} -> conn |> error_res(500, reason)
+      end
+    else
+      _ -> conn |> error_res(400, "Invalid request", "No filetype specified")
     end
   end
 
   # Fallback route
   match _ do
-    Hexerei.Res.json(conn, 404, %{code: 404, message: "Not found"})
+    conn |> error_res(404, %{code: 404, message: "Not found"})
   end
 
   # Handle unexpected errors
   @impl Plug.ErrorHandler
   def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
-    Hexerei.Res.err(conn, 500, "Something went wrong")
+    conn |> generic_error()
   end
 end

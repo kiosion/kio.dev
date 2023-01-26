@@ -20,19 +20,9 @@ install-sanity:
 	@cd ./sanity-cms &&\
 	yarn install
 
-# Install api deps
-install-api: SHELL:=/bin/bash
-install-api:
-	@cd ./elixir-api &&\
-	mix deps.get &&\
-	mix local.hex --if-missing --force &&\
-	mix local.rebar --if-missing --force
-
 api: SHELL:=/bin/bash
-api: install-api
 api:
-	@cd ./elixir-api &&\
-	make dev
+	@cd ./elixir-api && make dev
 
 sanity-%: SHELL:=/bin/bash
 sanity-%: install-sanity
@@ -47,7 +37,7 @@ web:
 	yarn dev
 
 server: SHELL:=/bin/bash
-server: install-api install-web
+server: install-web
 server:
 	@echo "Starting dev servers..."
 	@./scripts/server.sh

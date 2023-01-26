@@ -5,13 +5,13 @@ defmodule HexereiTest do
   @opts Hexerei.Router.init([])
 
   test "GET /" do
-    # Build connection with GET req to "/"
     conn = conn(:get, "/")
-    # Pass conn to router
     conn = Hexerei.Router.call(conn, @opts)
-    # Assert response status
     assert conn.state == :sent
-    assert conn.status == 200
-    assert conn.resp_body == "Hello World!"
+    assert conn.status == 418
+    body = Poison.decode!(conn.resp_body)
+    assert body["message"] == "Do I look like a coffee pot to you??"
   end
+
+  # TODO: Finally finish thses tests lol
 end
