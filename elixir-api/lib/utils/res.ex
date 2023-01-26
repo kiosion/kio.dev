@@ -27,10 +27,12 @@ defmodule Hexerei.Response do
 
   # Standard json res for expected errors
   def error_res(conn, status, message, detail \\ nil) do
-    reason = case detail != nil do
+    content = case detail != nil do
       true -> %{code: status, message: message, detail: detail}
       _ -> %{code: status, message: message}
     end
+
+    conn |> json_res(status, content)
   end
 
   # Standard json res for unexpected errors

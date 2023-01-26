@@ -34,7 +34,6 @@ defmodule Router.Api.V1 do
         _ -> cb.(conn, result)
       end
     else
-      # TODO: Error logging
       {:error, error} -> conn |> generic_error(error.message)
     end
   end
@@ -48,8 +47,6 @@ defmodule Router.Api.V1 do
 
   defp document_counts_query(query), do: "{ 'total': count(#{query}) }"
   defp document_counts_query(query, limited_query), do: "{ 'total': count(#{query}), 'count': count(#{limited_query}) }"
-
-  ## Routes
 
   get "#{@query_url}/post/:id" do
     params = validate_query_params(%{
@@ -258,12 +255,13 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/now" do
-    conn |> handle_sanity_fetch(BuildQuery.nowPage(), fn (conn, result) ->
-      Poison.decode!(result)
-        |> Map.delete("ms")
-        |> Map.delete("query")
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
-    end)
+    conn |> error_res(404, "Not found")
+    # conn |> handle_sanity_fetch(BuildQuery.nowPage(), fn (conn, result) ->
+    #   Poison.decode!(result)
+    #     |> Map.delete("ms")
+    #     |> Map.delete("query")
+    #     |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
+    # end)
   end
 
   get "/config" do
