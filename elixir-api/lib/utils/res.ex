@@ -1,4 +1,4 @@
-defmodule Hexerei.Res do
+defmodule Hexerei.Response do
   @moduledoc """
   Basic response templates
   """
@@ -11,19 +11,33 @@ defmodule Hexerei.Res do
     json_decoder: Poison
   )
 
-  # Standard json res using Conn, status code, and res content
-  def json(conn, status, res) do
+  defmacro __using__(_opts) do
+    quote do
+      import Hexerei.Response
+    end
+  end
+
+  # Standard json response
+  def json_res(conn, status, content) do
     conn
     |> put_resp_content_type("application/json")
     |> put_resp_header("cache-control", "no-cache")
-    |> send_resp(status, Poison.encode!(res))
+    |> send_resp(status, Poison.encode!(content))
   end
 
   # Standard json res for expected errors
-  def err(conn, status, reason) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> put_resp_header("cache-control", "no-cache")
-    |> send_resp(status, Poison.encode!(%{code: status, message: reason}))
+  def error_res(conn, status, message, detail \\ nil) do
+    reason = case detail != nil do
+      true -> %{code: status, message: message, detail: detail}
+      _ -> %{code: status, message: message}
+    end
+  end
+
+  # Standard json res for unexpected errors
+  def generic_error(conn, detail \\ nil) do
+    case detail != nil do
+      true -> conn |> error_res(500, "Something went wrong", to_string(detail))
+      _ -> conn |> error_res(500, "Something went wrong")
+    end
   end
 end

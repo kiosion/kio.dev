@@ -1,4 +1,6 @@
 defmodule Hexerei.Plug.VerifyRequest do
+  use Hexerei.Response
+
   import Plug.Conn
 
   # alias Hexerei.JWT
@@ -26,13 +28,14 @@ defmodule Hexerei.Plug.VerifyRequest do
     token
     |> verify_token()
     |> case do
-      {:error, message} -> Hexerei.Res.err(conn, 401, message)
+      {:error, message} -> conn |> error_res(401, message)
       {:ok, _token} -> conn
     end
   end
 
   defp verify_request({conn}) do
-    Hexerei.Res.err(conn, 401, "Missing authorization")
+    conn
+    |> error_res(401, "Missing authorization")
     |> halt()
   end
 

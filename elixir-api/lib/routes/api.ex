@@ -1,6 +1,7 @@
 defmodule Router.Api do
   use Plug.Router
   use Plug.ErrorHandler
+  use Hexerei.Response
 
   forward("/v1", to: Router.Api.V1)
 
@@ -9,11 +10,11 @@ defmodule Router.Api do
   plug(:dispatch)
 
   match "/v:any" do
-    Hexerei.Res.err(conn, 400, "Invalid version specified")
+    conn |> error_res(400, "Invalid version specified")
   end
 
   # Fallback
   match _ do
-    Hexerei.Res.json(conn, 400, %{code: 400, message: "No version specified"})
+    conn |> error_res(400, %{code: 400, message: "No version specified"})
   end
 end
