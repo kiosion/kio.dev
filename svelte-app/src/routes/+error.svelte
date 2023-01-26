@@ -51,7 +51,11 @@
     </div>
     <IconHeader
       icon="Downasaur"
-      text={t($page.error?.message || message)}
+      text={t(
+        $page.error?.message && $page.status !== 404
+          ? $page.error.message
+          : message
+      )}
       classes="mx-auto w-fit"
     />
   </ContentWrapper>

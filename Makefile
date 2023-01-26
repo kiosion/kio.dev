@@ -96,8 +96,7 @@ cypress:
 
 lint: SHELL:=/bin/bash
 lint:
-	@cd ./svelte-app &&\
-	yarn lint
+	@cd ./svelte-app && yarn lint
 
 # Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash

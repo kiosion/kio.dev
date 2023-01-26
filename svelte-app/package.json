@@ -19,7 +19,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin-search-dir=. ./src/**/*.{ts,svelte}",
-    "lint": "NODE_OPTIONS=--max-old-space-size=1900 yarn format && eslint --fix ./src/**/*.{ts,svelte}"
+    "format:json": "deno run --allow-read --allow-write ./scripts/sort-json.ts --fix ./src/languages/en.json ./src/languages/fr.json",
+    "lint": "NODE_OPTIONS=--max-old-space-size=1900 yarn format && eslint --fix ./src/**/*.{ts,svelte} && yarn format:json"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -99,6 +100,7 @@
   },
   "type": "module",
   "dependencies": {
+    "cal-sans": "^1.0.1",
     "fiona": "^4.1.4",
     "pixelarticons": "^1.7.0",
     "twemoji": "patch:twemoji@npm%3A14.0.2#~/.yarn/patches/twemoji-npm-14.0.2-bd5648dce6.patch"

@@ -3,7 +3,7 @@
   import { t } from '$i18n';
 </script>
 
-<div data-test-route="work" class="w-full pb-20">
+<div data-test-route="work" class="w-full pb-20 max-w-[80rem] mx-auto">
   <PageHeading
     heading={t('Work')}
     text={t(

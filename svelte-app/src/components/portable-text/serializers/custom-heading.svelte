@@ -4,6 +4,8 @@
 
   export let portableText: BlockComponentProps;
 
+  const baseHeadingClasses = 'inline font-display font-bold';
+
   $: ({ value } = portableText);
   $: ({ style } = value);
 </script>
@@ -17,23 +19,23 @@
     href={`#${value._key}`}
   >
     {#if style === 'h1'}
-      <h1 class="inline font-display text-4xl font-bold">
+      <h1 class="{baseHeadingClasses} text-5xl">
         <slot />
       </h1>
     {:else if style === 'h2'}
-      <h2 class="inline font-display text-3xl font-bold">
+      <h2 class="{baseHeadingClasses} text-4xl">
         <slot />
       </h2>
     {:else if style === 'h3'}
-      <h3 class="inline font-display text-2xl font-bold">
+      <h3 class="{baseHeadingClasses} text-4xl">
         <slot />
       </h3>
     {:else if style === 'h4'}
-      <h4 class="inline font-display text-xl font-bold">
+      <h4 class="{baseHeadingClasses} text-3xl">
         <slot />
       </h4>
     {:else}
-      <h5 class="inline font-display text-lg font-bold">
+      <h5 class="{baseHeadingClasses} text-xl">
         <slot />
       </h5>
     {/if}

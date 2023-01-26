@@ -19,6 +19,7 @@
 }
 
 @import 'styles/colors';
+@import 'styles/fonts';
 
 body,
 html {
@@ -110,15 +111,5 @@ body {
   &,
   &:focus {
     outline: none !important;
-  }
-}
-
-.comicSans {
-  .font-display,
-  .font-code,
-  .font-sans,
-  .font-mono {
-    font-family: 'Comic Neue', sans-serif !important;
-    font-weight: 700;
   }
 }
