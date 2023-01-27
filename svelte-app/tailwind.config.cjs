@@ -8,15 +8,17 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
-        mono: ['"Work Sans"', ...defaultTheme.fontFamily.mono],
-        code: ['"Ubuntu Mono"', ...defaultTheme.fontFamily.mono],
-        display: ['Poppins', ...defaultTheme.fontFamily.sans]
+        mono: ['Work Sans', ...defaultTheme.fontFamily.mono],
+        code: ['Ubuntu Mono', ...defaultTheme.fontFamily.mono],
+        heading: ['Poppins', ...defaultTheme.fontFamily.sans],
+        display: ['Cal Sans', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
-        '3xl': '28px',
-        '4xl': '32px',
-        '5xl': '38px',
-        '6xl': '46px'
+        '4xl': ['2.25rem', '2.5rem'],
+        '5xl': ['2.25rem', '1'],
+        '6xl': ['3rem', '1'],
+        '7xl': ['3.825rem', '1'],
+        '8xl': ['4.5rem', '1'],
       },
       borderRadius: {
         'sm': '0.2rem'

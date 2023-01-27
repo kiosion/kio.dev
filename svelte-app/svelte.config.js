@@ -13,7 +13,8 @@ const config = {
       $helpers: 'src/lib/helpers',
       $stores: 'src/stores',
       $langs: 'src/languages',
-      $i18n: 'src/lib/helpers/i18n'
+      $i18n: 'src/lib/helpers/i18n',
+      $routes: 'src/routes'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'

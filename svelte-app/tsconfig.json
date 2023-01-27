@@ -19,6 +19,7 @@
       "$stores/*": ["src/stores/*"],
       "$langs/*": ["src/languages/*"],
       "$i18n": ["src/lib/helpers/i18n"],
+      "$routes/*": ["src/routes/*"],
       "$types": ["types/app/index.d.ts"],
       "$types/*": ["types/app/*"],
       "*": ["types/*"]

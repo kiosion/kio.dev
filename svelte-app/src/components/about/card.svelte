@@ -38,7 +38,7 @@
     </div>
     <div class="flex flex-col items-start justify-start flex-1 w-full h-full">
       <h3
-        class="text-2xl font-bold transition-colors font-display text-stone-800 dark:text-stone-100"
+        class="text-2xl font-bold transition-colors font-heading text-stone-800 dark:text-stone-100"
       >
         Maxim
       </h3>

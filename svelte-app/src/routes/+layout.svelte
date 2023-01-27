@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.scss';
+  import 'cal-sans';
   import { onMount, onDestroy, setContext } from 'svelte';
   import { classList } from 'svelte-body';
   import { fly } from 'svelte/transition';
@@ -19,12 +20,9 @@
   import { state as menuState } from '$stores/menu';
   import { setState as setMenuState } from '$lib/helpers/menu';
   import CustomCursor from '$components/custom-cursor.svelte';
+  import { isDesktop } from '$helpers/responsive';
   import { useMediaQuery } from 'svelte-breakpoints';
-  import {
-    APP_LANGS,
-    DEFAULT_APP_LANG,
-    DEFAULT_DESKTOP_BREAKPOINT
-  } from '$lib/consts';
+  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
 
   interface DevToolsEvent extends Event {
@@ -45,8 +43,6 @@
   const navUnsubscribe = navigating.subscribe((res) => {
     !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
   });
-
-  const isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
 
   const unsubscribePreferReducedMotion = useMediaQuery(
     '(prefers-reduced-motion: reduce)'
@@ -134,18 +130,19 @@
 <div
   class="flex {$isDesktop
     ? 'flex-row'
-    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-stone-900 dark:text-stone-50 text-primary transition-colors"
+    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-stone-900 dark:text-stone-50 text-primary transition-colors duration-150"
   data-test-app-root
   data-test-theme={$theme}
-  in:fly={{ delay: 100, duration: 100, y: -10 }}
+  in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
   <Nav />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
     <div
-      class="relative inner h-fit w-full max-w-[80rem] mx-auto {$isDesktop &&
-        'mt-12'}"
+      class="relative inner {$isDesktop
+        ? 'mt-[3rem] h-[calc(100%_-_3rem)]'
+        : 'h-full'} w-full"
     >
       {#if appLoaded}
         <PageTransition url={data.url}>

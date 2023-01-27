@@ -80,7 +80,7 @@
               <Hoverable>
                 <Tooltip text={t('Scroll to top')} position="bottom" fixed>
                   <button
-                    class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline drop-shadow-md -translate-x-1/4"
+                    class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline drop-shadow-md"
                     aria-label="Scroll to top"
                     on:click={() =>
                       appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}

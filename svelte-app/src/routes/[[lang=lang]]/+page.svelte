@@ -5,6 +5,10 @@
   import { onMount } from 'svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import { isDesktop } from '$helpers/responsive';
+  import LinkNonPt from '$components/link-non-pt.svelte';
+  import FloatingBgImage from '$components/floating-bg-image.svelte';
+  import { theme } from '$stores/theme';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -31,43 +35,92 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<div class="h-fit w-full translate-y-[50%]" data-test-route="index">
+<div
+  class="relative w-full {$isDesktop
+    ? 'mb-[3rem] h-[calc(100%_-_3rem)]'
+    : 'h-full'}"
+  data-test-route="index"
+>
   <Breakpoints queries={DEFAULT_BREAKPOINTS}>
     <svelte:fragment slot="lg">
       <div
-        class="mt-[40vh] flex flex-col mx-auto items-center justify-center gap-2"
+        class="relative pb-[12%] p-[10%] w-full h-full flex flex-col items-start justify-end gap-6 z-10"
       >
-        <p
-          class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5"
-        >
-          {t("Hi there, I'm Kio")}<span class="text-violet-300 ml-[2px]">.</span
-          >
-        </p>
-        <p class="font-sans text-lg -mb-1 text-center leading-9">
-          {t('Software engineer / web dev / artist')}<br />
-          {t('Lover of cats & all things tech')}<br />
-          {t('Welcome to my little corner of the internet!')}
-        </p>
-        <!-- <IconHeader icon="book-open" text={t('Recent posts')} />
-        <IconHeader icon="art-text" text={t('Recent projects')} /> -->
+        <h1 class="font-display font-black text-8xl">
+          kio<span
+            class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
+            >.</span
+          >dev
+        </h1>
+        <div class="text-lg w-[22rem] lg:w-[28rem] xl:w-[34rem] 2xl:w-[38rem]">
+          <p class="leading-loose">
+            {t(
+              "Hi there, welcome to my little corner of the internet! Here you'll find"
+            )}
+            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
+              'a bit about'
+            )}
+            <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
+            {t('and')}
+            <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt>.
+          </p>
+        </div>
       </div>
+      <div
+        class="absolute left-0 right-0 top-0 bottom-[-4rem] gradient from-stone-200 to-stone-200/30 dark:from-stone-800 dark:to-stone-800/30 z-[2]"
+      />
+      <FloatingBgImage
+        classNames="right-[15vw] top-[15vh]"
+        width={800}
+        height={400}
+        seed={$theme === 'light' ? '22lsAl2' : '22lsAl2a'}
+        delayOffset={0}
+      />
+      <FloatingBgImage
+        classNames="right-[10vw] top-[5vh]"
+        width={600}
+        height={900}
+        seed={$theme === 'light' ? '1a0Phj2P' : '1a0Phj2z'}
+        delayOffset={150}
+      />
     </svelte:fragment>
     <svelte:fragment slot="sm">
       <div
-        class="mt-[4vh] flex flex-col mx-auto items-center justify-center gap-2"
+        class="relative p-6 w-full h-full flex flex-col items-center justify-center gap-6"
       >
-        <p
-          class="font-display text-3xl font-bold w-fit mt-14 md:-mt-[10vh] mb-5"
-        >
-          {t("Hi there, I'm Kio")}<span class="text-violet-300 ml-[2px]">.</span
-          >
-        </p>
-        <p class="font-sans text-lg -mb-1 text-center leading-9">
-          {t('Software engineer / web dev / artist')}<br />
-          {t('Lover of cats & all things tech')}<br />
-          {t('Welcome to my little corner of the internet!')}
-        </p>
+        <h1 class="font-display font-black text-8xl">
+          kio<span
+            class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
+            >.</span
+          >dev
+        </h1>
+        <div class="text-lg max-w-[24rem]">
+          <p class="leading-loose text-center">
+            {t(
+              "Hi there, welcome to my little corner of the internet! Here you'll find"
+            )}
+            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
+              'a bit about'
+            )}
+            <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
+            {t('and')}
+            <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt>.
+          </p>
+        </div>
       </div>
     </svelte:fragment>
   </Breakpoints>
 </div>
+
+<style lang="scss">
+  .gradient {
+    background: linear-gradient(
+      to top,
+      var(--tw-gradient-from) 5%,
+      var(--tw-gradient-to) 100%
+    );
+    width: calc(100% + 4px);
+    left: -2px;
+    right: -2px;
+  }
+</style>

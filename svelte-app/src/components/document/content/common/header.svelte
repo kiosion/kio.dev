@@ -84,7 +84,7 @@
       </svelte:fragment>
       <svelte:fragment slot="title">
         <h1
-          class="w-fit h-fit font-display text-6xl leading-tight font-bold mb-4"
+          class="w-fit h-fit font-display text-7xl leading-none font-bold mb-4"
         >
           {data.title}
         </h1>

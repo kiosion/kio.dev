@@ -107,7 +107,11 @@ const fetchRemote = async ({
 
     return normalizedResponse;
   } catch (err: unknown) {
-    Logger.error(`Failed to fetch from API: Unknown error occures: ${err}`);
+    Logger.error(
+      `Failed to fetch from API: Unknown error occured: ${err}`,
+      {},
+      { err }
+    );
     return new Error(
       `Endpoint error: Unknown or unhandled error occured: ${err}`
     );
