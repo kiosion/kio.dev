@@ -46,7 +46,8 @@ defmodule Hexerei.MixProject do
       {:poison, "~> 3.1"},
       {:httpoison, "~> 1.8"},
       {:cli_spinners, "~> 0.1.0"},
-      {:jose, "~> 1.10.1"}
+      {:jose, "~> 1.10.1"},
+      {:exsync, "~> 0.2", only: :dev},
     ]
   end
 end

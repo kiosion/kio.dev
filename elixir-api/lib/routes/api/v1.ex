@@ -103,7 +103,6 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/project/:id" do
-    start = System.system_time(:millisecond)
     params = validate_query_params(%{
         "id" => id
       }, %{
@@ -192,7 +191,7 @@ defmodule Router.Api.V1 do
   # Documents belonging to tag
   get "#{@query_url}/tag/:id" do
     with true <- is_binary(id),
-         true <- String.strip(id) != "" do
+         true <- String.trim(id) != "" do
       params = fetch_query_params(conn).query_params
       |> validate_query_params(%{
           "type" => nil
@@ -224,7 +223,7 @@ defmodule Router.Api.V1 do
   # Comments referencing document
   get "#{@query_url}/comments/:id" do
     with true <- is_binary(id),
-         true <- String.strip(id) != "" do
+         true <- String.trim(id) != "" do
       params = fetch_query_params(conn).query_params
       |> validate_query_params(%{
           "force" => false
@@ -275,6 +274,6 @@ defmodule Router.Api.V1 do
 
   # Fallback
   match _ do
-    conn |> error_res(404, "Not found")
+    conn |> error_res(404, "Not found", "The requested resource could not be found or does not exist")
   end
 end

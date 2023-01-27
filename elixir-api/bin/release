@@ -42,6 +42,9 @@ mix deps.get --only ${ENV}
 for arg in "${REQ_ARGS[@]}"; do
   sed -i "s/{{$arg}}/${!arg}/g" ./config/${ENV}.env.exs
 done
+if [ "$ENV" = "dev" ]; then
+  sed -i '/{:exsync, "~> 0.2", only: :dev}/d' ./mix.exs
+fi
 
 MIX_ENV=${ENV} mix release --overwrite
 
