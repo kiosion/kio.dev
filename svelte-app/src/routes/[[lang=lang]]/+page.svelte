@@ -36,52 +36,58 @@
 </svelte:head>
 
 <div
-  class="relative w-full max-w-[120rem] mx-auto {$isDesktop
+  class="relative overflow-hidden w-full max-w-[120rem] mx-auto {$isDesktop
     ? 'mb-[3rem] h-[calc(100%_-_3rem)]'
     : 'h-full'}"
   data-test-route="index"
 >
   <Breakpoints queries={DEFAULT_BREAKPOINTS}>
     <svelte:fragment slot="lg">
-      <div
-        class="my-auto max-h-[80rem] relative pb-[10%] 2xl:pb-[12%] 4xl:pb-[14%] p-[10%] w-full h-full flex flex-col items-start justify-end gap-6 z-10"
-      >
-        <h1 class="font-display font-black text-8xl">
-          kio<span
-            class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
-            >.</span
-          >dev
-        </h1>
-        <div class="text-lg w-[22rem] lg:w-[28rem] xl:w-[34rem] 2xl:w-[38rem]">
-          <p class="leading-loose">
-            {t(
-              "Hi there, welcome to my little corner of the internet! Here you'll find"
-            )}
-            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
-              'a bit about'
-            )}
-            <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
-            {t('and')}
-            <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt>.
-          </p>
+      <div class="flex items-center justify-center w-full h-full">
+        <div
+          class="relative max-h-[50rem] max-w-[100rem] w-full h-full flex flex-col items-start justify-end gap-6 px-[5vw] pb-[5vh]"
+        >
+          <h1 class="font-display font-black text-8xl z-10">
+            kio<span
+              class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
+              >.</span
+            >dev
+          </h1>
+          <div
+            class="text-lg w-[22rem] lg:w-[28rem] xl:w-[34rem] 2xl:w-[38rem] z-10"
+          >
+            <p class="leading-loose">
+              {t(
+                "Hi there, welcome to my little corner of the internet! Here you'll find"
+              )}
+              <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
+                'a bit about'
+              )}
+              <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
+              {t('and')}
+              <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt
+              >.
+            </p>
+          </div>
+
+          <FloatingBgImage
+            classNames="right-[10vw] top-[5vh]"
+            width={800}
+            height={400}
+            seed={$theme === 'light' ? '22lsAl2' : '22lsAl2a'}
+            delayOffset={300}
+          />
+          <FloatingBgImage
+            classNames="right-[5vw] top-[-5vh]"
+            width={600}
+            height={900}
+            seed={$theme === 'light' ? '1a0Phj2P' : '1a0Phj2z'}
+            delayOffset={0}
+          />
         </div>
       </div>
       <div
         class="absolute left-0 right-0 top-0 bottom-[-4rem] gradient from-stone-200 to-stone-200/30 dark:from-stone-800 dark:to-stone-800/30 z-[2]"
-      />
-      <FloatingBgImage
-        classNames="right-[15vw] top-[15vh]"
-        width={800}
-        height={400}
-        seed={$theme === 'light' ? '22lsAl2' : '22lsAl2a'}
-        delayOffset={0}
-      />
-      <FloatingBgImage
-        classNames="right-[10vw] top-[5vh]"
-        width={600}
-        height={900}
-        seed={$theme === 'light' ? '1a0Phj2P' : '1a0Phj2z'}
-        delayOffset={150}
       />
     </svelte:fragment>
     <svelte:fragment slot="sm">

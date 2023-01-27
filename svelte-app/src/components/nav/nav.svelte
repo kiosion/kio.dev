@@ -81,7 +81,7 @@
   <svelte:fragment slot="lg">
     <Hoverable setPointer={false} bind:hovered={navHovered}>
       <nav
-        class="flex flex-col flex-shrink-0 w-32 lg:w-40 xl:w-48 px-4 py-8 my-4 ml-4 overflow-hidden text-center {navHovered
+        class="flex flex-col flex-shrink-0 w-32 lg:w-40 xl:w-48 px-4 py-8 my-4 ml-4 overflow-x-hidden overflow-y-scroll text-center {navHovered
           ? 'bg-stone-300 dark:bg-stone-900/40 border-stone-400 dark:border-stone-500/80'
           : 'bg-stone-300/60 dark:bg-stone-900/80 border-stone-400/80 dark:border-stone-500/60'} border rounded-3xl transition-colors"
         data-test-id="navBar"
