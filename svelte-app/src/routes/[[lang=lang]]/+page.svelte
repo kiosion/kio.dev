@@ -36,7 +36,7 @@
 </svelte:head>
 
 <div
-  class="relative w-full {$isDesktop
+  class="relative w-full max-w-[120rem] mx-auto {$isDesktop
     ? 'mb-[3rem] h-[calc(100%_-_3rem)]'
     : 'h-full'}"
   data-test-route="index"
@@ -44,7 +44,7 @@
   <Breakpoints queries={DEFAULT_BREAKPOINTS}>
     <svelte:fragment slot="lg">
       <div
-        class="relative pb-[12%] p-[10%] w-full h-full flex flex-col items-start justify-end gap-6 z-10"
+        class="my-auto max-h-[80rem] relative pb-[10%] 2xl:pb-[12%] 4xl:pb-[14%] p-[10%] w-full h-full flex flex-col items-start justify-end gap-6 z-10"
       >
         <h1 class="font-display font-black text-8xl">
           kio<span
