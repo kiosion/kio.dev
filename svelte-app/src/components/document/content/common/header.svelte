@@ -159,16 +159,10 @@
               {date ? date : '...'}
             </button>
           </Hoverable>
-          {#if model === 'post'}
-            <BulletPoint />
-            <p
-              class="font-mono text-base cursor-default"
-              role="button"
-              aria-label="Reading time"
-            >
-              {t('{length} min read', { length: Math.floor(readingTime / 60) })}
-            </p>
-          {/if}
+          <BulletPoint />
+          <p class="font-mono text-base cursor-default">
+            {t('{length} min read', { length: Math.floor(readingTime / 60) })}
+          </p>
         </div>
       </svelte:fragment>
     </svelte:component>

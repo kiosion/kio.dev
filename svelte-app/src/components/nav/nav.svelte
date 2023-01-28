@@ -88,7 +88,7 @@
       >
         <div class="flex-grow -mt-7 md:-mt-4 click-through">
           <!-- Logo -->
-          <Tooltip text={t('Click me :)')} position="right">
+          <Tooltip text={t('Click me a few times!')} position="right">
             <Hoverable>
               <button
                 class="inline-block -ml-3 lg:ml-0 mt-24 mb-[68px] lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"

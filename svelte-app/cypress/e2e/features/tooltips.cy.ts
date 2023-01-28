@@ -26,7 +26,7 @@ describe('E2E | features | tooltips', () => {
       .trigger('mouseenter');
     cy.wait(1000);
     cy.get('[data-tippy-root]').should('be.visible');
-    cy.get('[data-tippy-root]').should('contain', 'Click me :)');
+    cy.get('[data-tippy-root]').should('contain', 'Click me a few times!');
     // check that the tooltip follows the cursor, first store the initial position
     cy.get('[data-tippy-root]').then(($el) => {
       const initialPosition = $el[0].getBoundingClientRect();

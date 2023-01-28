@@ -20,7 +20,7 @@
   const pageTitle = `kio.dev | ${t('About').toLowerCase()}`,
     description = t('A bit about me & my work');
 
-  $: about = data?.about?.data;
+  $: about = data.about?.data;
 </script>
 
 <svelte:head>
@@ -39,7 +39,12 @@
 
 <div data-test-route="about">
   <ContentWrapper>
-    <AboutCard image={about?.image} body={about?.bio} />
+    <AboutCard
+      name={about?.fullname}
+      username={about?.at}
+      body={about?.bio}
+      image={about?.image}
+    />
     {#if about?.timeline}
       <AboutSection title={t('My work')} icon="Briefcase">
         <AboutTimeline data={about.timeline} />

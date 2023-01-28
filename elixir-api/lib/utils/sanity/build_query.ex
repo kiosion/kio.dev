@@ -4,7 +4,10 @@ defmodule Hexerei.BuildQuery do
   """
 
   defp strip(str) do
-    Regex.replace(~r/\s{2,}/, str, " ") |> String.trim()
+    str
+    |> String.trim()
+    |> String.replace(~r/[\r\n]+/, " ")
+    |> String.replace(~r/\s{2,}/, " ")
   end
 
   def postSingle(id) do
@@ -146,9 +149,7 @@ defmodule Hexerei.BuildQuery do
 
   # Query all tag documents
   def tags(type) do
-    if type not in ["post", "project"] do
-      ^type = nil
-    end
+    with true <- type in ["post", "project"] do
     "
       *[!(_id in path('drafts.**')) && _type == 'tag'] {
         _id,
@@ -160,13 +161,15 @@ defmodule Hexerei.BuildQuery do
         #{if type != nil do "'referencedBy': *[_type == '#{type}' && references(^._id)]._id" end}
       }
     " |> strip()
+    else
+      false -> nil
+    end
   end
+  def tags(), do: nil
 
   # Determine documents of @type referencing tag @id
   def tag(id, type) do
-    if type not in ["post", "project"] do
-      nil
-    else
+    with true <- type in ["post", "project"] do
       "
       *[!(_id in path('drafts.**')) && _type == '#{type}' && references(*[!(_id in path('drafts.**')) && _type == 'tag' && slug.current == '#{id}']._id)] {
         _id,
@@ -196,13 +199,13 @@ defmodule Hexerei.BuildQuery do
         'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120 )
       }
       " |> strip()
+    else
+      false -> nil
     end
-  end
-  def tag(_, _) do
-    nil
   end
 
   # Fetch 'about' page content
+  @spec about() :: String.t()
   def about do
     "
       *[!(_id in path('drafts.**')) && _type == 'author' && _id == 'me']{
@@ -210,9 +213,11 @@ defmodule Hexerei.BuildQuery do
         'objectID': _id,
         _rev,
         _type,
+        at,
         bio,
         body,
         contact,
+        fullname,
         timeline[]{
           title,
           subtitle,
@@ -231,6 +236,7 @@ defmodule Hexerei.BuildQuery do
   end
 
   # Fetch site config
+  @spec config() :: String.t()
   def config do
     "
       *[!(_id in path(\'drafts.**\')) && _type == 'siteSettings'][0]
@@ -238,6 +244,7 @@ defmodule Hexerei.BuildQuery do
   end
 
   # Fetch comment with '_id' of @id
+  @spec comment(String.t()) :: String.t()
   def comment(id) do
     "
       *[!(_id in path('drafts.**')) && _type == 'comment' && _id == '#{id}']{
@@ -257,11 +264,9 @@ defmodule Hexerei.BuildQuery do
       }[0]
     " |> strip()
   end
-  def comment(_) do
-    nil
-  end
 
   # Fetch comments on document @ref (slug || id), unless @force is provided, hide unapproved
+  @spec commentsOn(String.t(), boolean() | nil) :: String.t()
   def commentsOn(ref, force) do
     "
       *[!(_id in path('drafts.**')) && _type == 'comment' && (document._ref == '#{ref}' || document->slug.current == '#{ref}')#{if force != true do " && approved == true" end}]{
@@ -288,11 +293,9 @@ defmodule Hexerei.BuildQuery do
       }
     " |> strip()
   end
-  def commentsOn(_, _) do
-    nil
-  end
 
   # Fetch all children of comment @id
+  @spec commentChildren(String.t(), boolean() | nil) :: String.t()
   def commentChildren(id, force) do
     "
       *[!(_id in path('drafts.**')) && _type == 'comment' && parent._ref == '#{id}'#{if force != true do " && approved == true" end}]{
@@ -318,8 +321,5 @@ defmodule Hexerei.BuildQuery do
         verified
       }
     "
-  end
-  def commentChildren(_, _) do
-    nil
   end
 end

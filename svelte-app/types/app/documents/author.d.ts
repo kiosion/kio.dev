@@ -22,9 +22,11 @@ export type AuthorTimelineItem = SanityAsset & {
     slug: SanityAsset & { current: string };
     title: string;
   })[];
+  hovered?: boolean;
 };
 
 export interface AuthorDocument extends Omit<Document, 'slug' | 'date'> {
+  at: string;
   bio: InputValue;
   name: string;
   fullname: string;

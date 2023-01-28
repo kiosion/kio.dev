@@ -12,9 +12,7 @@
 
   let selected: number | null = null;
 
-  export let data:
-    | (AuthorTimelineItem & { hovered: boolean | undefined })[]
-    | undefined;
+  export let data: AuthorTimelineItem[] | undefined;
 
   const dateDisplay = (start: string, end: string | undefined) => {
     try {

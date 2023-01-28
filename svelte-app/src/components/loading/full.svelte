@@ -1,39 +1,20 @@
 <script lang="ts">
   import { classList } from 'svelte-body';
   import Line from './animations/line.svelte';
-  // import Spinner from './animations/spinner.svelte';
-  // import Circle from '$components/loading/animations/circle.svelte';
   import { fade } from 'svelte/transition';
   import seedrandom from 'seedrandom';
+  import { LOADING_PHRASES } from '$lib/consts';
+  import { t } from '$i18n';
 
   export let classes = 'transparent',
     segments = 12,
     width = '400px';
 
-  let phrase = '';
-
-  const phrases = [
-    'Spinning violently around the y-axis',
-    'Assembling from source',
-    'Hunting for bugs',
-    'Dusting the cobwebs',
-    'Looking for missing semicolons',
-    'Getting a bigger boat',
-    ':3',
-    'Waiting for the eventual heat-death of the universe',
-    'Calculating the airspeed velocity of an unladen swallow',
-    'Why do they call it oven when you of in the cold food of out hot eat the food',
-    'Brewing some coffee',
-    'Reticulating splines',
-    'Translating from English to English',
-    'Browsing StackOverflow',
-    'Warming up your CPU',
-    'Rotating the earth'
-  ];
-
-  phrase = `${
-    phrases[
-      Math.floor(seedrandom(`${new Date().getMinutes()}`)() * phrases.length)
+  let phrase = `${
+    LOADING_PHRASES[
+      Math.floor(
+        seedrandom(`${new Date().getMinutes()}`)() * LOADING_PHRASES.length
+      )
     ]
   }`;
 
@@ -54,7 +35,7 @@
   </div>
   {#if phrase !== ''}
     <div
-      class="absolute w-fit max-w-1/2 bottom-[8vh]"
+      class="absolute w-fit max-w-[50%] bottom-[8vh]"
       out:fade={{ duration: 200 }}
     >
       <p
@@ -63,7 +44,7 @@
           : ' text-stone-200'} font-mono text-base w-fit"
         data-test-id="loader-full-phrase"
       >
-        {phrase}
+        {t(phrase)}
       </p>
     </div>
   {/if}

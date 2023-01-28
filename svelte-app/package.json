@@ -19,7 +19,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin-search-dir=. ./src/**/*.{ts,svelte}",
-    "format:json": "deno run --allow-read --allow-write ./scripts/sort-json.ts --fix ./src/languages/en.json ./src/languages/fr.json",
+    "format:json": "deno run --allow-read --allow-write ./scripts/sort-json.ts ./src/languages/en.json ./src/languages/fr.json --fix",
     "lint": "NODE_OPTIONS=--max-old-space-size=1900 yarn format && eslint --fix ./src/**/*.{ts,svelte}"
   },
   "devDependencies": {

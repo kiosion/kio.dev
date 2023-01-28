@@ -49,6 +49,11 @@ export const APP_ROUTES = [
     ],
     hidden: false
   },
+  // {
+  //   name: 'Now',
+  //   path: '/now',
+  //   hidden: false
+  // },
   {
     name: 'PGP',
     path: '/pgp',
@@ -171,3 +176,25 @@ export const LANGUAGE_COLOURS = new Proxy(
     }
   }
 );
+
+export const LOADING_PHRASES = [
+  'Spinning violently around the y-axis',
+  'Assembling from source',
+  'Hunting for bugs',
+  'Dusting the cobwebs',
+  'Looking for missing semicolons',
+  'Getting a bigger boat',
+  ':3',
+  'Waiting for the eventual heat-death of the universe',
+  'Calculating the airspeed velocity of an unladen swallow',
+  'Why do they call it oven when you of in the cold food of out hot eat the food',
+  'Brewing some coffee',
+  'Reticulating splines',
+  'Translating from English to English',
+  'Browsing StackOverflow',
+  'Warming up your CPU',
+  'Rotating the earth',
+  'Decompiling binaries',
+  'Parsing XML',
+  'Asking ChatGPT for help'
+];

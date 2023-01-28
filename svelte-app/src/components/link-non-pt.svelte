@@ -1,5 +1,6 @@
 <script lang="ts">
   import Hoverable from '$components/hoverable.svelte';
+  import Tooltip from '$components/tooltip.svelte';
   import { linkTo } from '$i18n';
 
   export let href: string,
@@ -10,17 +11,19 @@
 </script>
 
 <Hoverable bind:hovered>
-  <a
-    href={linkTo(href)}
-    {target}
-    rel={external ? 'noopener noreferrer' : undefined}
-    class="underlined from-violet-300 {hovered
-      ? 'active dark:text-stone-800'
-      : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
-    tabindex="0"
-  >
-    <slot />
-  </a>
+  <Tooltip text={`Go to '${href}'`} position="bottom" disable={external}>
+    <a
+      href={linkTo(href)}
+      {target}
+      rel={external ? 'noopener noreferrer' : undefined}
+      class="underlined from-violet-300 {hovered
+        ? 'active dark:text-stone-800'
+        : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
+      tabindex="0"
+    >
+      <slot />
+    </a>
+  </Tooltip>
 </Hoverable>
 
 <style lang="scss">

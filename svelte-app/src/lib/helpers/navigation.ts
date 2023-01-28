@@ -61,6 +61,7 @@ const routes = [
   'work/*/*',
   'work/+/*',
   'about',
+  'now',
   'pgp'
 ];
 

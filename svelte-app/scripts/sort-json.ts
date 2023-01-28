@@ -7,7 +7,7 @@
 
 import { parse } from 'https://deno.land/std@0.174.0/flags/mod.ts';
 
-const { f, fix, _: filePaths } = parse(Deno.args);
+const { fix, _: filePaths } = parse(Deno.args);
 
 if (!filePaths?.length) {
   throw new Error('[sort-json] No file path(s) provided');
@@ -15,7 +15,7 @@ if (!filePaths?.length) {
   throw new Error('[sort-json] File(s) must be JSON');
 }
 
-const shouldFix = f || fix,
+const shouldFix = fix,
   errors = [] as string[];
 
 filePaths.forEach((filePath: string) => {

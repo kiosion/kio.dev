@@ -43,8 +43,8 @@ export default {
     },
     Body,
     {
-      name: 'contact',
-      title: 'Contact',
+      name: 'now',
+      title: 'Now',
       type: 'array',
       of: BodyBlocks,
       validation: (Rule: Rule) => Rule.required()

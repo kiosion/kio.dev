@@ -2,14 +2,15 @@
   import { fade } from 'svelte/transition';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
-  import type { SanityImageObject } from '$types/sanity';
-  import type { InputValue } from '@portabletext/svelte/ptTypes';
+  import type { InputValue, SanityImageObject } from '$types/sanity';
   import EmptyContent from '$components/empty-content.svelte';
 
   let pfpCrop: ImageCrop;
 
-  export let image: SanityImageObject | undefined;
-  export let body: InputValue | undefined;
+  export let name: string | undefined,
+    username: string | undefined,
+    image: SanityImageObject | undefined,
+    body: InputValue | undefined;
 
   $: pfpCrop = getCrop(image);
 </script>
@@ -40,12 +41,12 @@
       <h3
         class="text-2xl font-bold transition-colors font-heading text-stone-800 dark:text-stone-100"
       >
-        Maxim
+        {name}
       </h3>
       <h4
         class="font-mono text-xl font-bold transition-colors text-stone-600 dark:text-stone-300"
       >
-        @kiosion
+        @{username}
       </h4>
     </div>
   </div>

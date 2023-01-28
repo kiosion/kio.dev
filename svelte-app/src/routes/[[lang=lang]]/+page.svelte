@@ -9,6 +9,8 @@
   import LinkNonPt from '$components/link-non-pt.svelte';
   import FloatingBgImage from '$components/floating-bg-image.svelte';
   import { theme } from '$stores/theme';
+  import LogoText from '$lib/assets/logo-text.png';
+  import Icon from '$components/icon.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -45,25 +47,32 @@
     <svelte:fragment slot="lg">
       <div class="flex items-center justify-center w-full h-full">
         <div
-          class="relative max-h-[50rem] max-w-[100rem] w-full h-full flex flex-col items-start justify-end gap-6 px-[5vw] pb-[5vh]"
+          class="relative max-h-[50rem] max-w-[100rem] w-full h-full flex flex-col items-start justify-end gap-4 px-[5vw] pb-[5vh]"
         >
-          <h1 class="font-display font-black text-8xl z-10">
+          <!-- <h1 class="font-display font-black text-8xl z-10">
             kio<span
               class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
               >.</span
             >dev
-          </h1>
-          <div
-            class="text-lg w-[22rem] lg:w-[28rem] xl:w-[34rem] 2xl:w-[38rem] z-10"
-          >
+          </h1> -->
+          <div class="z-10">
+            <img
+              src={LogoText}
+              class="w-[26rem] dark:invert select-none transition-colors"
+              alt="kio.dev"
+            />
+            <span class="flex flex-row items-center gap-2 -mt-1 ml-8">
+              <Icon icon="arrow-right" />
+              <p class="font-code text-lg">kio.dev // {t('index')}</p>
+            </span>
+          </div>
+          <div class="text-lg w-[26rem] lg:w-[32rem] xl:w-[36rem] z-10">
             <p class="leading-loose">
               {t(
                 "Hi there, welcome to my little corner of the internet! Here you'll find"
               )}
-              <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
-                'a bit about'
-              )}
-              <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
+              <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>,
+              <LinkNonPt href="/about">{t('a bit about me')}</LinkNonPt>,
               {t('and')}
               <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt
               >.
@@ -75,7 +84,7 @@
             width={800}
             height={400}
             seed={$theme === 'light' ? '22lsAl2' : '22lsAl2a'}
-            delayOffset={300}
+            delayOffset={150}
           />
           <FloatingBgImage
             classNames="right-[5vw] top-[-5vh]"
@@ -105,10 +114,8 @@
             {t(
               "Hi there, welcome to my little corner of the internet! Here you'll find"
             )}
-            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t(
-              'a bit about'
-            )}
-            <LinkNonPt href="/work">{t('my work')}</LinkNonPt>,
+            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t('a bit')}
+            <LinkNonPt href="/about">{t('about me')}</LinkNonPt>,
             {t('and')}
             <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt>.
           </p>
