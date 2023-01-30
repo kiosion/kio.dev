@@ -42,11 +42,11 @@
 
 <Hoverable bind:hovered>
   <a
-    class="flex flex-col items-stretch justify-stretch gap-y-1.5 w-full h-fit px-6 pl-5 border {getClassNames(
+    class="justify-stretch flex h-fit w-full flex-col items-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
       position
     )} {hovered
-      ? 'bg-stone-300/60 dark:bg-stone-700/20 border-stone-400/80 dark:border-stone-500/80'
-      : 'bg-stone-300/20 dark:bg-stone-900/40 border-stone-400/60 dark:border-stone-500/60'} -ml-[1px] transition-colors focusOutline"
+      ? 'border-stone-400/80 bg-stone-300/60 dark:border-stone-500/80 dark:bg-stone-700/20'
+      : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] transition-colors"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
@@ -58,7 +58,7 @@
     on:keydown={onKey}
   >
     <h1
-      class="w-full text-xl font-bold text-ellipsis font-display line-clamp-1 underline-offset-[3px] decoration-[2px] {hovered
+      class="w-full text-ellipsis font-display text-xl font-bold decoration-[2px] underline-offset-[3px] line-clamp-1 {hovered
         ? 'underline'
         : ''}"
     >
@@ -66,13 +66,13 @@
     </h1>
     {#if post.desc}
       <p
-        class="my-0.5 mr-4 overflow-hidden font-sans text-base w-fit text-ellipsis text-gray-700 dark:text-gray-200 line-clamp-1 md:line-clamp-2"
+        class="my-0.5 mr-4 w-fit overflow-hidden text-ellipsis font-sans text-base text-gray-700 line-clamp-1 dark:text-gray-200 md:line-clamp-2"
       >
         {post.desc}
       </p>
     {/if}
     <div
-      class="flex flex-row flex-wrap items-center justify-start w-full font-sans text-sm text-gray-700 dark:text-gray-200 gap-y-2"
+      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-gray-700 dark:text-gray-200"
     >
       {#if date}
         <p>{date}</p>

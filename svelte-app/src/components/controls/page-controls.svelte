@@ -27,10 +27,8 @@
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <div
-      class="page-controls-{position} from-stone-200 dark:from-stone-800 fixed left-36 lg:left-44 xl:left-52 right-0 z-[4] hidden md:block py-6 px-7 bg-transparent transition-colors"
-    >
-      <div class="flex flex-row justify-between items-start">
+    <div class="page-controls-{position}">
+      <div class="flex flex-row items-start justify-between">
         <div class="w-52">
           <Hoverable bind:hovered={scrollNavHovered}>
             {#if hasNavOption}
@@ -38,9 +36,9 @@
                 data-sveltekit-preload-data
                 data-sveltekit-preload-code
                 href={linkTo(navOption)}
-                class="w-fit flex flex-row items-center select-none {scrollNavHovered
+                class="flex w-fit select-none flex-row items-center {scrollNavHovered
                   ? `scroll-hover-${position === 'bottom' ? 'down' : 'up'}`
-                  : ''} rounded-sm focusOutline"
+                  : ''} focusOutline rounded-sm"
                 aria-disabled={!hasNavOption}
                 on:click={() => SFX.click.play()}
                 on:keydown={(e) => {
@@ -51,13 +49,13 @@
                 }}
               >
                 <Icon icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'} />
-                <p class="font-code text-base w-fit ml-4">
+                <p class="ml-4 w-fit font-code text-base">
                   {t(actionText)} ({navOption})
                 </p>
               </a>
             {:else}
               <div
-                class="w-fit flex flex-row items-center select-none cursor-not-allowed"
+                class="flex w-fit cursor-not-allowed select-none flex-row items-center"
                 role="button"
                 aria-disabled="true"
               >
@@ -66,7 +64,7 @@
                   classes="text-stone-700 dark:text-stone-100/60"
                 />
                 <p
-                  class="font-code text-base w-fit ml-4 text-stone-700 dark:text-stone-100/60"
+                  class="ml-4 w-fit font-code text-base text-stone-700 dark:text-stone-100/60"
                 >
                   {t(actionText)}
                 </p>
@@ -80,7 +78,7 @@
               <Hoverable>
                 <Tooltip text={t('Scroll to top')} position="bottom" fixed>
                   <button
-                    class="flex flex-row gap-4 items-center font-code text-lg text-center w-fit md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem] select-none cursor-pointer rounded-sm focusOutline drop-shadow-md"
+                    class="focusOutline flex w-fit cursor-pointer select-none flex-row items-center gap-4 rounded-sm text-center font-code text-lg drop-shadow-md md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem]"
                     aria-label="Scroll to top"
                     on:click={() =>
                       appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}
@@ -90,7 +88,7 @@
                     transition:fade={{ duration: 100 }}
                   >
                     <p
-                      class="block w-fit md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                      class="block w-fit overflow-hidden overflow-ellipsis whitespace-nowrap md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem]"
                     >
                       {$pageHeading}
                     </p>
@@ -99,20 +97,20 @@
               </Hoverable>
             {/if}
           </div>
-          <div class="flex flex-row items-center justify-end w-40 gap-4">
+          <div class="flex w-40 flex-row items-center justify-end gap-4">
             <ThemeToggle />
             <SoundsToggle />
           </div>
         {:else}
           <div
-            class="flex flex-row justify-end items-center gap-1 w-52 font-code text-base"
+            class="flex w-52 flex-row items-center justify-end gap-1 font-code text-base"
           >
-            <span class="select-none cursor-default">{t('Language')} (</span>
+            <span class="cursor-default select-none">{t('Language')} (</span>
             <Hoverable bind:hovered={enHover}>
               <a
                 class="{enHover
                   ? 'underline'
-                  : ''} decoration-violet-300 decoration-2 rounded-sm focusOutline-sm"
+                  : ''} focusOutline-sm rounded-sm decoration-violet-300 decoration-2"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[0]
                 })}
@@ -134,12 +132,12 @@
                 {APP_LANGS[0]}
               </a>
             </Hoverable>
-            <span class="select-none cursor-default">/</span>
+            <span class="cursor-default select-none">/</span>
             <Hoverable bind:hovered={frHover}>
               <a
                 class="{frHover
                   ? 'underline'
-                  : ''} decoration-violet-300 decoration-2 rounded-sm focusOutline-sm"
+                  : ''} focusOutline-sm rounded-sm decoration-violet-300 decoration-2"
                 aria-label={t('Switch language to {lang}', {
                   lang: APP_LANGS[1]
                 })}
@@ -161,7 +159,7 @@
                 {APP_LANGS[1]}
               </a>
             </Hoverable>
-            <span class="select-none cursor-default">)</span>
+            <span class="cursor-default select-none">)</span>
           </div>
         {/if}
       </div>
@@ -171,21 +169,31 @@
 
 <style lang="scss">
   .page-controls {
-    &-top {
-      top: 0;
+    &-top,
+    &-bottom {
+      @apply fixed left-36 right-0 z-[4] hidden bg-transparent from-stone-200 py-6 px-7 transition-colors md:block lg:left-44 xl:left-52;
+
       background: linear-gradient(
         to bottom,
         var(--tw-gradient-from) 20%,
         var(--tw-gradient-to) 100%
       );
     }
+
+    &-top {
+      top: 0;
+    }
     &-bottom {
       bottom: 0;
-      background: linear-gradient(
-        to top,
-        var(--tw-gradient-from) 20%,
-        var(--tw-gradient-to) 100%
-      );
+    }
+  }
+
+  :global(.dark) {
+    .page-controls {
+      &-top,
+      &-bottom {
+        @apply from-stone-800;
+      }
     }
   }
 

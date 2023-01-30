@@ -46,7 +46,7 @@
 </script>
 
 <span
-  class="contents {setPointer && 'cursor-pointer'} {classes}"
+  class="contents {setPointer ? 'cursor-pointer' : ''} {classes}"
   data-test-id="hover-target"
   bind:this={target}
   on:mouseover={() => handleHoverIn()}

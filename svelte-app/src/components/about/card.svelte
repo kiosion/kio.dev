@@ -16,15 +16,15 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start w-full gap-6 p-6 transition-colors bg-stone-300/60 dark:bg-stone-900/50 border border-stone-400/60 dark:border-stone-500/60 rounded-xl"
+  class="flex w-full flex-col items-start justify-start gap-6 rounded-xl border border-stone-400/60 bg-stone-300/60 p-6 transition-colors dark:border-stone-500/60 dark:bg-stone-900/50"
 >
   <div
-    class="flex flex-row items-center justify-start w-full gap-6 md:gap-7 p-3 md:p-4 pb-1 md:pb-2 h-fit"
+    class="flex h-fit w-full flex-row items-center justify-start gap-6 p-3 pb-1 md:gap-7 md:p-4 md:pb-2"
   >
-    <div class="h-20 md:h-24 aspect-square">
+    <div class="aspect-square h-20 md:h-24">
       {#if image?.asset}
         <img
-          class="h-full outline outline-offset-2 outline-2 outline-stone-600 dark:outline-stone-300/90 rounded-full select-none aspect-square transition-[outline]"
+          class="aspect-square h-full select-none rounded-full outline outline-2 outline-offset-2 outline-stone-600 transition-[outline] dark:outline-stone-300/90"
           src={urlFor(image.asset._ref)
             .size(150, 150)
             .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
@@ -37,20 +37,20 @@
         />
       {/if}
     </div>
-    <div class="flex flex-col items-start justify-start flex-1 w-full h-full">
+    <div class="flex h-full w-full flex-1 flex-col items-start justify-start">
       <h3
-        class="text-2xl font-bold transition-colors font-heading text-stone-800 dark:text-stone-100"
+        class="font-heading text-2xl font-bold text-stone-800 transition-colors dark:text-stone-100"
       >
         {name}
       </h3>
       <h4
-        class="font-mono text-xl font-bold transition-colors text-stone-600 dark:text-stone-300"
+        class="font-mono text-xl font-bold text-stone-600 transition-colors dark:text-stone-300"
       >
         @{username}
       </h4>
     </div>
   </div>
-  <div class="flex-1 p-2 pt-0 -my-4 font-sans">
+  <div class="-my-4 flex-1 p-2 pt-0 font-sans">
     {#if body}
       <PortableText text={body} />
     {:else}

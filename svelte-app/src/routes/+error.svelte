@@ -45,7 +45,7 @@
 
 <div data-test-route="error" class="mt-12">
   <ContentWrapper>
-    <h3 class="font-display font-bold text-3xl text-center mb-4">{t(title)}</h3>
+    <h3 class="mb-4 text-center font-display text-3xl font-bold">{t(title)}</h3>
     <div class="mx-12">
       <Divider />
     </div>

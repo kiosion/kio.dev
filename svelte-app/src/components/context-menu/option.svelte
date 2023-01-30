@@ -25,9 +25,9 @@
 
 <Hoverable>
   <div
-    class="w-full max-w-[460px] flex justify-start items-center gap-4 px-4 py-2 {disabled
-      ? 'bg-stone-400/50 dark:bg-stone-500/50 text-stone-800 cursor-not-allowed'
-      : 'hover:bg-stone-200/50 dark:hover:bg-stone-300/50 cursor-pointer'} transition-colors duration-75"
+    class="flex w-full max-w-[460px] items-center justify-start gap-4 px-4 py-2 {disabled
+      ? 'cursor-not-allowed bg-stone-400/50 text-stone-800 dark:bg-stone-500/50'
+      : 'cursor-pointer hover:bg-stone-200/50 dark:hover:bg-stone-300/50'} transition-colors duration-75"
     data-test-option-index={index}
     role="button"
     tabindex="0"
@@ -39,11 +39,11 @@
     }}
   >
     {#if text !== ''}
-      <div class="w-[20px] mb-[2px]">
+      <div class="mb-[2px] w-[20px]">
         <Icon {icon} />
       </div>
       <p
-        class="font-sans text-base break-all line-clamp-1 overflow-ellipsis w-fit max-w-full mr-2"
+        class="mr-2 w-fit max-w-full overflow-ellipsis break-all font-sans text-base line-clamp-1"
       >
         {text}
       </p>

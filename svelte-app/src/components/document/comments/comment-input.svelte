@@ -1,18 +1,19 @@
 <script lang="ts">
   import { applyAction, deserialize } from '$app/forms';
   import { invalidateAll } from '$app/navigation';
-  import Hoverable from '$components/hoverable.svelte';
   import LinkNonPt from '$components/link-non-pt.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import { t, linkTo } from '$i18n';
   import { page } from '$app/stores';
   import type { ExternalUserInfo } from '$types';
   import type { ActionResult } from '@sveltejs/kit';
+  import Icon from '$components/icon.svelte';
+  import Button from '$components/controls/button.svelte';
 
   export let userInfo: ExternalUserInfo | null = null;
 
-  let submitActive = false,
-    loading = false;
+  let loading = false,
+    submit: HTMLInputElement;
 
   const handleSubmit = async (
     event: Event & {
@@ -37,8 +38,6 @@
     });
 
     const result: ActionResult = deserialize(await response.text());
-
-    // console.log('got result:', result);
 
     if (result.type === 'success') {
       await invalidateAll();
@@ -67,18 +66,25 @@
   action="/api/v1/comment?/post"
   on:submit|preventDefault={(e) => handleSubmit(e)}
 >
-  <img src={userInfo?.avatar_url || '/assets/user.svg'} alt="User avatar" />
-  <div class="flex flex-row gap-4 w-full h-full items-center">
+  {#if userInfo?.avatar_url}
+    <img src={userInfo.avatar_url} alt="User avatar" />
+  {:else}
+    <div class="userIcon--placeholder">
+      <Icon icon="User" />
+    </div>
+  {/if}
+
+  <div class="flex h-full w-full flex-row items-center gap-4">
     {#if userInfo}
       <textarea
-        class="focusOutline"
+        class="focusOutline-sm"
         placeholder="Leave a comment..."
         bind:this={textarea}
         on:input={() => setTextareaHeight(textarea)}
       />
     {:else}
       <div
-        class="overflow-hidden w-full h-fit p-2 rounded-md bg-stone-50/80 dark:bg-stone-700/60"
+        class="h-fit w-full overflow-hidden rounded-md bg-stone-50/80 p-2 dark:bg-stone-700/60"
       >
         <LinkNonPt href={linkTo(`/auth/login?redirect=${$page.url.pathname}`)}
           >{t('Log in')}</LinkNonPt
@@ -86,43 +92,52 @@
         {t('to leave a comment')}
       </div>
     {/if}
-    {#if loading}
-      <Spinner />
-    {/if}
-    <Hoverable bind:hovered={submitActive}>
-      <input
-        type="submit"
-        value={t('Send')}
-        class="focusOutline-sm"
-        disabled={!userInfo || loading}
-        class:active={submitActive}
-      />
-    </Hoverable>
+
+    <input type="submit" hidden bind:this={submit} />
+
+    <Button
+      type="button"
+      on:click={() => {
+        submit.click();
+      }}
+      disabled={!userInfo || loading}
+    >
+      <span class="flex flex-row items-center gap-2">
+        {#if loading}
+          <Spinner classNames="mt-0 ml-0" />
+        {/if}
+        {t('Post')}
+      </span>
+    </Button>
   </div>
 </form>
 
 <style lang="postcss">
   form {
-    @apply flex flex-row gap-4 px-4 py-3 rounded-lg items-center justify-between w-full bg-stone-300/50;
+    @apply flex w-full flex-row items-center justify-between gap-4 rounded-xl bg-stone-300/50 p-4;
 
     img {
-      @apply h-10 w-10 aspect-square rounded-full;
+      @apply aspect-square h-10 w-10 rounded-full;
+    }
+
+    .userIcon--placeholder {
+      @apply flex aspect-square h-10 w-10 items-center justify-center rounded-full bg-stone-400/50;
     }
   }
 
   input {
-    @apply cursor-pointer rounded-md border px-2 py-1 text-base font-code border-stone-400 transition-colors;
+    @apply cursor-pointer rounded-md border border-stone-400 px-2 py-1 font-code text-base transition-colors;
 
     &.active:not(:disabled) {
-      @apply border-2 bg-violet-400 border-stone-800 text-stone-900;
+      @apply border-2 border-stone-800 bg-violet-400 text-stone-900;
     }
 
     &:disabled {
-      @apply bg-stone-400/40 cursor-not-allowed;
+      @apply cursor-not-allowed bg-stone-400/40;
     }
   }
   textarea {
-    @apply overflow-hidden w-full p-2 rounded-md resize-none bg-stone-100/80;
+    @apply w-full resize-none overflow-hidden rounded-md bg-stone-100/80 p-2;
   }
   :global(.dark) {
     form {

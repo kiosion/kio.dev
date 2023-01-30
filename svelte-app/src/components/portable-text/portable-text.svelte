@@ -115,17 +115,17 @@
     />
     {#if footnotes?.length}
       <div class="footnotes mt-8">
-        <h3 class="block font-display text-2xl font-bold mb-6">
+        <h3 class="mb-6 block font-display text-2xl font-bold">
           {t('Footnotes')}
         </h3>
-        <ol class="list-decimal ml-6 leading-8">
+        <ol class="ml-6 list-decimal leading-8">
           {#each footnotes as note}
             <li class="list-item">
-              <span class="flex flex-row items-center flex-wrap">
+              <span class="flex flex-row flex-wrap items-center">
                 <!-- Allow recursion with PT styles in footnotes -->
                 <svelte:self text={note.note} plaintext />
                 <a
-                  class="inline ml-2 mb-0.5"
+                  class="ml-2 mb-0.5 inline"
                   id={`note-${note._key}`}
                   href={`#src-${note._key}`}
                   aria-label={t('Go to footnote source')}

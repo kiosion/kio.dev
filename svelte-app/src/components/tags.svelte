@@ -17,7 +17,7 @@
 </script>
 
 <div
-  class="flex flex-row flex-wrap justify-start items-center gap-2 {classes}"
+  class="flex flex-row flex-wrap items-center justify-start gap-2 {classes}"
   in:maybe={{ animate, fn: 'slide', duration: 150 }}
   out:maybe={{ animate, fn: 'slide', duration: 150 }}
 >

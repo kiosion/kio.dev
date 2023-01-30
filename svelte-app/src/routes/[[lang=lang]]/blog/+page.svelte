@@ -56,7 +56,7 @@
     <ListSection posts={postsExceptPinned} />
   </div>
 {:else}
-  <div class="w-full flex flex-row items-center justify-center">
+  <div class="flex w-full flex-row items-center justify-center">
     <EmptyContent />
   </div>
 {/if}
@@ -64,7 +64,7 @@
   <Hoverable>
     <a
       href="/blog/1"
-      class="block w-fit mt-8"
+      class="mt-8 block w-fit"
       aria-label={t('View more posts')}
       on:click={() => SFX.click.play()}
     >

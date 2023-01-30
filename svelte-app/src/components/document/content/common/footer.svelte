@@ -46,7 +46,7 @@
       text={t('Links')}
       classes="mt-8 mb-4 w-full h-fit"
     />
-    <ul class="list-disc ml-8">
+    <ul class="ml-8 list-disc">
       {#each extLinks as link}
         <li>
           <Hoverable bind:hovered={link.hovered}>
@@ -56,7 +56,7 @@
               rel={'noopener noreferrer'}
               class="underlined from-violet-300 {link.hovered
                 ? 'active dark:text-gray-800'
-                : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
+                : ''} focusOutline-sm -mx[2px] rounded-sm px-[2px]"
               tabindex="0"
             >
               {link.title}

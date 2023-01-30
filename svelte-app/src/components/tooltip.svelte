@@ -3,7 +3,6 @@
   import { onMount, onDestroy } from 'svelte';
   import Logger from '$lib/logger';
   import tippy, { followCursor, type Instance } from 'tippy.js';
-  import Features from '$stores/features';
 
   export let text = '',
     position: Placement = 'bottom',
@@ -61,24 +60,20 @@
     return div;
   };
 
-  $: useTooltips = Features.can('see tooltips');
-  $: if ($useTooltips === false) {
-    disable = true;
-  }
   $: if (
     text !== (instance?.props.content as Element | undefined)?.textContent
   ) {
     instance?.setContent(createContent(text));
   }
-  $: if ($useTooltips === false) {
-    instance?.disable();
-  } else {
+  $: if (!disable) {
     instance?.enable();
+  } else {
+    instance?.disable();
   }
 </script>
 
 <div
-  class="contents w-fit h-fit"
+  class="contents h-fit w-fit"
   data-test-id="tooltip-container"
   bind:this={container}
 >

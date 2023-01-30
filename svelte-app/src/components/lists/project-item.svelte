@@ -44,9 +44,9 @@
 
 <Hoverable bind:hovered>
   <a
-    class="relative flex flex-col items-stretch justify-start gap-y-1.5 py-5 px-6 w-full lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] rounded-2xl transition-colors {hovered
-      ? 'bg-stone-300/60 dark:bg-stone-700/20 border-stone-400/80 dark:border-stone-500/80'
-      : 'bg-stone-300/20 dark:bg-stone-900/40 border-stone-400/60 dark:border-stone-500/60'} border -ml-[1px] -mt-[1px] focusOutline"
+    class="relative flex w-full flex-col items-stretch justify-start gap-y-1.5 rounded-2xl py-5 px-6 transition-colors lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] {hovered
+      ? 'border-stone-400/80 bg-stone-300/60 dark:border-stone-500/80 dark:bg-stone-700/20'
+      : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] -mt-[1px] border"
     data-test-id="list-item"
     tabindex="0"
     role="button"
@@ -58,7 +58,7 @@
     on:keydown={onKey}
     bind:this={self}
   >
-    <div class="w-full flex flex-row items-center gap-x-3 mb-0.5">
+    <div class="mb-0.5 flex w-full flex-row items-center gap-x-3">
       <Icon
         classes="-ml-0.5 text-stone-900 dark:text-stone-100 {project.external
           ? 'mb-0.5'
@@ -67,7 +67,7 @@
         width={20}
       />
       <h1
-        class="w-full overflow-hidden whitespace-nowrap text-ellipsis line-clamp-1 font-display font-bold text-xl underline-offset-[3px] decoration-[2px] {hovered
+        class="w-full overflow-hidden text-ellipsis whitespace-nowrap font-display text-xl font-bold decoration-[2px] underline-offset-[3px] line-clamp-1 {hovered
           ? 'underline'
           : ''}"
       >
@@ -77,21 +77,21 @@
     <div class="">
       {#if project.desc}
         <p
-          class="block overflow-hidden w-full pr-6 text-ellipsis font-sans text-base line-clamp-2"
+          class="block w-full overflow-hidden text-ellipsis pr-6 font-sans text-base line-clamp-2"
         >
           {project.desc}
         </p>
       {/if}
     </div>
-    <div class="w-full flex flex-row flex-wrap gap-y-2 items-center mt-2">
+    <div class="mt-2 flex w-full flex-row flex-wrap items-center gap-y-2">
       {#if project.language}
         <div
-          class="flex flex-row items-center gap-x-2 text-sm font-sans text-gray-700 dark:text-gray-200"
+          class="flex flex-row items-center gap-x-2 font-sans text-sm text-gray-700 dark:text-gray-200"
         >
           <span
-            class="relative block opacity-90 mb-0.5 w-3 h-3 rounded-full bg-[{LANGUAGE_COLOURS.get(
+            class="relative mb-0.5 block h-3 w-3 rounded-full opacity-90 bg-[{LANGUAGE_COLOURS.get(
               project.language.toLowerCase()
-            )}] border-gray-700/25 dark:border-gray-300/25 border-[0.5px] -m-[0.5px]"
+            )}] -m-[0.5px] border-[0.5px] border-gray-700/25 dark:border-gray-300/25"
             style="background: {LANGUAGE_COLOURS.get(
               project.language.toLowerCase()
             )}">&nbsp;</span

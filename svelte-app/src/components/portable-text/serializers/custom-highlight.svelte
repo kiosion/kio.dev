@@ -3,6 +3,6 @@
     <slot />
   </span>
   <span
-    class="absolute w-full h-full left-0 bottom-0 rounded-sm bg-violet-300 z-[0]"
+    class="absolute left-0 bottom-0 z-[0] h-full w-full rounded-sm bg-violet-300"
   />
 </span>

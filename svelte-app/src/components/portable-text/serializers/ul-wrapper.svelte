@@ -6,7 +6,7 @@
   $: ({ value: _value } = portableText);
 </script>
 
-<ul class="pt-ul list-disc ml-6">
+<ul class="pt-ul ml-6 list-disc">
   <slot />
 </ul>
 

@@ -29,12 +29,12 @@
   <title>kio.dev | work | all work</title>
 </svelte:head>
 
-<div class="w-full flex flex-row justify-between items-center mt-4 mb-2">
-  <div class="flex flex-row justify-start items-center gap-2">
+<div class="mt-4 mb-2 flex w-full flex-row items-center justify-between">
+  <div class="flex flex-row items-center justify-start gap-2">
     <Icon icon={'List'} />
     <h3 class="font-code text-lg">Page {curPage} of {totalPages}</h3>
   </div>
-  <div class="flex flex-row justify-start items-center gap-4">
+  <div class="flex flex-row items-center justify-start gap-4">
     <Hoverable>
       <a href="/work/{curPage > 1 ? curPage - 1 : 1}">
         <Icon icon={'ArrowLeft'} />

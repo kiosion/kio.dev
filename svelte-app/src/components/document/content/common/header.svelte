@@ -67,15 +67,15 @@
         <Breakpoints queries={DEFAULT_BREAKPOINTS}>
           <svelte:fragment slot="lg">
             <div
-              class="relative rounded-t-2xl overflow-hidden md:mt-2 -mb-20 lg:-mb-28 xl:-mb-36 z-[0] w-[112%] -translate-x-[5.4%]"
+              class="relative z-[0] -mb-20 w-[112%] -translate-x-[5.4%] overflow-hidden rounded-t-2xl md:mt-2 lg:-mb-28 xl:-mb-36"
             >
               <div
-                class="absolute w-full h-full gradient from-stone-200 dark:from-stone-800 transition-colors"
+                class="gradient absolute h-full w-full from-stone-200 transition-colors dark:from-stone-800"
               >
                 &nbsp;
               </div>
               <div
-                class="w-full aspect-[10/4] bg-cover bg-center border border-stone-400 dark:border-stone-400/40 border-b-0 rounded-t-2xl"
+                class="aspect-[10/4] w-full rounded-t-2xl border border-b-0 border-stone-400 bg-cover bg-center dark:border-stone-400/40"
                 style={`background-image: url("${imageSrc}");`}
               />
             </div>
@@ -84,7 +84,7 @@
       </svelte:fragment>
       <svelte:fragment slot="title">
         <h1
-          class="w-fit h-fit font-display text-7xl leading-none font-bold mb-4"
+          class="mb-4 h-fit w-fit font-display text-7xl font-bold leading-none"
         >
           {data.title}
         </h1>
@@ -102,19 +102,19 @@
         {/if}
       </svelte:fragment>
       <svelte:fragment slot="meta">
-        <div class="flex flex-row items-center justify-start mt-6">
+        <div class="mt-6 flex flex-row items-center justify-start">
           {#if data.author?.name}
             <Hoverable>
               <Tooltip text={t('View author')}>
                 <button
-                  class="flex flex-row gap-2 items-center font-mono text-base rounded-sm focusOutline"
+                  class="focusOutline flex flex-row items-center gap-2 rounded-sm font-mono text-base"
                   on:click={() => goto(linkTo('/about'))}
                   tabindex="0"
                 >
-                  <div class="h-8 aspect-square">
+                  <div class="aspect-square h-8">
                     {#if pfpRef && pfpCrop}
                       <img
-                        class="rounded-full aspect-square h-full select-none border border-stone-500 dark:border-stone-400"
+                        class="aspect-square h-full select-none rounded-full border border-stone-500 dark:border-stone-400"
                         src={urlFor(pfpRef)
                           .size(50, 50)
                           .rect(
@@ -152,7 +152,7 @@
           {/if}
           <Hoverable>
             <button
-              class="inline font-mono text-base cursor-pointer rounded-sm focusOutline"
+              class="focusOutline inline cursor-pointer rounded-sm font-mono text-base"
               on:click={() => switchDate()}
               tabindex="0"
             >
@@ -160,7 +160,7 @@
             </button>
           </Hoverable>
           <BulletPoint />
-          <p class="font-mono text-base cursor-default">
+          <p class="cursor-default font-mono text-base">
             {t('{length} min read', { length: Math.floor(readingTime / 60) })}
           </p>
         </div>

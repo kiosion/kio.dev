@@ -55,7 +55,7 @@
 />
 
 <div
-  class="fixed grid min-w-[14rem] py-2 z-20 shadow-stone-500/50 dark:shadow-stone-500/20 shadow-[0_0_20px_-2px_var(--tw-shadow)] text-stone-900 bg-stone-300 dark:bg-stone-400 rounded-lg overflow-hidden"
+  class="fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg bg-stone-300 py-2 text-stone-900 shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-stone-500/50 dark:bg-stone-400 dark:shadow-stone-500/20"
   style="top: {y}px; left: {x}px"
   in:fade={{ duration: 100 }}
   out:fade={{ duration: 100, delay: 10 }}

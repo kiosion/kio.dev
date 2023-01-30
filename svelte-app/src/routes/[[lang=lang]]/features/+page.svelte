@@ -6,7 +6,9 @@
   import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
   import SFX from '$lib/sfx';
-  import { t } from '$i18n';
+  import { linkTo, t } from '$i18n';
+  import { page } from '$app/stores';
+  import Button from '$components/controls/button.svelte';
 
   let body: HTMLElement;
 
@@ -72,24 +74,15 @@
       state={$CanSeeComments}
       label="View Comments"
     />
-    <SwitchItem
-      action={onChange}
-      target={'tooltips'}
-      state={$CanUseTooltips}
-      label="View Tooltips"
-    />
   </div>
   <div class="mt-6">
-    <h3 class="font-bold text-xl">Other</h3>
-    <div class="flex flex-col justify-start items-start mt-4">
-      <button
-        class="text-sm p-2 border-2 border-violet-300 hover:bg-violet-400 hover:border-violet-400 focus-visible:bg-violet-400 focus-visible:border-violet-400 focusOutline rounded-md hover:text-gray-800"
-        on:click={() => {
-          SFX.click.play();
-        }}
+    <h3 class="text-xl font-bold">Other</h3>
+    <div class="mt-4 flex flex-col items-start justify-start">
+      <Button
+        href={linkTo(`/auth/login?redirect=${linkTo($page.url.pathname)}`)}
       >
         {t('Log in with {provider}', { provider: 'GitHub' })}
-      </button>
+      </Button>
     </div>
   </div>
 </div>

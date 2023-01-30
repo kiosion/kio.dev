@@ -18,7 +18,7 @@
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
   <Tooltip text={t('Toggle summary')} fixed>
     <div
-      class="flex flex-row items-center justify-between py-4 px-4 rounded-md focusOutline-sm"
+      class="focusOutline-sm flex flex-row items-center justify-between rounded-md py-4 px-4"
       role="button"
       tabindex="0"
       on:click={(_) => {
@@ -37,12 +37,12 @@
         }
       }}
     >
-      <div class="flex flex-row items-center justify-start gap-3 w-fit">
+      <div class="flex w-fit flex-row items-center justify-start gap-3">
         <Icon icon="List" />
-        <h3 class="font-lg font-bold select-none">{t('Summary')}</h3>
+        <h3 class="font-lg select-none font-bold">{t('Summary')}</h3>
       </div>
       {#if floating}
-        <div class="flex flex-row items-center justify-center gap-3 w-fit ">
+        <div class="flex w-fit flex-row items-center justify-center gap-3 ">
           <Icon
             icon="ChevronDown"
             classes="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"

@@ -10,16 +10,23 @@
     loading = false;
 </script>
 
-<PageHeading heading={t(title)}>
-  <span class="flex flex-row items-center gap-3">
+<PageHeading heading={title}>
+  <span>
     {#if loading}
       <Spinner />
     {:else}
       <Icon {icon} classNames="mt-0.5" />
     {/if}
-    <p class="font-code text-base">{t(text)}</p>
+    <p>{text}</p>
   </span>
 </PageHeading>
 
 <style lang="postcss">
+  span {
+    @apply flex flex-row items-center gap-3;
+  }
+
+  p {
+    @apply font-code text-base;
+  }
 </style>

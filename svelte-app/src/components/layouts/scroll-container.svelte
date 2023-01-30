@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-x-clip overflow-y-scroll bg-stone-200 dark:bg-stone-800 rounded-t-3xl md:rounded-none p-8 overflow-visible transition-colors focusOutline"
+  class="focusOutline relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-3xl bg-stone-200 p-8 transition-colors dark:bg-stone-800 md:rounded-none"
   bind:this={element}
 >
   <slot />

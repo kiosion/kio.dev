@@ -18,7 +18,7 @@
   $: (imageCrop = getCrop(value as unknown as SanityImageObject)), value;
 </script>
 
-<div class="w-full h-fit">
+<div class="h-fit w-full">
   <img
     src={urlFor(_ref)
       .width(800)
@@ -26,7 +26,7 @@
       .fit('crop')
       .auto('format')
       .url()}
-    class="rounded-sm select-none"
+    class="select-none rounded-sm"
     alt={_key}
     draggable="false"
   />

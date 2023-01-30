@@ -4,5 +4,5 @@
 </script>
 
 <div
-  class="h-1 w-1 rounded-full mx-2 transition-all duration-150 {colors} {classNames}"
+  class="mx-2 h-1 w-1 rounded-full transition-all duration-150 {colors} {classNames}"
 />

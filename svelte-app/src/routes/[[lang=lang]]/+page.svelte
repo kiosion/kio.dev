@@ -38,29 +38,29 @@
 </svelte:head>
 
 <div
-  class="relative overflow-hidden w-full max-w-[120rem] mx-auto {$isDesktop
+  class="relative mx-auto w-full max-w-[120rem] overflow-hidden {$isDesktop
     ? 'mb-[3rem] h-[calc(100%_-_3rem)]'
     : 'h-full'}"
   data-test-route="index"
 >
   <Breakpoints queries={DEFAULT_BREAKPOINTS}>
     <svelte:fragment slot="lg">
-      <div class="flex items-center justify-center w-full h-full">
+      <div class="flex h-full w-full items-center justify-center">
         <div
-          class="relative max-h-[50rem] max-w-[100rem] w-full h-full flex flex-col items-start justify-end gap-4 px-[5vw] pb-[5vh]"
+          class="relative flex h-full max-h-[50rem] w-full max-w-[100rem] flex-col items-start justify-end gap-4 px-[5vw] pb-[5vh]"
         >
           <div class="z-10">
             <img
               src={LogoText}
-              class="w-[26rem] dark:invert select-none transition-colors"
+              class="w-[26rem] select-none transition-colors dark:invert"
               alt="kio.dev"
             />
-            <span class="flex flex-row items-center gap-2 -mt-1 ml-8">
+            <span class="-mt-1 ml-8 flex flex-row items-center gap-2">
               <Icon icon="arrow-right" />
               <p class="font-code text-lg">kio.dev // {t('index')}</p>
             </span>
           </div>
-          <div class="text-lg w-[26rem] lg:w-[32rem] xl:w-[36rem] z-10">
+          <div class="z-10 w-[26rem] text-lg lg:w-[32rem] xl:w-[36rem]">
             <p class="leading-loose">
               {t(
                 "Hi there, welcome to my little corner of the internet! Here you'll find"
@@ -90,20 +90,20 @@
         </div>
       </div>
       <div
-        class="absolute left-0 right-0 top-0 bottom-[-4rem] gradient from-stone-200 to-stone-200/30 dark:from-stone-800 dark:to-stone-800/30 z-[2]"
+        class="gradient absolute left-0 right-0 top-0 bottom-[-4rem] z-[2] from-stone-200 to-stone-200/30 dark:from-stone-800 dark:to-stone-800/30"
       />
     </svelte:fragment>
     <svelte:fragment slot="sm">
       <div
-        class="relative p-6 w-full h-full flex flex-col items-center justify-center gap-6"
+        class="relative flex h-full w-full flex-col items-center justify-center gap-6 p-6"
       >
-        <h1 class="font-display font-black text-8xl">
+        <h1 class="font-display text-8xl font-black">
           kio<span
-            class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
+            class="mx-[5px] text-8xl text-violet-400 dark:text-violet-300"
             >.</span
           >dev
         </h1>
-        <div class="text-lg max-w-[24rem]">
+        <div class="max-w-[24rem] text-lg">
           <p class="leading-loose">
             {t(
               "Hi there, welcome to my little corner of the internet! Here you'll find"

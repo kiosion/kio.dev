@@ -7,7 +7,7 @@
 </script>
 
 <div
-  class="flex flex-row justify-start items-center gap-3 select-none {classes}"
+  class="flex select-none flex-row items-center justify-start gap-3 {classes}"
 >
   <Icon {icon} />
   <h3 class="font-code text-lg">{text}</h3>
