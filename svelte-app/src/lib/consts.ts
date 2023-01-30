@@ -181,7 +181,7 @@ export const AVAILABLE_OAUTH_PROVIDERS = ['github' as const];
 export const GH_OAUTH_COOKIE_NAME = 'gh_oauth_token';
 export const OAUTH_COOKIE_TTL_S = 1000 * 60 * 60 * 24 * 6; // 6 days
 export const OAUTH_COOKIE_TTL_DAYS = '6d';
-export const OAUTH_RETURN_TO_COOKIE_NAME = 'oauth_return_to';
+export const OAUTH_REDIRECT_COOKIE_NAME = 'oauth_redirect';
 
 export const LOADING_PHRASES = [
   'Spinning violently around the y-axis',

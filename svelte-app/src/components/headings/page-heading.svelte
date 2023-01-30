@@ -15,4 +15,5 @@
       <p class="font-code text-base">{text}</p>
     </span>
   {/if}
+  <slot />
 </div>

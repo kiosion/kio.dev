@@ -3,20 +3,23 @@ import { checkJWTValidity, generateOAuthUrl } from '$lib/auth.server';
 import {
   APP_LANGS,
   AVAILABLE_OAUTH_PROVIDERS,
-  GH_OAUTH_COOKIE_NAME
+  GH_OAUTH_COOKIE_NAME,
+  OAUTH_REDIRECT_COOKIE_NAME
 } from '$lib/consts';
 import crypto from 'crypto';
 
 export const load: PageServerLoad = ({ cookies, params, url }) => {
   const { lang } = params;
   const { searchParams } = url;
-  const returnTo = searchParams.get('returnTo') || '/';
-  cookies.set('oauth_return_to', returnTo, {
+  const redirect = searchParams.get('redirect') || '/';
+
+  cookies.set(OAUTH_REDIRECT_COOKIE_NAME, redirect, {
     path: '/',
     sameSite: 'strict',
     secure: true,
-    maxAge: 1000 * 60 * 60
+    maxAge: 1000 * 60 * 60 // 1 hour
   });
+
   const authCookie = cookies.get(GH_OAUTH_COOKIE_NAME);
 
   const providers = AVAILABLE_OAUTH_PROVIDERS.map((provider) => {
@@ -33,11 +36,12 @@ export const load: PageServerLoad = ({ cookies, params, url }) => {
   });
 
   if (authCookie) {
-    const isValid = checkJWTValidity(authCookie);
+    const isValid = checkJWTValidity(authCookie, 'github');
 
     if (isValid) {
       return {
         mode: 'authed' as const,
+        redirect,
         providers: null
       };
     }
@@ -45,7 +49,7 @@ export const load: PageServerLoad = ({ cookies, params, url }) => {
 
   return {
     mode: 'unauthed' as const,
-    returnTo,
+    redirect,
     providers
   };
 };

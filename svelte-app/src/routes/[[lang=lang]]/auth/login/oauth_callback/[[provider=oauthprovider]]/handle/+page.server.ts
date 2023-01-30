@@ -5,7 +5,8 @@ import {
 import {
   type APP_LANGS,
   OAUTH_COOKIE_TTL_S,
-  GH_OAUTH_COOKIE_NAME
+  GH_OAUTH_COOKIE_NAME,
+  OAUTH_REDIRECT_COOKIE_NAME
 } from '$lib/consts';
 import type { PageServerLoad } from './$types';
 
@@ -13,7 +14,7 @@ export const load: PageServerLoad = async ({ cookies, fetch, params, url }) => {
   const { searchParams } = url;
   const { provider, lang } = params;
   const code = searchParams.get('code');
-  const returnTo = cookies.get('oauth_return_to') || '/';
+  const redirect = cookies.get(OAUTH_REDIRECT_COOKIE_NAME) || '/';
 
   if (!code) {
     return {
@@ -36,14 +37,14 @@ export const load: PageServerLoad = async ({ cookies, fetch, params, url }) => {
                 error: response.error_description || response.error,
                 jwt: null,
                 provider,
-                returnTo
+                redirect
               };
             }
             return {
               error: 'No access token resolved or invalid response format',
               jwt: null,
               provider,
-              returnTo
+              redirect
             };
           }
 
@@ -57,7 +58,7 @@ export const load: PageServerLoad = async ({ cookies, fetch, params, url }) => {
             maxAge: OAUTH_COOKIE_TTL_S
           });
 
-          return { error: null, jwt, provider, returnTo };
+          return { error: null, jwt, provider, redirect };
         })
         .catch((error) => {
           console.error(error);
@@ -65,7 +66,7 @@ export const load: PageServerLoad = async ({ cookies, fetch, params, url }) => {
             error: error?.toString(),
             jwt: null,
             provider,
-            returnTo
+            redirect
           };
         });
   }

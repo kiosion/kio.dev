@@ -10,7 +10,7 @@
 
   onMount(() => {
     if (data.error === null && data.jwt) {
-      goto(linkTo(data.returnTo));
+      goto(linkTo(data.redirect));
     }
   });
 </script>

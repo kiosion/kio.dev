@@ -5,6 +5,7 @@
   import LinkNonPt from '$components/link-non-pt.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import { t, linkTo } from '$i18n';
+  import { page } from '$app/stores';
   import type { ExternalUserInfo } from '$types';
   import type { ActionResult } from '@sveltejs/kit';
 
@@ -16,7 +17,7 @@
   const handleSubmit = async (
     event: Event & {
       readonly submitter: HTMLElement | null;
-      target: EventTarget & HTMLFormElement;
+      target: EventTarget | null;
     } & {
       currentTarget: EventTarget & HTMLFormElement;
     }
@@ -24,9 +25,11 @@
     if (!event.target) {
       return;
     }
+    const target = event.target as EventTarget & HTMLFormElement;
+
     loading = true;
 
-    const data = new FormData(event.target as HTMLFormElement);
+    const data = new FormData(target);
 
     const response = await fetch('/api/v1/comment?/post', {
       method: 'POST',
@@ -35,12 +38,11 @@
 
     const result: ActionResult = deserialize(await response.text());
 
-    console.log('got result:', result);
+    // console.log('got result:', result);
 
     if (result.type === 'success') {
       await invalidateAll();
-      // Clear textarea
-      event.target.reset();
+      target.reset();
     }
 
     loading = false;
@@ -78,7 +80,9 @@
       <div
         class="overflow-hidden w-full h-fit p-2 rounded-md bg-stone-50/80 dark:bg-stone-700/60"
       >
-        <LinkNonPt href={linkTo('/auth/login')}>{t('Log in')}</LinkNonPt>
+        <LinkNonPt href={linkTo(`/auth/login?redirect=${$page.url.pathname}`)}
+          >{t('Log in')}</LinkNonPt
+        >
         {t('to leave a comment')}
       </div>
     {/if}
