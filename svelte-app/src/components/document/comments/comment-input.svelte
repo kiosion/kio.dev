@@ -112,7 +112,7 @@
   </div>
 </form>
 
-<style lang="postcss">
+<style lang="scss">
   form {
     @apply flex w-full flex-row items-center justify-between gap-4 rounded-xl bg-stone-300/50 p-4;
 
@@ -122,18 +122,6 @@
 
     .userIcon--placeholder {
       @apply flex aspect-square h-10 w-10 items-center justify-center rounded-full bg-stone-400/50;
-    }
-  }
-
-  input {
-    @apply cursor-pointer rounded-md border border-stone-400 px-2 py-1 font-code text-base transition-colors;
-
-    &.active:not(:disabled) {
-      @apply border-2 border-stone-800 bg-violet-400 text-stone-900;
-    }
-
-    &:disabled {
-      @apply cursor-not-allowed bg-stone-400/40;
     }
   }
   textarea {
@@ -146,12 +134,6 @@
 
     textarea {
       @apply bg-stone-700/60;
-    }
-
-    input {
-      &.active:not(:disabled) {
-        @apply border-stone-100;
-      }
     }
   }
 </style>

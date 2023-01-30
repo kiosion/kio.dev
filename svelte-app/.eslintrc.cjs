@@ -16,14 +16,10 @@ module.exports = {
     'eslint:recommended',
     'plugin:svelte/recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   plugins: ['prettier', '@typescript-eslint'],
   rules: {
-    // '@typescript-eslint/no-unsafe-assignment': ['off'],
-    // '@typescript-eslint/no-unsafe-return': ['off'],
-    // '@typescript-eslint/no-unsafe-call': ['off'],
-    // '@typescript-eslint/no-unsafe-member-access': ['off'],
+    'svelte/valid-compile': ['off'],
     '@typescript-eslint/restrict-template-expressions': ['off'],
     '@typescript-eslint/no-unused-vars': [
       'error', {

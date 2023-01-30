@@ -1,12 +1,16 @@
 import NodeAdapter from '@sveltejs/adapter-node';
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
-  preprocess: preprocess({
-    postcss: true
-  }),
+export default {
+  preprocess: [
+    vitePreprocess(),
+    preprocess({
+      postcss: true
+    })
+  ],
   kit: {
     alias: {
       $components: 'src/components',
@@ -39,4 +43,4 @@ const config = {
   }
 };
 
-export default config;
+// export default config;

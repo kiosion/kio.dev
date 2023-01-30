@@ -148,7 +148,7 @@
   </ScrollContainer>
 </div>
 
-<style lang="postcss">
+<style lang="scss">
   .main {
     @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900 transition-colors duration-150 lg:text-lg;
 

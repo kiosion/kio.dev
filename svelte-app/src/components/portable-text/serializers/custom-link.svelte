@@ -28,7 +28,7 @@
   </a>
 </Hoverable>
 
-<style lang="postcss">
+<style lang="scss">
   a {
     @apply rounded-sm from-violet-300 px-[2px] no-underline;
 

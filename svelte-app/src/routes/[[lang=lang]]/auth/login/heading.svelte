@@ -21,7 +21,7 @@
   </span>
 </PageHeading>
 
-<style lang="postcss">
+<style lang="scss">
   span {
     @apply flex flex-row items-center gap-3;
   }

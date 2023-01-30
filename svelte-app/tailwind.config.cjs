@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: 'jit',
-  content: ['./src/**/*.{html,svelte,ts}'],
+  content: ['./src/**/*.{html,svelte,js,ts}'],
   theme: {
     extend: {
       fontFamily: {
@@ -18,10 +18,10 @@ module.exports = {
         '5xl': ['2.25rem', '1'],
         '6xl': ['3rem', '1'],
         '7xl': ['3.825rem', '1'],
-        '8xl': ['4.5rem', '1'],
+        '8xl': ['4.5rem', '1']
       },
       borderRadius: {
-        'sm': '0.2rem'
+        sm: '0.2rem'
       },
       keyframes: {
         wave: {
@@ -43,7 +43,5 @@ module.exports = {
     }
   },
   darkMode: 'class',
-  plugins: [
-    require('@tailwindcss/line-clamp')
-  ]
+  plugins: [require('@tailwindcss/line-clamp')]
 };

@@ -39,7 +39,7 @@
   </a>
 </Hoverable>
 
-<style lang="postcss">
+<style lang="scss">
   a {
     @apply mt-6 mb-2 block w-fit rounded-sm font-extrabold;
 
