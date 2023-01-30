@@ -30,7 +30,7 @@
 
 <style lang="postcss">
   a {
-    @apply no-underline from-violet-300 rounded-sm px-[2px];
+    @apply rounded-sm from-violet-300 px-[2px] no-underline;
 
     background-image: linear-gradient(
       to right,

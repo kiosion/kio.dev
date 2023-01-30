@@ -24,6 +24,7 @@
   import { useMediaQuery } from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
+  import type { Unsubscriber } from 'svelte/store';
 
   interface DevToolsEvent extends Event {
     detail: {
@@ -34,21 +35,21 @@
   let appLoaded: boolean,
     scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
-    preloadUrls = ['/assets/logo-text--short.webp'];
+    preloadUrls = ['/assets/logo-text--short.webp'],
+    unsubscribers = [] as Unsubscriber[];
 
   const msg = (e: DevToolsEvent) =>
     e.detail?.isOpen &&
     console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
 
-  const navUnsubscribe = navigating.subscribe((res) => {
-    !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
-  });
-
-  const unsubscribePreferReducedMotion = useMediaQuery(
-    '(prefers-reduced-motion: reduce)'
-  ).subscribe((value) => {
-    Features.set('reduce motion', value);
-  });
+  unsubscribers.push(
+    navigating.subscribe((res) => {
+      !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
+    }),
+    useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
+      Features.set('reduce motion', value);
+    })
+  );
 
   [
     ['getScrollContainer', () => scrollContainer],
@@ -66,8 +67,7 @@
   });
 
   onDestroy(() => {
-    navUnsubscribe();
-    unsubscribePreferReducedMotion();
+    unsubscribers.forEach((u) => u());
     browser && window.removeEventListener('devtoolschange', () => msg);
   });
 
@@ -75,9 +75,11 @@
 
   $: useCustomCursor = Features.can('use custom cursor');
   $: useComicSans = Features.can('use comic sans');
-  $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
+  $: isLocalized.set(
+    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
+  );
   $: currentLang.set(
-    APP_LANGS.includes($page?.params?.lang)
+    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
@@ -90,12 +92,10 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`w-full h-full overflow-x-hidden transition-colors ${
-    isDesktop ? 'desktop' : 'mobile'
-  } ${$theme ?? 'dark'} ${
+  use:classList={`${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${appLoaded && 'app-loaded'} ${$useComicSans && 'comicSans'} ${
-    $useCustomCursor && 'custom-cursor'
+  } ${$useComicSans ? 'comicSans' : ''} ${
+    $useCustomCursor ? 'custom-cursor' : ''
   }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
@@ -106,7 +106,7 @@
 
 {#if !$isDesktop && $loading}
   <div
-    class="fixed top-0 left-0 w-[100vw] h-[3px] z-[50]"
+    class="fixed top-0 left-0 z-[50] h-[3px] w-[100vw]"
     in:fly={{ x: 0, y: 3, duration: 600 }}
     out:fly={{ x: 0, y: -3, duration: 600 }}
   >
@@ -120,17 +120,16 @@
 {/if}
 
 {#if browser && $useCustomCursor}
-  <CustomCursor {scrollContainer} showLoader={$loading || !appLoaded} />
+  <CustomCursor showLoader={$loading || !appLoaded} />
 {/if}
 
 {#if $menuState.open}
-  <ContextMenu {pageContainer} />
+  <ContextMenu />
 {/if}
 
 <div
   class="main"
   class:is-desktop={$isDesktop}
-  data-test-app-root
   data-test-theme={$theme}
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
@@ -151,7 +150,7 @@
 
 <style lang="postcss">
   .main {
-    @apply flex flex-col w-full h-full lg:text-lg overflow-x-hidden text-stone-900 transition-colors duration-150;
+    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900 transition-colors duration-150 lg:text-lg;
 
     div {
       @apply relative h-full w-full;
@@ -170,5 +169,9 @@
     .main {
       @apply text-stone-50;
     }
+  }
+
+  :global(body) {
+    @apply h-full w-full overflow-x-hidden transition-colors;
   }
 </style>

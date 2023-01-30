@@ -33,7 +33,7 @@
         <ListItem {post} />
       {/each}
     {:else}
-      <div class="w-full flex flex-row items-center justify-center">
+      <div class="flex w-full flex-row items-center justify-center">
         <EmptyContent />
       </div>
     {/if}

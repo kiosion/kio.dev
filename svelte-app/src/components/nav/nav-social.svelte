@@ -31,7 +31,7 @@
   >
     <!-- svelte-ignore a11y-missing-attribute -->
     <a
-      class="flex justify-center p-2 transition-colors duration-150 cursor-pointer align-center hover:text-violet-400 dark:hover:text-violet-300 rounded-sm focusOutline-sm"
+      class="align-center focusOutline-sm flex cursor-pointer justify-center rounded-sm p-2 transition-colors duration-150 hover:text-violet-400 dark:hover:text-violet-300"
       role="menuitem"
       aria-label={social.name}
       {...social.attrs}

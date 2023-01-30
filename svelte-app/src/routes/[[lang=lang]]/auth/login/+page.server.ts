@@ -11,6 +11,7 @@ import crypto from 'crypto';
 export const load: PageServerLoad = ({ cookies, params, url }) => {
   const { lang } = params;
   const { searchParams } = url;
+
   const redirect = searchParams.get('redirect') || '/';
 
   cookies.set(OAUTH_REDIRECT_COOKIE_NAME, redirect, {

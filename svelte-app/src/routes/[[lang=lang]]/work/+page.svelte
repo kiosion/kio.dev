@@ -49,7 +49,7 @@
 <IconHeader icon="bulletlist" text={t('Recent projects')} />
 {#if projects?.data?.length}
   <div
-    class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
+    class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
   >
     {#each projects.data as project}
       {#if project._id !== pinned?.data?._id}
@@ -58,7 +58,7 @@
     {/each}
   </div>
 {:else}
-  <div class="w-full flex flex-row items-center justify-center">
+  <div class="flex w-full flex-row items-center justify-center">
     <EmptyContent />
   </div>
 {/if}
@@ -66,7 +66,7 @@
   <Hoverable>
     <a
       href="/work/1"
-      class="block w-fit mt-8"
+      class="mt-8 block w-fit"
       aria-label={t('View more projects')}
       on:click={() => SFX.click.play()}
     >

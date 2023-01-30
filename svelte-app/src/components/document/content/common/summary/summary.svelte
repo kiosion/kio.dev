@@ -19,9 +19,9 @@
 <div
   class="{hide && 'hidden'} rounded-md {floating
     ? expanded
-      ? 'bg-stone-300/90 dark:bg-stone-900/90 backdrop-blur-lg shadow-lg'
-      : 'bg-stone-300/60 dark:bg-stone-900/60 backdrop-blur-md shadow-lg'
-    : 'bg-stone-300/60 dark:bg-stone-900'} hover:bg-stone-300 dark:hover:bg-stone-900/60 hover:border-stone-400/80 hover:dark:border-stone-500/80 border-stone-400/60 dark:border-stone-500/60 border z-[5] transition-[background-color,box-shadow,color,opacity]"
+      ? 'bg-stone-300/90 shadow-lg backdrop-blur-lg dark:bg-stone-900/90'
+      : 'bg-stone-300/60 shadow-lg backdrop-blur-md dark:bg-stone-900/60'
+    : 'bg-stone-300/60 dark:bg-stone-900'} z-[5] border border-stone-400/60 transition-[background-color,box-shadow,color,opacity] hover:border-stone-400/80 hover:bg-stone-300 dark:border-stone-500/60 hover:dark:border-stone-500/80 dark:hover:bg-stone-900/60"
 >
   <Heading
     {floating}

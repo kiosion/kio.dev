@@ -184,7 +184,7 @@
   @import '../styles/colors';
 
   .codeBlock--container {
-    @apply relative my-6 -mx-2 overflow-hidden rounded-md border-stone-400/40 border transition-colors;
+    @apply relative my-6 -mx-2 overflow-hidden rounded-md border border-stone-400/40 transition-colors;
 
     &.active {
       @apply border-stone-400;
@@ -192,10 +192,10 @@
   }
 
   .codeBlock--codeContainer {
-    @apply relative overflow-hidden rounded-md w-full text-lg h-[0px] transition-[height];
+    @apply relative h-[0px] w-full overflow-hidden rounded-md text-lg transition-[height];
 
     .inner {
-      @apply rounded-md min-w-full w-fit h-fit p-1 bg-stone-300/40 transition-all;
+      @apply h-fit w-fit min-w-full rounded-md bg-stone-300/40 p-1 transition-all;
 
       &.active {
         @apply bg-stone-300;
@@ -204,7 +204,7 @@
   }
 
   .copyButton {
-    @apply opacity-0 cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-stone-600 hover:text-stone-800;
+    @apply absolute top-0 right-0 z-10 m-2 cursor-pointer rounded-sm p-2 text-stone-600 opacity-0 transition-opacity duration-150 hover:text-stone-800;
 
     &.visible {
       @apply opacity-100;

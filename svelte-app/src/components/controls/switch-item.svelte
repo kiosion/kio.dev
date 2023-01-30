@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="flex flex-row w-full items-center justify-start gap-2 mt-3 {disabled
+  class="mt-3 flex w-full flex-row items-center justify-start gap-2 {disabled
     ? 'cursor-not-allowed'
     : ''}"
 >

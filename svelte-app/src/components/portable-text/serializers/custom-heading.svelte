@@ -41,26 +41,26 @@
 
 <style lang="postcss">
   a {
-    @apply block w-fit rounded-sm mt-6 mb-2 font-extrabold;
+    @apply mt-6 mb-2 block w-fit rounded-sm font-extrabold;
 
     &.large {
       @apply mt-12 mb-6;
     }
 
     h1 {
-      @apply inline font-display font-bold text-5xl;
+      @apply inline font-display text-5xl font-bold;
     }
     h2 {
-      @apply inline font-display font-bold text-4xl;
+      @apply inline font-display text-4xl font-bold;
     }
     h3 {
-      @apply inline font-display font-bold text-3xl;
+      @apply inline font-display text-3xl font-bold;
     }
     h4 {
-      @apply inline font-display font-bold text-2xl;
+      @apply inline font-display text-2xl font-bold;
     }
     h5 {
-      @apply inline font-display font-bold text-xl;
+      @apply inline font-display text-xl font-bold;
     }
   }
 </style>

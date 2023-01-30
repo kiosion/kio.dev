@@ -31,12 +31,12 @@
 </svelte:head>
 
 <!-- TODO: Split pagination into its own component -->
-<div class="w-full flex flex-row justify-between items-center mb-4">
-  <div class="flex flex-row justify-start items-center gap-2">
+<div class="mb-4 flex w-full flex-row items-center justify-between">
+  <div class="flex flex-row items-center justify-start gap-2">
     <Icon icon={'List'} />
     <h3 class="font-code text-lg">Page {curPage} of {totalPages}</h3>
   </div>
-  <div class="flex flex-row justify-start items-center gap-4">
+  <div class="flex flex-row items-center justify-start gap-4">
     <Hoverable>
       <a
         href="/blog/{curPage > 1 ? curPage - 1 : 1}"

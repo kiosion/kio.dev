@@ -1,6 +1,6 @@
-<div class="flex flex-1 w-full items-stretch justify-start">
+<div class="flex w-full flex-1 items-stretch justify-start">
   <div
-    class="block w-[2px] bg-gray-500 dark:bg-gray-300 rounded-sm mr-3 opacity-80"
+    class="mr-3 block w-[2px] rounded-sm bg-gray-500 opacity-80 dark:bg-gray-300"
   />
   <span class="block"><slot /></span>
 </div>

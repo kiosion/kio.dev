@@ -55,12 +55,8 @@ body {
     --textColour: $stone-900;
   }
   &:not(.is-loaded) {
-    &,
-    &:not(.app-loaded) {
-      cursor: wait !important;
-    }
+    cursor: wait !important;
   }
-  &.is-loading,
   &.is-loading {
     cursor: progress !important;
 

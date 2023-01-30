@@ -18,7 +18,7 @@
       rel={external ? 'noopener noreferrer' : undefined}
       class="underlined from-violet-300 {hovered
         ? 'active dark:text-stone-800'
-        : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
+        : ''} focusOutline-sm -mx[2px] rounded-sm px-[2px]"
       tabindex="0"
     >
       <slot />

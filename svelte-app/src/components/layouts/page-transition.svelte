@@ -21,7 +21,7 @@
 <!-- in each individual subroute... which is Not happening, lol -->
 {#key pathname}
   <div
-    class="absolute top-0 left-0 w-full h-full"
+    class="absolute top-0 left-0 h-full w-full"
     in:maybe={{
       // animate: !$CanUseReduceMotion,
       animate: true,

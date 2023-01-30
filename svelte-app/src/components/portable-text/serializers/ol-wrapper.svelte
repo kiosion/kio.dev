@@ -6,6 +6,6 @@
   $: ({ value: _value } = portableText);
 </script>
 
-<ol class="list-decimal ml-6 leading-8">
+<ol class="ml-6 list-decimal leading-8">
   <slot />
 </ol>

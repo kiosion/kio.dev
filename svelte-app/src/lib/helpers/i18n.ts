@@ -92,7 +92,7 @@ const linkTo = (path: string, lang?: string): string => {
 
   APP_LANGS.forEach((l) => path.startsWith(`/${l}/`) && (path = path.slice(3)));
 
-  return APP_LANGS.includes(lang.toLowerCase())
+  return APP_LANGS.includes(lang.toLowerCase() as (typeof APP_LANGS)[number])
     ? `/${lang}${path.startsWith('/') ? path : `/${path}`}`
     : path;
 };

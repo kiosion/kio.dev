@@ -1,19 +1,23 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { page } from '$app/stores';
   import { theme } from '$stores/theme';
   import { tweened } from 'svelte/motion';
   import { cubicInOut } from 'svelte/easing';
   import Store from '$stores/cursor';
 
-  export let scrollContainer: HTMLElement;
+  // export let scrollContainer: HTMLElement;
   export let showLoader = true;
 
   let cursor: HTMLElement,
     progressPath: SVGPathElement,
     loaderPath: SVGPathElement,
     cursorHidden = true;
-  const mousePos = { x: 0, y: 0 };
+
+  const mousePos = { x: 0, y: 0 },
+    scrollContainer = (
+      getContext('getScrollContainer') as () => HTMLDivElement
+    )();
 
   const cursorTweenX = tweened(0, { duration: 22, easing: cubicInOut }),
     cursorTweenY = tweened(0, { duration: 22, easing: cubicInOut });

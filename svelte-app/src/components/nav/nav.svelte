@@ -55,41 +55,31 @@
     })
   );
 
-  let clicks = 0,
-    navHovered = false;
+  let navHovered = false;
 
   const onLogoClick = () => {
-    clicks++;
+    SFX.click.play();
     navOpen.set(false);
-    if (clicks >= 3) {
-      goto(linkTo('/features'))
-        .then(() => {
-          SFX.ping.play();
-          setTimeout(() => (clicks = 0), 1200);
-        })
-        .catch(() => (clicks = 0));
+
+    if (currentRouteIsHome) {
+      goto(linkTo('/features')).then(() => SFX.ping.play());
     } else {
-      SFX.click.play();
-      goto(linkTo('/')).catch(() => undefined);
-      setTimeout(() => (clicks = 0), 1200);
+      goto(linkTo('/'));
     }
   };
+
+  $: currentRouteIsHome = $page.url.pathname.match(/^\/(?:en|fr)?\/?$/gim);
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <Hoverable setPointer={false} bind:hovered={navHovered}>
-      <nav
-        class="flex flex-col flex-shrink-0 w-32 lg:w-40 xl:w-48 px-4 py-8 my-4 ml-4 overflow-x-hidden overflow-y-scroll text-center {navHovered
-          ? 'bg-stone-300 dark:bg-stone-900/40 border-stone-400 dark:border-stone-500/80'
-          : 'bg-stone-300/60 dark:bg-stone-900/80 border-stone-400/80 dark:border-stone-500/60'} border rounded-3xl transition-colors"
-        data-test-id="navBar"
-      >
-        <div class="flex-grow -mt-7 md:-mt-4 click-through">
+      <nav class="nav--desktop" class:active={navHovered} data-test-id="navBar">
+        <div class="click-through -mt-7 flex-grow md:-mt-4">
           <Tooltip text={t('Click me a few times!')} position="right">
             <Hoverable>
               <button
-                class="inline-block -ml-3 lg:ml-0 mt-24 mb-[68px] lg:my-20 xl:my-24 w-28 lg:w-32 xl:w-36 logo-text dark:invert transition-[filter] rounded-sm focusOutline dark:outline-lime-700"
+                class="logo-text focusOutline -ml-3 mt-24 mb-[68px] inline-block w-28 rounded-sm transition-[filter] dark:outline-lime-700 dark:invert lg:my-20 lg:ml-0 lg:w-32 xl:my-24 xl:w-36"
                 role="menuitem"
                 data-test-id="nav-logo"
                 on:click={() => onLogoClick()}
@@ -111,7 +101,7 @@
           </div>
         </div>
         <div
-          class="flex flex-col justify-center pt-8 mx-auto text-center text-secondary align-center"
+          class="text-secondary align-center mx-auto flex flex-col justify-center pt-8 text-center"
         >
           {#if socials?.length > 0}
             {#each socials as social}
@@ -123,17 +113,14 @@
     </Hoverable>
   </svelte:fragment>
   <svelte:fragment slot="sm">
-    <nav
-      class="h-fit w-full text-center flex flex-col bg-stone-300 dark:bg-stone-900 transition-colors z-10"
-      data-test-id="navBar"
-    >
+    <nav class="nav--mobile" data-test-id="navBar">
       <div
-        class="relative flex flex-row justify-between items-center m-4 px-3 flex-wrap gap-4"
+        class="relative m-4 flex flex-row flex-wrap items-center justify-between gap-4 px-3"
       >
         <MenuToggle />
         <Hoverable>
           <button
-            class="-mr-6 h-8 logo-text dark:invert transition-[filter]"
+            class="logo-text -mr-6 h-8 transition-[filter] dark:invert"
             data-test-id="nav-logo"
             on:click={() => onLogoClick()}
           >
@@ -144,7 +131,7 @@
             />
           </button>
         </Hoverable>
-        <div class="flex flex-row justify-start gap-4 w-fit align-center pt-1">
+        <div class="align-center flex w-fit flex-row justify-start gap-4 pt-1">
           <ThemeToggle />
           <SoundsToggle />
         </div>
@@ -152,7 +139,7 @@
       <!-- Nav dropdown -->
       {#if $navOpen}
         <div
-          class="flex text-2xl flex-col gap-3 justify-center items-center mb-[10px]"
+          class="mb-[10px] flex flex-col items-center justify-center gap-3 text-2xl"
           transition:slide|local={{
             duration: BASE_ANIMATION_DURATION,
             easing: circInOut
@@ -166,3 +153,29 @@
     </nav>
   </svelte:fragment>
 </Breakpoints>
+
+<style lang="scss">
+  .nav--desktop {
+    @apply my-4 ml-4 flex w-32 flex-shrink-0 flex-col overflow-x-hidden overflow-y-scroll rounded-3xl border border-stone-400/80 bg-stone-300/60 px-4 py-8 text-center transition-colors lg:w-40 xl:w-48;
+
+    &.active {
+      @apply border-stone-400 bg-stone-300;
+    }
+  }
+  .nav--mobile {
+    @apply z-10 flex h-fit w-full flex-col bg-stone-300 text-center transition-colors;
+  }
+
+  :global(.dark) {
+    .nav--desktop {
+      @apply border-stone-500/60 bg-stone-900/80;
+
+      &.active {
+        @apply border-stone-500/80 bg-stone-900/40;
+      }
+    }
+    .nav--mobile {
+      @apply bg-stone-900;
+    }
+  }
+</style>

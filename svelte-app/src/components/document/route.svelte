@@ -74,7 +74,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-row items-stretch justify-start h-fit"
+  class="flex h-fit flex-row items-stretch justify-start"
   data-test-route={isPost ? 'blog' : 'work'}
 >
   {#if data}

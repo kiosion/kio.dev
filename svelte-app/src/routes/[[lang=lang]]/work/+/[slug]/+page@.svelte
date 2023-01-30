@@ -29,14 +29,14 @@
   <div class="pb-20">
     {#if projects?.data?.length}
       <div
-        class="w-full mt-4 flex flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
+        class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
       >
         {#each projects.data as project}
           <ListItem {project} />
         {/each}
       </div>
     {:else}
-      <div class="w-full flex flex-row items-center justify-center">
+      <div class="flex w-full flex-row items-center justify-center">
         <EmptyContent />
       </div>
     {/if}

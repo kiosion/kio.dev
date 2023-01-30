@@ -11,13 +11,13 @@
 </script>
 
 <div
-  class="relative flex flex-col items-start justify-start w-full h-fit text-ellipsis {classes}"
+  class="relative flex h-fit w-full flex-col items-start justify-start text-ellipsis {classes}"
 >
   {#each headings as heading}
     <Hoverable>
       <a
         href={`#${heading.key}`}
-        class="block select-none w-full p-1 mx-4 my-2 text-sm font-medium whitespace-nowrap text-ellipsis text-[15px] overflow-hidden rounded-sm focusOutline-sm"
+        class="focusOutline-sm mx-4 my-2 block w-full select-none overflow-hidden text-ellipsis whitespace-nowrap rounded-sm p-1 text-sm text-[15px] font-medium"
         on:click={() => {
           sfx.click.play();
           dispatch('click', heading);

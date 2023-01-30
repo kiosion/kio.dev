@@ -5,8 +5,13 @@
   import Option from './context-menu/option.svelte';
   import Divider from './context-menu/divider.svelte';
   import { fly } from 'svelte/transition';
+  import { getContext } from 'svelte';
 
-  export let pageContainer: HTMLDivElement;
+  const pageContainer = (
+    getContext('getPageContainer') as () => HTMLDivElement
+  )();
+
+  // export let pageContainer: HTMLDivElement;
 </script>
 
 <Menu

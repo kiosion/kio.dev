@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Spinner from '$components/loading/spinner.svelte';
+  import Heading from '../heading.svelte';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import { t } from '$i18n';
@@ -16,18 +16,12 @@
   $: provider = data?.provider;
 </script>
 
-<div class="relative flex flex-col gap-3">
-  <h1 class="font-display text-7xl">{t('Authenticated')}</h1>
-  <span class="flex flex-row gap-3 items-center">
-    <Spinner />
-    {#if provider}
-      <p class="font-code text-lg">
-        {t('Successfully authenticated with {provider}', {
-          provider: provider.charAt(0).toUpperCase() + provider.substring(1)
-        })}...
-      </p>
-    {:else}
-      <p class="font-code text-lg">{t('Successfully authenticated')}...</p>
-    {/if}
-  </span>
-</div>
+<Heading
+  title={t('Authenticated')}
+  text={provider
+    ? t('Successfully authenticated with {provider}', {
+        provider: provider.charAt(0).toUpperCase() + provider.substring(1)
+      })
+    : t('Successfully authenticated')}
+  loading
+/>
