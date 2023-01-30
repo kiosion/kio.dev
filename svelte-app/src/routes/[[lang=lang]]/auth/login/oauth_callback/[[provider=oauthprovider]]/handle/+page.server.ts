@@ -62,7 +62,7 @@ export const load: PageServerLoad = async ({ cookies, fetch, params, url }) => {
         .catch((error) => {
           console.error(error);
           return {
-            error,
+            error: error?.toString(),
             jwt: null,
             provider,
             returnTo

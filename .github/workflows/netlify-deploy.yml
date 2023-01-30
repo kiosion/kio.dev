@@ -25,12 +25,17 @@ jobs:
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
-      - name: Inject env variables
-        run: (touch ./svelte-app/.env && echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" >> ./svelte-app/.env)
+      - name: Inject build env variables
+        run: |
+          touch ./svelte-app/.env
+          echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" >> ./svelte-app/.env
+          echo "VITE_GITHUB_APPLICATION_ID=${{ secrets.VITE_GITHUB_APPLICATION_ID }}" >> ./svelte-app/.env
+          echo "VITE_GITHUB_APPLICATION_SECRET=${{ secrets.VITE_GITHUB_APPLICATION_SECRET }}" >> ./svelte-app/.env
+          echo "VITE_JWT_SECRET=${{ secrets.VITE_JWT_SECRET }}" >> ./svelte-app/.env
       - name: Build for production
         env:
           SVELTE_NETLIFY_ENV: netlify
-        run: (make prod && cp ./svelte-app/.env ./svelte-app/build/.env)
+        run: make prod
       - name: Deploy to Netlify
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
