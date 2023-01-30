@@ -49,12 +49,6 @@
         <div
           class="relative max-h-[50rem] max-w-[100rem] w-full h-full flex flex-col items-start justify-end gap-4 px-[5vw] pb-[5vh]"
         >
-          <!-- <h1 class="font-display font-black text-8xl z-10">
-            kio<span
-              class="text-violet-400 dark:text-violet-300 mx-[5px] text-8xl"
-              >.</span
-            >dev
-          </h1> -->
           <div class="z-10">
             <img
               src={LogoText}
@@ -110,12 +104,12 @@
           >dev
         </h1>
         <div class="text-lg max-w-[24rem]">
-          <p class="leading-loose text-center">
+          <p class="leading-loose">
             {t(
               "Hi there, welcome to my little corner of the internet! Here you'll find"
             )}
-            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>, {t('a bit')}
-            <LinkNonPt href="/about">{t('about me')}</LinkNonPt>,
+            <LinkNonPt href="/blog">{t('my blog')}</LinkNonPt>,
+            <LinkNonPt href="/about">{t('a bit about me')}</LinkNonPt>,
             {t('and')}
             <LinkNonPt href="/now">{t("what I'm up to right now")}</LinkNonPt>.
           </p>

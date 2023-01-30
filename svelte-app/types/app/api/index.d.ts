@@ -34,3 +34,10 @@ export interface ResDataMany<T> extends Omit<ResData, 'data'> {
 }
 
 export type StoreRes<T> = T | undefined;
+
+export interface ExternalUserInfo {
+  login: string;
+  name: string;
+  avatar_url: string;
+  html_url: string;
+}

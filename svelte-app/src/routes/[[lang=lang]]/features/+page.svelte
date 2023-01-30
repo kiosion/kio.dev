@@ -6,6 +6,7 @@
   import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
   import SFX from '$lib/sfx';
+  import { t } from '$i18n';
 
   let body: HTMLElement;
 
@@ -17,10 +18,10 @@
   };
 
   navOptions.set({ down: '', up: '/' });
-  pageHeading.set('Secret');
+  pageHeading.set(t('Features'));
 
-  export const hydrate = false;
-  export const router = false;
+  export const hydrate = false,
+    router = false;
 
   $: CanUseReduceMotion = Features.can('reduce motion');
   $: CanUseSounds = Features.can('use sounds');
@@ -28,7 +29,6 @@
   $: CanUseComicSans = Features.can('use comic sans');
   $: CanSeeComments = Features.can('see comments');
   $: CanUseTooltips = Features.can('see tooltips');
-  $: CanSeeNewDesign = Features.can('see new design');
 </script>
 
 <svelte:head>
@@ -37,12 +37,11 @@
 
 <div data-test-route="index" class="w-full" bind:this={body}>
   <PageHeading
-    heading="Secret Stuff"
-    text="This is where I keep all my secret options and WIP features :)"
+    heading={t('Features')}
+    text={t('Secret & work-in-progress features')}
     icon="AbTesting"
   />
   <div class="mt-6">
-    <h3 class="font-bold text-xl">Features</h3>
     <SwitchItem
       action={onChange}
       target={'reduce-motion'}
@@ -79,12 +78,6 @@
       state={$CanUseTooltips}
       label="View Tooltips"
     />
-    <SwitchItem
-      action={onChange}
-      target={'new-design'}
-      state={$CanSeeNewDesign}
-      label="New design"
-    />
   </div>
   <div class="mt-6">
     <h3 class="font-bold text-xl">Other</h3>
@@ -95,7 +88,7 @@
           SFX.click.play();
         }}
       >
-        Log in with GitHub
+        {t('Log in with {provider}', { provider: 'GitHub' })}
       </button>
     </div>
   </div>

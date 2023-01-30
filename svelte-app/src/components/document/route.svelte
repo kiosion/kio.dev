@@ -9,7 +9,8 @@
     PostDocument,
     ProjectDocument,
     ResDataMany,
-    Comment
+    Comment,
+    ExternalUserInfo
   } from '$types';
   import type { Heading } from '$helpers/pt';
   import { t } from '$lib/helpers/i18n';
@@ -17,6 +18,7 @@
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
     headings: Heading[],
+    userInfo: ExternalUserInfo | null = null,
     comments: ResDataMany<Comment> | undefined = undefined;
 
   const isPost = model === 'post',
@@ -77,7 +79,7 @@
 >
   {#if data}
     <ContentWrapper>
-      <Content {model} {data} {headings} {comments} />
+      <Content {model} {data} {headings} {comments} {userInfo} />
     </ContentWrapper>
   {/if}
 </div>

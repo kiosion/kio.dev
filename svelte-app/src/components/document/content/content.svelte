@@ -9,13 +9,15 @@
     PostDocument,
     ProjectDocument,
     Comment,
-    ResDataMany
+    ResDataMany,
+    ExternalUserInfo
   } from '$types';
   import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
     headings: Heading[] | undefined,
+    userInfo: ExternalUserInfo | null = null,
     comments: ResDataMany<Comment> | undefined = undefined;
 </script>
 
@@ -30,4 +32,4 @@
     <EmptyContent />
   {/if}
 </Wrapper>
-<Footer {model} {data} {comments} />
+<Footer {model} {data} {userInfo} {comments} />

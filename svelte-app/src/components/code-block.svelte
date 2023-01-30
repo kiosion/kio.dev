@@ -55,7 +55,6 @@
   });
 
   onMount(async () => {
-    console.log('mounting...');
     !lang
       ? (hlAuto = await import('svelte-highlight')).HighlightAuto
       : (hlHighlight = (await import('svelte-highlight'))
@@ -89,13 +88,11 @@
             break;
           }
           default: {
-            console.log('lang:', lang);
             imp = (
               await import(
                 `../../node_modules/svelte-highlight/languages/${lang}.js`
               )
             )[lang];
-            console.log('imported:', imp);
             break;
           }
         }
@@ -108,7 +105,6 @@
       }
       return imp as LanguageType;
     })();
-    console.log('hllang:', hlLang);
   });
 
   onDestroy(() => unsubscribe());
@@ -124,9 +120,7 @@
 </svelte:head>
 
 <div
-  class="relative my-6 -mx-2 overflow-hidden rounded-md {hovered
-    ? 'border-stone-400 dark:border-stone-500/60'
-    : 'border-stone-400/40 dark:border-stone-500/20'} border transition-colors"
+  class="codeBlock--container"
   class:active={hovered}
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
@@ -140,10 +134,9 @@
       <Tooltip text={t('Copy to clipboard')} position="top">
         {#key copied}
           <button
-            class="{hovered
-              ? 'opacity-100'
-              : 'opacity-0'} cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-stone-600 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200 focusOutline-sm"
+            class="copyButton focusOutline-sm"
             on:click={() => copy()}
+            class:visible={hovered}
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
           >
@@ -157,14 +150,10 @@
       </Tooltip>
     </Hoverable>
   {/if}
-  <div
-    class="relative overflow-hidden rounded-md w-full text-lg md:text-md h-[0px] transition-[height] focusOutline"
-    bind:this={codeContainer}
-  >
+  <div class="codeBlock--codeContainer focusOutline" bind:this={codeContainer}>
     <div
-      class="rounded-md min-w-full w-fit h-fit p-1 {hovered
-        ? 'bg-stone-300 dark:bg-stone-900/60'
-        : 'bg-stone-300/40 dark:bg-stone-900'} is-{$theme} transition-all"
+      class="inner is-{$theme} transition-all"
+      class:active={hovered}
       bind:clientHeight={innerHeight}
     >
       {#await hlLang then resolvedLang}
@@ -194,22 +183,75 @@
 <style lang="scss">
   @import '../styles/colors';
 
-  :global(.hljs code) {
-    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
-      Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+  .codeBlock--container {
+    @apply relative my-6 -mx-2 overflow-hidden rounded-md border-stone-400/40 border transition-colors;
+
+    &.active {
+      @apply border-stone-400;
+    }
   }
 
-  :global(code.hljs) {
-    background-color: transparent;
-    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
-      Consolas, 'Liberation Mono', 'Courier New', monospace;
-    font-size: 1rem;
-    line-height: 1.2rem;
-    max-width: 100%;
+  .codeBlock--codeContainer {
+    @apply relative overflow-hidden rounded-md w-full text-lg h-[0px] transition-[height];
 
-    &::selection {
-      background: $violet-300 !important;
-      color: $gray-900 !important;
+    .inner {
+      @apply rounded-md min-w-full w-fit h-fit p-1 bg-stone-300/40 transition-all;
+
+      &.active {
+        @apply bg-stone-300;
+      }
+    }
+  }
+
+  .copyButton {
+    @apply opacity-0 cursor-pointer m-2 p-2 rounded-sm absolute z-10 top-0 right-0 transition-opacity duration-150 text-stone-600 hover:text-stone-800;
+
+    &.visible {
+      @apply opacity-100;
+    }
+  }
+
+  :global(.dark) {
+    .codeBlock--container {
+      @apply border-stone-500/20;
+
+      &.active {
+        @apply border-stone-500/60;
+      }
+    }
+
+    .codeBlock--codeContainer .inner {
+      @apply bg-stone-900;
+
+      &.active {
+        @apply bg-stone-900/60;
+      }
+    }
+    .copyButton {
+      @apply text-stone-400 hover:text-stone-200;
+    }
+  }
+
+  :global(.hljs) {
+    background-color: transparent !important;
+  }
+
+  :global(code) {
+    &,
+    &.hljs {
+      background-color: transparent !important;
+      font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+      font-size: 1rem;
+      line-height: 1.2rem;
+      max-width: 100%;
+
+      & {
+        &::selection {
+          background: $violet-300 !important;
+          color: $gray-900 !important;
+        }
+      }
     }
   }
 
@@ -219,14 +261,5 @@
       Consolas, 'Liberation Mono', 'Courier New', monospace !important;
     font-size: 1rem;
     line-height: 1.2rem;
-  }
-  :global(.hljs) {
-    background-color: transparent !important;
-  }
-  :global(code.hljs *) {
-    &::selection {
-      background: $violet-300 !important;
-      color: $gray-900 !important;
-    }
   }
 </style>

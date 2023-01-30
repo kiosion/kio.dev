@@ -14,3 +14,15 @@ export const REMOTE_CDN_URL =
     : ENV === 'backed'
     ? 'https://dev.kio.sh/cdn'
     : 'http://localhost:4444/cdn';
+export const SELF_BASE_URL = (() => {
+  switch (ENV) {
+    case 'backed':
+      return 'http://localhost:5173';
+    case 'development':
+      return 'http://localhost:5173';
+    case 'testing':
+      return 'http://localhost:3000';
+    default:
+      return 'https://kio.dev';
+  }
+})();

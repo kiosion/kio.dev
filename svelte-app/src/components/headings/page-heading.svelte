@@ -1,19 +1,18 @@
 <script lang="ts">
-  import IconHeader from '$components/headings/icon-header.svelte';
+  import Icon from '$components/icon.svelte';
 
-  export let heading: string;
-  export let text = '';
-  export let icon = 'ArtText';
-  export let classes = '';
+  export let heading: string,
+    text = '',
+    icon = 'ArrowRight',
+    classNames = '';
 </script>
 
-<div class="mb-8">
-  <IconHeader
-    {icon}
-    text={heading}
-    classes="w-full h-fit {text !== '' ? 'mb-2' : ''} {classes}"
-  />
-  {#if text !== ''}
-    <p class="font-sans text-base w-full h-fit line-clamp-2">{text}</p>
+<div class="mt-4 ml-4 mb-8 {classNames}">
+  <h1 class="font-display text-8xl mb-3">{heading}</h1>
+  {#if text}
+    <span class="flex flex-row gap-2 items-start ml-4">
+      <Icon {icon} classNames="mt-0.5" />
+      <p class="font-code text-base">{text}</p>
+    </span>
   {/if}
 </div>
