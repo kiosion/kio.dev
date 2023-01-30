@@ -13303,13 +13303,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-svelte@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "prettier-plugin-svelte@npm:2.8.0"
+"prettier-plugin-svelte@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "prettier-plugin-svelte@npm:2.9.0"
   peerDependencies:
     prettier: ^1.16.4 || ^2.0.0
     svelte: ^3.2.0
-  checksum: d4df5b8f7ea19a6169b9340843925c9bea53806a1cf754b57f1a01d5cef5ef43e9f4c717908bfce2bc688f1dfad52f572535012a2374ddc13313aaf82a754cba
+  checksum: fbca5f9d214f14dea9e82c5f11bc5e250a5a3fd27650af26cf3b7ec261bd15511708cccff2dcd313cdc91c449de0a47f0eaf4e40f9ad5da9f3a54eeeef0818fb
   languageName: node
   linkType: hard
 
@@ -15357,7 +15357,7 @@ __metadata:
     postcss: "npm:^8.4.14"
     postcss-load-config: "npm:^4.0.1"
     prettier: "npm:^2.8.3"
-    prettier-plugin-svelte: "npm:^2.8.0"
+    prettier-plugin-svelte: "npm:^2.9.0"
     prettier-plugin-tailwindcss: "npm:^0.2.2"
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^3.0.2"
