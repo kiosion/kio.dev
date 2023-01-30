@@ -1,19 +1,16 @@
 <div align="center">
   <h1>kio.dev</h1>
-
-![Workflow Status](https://github.com/kiosion/kio.dev/actions/workflows/svelte.yml/badge.svg) 
-![Workflow Status](https://github.com/kiosion/kio.dev/actions/workflows/api.yml/badge.svg) ![Netlify Status](https://api.netlify.com/api/v1/badges/b300e0f9-e70d-4358-b27d-09a862efbc8d/deploy-status)
 </div>
 
-Welcome to the monorepo for kio.dev, my personal website and blog featuring my art, development portfolio, and CV. It's overengineered, but intentionally, I wanted to try and pull together new / exciting tech :)
+Welcome to the monorepo for kio.dev, my personal website featuring my blog, development portfolio, nowpage, and CV.
 
-You can visit the live site at https://kio.dev.
+You can see the project live at https://kio.dev.
 
-## Preview
+## 🔎 Preview
 
 <img width="49%" src="https://user-images.githubusercontent.com/34040324/213913077-8a006ab8-70b5-405d-9ac0-69bf1188a006.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/213913110-6f3ee3c7-b6ac-404b-97ad-fc859404c66e.png" />
 
-## Tech stack
+## 📚 Tech stack
 The frontend is built with:
 * Sveltekit
 * Typescript
@@ -32,8 +29,8 @@ For hosting and deploys, I use:
 * Docker
 * Netlify
 
-## Dependencies
-To build and test this project, you'll need the following dependencies installed:
+## 📦 Dependencies
+To build and test this project, you'll need the following:
 
 * Node >= 16.16
 * Yarn >= 3.0
@@ -42,29 +39,3 @@ To build and test this project, you'll need the following dependencies installed
 * Hex
 * Docker
 * docker-compose
-
-## Building and Testing
-
-To build the project for development, run:
-
-```bash
-make dev
-```
-
-This will build and run livereload servers for the local API, Sanity studio, and Sveltekit.
-
-To build the UI for development against existing dev APIs, run:
-
-```bash
-make backed
-```
-
-To build the UI for testing or production, run `make test` or `make prod`. The only difference between these two builds is the stripping of test selectors and usage of [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect).
-
-To run all tests, use the following commands:
-
-```bash
-make test
-make vitest
-(node ./svelte-app/dist/) & make cypress
-```
