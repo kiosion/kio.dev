@@ -3081,14 +3081,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@sveltejs/kit@npm:1.0.1"
+"@sveltejs/kit@npm:^1.3.5":
+  version: 1.3.5
+  resolution: "@sveltejs/kit@npm:1.3.5"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.0.0"
     "@types/cookie": "npm:^0.5.1"
     cookie: "npm:^0.5.0"
-    devalue: "npm:^4.2.0"
+    devalue: "npm:^4.2.3"
     esm-env: "npm:^1.0.0"
     kleur: "npm:^4.1.5"
     magic-string: "npm:^0.27.0"
@@ -3097,13 +3097,13 @@ __metadata:
     set-cookie-parser: "npm:^2.5.1"
     sirv: "npm:^2.0.2"
     tiny-glob: "npm:^0.2.9"
-    undici: "npm:5.14.0"
+    undici: "npm:5.16.0"
   peerDependencies:
     svelte: ^3.54.0
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 6cea1607358f5b0665522d75ff7db4d614b0be7dbe201519138ee21e35b8ab3906efa7aab3f38b969e3bb1ea071524a09badfdde2be9981a95948dc89905f7ed
+  checksum: 394d6216ad93a8e3a6b3e35eca3db247d1a628a4a060cd553e08572df4ec4343bc4cd252683a5c014f26a0b4900ff558b543917e87aa8ab997eb72b04bd58823
   languageName: node
   linkType: hard
 
@@ -6706,10 +6706,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devalue@npm:4.2.0, devalue@npm:^4.2.0":
+"devalue@npm:4.2.0":
   version: 4.2.0
   resolution: "devalue@npm:4.2.0"
   checksum: a250617b3d5d065ee0b961088b257061b7dbc658ff607260870949fd1f2b14cc814653aaee90e27c1bb1c66a5f2d990be6225148c2794b99bb0be845f0706303
+  languageName: node
+  linkType: hard
+
+"devalue@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "devalue@npm:4.2.3"
+  checksum: c5938f66de5d12e7809a8a5a1f447fefd6b715414297c2b307a247b4965b224f291f8501e93e5a538355c71679a4a922ed1d949c8874307680d4c4b22038ed97
   languageName: node
   linkType: hard
 
@@ -15319,7 +15326,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^1.0.2"
     "@sveltejs/adapter-netlify": "npm:^1.0.4"
     "@sveltejs/adapter-node": "npm:^1.0.0"
-    "@sveltejs/kit": "npm:1.0.1"
+    "@sveltejs/kit": "npm:^1.3.5"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^9.0.0"
@@ -16415,12 +16422,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:5.14.0":
-  version: 5.14.0
-  resolution: "undici@npm:5.14.0"
+"undici@npm:5.16.0":
+  version: 5.16.0
+  resolution: "undici@npm:5.16.0"
   dependencies:
     busboy: "npm:^1.6.0"
-  checksum: 2fcd47aea5e535d0cc3a7a756ddb3b76d7810d0b70a24d09c706652a0b4fc923efdd9b834fed425268097fcf1eebb2b7fcb19c5d278b07e6f79e72c388825c67
+  checksum: e0cb4f75a59e8c8e2331d5fb8305af6ad2a27033f1127ff6a3573252058cdf5f858d20bfa21c53774ffcce59a5d81380df1f20023f33cadbdb5bafc8a5527b73
   languageName: node
   linkType: hard
 
