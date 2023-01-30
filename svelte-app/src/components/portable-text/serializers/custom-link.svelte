@@ -20,18 +20,18 @@
     href={href ? linkTo(href) : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
-    class="underlined from-violet-300 {hovered
-      ? 'active dark:text-stone-800'
-      : ''} rounded-sm focusOutline-sm px-[2px] -mx[2px]"
+    class="focusOutline-sm"
+    class:active={hovered}
     tabindex="0"
   >
     {plainTextContent}
   </a>
 </Hoverable>
 
-<style lang="scss">
-  .underlined {
-    text-decoration: none;
+<style lang="postcss">
+  a {
+    @apply no-underline from-violet-300 rounded-sm px-[2px];
+
     background-image: linear-gradient(
       to right,
       var(--tw-gradient-from) 0%,
@@ -41,8 +41,15 @@
     background-repeat: no-repeat;
     background-size: calc(100% - 4px) 2px;
     transition: background-size 50ms ease, color 50ms ease;
+
     &.active {
       background-size: calc(100% - 4px) 100%;
+    }
+  }
+
+  :global(.dark) {
+    .active {
+      @apply text-stone-800;
     }
   }
 </style>

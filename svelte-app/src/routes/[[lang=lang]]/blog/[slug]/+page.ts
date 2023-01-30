@@ -2,7 +2,7 @@ import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import { error } from '@sveltejs/kit';
-import type { ResData, PostDocument } from '$types';
+import type { ResData, PostDocument, ExternalUserInfo } from '$types';
 import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');
@@ -38,9 +38,27 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       })
     )?.json()) ?? [];
 
-  // Set an additional timeout to allow any other requests to fully finish
-  // TODO: Use this time to preload codeblocks and other onMount components
-  await new Promise((res) => setTimeout(res, 100));
+  let userInfo: ExternalUserInfo | null = null;
 
-  return { post, headings };
+  const authValid = await fetch('/api/v1/auth/check', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((res) => !!res.ok)
+    .catch((_err) => false);
+
+  if (authValid) {
+    userInfo = await fetch('/api/v1/auth/fetch_info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json().then((json) => json.data))
+      .catch((_err) => ({}));
+  }
+
+  return { post, headings, authState: authValid, userInfo };
 };

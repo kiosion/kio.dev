@@ -3,7 +3,7 @@ export const LOG_DIR = '$logs';
 export const LIGHT_THEME = 'light';
 export const DARK_THEME = 'dark';
 
-export const APP_LANGS = ['en', 'fr'];
+export const APP_LANGS = ['en' as const, 'fr' as const];
 export const DEFAULT_APP_LANG = 'en';
 
 interface AppRoute {
@@ -176,6 +176,12 @@ export const LANGUAGE_COLOURS = new Proxy(
     }
   }
 );
+
+export const AVAILABLE_OAUTH_PROVIDERS = ['github' as const];
+export const GH_OAUTH_COOKIE_NAME = 'gh_oauth_token';
+export const OAUTH_COOKIE_TTL_S = 1000 * 60 * 60 * 24 * 6; // 6 days
+export const OAUTH_COOKIE_TTL_DAYS = '6d';
+export const OAUTH_RETURN_TO_COOKIE_NAME = 'oauth_return_to';
 
 export const LOADING_PHRASES = [
   'Spinning violently around the y-axis',

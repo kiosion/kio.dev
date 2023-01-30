@@ -3,3 +3,16 @@ export const REMOTE_API_TOKEN: string =
   ENV === 'production'
     ? import.meta.env.VITE_API_TOKEN
     : import.meta.env.VITE_DEV_API_TOKEN;
+
+export const GITHUB_APPLICATION_ID: string = import.meta.env
+  .VITE_GITHUB_APPLICATION_ID;
+
+export const GITHUB_APPLICATION_SECRET: string = import.meta.env
+  .VITE_GITHUB_APPLICATION_SECRET;
+
+export const GITHUB_OAUTH_BASE_URL = 'https://github.com/login/oauth/authorize';
+
+export const GITHUB_OAUTH_ACCESS_TOKEN_EXCHANGE_URL =
+  'https://github.com/login/oauth/access_token';
+
+export const JWT_SECRET: string = import.meta.env.VITE_JWT_SECRET;

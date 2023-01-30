@@ -1,6 +1,7 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
+  import CommentSection from '$components/document/comments/comment-section.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
   import { t } from '$i18n';
@@ -9,11 +10,13 @@
     PostDocument,
     ProjectDocument,
     ResDataMany,
-    Comment
+    Comment,
+    ExternalUserInfo
   } from '$types';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
+    userInfo: ExternalUserInfo | null = null,
     comments: ResDataMany<Comment> | undefined = undefined;
 
   $: extLinks =
@@ -65,30 +68,7 @@
   {/if}
   {#if $canSeeComments && comments}
     <Divider />
-    <IconHeader
-      icon="comment"
-      text={t('Comments')}
-      classes="mt-8 mb-4 w-full h-fit"
-    />
-    {#await comments}
-      <div class="flex justify-center items-center h-32">
-        <p>Loading...</p>
-      </div>
-    {:then comments}
-      <div class="mt-4">
-        {#if comments.data?.length > 0}
-          {#each comments.data as comment}
-            <div class="mb-4">
-              <p>{comment.name}{comment.email ? ` (${comment.email})` : ''}</p>
-              <p>{comment.body}</p>
-            </div>
-          {/each}
-        {:else}
-          <p>No comments yet...</p>
-        {/if}
-        <!-- <CommentList {comments} /> -->
-      </div>
-    {/await}
+    <CommentSection {comments} {userInfo} />
   {/if}
 </div>
 

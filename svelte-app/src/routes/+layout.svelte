@@ -128,9 +128,8 @@
 {/if}
 
 <div
-  class="flex {$isDesktop
-    ? 'flex-row'
-    : 'flex-col'} w-full h-full lg:text-lg overflow-x-hidden text-stone-900 dark:text-stone-50 text-primary transition-colors duration-150"
+  class="main"
+  class:is-desktop={$isDesktop}
   data-test-app-root
   data-test-theme={$theme}
   in:fly={{ delay: 100, duration: 100, y: -40 }}
@@ -139,11 +138,7 @@
   <Nav />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
-    <div
-      class="relative inner {$isDesktop
-        ? 'mt-[3rem] h-[calc(100%_-_3rem)]'
-        : 'h-full'} w-full"
-    >
+    <div>
       {#if appLoaded}
         <PageTransition url={data.url}>
           <slot />
@@ -153,3 +148,27 @@
     <PageControls position="bottom" />
   </ScrollContainer>
 </div>
+
+<style lang="postcss">
+  .main {
+    @apply flex flex-col w-full h-full lg:text-lg overflow-x-hidden text-stone-900 transition-colors duration-150;
+
+    div {
+      @apply relative h-full w-full;
+    }
+
+    &.is-desktop {
+      @apply flex-row;
+
+      div {
+        @apply mt-[3rem] h-[calc(100%_-_3rem)];
+      }
+    }
+  }
+
+  :global(.dark) {
+    .main {
+      @apply text-stone-50;
+    }
+  }
+</style>

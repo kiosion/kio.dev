@@ -1,7 +1,6 @@
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unsafe-argument */
   import { slide } from 'svelte/transition';
-  import Icon from '@iconify/svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import MenuToggle from '$components/controls/menu-toggle.svelte';
   import { navOpen } from '$stores/navigation';
@@ -38,7 +37,7 @@
   const socials =
     ($currentConfig.data?.socialLinks?.map((link) => ({
       attrs: {
-        href: link.url,
+        href: linkTo(link.url),
         target: link.internal ? undefined : '_blank',
         rel: link.rel?.join(' ') || undefined
       },
@@ -87,7 +86,6 @@
         data-test-id="navBar"
       >
         <div class="flex-grow -mt-7 md:-mt-4 click-through">
-          <!-- Logo -->
           <Tooltip text={t('Click me a few times!')} position="right">
             <Hoverable>
               <button
@@ -104,7 +102,6 @@
               </button>
             </Hoverable>
           </Tooltip>
-          <!-- Nav links list -->
           <div
             class="flex flex-col items-center justify-center gap-3 pt-8 text-base"
           >
@@ -113,7 +110,6 @@
             {/each}
           </div>
         </div>
-        <!-- Social links -->
         <div
           class="flex flex-col justify-center pt-8 mx-auto text-center text-secondary align-center"
         >

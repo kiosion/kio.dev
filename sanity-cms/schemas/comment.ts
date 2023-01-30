@@ -17,6 +17,12 @@ export default {
       type: 'string'
     },
     {
+      name: 'username',
+      title: 'Username',
+      type: 'string',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
       name: 'body',
       title: 'Comment',
       type: 'text',

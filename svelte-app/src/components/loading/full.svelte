@@ -4,7 +4,6 @@
   import { fade } from 'svelte/transition';
   import seedrandom from 'seedrandom';
   import { LOADING_PHRASES } from '$lib/consts';
-  import { t } from '$i18n';
 
   export let classes = 'transparent',
     segments = 12,
@@ -44,7 +43,7 @@
           : ' text-stone-200'} font-mono text-base w-fit"
         data-test-id="loader-full-phrase"
       >
-        {t(phrase)}
+        {phrase}
       </p>
     </div>
   {/if}
