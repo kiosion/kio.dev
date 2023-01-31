@@ -3492,6 +3492,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:^3":
+  version: 3.2.0
+  resolution: "@types/luxon@npm:3.2.0"
+  checksum: 01dfff4311090d9756ef76d59d0658be87e55318ff71adab5d725384b3a6879152b0bb10065ba1f56fa16a1f59059545fd4ffc41aa6820e126cf452decbf1b87
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -11058,7 +11065,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.0.1":
+"luxon@npm:^3.0.1, luxon@npm:^3.2.1":
   version: 3.2.1
   resolution: "luxon@npm:3.2.1"
   checksum: 39d7a8e42372af2fc874853d44f824f5c1e05f93a3b2605436e42212f17158dadcdbb9fec683038f441211fb257d8bb37a9f7cc06f7ae70588798008ca196852
@@ -11643,13 +11650,6 @@ __metadata:
     fast-equals: "npm:^3.0.1"
     micro-memoize: "npm:^4.0.11"
   checksum: ede4a257ecd56c939b17ec6f6f142fd42df71c6353f23ff171077b4bd4d07e97e99c6b840a1e57fe89aea8ec6a4435ba73d1b109c3076dbcc38de8659ead1469
-  languageName: node
-  linkType: hard
-
-"moment@npm:^2.29.4":
-  version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: d275537a30f155cae7f53f6e6d164ccb59b560935f3c6ed0f4a2e6f3503063b491ffa6b4f7e7207501f6fcab92a2d0bb78ed539cde33cadcb91df6b254f7328d
   languageName: node
   linkType: hard
 
@@ -15336,6 +15336,7 @@ __metadata:
     "@types/babel__preset-env": "npm:^7"
     "@types/cypress": "npm:^1.1.3"
     "@types/jsonwebtoken": "npm:^9.0.1"
+    "@types/luxon": "npm:^3"
     "@types/randomstring": "npm:^1.1.8"
     "@types/seedrandom": "npm:^3.0.4"
     "@typescript-eslint/eslint-plugin": "npm:^5.42.0"
@@ -15356,8 +15357,8 @@ __metadata:
     fiona: "npm:^4.1.4"
     highlight.js: "npm:^11.6.0"
     jsdom: "npm:^21.0.0"
+    luxon: "npm:^3.2.1"
     miragejs: "npm:^0.1.46"
-    moment: "npm:^2.29.4"
     netlify-cli: "npm:^12.7.2"
     node-html-to-image: "npm:^3.2.4"
     pixelarticons: "npm:^1.7.0"

@@ -8,12 +8,7 @@
   import ProjectHeader from '$components/document/content/project/header.svelte';
   import { goto } from '$app/navigation';
   import { getCrop, urlFor } from '$lib/helpers/image';
-  import {
-    getAbsDate,
-    getShortDate,
-    getRelDate,
-    getReadingTime
-  } from '$lib/helpers/date';
+  import { getReadingTime, formatDate } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
   import { t, linkTo } from '$i18n';
   import type { PostDocument, ProjectDocument, PTBlock } from '$types';
@@ -26,27 +21,25 @@
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
 
-  let date =
-    model === 'project' ? getShortDate(data.date) : getRelDate(data.date);
-  let dateFormat = model === 'project' ? 'short' : 'rel';
-  let readingTime = getReadingTime(
-    getTotalWords((data?.body ?? []) as PTBlock[])
-  );
+  let dateFormat = model === 'project' ? 'med' : 'rel',
+    readingTime = getReadingTime(
+      getTotalWords((data?.body ?? []) as PTBlock[])
+    );
 
   const switchDate = () => {
     if (model === 'project') {
-      dateFormat === 'short'
-        ? (date = getAbsDate(data.date))
-        : (date = getShortDate(data.date));
-      dateFormat = dateFormat === 'short' ? 'abs' : 'short';
+      dateFormat = dateFormat === 'med' ? 'full' : 'med';
+      date = formatDate(data.date, dateFormat);
     } else {
-      dateFormat === 'rel'
-        ? (date = getAbsDate(data.date) ?? 'Unknown date')
-        : (date = getRelDate(data.date));
-      dateFormat = dateFormat === 'rel' ? 'abs' : 'rel';
+      dateFormat = dateFormat === 'rel' ? 'full' : 'rel';
+      date = formatDate(data.date, dateFormat);
     }
   };
 
+  $: date =
+    model === 'project'
+      ? formatDate(data.date, 'med')
+      : formatDate(data.date, 'rel');
   $: pfpRef = data.author?.image?.asset?._ref;
   $: pfpCrop = pfpRef && getCrop(data.author?.image);
   $: external = model === 'project' && (data as ProjectDocument).external;
@@ -69,11 +62,7 @@
             <div
               class="relative z-[0] -mb-20 w-[112%] -translate-x-[5.4%] overflow-hidden rounded-t-2xl md:mt-2 lg:-mb-28 xl:-mb-36"
             >
-              <div
-                class="gradient absolute h-full w-full from-stone-200 transition-colors dark:from-stone-800"
-              >
-                &nbsp;
-              </div>
+              <span class="gradient" />
               <div
                 class="aspect-[10/4] w-full rounded-t-2xl border border-b-0 border-stone-400 bg-cover bg-center dark:border-stone-400/40"
                 style={`background-image: url("${imageSrc}");`}
@@ -156,7 +145,7 @@
               on:click={() => switchDate()}
               tabindex="0"
             >
-              {date ? date : '...'}
+              {date ? date : t('Unknown date')}
             </button>
           </Hoverable>
           <BulletPoint />
@@ -172,6 +161,8 @@
 
 <style lang="scss">
   .gradient {
+    @apply absolute h-full w-full from-stone-200 transition-colors;
+
     background: linear-gradient(
       to top,
       var(--tw-gradient-from) 5%,
@@ -180,5 +171,11 @@
     width: calc(100% + 4px);
     left: -2px;
     right: -2px;
+  }
+
+  :global(.dark) {
+    .gradient {
+      @apply from-stone-800;
+    }
   }
 </style>

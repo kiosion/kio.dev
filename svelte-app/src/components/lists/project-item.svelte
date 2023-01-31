@@ -2,7 +2,7 @@
   import type { ProjectDocument } from '$types';
   import { goto } from '$app/navigation';
   import BulletPoint from '../bullet-point.svelte';
-  import { getShortDate } from '$helpers/date';
+  import { formatDate } from '$helpers/date';
   import Hoverable from '$components/hoverable.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
@@ -33,7 +33,7 @@
     }
   };
 
-  $: date = getShortDate(project.date);
+  $: date = formatDate(project.date, 'med');
   $: external = project.external;
   $: link = (() => {
     return external && project.externalUrl

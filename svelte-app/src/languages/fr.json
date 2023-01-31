@@ -84,6 +84,7 @@
   "to": "à",
   "to leave a comment": "pour laisser un commentaire",
   "what I'm up to right now": "ce que je fais a présent",
+  "{duration} ago": "il y a {duration}",
   "{length} min read": "{length} minute de lecture",
   "{length} mins read": "{length} minutes de lecture"
 }

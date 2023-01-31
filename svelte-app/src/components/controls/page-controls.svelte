@@ -172,19 +172,23 @@
     &-top,
     &-bottom {
       @apply fixed left-36 right-0 z-[4] hidden bg-transparent from-stone-200 py-6 px-7 transition-colors md:block lg:left-44 xl:left-52;
+    }
 
+    &-top {
+      top: 0;
       background: linear-gradient(
         to bottom,
         var(--tw-gradient-from) 20%,
         var(--tw-gradient-to) 100%
       );
     }
-
-    &-top {
-      top: 0;
-    }
     &-bottom {
       bottom: 0;
+      background: linear-gradient(
+        to top,
+        var(--tw-gradient-from) 20%,
+        var(--tw-gradient-to) 100%
+      );
     }
   }
 

@@ -84,6 +84,7 @@
   "to": "to",
   "to leave a comment": "to leave a comment",
   "what I'm up to right now": "what I'm up to right now",
+  "{duration} ago": "{duration} ago",
   "{length} min read": "{length} min read",
   "{length} mins read": "{length} mins read"
 }

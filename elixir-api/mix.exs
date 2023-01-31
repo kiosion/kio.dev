@@ -15,12 +15,22 @@ defmodule Hexerei.MixProject do
 
   def application do
     [
-      extra_applications: [
-        :logger,
-        :runtime_tools,
-        :os_mon,
-        ],
-      mod: {Hexerei.Application, []}
+      extra_applications: case Mix.env() do
+        :dev ->
+          [
+            :logger,
+            :runtime_tools,
+            :os_mon
+          ]
+        _ ->
+          [
+            :logger,
+            :os_mon
+          ]
+      end,
+      mod: {
+        Hexerei.Application, []
+      }
     ]
   end
 
@@ -41,13 +51,25 @@ defmodule Hexerei.MixProject do
   end
 
   defp deps do
-    [
-      {:plug_cowboy, "~> 2.5"},
-      {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.8"},
-      {:cli_spinners, "~> 0.1.0"},
-      {:jose, "~> 1.10.1"},
-      {:exsync, "~> 0.2", only: :dev},
-    ]
+    case Mix.env() do
+      :dev ->
+        [
+          {:plug_cowboy, "~> 2.5"},
+          {:poison, "~> 3.1"},
+          {:httpoison, "~> 1.8"},
+          {:cli_spinners, "~> 0.1.0"},
+          {:jose, "~> 1.10.1"},
+          {:exsync, "~> 0.2"},
+          {:file_system, "~> 0.2"}
+        ]
+      _ ->
+        [
+          {:plug_cowboy, "~> 2.5"},
+          {:poison, "~> 3.1"},
+          {:httpoison, "~> 1.8"},
+          {:cli_spinners, "~> 0.1.0"},
+          {:jose, "~> 1.10.1"}
+        ]
+    end
   end
 end
