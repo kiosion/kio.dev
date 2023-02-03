@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { maybe } from '$helpers/animate';
+  import { maybe } from 'svelte-maybe-transition';
   import { quartIn, quartOut } from 'svelte/easing';
   import Features from '$stores/features';
   import { onNav } from '$helpers/navigation';
@@ -23,8 +23,7 @@
   <div
     class="absolute top-0 left-0 h-full w-full"
     in:maybe={{
-      // animate: !$CanUseReduceMotion,
-      animate: true,
+      enable: true,
       fn: $reduceMotion ? 'fade' : 'fly',
       delay: duration,
       duration: duration * 2,
@@ -32,8 +31,7 @@
       y: navDir === 'backward' ? -dist : dist
     }}
     out:maybe={{
-      // animate: !$CanUseReduceMotion,
-      animate: true,
+      enable: true,
       fn: $reduceMotion ? 'fade' : 'fly',
       duration,
       easing: quartIn,

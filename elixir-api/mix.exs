@@ -1,6 +1,8 @@
 defmodule Hexerei.MixProject do
   use Mix.Project
 
+  @lr_enabled System.get_env("LIVE_RELOAD", "false") == "true"
+
   def project do
     [
       app: :hexerei,
@@ -15,8 +17,8 @@ defmodule Hexerei.MixProject do
 
   def application do
     [
-      extra_applications: case Mix.env() do
-        :dev ->
+      extra_applications: case @lr_enabled do
+        true ->
           [
             :logger,
             :runtime_tools,
@@ -51,8 +53,8 @@ defmodule Hexerei.MixProject do
   end
 
   defp deps do
-    case Mix.env() do
-      :dev ->
+    case @lr_enabled do
+      true ->
         [
           {:plug_cowboy, "~> 2.5"},
           {:poison, "~> 3.1"},

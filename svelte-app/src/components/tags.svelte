@@ -1,12 +1,13 @@
 <script lang="ts">
   import { linkTo } from '$i18n';
   import Hoverable from '$components/hoverable.svelte';
-  import { maybe } from '$helpers/animate';
+  import { maybe } from 'svelte-maybe-transition';
   import type { DocumentTags } from '$types';
 
   export let size: 'sm' | 'lg' = 'sm',
     model: 'post' | 'project',
     animate = false,
+    enable = animate,
     classes = '',
     data: DocumentTags[];
 
@@ -18,8 +19,8 @@
 
 <div
   class="flex flex-row flex-wrap items-center justify-start gap-2 {classes}"
-  in:maybe={{ animate, fn: 'slide', duration: 150 }}
-  out:maybe={{ animate, fn: 'slide', duration: 150 }}
+  in:maybe={{ enable, fn: 'slide', duration: 150 }}
+  out:maybe={{ enable, fn: 'slide', duration: 150 }}
 >
   {#each data as tag}
     <Hoverable>

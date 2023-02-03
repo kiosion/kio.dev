@@ -3,7 +3,7 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Icon from '$components/icon.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import { maybe } from '$lib/helpers/animate';
+  import { maybe } from 'svelte-maybe-transition';
   import Features from '$stores/features';
   import { t, currentLang } from '$i18n';
   import Tags from '$components/tags.svelte';
@@ -131,12 +131,12 @@
                       class="pb-2 font-sans text-base"
                       in:maybe={{
                         fn: $reduceMotion ? 'fade' : 'slide',
-                        animate: true,
+                        enable: true,
                         duration: 150
                       }}
                       out:maybe={{
                         fn: $reduceMotion ? 'fade' : 'slide',
-                        animate: true,
+                        enable: true,
                         duration: 150
                       }}
                     >

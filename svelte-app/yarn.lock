@@ -15373,6 +15373,7 @@ __metadata:
     svelte-eslint-parser: "npm:^0.22.3"
     svelte-highlight: "npm:^7.1.2"
     svelte-loading-spinners: "npm:^0.1.7"
+    svelte-maybe-transition: "npm:^0.1.2"
     svelte-preprocess: "npm:^4.10.7"
     tailwindcss: "npm:^3.2.4"
     terser: "npm:^5.16.1"
@@ -15476,6 +15477,15 @@ __metadata:
   version: 0.1.7
   resolution: "svelte-loading-spinners@npm:0.1.7"
   checksum: 0efd3417998400081cabd970472f80517f450066dfd7fa21d8c93922c94288d497ef2a852c2e6488cb8dd367f7f4cdaec0e29174a5b39ca4564f97a43cdaf563
+  languageName: node
+  linkType: hard
+
+"svelte-maybe-transition@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "svelte-maybe-transition@npm:0.1.2"
+  peerDependencies:
+    svelte: ^3.0.0
+  checksum: 9be5635ab5915f47d06aea1d0817d6936a8d93f51377d9af065291c366d6bc3cc24d94a5a20169140518eda8b75d50135f78a43abea9e5d711e68c279b413dea
   languageName: node
   linkType: hard
 

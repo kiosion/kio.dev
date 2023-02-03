@@ -30,8 +30,8 @@ defmodule Router.Api.V1 do
         _ -> System.system_time(:millisecond) - start + init_duration
       end
       case :erlang.fun_info(cb, :arity) do
-        {:arity, 3} -> cb.(conn, result, duration)
-        _ -> cb.(conn, result)
+        {:arity, 3} -> cb.(conn, Poison.decode!(result), duration)
+        _ -> cb.(conn, Poison.decode!(result))
       end
     else
       {:error, error} -> conn |> generic_error(error.message)
@@ -46,7 +46,7 @@ defmodule Router.Api.V1 do
   end
 
   defp document_counts_query(query), do: "{ 'total': count(#{query}) }"
-  defp document_counts_query(query, limited_query), do: "{ 'total': count(#{query}), 'count': count(#{limited_query}) }"
+  defp document_counts_query(query, limited_query), do: "{ 'total': count(#{query})#{if limited_query do ", 'count': count(#{limited_query})" else "" end}}"
 
   get "#{@query_url}/post/:id" do
     params = validate_query_params(%{
@@ -56,12 +56,12 @@ defmodule Router.Api.V1 do
       })
 
     conn |> handle_sanity_fetch(BuildQuery.postSingle(params["id"]), fn (conn, result, duration) ->
-      Poison.decode!(result)
+      result
         |> Map.put("meta", %{
-          "total" => 1,
-          "count" => 1,
-          "id" => params["id"]
-        })
+            "total" => 1,
+            "count" => 1,
+            "id" => params["id"]
+          })
         |> Map.update("ms", duration, &(&1 + (duration - &1)))
         |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
     end)
@@ -69,36 +69,40 @@ defmodule Router.Api.V1 do
 
   get "#{@query_url}/posts" do
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{
-        "limit" => 10,
-        "skip" => 0,
-        "s" =>
-        "date",
-        "o" =>
-        "desc",
-        "date" => nil,
-        "tags" => nil
-      })
-    |> params_to_integer([:limit, :skip])
-    |> empty_to_nil([:date])
+      |> validate_query_params(%{
+          "limit" => 10,
+          "skip" => 0,
+          "s" =>
+          "date",
+          "o" =>
+          "desc",
+          "date" => nil,
+          "tags" => nil
+        })
+      |> params_to_integer([:limit, :skip])
+      |> empty_to_nil([:date])
 
     query = BuildQuery.postMany(params["date"], params["tags"])
     query_limited = query |> limit_query(params)
 
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, init_duration) ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (conn, counts, duration) ->
-        parsed_counts = Poison.decode!(counts)
+    counts = Task.async(fn ->
+      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+        result
+      end)
+    end)
 
-        Poison.decode!(result)
+    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+      parsed_counts = Task.await(counts)
+
+      result
         |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"],
-          "count" => parsed_counts["result"]["count"],
-          "sort" => params["s"],
-          "order" => params["o"]
-        })
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"],
+            "sort" => params["s"],
+            "order" => params["o"]
+          })
         |> Map.update("ms", duration, &(&1 + (duration - &1)))
         |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-      end, init_duration)
     end)
   end
 
@@ -110,81 +114,89 @@ defmodule Router.Api.V1 do
       })
 
     conn |> handle_sanity_fetch(BuildQuery.projectSingle(params["id"]), fn (conn, result, duration) ->
-      Poison.decode!(result)
-      |> Map.put("meta", %{
-        "total" => 1,
-        "count" => 1,
-        "id" => params["id"]
-      })
-      |> Map.update("ms", duration, &(&1 + (duration - &1)))
-      |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+      result
+        |> Map.put("meta", %{
+            "total" => 1,
+            "count" => 1,
+            "id" => params["id"]
+          })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
     end)
   end
 
   get "#{@query_url}/projects" do
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{
-        "limit" => 10,
-        "skip" => 0,
-        "s" => "date",
-        "o" => "desc",
-        "date" => nil,
-        "tags" => nil
-      })
-    |> params_to_integer([:limit, :skip])
-    |> empty_to_nil([:date])
+      |> validate_query_params(%{
+          "limit" => 10,
+          "skip" => 0,
+          "s" => "date",
+          "o" => "desc",
+          "date" => nil,
+          "tags" => nil
+        })
+      |> params_to_integer([:limit, :skip])
+      |> empty_to_nil([:date])
 
     query = BuildQuery.projectMany(params["date"], params["tags"])
     query_limited = query |> limit_query(params)
 
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, init_duration) ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (conn, counts, duration) ->
-        parsed_counts = Poison.decode!(counts)
+    counts = Task.async(fn ->
+      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+        result
+      end)
+    end)
 
-        Poison.decode!(result)
+    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+      parsed_counts = Task.await(counts)
+
+      result
         |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"],
-          "count" => parsed_counts["result"]["count"],
-          "sort" => params["s"],
-          "order" => params["o"]
-        })
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"],
+            "sort" => params["s"],
+            "order" => params["o"]
+          })
         |> Map.update("ms", duration, &(&1 + (duration - &1)))
         |> Map.delete("query")
         |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-      end, init_duration)
     end)
   end
 
   # All tags
   get "#{@query_url}/tags" do
     params = fetch_query_params(conn).query_params
-    |> validate_query_params(%{
-        "type" => nil,
-        "limit" => 10,
-        "skip" => 0,
-        "s" => "title",
-        "o" => "asc"
-      })
-    |> params_to_integer([:limit, :skip])
+      |> validate_query_params(%{
+          "type" => nil,
+          "limit" => 10,
+          "skip" => 0,
+          "s" => "title",
+          "o" => "asc"
+        })
+      |> params_to_integer([:limit, :skip])
 
     query = BuildQuery.tags(params["type"])
     query_limited = query |> limit_query(params)
 
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, init_duration) ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (conn, counts, duration) ->
-        parsed_counts = Poison.decode!(counts)
+    counts = Task.async(fn ->
+      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+        result
+      end)
+    end)
 
-        Poison.decode!(result)
-        |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"],
-          "count" => parsed_counts["result"]["count"],
-          "sort" => params["s"],
-          "order" => params["o"]
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> Map.delete("query")
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-      end, init_duration)
+    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+        parsed_counts = Task.await(counts)
+
+        result
+          |> Map.put("meta", %{
+              "total" => parsed_counts["result"]["total"],
+              "count" => parsed_counts["result"]["count"],
+              "sort" => params["s"],
+              "order" => params["o"]
+            })
+          |> Map.update("ms", duration, &(&1 + (duration - &1)))
+          |> Map.delete("query")
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
     end)
   end
 
@@ -193,27 +205,31 @@ defmodule Router.Api.V1 do
     with true <- is_binary(id),
          true <- String.trim(id) != "" do
       params = fetch_query_params(conn).query_params
-      |> validate_query_params(%{
-          "type" => nil
-        })
+        |> validate_query_params(%{
+            "type" => nil
+          })
 
       query = BuildQuery.tag(id, params["type"])
 
-      conn |> handle_sanity_fetch(query, fn (conn, result, init_duration) ->
-        conn |> handle_sanity_fetch(document_counts_query(query), fn (conn, counts, duration) ->
-          parsed_counts = Poison.decode!(counts)
+      counts = Task.async(fn ->
+        conn |> handle_sanity_fetch(document_counts_query(query), fn (_, result) ->
+          result
+        end)
+      end)
 
-          Poison.decode!(result)
+      conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
+        parsed_counts = Task.await(counts)
+
+        result
           |> Map.put("meta", %{
-            "total" => parsed_counts["result"]["total"],
-            "count" => parsed_counts["result"]["total"],
-            "id" => id,
-            "type" => params["type"]
-          })
+              "total" => parsed_counts["result"]["total"],
+              "count" => parsed_counts["result"]["total"],
+              "id" => id,
+              "type" => params["type"]
+            })
           |> Map.update("ms", duration, &(&1 + (duration - &1)))
           |> Map.delete("query")
           |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-        end, init_duration)
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Missing tag ID")
@@ -225,19 +241,19 @@ defmodule Router.Api.V1 do
     with true <- is_binary(id),
          true <- String.trim(id) != "" do
       params = fetch_query_params(conn).query_params
-      |> validate_query_params(%{
-          "force" => false
-        })
+        |> validate_query_params(%{
+            "force" => false
+          })
 
       query = BuildQuery.commentsOn(id, params["force"])
 
       conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
-        Poison.decode!(result)
-        |> Map.put("meta", %{
-          "id" => id
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        result
+          |> Map.put("meta", %{
+            "id" => id
+          })
+          |> Map.update("ms", duration, &(&1 + (duration - &1)))
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Missing document ID")
@@ -246,7 +262,7 @@ defmodule Router.Api.V1 do
 
   get "#{@query_url}/about" do
     conn |> handle_sanity_fetch(BuildQuery.about(), fn (conn, result) ->
-      Poison.decode!(result)
+      result
         |> Map.delete("ms")
         |> Map.delete("query")
         |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
@@ -265,7 +281,7 @@ defmodule Router.Api.V1 do
 
   get "/config" do
     conn |> handle_sanity_fetch(BuildQuery.config(), fn (conn, result) ->
-      Poison.decode!(result)
+      result
         |> Map.delete("ms")
         |> Map.delete("query")
         |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()

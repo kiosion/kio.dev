@@ -89,6 +89,7 @@
     "svelte-eslint-parser": "^0.22.3",
     "svelte-highlight": "^7.1.2",
     "svelte-loading-spinners": "^0.1.7",
+    "svelte-maybe-transition": "^0.1.2",
     "svelte-preprocess": "^4.10.7",
     "tailwindcss": "^3.2.4",
     "terser": "^5.16.1",
