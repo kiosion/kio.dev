@@ -239,7 +239,6 @@
   :global(code) {
     &,
     &.hljs {
-      background-color: transparent !important;
       font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
         Consolas, 'Liberation Mono', 'Courier New', monospace !important;
       font-size: 1rem;
