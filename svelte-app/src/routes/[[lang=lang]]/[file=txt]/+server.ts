@@ -1,7 +1,10 @@
 import Robots from '$lib/fixtures/robots';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url }): Promise<Response> => {
+export const GET: RequestHandler = async ({
+  url,
+  fetch
+}): Promise<Response> => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {
