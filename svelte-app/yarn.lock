@@ -9060,17 +9060,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.7.0":
+"highlight.js@npm:11.7.0, highlight.js@npm:^11.7.0":
   version: 11.7.0
   resolution: "highlight.js@npm:11.7.0"
   checksum: 059b24161bb950d4dd4162a92cfaf4f0fe2ea61b2edb147394a70e3abb5e0a92670307266a91d562aa5a967ea9f92561cdc5a2ab71e5fd5a7898b14bd8992c18
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:^11.6.0":
-  version: 11.6.0
-  resolution: "highlight.js@npm:11.6.0"
-  checksum: fc1fae6767dbb3e540270a9ea054e15f87cf3316cc0cd23bcf4afe3f1098a4e38fa90a1891f1eadfcf7cb8ee1e8ff3f289a8ee44aabf520879fe8c6c73f22124
   languageName: node
   linkType: hard
 
@@ -15348,7 +15341,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-svelte: "npm:^2.16.0"
     fiona: "npm:^4.1.4"
-    highlight.js: "npm:^11.6.0"
+    highlight.js: "npm:^11.7.0"
     jsdom: "npm:^21.0.0"
     luxon: "npm:^3.2.1"
     miragejs: "npm:^0.1.46"
