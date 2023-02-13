@@ -14276,6 +14276,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rollup@npm:^3.15.0":
+  version: 3.15.0
+  resolution: "rollup@npm:3.15.0"
+  dependencies:
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 52a395d98cecc9971dc3c2322aa037dffbb1c7f548023f08bb2011ad9aceca5e302ccd0e00260621debc95363b99c6804f679d49b1cdb164c97ce9b3574f5dc6
+  languageName: node
+  linkType: hard
+
 "rollup@npm:^3.7.0":
   version: 3.7.4
   resolution: "rollup@npm:3.7.4"
@@ -14287,20 +14301,6 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 4184baf153fa4cde8d842eb438c7efc16f8f1b3a1ce28b34f8b5f386dccdc76abf7d09bd1ce70f45e7dfe39feeb1734b7d856f62d8c46419f8edca12390df1bd
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^3.8.1":
-  version: 3.8.1
-  resolution: "rollup@npm:3.8.1"
-  dependencies:
-    fsevents: "npm:~2.3.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: e6df7611f6a2b80db687526748614dfbf4f1e4540ea0e8fe86d9d062b2432cc39df0294a0e22eb63e52a8ed7b626854e213581745e26611176c87ef254cde45d
   languageName: node
   linkType: hard
 
@@ -15355,7 +15355,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0.2.2"
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^3.0.2"
-    rollup: "npm:^3.8.1"
+    rollup: "npm:^3.15.0"
     rollup-plugin-babel: "npm:^4.4.0"
     sass: "npm:^1.58.0"
     seedrandom: "npm:^3.0.5"
