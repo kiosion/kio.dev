@@ -3054,16 +3054,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-netlify@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@sveltejs/adapter-netlify@npm:1.0.4"
+"@sveltejs/adapter-netlify@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@sveltejs/adapter-netlify@npm:2.0.4"
   dependencies:
     "@iarna/toml": "npm:^2.2.5"
     esbuild: "npm:^0.16.3"
     set-cookie-parser: "npm:^2.5.1"
   peerDependencies:
-    "@sveltejs/kit": ^1.0.0
-  checksum: 25201581c4ba4159ed13af121c8ca9c04fabff87b72e2ef56e5755de16c6d38d958736769524df0651ceafd8afc2becbc06115b1c0835fea3fcf8a287b449d08
+    "@sveltejs/kit": ^1.5.0
+  checksum: a476397b4662aa8a93343c8a1877a66c3a8d9501dee38bd7dce5503f9a9be43b54eca0da08938af30511cae6dbf137e23884f0264d4efe45332073a23568be8b
   languageName: node
   linkType: hard
 
@@ -15310,7 +15310,7 @@ __metadata:
     "@rgossiaux/svelte-headlessui": "npm:^1.0.2"
     "@sanity/image-url": "npm:^1.0.1"
     "@sveltejs/adapter-auto": "npm:^1.0.2"
-    "@sveltejs/adapter-netlify": "npm:^1.0.4"
+    "@sveltejs/adapter-netlify": "npm:^2.0.4"
     "@sveltejs/adapter-node": "npm:^1.0.0"
     "@sveltejs/kit": "npm:^1.3.10"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
