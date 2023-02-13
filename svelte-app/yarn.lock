@@ -6169,9 +6169,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.0.1":
-  version: 12.0.1
-  resolution: "cypress@npm:12.0.1"
+"cypress@npm:12.5.1":
+  version: 12.5.1
+  resolution: "cypress@npm:12.5.1"
   dependencies:
     "@cypress/request": "npm:^2.88.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -6217,7 +6217,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 150d7a11ff8f2654516ad31a4c5221281aab0aaa98ab9f9764fe72aec6ce2e76d846e41f0de7b387c0cc72ce5efa891602bf58f7a555cfb7de7fc4f86d681c00
+  checksum: 0fc2ebe68492e97f461f7049120e1a5c379268378dab88908ed5149c47e7e8ec19d8a241da075c6ded4ae8b65348b427fc3465b03e0d6d700f3641c65520abf3
   languageName: node
   linkType: hard
 
@@ -15331,7 +15331,7 @@ __metadata:
     autoprefixer: "npm:^10.4.7"
     c8: "npm:^7.12.0"
     cal-sans: "npm:^1.0.1"
-    cypress: "npm:12.0.1"
+    cypress: "npm:12.5.1"
     cypress-svelte-unit-test: "npm:^3.3.4"
     devalue: "npm:4.2.3"
     devtools-detect: "npm:^4.0.0"
