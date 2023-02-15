@@ -5,16 +5,20 @@
   import { setupNavigation } from '$helpers/navigation';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import type { PageData } from './$types';
+  import EmptyContent from '$components/empty-content.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+  import PageHeading from '$components/headings/page-heading.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
   });
 
   const pageTitle = `kio.dev | ${t('Now').toLowerCase()}`,
-    description = t("What I'm up to now");
+    description = t('A peek into my current adventures in tech and beyond');
 
-  // eslint-disable-next-line svelte/valid-compile
   export let data: PageData;
+
+  $: now = data?.about?.data.now;
 </script>
 
 <svelte:head>
@@ -32,5 +36,13 @@
 </svelte:head>
 
 <div data-test-route="now">
-  <ContentWrapper>asdf</ContentWrapper>
+  <ContentWrapper>
+    <!-- Heading -->
+    <PageHeading heading={t('Now')} text={description} />
+    {#if now}
+      <PortableText text={now} />
+    {:else}
+      <EmptyContent />
+    {/if}
+  </ContentWrapper>
 </div>

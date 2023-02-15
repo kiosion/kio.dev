@@ -216,6 +216,7 @@ defmodule Hexerei.BuildQuery do
         at,
         bio,
         body,
+        now,
         contact,
         fullname,
         timeline[]{

@@ -49,11 +49,11 @@ export const APP_ROUTES = [
     ],
     hidden: false
   },
-  // {
-  //   name: 'Now',
-  //   path: '/now',
-  //   hidden: false
-  // },
+  {
+    name: 'Now',
+    path: '/now',
+    hidden: false
+  },
   {
     name: 'PGP',
     path: '/pgp',
