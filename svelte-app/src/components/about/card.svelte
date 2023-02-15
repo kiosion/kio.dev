@@ -2,7 +2,11 @@
   import { fade } from 'svelte/transition';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
-  import type { InputValue, SanityImageObject } from '$types/sanity';
+  import type {
+    PortableTextBlock,
+    ArbitraryTypedObject,
+    SanityImageObject
+  } from '$types/sanity';
   import EmptyContent from '$components/empty-content.svelte';
 
   let pfpCrop: ImageCrop;
@@ -10,7 +14,7 @@
   export let name: string | undefined,
     username: string | undefined,
     image: SanityImageObject | undefined,
-    body: InputValue | undefined;
+    body: (PortableTextBlock | ArbitraryTypedObject)[] | undefined;
 
   $: pfpCrop = getCrop(image);
 </script>

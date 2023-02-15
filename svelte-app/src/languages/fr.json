@@ -1,7 +1,6 @@
 {
   "A blog post on kio.dev": "Un article de blog sur kio.dev",
   "A collection of my work, open-source contributions, and personal projects": "Une collection de mon travail, de mes contributions open-source et de mes projets personnels",
-  "A project on kio.dev": "Un projet sur kio.dev",
   "About": "À propos",
   "All posts": "Tous les articles",
   "All posts tagged with": "Tous les articles avec le tag",
@@ -28,7 +27,6 @@
   "Features": "Fonctionnalités",
   "Forward": "Vers l'avant",
   "Go to": "Aller à",
-  "Hi there, I'm Kio": "Salut, je m'appelle Kio",
   "Hi there, welcome to my little corner of the internet! Here you'll find": "Salut, bienvenue dans mon petit coin d'internet! Ici vous trouverez",
   "Just now": "À l'instant",
   "Language": "Langue",
@@ -36,7 +34,6 @@
   "Log in with {provider}": "Se connecter avec {provider}",
   "Logged in": "Connecté",
   "Logged out": "Déconnecté",
-  "Lover of cats & all things tech": "J'adore les chats et tout ce qui touche à la technologie",
   "Mail": "Envoyer un e-mail",
   "More": "Plus",
   "My work": "Mon travail",
@@ -54,7 +51,6 @@
   "Reload": "Rafraîchir la page",
   "Save image": "Enregistrer l'image",
   "Secret & work-in-progress features": "Fonctionnalités secrètes et en cours de développement",
-  "Software engineer / web dev / artist": "Ingénieur logiciel / développeur web / artiste",
   "Sorry, something went wrong handling your login.": "Désolé, quelque chose s'est mal passé lors de votre connexion.",
   "Sorry, something went wrong while logging you out.": "Désolé, quelque chose s'est mal passé lors de votre déconnexion.",
   "Successfully authenticated": "Authentification réussie",
@@ -86,5 +82,6 @@
   "what I'm up to right now": "ce que je fais a présent",
   "{duration} ago": "il y a {duration}",
   "{length} min read": "{length} minute de lecture",
-  "{length} mins read": "{length} minutes de lecture"
+  "A peek into my current adventures in tech and beyond": "Un aperçu de mes aventures actuelles dans le monde de la technologie et au-delà",
+  "Now": "Maintenant:"
 }

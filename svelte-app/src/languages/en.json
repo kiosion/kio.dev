@@ -1,7 +1,6 @@
 {
   "A blog post on kio.dev": "A blog post on kio.dev",
   "A collection of my work, open-source contributions, and personal projects": "A collection of my work, open-source contributions, and personal projects",
-  "A project on kio.dev": "A project on kio.dev",
   "About": "About",
   "All posts": "All posts",
   "All posts tagged with": "All posts tagged with",
@@ -28,7 +27,6 @@
   "Features": "Features",
   "Forward": "Forward",
   "Go to": "Go to",
-  "Hi there, I'm Kio": "Hi there, I'm Kio",
   "Hi there, welcome to my little corner of the internet! Here you'll find": "Hi there, welcome to my little corner of the internet! Here you'll find",
   "Just now": "Just now",
   "Language": "Language",
@@ -36,7 +34,6 @@
   "Log in with {provider}": "Log in with {provider}",
   "Logged in": "Logged in",
   "Logged out": "Logged out",
-  "Lover of cats & all things tech": "Lover of cats & all things tech",
   "Mail": "Mail",
   "More": "More",
   "My work": "My work",
@@ -54,7 +51,6 @@
   "Reload": "Reload",
   "Save image": "Save image",
   "Secret & work-in-progress features": "Secret & work-in-progress features",
-  "Software engineer / web dev / artist": "Software engineer / web dev / artist",
   "Sorry, something went wrong handling your login.": "Sorry, something went wrong handling your login.",
   "Sorry, something went wrong while logging you out.": "Sorry, something went wrong while logging you out.",
   "Successfully authenticated": "Successfully authenticated",
@@ -86,5 +82,6 @@
   "what I'm up to right now": "what I'm up to right now",
   "{duration} ago": "{duration} ago",
   "{length} min read": "{length} min read",
-  "{length} mins read": "{length} mins read"
+  "A peek into my current adventures in tech and beyond": "A peek into my current adventures in tech and beyond",
+  "Now": "Now"
 }
