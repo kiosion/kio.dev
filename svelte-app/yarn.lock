@@ -15369,7 +15369,7 @@ __metadata:
     svelte-maybe-transition: "npm:^0.1.2"
     svelte-preprocess: "npm:^4.10.7"
     tailwindcss: "npm:^3.2.4"
-    terser: "npm:^5.16.1"
+    terser: "npm:^5.16.3"
     tippy.js: "npm:^6.3.7"
     ts-essentials: "npm:^9.3.0"
     tslib: "npm:^2.5.0"
@@ -15761,9 +15761,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.16.1":
-  version: 5.16.1
-  resolution: "terser@npm:5.16.1"
+"terser@npm:^5.16.3":
+  version: 5.16.3
+  resolution: "terser@npm:5.16.3"
   dependencies:
     "@jridgewell/source-map": "npm:^0.3.2"
     acorn: "npm:^8.5.0"
@@ -15771,7 +15771,7 @@ __metadata:
     source-map-support: "npm:~0.5.20"
   bin:
     terser: bin/terser
-  checksum: c18036a7958b1435147a94e4b0e36f10252466b811f4dedfa3016c90721ff973b5479108491de9ef8c6238a37b0b5359a3350fb3fc4c5ce3cb00fbef6f8e1113
+  checksum: c2b3d3d083d0fa4974d3e8460d94e1e58ace839fb186b134621e31d3bc0499eccae48a259ec5d34432ec6450f4a8db1208a39206a1cf47f5ddb114a95da1abc9
   languageName: node
   linkType: hard
 
