@@ -15363,7 +15363,7 @@ __metadata:
     svelte-body: "npm:^1.3.6"
     svelte-breakpoints: "npm:0.2.0"
     svelte-check: "npm:^3.0.1"
-    svelte-eslint-parser: "npm:^0.22.3"
+    svelte-eslint-parser: "npm:^0.23.0"
     svelte-highlight: "npm:^7.1.2"
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-maybe-transition: "npm:^0.1.2"
@@ -15419,19 +15419,6 @@ __metadata:
   bin:
     svelte-check: bin/svelte-check
   checksum: cb453f545bbc20075d7eeffbe72167b2bd0fba569c3430382c43a70b995702c8b0efd1cd60d2a9d1d4b42256eefbd18402e2ac07757fc109c90040ce3ad30bcc
-  languageName: node
-  linkType: hard
-
-"svelte-eslint-parser@npm:^0.22.3":
-  version: 0.22.3
-  resolution: "svelte-eslint-parser@npm:0.22.3"
-  dependencies:
-    eslint-scope: "npm:^7.0.0"
-    eslint-visitor-keys: "npm:^3.0.0"
-    espree: "npm:^9.0.0"
-  peerDependencies:
-    svelte: ^3.37.0
-  checksum: 52184fddfae5417797adf702b6e3c5ed25dd4cc3aa26921a44d823f4dd4cb4a4325af9d12e38e142ead2d25c289e1ab475fcfb785169a09912b25b193bccf384
   languageName: node
   linkType: hard
 
