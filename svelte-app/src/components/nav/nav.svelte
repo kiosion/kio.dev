@@ -156,7 +156,7 @@
 
 <style lang="scss">
   .nav--desktop {
-    @apply my-4 ml-4 flex w-32 flex-shrink-0 flex-col overflow-x-hidden overflow-y-scroll rounded-3xl border border-stone-400/80 bg-stone-300/60 px-4 py-8 text-center transition-colors lg:w-40 xl:w-48;
+    @apply my-4 ml-4 flex w-32 flex-shrink-0 flex-col overflow-x-hidden rounded-3xl border border-stone-400/80 bg-stone-300/60 px-4 py-8 text-center transition-colors lg:w-40 xl:w-48;
 
     &.active {
       @apply border-stone-400 bg-stone-300;
