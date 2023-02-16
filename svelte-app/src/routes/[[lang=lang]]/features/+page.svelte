@@ -2,17 +2,11 @@
   import SwitchItem from '$components/controls/switch-item.svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import Features from '$stores/features';
-  import { onMount } from 'svelte';
-  import { parseEmoji } from '$helpers/emoji';
   import PageHeading from '$components/headings/page-heading.svelte';
   import SFX from '$lib/sfx';
   import { linkTo, t } from '$i18n';
   import { page } from '$app/stores';
   import Button from '$components/controls/button.svelte';
-
-  let body: HTMLElement;
-
-  onMount(() => parseEmoji(body));
 
   const onChange = (event: CustomEvent, target: string) => {
     Features.set(target, event?.detail?.state === true ? true : false);
@@ -30,14 +24,13 @@
   $: CanUseCustomCursor = Features.can('use custom cursor');
   $: CanUseComicSans = Features.can('use comic sans');
   $: CanSeeComments = Features.can('see comments');
-  $: CanUseTooltips = Features.can('see tooltips');
 </script>
 
 <svelte:head>
   <title>kio.dev | secret stuff</title>
 </svelte:head>
 
-<div data-test-route="index" class="w-full" bind:this={body}>
+<div data-test-route="index" class="w-full">
   <PageHeading
     heading={t('Features')}
     text={t('Secret & work-in-progress features')}

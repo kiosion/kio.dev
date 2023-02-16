@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Wrapper from '$components/document/content/wrapper.svelte';
   import Header from '$components/document/content/common/header.svelte';
   import Footer from '$components/document/content/common/footer.svelte';
   import SummaryWrapper from '$components/document/content/common/summary/wrapper.svelte';
@@ -25,11 +24,11 @@
 {#if headings && headings.length > 0}
   <SummaryWrapper {headings} />
 {/if}
-<Wrapper>
+<div class="mt-4 font-sans text-base">
   {#if data.body}
     <PortableText text={data.body} />
   {:else}
     <EmptyContent />
   {/if}
-</Wrapper>
+</div>
 <Footer {model} {data} {userInfo} {comments} />
