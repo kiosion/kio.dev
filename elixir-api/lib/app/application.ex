@@ -19,21 +19,28 @@ defmodule Hexerei.Application do
         refs: [
           :all
         ]
+      },
+      {
+        Hexerei.CDNCache,
+        [
+          options: [
+            max_size: 256
+          ]
+        ]
       }
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
 
     # Start up our :cdn_cache ETS table with an initial max_size of 1000
-    Hexerei.CDNCache.setup(1000)
+    # Hexerei.CDNCache.setup(1000)
 
     start_res = CliSpinners.spin_fun([frames: :simple_dots_scrolling, text: "Starting Hexerei", done: "Started Hexerei"], fn ->
       case Supervisor.start_link(children, opts) do
         {:ok, pid} ->
-          Application.put_env(:hexerei, :started_at, {"STARTED_AT", System.system_time(:millisecond), :int})
-          Application.put_env(:sasl, :errlog_type, :error)
-          Application.ensure_all_started(:os_mon)
-          :timer.sleep(500)
+          Application.put_env :hexerei, :started_at, {"STARTED_AT", System.system_time(:millisecond), :int}
+          :timer.sleep 500
+          Application.ensure_all_started :os_mon
           {:ok, pid}
         {:error, reason} -> {:error, reason}
       end
@@ -41,7 +48,7 @@ defmodule Hexerei.Application do
 
     case start_res do
       {:ok, pid} ->
-        Logger.info("Listening on port #{port()}")
+        Logger.info "Listening on port #{port()}"
         {:ok, pid}
       {:error, reason} -> {:error, reason}
     end

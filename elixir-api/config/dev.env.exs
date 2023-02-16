@@ -18,3 +18,5 @@ config :os_mon,
 
 config :sasl,
   errlog_type: :info
+
+config :exsync, extra_extensions: [".exs"]

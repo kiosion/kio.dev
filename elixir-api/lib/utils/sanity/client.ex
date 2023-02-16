@@ -3,31 +3,49 @@ defmodule Hexerei.SanityClient do
   Module to act as a client for Sanity.io, handling queries, responses, and errors
   """
 
-  # Set variables from env
-  @sanity_project_id Hexerei.Env.get!(:sanity_project_id)
-  @sanity_dataset Hexerei.Env.get!(:sanity_dataset)
-  @sanity_token Hexerei.Env.get!(:sanity_token)
-  @sanity_api_version Hexerei.Env.get!(:sanity_api_version)
-  @sanity_apicdn Hexerei.Env.get!(:sanity_apicdn)
+  require Logger
 
-  @base_url "https://#{@sanity_project_id}.api#{if @sanity_apicdn == true do "cdn" end}.sanity.io/v#{@sanity_api_version}/data/query/#{@sanity_dataset}"
-  @base_asset_url "https://cdn.sanity.io/images/#{@sanity_project_id}/#{@sanity_dataset}/"
+  defp get_base_url do
+    project_id = Hexerei.Env.get!(:sanity_project_id)
+    api_version = Hexerei.Env.get!(:sanity_api_version)
+    dataset = Hexerei.Env.get!(:sanity_dataset)
+    apicdn = Hexerei.Env.get!(:sanity_apicdn)
 
-  # Set headers
-  @headers [
+    with {:ok, _} <- is_valid_string?(project_id),
+         {:ok, _} <- is_valid_string?(api_version),
+         {:ok, _} <- is_valid_string?(dataset) do
+      "https://#{project_id}.api" <> if(apicdn == true, do: "cdn", else: "") <> ".sanity.io/v#{api_version}/data/query/#{dataset}"
+    else
+      _ ->
+        Logger.error "Sanity Client: Failed to load expected environment variables for base_url"
+        nil
+    end
+  end
+
+  defp get_base_asset_url do
+    with project_id <- Hexerei.Env.get!(:sanity_project_id),
+         dataset    <- Hexerei.Env.get!(:sanity_dataset) do
+      "https://cdn.sanity.io/images/#{project_id}/#{dataset}/"
+    else
+      _ ->
+        Logger.error "Sanity Client: Failed to load expected environment variables for base_asset_url"
+        nil
+    end
+  end
+
+  defp sanity_token, do: Hexerei.Env.get!(:sanity_token)
+
+  defp get_headers, do: [
     {"Content-Type", "application/json"},
-    {"Authorization", "Bearer #{@sanity_token}"},
+    {"Authorization", "Bearer #{sanity_token()}"},
     {"Accept", "application/json"}
   ]
 
-  @doc """
-  Simple helper function to check a given string or list of strings for validity
-  """
   defp is_valid_string?(string) do
-    is_binary(string) and String.trim(string) != ""
-  end
-  defp is_valid_string?(strings) when is_list(strings) do
-    Enum.all?(strings, &is_valid_string?/1)
+    case is_binary(string) and String.trim(string) != "" do
+      true -> {:ok, string}
+      _ -> {:error, string}
+    end
   end
 
   @doc """
@@ -41,23 +59,22 @@ defmodule Hexerei.SanityClient do
       {:ok, data} | {:error, %{code, message}}
   """
   def fetch(query) do
-    case !is_valid_string?(query) do
-      true -> {:error, %{code: 400, message: "Query must be a string and not empty"}}
-      _ ->
-        query = URI.encode_query(%{"query" => query})
-        url = @base_url <> "?" <> query
+    with {:ok, query} <- is_valid_string?(query) do
+      query = URI.encode_query(%{"query" => query})
+      url = get_base_url() <> "?" <> query
 
-        # Send GET request and return the body
-        case HTTPoison.get(url, @headers) do
-          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-            {:ok, body}
+      Logger.info "Sanity Client: Sending GET request to #{url}"
 
-          {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
-            {:error, %{code: status_code, message: "Sanity error: #{body}"}}
-
-          {:error, %HTTPoison.Error{reason: reason}} ->
-            {:error, %{code: 500, message: "Sanity error: #{reason}"}}
-        end
+      case HTTPoison.get(url, get_headers()) do
+        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          {:ok, body}
+        {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
+          {:error, %{code: status_code, message: "Sanity error: #{body}"}}
+        {:error, %HTTPoison.Error{reason: reason}} ->
+          {:error, %{code: 500, message: "Sanity error: #{reason}"}}
+      end
+    else
+      {:error, _} -> {:error, %{code: 400, message: "Query must be a string and not empty"}}
     end
   end
 
@@ -72,15 +89,14 @@ defmodule Hexerei.SanityClient do
       "https://cdn.sanity.io/images/..."
   """
   def urlFor(assetID, queryParams) do
-    # Check all params are valid
     case is_valid_string?(assetID) do
-      true ->
-        url = @base_asset_url <> assetID
+      {:ok, _} ->
+        url = get_base_asset_url() <> assetID
         case is_valid_string?(queryParams) do
-          true -> {:ok, url <> "?" <> queryParams}
-          false -> {:ok, url}
+          {:ok, _} -> {:ok, url <> "?" <> queryParams}
+          {:error, _} -> {:ok, url}
         end
-      false-> {:error, nil}
+      {:error, _} -> {:error, nil}
     end
   end
 end

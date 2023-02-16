@@ -9,6 +9,8 @@ defmodule Router.Api.V1 do
   use Hexerei.Response
   use Hexerei.Utils
 
+  require Logger
+
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.BuildQuery, as: BuildQuery
 
@@ -34,7 +36,9 @@ defmodule Router.Api.V1 do
         _ -> cb.(conn, Poison.decode!(result))
       end
     else
-      {:error, error} -> conn |> generic_error(error.message)
+      {:error, error} ->
+        Logger.error("Sanity fetch failed: #{inspect error}")
+        conn |> generic_error(error.message)
     end
   end
 

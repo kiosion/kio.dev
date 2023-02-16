@@ -16,21 +16,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # TODO: Test job, lint job, then build + deploy
-  # test:
-  #   name: Test
-  #   environment: API
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Install Dependencies
-  #       run: (cd ./elixir-api && make install)
-  #     - name: Run tests
-  #       run: (cd ./elixir-api && make test)
+  test:
+    name: Test
+    environment: API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          otp-version: 25
+          elixir-version: 1.13
+          rebar3-version: 3.16
+      - name: Install Dependencies
+        run: (cd ./elixir-api && make install)
+      - name: Run tests
+        run: |
+          cd ./elixir-api &&\
+          touch ./.env &&\
+          echo "export SANITY_TOKEN=${{ secrets.SANITY_TOKEN }}" >> .env &&\
+          echo "export SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}" >> .env &&\
+          echo "export API_TOKEN=${{ secrets.DEV_API_TOKEN }}" >> .env &&\
+          make test
+
   build-dev:
     name: Build Development
     environment: API
+    needs: [ test ]
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -45,7 +58,7 @@ jobs:
   deploy-dev:
     name: Deploy Development
     environment: API
-    needs: [ build-dev ]
+    needs: [ test, build-dev ]
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -58,7 +71,7 @@ jobs:
   build-prod:
     name: Build Production
     environment: API
-    needs: [ deploy-dev ]
+    needs: [ test, deploy-dev ]
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -73,7 +86,7 @@ jobs:
   deploy-prod:
     name: Deploy Production
     environment: API
-    needs: [ build-prod ]
+    needs: [ test, build-prod ]
     runs-on: self-hosted
     steps:
       - name: Checkout

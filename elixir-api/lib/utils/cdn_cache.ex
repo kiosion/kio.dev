@@ -3,14 +3,26 @@ defmodule Hexerei.CDNCache do
   A simple ETS-based cache for storing CDN responses
   """
 
+  use Supervisor
+
+  require Logger
+
   defmacro __using__(_opts) do
     quote do
       alias Hexerei.CDNCache, as: CDNCache
     end
   end
 
-  def setup(max_size) do
-    :ets.new(:cdn_cache, [
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, opts)
+  end
+
+  def init(opts) do
+    max_size = Keyword.get(opts, :options, [max_size: 200])[:max_size]
+
+    Logger.info "Creating CDN cache with max_size of #{max_size}"
+
+    table = :ets.new(:cdn_cache, [
       # gives key=> value semantics
       :set,
 
@@ -27,9 +39,12 @@ defmodule Hexerei.CDNCache do
       # to reduce write-lock contention
       write_concurrency: true,
     ])
+
     # Store the max_size in the ETS table as a regular entry, but with a nil key
     # for expires_at - since nil is always greater than any integer
     :ets.insert(:cdn_cache, {:__max_size, max_size, nil})
+
+    {:ok, []}
   end
 
   def get(key) do
