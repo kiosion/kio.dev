@@ -52,7 +52,6 @@
     aria-label="Post - {post.title}"
     data-test-id="list-item"
     href={linkTo(`/blog/${post.slug.current}`)}
-    data-sveltekit-preload-data
     data-sveltekit-preload-code
     on:click={() => SFX.click.play()}
     on:keydown={onKey}

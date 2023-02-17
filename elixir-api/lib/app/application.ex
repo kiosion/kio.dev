@@ -32,9 +32,6 @@ defmodule Hexerei.Application do
 
     opts = [strategy: :one_for_one, name: __MODULE__]
 
-    # Start up our :cdn_cache ETS table with an initial max_size of 1000
-    # Hexerei.CDNCache.setup(1000)
-
     start_res = CliSpinners.spin_fun([frames: :simple_dots_scrolling, text: "Starting Hexerei", done: "Started Hexerei"], fn ->
       case Supervisor.start_link(children, opts) do
         {:ok, pid} ->

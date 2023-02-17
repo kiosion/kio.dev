@@ -14,7 +14,6 @@
   import Nav from '$components/nav/nav.svelte';
   import PageControls from '$components/controls/page-controls.svelte';
   import Features from '$stores/features';
-  import type { LayoutData } from './$types';
   import { browser } from '$app/environment';
   import ContextMenu from '$components/context-menu.svelte';
   import { state as menuState } from '$stores/menu';
@@ -24,6 +23,7 @@
   import { useMediaQuery } from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
+  import type { LayoutData } from './$types';
   import type { Unsubscriber } from 'svelte/store';
 
   interface DevToolsEvent extends Event {

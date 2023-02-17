@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import sfx from '$lib/sfx';
   import Hoverable from '$components/hoverable.svelte';
+  import BulletPoint from '$components/bullet-point.svelte';
   import type { Heading } from '$helpers/pt';
 
   const dispatch = createEventDispatcher();
@@ -17,7 +18,7 @@
     <Hoverable>
       <a
         href={`#${heading.key}`}
-        class="focusOutline-sm mx-4 my-2 block w-full select-none overflow-hidden text-ellipsis whitespace-nowrap rounded-sm p-1 text-sm text-[15px] font-medium"
+        class="focusOutline-sm"
         on:click={() => {
           sfx.click.play();
           dispatch('click', heading);
@@ -30,6 +31,7 @@
           }
         }}
       >
+        <BulletPoint />
         {heading.text}
       </a>
     </Hoverable>
@@ -42,3 +44,9 @@
     {/if}
   {/each}
 </div>
+
+<style lang="scss">
+  a {
+    @apply ml-3 flex w-full select-none flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-[.65rem] text-sm text-[15px] font-medium;
+  }
+</style>

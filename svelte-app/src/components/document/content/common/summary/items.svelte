@@ -17,7 +17,7 @@
   in:slide={{ duration: 400 }}
   out:slide={{ duration: 400 }}
 >
-  <Divider classes="mb-5 mt-0" />
+  <Divider classes="mb-3 mt-0" />
   {#if headingsExist}
     <Item
       {headings}
