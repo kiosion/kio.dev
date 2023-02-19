@@ -30,7 +30,7 @@ export const GET = (async ({ url }) => {
 
     return new Response(renderXML(remoteRes), {
       headers: {
-        'content-type': 'application/rss+xml; charset=utf-8',
+        'content-type': 'application/xml; charset=utf-8',
         'Cache-Control': 'max-age=0, s-max-age=3600'
       }
     });
