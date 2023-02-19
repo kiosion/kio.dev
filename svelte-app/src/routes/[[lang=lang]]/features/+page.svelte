@@ -24,6 +24,7 @@
   $: CanUseCustomCursor = Features.can('use custom cursor');
   $: CanUseComicSans = Features.can('use comic sans');
   $: CanSeeComments = Features.can('see comments');
+  $: CanUseNewNav = Features.can('use new nav');
 </script>
 
 <svelte:head>
@@ -66,6 +67,12 @@
       target={'comments'}
       state={$CanSeeComments}
       label="View Comments"
+    />
+    <SwitchItem
+      action={onChange}
+      target={'new-nav'}
+      state={$CanUseNewNav}
+      label="New navigation"
     />
   </div>
   <div class="mt-6">

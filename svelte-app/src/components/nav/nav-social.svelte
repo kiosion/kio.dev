@@ -26,7 +26,7 @@
       ?.substring(0, 1)
       ?.toUpperCase()}${social.name?.substring(1)}`}
     position="right"
-    delay={250}
+    delay={150}
     fixed
   >
     <!-- svelte-ignore a11y-missing-attribute -->

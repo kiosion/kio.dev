@@ -10,7 +10,7 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={t('Toggle sound effects')} fixed>
+  <Tooltip text={t('Toggle sound effects')} delay={150} fixed>
     <button
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400"
       aria-label={t('Toggle sound effects')}

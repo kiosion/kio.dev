@@ -75,6 +75,7 @@
 
   $: useCustomCursor = Features.can('use custom cursor');
   $: useComicSans = Features.can('use comic sans');
+  $: useNewNav = Features.can('use new nav');
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -134,7 +135,11 @@
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Nav />
+  {#if $useNewNav}
+    asdf
+  {:else}
+    <Nav />
+  {/if}
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
     <div>

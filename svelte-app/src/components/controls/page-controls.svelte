@@ -6,6 +6,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import RSSButton from '$components/controls/rss-button.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import { t, linkTo } from '$i18n';
@@ -98,6 +99,7 @@
             {/if}
           </div>
           <div class="flex w-40 flex-row items-center justify-end gap-4">
+            <RSSButton />
             <ThemeToggle />
             <SoundsToggle />
           </div>

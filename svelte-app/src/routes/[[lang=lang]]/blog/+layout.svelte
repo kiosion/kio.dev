@@ -1,5 +1,6 @@
 <script lang="ts">
   import PageHeading from '$components/headings/page-heading.svelte';
+  import Icon from '$components/icon.svelte';
   import { t } from '$i18n';
 </script>
 

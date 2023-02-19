@@ -54,20 +54,34 @@ const XML_HEADERS = `
 </rss>
   `.trim();
 
+const stinkyTextCleaner = (text?: string) => {
+  return (
+    text?.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') ||
+    ''
+  );
+};
+
+const uriEncode = (text?: string) => {
+  return encodeURI(text || '');
+};
+
 const renderXML = (data: UnpackPromise<ReturnType<typeof fetchRemote>>) => {
   const posts = (data as unknown as ResDataMany<PostDocument>).data,
     items = posts
       .map((post) => {
-        const { slug, title, date, desc } = post;
+        const { slug, title, date, desc } = post,
+          safeTitle = stinkyTextCleaner(title),
+          safeDesc = stinkyTextCleaner(desc),
+          safeSlug = uriEncode(slug.current);
 
         return `
-        <item>
-          <guid>https://kio.dev/blog/${slug.current}</guid>
-          <title>${title}</title>
-          <link>https://kio.dev/blog/${slug.current}</link>
-          <description>${desc}</description>
-          <pubDate>${new Date(date).toUTCString()}</pubDate>
-        </item>
+    <item>
+      <guid>https://kio.dev/blog/${safeSlug}</guid>
+      <title>${safeTitle}</title>
+      <link>https://kio.dev/blog/${safeSlug}</link>
+      <description>${safeDesc}</description>
+      <pubDate>${new Date(date).toUTCString()}</pubDate>
+    </item>
       `.trim();
       })
       .join('');
