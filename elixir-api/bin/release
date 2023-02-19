@@ -1,15 +1,13 @@
 #!/bin/bash
 
 set -e
-ARGS=$(getopt -o e:p: -l env:,project_id:,dataset:,sanity_token:,api_token:,port: -- "$@")
+ARGS=$(getopt -o e:p: -l env:,project_id:,sanity_token:,api_token: -- "$@")
 eval set -- "$ARGS"
 
 while [[ $1 != -- ]]; do
   case $1 in
     -e|--env) ENV=$2; shift 2;;
-    -p|--port) PORT=$2; shift 2;;
     --project_id) SANITY_PROJECT_ID=$2; shift 2;;
-    --dataset) SANITY_DATASET=$2; shift 2;;
     --sanity_token) SANITY_TOKEN=$2; shift 2;;
     --api_token) API_TOKEN=$2; shift 2;;
     *) echo "Invalid option: $1"; exit 1;;
@@ -20,11 +18,8 @@ if [ -z "$ENV" ]; then
   echo "ERROR: Missing 'ENV' argument for release"
   exit 1
 fi
-if [ -z "$PORT" ]; then
-  echo "ERROR: Missing 'PORT' argument for release"
-  exit 1
-fi
-REQ_ARGS=(SANITY_PROJECT_ID SANITY_DATASET SANITY_TOKEN API_TOKEN)
+echo "API Token: ${API_TOKEN}"
+REQ_ARGS=(SANITY_PROJECT_ID SANITY_TOKEN API_TOKEN)
 for arg in "${REQ_ARGS[@]}"; do
   if [ -z "${!arg}" ]; then
     echo "ERROR: Missing '$arg' argument for release"
@@ -34,6 +29,11 @@ done
 
 printf "Starting release build for $ENV...\r"
 cd /app
+
+touch .env && chmod +x .env
+echo "export SANITY_PROJECT_ID=${SANITY_PROJECT_ID}" >> .env
+echo "export SANITY_TOKEN=${SANITY_TOKEN}" >> .env
+echo "export API_TOKEN=${API_TOKEN}" >> .env
 
 mix local.hex --if-missing --force
 mix local.rebar --if-missing --force

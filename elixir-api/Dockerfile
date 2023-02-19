@@ -1,18 +1,10 @@
-FROM elixir:1.14-alpine AS build
-
-RUN apk upgrade --no-cache
-RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
+FROM elixir:1.14-slim AS build
 
 ARG ENV=prod
-ARG PORT=4000
-
+ENV ENV=$ENV
 ARG SANITY_TOKEN
 ARG SANITY_PROJECT_ID
-ARG SANITY_DATASET
 ARG API_TOKEN
-
-ENV PORT=$PORT
-ENV ENV=$ENV
 
 RUN mkdir /app
 WORKDIR /app
@@ -23,44 +15,31 @@ COPY mix.exs mix.lock ./
 COPY config config
 COPY lib lib
 
-RUN echo "SANITY_TOKEN=$SANITY_TOKEN" > ./.env &&\
-    echo "SANITY_PROJECT_ID"=$SANITY_PROJECT_ID >> ./.env &&\
-    echo "API_TOKEN"=$API_TOKEN >> ./.env &&\
-    echo "PORT"=$PORT >> ./.env
+RUN echo "export SANITY_TOKEN=$SANITY_TOKEN" > .env &&\
+    echo "export SANITY_PROJECT_ID=$SANITY_PROJECT_ID" >> .env &&\
+    echo "export API_TOKEN=$API_TOKEN" >> .env
 
 RUN ./release \
         --project_id $SANITY_PROJECT_ID \
-        --dataset $SANITY_DATASET \
         --sanity_token $SANITY_TOKEN \
         --api_token $API_TOKEN \
-        --port $PORT \
         --env $ENV
 
-FROM alpine:3.16.2 AS app
+FROM elixir:1.14-slim AS app
 
-ARG PORT
 ARG ENV
-
-RUN apk upgrade --no-cache
-RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY --from=build /app/_build ./
-COPY --from=build /app/.env .
-
-EXPOSE $PORT
-
-RUN chown -R nobody: /app
-USER nobody
-
-ARG START_PATH=/app/$ENV/rel/hexerei/bin/hexerei
+COPY --from=build /app/_build .
+COPY --from=build /app/.env .env
 
 RUN echo "#!/bin/bash" > ./entrypoint.sh &&\
-    echo "exec ${START_PATH} start" >> ./entrypoint.sh
+    echo ". .env && /app/${ENV}/rel/hexerei/bin/hexerei start" >> ./entrypoint.sh &&\
+    chmod +x ./entrypoint.sh &&\
+    chown -R nobody: /app
 
-RUN chown nobody: ./entrypoint.sh &&\
-    chmod +x ./entrypoint.sh
+USER nobody
 
 ENTRYPOINT ["./entrypoint.sh"]

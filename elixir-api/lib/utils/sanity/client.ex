@@ -18,6 +18,7 @@ defmodule Hexerei.SanityClient do
     else
       _ ->
         Logger.error "Sanity Client: Failed to load expected environment variables for base_url"
+        Logger.error "Sanity Client: Failed to load: #{if(project_id == nil, do: "project_id", else: "")} #{if(api_version == nil, do: "api_version", else: "")} #{if(dataset == nil, do: "dataset", else: "")}"
         nil
     end
   end
