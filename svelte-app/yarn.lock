@@ -3081,9 +3081,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@sveltejs/kit@npm:1.6.0"
+"@sveltejs/kit@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "@sveltejs/kit@npm:1.7.2"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.0.0"
     "@types/cookie": "npm:^0.5.1"
@@ -3091,19 +3091,19 @@ __metadata:
     devalue: "npm:^4.2.3"
     esm-env: "npm:^1.0.0"
     kleur: "npm:^4.1.5"
-    magic-string: "npm:^0.27.0"
+    magic-string: "npm:^0.29.0"
     mime: "npm:^3.0.0"
     sade: "npm:^1.8.1"
     set-cookie-parser: "npm:^2.5.1"
     sirv: "npm:^2.0.2"
     tiny-glob: "npm:^0.2.9"
-    undici: "npm:5.18.0"
+    undici: "npm:5.19.1"
   peerDependencies:
     svelte: ^3.54.0
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 57d03e50e743932d6c3864890093ba2030d09912560cf8d96bfebef2821b1056ce82356b53d3e313bcc62d9f7be192dbc247bd9391d2ce160a012cb6948f467a
+  checksum: 9eff33beb98007ff90bb625fda37844fbaaac2c65986ad6e2a270f45df3e17c0c5c25b8b20edd3b549d4b9d75a3f9d13255b0774c54bcae59c0045ed5c9d2733
   languageName: node
   linkType: hard
 
@@ -11112,6 +11112,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.29.0":
+  version: 0.29.0
+  resolution: "magic-string@npm:0.29.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": "npm:^1.4.13"
+  checksum: f7ee668220ecaabc6f8c3d0ef9f97177fd86ad67eb7b27257afc1f6185a6935f9ddb987fbd638e7e97b406003b9c662012a2f90ed7000736d6c499bb42762f97
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^1.0.0":
   version: 1.3.0
   resolution: "make-dir@npm:1.3.0"
@@ -15343,7 +15352,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^1.0.2"
     "@sveltejs/adapter-netlify": "npm:^2.0.4"
     "@sveltejs/adapter-node": "npm:^1.0.0"
-    "@sveltejs/kit": "npm:^1.6.0"
+    "@sveltejs/kit": "npm:^1.7.2"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^9.0.0"
@@ -16451,12 +16460,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:5.18.0":
-  version: 5.18.0
-  resolution: "undici@npm:5.18.0"
+"undici@npm:5.19.1":
+  version: 5.19.1
+  resolution: "undici@npm:5.19.1"
   dependencies:
     busboy: "npm:^1.6.0"
-  checksum: 6e4bd8f2c0c9475e601ef9dba378a8f5c9274ce28cf97f03b1c202d5002c7722466358d6d63a69be96ef29f52be3d29d3fbfb13ac7b92f25520960c72104d0c3
+  checksum: 999c4ad5d08b9082b3a3e7a1e66bf3b9c08dac89ef8b9951da8e00959fafc03319028ed83f161ddb8d4e157ce6a9b6c8a50194daa64fd21dd5e493cddb039bbe
   languageName: node
   linkType: hard
 
