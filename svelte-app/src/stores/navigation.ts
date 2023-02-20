@@ -88,4 +88,8 @@ const history = new Proxy(historyStore, {
 
 const nowPlayingData = writable<Data | undefined>(undefined);
 
-export { history, navOpen, navOptions, pageHeading, nowPlayingData };
+const navLinks = writable<
+  { name: string; url: string; active: boolean; hovered: boolean }[]
+>([]);
+
+export { history, navLinks, navOpen, navOptions, pageHeading, nowPlayingData };

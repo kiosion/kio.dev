@@ -1,30 +1,40 @@
 <script lang="ts">
   import { config as currentConfig } from '$stores/config';
-  import { navOpen, nowPlayingData } from '$stores/navigation';
-  import { linkTo } from '$i18n';
+  import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
+  import { t, linkTo } from '$i18n';
   import {
     TOP_LEVEL_ROUTES,
     DEFAULT_BREAKPOINTS,
-    BASE_ANIMATION_DURATION
+    BASE_ANIMATION_DURATION,
+    DEFAULT_DESKTOP_BREAKPOINT
   } from '$lib/consts';
   import { circInOut } from 'svelte/easing';
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
   import { slide } from 'svelte/transition';
-  import Breakpoints from 'svelte-breakpoints';
+  import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
   import NavLink from '$components/nav/nav-link.svelte';
   import MenuToggle from '$components/controls/menu-toggle.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import Icon from '$components/icon.svelte';
-  import NewNavLink from '$components/nav/new-nav-link.svelte';
   import NewNavSocial from '$components/nav/new-nav-social.svelte';
   import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
   import Typewriter from 'typewriter-effect/dist/core';
   import { browser } from '$app/environment';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+  import type { Unsubscriber } from 'svelte/store';
+  import NavLinks from '$components/nav/nav-links.svelte';
+
+  navLinks.set(
+    TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
+      name: route.name,
+      url: linkTo(route.path),
+      active: false,
+      hovered: false
+    }))
+  );
 
   interface SocialLink {
     attrs: {
@@ -51,55 +61,59 @@
       iconRotation: link.iconRotation
     })) as SocialLink[]) || ([{}] as SocialLink[]);
 
-  const links = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
-    (route) => ({
-      name: route.name,
-      url: linkTo(route.path),
-      active: false
-    })
-  );
-
   const onLogoClick = () => {
     SFX.click.play();
     navOpen.set(false);
-
-    if (currentRouteIsHome) {
-      goto(linkTo('/features')).then(() => SFX.ping.play());
-    } else {
-      goto(linkTo('/'));
-    }
+    goto(linkTo('/'));
   };
 
-  let typewriterName: typeof Typewriter | undefined;
+  let typewriterName: typeof Typewriter | undefined,
+    typewriterElement: HTMLHeadingElement;
 
-  onMount(() => {
+  const unsubscribers: Unsubscriber[] = [],
+    isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
+
+  const initTypewriter = () => {
     typewriterName = browser
-      ? new Typewriter('#typewriter-name', {
-          strings: ['Kiosion'],
+      ? new Typewriter(typewriterElement, {
           autoStart: false
         })
       : undefined;
 
     browser &&
       typewriterName
-        ?.typeString("Hi! I'm")
+        ?.typeString(t("Hi! I'm"))
         .pauseFor(1000)
         .deleteAll()
         .typeString('Kiosion')
         .start();
-  });
+  };
 
   const typeName = () => {
     typewriterName?.deleteAll().typeString('Kiosion').start();
   };
 
-  $: currentRouteIsHome = $page.url.pathname.match(/^\/(?:en|fr)?\/?$/gim);
+  onMount(() => {
+    unsubscribers.push(
+      isDesktop.subscribe((value) => {
+        if (value) {
+          initTypewriter();
+        } else {
+          typewriterName?.deleteAll();
+        }
+      })
+    );
+  });
+
+  onDestroy(() => {
+    unsubscribers.forEach((unsubscriber) => unsubscriber());
+  });
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav
-      class="flex my-6 ml-9 w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3 dark:border-stone-500/60"
+      class="my-6 ml-9 flex w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3 dark:border-stone-500/60"
       data-test-id="navBar"
     >
       <div>
@@ -116,20 +130,16 @@
             on:focusin={() => {
               typeName();
             }}
+            bind:this={typewriterElement}
           />
           <span class="flex flex-row items-center gap-2 font-code text-base">
             <Icon icon="pin" width={18} />
             <p>Halifax, CA</p>
           </span>
         </div>
-        <ul class="flex relative flex-col items-start gap-4 pt-5 text-base">
-          {#each links as link}
-            <NewNavLink {link} />
-          {/each}
-          <!-- TODO: Slider indicator instance -->
-        </ul>
+        <NavLinks />
       </div>
-      <div class="flex mr-9 flex-col">
+      <div class="mr-9 flex flex-col">
         {#if $nowPlayingData}
           <NowPlayingWidget data={$nowPlayingData} />
         {/if}
@@ -144,7 +154,7 @@
   <svelte:fragment slot="sm">
     <nav class="nav--mobile" data-test-id="navBar">
       <div
-        class="flex relative m-4 flex-row flex-wrap items-center justify-between gap-4 px-3"
+        class="relative m-4 flex flex-row flex-wrap items-center justify-between gap-4 px-3"
       >
         <MenuToggle />
         <Hoverable>
@@ -168,13 +178,13 @@
       <!-- Nav dropdown -->
       {#if $navOpen}
         <div
-          class="flex mb-[10px] flex-col items-center justify-center gap-3 text-2xl"
+          class="mb-[10px] flex flex-col items-center justify-center gap-3 text-2xl"
           transition:slide|local={{
             duration: BASE_ANIMATION_DURATION,
             easing: circInOut
           }}
         >
-          {#each links as link}
+          {#each $navLinks as link}
             <NavLink {link} />
           {/each}
         </div>
