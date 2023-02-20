@@ -1,13 +1,16 @@
 <script lang="ts">
-  import PageHeading from '$components/headings/page-heading.svelte';
   import Icon from '$components/icon.svelte';
   import { t } from '$i18n';
 </script>
 
-<div data-test-route="blog" class="mx-auto w-full max-w-[80rem] pb-20">
-  <PageHeading
-    heading={t('Blog')}
-    text={t('Thoughts on tech, design, and development things')}
-  />
+<div data-test-route="blog" class="mt-8 w-full max-w-[64rem] pb-20">
+  <!-- <span
+    class="flex flex-row gap-2 text-base text-slate-700 dark:text-slate-200"
+  >
+    <Icon icon="ChevronRight" classNames="mt-0.5" />
+    <p>
+      {t('Thoughts and guides on tech, design, and development things')}
+    </p>
+  </span> -->
   <slot />
 </div>

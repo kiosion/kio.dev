@@ -6,13 +6,13 @@
   import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_BREAKPOINTS } from '$lib/consts';
-  import RSSButton from '$components/controls/rss-button.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
   import Tooltip from '$components/tooltip.svelte';
   import { page } from '$app/stores';
+  import Features from '$stores/features';
 
   let scrollNavHovered = false,
     enHover = false,
@@ -24,11 +24,12 @@
   $: navOption = $navOptions[position === 'bottom' ? 'down' : 'up'];
   $: hasNavOption = navOption !== '' && navOption !== undefined;
   $: actionText = position === 'bottom' ? 'Next' : 'Back';
+  $: useNewNav = Features.can('use new nav');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <div class="page-controls-{position}">
+    <div class="page-controls-{position} {$useNewNav ? 'newPos' : ''}">
       <div class="flex flex-row items-start justify-between">
         <div class="w-52">
           <Hoverable bind:hovered={scrollNavHovered}>
@@ -62,10 +63,10 @@
               >
                 <Icon
                   icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'}
-                  classes="text-stone-700 dark:text-stone-100/60"
+                  classes="text-stone-500 dark:text-stone-100/60"
                 />
                 <p
-                  class="ml-4 w-fit font-code text-base text-stone-700 dark:text-stone-100/60"
+                  class="ml-4 w-fit font-code text-base text-stone-500 dark:text-stone-100/60"
                 >
                   {t(actionText)}
                 </p>
@@ -99,7 +100,6 @@
             {/if}
           </div>
           <div class="flex w-40 flex-row items-center justify-end gap-4">
-            <RSSButton />
             <ThemeToggle />
             <SoundsToggle />
           </div>
@@ -174,6 +174,10 @@
     &-top,
     &-bottom {
       @apply fixed left-36 right-0 z-[4] hidden bg-transparent from-stone-200 py-6 px-7 transition-colors md:block lg:left-44 xl:left-52;
+
+      &.newPos {
+        @apply left-56;
+      }
     }
 
     &-top {

@@ -1,4 +1,4 @@
-import { TOP_LEVEL_ROUTES } from '$lib/consts';
+import { TOP_LEVEL_ROUTES, ROUTE_ORDER } from '$lib/consts';
 import { navOptions, pageHeading } from '$stores/navigation';
 import { get } from 'svelte/store';
 import { t, isLocalized } from '$i18n';
@@ -28,6 +28,7 @@ export const setupNavigation = (route: string): void => {
         up: ''
       });
       pageHeading.set('');
+      // console.log('index 0 for:', route);
       return;
     case TOP_LEVEL_ROUTES.length - 1:
       navOptions.set({
@@ -42,33 +43,15 @@ export const setupNavigation = (route: string): void => {
       });
       break;
   }
-  pageHeading.set(t(TOP_LEVEL_ROUTES[index].name));
+  pageHeading.set(`kio.dev | ${t(TOP_LEVEL_ROUTES[index].name).toLowerCase()}`);
 };
 
 let prevPath: string;
 
-const routes = [
-  'features',
-  'index',
-  'blog',
-  'blog/*',
-  'blog/*/*',
-  'blog/+/*',
-  'art',
-  'art/*',
-  'work',
-  'work/*',
-  'work/*/*',
-  'work/+/*',
-  'about',
-  'now',
-  'pgp'
-];
-
 const forward: string[] = [];
-routes.forEach((route, index) => {
-  index !== routes.length - 1 &&
-    routes.forEach((subRoute, i) => {
+ROUTE_ORDER.forEach((route, index) => {
+  index !== ROUTE_ORDER.length - 1 &&
+    ROUTE_ORDER.forEach((subRoute, i) => {
       !(i <= index) && forward.push(`${route}-${subRoute}`);
     });
 });

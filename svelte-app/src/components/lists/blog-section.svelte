@@ -5,12 +5,12 @@
   export let posts: PostDocument[];
 </script>
 
-{#each posts as post, index}
-  {#if index === 0}
-    <ListItem {post} position="first" />
-  {:else if index === posts.length - 1}
-    <ListItem {post} position="last" />
-  {:else}
+{#if posts.length === 1}
+  <ListItem post={posts[0]} position="solo" />
+{:else}
+  <ListItem post={posts[0]} position="first" />
+  {#each posts.slice(1, posts.length - 1) as post}
     <ListItem {post} position="middle" />
-  {/if}
-{/each}
+  {/each}
+  <ListItem post={posts[posts.length - 1]} position="last" />
+{/if}

@@ -22,13 +22,13 @@
     comments: ResDataMany<Comment> | undefined = undefined;
 
   const isPost = model === 'post',
-    pageName = `${isPost ? t('Blog') : t('Work')}${
+    pageName = `${isPost ? t('Thoughts') : t('My work')}${
       data?.title ? ` | ${data.title}` : ''
     }`,
     pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`,
     pageDescription = data?.desc
       ? data.desc
-      : t(`A ${isPost ? 'blog post' : 'project'} on kio.dev`),
+      : t(`A ${isPost ? 'post' : 'project'} on kio.dev`),
     allTags =
       (((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
         if (!tags) {
@@ -65,7 +65,7 @@
   <meta property="og:title" content={pageTitle} />
   <meta
     property="og:description"
-    content={data?.desc ? data.desc : t('A blog post on kio.dev')}
+    content={data?.desc ? data.desc : t('A post on kio.dev')}
   />
   <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content={pageTitle} />

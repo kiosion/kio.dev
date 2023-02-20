@@ -11,7 +11,7 @@
 <IconHeader
   icon="comment"
   text={t('Comments')}
-  classes="mt-8 mb-4 w-full h-fit"
+  classNames="mt-8 mb-4 w-full h-fit"
 />
 
 <CommentInput {userInfo} />

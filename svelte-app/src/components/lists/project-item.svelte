@@ -44,7 +44,7 @@
 
 <Hoverable bind:hovered>
   <a
-    class="relative flex w-full flex-col items-stretch justify-start gap-y-1.5 rounded-2xl py-5 px-6 transition-colors lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] {hovered
+    class="relative flex w-full flex-col items-stretch justify-start gap-y-1.5 rounded-xl py-5 px-6 transition-colors lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] {hovered
       ? 'border-stone-400/80 bg-stone-300/60 dark:border-stone-500/80 dark:bg-stone-700/20'
       : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] -mt-[1px] border"
     data-test-id="list-item"

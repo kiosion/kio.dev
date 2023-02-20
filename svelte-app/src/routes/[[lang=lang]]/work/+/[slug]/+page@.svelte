@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import PageHeading from '$components/headings/page-heading.svelte';
   import type { PageData } from './$types';
   import ListItem from '$components/lists/project-item.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
+  import { t } from '$i18n';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`Work | Tag | ${pageTitle}`);
@@ -22,9 +23,10 @@
 </svelte:head>
 
 <div data-test-route="tag" class="w-full">
-  <PageHeading
-    heading={pageTitle}
-    text="Recent work tagged with '{pageTitle}'"
+  <IconHeader
+    icon="label"
+    text={t("Recent '{tag}' work", { tag: pageTitle })}
+    classNames="mb-4"
   />
   <div class="pb-20">
     {#if projects?.data?.length}

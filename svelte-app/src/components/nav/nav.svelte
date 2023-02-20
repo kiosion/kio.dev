@@ -1,26 +1,30 @@
 <script lang="ts">
-  /* eslint-disable @typescript-eslint/no-unsafe-argument */
-  import { slide } from 'svelte/transition';
-  import ThemeToggle from '$components/controls/theme-toggle.svelte';
-  import MenuToggle from '$components/controls/menu-toggle.svelte';
-  import { navOpen } from '$stores/navigation';
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import Hoverable from '$components/hoverable.svelte';
-  import Breakpoints from 'svelte-breakpoints';
-  import {
-    BASE_ANIMATION_DURATION,
-    DEFAULT_BREAKPOINTS,
-    TOP_LEVEL_ROUTES
-  } from '$lib/consts';
-  import SoundsToggle from '$components/controls/sounds-toggle.svelte';
-  import { circInOut } from 'svelte/easing';
-  import { t, linkTo } from '$i18n';
-  import SFX from '$lib/sfx';
   import { config as currentConfig } from '$stores/config';
+  import { navOpen, nowPlayingData } from '$stores/navigation';
+  import { linkTo } from '$i18n';
+  import {
+    TOP_LEVEL_ROUTES,
+    DEFAULT_BREAKPOINTS,
+    BASE_ANIMATION_DURATION
+  } from '$lib/consts';
+  import { circInOut } from 'svelte/easing';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import SFX from '$lib/sfx';
+  import { slide } from 'svelte/transition';
+  import Breakpoints from 'svelte-breakpoints';
   import NavLink from '$components/nav/nav-link.svelte';
-  import Tooltip from '$components/tooltip.svelte';
-  import NavSocial from './nav-social.svelte';
+  import MenuToggle from '$components/controls/menu-toggle.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+  import SoundsToggle from '$components/controls/sounds-toggle.svelte';
+  import ThemeToggle from '$components/controls/theme-toggle.svelte';
+  import Icon from '$components/icon.svelte';
+  import NewNavLink from '$components/nav/new-nav-link.svelte';
+  import NewNavSocial from '$components/nav/new-nav-social.svelte';
+  import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
+  import Typewriter from 'typewriter-effect/dist/core';
+  import { browser } from '$app/environment';
+  import { onMount } from 'svelte';
 
   interface SocialLink {
     attrs: {
@@ -55,8 +59,6 @@
     })
   );
 
-  let navHovered = false;
-
   const onLogoClick = () => {
     SFX.click.play();
     navOpen.set(false);
@@ -68,54 +70,81 @@
     }
   };
 
+  let typewriterName: typeof Typewriter | undefined;
+
+  onMount(() => {
+    typewriterName = browser
+      ? new Typewriter('#typewriter-name', {
+          strings: ['Kiosion'],
+          autoStart: false
+        })
+      : undefined;
+
+    browser &&
+      typewriterName
+        ?.typeString("Hi! I'm")
+        .pauseFor(1000)
+        .deleteAll()
+        .typeString('Kiosion')
+        .start();
+  });
+
+  const typeName = () => {
+    typewriterName?.deleteAll().typeString('Kiosion').start();
+  };
+
   $: currentRouteIsHome = $page.url.pathname.match(/^\/(?:en|fr)?\/?$/gim);
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <Hoverable setPointer={false} bind:hovered={navHovered}>
-      <nav class="nav--desktop" class:active={navHovered} data-test-id="navBar">
-        <div class="click-through -mt-7 flex-grow md:-mt-4">
-          <Tooltip text={t('Click me a few times!')} position="right">
-            <Hoverable>
-              <button
-                class="logo-text focusOutline -ml-3 mt-24 mb-[68px] inline-block w-28 rounded-sm transition-[filter] dark:outline-lime-700 dark:invert lg:my-20 lg:ml-0 lg:w-32 xl:my-24 xl:w-36"
-                role="menuitem"
-                data-test-id="nav-logo"
-                on:click={() => onLogoClick()}
-              >
-                <img
-                  class="-rotate-90"
-                  src="/assets/logo-text--short.webp"
-                  alt="kio."
-                />
-              </button>
-            </Hoverable>
-          </Tooltip>
-          <div
-            class="flex flex-col items-center justify-center gap-3 pt-8 text-base"
-          >
-            {#each links as link}
-              <NavLink {link} />
-            {/each}
-          </div>
-        </div>
+    <nav
+      class="flex my-6 ml-9 w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3 dark:border-stone-500/60"
+      data-test-id="navBar"
+    >
+      <div>
         <div
-          class="text-secondary align-center mx-auto flex flex-col justify-center pt-8 text-center"
+          class="mr-9 border-b border-stone-400/50 pb-5 dark:border-stone-500/60"
         >
-          {#if socials?.length > 0}
-            {#each socials as social}
-              <NavSocial {social} />
-            {/each}
-          {/if}
+          <!-- svelte-ignore a11y-missing-content -->
+          <h3
+            class="font-heading text-xl font-bold leading-relaxed"
+            id="typewriter-name"
+            on:mouseenter={() => {
+              typeName();
+            }}
+            on:focusin={() => {
+              typeName();
+            }}
+          />
+          <span class="flex flex-row items-center gap-2 font-code text-base">
+            <Icon icon="pin" width={18} />
+            <p>Halifax, CA</p>
+          </span>
         </div>
-      </nav>
-    </Hoverable>
+        <ul class="flex relative flex-col items-start gap-4 pt-5 text-base">
+          {#each links as link}
+            <NewNavLink {link} />
+          {/each}
+          <!-- TODO: Slider indicator instance -->
+        </ul>
+      </div>
+      <div class="flex mr-9 flex-col">
+        {#if $nowPlayingData}
+          <NowPlayingWidget data={$nowPlayingData} />
+        {/if}
+        <div class="flex flex-row flex-wrap items-center justify-center">
+          {#each socials as social}
+            <NewNavSocial {social} />
+          {/each}
+        </div>
+      </div>
+    </nav>
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav class="nav--mobile" data-test-id="navBar">
       <div
-        class="relative m-4 flex flex-row flex-wrap items-center justify-between gap-4 px-3"
+        class="flex relative m-4 flex-row flex-wrap items-center justify-between gap-4 px-3"
       >
         <MenuToggle />
         <Hoverable>
@@ -139,7 +168,7 @@
       <!-- Nav dropdown -->
       {#if $navOpen}
         <div
-          class="mb-[10px] flex flex-col items-center justify-center gap-3 text-2xl"
+          class="flex mb-[10px] flex-col items-center justify-center gap-3 text-2xl"
           transition:slide|local={{
             duration: BASE_ANIMATION_DURATION,
             easing: circInOut
@@ -153,29 +182,3 @@
     </nav>
   </svelte:fragment>
 </Breakpoints>
-
-<style lang="scss">
-  .nav--desktop {
-    @apply my-4 ml-4 flex w-32 flex-shrink-0 flex-col overflow-x-hidden rounded-3xl border border-stone-400/80 bg-stone-300/60 px-4 py-8 text-center transition-colors lg:w-40 xl:w-48;
-
-    &.active {
-      @apply border-stone-400 bg-stone-300;
-    }
-  }
-  .nav--mobile {
-    @apply z-10 flex h-fit w-full flex-col bg-stone-300 text-center transition-colors;
-  }
-
-  :global(.dark) {
-    .nav--desktop {
-      @apply border-stone-500/60 bg-stone-900/80;
-
-      &.active {
-        @apply border-stone-500/80 bg-stone-900/40;
-      }
-    }
-    .nav--mobile {
-      @apply bg-stone-900;
-    }
-  }
-</style>

@@ -6,7 +6,12 @@ import {
 import { config } from '$stores/config';
 import { get } from 'svelte/store';
 import Store from '$lib/store';
-import type { ProjectDocument, ResData, ResDataMany } from '$types';
+import type {
+  AuthorDocument,
+  ProjectDocument,
+  ResData,
+  ResDataMany
+} from '$types';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent, fetch }) => {
@@ -25,6 +30,13 @@ export const load: PageLoad = async ({ parent, fetch }) => {
     });
   }
 
+  const about = await Store.findOne<AuthorDocument>(fetch, 'about').catch(
+    (err: unknown) => {
+      Logger.error(err as string);
+      return undefined;
+    }
+  );
+
   const projects: ResDataMany<ProjectDocument> | undefined =
     await Store.find<ProjectDocument>(fetch, 'project', {
       ...DEFAULT_PROJECT_QUERY_PARAMS,
@@ -34,5 +46,5 @@ export const load: PageLoad = async ({ parent, fetch }) => {
       return undefined;
     });
 
-  return { pinned, projects };
+  return { about, pinned, projects };
 };

@@ -41,7 +41,6 @@ export default {
       of: BodyBlocks,
       validation: (Rule: Rule) => Rule.required()
     },
-    Body,
     {
       name: 'now',
       title: 'Now',
@@ -49,6 +48,7 @@ export default {
       of: BodyBlocks,
       validation: (Rule: Rule) => Rule.required()
     },
+    Body,
     {
       name: 'contact',
       title: 'Contact',

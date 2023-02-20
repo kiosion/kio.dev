@@ -1,4 +1,5 @@
 import { get, writable, type Writable } from 'svelte/store';
+import type { Data } from '$helpers/toru';
 
 const navOpen = writable(false);
 
@@ -85,4 +86,6 @@ const history = new Proxy(historyStore, {
   }
 }) as History;
 
-export { history, navOpen, navOptions, pageHeading };
+const nowPlayingData = writable<Data | undefined>(undefined);
+
+export { history, navOpen, navOptions, pageHeading, nowPlayingData };

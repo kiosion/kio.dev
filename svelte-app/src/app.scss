@@ -40,7 +40,7 @@ body {
   @media (min-width: 0px) {
     background-color: $stone-900;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 830px) {
     background-color: $stone-800;
   }
   --textColour: $stone-50;
@@ -49,7 +49,7 @@ body {
     @media (min-width: 0px) {
       background-color: $stone-300;
     }
-    @media (min-width: 768px) {
+    @media (min-width: 830px) {
       background-color: $stone-200;
     }
     --textColour: $stone-900;
