@@ -12,7 +12,6 @@
   import SFX from '$lib/sfx';
   import Tooltip from '$components/tooltip.svelte';
   import { page } from '$app/stores';
-  import Features from '$stores/features';
 
   let scrollNavHovered = false,
     enHover = false,
@@ -24,12 +23,11 @@
   $: navOption = $navOptions[position === 'bottom' ? 'down' : 'up'];
   $: hasNavOption = navOption !== '' && navOption !== undefined;
   $: actionText = position === 'bottom' ? 'Next' : 'Back';
-  $: useNewNav = Features.can('use new nav');
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <div class="page-controls-{position} {$useNewNav ? 'newPos' : ''}">
+    <div class="page-controls-{position}">
       <div class="flex flex-row items-start justify-between">
         <div class="w-52">
           <Hoverable bind:hovered={scrollNavHovered}>
@@ -173,11 +171,7 @@
   .page-controls {
     &-top,
     &-bottom {
-      @apply fixed left-36 right-0 z-[4] hidden bg-transparent from-stone-200 py-6 px-7 transition-colors md:block lg:left-44 xl:left-52;
-
-      &.newPos {
-        @apply left-56;
-      }
+      @apply fixed right-0 left-56 z-[4] hidden bg-transparent from-stone-200 py-6 px-7 transition-colors md:block xl:left-56;
     }
 
     &-top {
