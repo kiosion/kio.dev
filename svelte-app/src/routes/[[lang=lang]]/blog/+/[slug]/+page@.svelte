@@ -1,9 +1,10 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import PageHeading from '$components/headings/page-heading.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
-  import ListItem from '$components/lists/blog-item.svelte';
+  import ListSection from '$components/lists/blog-section.svelte';
+  // import ListItem from '$components/lists/blog-item.svelte';
   import { t } from '$i18n';
   import EmptyContent from '$components/empty-content.svelte';
 
@@ -23,15 +24,14 @@
 </svelte:head>
 
 <div data-test-route="tag" class="w-full">
-  <PageHeading
-    heading={pageTitle}
-    text={`${t('Recent posts tagged with')} '${pageTitle}'`}
+  <IconHeader
+    icon="label"
+    text={t("Recent '{tag}' posts", { tag: pageTitle })}
+    classNames="mb-4"
   />
   <div class="pb-20">
     {#if posts?.data?.length}
-      {#each posts.data as post}
-        <ListItem {post} />
-      {/each}
+      <ListSection posts={posts.data} />
     {:else}
       <div class="flex w-full flex-row items-center justify-center">
         <EmptyContent />

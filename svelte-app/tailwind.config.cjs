@@ -14,6 +14,7 @@ module.exports = {
         display: ['Cal Sans', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
+        'xs': ['0.75rem', '1'],
         '4xl': ['2.25rem', '2.5rem'],
         '5xl': ['2.25rem', '1'],
         '6xl': ['3rem', '1'],

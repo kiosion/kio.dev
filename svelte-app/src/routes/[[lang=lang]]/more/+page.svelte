@@ -4,21 +4,23 @@
   import { onMount } from 'svelte';
   import { setupNavigation } from '$helpers/navigation';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import type { PageData } from './$types';
   import EmptyContent from '$components/empty-content.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import PageHeading from '$components/headings/page-heading.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
+  import type { PageData } from './$types';
+  import LinkNonPt from '$components/link-non-pt.svelte';
+  import Divider from '$components/divider.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
   });
 
-  const pageTitle = `kio.dev | ${t('Now').toLowerCase()}`,
+  const pageTitle = `kio.dev | ${t('Meta + Contact').toLowerCase()}`,
     description = t('A peek into my current adventures in tech and beyond');
 
   export let data: PageData;
 
-  $: now = data?.about?.data.now;
+  $: about = data?.about?.data;
 </script>
 
 <svelte:head>
@@ -35,14 +37,34 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<div data-test-route="now">
-  <ContentWrapper>
-    <!-- Heading -->
-    <PageHeading heading={t('Now')} text={description} />
-    {#if now}
-      <PortableText text={now} />
+<div data-test-route="meta">
+  <ContentWrapper fixed>
+    {#if about}
+      <IconHeader icon="Message" text={t('Say hello')} />
+      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+        <PortableText text={about.contact} />
+      </div>
+
+      <Divider />
+
+      <IconHeader icon="InfoBox" text={t('Meta')} />
+      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+        <PortableText text={about.body} />
+      </div>
+
+      <Divider />
     {:else}
       <EmptyContent />
     {/if}
+
+    <IconHeader icon="LockOpen" text={t('PGP')} />
+    <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+      <p>
+        {t("Want to send a secure message my way? Here's my main PGP key:")}
+        <LinkNonPt href="/pgp.txt" target="_blank"
+          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
+        >
+      </p>
+    </div>
   </ContentWrapper>
 </div>

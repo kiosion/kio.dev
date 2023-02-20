@@ -11,7 +11,7 @@
   import BarLoader from '$components/loading/bar.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
-  import Nav from '$components/nav/nav.svelte';
+  import Navigation from '$components/nav/nav.svelte';
   import PageControls from '$components/controls/page-controls.svelte';
   import Features from '$stores/features';
   import { browser } from '$app/environment';
@@ -75,7 +75,6 @@
 
   $: useCustomCursor = Features.can('use custom cursor');
   $: useComicSans = Features.can('use comic sans');
-  $: useNewNav = Features.can('use new nav');
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -135,11 +134,7 @@
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  {#if $useNewNav}
-    asdf
-  {:else}
-    <Nav />
-  {/if}
+  <Navigation />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
     <div>

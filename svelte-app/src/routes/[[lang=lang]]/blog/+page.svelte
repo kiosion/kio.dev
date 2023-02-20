@@ -21,7 +21,7 @@
 
   let postsExceptPinned: PostDocument[] = [];
 
-  const pageTitle = `kio.dev | ${t('Blog').toLowerCase()}`,
+  const pageTitle = `kio.dev | ${t('Thoughts').toLowerCase()}`,
     description = t('Thoughts about tech, design, and development');
 
   $: ({ pinned, posts } = data);
@@ -46,11 +46,11 @@
 </svelte:head>
 
 {#if pinned?.data}
-  <IconHeader icon="Pin" text={t('Pinned')} />
+  <IconHeader icon="Pin" text={t('Pinned')} classNames="mb-3" />
   <ListItem post={pinned.data} />
 {/if}
-<!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
-<IconHeader icon="bulletlist" text={t('Recent posts')} />
+
+<IconHeader icon="bulletlist" text={t('Recent')} />
 {#if posts?.data?.length}
   <div class="flex flex-col">
     <ListSection posts={postsExceptPinned} />
@@ -60,6 +60,7 @@
     <EmptyContent />
   </div>
 {/if}
+
 {#if posts?.meta?.total > RECENT_POSTS_COUNT}
   <Hoverable>
     <a
@@ -68,7 +69,7 @@
       aria-label={t('View more posts')}
       on:click={() => SFX.click.play()}
     >
-      <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
+      <IconHeader icon="ArrowRight" text={t('View more')} />
     </a>
   </Hoverable>
 {/if}

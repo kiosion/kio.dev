@@ -27,13 +27,13 @@
   const getClassNames = (pos: typeof position) => {
     switch (pos) {
       case 'first':
-        return 'rounded-t-2xl mt-2 pb-4 pt-5';
+        return 'rounded-t-xl mt-2 pb-4 pt-5';
       case 'middle':
         return 'py-4 -mt-[1px]';
       case 'last':
-        return 'rounded-b-2xl mb-2 pt-4 pb-5 -mt-[1px]';
+        return 'rounded-b-xl mb-2 pt-4 pb-5 -mt-[1px]';
       case 'solo':
-        return 'rounded-2xl my-2 py-4';
+        return 'rounded-xl my-2 py-4';
     }
   };
 
@@ -56,6 +56,19 @@
     on:click={() => SFX.click.play()}
     on:keydown={onKey}
   >
+    <!-- <a
+    class="justify-stretch flex h-fit w-full flex-col items-stretch gap-y-1.5 border-t border-b py-3 px-6 pl-5 {hovered
+      ? 'border-stone-400/80 dark:border-stone-500/80 '
+      : 'border-transparent'} focusOutline transition-colors"
+    tabindex="0"
+    role="button"
+    aria-label="Post - {post.title}"
+    data-test-id="list-item"
+    href={linkTo(`/blog/${post.slug.current}`)}
+    data-sveltekit-preload-code
+    on:click={() => SFX.click.play()}
+    on:keydown={onKey}
+  > -->
     <h1
       class="w-full text-ellipsis font-display text-xl font-bold decoration-[2px] underline-offset-[3px] line-clamp-1 {hovered
         ? 'underline'

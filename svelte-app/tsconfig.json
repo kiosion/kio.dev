@@ -20,6 +20,7 @@
       "$langs/*": ["src/languages/*"],
       "$i18n": ["src/lib/helpers/i18n"],
       "$routes/*": ["src/routes/*"],
+      "$assets/*": ["src/static/*"],
       "$types": ["types/app/index.d.ts"],
       "$types/*": ["types/app/*"],
       "*": ["types/*"]

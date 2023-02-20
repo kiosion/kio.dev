@@ -56,7 +56,7 @@
           ? $page.error.message
           : message
       )}
-      classes="mx-auto w-fit"
+      classNames="mx-auto w-fit"
     />
   </ContentWrapper>
 </div>

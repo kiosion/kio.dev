@@ -35,7 +35,7 @@
     <IconHeader
       icon="CardText"
       text={t('Tags')}
-      classes="mt-8 mb-4 w-full h-fit"
+      classNames="mt-8 mb-4 w-full h-fit"
     />
     <Tags {model} data={data.tags} size="lg" />
   {/if}
@@ -44,7 +44,7 @@
     <IconHeader
       icon="link"
       text={t('Links')}
-      classes="mt-8 mb-4 w-full h-fit"
+      classNames="mt-8 mb-4 w-full h-fit"
     />
     <ul class="ml-8 list-disc">
       {#each extLinks as link}

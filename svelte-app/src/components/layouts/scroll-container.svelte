@@ -23,7 +23,8 @@
 </script>
 
 <div
-  class="focusOutline relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-3xl bg-stone-200 p-8 transition-colors dark:bg-stone-800 md:rounded-none"
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-200 p-8 transition-colors dark:bg-stone-800"
+  tabindex={-1}
   bind:this={element}
 >
   <slot />

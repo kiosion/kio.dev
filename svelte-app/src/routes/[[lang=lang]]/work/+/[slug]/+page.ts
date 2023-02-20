@@ -10,7 +10,7 @@ import type { ResDataMany, ProjectDocument, DocumentTags } from '$types';
 
 export const prerender = false;
 
-export const load: PageLoad = async ({ parent, fetch, params }) => {
+export const load = (async ({ parent, fetch, params }) => {
   if (params.slug === '') {
     throw redirect(301, params.lang === 'fr' ? '/fr/work/' : '/work/');
   }
@@ -33,7 +33,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
         tag.title?.toLowerCase() === params.slug?.toLowerCase()
     )
   ) {
-    Logger.info('Tag not found', params.slug);
+    Logger.info('Tag not found', {}, params.slug);
     if (!allTags?.data) {
       console.warn('Failed to fetch tags');
     }
@@ -48,9 +48,9 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       limit: PAGINATION_PROJECTS_PER_PAGE,
       tags: [params.slug]
     }).catch((err: unknown) => {
-      Logger.error(err as string, `routes/work/+/${params.slug}`);
+      Logger.error(err as string, {}, `routes/work/+/${params.slug}`);
       return undefined;
     });
 
   return { projects };
-};
+}) satisfies PageLoad;

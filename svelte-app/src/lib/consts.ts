@@ -14,9 +14,14 @@ interface AppRoute {
 }
 
 export const APP_ROUTES = [
-  { name: 'Index', path: '/', hidden: true },
+  // { name: 'Index', path: '/', hidden: true },
   {
-    name: 'Blog',
+    name: 'About me',
+    path: '/',
+    hidden: false
+  },
+  {
+    name: 'Thoughts',
     path: '/blog',
     children: [
       { name: 'Post', path: '/blog/:slug' },
@@ -26,7 +31,7 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'Work',
+    name: 'My work',
     path: '/work',
     children: [
       { name: 'Project', path: '/work/:slug' },
@@ -40,24 +45,9 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'About',
-    path: '/about',
-    children: [
-      { name: 'Resume', path: '/about/resume' },
-      { name: 'Skills', path: '/about/skills' },
-      { name: 'PGP', path: '/pgp' }
-    ],
+    name: 'Meta + Contact',
+    path: '/more',
     hidden: false
-  },
-  {
-    name: 'Now',
-    path: '/now',
-    hidden: false
-  },
-  {
-    name: 'PGP',
-    path: '/pgp',
-    hidden: true
   }
 ] as AppRoute[];
 
@@ -66,6 +56,23 @@ export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   const { children, ...rest } = r;
   return rest;
 }) as Omit<AppRoute, 'children'>[];
+
+export const ROUTE_ORDER = [
+  'features',
+  'index',
+  'about',
+  'blog',
+  'blog/*',
+  'blog/*/*',
+  'blog/+/*',
+  'art',
+  'art/*',
+  'work',
+  'work/*',
+  'work/*/*',
+  'work/+/*',
+  'more'
+];
 
 export const BASE_TRANSITION_DURATION = 200;
 export const BASE_ANIMATION_DURATION = 300;
@@ -91,7 +98,7 @@ export const DEFAULT_PROJECT_QUERY_PARAMS = {
   limit: PAGINATION_PROJECTS_PER_PAGE
 };
 
-export const DEFAULT_DESKTOP_WIDTH = 768;
+export const DEFAULT_DESKTOP_WIDTH = 830;
 export const DEFAULT_MOBILE_WIDTH = DEFAULT_DESKTOP_WIDTH - 1;
 
 export const DEFAULT_DESKTOP_BREAKPOINT = `(min-width: ${DEFAULT_DESKTOP_WIDTH}px)`;
@@ -204,3 +211,5 @@ export const LOADING_PHRASES = [
   'Parsing XML',
   'Asking ChatGPT for help'
 ];
+
+export const TORU_API_URL = 'https://toru.kio.dev/api/v1/kiosion?res=json';

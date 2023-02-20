@@ -10,6 +10,8 @@
   import { t } from '$i18n';
   import SFX from '$lib/sfx';
   import EmptyContent from '$components/empty-content.svelte';
+  import Timeline from '$components/about/timeline.svelte';
+  import Divider from '$components/divider.svelte';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -17,12 +19,12 @@
 
   export let data: PageData;
 
-  const pageTitle = `kio.dev | ${t('Work').toLowerCase()}`,
+  const pageTitle = `kio.dev | ${t('My work').toLowerCase()}`,
     description = t(
       'A collection of my work, open-source contributions, and personal projects'
     );
 
-  $: ({ pinned, projects } = data);
+  $: ({ about, pinned, projects } = data);
 </script>
 
 <svelte:head>
@@ -39,17 +41,22 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
+<IconHeader icon="briefcase" text={t("Where I've worked")} />
+<div class="ml-2 w-full max-w-[42rem]">
+  <Timeline data={about?.data.timeline} />
+</div>
+
+<IconHeader icon="bulletlist" text={t("What I've made")} />
 {#if pinned?.data}
-  <IconHeader icon="Pin" text={t('Pinned')} />
   <div class="mt-4">
     <ListItem project={pinned.data} />
   </div>
+
+  <Divider />
 {/if}
-<!-- <IconHeader icon="Clock" text={t('Recent')} /> -->
-<IconHeader icon="bulletlist" text={t('Recent projects')} />
 {#if projects?.data?.length}
   <div
-    class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
+    class="mt-6 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
   >
     {#each projects.data as project}
       {#if project._id !== pinned?.data?._id}
@@ -70,7 +77,7 @@
       aria-label={t('View more projects')}
       on:click={() => SFX.click.play()}
     >
-      <IconHeader icon="ArrowRight" text={t('View more')} classes="" />
+      <IconHeader icon="ArrowRight" text={t('View more')} />
     </a>
   </Hoverable>
 {/if}

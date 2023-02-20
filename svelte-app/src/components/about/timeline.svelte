@@ -81,7 +81,7 @@
           />
           <div class="mr-6 flex w-full flex-col items-start justify-start">
             <h1
-              class="select-none font-code text-lg font-bold text-stone-800 dark:text-stone-50/90"
+              class="select-none font-code text-base text-stone-800 dark:text-stone-50/90"
             >
               {dateDisplay(item.range.start, item.range.end)}
             </h1>
