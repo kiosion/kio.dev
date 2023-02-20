@@ -3732,9 +3732,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/vision@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "@sanity/vision@npm:3.3.1"
+"@sanity/vision@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@sanity/vision@npm:3.4.0"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.1.0"
     "@codemirror/commands": "npm:^6.0.1"
@@ -3757,7 +3757,7 @@ __metadata:
   peerDependencies:
     react: ^18
     styled-components: ^5.2
-  checksum: 17c4fb65eae4a1a6ea10ec9c62047d16e1d67a0e5b265a8b3bd77a924baefac831ec0ccc9f5f150f4c376cd06c826f7b293c53d26893b2d91e99e978428fdcb0
+  checksum: 741aae72edbc250c232943ded4d74cc6a5ec26df77afd2325736a4213c70a816bf4297fa9fc41c882becfed70e70c9460883a273ef6680d34b70f64279cadad2
   languageName: node
   linkType: hard
 
@@ -11078,7 +11078,7 @@ __metadata:
     "@sanity/code-input": "npm:^4.0.0"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/ui": "npm:^1.2.2"
-    "@sanity/vision": "npm:^3.3.1"
+    "@sanity/vision": "npm:^3.4.0"
     "@typescript-eslint/eslint-plugin": "npm:^5.52.0"
     "@typescript-eslint/parser": "npm:^5.52.0"
     ace-builds: "npm:^1.15.0"
