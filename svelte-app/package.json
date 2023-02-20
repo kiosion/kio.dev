@@ -30,7 +30,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@cypress/vite-dev-server": "^5.0.2",
     "@iconify/svelte": "^3.0.1",
-    "@poppanator/sveltekit-svg": "^1.1.1",
+    "@poppanator/sveltekit-svg": "^2.1.2",
     "@popperjs/core": "^2.11.6",
     "@portabletext/svelte": "^1.0.1",
     "@rgossiaux/svelte-headlessui": "^1.0.2",
