@@ -8,7 +8,7 @@
 </script>
 
 <div class="mb-4 border-b border-stone-400/50 pb-4 dark:border-stone-500/60">
-  <div class="flex w-full flex-row items-start gap-3 pt-4">
+  <div class="flex w-full flex-row items-center gap-3 pt-4">
     <span class="relative h-fit w-fit flex-shrink-0">
       <img
         class="aspect-square w-12 rounded-sm"
@@ -26,11 +26,13 @@
             src={LastFM}
             alt=""
             class="absolute -bottom-0.5 -right-0.5 h-4 w-4"
+            role="button"
+            tabindex={0}
             on:click={() => {
               window.open('https://github.com/kiosion/toru', '_blank');
             }}
             on:keydown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.code === 'Enter' || e.code === 'Space') {
                 window.open('https://github.com/kiosion/toru', '_blank');
               }
             }}
