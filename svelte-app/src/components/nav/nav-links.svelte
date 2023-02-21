@@ -7,10 +7,16 @@
 </script>
 
 <div bind:this={navLinksContainer}>
-  <ul class="relative flex flex-col items-start pt-5 text-base">
+  <ul>
     {#each $navLinks as link, index}
       <NewNavLink {link} {index} />
     {/each}
     <SliderIndicator container={navLinksContainer} />
   </ul>
 </div>
+
+<style lang="scss">
+  ul {
+    @apply relative flex flex-col items-start pt-5 text-base;
+  }
+</style>

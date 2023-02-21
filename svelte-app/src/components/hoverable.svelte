@@ -46,7 +46,8 @@
 </script>
 
 <span
-  class="contents {setPointer ? 'cursor-pointer' : ''} {classes}"
+  class={classes}
+  class:cursor-pointer={setPointer}
   data-test-id="hover-target"
   bind:this={target}
   on:mouseover={() => handleHoverIn()}
@@ -58,3 +59,9 @@
 >
   <slot />
 </span>
+
+<style lang="scss">
+  span {
+    @apply contents;
+  }
+</style>

@@ -43,7 +43,7 @@
   <ContentWrapper fixed>
     {#if about}
       <IconHeader icon="User" text={t('About me')} />
-      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+      <div>
         <PortableText text={about.bio} />
       </div>
       {#if about.bio && about.now}
@@ -51,9 +51,7 @@
       {/if}
       {#if about.now}
         <IconHeader icon="Clock" text={t("What I'm up to now")} />
-        <div
-          class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200"
-        >
+        <div>
           <PortableText text={about.now} />
         </div>
       {/if}
@@ -62,3 +60,19 @@
     {/if}
   </ContentWrapper>
 </div>
+
+<style lang="scss">
+  div {
+    div {
+      @apply mx-1 font-sans text-base text-stone-700;
+    }
+  }
+
+  :global(.dark) {
+    div {
+      div {
+        @apply text-stone-200;
+      }
+    }
+  }
+</style>

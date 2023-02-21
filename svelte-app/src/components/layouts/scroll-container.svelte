@@ -22,10 +22,18 @@
   onDestroy(() => unsubscribe?.());
 </script>
 
-<div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-200 p-8 transition-colors dark:bg-stone-800"
-  tabindex={-1}
-  bind:this={element}
->
+<div tabindex="-1" bind:this={element}>
   <slot />
 </div>
+
+<style lang="scss">
+  div {
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-200 p-8 transition-colors;
+  }
+
+  :global(.dark) {
+    div {
+      @apply bg-stone-800;
+    }
+  }
+</style>

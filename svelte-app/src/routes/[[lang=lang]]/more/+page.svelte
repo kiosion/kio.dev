@@ -41,14 +41,14 @@
   <ContentWrapper fixed>
     {#if about}
       <IconHeader icon="Message" text={t('Say hello')} />
-      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+      <div>
         <PortableText text={about.contact} />
       </div>
 
       <Divider />
 
       <IconHeader icon="LockOpen" text={t('PGP')} />
-      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+      <div>
         <p>
           {t("Want to send a secure message my way? Here's my main PGP key:")}
           <LinkNonPt href="/pgp.txt" target="_blank"
@@ -60,7 +60,7 @@
       <Divider />
 
       <IconHeader icon="InfoBox" text={t('Meta')} />
-      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+      <div>
         <PortableText text={about.body} />
       </div>
     {:else}
@@ -68,3 +68,23 @@
     {/if}
   </ContentWrapper>
 </div>
+
+<style lang="scss">
+  div {
+    div {
+      @apply mx-1 font-sans text-base text-stone-700;
+
+      p {
+        @apply my-4;
+      }
+    }
+  }
+
+  :global(.dark) {
+    div {
+      div {
+        @apply text-stone-200;
+      }
+    }
+  }
+</style>

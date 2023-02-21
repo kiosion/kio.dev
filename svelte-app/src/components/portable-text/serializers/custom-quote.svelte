@@ -1,6 +1,25 @@
-<div class="flex w-full flex-1 items-stretch justify-start">
-  <div
-    class="mr-3 block w-[2px] rounded-sm bg-gray-500 opacity-80 dark:bg-gray-300"
-  />
-  <span class="block"><slot /></span>
+<div class="quoteContainer">
+  <div class="quoteBar" />
+  <span><slot /></span>
 </div>
+
+<style lang="scss">
+  .quoteContainer {
+    @apply flex w-full flex-1 items-stretch justify-start;
+  }
+
+  .quoteBar {
+    @apply mr-3 block rounded-sm bg-stone-500 opacity-80;
+    width: 2px;
+  }
+
+  span {
+    @apply block flex-grow;
+  }
+
+  :global(.dark) {
+    .quoteBar {
+      @apply bg-stone-300;
+    }
+  }
+</style>

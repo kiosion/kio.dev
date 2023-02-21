@@ -73,13 +73,16 @@
   <slot name="meta" />
 </svelte:head>
 
-<div
-  class="flex h-fit flex-row items-stretch justify-start"
-  data-test-route={isPost ? 'blog' : 'work'}
->
+<div data-test-route={isPost ? 'blog' : 'work'}>
   {#if data}
     <ContentWrapper>
       <Content {model} {data} {headings} {comments} {userInfo} />
     </ContentWrapper>
   {/if}
 </div>
+
+<style lang="scss">
+  div {
+    @apply flex h-fit flex-row items-stretch justify-start;
+  }
+</style>

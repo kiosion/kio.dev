@@ -112,18 +112,11 @@
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <nav
-      class="my-6 ml-9 flex w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3 dark:border-stone-500/60"
-      data-test-id="navBar"
-    >
+    <nav class="nav-desktop" data-test-id="navBar">
       <div>
-        <div
-          class="mr-9 border-b border-stone-400/50 pb-5 dark:border-stone-500/60"
-        >
+        <div class="nameContainer">
           <!-- svelte-ignore a11y-missing-content -->
           <h3
-            class="font-heading text-xl font-bold leading-relaxed"
-            id="typewriter-name"
             on:mouseenter={() => {
               typeName();
             }}
@@ -132,18 +125,19 @@
             }}
             bind:this={typewriterElement}
           />
-          <span class="flex flex-row items-center gap-2 font-code text-base">
-            <Icon icon="pin" width={18} />
+          <span class="location-line">
+            <Icon icon="pin" width={17} />
+            <!-- TODO: Replace with AuthorDocument.location -->
             <p>Halifax, CA</p>
           </span>
         </div>
         <NavLinks />
       </div>
-      <div class="mr-9 flex flex-col">
+      <div class="linksContainer">
         {#if $nowPlayingData}
           <NowPlayingWidget data={$nowPlayingData} />
         {/if}
-        <div class="flex flex-row flex-wrap items-center justify-center">
+        <div>
           {#each socials as social}
             <NewNavSocial {social} />
           {/each}
@@ -192,3 +186,41 @@
     </nav>
   </svelte:fragment>
 </Breakpoints>
+
+<style lang="scss">
+  .nav-desktop {
+    @apply my-6 ml-9 flex w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3;
+
+    .nameContainer {
+      @apply mr-9 border-b border-stone-400/50 pb-5;
+
+      h3 {
+        @apply select-none font-heading text-xl font-bold leading-relaxed;
+      }
+      .location-line {
+        @apply mt-0.5 flex flex-row items-center gap-2 font-code text-base;
+
+        p {
+          @apply -mt-0.5;
+        }
+      }
+    }
+    .linksContainer {
+      @apply mr-9 flex flex-col;
+
+      div {
+        @apply flex flex-row flex-wrap items-center justify-center;
+      }
+    }
+  }
+
+  :global(.dark) {
+    .nav-desktop {
+      @apply border-stone-500/60;
+
+      &--name {
+        @apply border-stone-500/60;
+      }
+    }
+  }
+</style>

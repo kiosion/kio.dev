@@ -27,6 +27,12 @@ export default {
       validation: (Rule: Rule) => Rule.required()
     },
     {
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
       name: 'image',
       title: 'Image',
       type: 'image',

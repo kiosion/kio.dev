@@ -16,13 +16,7 @@
   $: headingsExist = headings.length > 0;
 </script>
 
-<div
-  class="{hide && 'hidden'} rounded-md {floating
-    ? expanded
-      ? 'bg-stone-300/90 shadow-lg backdrop-blur-lg dark:bg-stone-900/90'
-      : 'bg-stone-300/60 shadow-lg backdrop-blur-md dark:bg-stone-900/60'
-    : 'bg-stone-300/60 dark:bg-stone-900'} z-[5] border border-stone-400/60 transition-[background-color,box-shadow,color,opacity] hover:border-stone-400/80 hover:bg-stone-300 dark:border-stone-500/60 hover:dark:border-stone-500/80 dark:hover:bg-stone-900/60"
->
+<div class:floating class:expanded class:hidden={hide}>
   <Heading
     {floating}
     {headingsExist}
@@ -39,3 +33,24 @@
     />
   {/if}
 </div>
+
+<style lang="scss">
+  div {
+    @apply rounded-md border border-stone-400/60 bg-stone-300/60 transition-[background-color,box-shadow-color-opacity];
+    z-index: 5;
+
+    &:hover {
+      @apply border-stone-400/80 bg-stone-300;
+    }
+  }
+
+  :global(.dark) {
+    div {
+      @apply border-stone-500/60 bg-stone-900;
+
+      &:hover {
+        @apply border-stone-500/80 bg-stone-900/60;
+      }
+    }
+  }
+</style>
