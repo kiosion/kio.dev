@@ -5,7 +5,11 @@
   import { cubicOut } from 'svelte/easing';
   import { browser } from '$app/environment';
   import { navLinks } from '$stores/navigation';
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import {
+    BASE_ANIMATION_DURATION,
+    DEFAULT_DESKTOP_BREAKPOINT
+  } from '$lib/consts';
+  import { useMediaQuery } from 'svelte-breakpoints';
 
   export let container: HTMLElement,
     showHoverState = false;
@@ -19,9 +23,11 @@
       easing: cubicOut
     });
 
-  const activeSizeOffset = -6,
+  let activeSizeOffset = -6,
     hoverSizeOffset = -12,
-    normalSizeOffset = -20;
+    normalSizeOffset = -20,
+    isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT),
+    containerBoundingRect = container?.getBoundingClientRect();
 
   const getTrueLinkUrl = (url: string) => {
     return url.slice($isLocalized ? 4 : 1);
@@ -89,8 +95,12 @@
   };
 
   $: truePageUrl = getTrueLinkUrl($page?.url.pathname);
-  $: containerBoundingRect = container?.getBoundingClientRect();
-  $: setPositionalClassNames(), container, $page?.url, $navLinks;
+  $: setTimeout(
+    () => (containerBoundingRect = container?.getBoundingClientRect()),
+    50
+  ),
+    $isDesktop;
+  $: setPositionalClassNames(), containerBoundingRect, $page?.url, $navLinks;
   $: isHoveringLink = showHoverState && $navLinks.some((link) => link.hovered);
 </script>
 
