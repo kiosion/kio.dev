@@ -47,24 +47,24 @@
 
       <Divider />
 
+      <IconHeader icon="LockOpen" text={t('PGP')} />
+      <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
+        <p>
+          {t("Want to send a secure message my way? Here's my main PGP key:")}
+          <LinkNonPt href="/pgp.txt" target="_blank"
+            >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
+          >
+        </p>
+      </div>
+
+      <Divider />
+
       <IconHeader icon="InfoBox" text={t('Meta')} />
       <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
         <PortableText text={about.body} />
       </div>
-
-      <Divider />
     {:else}
       <EmptyContent />
     {/if}
-
-    <IconHeader icon="LockOpen" text={t('PGP')} />
-    <div class="mx-1 font-sans text-base text-stone-700 dark:text-stone-200">
-      <p>
-        {t("Want to send a secure message my way? Here's my main PGP key:")}
-        <LinkNonPt href="/pgp.txt" target="_blank"
-          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
-        >
-      </p>
-    </div>
   </ContentWrapper>
 </div>

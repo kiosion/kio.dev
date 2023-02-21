@@ -12,7 +12,8 @@
       active: boolean;
       hovered: boolean;
     },
-    index: number;
+    index: number,
+    navigatingIsActive = false;
 
   let isHovered = false;
 
@@ -27,10 +28,18 @@
 
   $: splitPath = $page?.url.pathname.split('/') || [];
   $: truePath = link.url.slice($isLocalized ? 4 : 1);
-  $: isActive =
-    [$page?.url?.pathname, $navigating?.to?.url.pathname].includes(link.url) ||
-    (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0);
+  $: isActive = (() => {
+    let urlIncludesLink = $page?.url.pathname === link.url;
 
+    if (navigatingIsActive) {
+      urlIncludesLink ||= $navigating?.to?.url.pathname === link.url;
+    }
+
+    return (
+      urlIncludesLink ||
+      (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0)
+    );
+  })();
   $: updateActive(), isActive;
   $: updateHovered(), isHovered;
 </script>

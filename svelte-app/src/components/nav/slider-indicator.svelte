@@ -5,8 +5,10 @@
   import { cubicOut } from 'svelte/easing';
   import { browser } from '$app/environment';
   import { navLinks } from '$stores/navigation';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
 
-  export let container: HTMLElement;
+  export let container: HTMLElement,
+    showHoverState = false;
 
   const topValue = tweened(0, {
       duration: 350,
@@ -17,19 +19,21 @@
       easing: cubicOut
     });
 
-  const activeSizeOffset = -4,
+  const activeSizeOffset = -6,
     hoverSizeOffset = -12,
-    normalSizeOffset = -22;
+    normalSizeOffset = -20;
 
   const getTrueLinkUrl = (url: string) => {
     return url.slice($isLocalized ? 4 : 1);
   };
 
   const getActiveLink = () => {
-    const hoveredLink = $navLinks.find((link) => link.hovered);
+    if (showHoverState) {
+      const hoveredLink = $navLinks.find((link) => link.hovered);
 
-    if (hoveredLink) {
-      return { status: 'hover' as const, link: hoveredLink };
+      if (hoveredLink) {
+        return { status: 'hover' as const, link: hoveredLink };
+      }
     }
 
     const activeLink = $navLinks.find((link) => link.active);
@@ -41,19 +45,6 @@
         link: activeLink
       };
     }
-
-    // const fbActiveLink =
-    //   $navLinks.find((link) => {
-    //     return (
-    //       getTrueLinkUrl(link.url) !== '' &&
-    //       truePageUrl.startsWith(getTrueLinkUrl(link.url))
-    //     );
-    //   }) || $navLinks.find((link) => getTrueLinkUrl(link.url) === '');
-
-    // if (fbActiveLink) {
-    //   const isRoot = truePageUrl === getTrueLinkUrl(fbActiveLink.url);
-    //   return { status: isRoot ? 'root' : 'sub', link: fbActiveLink };
-    // }
 
     return null;
   };
@@ -77,6 +68,10 @@
     // Accounting for container's top voffset
     top -= containerBoundingRect.top;
 
+    await new Promise((resolve) =>
+      setTimeout(resolve, BASE_ANIMATION_DURATION / 2)
+    );
+
     switch (status) {
       case 'hover':
         topValue.set(top - hoverSizeOffset / 2);
@@ -96,7 +91,7 @@
   $: truePageUrl = getTrueLinkUrl($page?.url.pathname);
   $: containerBoundingRect = container?.getBoundingClientRect();
   $: setPositionalClassNames(), container, $page?.url, $navLinks;
-  $: isHoveringLink = $navLinks.some((link) => link.hovered);
+  $: isHoveringLink = showHoverState && $navLinks.some((link) => link.hovered);
 </script>
 
 <span

@@ -27,7 +27,7 @@
     ? ' bg-stone-200'
     : ' bg-stone-900'} z-[100] flex flex-col items-center justify-between"
   data-test-id="loader-full"
-  out:fade={{ duration: 200, delay: 600 }}
+  out:fade={{ duration: 200, delay: 200 }}
 >
   <div class="mt-[calc(50vh_-_4px)] h-fit w-full" out:fade={{ duration: 200 }}>
     <Line {width} {segments} {classes} />

@@ -3,11 +3,12 @@
   import { quartIn, quartOut } from 'svelte/easing';
   import Features from '$stores/features';
   import { onNav } from '$helpers/navigation';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
 
   export let url: URL | undefined;
 
-  const dist = 12,
-    duration = 300;
+  const dist = 18,
+    duration = BASE_ANIMATION_DURATION;
 
   let navDir: 'forward' | 'backward' = 'forward';
 
