@@ -5,14 +5,13 @@
   import { setupNavigation } from '$helpers/navigation';
   import { pageHeading } from '$stores/navigation';
   import { onMount } from 'svelte';
-  import AboutTimeline from '$components/about/timeline.svelte';
   import { t } from '$i18n';
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import type { PageData } from './$types';
 
-  const pageTitle = `kio.dev | ${t('Index').toLowerCase()}`,
+  const pageTitle = `kio.dev | ${t('Index')}`,
     description = t('A bit about me, my work, and what I do');
 
   onMount(() => {

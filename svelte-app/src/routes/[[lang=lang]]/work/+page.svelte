@@ -19,7 +19,7 @@
 
   export let data: PageData;
 
-  const pageTitle = `kio.dev | ${t('My work').toLowerCase()}`,
+  const pageTitle = `kio.dev | ${t('My work')}`,
     description = t(
       'A collection of my work, open-source contributions, and personal projects'
     );
@@ -46,7 +46,7 @@
   <Timeline data={about?.data.timeline} />
 </div>
 
-<IconHeader icon="bulletlist" text={t("What I've made")} />
+<IconHeader icon="bulletlist" text={t("What I've worked on")} />
 {#if pinned?.data}
   <div class="mt-4">
     <ListItem project={pinned.data} />

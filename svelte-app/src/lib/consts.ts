@@ -14,7 +14,6 @@ interface AppRoute {
 }
 
 export const APP_ROUTES = [
-  // { name: 'Index', path: '/', hidden: true },
   {
     name: 'About me',
     path: '/',

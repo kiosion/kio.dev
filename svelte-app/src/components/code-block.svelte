@@ -195,10 +195,10 @@
     @apply relative h-[0px] w-full overflow-hidden rounded-md text-lg transition-[height];
 
     .inner {
-      @apply h-fit w-fit min-w-full rounded-md bg-stone-300/40 p-1 transition-all;
+      @apply h-fit w-fit min-w-full rounded-md bg-stone-200/40 p-1 transition-all;
 
       &.active {
-        @apply bg-stone-300;
+        @apply bg-stone-200/60;
       }
     }
   }
@@ -213,18 +213,18 @@
 
   :global(.dark) {
     .codeBlock--container {
-      @apply border-stone-500/20;
+      @apply border-stone-500/60;
 
       &.active {
-        @apply border-stone-500/60;
+        @apply border-stone-500/80;
       }
     }
 
     .codeBlock--codeContainer .inner {
-      @apply bg-stone-900;
+      @apply bg-stone-800/40;
 
       &.active {
-        @apply bg-stone-900/60;
+        @apply bg-stone-800/60;
       }
     }
     .copyButton {

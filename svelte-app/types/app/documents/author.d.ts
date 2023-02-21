@@ -31,6 +31,7 @@ export interface AuthorDocument extends Omit<Document, 'slug' | 'date'> {
   name: string;
   fullname: string;
   at: string;
+  location: string;
   image: SanityImageObject;
   timeline: AuthorTimelineItem[];
   contact: (PortableTextBlock | ArbitraryTypedObject)[];

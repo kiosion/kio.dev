@@ -169,7 +169,7 @@
   .page-controls {
     &-top,
     &-bottom {
-      @apply fixed right-0 left-56 z-[4] hidden flex-row items-start justify-between bg-transparent from-stone-200 py-6 px-7 transition-colors md:flex xl:left-56;
+      @apply fixed right-0 left-56 z-[4] hidden flex-row items-start justify-between bg-transparent from-stone-100 py-6 px-7 transition-colors md:flex xl:left-56;
     }
 
     &-top {
@@ -194,7 +194,7 @@
     .page-controls {
       &-top,
       &-bottom {
-        @apply from-stone-800;
+        @apply from-stone-900;
       }
     }
   }

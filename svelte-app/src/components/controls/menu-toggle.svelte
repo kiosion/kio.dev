@@ -7,7 +7,7 @@
 
 <Hoverable>
   <button
-    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400"
+    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
     aria-label="Toggle navigation"
     data-test-id="nav-toggle"
     on:click={() => {
@@ -16,9 +16,9 @@
     }}
   >
     {#if $navOpen}
-      <Icon icon={'CloseBox'} classes="transition-none!" />
+      <Icon icon={'CloseBox'} useTransition={false} />
     {:else}
-      <Icon icon={'Menu'} classes="transition-none!" />
+      <Icon icon={'Menu'} useTransition={false} />
     {/if}
   </button>
 </Hoverable>

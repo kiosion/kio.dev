@@ -13,19 +13,20 @@
   import SFX from '$lib/sfx';
   import { slide } from 'svelte/transition';
   import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
-  import NavLink from '$components/nav/nav-link.svelte';
   import MenuToggle from '$components/controls/menu-toggle.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import Icon from '$components/icon.svelte';
-  import NewNavSocial from '$components/nav/new-nav-social.svelte';
+  import NavSocial from '$components/nav/nav-social.svelte';
   import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
   import Typewriter from 'typewriter-effect/dist/core';
   import { browser } from '$app/environment';
   import { onDestroy, onMount } from 'svelte';
-  import type { Unsubscriber } from 'svelte/store';
+  import NavLink from '$components/nav/nav-link.svelte';
   import NavLinks from '$components/nav/nav-links.svelte';
+  import type { Unsubscriber } from 'svelte/store';
+  import type { AuthorDocument } from '$types';
 
   navLinks.set(
     TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
@@ -47,6 +48,8 @@
     iconSize: number;
     iconRotation: number;
   }
+
+  export let author: AuthorDocument | undefined;
 
   const socials =
     ($currentConfig.data?.socialLinks?.map((link) => ({
@@ -127,8 +130,7 @@
           />
           <span class="location-line">
             <Icon icon="pin" width={17} />
-            <!-- TODO: Replace with AuthorDocument.location -->
-            <p>Halifax, CA</p>
+            <p>{author?.location}</p>
           </span>
         </div>
         <NavLinks />
@@ -139,7 +141,7 @@
         {/if}
         <div>
           {#each socials as social}
-            <NewNavSocial {social} />
+            <NavSocial {social} />
           {/each}
         </div>
       </div>
@@ -169,7 +171,6 @@
           <SoundsToggle />
         </div>
       </div>
-      <!-- Nav dropdown -->
       {#if $navOpen}
         <div
           class="mb-[10px] flex flex-col items-center justify-center gap-3 text-2xl"
@@ -178,8 +179,8 @@
             easing: circInOut
           }}
         >
-          {#each $navLinks as link}
-            <NavLink {link} />
+          {#each $navLinks as link, index}
+            <NavLink {link} {index} mobile />
           {/each}
         </div>
       {/if}
@@ -215,12 +216,9 @@
   }
 
   :global(.dark) {
-    .nav-desktop {
+    .nav-desktop,
+    .nameContainer {
       @apply border-stone-500/60;
-
-      &--name {
-        @apply border-stone-500/60;
-      }
     }
   }
 </style>

@@ -17,7 +17,7 @@
       {target}
       rel={external ? 'noopener noreferrer' : undefined}
       class="underlined from-violet-300 {hovered
-        ? 'active dark:text-stone-800'
+        ? 'active dark:text-stone-900'
         : ''} focusOutline-sm -mx[2px] rounded-sm px-[2px]"
       tabindex="0"
     >

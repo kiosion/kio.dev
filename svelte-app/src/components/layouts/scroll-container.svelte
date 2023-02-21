@@ -28,12 +28,12 @@
 
 <style lang="scss">
   div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-200 p-8 transition-colors;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-2xl bg-stone-100 p-8 transition-colors md:rounded-t-none;
   }
 
   :global(.dark) {
     div {
-      @apply bg-stone-800;
+      @apply bg-stone-900;
     }
   }
 </style>

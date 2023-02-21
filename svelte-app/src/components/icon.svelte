@@ -8,7 +8,8 @@
     height = width,
     classes = '',
     classNames = '',
-    style = '';
+    style = '',
+    useTransition = true;
 </script>
 
 <div class="w-[{width}px] {inline ? 'inline' : ''} {classes} {classNames}">
@@ -17,9 +18,9 @@
       this={svg}
       {width}
       {height}
-      class="{hovered
-        ? 'text-gray-600 dark:text-gray-300'
-        : ''} transition-colors {inline ? 'inline' : ''}"
+      class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {useTransition
+        ? 'transition-colors'
+        : 'transition-colors duration-75'} {inline ? 'inline' : ''}"
       {style}
     />
   {/await}

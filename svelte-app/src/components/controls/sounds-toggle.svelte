@@ -12,7 +12,7 @@
 <Hoverable>
   <Tooltip text={t('Toggle sound effects')} delay={150} fixed>
     <button
-      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400"
+      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
       aria-label={t('Toggle sound effects')}
       data-test-id="sfx-toggle"
       data-test-state={$CanUseSounds ? 'on' : 'off'}
@@ -23,9 +23,9 @@
       }}
     >
       {#if $CanUseSounds}
-        <Icon icon={'Volume2'} />
+        <Icon icon={'Volume2'} useTransition={false} />
       {:else}
-        <Icon icon={'VolumeX'} />
+        <Icon icon={'VolumeX'} useTransition={false} />
       {/if}
     </button>
   </Tooltip>

@@ -134,7 +134,7 @@
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Navigation />
+  <Navigation author={data.author} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
     <div>

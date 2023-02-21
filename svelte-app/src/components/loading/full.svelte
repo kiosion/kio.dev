@@ -39,7 +39,7 @@
     >
       <p
         class="{theme === 'light'
-          ? ' text-stone-700'
+          ? ' text-stone-800'
           : ' text-stone-200'} w-fit font-mono text-base"
         data-test-id="loader-full-phrase"
       >

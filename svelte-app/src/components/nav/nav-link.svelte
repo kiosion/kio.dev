@@ -1,45 +1,141 @@
 <script lang="ts">
-  import LinkIndicator from '$components/nav/link-indicator.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import { navOpen } from '$stores/navigation';
   import { page, navigating } from '$app/stores';
-  import { t } from '$i18n';
+  import { t, isLocalized } from '$i18n';
   import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
+  import { navLinks, navOpen } from '$stores/navigation';
+  import { fade } from 'svelte/transition';
 
-  export let link: { name: string; url: string; active: boolean };
+  export let link: {
+      name: string;
+      url: string;
+      active: boolean;
+      hovered: boolean;
+    },
+    index: number,
+    mobile = false,
+    navigatingIsActive = false;
 
-  $: isActive =
-    [$page?.url?.pathname, $navigating?.to?.url.pathname].includes(link.url) ||
-    link.active;
+  let isHovered = false;
+
+  const updateActive = () => {
+      $navLinks[index].active !== isActive &&
+        navLinks.update((links) => ((links[index].active = isActive), links));
+    },
+    updateHovered = () => {
+      $navLinks[index].hovered !== isHovered &&
+        navLinks.update((links) => ((links[index].hovered = isHovered), links));
+    },
+    handleAction = (e: Event) => {
+      e.preventDefault();
+      SFX.click.play();
+      if (mobile) {
+        navOpen.set(false);
+      }
+      goto(link.url).catch(() => undefined);
+    };
+
+  $: splitPath = $page?.url.pathname.split('/') || [];
+  $: truePath = link.url.slice($isLocalized ? 4 : 1);
+  $: isActive = (() => {
+    let urlIncludesLink = $page?.url.pathname === link.url;
+
+    if (navigatingIsActive) {
+      urlIncludesLink ||= $navigating?.to?.url.pathname === link.url;
+    }
+
+    return (
+      urlIncludesLink ||
+      (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0)
+    );
+  })();
+  $: updateActive(), isActive;
+  $: updateHovered(), isHovered;
 </script>
 
-<Hoverable bind:hovered={link.active}>
-  <div class="relative flex flex-row items-center justify-start">
-    <a
-      class="menuTarget focusOutline duration[40ms] z-[1] rounded-sm font-mono text-base font-normal uppercase transition-colors lg:text-lg"
-      class:text-gray-900={isActive}
-      aria-label={t(link.name)}
-      href={link.url}
-      role="menuitem"
-      tabindex="0"
-      data-sveltekit-preload-data
-      data-sveltekit-preload-code
-      on:click={() => {
-        SFX.click.play();
-        navOpen.set(false);
-      }}
-      on:keydown={(e) => {
-        if (e.code === 'Enter' || e.code === 'Space') {
-          e.preventDefault();
-          SFX.click.play();
-          navOpen.set(false);
-          goto(link.url).catch(() => undefined);
-        }
-      }}
-    >
-      {t(link.name)}
-    </a>
-    <LinkIndicator {link} />
-  </div>
+<Hoverable bind:hovered={isHovered}>
+  <a
+    class="focusOutline-sm"
+    class:mobile
+    class:first={index === 0}
+    class:last={index === $navLinks.length - 1}
+    class:active={isActive || link.hovered}
+    aria-label={t(link.name)}
+    href={link.url}
+    role="menuitem"
+    tabindex="0"
+    data-sveltekit-preload-data
+    data-sveltekit-preload-code
+    on:click={handleAction}
+    on:keydown={(e) => {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        handleAction(e);
+      }
+    }}
+  >
+    {t(link.name)}
+    {#if mobile && (isActive || link.hovered)}
+      <span
+        class="indicator"
+        class:hovered={link.hovered}
+        transition:fade={{ duration: 100 }}
+      />
+    {/if}
+  </a>
 </Hoverable>
+
+<style lang="scss">
+  a {
+    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-colors;
+
+    &.active {
+      @apply text-stone-800;
+    }
+    &.first {
+      @apply -mt-2;
+    }
+    &.mobile {
+      @apply mx-auto w-fit;
+
+      &.first {
+        @apply mt-4;
+      }
+      &.last {
+        @apply mb-4;
+      }
+    }
+  }
+
+  .indicator {
+    @apply absolute rounded-full bg-violet-400 transition-colors;
+    width: 6px;
+    height: 6px;
+    // Account for font leading :/
+    top: calc(50% + 1px);
+    left: -14px;
+    transform: translate(-50%, -50%);
+
+    &.hovered {
+      @apply bg-violet-400/60;
+    }
+  }
+
+  :global(.dark) {
+    a {
+      @apply text-stone-300;
+
+      &.active {
+        @apply text-stone-100;
+      }
+    }
+
+    .indicator {
+      @apply bg-violet-300;
+
+      &.hovered {
+        @apply bg-violet-300/60;
+      }
+    }
+  }
+</style>

@@ -36,11 +36,12 @@
 
 <style lang="scss">
   div {
-    @apply rounded-md border border-stone-400/60 bg-stone-300/60 transition-[background-color,box-shadow-color-opacity];
+    @apply rounded-md border border-stone-400/60 bg-stone-200/40 transition-[background-color,box-shadow,color,opacity];
     z-index: 5;
 
-    &:hover {
-      @apply border-stone-400/80 bg-stone-300;
+    &:hover,
+    &.expanded {
+      @apply border-stone-400/80 bg-stone-200/80;
     }
   }
 
@@ -48,8 +49,9 @@
     div {
       @apply border-stone-500/60 bg-stone-900;
 
-      &:hover {
-        @apply border-stone-500/80 bg-stone-900/60;
+      &:hover,
+      &.expanded {
+        @apply border-stone-500/80 bg-stone-800/40;
       }
     }
   }

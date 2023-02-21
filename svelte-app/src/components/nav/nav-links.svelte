@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NewNavLink from '$components/nav/new-nav-link.svelte';
+  import NavLink from '$components/nav/nav-link.svelte';
   import SliderIndicator from '$components/nav/slider-indicator.svelte';
   import { navLinks } from '$stores/navigation';
 
@@ -9,7 +9,7 @@
 <div bind:this={navLinksContainer}>
   <ul>
     {#each $navLinks as link, index}
-      <NewNavLink {link} {index} />
+      <NavLink {link} {index} />
     {/each}
     <SliderIndicator container={navLinksContainer} />
   </ul>

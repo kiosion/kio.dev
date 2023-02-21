@@ -64,7 +64,7 @@
             >
               <span class="gradient" />
               <div
-                class="aspect-[10/4] w-full rounded-t-2xl border border-b-0 border-stone-400 bg-cover bg-center dark:border-stone-400/40"
+                class="aspect-[10/4] w-full rounded-t-2xl border border-b-0 border-stone-400 bg-cover bg-center dark:border-stone-500/60"
                 style={`background-image: url("${imageSrc}");`}
               />
             </div>
@@ -103,7 +103,7 @@
                   <div class="aspect-square h-8">
                     {#if pfpRef && pfpCrop}
                       <img
-                        class="aspect-square h-full select-none rounded-full border border-stone-500 dark:border-stone-400"
+                        class="aspect-square h-full select-none rounded-full border border-stone-500 dark:border-stone-500/60"
                         src={urlFor(pfpRef)
                           .size(50, 50)
                           .rect(
@@ -161,12 +161,12 @@
 
 <style lang="scss">
   .gradient {
-    @apply absolute h-full w-full from-stone-200 transition-colors;
+    @apply absolute h-full w-full from-stone-100 transition-colors;
 
     background: linear-gradient(
       to top,
-      var(--tw-gradient-from) 5%,
-      var(--tw-gradient-to) 100%
+      var(--tw-gradient-from) 10%,
+      var(--tw-gradient-to) 115%
     );
     width: calc(100% + 4px);
     left: -2px;
@@ -175,7 +175,7 @@
 
   :global(.dark) {
     .gradient {
-      @apply from-stone-800;
+      @apply from-stone-900;
     }
   }
 </style>
