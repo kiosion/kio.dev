@@ -2322,7 +2322,7 @@ __metadata:
     prettier: "npm:^2.8.4"
     prettier-eslint: "npm:^15.0.1"
     rimraf: "npm:^4.1.2"
-    stylelint: "npm:^15.1.0"
+    stylelint: "npm:^15.2.0"
     stylelint-config-standard-scss: "npm:^7.0.1"
     typescript: "npm:^4.9.5"
   languageName: unknown
@@ -2634,9 +2634,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^15.1.0":
-  version: 15.1.0
-  resolution: "stylelint@npm:15.1.0"
+"stylelint@npm:^15.2.0":
+  version: 15.2.0
+  resolution: "stylelint@npm:15.2.0"
   dependencies:
     "@csstools/css-parser-algorithms": "npm:^2.0.1"
     "@csstools/css-tokenizer": "npm:^2.0.1"
@@ -2682,7 +2682,7 @@ __metadata:
     write-file-atomic: "npm:^5.0.0"
   bin:
     stylelint: bin/stylelint.js
-  checksum: 28cba1a1e1c1cf3342cc7549e0067261fc5c32de3194140d4b7239bded83f9b0c30c3a94f3a67be10741eedd145793d33a1191bdc05bd477cc361355c47f1f25
+  checksum: 7e5bf168f06f2d92f61f22be14ba59f9c76f9fb82374431caebe30c6cac116d425edd3b70b6fc629236733e14b80d087c92a4a31a28c821aad081ca3a78a7a10
   languageName: node
   linkType: hard
 
