@@ -2,7 +2,7 @@
   "private": true,
   "version": "0.0.0",
   "devDependencies": {
-    "bumpp": "^8.2.1",
+    "bumpp": "^9.0.0",
     "eslint": "^8.34.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
