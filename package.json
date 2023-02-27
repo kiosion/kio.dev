@@ -2,7 +2,6 @@
   "private": true,
   "version": "0.0.0",
   "devDependencies": {
-    "bumpp": "^8.2.1",
     "eslint": "^8.34.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
@@ -15,9 +14,6 @@
   },
   "scripts": {
     "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
-  },
-  "dependencies": {
-    "envinfo": "^7.8.1"
   },
   "packageManager": "yarn@4.0.0-rc.25"
 }
