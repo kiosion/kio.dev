@@ -2383,7 +2383,7 @@ __metadata:
     prettier-eslint: "npm:^15.0.1"
     rimraf: "npm:^4.1.2"
     stylelint: "npm:^15.1.0"
-    stylelint-config-standard-scss: "npm:^7.0.0"
+    stylelint-config-standard-scss: "npm:^7.0.1"
     typescript: "npm:^4.9.5"
   languageName: unknown
   linkType: soft
@@ -2659,9 +2659,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard-scss@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "stylelint-config-standard-scss@npm:7.0.0"
+"stylelint-config-standard-scss@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "stylelint-config-standard-scss@npm:7.0.1"
   dependencies:
     stylelint-config-recommended-scss: "npm:^9.0.0"
     stylelint-config-standard: "npm:^30.0.1"
@@ -2671,7 +2671,7 @@ __metadata:
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: 52fb3de42d5410e3bea7ccdcfec07fd843f3f0551555ade989fdc734b19ca644cdd0b54e0fc4d6f054280c0cb5f4ad4b1b3d5554a71ed24931b5eb1990579964
+  checksum: 50961aebd06dbbd8eea307c7a648956ac4d8b9cfcafa12886f73a52f14e4b65df4fc5da2faadd83709b1f4c7ad1ef91cf7ff2d6119ceb42fb3a64f9343279a70
   languageName: node
   linkType: hard
 
