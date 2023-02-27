@@ -1490,14 +1490,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/vite-dev-server@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@cypress/vite-dev-server@npm:5.0.2"
+"@cypress/vite-dev-server@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "@cypress/vite-dev-server@npm:5.0.4"
   dependencies:
     debug: "npm:^4.3.4"
     find-up: "npm:6.3.0"
     node-html-parser: "npm:5.3.3"
-  checksum: b706e9bf08d774b06d96953f3a7caea343189c5d0c14e122520ac246f91c127213ef9dafb6500812bbe15e53cdcab2e4c2b7323b256679b67bc8e7fc26058d03
+  checksum: 93194680d810a36cea319b354f3f32f24aaa57def2e0160970507dc066d6999944063b903314213f6466c31922734e4c88be565499deeabeae58db4a5273b3fc
   languageName: node
   linkType: hard
 
@@ -15342,7 +15342,7 @@ __metadata:
     "@babel/plugin-transform-runtime": "npm:^7.19.6"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-typescript": "npm:^7.18.6"
-    "@cypress/vite-dev-server": "npm:^5.0.2"
+    "@cypress/vite-dev-server": "npm:^5.0.4"
     "@iconify/svelte": "npm:^3.0.1"
     "@poppanator/sveltekit-svg": "npm:^2.1.2"
     "@popperjs/core": "npm:^2.11.6"
