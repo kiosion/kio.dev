@@ -12,6 +12,7 @@ defmodule Router.Api.V1 do
   require Logger
 
   alias Hexerei.SanityClient, as: Sanity
+  alias Hexerei.SanityClient.Query, as: Query
   alias Hexerei.BuildQuery, as: BuildQuery
 
   @query_url Hexerei.Env.get!(:query_url)
@@ -179,8 +180,38 @@ defmodule Router.Api.V1 do
         })
       |> params_to_integer([:limit, :skip])
 
-    query = BuildQuery.tags(params["type"])
-    query_limited = query |> limit_query(params)
+    query = Query.new()
+      |> Query.filter!(%{"_type" => "'tag'"})
+      |> Query.project!([
+        "_id",
+        "_rev",
+        [
+          "'objectID'", "_id"
+        ],
+        "_type",
+        "title",
+        "slug"
+      ])
+
+    query = case params["type"] do
+      nil ->
+        query
+      _ ->
+        query |> Query.project!([
+          [
+            "'referencedBy'",
+            "*[_type == '#{params["type"]}' && references(^._id)]._id"
+          ]
+        ])
+    end
+
+    query_limited = query
+      |> Query.limit({params["skip"], params["limit"]})
+      |> Query.order("#{params["s"]} #{params["o"]}")
+      |> Query.build()
+
+    query = query
+      |> Query.build()
 
     counts = Task.async(fn ->
       conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
