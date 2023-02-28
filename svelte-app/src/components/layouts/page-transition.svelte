@@ -7,7 +7,7 @@
 
   export let url: URL | undefined;
 
-  const dist = 18,
+  const dist = 12,
     duration = BASE_ANIMATION_DURATION;
 
   let navDir: 'forward' | 'backward' = 'forward';

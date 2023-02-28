@@ -91,7 +91,8 @@ export const BodyBlocks = [
     }
   },
   Code,
-  { type: 'divider' }
+  { type: 'divider' },
+  { type: 'header' }
 ];
 
 export default {
