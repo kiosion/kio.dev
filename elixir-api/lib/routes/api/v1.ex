@@ -181,8 +181,8 @@ defmodule Router.Api.V1 do
       |> params_to_integer([:limit, :skip])
 
     query = Query.new()
-      |> Query.filter!(%{"_type" => "'tag'"})
-      |> Query.project!([
+      |> Query.filter(%{"_type" => "'tag'"})
+      |> Query.project([
         "_id",
         "_rev",
         [
@@ -197,7 +197,7 @@ defmodule Router.Api.V1 do
       nil ->
         query
       _ ->
-        query |> Query.project!([
+        query |> Query.project([
           [
             "'referencedBy'",
             "*[_type == '#{params["type"]}' && references(^._id)]._id"
@@ -208,10 +208,10 @@ defmodule Router.Api.V1 do
     query_limited = query
       |> Query.limit({params["skip"], params["limit"]})
       |> Query.order("#{params["s"]} #{params["o"]}")
-      |> Query.build()
+      |> Query.build!()
 
     query = query
-      |> Query.build()
+      |> Query.build!()
 
     counts = Task.async(fn ->
       conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
@@ -237,18 +237,64 @@ defmodule Router.Api.V1 do
 
   # Documents belonging to tag
   get "#{@query_url}/tag/:id" do
-    with true <- is_binary(id),
-         true <- String.trim(id) != "" do
-      params = fetch_query_params(conn).query_params
-        |> validate_query_params(%{
-            "type" => nil
-          })
+    with true   <- is_binary(id),
+         true   <- String.trim(id) != "",
+         params <- fetch_query_params(conn).query_params |> validate_query_params(%{ "type" => nil }),
+         true   <- params["type"] in ["post", "project"] do
 
-      query = BuildQuery.tag(id, params["type"])
+      query = Query.new()
+        |> Query.filter([%{
+            "_type" => "'#{params["type"]}'"
+          },
+          %{
+            "references" => Query.new()
+              |> Query.filter(["_type", "'tag'"])
+              |> Query.filter(["slug.current", "'#{id}'"])
+              |> Query.project(["_id"])
+              |> Query.build!(),
+            :nest => true
+          }
+        ])
+        |> Query.project([
+          "_id",
+          ["'objectID'", "_id"],
+          "_rev",
+          "_type",
+          "title",
+          "publishedAt",
+          %{
+            "'author'" => [
+              ["'_id'", ["author", "_id", :follow]],
+              ["'_type'", ["author", "_type", :follow]],
+              ["'name'", ["author", "name", :follow]],
+              ["'slug'", ["author", "slug", :follow]],
+              ["'image'", ["author", "image", :follow]]
+            ]
+          },
+          %{
+            "tags[]" => [
+              "_id",
+              "title",
+              "slug"
+            ],
+            :follow => true
+          },
+          "slug",
+          "body",
+          "desc",
+          "date",
+          ["'numberOfCharacters'", "length(pt::text(body))"],
+          ["'estimatedWordCount'", "round(length(pt::text(body)) / 5)"],
+          ["'estimatedReadingTime'", "round(length(pt::text(body)) / 5 / 120)"]
+        ])
+        |> Query.build!()
 
       counts = Task.async(fn ->
-        conn |> handle_sanity_fetch(document_counts_query(query), fn (_, result) ->
-          result
+        conn |> handle_sanity_fetch(
+          Query.new(%{:direct_query => true})
+          |> Query.project([["'total'", "count(#{query})"]])
+          |> Query.build(),
+          fn (_, result) -> result
         end)
       end)
 
@@ -257,17 +303,16 @@ defmodule Router.Api.V1 do
 
         result
           |> Map.put("meta", %{
-              "total" => parsed_counts["result"]["total"],
-              "count" => parsed_counts["result"]["total"],
+              "total" => parsed_counts["result"]["total"] || 0,
+              "count" => parsed_counts["result"]["total"] || 0,
               "id" => id,
               "type" => params["type"]
             })
           |> Map.update("ms", duration, &(&1 + (duration - &1)))
-          |> Map.delete("query")
           |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
       end)
     else
-      _ -> conn |> error_res(400, "Invalid request", "Missing tag ID")
+      _ -> conn |> error_res(400, "Invalid request", "Missing ID or invalid type")
     end
   end
 

@@ -6,41 +6,66 @@ defmodule Hexerei.SanityClient.Query do
   require Logger
 
   @doc """
-  Start building a template
+  Start building a template for a query
+
+  ## Options
+    - `:include_drafts` - Include drafts in the query (default: false)
   """
-  def new(drafts \\ false) do
-    case drafts do
-      true ->
-        %{filters: [], projections: [], order: nil, limit: nil}
-      false ->
-        %{filters: [%{"_id" => {"in", "path('drafts.**')", true}}], projections: [], order: nil, limit: nil}
-      _ ->
-        Logger.warn "Drafts must be provided as a boolean"
-        %{filters: [%{"_id" => {"in", "path('drafts.**')", true}}], projections: [], order: nil, limit: nil}
+  def new(opts \\ %{}) do
+    include_drafts = Map.get(opts, :include_drafts, false)
+    direct_query = Map.get(opts, :direct_query, false)
+    %{
+      base_query: if direct_query do "" else "*" end,
+      filters: if include_drafts or direct_query do [] else [%{"_id" => ["in", "path('drafts.**')", :negate]}] end,
+      projections: [],
+      order: nil,
+      limit: nil
+    }
+  end
+
+  def filter(template, [key, val]) when not is_map(key) and not is_map(val) do
+    filter(template, [%{key => val}])
+  end
+  def filter(template, filter) when is_map(filter) do
+    filter(template, [filter])
+  end
+  def filter(template, filters) when is_list(filters) do
+    if Enum.all?(filters, &is_map/1) do
+      Map.put(template, :filters, template[:filters] ++ filters)
+    else
+      err = "Filters must be a list of maps"
+      Logger.error err
+      {:error, err, template}
     end
   end
 
   def filter!(template, [key, val]) when not is_map(key) and not is_map(val) do
     filter!(template, [%{key => val}])
   end
-
   def filter!(template, filter) when is_map(filter) do
     filter!(template, [filter])
   end
-
   def filter!(template, filters) when is_list(filters) do
-    if Enum.all?(filters, &is_map/1) do
-      Map.put(template, :filters, template[:filters] ++ filters)
+    case filter(template, filters) do
+      {:error, msg, _} -> raise msg
+      res -> res
+    end
+  end
+
+  def project(template, projections) do
+    if is_list(projections) do
+      Map.put(template, :projections, template[:projections] ++ projections)
     else
-      raise "Filters must be a list of maps"
+      err = "Projections must be a list of strings or nested maps"
+      Logger.error err
+      {:error, err, template}
     end
   end
 
   def project!(template, projections) do
-    if is_list(projections) do
-      Map.put(template, :projections, template[:projections] ++ projections)
-    else
-      raise "Projections must be a list of strings or nested maps"
+    case project(template, projections) do
+      {:error, msg, _} -> raise msg
+      res -> res
     end
   end
 
@@ -51,8 +76,9 @@ defmodule Hexerei.SanityClient.Query do
       order when is_list(order) ->
         Map.put(template, :order, order)
       _ ->
-        Logger.warn "Order must be a string or a list of strings"
-        template
+        err = "Order must be a string or a list of strings"
+        Logger.error err
+        {:error, err, template}
     end
   end
 
@@ -63,37 +89,56 @@ defmodule Hexerei.SanityClient.Query do
       limit when is_integer(limit) and limit > 0 ->
         Map.put(template, :limit, limit)
       _ ->
-        Logger.warn "Limit must be a positive integer, or a tuple of {offset, limit}"
-        template
+        err = "Limit must be a positive integer, or a tuple of {offset, limit}"
+        Logger.error err
+        {:error, err, template}
     end
   end
 
-  def build(%{filters: filters, projections: projections, order: order, limit: limit}) do
-    "*"
+  def build(%{base_query: base_query, filters: filters, projections: projections, order: order, limit: limit}) do
+    q = base_query
     |> add_filters(filters)
     |> add_projections(projections)
     |> add_order(order)
     |> add_limit(limit)
+
+    IO.puts "Finished building query: #{q}"
+    q
+  end
+  def build!(template) do
+    case template do
+      {:error, msg, _} -> raise msg
+      _ -> build(template)
+    end
   end
 
   defp add_filters(query, filters) do
     filters_string =
       filters
-      |> Enum.map(&format_filter/1)
+      |> Enum.map(&format_filter!/1)
       |> Enum.join(" && ")
 
-    query <> "[#{filters_string}]"
+    case filters_string do
+      "" -> query
+      _ -> query <> "[#{filters_string}]"
+    end
   end
 
-  defp format_filter(filter) do
+  defp format_filter!(filter) do
     case filter do
       %{} ->
-        Enum.map(filter, fn {key, value} ->
-          format_filter_pair(key, value)
+        Enum.map(Enum.filter(filter, fn {key, _} -> is_binary(key) end), fn {key, value} ->
+          case Map.get(filter, :nest, false) do
+            true ->
+              "#{key}(#{format_filter!(value)})"
+            _ ->
+              format_filter_pair(key, value)
+          end
         end)
-      # If it's a simple string, leave it as is
       {key, value} when is_binary(key) and is_binary(value) ->
         format_filter_pair(key, value)
+      value when is_binary(value) ->
+        value
       _ ->
         raise "Invalid filter format"
     end
@@ -101,9 +146,15 @@ defmodule Hexerei.SanityClient.Query do
 
   defp format_filter_pair(key, value) do
     case value do
-      {operator, value, negate} when negate ->
-        "!(#{key} #{operator} #{value})"
-      {operator, value} ->
+      [operator, value | opts] when is_binary(operator) and is_binary(value) ->
+        negate = Enum.any?(opts, fn opt -> opt == :negate end)
+        case negate do
+          true ->
+            "!(#{key} #{operator} #{value})"
+          false ->
+            "#{key} #{operator} #{value}"
+        end
+      [operator, value] when is_binary(operator) and is_binary(value) ->
         "#{key} #{operator} #{value}"
       _ ->
         "#{key} == #{value}"
@@ -111,11 +162,16 @@ defmodule Hexerei.SanityClient.Query do
   end
 
   defp add_projections(query, projections) do
+    query_length = String.length(query)
     case projections do
       nil ->
         query
       [] ->
         query
+      # If only one projection is provided, don't wrap it in curly braces, as it can be a direct property access of the filter
+      # However, only do this if filters are present, as otherwise it's a direct query (e.g. query length > 1)
+      [projection] when query_length > 1 ->
+        query <> ".#{projection}"
       _ ->
         query <> "{#{join_projections(projections)}}"
     end
@@ -130,16 +186,31 @@ defmodule Hexerei.SanityClient.Query do
   end
 
   defp format_projection(projection) when is_map(projection) do
+    joiner = if Map.get(projection, :follow, false), do: "->", else: ":"
     Enum.join(
-      Enum.map(projection, fn {key, value} ->
-        "#{key}: {#{join_projections(value)}}"
+      Enum.map(Enum.filter(projection, fn {key, _} -> is_binary(key) end), fn {key, value} ->
+        "#{key}#{joiner}{#{join_projections(value)}}"
       end),
       ", "
     )
   end
 
   defp format_projection([key, value]) do
-    "#{key}: #{value}"
+    case value do
+      value when is_list(value) ->
+        "#{key}:#{format_projection(value)}"
+      _ ->
+        "#{key}:#{value}"
+    end
+  end
+  defp format_projection([key, value, opt]) do
+    joiner = if opt == :follow, do: "->", else: ":"
+    case value do
+      value when is_list(value) ->
+        "#{key}#{joiner}{#{join_projections(value)}}"
+      _ ->
+        "#{key}#{joiner}#{value}"
+    end
   end
 
   defp format_projection(projection) do
