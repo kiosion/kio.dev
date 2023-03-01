@@ -170,69 +170,79 @@ defmodule Router.Api.V1 do
 
   # All tags
   get "#{@query_url}/tags" do
-    params = fetch_query_params(conn).query_params
-      |> validate_query_params(%{
-          "type" => nil,
-          "limit" => 10,
-          "skip" => 0,
-          "s" => "title",
-          "o" => "asc"
-        })
-      |> params_to_integer([:limit, :skip])
-
-    query = Query.new()
-      |> Query.filter(%{"_type" => "'tag'"})
-      |> Query.project([
-        "_id",
-        "_rev",
-        [
-          "'objectID'", "_id"
-        ],
-        "_type",
-        "title",
-        "slug"
-      ])
-
-    query = case params["type"] do
-      nil ->
-        query
-      _ ->
-        query |> Query.project([
+    with params <- fetch_query_params(conn).query_params
+                     |> validate_query_params(%{
+                          "type" => nil,
+                          "limit" => 10,
+                          "skip" => 0,
+                          "s" => "title",
+                          "o" => "asc"
+                        })
+                     |> params_to_integer([:limit, :skip]),
+         true   <- params["limit"] >= 0 and params["skip"] >= 0
+    do
+      query = Query.new()
+        |> Query.filter(%{"_type" => "'tag'"})
+        |> Query.project([
+          "_id",
+          "_rev",
           [
-            "'referencedBy'",
-            "*[_type == '#{params["type"]}' && references(^._id)]._id"
-          ]
+            "'objectID'", "_id"
+          ],
+          "_type",
+          "title",
+          "slug"
         ])
-    end
 
-    query_limited = query
-      |> Query.limit({params["skip"], params["limit"]})
-      |> Query.order("#{params["s"]} #{params["o"]}")
-      |> Query.build!()
+      query = case params["type"] do
+        nil ->
+          query
+        _ ->
+          query |> Query.project([
+            [
+              "'referencedBy'",
+              Query.new()
+                |> Query.filter([
+                    %{"_type" => "'#{params["type"]}'"},
+                    %{"references" => "^._id", :nest => true}
+                  ])
+                |> Query.project([
+                  "_id"
+                ])
+                |> Query.build!()
+            ]
+          ])
+      end
 
-    query = query
-      |> Query.build!()
+      query_limited = query
+        |> Query.limit({params["skip"], params["limit"]})
+        |> Query.order("#{params["s"]} #{params["o"]}")
+        |> Query.build!()
 
-    counts = Task.async(fn ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
-        result
+      query = query |> Query.build!()
+
+      counts = Task.async(fn ->
+        conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+          result
+        end)
       end)
-    end)
 
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
-        parsed_counts = Task.await(counts)
+      conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+          parsed_counts = Task.await(counts)
 
-        result
-          |> Map.put("meta", %{
-              "total" => parsed_counts["result"]["total"],
-              "count" => parsed_counts["result"]["count"],
-              "sort" => params["s"],
-              "order" => params["o"]
-            })
-          |> Map.update("ms", duration, &(&1 + (duration - &1)))
-          |> Map.delete("query")
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-    end)
+          result
+            |> Map.put("meta", %{
+                "total" => parsed_counts["result"]["total"],
+                "count" => parsed_counts["result"]["count"],
+                "sort" => params["s"],
+                "order" => params["o"]
+              })
+            |> Map.update("ms", duration, &(&1 + (duration - &1)))
+            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+      end)
+    else
+      false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+    end
   end
 
   # Documents belonging to tag
