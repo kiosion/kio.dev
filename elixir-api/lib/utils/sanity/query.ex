@@ -76,7 +76,7 @@ defmodule Hexerei.SanityClient.Query do
       order when is_list(order) ->
         Map.put(template, :order, order)
       _ ->
-        err = "Order must be a string or a list of strings"
+        err = "Order must be a string or a list of strings - Got '#{inspect(order)}' instead"
         Logger.error err
         {:error, err, template}
     end
@@ -88,8 +88,12 @@ defmodule Hexerei.SanityClient.Query do
         Map.put(template, :limit, {offset, limit})
       limit when is_integer(limit) and limit > 0 ->
         Map.put(template, :limit, limit)
+      {offset, limit} when is_integer(offset) and is_integer(limit) and offset == 0 and limit == 0 ->
+        template
+      limit when is_integer(limit) and limit == 0 ->
+        template
       _ ->
-        err = "Limit must be a positive integer, or a tuple of {offset, limit}"
+        err = "Limit must be a positive integer or tuple of {offset, limit} - Got '#{inspect(limit)}' instead"
         Logger.error err
         {:error, err, template}
     end
