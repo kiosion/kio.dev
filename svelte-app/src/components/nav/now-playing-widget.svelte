@@ -24,7 +24,7 @@
         <img
           src={LastFM}
           alt="LastFM"
-          class="logo"
+          class="focusOutline-sm logo"
           role="button"
           tabindex={0}
           on:click={() => {
@@ -60,7 +60,10 @@
         @apply aspect-square w-12 select-none rounded-sm;
       }
       .logo {
-        @apply absolute -bottom-0.5 -right-0.5 h-4 w-4 select-none;
+        @apply absolute h-5 w-5 select-none rounded-full bg-stone-100;
+        padding: 3px;
+        bottom: -5px;
+        right: -5px;
       }
     }
     div {
@@ -85,6 +88,10 @@
 
       div {
         @apply text-stone-200;
+      }
+
+      .logo {
+        @apply bg-stone-900;
       }
     }
   }
