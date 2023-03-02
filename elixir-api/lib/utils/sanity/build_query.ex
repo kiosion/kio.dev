@@ -79,40 +79,6 @@ defmodule Hexerei.BuildQuery do
     query |> strip()
   end
 
-  def projectSingle(id) do
-    "
-      *[!(_id in path('drafts.**')) && _type == 'project' && (_id == '#{id}' || slug.current == '#{id}')] {
-        _id,
-        'objectID': _id,
-        _type,
-        _rev,
-        'author': {
-          '_id': author->_id,
-          '_type': author->_type,
-          'name': author->name,
-          'image': author->image,
-          'slug': author->slug
-        },
-        body,
-        desc,
-        date,
-        external,
-        externalAuthor,
-        externalLinks,
-        externalUrl,
-        image,
-        language,
-        tags[]->{
-          _id,
-          title,
-          slug
-        },
-        slug,
-        title
-      }[0]
-    " |> strip()
-  end
-
   def projectMany(date, tags) do
     "
       *[!(_id in path('drafts.**')) && _type == 'project'#{if date != nil do " && date == '#{date}'" end}#{if tags != nil do " && tags[]->slug.current match '#{tags}'" end}] {
@@ -144,47 +110,6 @@ defmodule Hexerei.BuildQuery do
         slug,
         title
       }
-    " |> strip()
-  end
-
-  # Fetch 'about' page content
-  @spec about() :: String.t()
-  def about do
-    "
-      *[!(_id in path('drafts.**')) && _type == 'author' && _id == 'me']{
-        _id,
-        'objectID': _id,
-        _rev,
-        _type,
-        at,
-        bio,
-        body,
-        now,
-        location,
-        contact,
-        fullname,
-        timeline[]{
-          title,
-          subtitle,
-          range,
-          skills[]->{
-            _id,
-            title,
-            slug
-          },
-          body
-        },
-        image,
-        name
-      }[0]
-    " |> strip()
-  end
-
-  # Fetch site config
-  @spec config() :: String.t()
-  def config do
-    "
-      *[!(_id in path(\'drafts.**\')) && _type == 'siteSettings'][0]
     " |> strip()
   end
 

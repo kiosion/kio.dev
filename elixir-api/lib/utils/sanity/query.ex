@@ -5,6 +5,11 @@ defmodule Hexerei.SanityClient.Query do
 
   require Logger
 
+  @op_precedence %{
+    "&&" => 1,
+    "||" => 2
+  }
+
   @doc """
   Start building a template for a query
 
@@ -18,6 +23,7 @@ defmodule Hexerei.SanityClient.Query do
       base_query: if direct_query do "" else "*" end,
       filters: if include_drafts or direct_query do [] else [%{"_id" => ["in", "path('drafts.**')", :negate]}] end,
       projections: [],
+      qualify: nil,
       order: nil,
       limit: nil
     }
@@ -30,10 +36,10 @@ defmodule Hexerei.SanityClient.Query do
     filter(template, [filter])
   end
   def filter(template, filters) when is_list(filters) do
-    if Enum.all?(filters, &is_map/1) do
+    if filters_valid?(filters) do
       Map.put(template, :filters, template[:filters] ++ filters)
     else
-      err = "Filters must be a list of maps"
+      err = "Filters must be a list of maps or nested lists of maps"
       Logger.error err
       {:error, err, template}
     end
@@ -52,6 +58,14 @@ defmodule Hexerei.SanityClient.Query do
     end
   end
 
+  defp filters_valid?(filters) do
+    Enum.all?(filters, fn
+      filter when is_map(filter) -> true
+      filter when is_list(filter) -> filters_valid?(filter)
+      _ -> false
+    end)
+  end
+
   def project(template, projections) do
     if is_list(projections) do
       Map.put(template, :projections, template[:projections] ++ projections)
@@ -66,6 +80,17 @@ defmodule Hexerei.SanityClient.Query do
     case project(template, projections) do
       {:error, msg, _} -> raise msg
       res -> res
+    end
+  end
+
+  def qualify(template, key) do
+    case key do
+      key when is_binary(key) ->
+        Map.put(template, :qualify, key)
+      _ ->
+        err = "Qualifier must be a string - Got '#{inspect(key)}' instead"
+        Logger.error err
+        {:error, err, template}
     end
   end
 
@@ -99,20 +124,25 @@ defmodule Hexerei.SanityClient.Query do
     end
   end
 
-  def build(%{base_query: base_query, filters: filters, projections: projections, order: order, limit: limit}) do
-    q = base_query
+  def build(%{base_query: base_query, filters: filters, projections: projections, qualify: qualifier, order: order, limit: limit}) do
+    base_query
     |> add_filters(filters)
     |> add_projections(projections)
+    |> add_qualifier(qualifier)
     |> add_order(order)
     |> add_limit(limit)
-
-    IO.puts "Finished building query: #{q}"
-    q
   end
   def build!(template) do
     case template do
       {:error, msg, _} -> raise msg
       _ -> build(template)
+    end
+  end
+
+  defp add_qualifier(query, qualifier) do
+    case qualifier do
+      nil -> query
+      _ -> query <> "#{qualifier}"
     end
   end
 
@@ -134,21 +164,32 @@ defmodule Hexerei.SanityClient.Query do
         Enum.map(Enum.filter(filter, fn {key, _} -> is_binary(key) end), fn {key, value} ->
           case Map.get(filter, :nest, false) do
             true ->
-              "#{key}(#{format_filter!(value)})"
+              key <> "(" <> format_filter! value <> ")"
             _ ->
-              format_filter_pair(key, value)
+              format_filter_pair key, value
           end
         end)
       {key, value} when is_binary(key) and is_binary(value) ->
         format_filter_pair(key, value)
-      value when is_binary(value) ->
-        value
+      filters when is_list(filters) ->
+        join = Enum.find(filters, fn x -> is_map(x) && Map.get(x, :join) end)
+        |> (fn x -> if x do Map.get(x, :join) else "||" end end).()
+        negate = Enum.find(filters, fn x -> is_map(x) && Map.get(x, :negate) end)
+        |> (fn x -> if x do "!" else "" end end).()
+
+        negate <> "(#{Enum.map(filters, &format_filter!/1) |> Enum.join(" " <> join <> " ")})"
+      filter when is_binary(filter) ->
+        filter
       _ ->
         raise "Invalid filter format"
     end
   end
 
   defp format_filter_pair(key, value) do
+    key = case key do
+      key when is_atom(key) -> Atom.to_string(key)
+      key when is_binary(key) -> key
+    end
     case value do
       [operator, value | opts] when is_binary(operator) and is_binary(value) ->
         negate = Enum.any?(opts, fn opt -> opt == :negate end)
@@ -190,7 +231,7 @@ defmodule Hexerei.SanityClient.Query do
   end
 
   defp format_projection(projection) when is_map(projection) do
-    joiner = if Map.get(projection, :follow, false), do: "->", else: ":"
+    joiner = if Map.get(projection, :join, false), do: Map.get(projection, :join), else: ":"
     Enum.join(
       Enum.map(Enum.filter(projection, fn {key, _} -> is_binary(key) end), fn {key, value} ->
         "#{key}#{joiner}{#{join_projections(value)}}"

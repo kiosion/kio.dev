@@ -112,22 +112,68 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/project/:id" do
-    params = validate_query_params(%{
-        "id" => id
-      }, %{
-        "id" => nil
-      })
+    with params <- validate_query_params(%{ "id" => id }, %{ "id" => nil }),
+         true <- not is_nil(params["id"])
+    do
+      query = Query.new()
+        |> Query.filter([
+          %{"_type" => "'project'"},
+          [%{"_id" => "'#{params["id"]}'"}, %{"slug.current" => "'#{params["id"]}'"}]
+        ])
+        |> Query.project([
+          "_id",
+          ["'objectID'", "_id"],
+          "_type",
+          "_rev",
+          %{
+            "'author'" => [
+              ["'_id'", ["author", "_id", :follow]],
+              ["'_type'", ["author", "_type", :follow]],
+              ["'name'", ["author", "name", :follow]],
+              ["'slug'", ["author", "slug", :follow]],
+              ["'image'", ["author", "image", :follow]]
+            ]
+          },
+          "body",
+          "desc",
+          "date",
+          "external",
+          "externalAuthor",
+          "externalLinks",
+          "externalUrl",
+          "image",
+          "language",
+          %{
+            "tags[]" => [
+              "_id",
+              "title",
+              "slug"
+            ],
+            :join => "->"
+          },
+          "slug",
+          "title"
+        ])
+        |> Query.qualify("[0]")
+        |> Query.build()
 
-    conn |> handle_sanity_fetch(BuildQuery.projectSingle(params["id"]), fn (conn, result, duration) ->
-      result
-        |> Map.put("meta", %{
-            "total" => 1,
-            "count" => 1,
-            "id" => params["id"]
-          })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-    end)
+      conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
+        count = case result["result"] do
+          nil -> 0
+          _ -> 1
+        end
+        result
+          |> Map.put("meta", %{
+              "total" => count,
+              "count" => count,
+              "id" => params["id"]
+            })
+          |> Map.update("ms", duration, &(&1 + (duration - &1)))
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+      end)
+    else
+      false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+    end
   end
 
   get "#{@query_url}/projects" do
@@ -186,9 +232,7 @@ defmodule Router.Api.V1 do
         |> Query.project([
           "_id",
           "_rev",
-          [
-            "'objectID'", "_id"
-          ],
+          ["'objectID'", "_id"],
           "_type",
           "title",
           "slug"
@@ -351,31 +395,64 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/about" do
-    conn |> handle_sanity_fetch(BuildQuery.about(), fn (conn, result) ->
-      result
-        |> Map.delete("ms")
-        |> Map.delete("query")
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
-    end)
-  end
-
-  get "#{@query_url}/now" do
-    conn |> error_res(404, "Not found")
-    # conn |> handle_sanity_fetch(BuildQuery.nowPage(), fn (conn, result) ->
-    #   Poison.decode!(result)
-    #     |> Map.delete("ms")
-    #     |> Map.delete("query")
-    #     |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
-    # end)
+    conn |> handle_sanity_fetch(
+      Query.new()
+        |> Query.filter([
+            %{"_type" => "'author'"},
+            %{"_id" => "'me'"}
+          ])
+        |> Query.project([
+          "_id",
+          ["'objectID'", "_id"],
+          "_rev",
+          "_type",
+          "at",
+          "bio",
+          "body",
+          "now",
+          "location",
+          "contact",
+          "fullname",
+          %{
+            "timeline[]" => [
+              "title",
+              "subtitle",
+              "range",
+              %{"skills[]" => [
+                "_id",
+                "title",
+                "slug"
+              ], :join => "->"},
+              "body"
+            ],
+            :join => "",
+          },
+          "image",
+          "name"
+        ])
+        |> Query.qualify("[0]")
+        |> Query.build(),
+      fn (conn, result) ->
+        result
+          |> Map.delete("ms")
+          |> Map.delete("query")
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
+      end
+    )
   end
 
   get "/config" do
-    conn |> handle_sanity_fetch(BuildQuery.config(), fn (conn, result) ->
-      result
-        |> Map.delete("ms")
-        |> Map.delete("query")
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
-    end)
+    conn |> handle_sanity_fetch(
+      Query.new()
+        |> Query.filter(["_type", "'siteSettings'"])
+        |> Query.qualify("[0]")
+        |> Query.build(),
+      fn (conn, result) ->
+        result
+          |> Map.delete("ms")
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
+      end
+    )
   end
 
   # Fallback
