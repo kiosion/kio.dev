@@ -21,7 +21,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "sanity": "^3.5.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
