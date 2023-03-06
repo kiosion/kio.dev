@@ -32,7 +32,7 @@ run-prod-dev: # Run docker container for 'dev' dataset build
 test: SHELL:=/bin/bash
 test: install
 test:
-	@. .env && MIX_ENV=test mix test ./test/hexerei_test.exs
+	@. .env && MIX_ENV=test mix test ./test/hexerei_test.exs ./test/api_test.exs ./test/query_test.exs
 
 cleanup: SHELL:=/bin/bash
 cleanup:
