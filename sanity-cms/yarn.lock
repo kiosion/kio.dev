@@ -11033,7 +11033,7 @@ __metadata:
     prettier: "npm:^2.8.4"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
-    react-icons: "npm:^4.7.1"
+    react-icons: "npm:^4.8.0"
     sanity: "npm:^3.5.0"
     styled-components: "npm:^5.2.0"
   languageName: unknown
@@ -13944,12 +13944,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-icons@npm:^4.7.1":
-  version: 4.7.1
-  resolution: "react-icons@npm:4.7.1"
+"react-icons@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "react-icons@npm:4.8.0"
   peerDependencies:
     react: "*"
-  checksum: 30dcb1ae224b5846d9436c433d321fb4827cacff4e759de9c26adc19093f4b71433007f896d09ff96cf09bc72751828642cfde0825b9ecdd48e300520e02c1ba
+  checksum: 18ff21e05b3ee10c34dccb930f60956c6124461cc5ef317e81a82bb88b61458f7b5e0afa47e79f24f793785fd3ae6b4775c2e1275cbf20be99fc7578e0b98628
   languageName: node
   linkType: hard
 
