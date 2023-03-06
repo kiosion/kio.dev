@@ -45,19 +45,6 @@ defmodule Hexerei.SanityClient.Query do
     end
   end
 
-  def filter!(template, [key, val]) when not is_map(key) and not is_map(val) do
-    filter!(template, [%{key => val}])
-  end
-  def filter!(template, filter) when is_map(filter) do
-    filter!(template, [filter])
-  end
-  def filter!(template, filters) when is_list(filters) do
-    case filter(template, filters) do
-      {:error, msg, _} -> raise msg
-      res -> res
-    end
-  end
-
   defp filters_valid?(filters) do
     Enum.all?(filters, fn
       filter when is_map(filter) -> true
@@ -73,13 +60,6 @@ defmodule Hexerei.SanityClient.Query do
       err = "Projections must be a list of strings or nested maps"
       Logger.error err
       {:error, err, template}
-    end
-  end
-
-  def project!(template, projections) do
-    case project(template, projections) do
-      {:error, msg, _} -> raise msg
-      res -> res
     end
   end
 
@@ -162,7 +142,8 @@ defmodule Hexerei.SanityClient.Query do
     case filter do
       %{} ->
         Enum.map(Enum.filter(filter, fn {key, _} -> is_binary(key) end), fn {key, value} ->
-          case Map.get(filter, :nest, false) do
+          nest = Map.get(filter, :nest, false)
+          case nest do
             true ->
               key <> "(" <> format_filter! value <> ")"
             _ ->
@@ -176,6 +157,8 @@ defmodule Hexerei.SanityClient.Query do
         |> (fn x -> if x do Map.get(x, :join) else "||" end end).()
         negate = Enum.find(filters, fn x -> is_map(x) && Map.get(x, :negate) end)
         |> (fn x -> if x do "!" else "" end end).()
+
+        filters = Enum.reject(filters, fn x -> is_map(x) && (Map.get(x, :join) || Map.get(x, :negate)) end)
 
         negate <> "(#{Enum.map(filters, &format_filter!/1) |> Enum.join(" " <> join <> " ")})"
       filter when is_binary(filter) ->

@@ -13,7 +13,6 @@ defmodule Router.Api.V1 do
 
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.SanityClient.Query, as: Query
-  alias Hexerei.BuildQuery, as: BuildQuery
 
   @query_url Hexerei.Env.get!(:query_url)
 
@@ -54,61 +53,164 @@ defmodule Router.Api.V1 do
   defp document_counts_query(query, limited_query), do: "{ 'total': count(#{query})#{if limited_query do ", 'count': count(#{limited_query})" else "" end}}"
 
   get "#{@query_url}/post/:id" do
-    params = validate_query_params(%{
-        "id" => id
-      }, %{
-        "id" => nil
-      })
+    with params <- validate_query_params(%{ "id" => id }, %{ "id" => nil })
+    do
+      query = Query.new()
+        |> Query.filter([
+          %{ "_type" => "'post'" },
+          [
+            %{ "_id" => "'#{params["id"]}'" },
+            %{ "slug.current" => "'#{params["id"]}'" },
+            %{ :join => "||" }
+          ]
+        ])
+        |> Query.project([
+          "_id",
+          ["'objectID'", "_id"],
+          "_rev",
+          "_type",
+          "title",
+          "publishedAt",
+          %{
+            "'author'" => [
+              ["'_id'", ["author", "_id", :follow]],
+              ["'_type'", ["author", "_type", :follow]],
+              ["'name'", ["author", "name", :follow]],
+              ["'slug'", ["author", "slug", :follow]],
+              ["'image'", ["author", "image", :follow]]
+            ]
+          },
+          %{
+            "tags[]" => [
+              "_id",
+              "title",
+              "slug"
+            ],
+            :join => "->"
+          },
+          "slug",
+          "body",
+          "desc",
+          "date",
+          ["'numberOfCharacters'", "length(pt::text(body))"],
+          ["'estimatedWordCount'", "round(length(pt::text(body)) / 5)"],
+          ["'estimatedReadingTime'", "round(length(pt::text(body)) / 5 / 120)"]
+        ])
+        |> Query.qualify("[0]")
+        |> Query.build!()
 
-    conn |> handle_sanity_fetch(BuildQuery.postSingle(params["id"]), fn (conn, result, duration) ->
-      result
-        |> Map.put("meta", %{
-            "total" => 1,
-            "count" => 1,
-            "id" => params["id"]
-          })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-    end)
+        conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
+          result
+            |> Map.put("meta", %{
+                "total" => 1,
+                "count" => 1,
+                "id" => params["id"]
+              })
+            |> Map.update("ms", duration, &(&1 + (duration - &1)))
+            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        end)
+    else
+      _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+    end
   end
 
   get "#{@query_url}/posts" do
-    params = fetch_query_params(conn).query_params
-      |> validate_query_params(%{
-          "limit" => 10,
-          "skip" => 0,
-          "s" =>
-          "date",
-          "o" =>
-          "desc",
-          "date" => nil,
-          "tags" => nil
-        })
-      |> params_to_integer([:limit, :skip])
-      |> empty_to_nil([:date])
-
-    query = BuildQuery.postMany(params["date"], params["tags"])
-    query_limited = query |> limit_query(params)
-
-    counts = Task.async(fn ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
-        result
-      end)
-    end)
-
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
-      parsed_counts = Task.await(counts)
-
-      result
-        |> Map.put("meta", %{
-            "total" => parsed_counts["result"]["total"],
-            "count" => parsed_counts["result"]["count"],
-            "sort" => params["s"],
-            "order" => params["o"]
+    with params <- fetch_query_params(conn).query_params
+                    |> validate_query_params(%{
+                      "limit" => 10,
+                      "skip" => 0,
+                      "s" => "date",
+                      "o" => "desc",
+                      "date" => nil,
+                      "tags" => nil
+                    })
+                    |> params_to_integer([:limit, :skip])
+                    |> empty_to_nil([:date]),
+         true   <- params["limit"] >= 0 and params["skip"] >= 0
+    do
+      query = Query.new()
+        |> Query.filter(%{
+            "_type" => "'post'"
           })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-    end)
+
+      query = case params["date"] do
+        nil -> query
+        _ -> query
+          |> Query.filter(%{
+              "date" => "'#{params["date"]}'"
+            })
+      end
+      query = case params["tags"] do
+        nil -> query
+        _ -> query
+          |> Query.filter(%{
+              "tags[]->slug.current" => ["match", "'#{params["tags"]}'"]
+            })
+      end
+
+      query = query
+        |> Query.project([
+          "_id",
+          ["'objectID'", "_id"],
+          "_rev",
+          "_type",
+          "title",
+          "publishedAt",
+          %{
+            "'author'" => [
+              ["'_id'", ["author", "_id", :follow]],
+              ["'_type'", ["author", "_type", :follow]],
+              ["'name'", ["author", "name", :follow]],
+              ["'slug'", ["author", "slug", :follow]],
+              ["'image'", ["author", "image", :follow]]
+            ]
+          },
+          %{
+            "tags[]" => [
+              "_id",
+              "title",
+              "slug"
+            ],
+            :join => "->"
+          },
+          "slug",
+          "body",
+          "desc",
+          "date",
+          ["'numberOfCharacters'", "length(pt::text(body))"],
+          ["'estimatedWordCount'", "round(length(pt::text(body)) / 5)"],
+          ["'estimatedReadingTime'", "round(length(pt::text(body)) / 5 / 120)"]
+        ])
+
+        query_limited = query
+          |> Query.limit({params["skip"], params["limit"]})
+          |> Query.order("#{params["s"]} #{params["o"]}")
+          |> Query.build!()
+
+        query = query |> Query.build!()
+
+        counts = Task.async(fn ->
+          conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+            result
+          end)
+        end)
+
+        conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+          parsed_counts = Task.await(counts)
+
+          result
+            |> Map.put("meta", %{
+                "total" => parsed_counts["result"]["total"],
+                "count" => parsed_counts["result"]["count"],
+                "sort" => params["s"],
+                "order" => params["o"]
+              })
+            |> Map.update("ms", duration, &(&1 + (duration - &1)))
+            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        end)
+    else
+      _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+    end
   end
 
   get "#{@query_url}/project/:id" do
@@ -177,41 +279,104 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/projects" do
-    params = fetch_query_params(conn).query_params
-      |> validate_query_params(%{
-          "limit" => 10,
-          "skip" => 0,
-          "s" => "date",
-          "o" => "desc",
-          "date" => nil,
-          "tags" => nil
-        })
-      |> params_to_integer([:limit, :skip])
-      |> empty_to_nil([:date])
-
-    query = BuildQuery.projectMany(params["date"], params["tags"])
-    query_limited = query |> limit_query(params)
-
-    counts = Task.async(fn ->
-      conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
-        result
-      end)
-    end)
-
-    conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
-      parsed_counts = Task.await(counts)
-
-      result
-        |> Map.put("meta", %{
-            "total" => parsed_counts["result"]["total"],
-            "count" => parsed_counts["result"]["count"],
-            "sort" => params["s"],
-            "order" => params["o"]
+    with params <- fetch_query_params(conn).query_params
+                    |> validate_query_params(%{
+                        "limit" => 10,
+                        "skip" => 0,
+                        "s" => "date",
+                        "o" => "desc",
+                        "date" => nil,
+                        "tags" => nil
+                      })
+                    |> params_to_integer([:limit, :skip])
+                    |> empty_to_nil([:date]),
+         true   <- params["limit"] >= 0 and params["skip"] >= 0
+    do
+      query = Query.new()
+        |> Query.filter(%{
+            "_type" => "'project'"
           })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> Map.delete("query")
-        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-    end)
+
+      query = case params["date"] do
+        nil -> query
+        _ -> query
+          |> Query.filter(%{
+              "date" => ["<=", "'#{params["date"]}'"]
+            })
+      end
+      query = case params["tags"] do
+        nil -> query
+        _ -> query
+          |> Query.filter(%{
+              "tags[]->slug.current" => ["match", "'#{params["tags"]}'"]
+            })
+      end
+
+      query = query |> Query.project([
+        "_id",
+        ["'objectID'", "_id"],
+        "_type",
+        "_rev",
+        %{
+          "'author'" => [
+            ["'_id'", ["author", "_id", :follow]],
+            ["'_type'", ["author", "_type", :follow]],
+            ["'name'", ["author", "name", :follow]],
+            ["'slug'", ["author", "slug", :follow]],
+            ["'image'", ["author", "image", :follow]]
+          ]
+        },
+        "body",
+        "desc",
+        "date",
+        "external",
+        "externalAuthor",
+        "externalLinks",
+        "externalUrl",
+        "image",
+        "language",
+        %{
+          "tags[]" => [
+            "_id",
+            "title",
+            "slug"
+          ],
+          :join => "->"
+        },
+        "slug",
+        "title"
+      ])
+
+      query_limited = query
+        |> Query.limit({params["skip"], params["limit"]})
+        |> Query.order("#{params["s"]} #{params["o"]}")
+        |> Query.build!()
+
+      query = query |> Query.build!()
+
+      counts = Task.async(fn ->
+        conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
+          result
+        end)
+      end)
+
+      conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
+        parsed_counts = Task.await(counts)
+
+        result
+          |> Map.put("meta", %{
+              "total" => parsed_counts["result"]["total"],
+              "count" => parsed_counts["result"]["count"],
+              "sort" => params["s"],
+              "order" => params["o"]
+            })
+          |> Map.update("ms", duration, &(&1 + (duration - &1)))
+          |> Map.delete("query")
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+      end)
+    else
+      _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+    end
   end
 
   # All tags
@@ -347,7 +512,7 @@ defmodule Router.Api.V1 do
         conn |> handle_sanity_fetch(
           Query.new(%{:direct_query => true})
           |> Query.project([["'total'", "count(#{query})"]])
-          |> Query.build(),
+          |> Query.build!(),
           fn (_, result) -> result
         end)
       end)
@@ -367,30 +532,6 @@ defmodule Router.Api.V1 do
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Missing ID or invalid type")
-    end
-  end
-
-  # Comments referencing document
-  get "#{@query_url}/comments/:id" do
-    with true <- is_binary(id),
-         true <- String.trim(id) != "" do
-      params = fetch_query_params(conn).query_params
-        |> validate_query_params(%{
-            "force" => false
-          })
-
-      query = BuildQuery.commentsOn(id, params["force"])
-
-      conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
-        result
-          |> Map.put("meta", %{
-            "id" => id
-          })
-          |> Map.update("ms", duration, &(&1 + (duration - &1)))
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-      end)
-    else
-      _ -> conn |> error_res(400, "Invalid request", "Missing document ID")
     end
   end
 
@@ -431,7 +572,7 @@ defmodule Router.Api.V1 do
           "name"
         ])
         |> Query.qualify("[0]")
-        |> Query.build(),
+        |> Query.build!(),
       fn (conn, result) ->
         result
           |> Map.delete("ms")
@@ -444,9 +585,9 @@ defmodule Router.Api.V1 do
   get "/config" do
     conn |> handle_sanity_fetch(
       Query.new()
-        |> Query.filter(["_type", "'siteSettings'"])
+        |> Query.filter([%{ "_type" => "'siteSettings'" }])
         |> Query.qualify("[0]")
-        |> Query.build(),
+        |> Query.build!(),
       fn (conn, result) ->
         result
           |> Map.delete("ms")
