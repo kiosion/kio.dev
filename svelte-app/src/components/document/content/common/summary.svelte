@@ -7,7 +7,6 @@
   const dispatch = createEventDispatcher();
 
   export let headings: PTHeading[],
-    floating = false,
     expanded = false;
 
   let hide = false,
@@ -16,9 +15,8 @@
   $: headingsExist = headings.length > 0;
 </script>
 
-<div class:floating class:expanded class:hidden={hide}>
+<div class:expanded class:hidden={hide}>
   <Heading
-    {floating}
     {headingsExist}
     bind:closeButton
     on:toggle={() => (expanded = !expanded)}
@@ -27,7 +25,6 @@
   {#if expanded}
     <Items
       {headings}
-      {floating}
       {headingsExist}
       on:toggle={() => (expanded = !expanded)}
     />

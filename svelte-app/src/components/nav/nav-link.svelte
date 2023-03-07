@@ -29,6 +29,9 @@
     },
     handleAction = (e: Event) => {
       e.preventDefault();
+      if ($page?.url.pathname.slice($isLocalized ? 3 : 0) === link.url) {
+        return;
+      }
       SFX.click.play();
       if (mobile) {
         navOpen.set(false);

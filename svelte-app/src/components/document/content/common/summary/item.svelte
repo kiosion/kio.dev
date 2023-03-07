@@ -7,18 +7,21 @@
 
   const dispatch = createEventDispatcher();
 
-  export let headings: Heading[];
-  export let classes = '';
+  export let headings: Heading[],
+    classNames = '';
+
+  $: localHeadings = headings as (Heading & { active: boolean })[];
 </script>
 
 <div
-  class="relative flex h-fit w-full flex-col items-start justify-start text-ellipsis {classes}"
+  class="relative flex h-fit w-full flex-col items-start justify-start text-ellipsis {classNames}"
 >
-  {#each headings as heading}
-    <Hoverable>
+  {#each localHeadings as heading}
+    <Hoverable bind:hovered={heading.active}>
       <a
         href={`#${heading.key}`}
         class="focusOutline-sm"
+        class:active={heading.active}
         on:click={() => {
           sfx.click.play();
           dispatch('click', heading);
@@ -38,7 +41,7 @@
     {#if heading.children.length}
       <svelte:self
         headings={heading.children}
-        classes="ml-6"
+        classNames="ml-6"
         on:click={(eventData) => dispatch('click', eventData)}
       />
     {/if}
@@ -47,6 +50,20 @@
 
 <style lang="scss">
   a {
-    @apply ml-3 flex w-full select-none flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-[.65rem] text-sm text-[15px] font-medium;
+    @apply ml-3 flex w-full select-none flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-[.65rem] text-sm text-[15px] font-medium text-stone-700 transition-colors;
+
+    &.active {
+      @apply text-stone-900;
+    }
+  }
+
+  :global(.dark) {
+    a {
+      @apply text-stone-300;
+
+      &.active {
+        @apply text-stone-100;
+      }
+    }
   }
 </style>

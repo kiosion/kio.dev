@@ -1,14 +1,10 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
   import Divider from '$components/divider.svelte';
   import Item from '$components/document/content/common/summary/item.svelte';
   import type { Heading as PTHeading } from '$helpers/pt';
 
-  const dispatch = createEventDispatcher();
-
   export let headings: PTHeading[],
-    floating = false,
     headingsExist = false;
 </script>
 
@@ -18,14 +14,8 @@
   out:slide={{ duration: 400 }}
 >
   <Divider classes="mb-3 mt-0" />
+
   {#if headingsExist}
-    <Item
-      {headings}
-      on:click={() => {
-        if (floating) {
-          dispatch('toggle');
-        }
-      }}
-    />
+    <Item {headings} />
   {/if}
 </div>
