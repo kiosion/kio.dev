@@ -211,4 +211,5 @@ export const LOADING_PHRASES = [
   'Asking ChatGPT for help'
 ];
 
-export const TORU_API_URL = 'https://toru.kio.dev/api/v1/kiosion?res=json';
+export const TORU_API_URL =
+  'https://toru.kio.dev/api/v1/kiosion?res=json&cover_size=medium';
