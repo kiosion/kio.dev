@@ -10100,9 +10100,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^21.0.0":
-  version: 21.0.0
-  resolution: "jsdom@npm:21.0.0"
+"jsdom@npm:^21.1.0":
+  version: 21.1.0
+  resolution: "jsdom@npm:21.1.0"
   dependencies:
     abab: "npm:^2.0.6"
     acorn: "npm:^8.8.1"
@@ -10135,7 +10135,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 24e257fafe4fb6ae27332f76087f66b7c8c4dd90b543d1d4bb9d87aeeaf54c78e77fa0bf705a88399fda45fcab7ed03d7b9101aa76f757fc57ffaefb3b0f67d2
+  checksum: aa02e69560fcee20f7af889988dff302c65e43846f38f5892c0982e51209a8ad16514635996fde6df2bda781f7f6b110c6a9480c0d9cbe5084d1eeb407171552
   languageName: node
   linkType: hard
 
@@ -15170,7 +15170,7 @@ __metadata:
     eslint-plugin-svelte: "npm:^2.16.0"
     fiona: "npm:^4.1.4"
     highlight.js: "npm:^11.7.0"
-    jsdom: "npm:^21.0.0"
+    jsdom: "npm:^21.1.0"
     luxon: "npm:^3.2.1"
     netlify-cli: "npm:^12.7.2"
     node-html-to-image: "npm:^3.2.4"
