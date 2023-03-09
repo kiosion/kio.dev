@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-ARGS=$(getopt -o e:p: -l env:,project_id:,sanity_token:,api_token: -- "$@")
+ARGS=$(getopt -o e:p: -l env:,project_id:,sanity_token:,api_token:,gcloud_key: -- "$@")
 eval set -- "$ARGS"
 
 while [[ $1 != -- ]]; do
@@ -10,6 +10,7 @@ while [[ $1 != -- ]]; do
     --project_id) SANITY_PROJECT_ID=$2; shift 2;;
     --sanity_token) SANITY_TOKEN=$2; shift 2;;
     --api_token) API_TOKEN=$2; shift 2;;
+    --gcloud_key) GCLOUD_KEY=$2; shift 2;;
     *) echo "Invalid option: $1"; exit 1;;
   esac
 done
@@ -18,7 +19,7 @@ if [ -z "$ENV" ]; then
   echo "ERROR: Missing 'ENV' argument for release"
   exit 1
 fi
-echo "API Token: ${API_TOKEN}"
+
 REQ_ARGS=(SANITY_PROJECT_ID SANITY_TOKEN API_TOKEN)
 for arg in "${REQ_ARGS[@]}"; do
   if [ -z "${!arg}" ]; then
@@ -34,6 +35,7 @@ touch .env && chmod +x .env
 echo "export SANITY_PROJECT_ID=${SANITY_PROJECT_ID}" >> .env
 echo "export SANITY_TOKEN=${SANITY_TOKEN}" >> .env
 echo "export API_TOKEN=${API_TOKEN}" >> .env
+echo "export GCLOUD_KEY=${GCLOUD_KEY}" >> .env
 
 mix local.hex --if-missing --force
 mix local.rebar --if-missing --force
@@ -42,6 +44,7 @@ mix deps.get --only ${ENV}
 for arg in "${REQ_ARGS[@]}"; do
   sed -i "s/{{$arg}}/${!arg}/g" ./config/${ENV}.env.exs
 done
+sed -i "s/{{GCLOUD_KEY}}/${GCLOUD_KEY}/g" ./config/${ENV}.env.exs
 if [ "$ENV" = "dev" ]; then
   sed -i '/{:exsync, "~> 0.2", only: :dev}/d' ./mix.exs
 fi

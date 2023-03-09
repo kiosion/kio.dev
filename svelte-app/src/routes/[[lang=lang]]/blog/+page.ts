@@ -9,7 +9,7 @@ import type { PageLoad } from './$types';
 
 export const ssr = !(ENV === 'testing');
 
-export const load: PageLoad = async ({ parent, fetch }) => {
+export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
 
   const currentConfig = get(config);
@@ -18,7 +18,8 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 
   if (currentConfig?.data?.pinnedPost?._ref) {
     pinned = await Store.findOne<PostDocument>(fetch, 'post', {
-      id: currentConfig.data.pinnedPost._ref
+      id: currentConfig.data.pinnedPost._ref,
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;
@@ -27,7 +28,8 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 
   const posts: ResDataMany<PostDocument> | undefined =
     await Store.find<PostDocument>(fetch, 'post', {
-      limit: RECENT_POSTS_COUNT
+      limit: RECENT_POSTS_COUNT,
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;

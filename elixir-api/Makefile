@@ -13,11 +13,11 @@ dev:
 
 prod: SHELL:=/bin/bash
 prod: # Run docker build for 'production' dataset
-	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=prod -t hexerei:prod .
+	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=prod --build-arg GCLOUD_KEY=$(GCLOUD_KEY) -t hexerei:prod .
 
 prod-dev: SHELL:=/bin/bash
 prod-dev: # Run docker build for 'dev' dataset
-	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=dev -t hexerei:dev .
+	@docker build --build-arg SANITY_TOKEN=$(SANITY_TOKEN) --build-arg SANITY_PROJECT_ID=$(SANITY_PROJECT_ID) --build-arg API_TOKEN=$(API_TOKEN) --build-arg ENV=dev --build-arg GCLOUD_KEY=$(GCLOUD_KEY) -t hexerei:dev .
 
 run-prod: SHELL:=/bin/bash
 run-prod: # Run docker container for 'production' dataset build

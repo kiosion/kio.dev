@@ -2,8 +2,9 @@ import type { RequestHandler } from './$types';
 import { REMOTE_API_URL } from '$lib/env';
 import { fetchRemote } from '$lib/data.server';
 
-export const GET: RequestHandler = async (): Promise<Response> => {
-  const endpoint = `${REMOTE_API_URL}/query/about`,
+export const GET: RequestHandler = async ({ url }): Promise<Response> => {
+  const lang = url.searchParams.get('lang') || 'en';
+  const endpoint = `${REMOTE_API_URL}/query/about?lang=${lang}`,
     remoteRes = await fetchRemote({ endpoint });
 
   if (remoteRes instanceof Error) {

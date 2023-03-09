@@ -12,7 +12,8 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   const post: ResData<PostDocument> | undefined =
     await Store.findOne<PostDocument>(fetch, 'post', {
-      idb: btoa(params.slug)
+      idb: btoa(params.slug),
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;

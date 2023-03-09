@@ -13,6 +13,7 @@ defmodule Router.Api.V1 do
 
   alias Hexerei.SanityClient, as: Sanity
   alias Hexerei.SanityClient.Query, as: Query
+  alias Hexerei.Translate
 
   @query_url Hexerei.Env.get!(:query_url)
 
@@ -52,8 +53,27 @@ defmodule Router.Api.V1 do
   defp document_counts_query(query), do: "{ 'total': count(#{query}) }"
   defp document_counts_query(query, limited_query), do: "{ 'total': count(#{query})#{if limited_query do ", 'count': count(#{limited_query})" else "" end}}"
 
+  options "#{@query_url}/post/:id" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
+  end
+
   get "#{@query_url}/post/:id" do
-    with params <- validate_query_params(%{ "id" => id }, %{ "id" => nil })
+    with params <- validate_query_params(
+                      Map.merge(
+                        fetch_query_params(conn).query_params,
+                        %{ "id" => conn.params["id"] }
+                      ),
+                      %{
+                        "id" => nil,
+                        "lang" => "en"
+                      }
+                    )
     do
       query = Query.new()
         |> Query.filter([
@@ -100,7 +120,19 @@ defmodule Router.Api.V1 do
         |> Query.build!()
 
         conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
-          result
+          transformed_result = case params["lang"] do
+            "en" -> result
+            "fr" -> Translate.translate(:post, result, "fr", "en")
+            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+          end
+
+          case transformed_result do
+            {:error, message} ->
+              Logger.error("Error fetching post: #{inspect(message)}")
+              result
+            _ ->
+              transformed_result
+          end
             |> Map.put("meta", %{
                 "total" => 1,
                 "count" => 1,
@@ -114,6 +146,16 @@ defmodule Router.Api.V1 do
     end
   end
 
+  options "#{@query_url}/posts" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
+  end
+
   get "#{@query_url}/posts" do
     with params <- fetch_query_params(conn).query_params
                     |> validate_query_params(%{
@@ -122,7 +164,8 @@ defmodule Router.Api.V1 do
                       "s" => "date",
                       "o" => "desc",
                       "date" => nil,
-                      "tags" => nil
+                      "tags" => nil,
+                      "lang" => "en"
                     })
                     |> params_to_integer([:limit, :skip])
                     |> empty_to_nil([:date]),
@@ -198,19 +241,41 @@ defmodule Router.Api.V1 do
         conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
           parsed_counts = Task.await(counts)
 
-          result
-            |> Map.put("meta", %{
-                "total" => parsed_counts["result"]["total"],
-                "count" => parsed_counts["result"]["count"],
-                "sort" => params["s"],
-                "order" => params["o"]
-              })
-            |> Map.update("ms", duration, &(&1 + (duration - &1)))
-            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+          transformed_result = case params["lang"] do
+            "en" -> result
+            "fr" -> Translate.translate(:posts, result, "fr", "en")
+            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+          end
+
+          case transformed_result do
+            {:error, message} ->
+              Logger.error("Error fetching posts: #{inspect(message)}")
+              result
+            _ ->
+              transformed_result
+          end
+          |> Map.put("meta", %{
+              "total" => parsed_counts["result"]["total"],
+              "count" => parsed_counts["result"]["count"],
+              "sort" => params["s"],
+              "order" => params["o"]
+            })
+          |> Map.update("ms", duration, &(&1 + (duration - &1)))
+          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
         end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
     end
+  end
+
+  options "#{@query_url}/project/:id" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
   end
 
   get "#{@query_url}/project/:id" do
@@ -276,6 +341,16 @@ defmodule Router.Api.V1 do
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
     end
+  end
+
+  options "#{@query_url}/projects" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
   end
 
   get "#{@query_url}/projects" do
@@ -379,6 +454,16 @@ defmodule Router.Api.V1 do
     end
   end
 
+  options "#{@query_url}/tags" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
+  end
+
   # All tags
   get "#{@query_url}/tags" do
     with params <- fetch_query_params(conn).query_params
@@ -452,6 +537,16 @@ defmodule Router.Api.V1 do
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
     end
+  end
+
+  options "#{@query_url}/tag/:id" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=3600, must-revalidate")
+    |> send_resp(200, "")
   end
 
   # Documents belonging to tag
@@ -535,51 +630,94 @@ defmodule Router.Api.V1 do
     end
   end
 
+  options "#{@query_url}/about" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=7200, must-revalidate")
+    |> send_resp(200, "")
+  end
+
   get "#{@query_url}/about" do
-    conn |> handle_sanity_fetch(
-      Query.new()
-        |> Query.filter([
-            %{"_type" => "'author'"},
-            %{"_id" => "'me'"}
-          ])
-        |> Query.project([
-          "_id",
-          ["'objectID'", "_id"],
-          "_rev",
-          "_type",
-          "at",
-          "bio",
-          "body",
-          "now",
-          "location",
-          "contact",
-          "fullname",
-          %{
-            "timeline[]" => [
-              "title",
-              "subtitle",
-              "range",
-              %{"skills[]" => [
-                "_id",
+    with params <- validate_query_params(
+                    fetch_query_params(conn).query_params,
+                    %{
+                      "id" => nil,
+                      "lang" => "en"
+                    }
+                  )
+    do
+      conn |> handle_sanity_fetch(
+        Query.new()
+          |> Query.filter([
+              %{"_type" => "'author'"},
+              %{"_id" => "'me'"}
+            ])
+          |> Query.project([
+            "_id",
+            ["'objectID'", "_id"],
+            "_rev",
+            "_type",
+            "at",
+            "bio",
+            "body",
+            "now",
+            "location",
+            "contact",
+            "fullname",
+            %{
+              "timeline[]" => [
                 "title",
-                "slug"
-              ], :join => "->"},
-              "body"
-            ],
-            :join => "",
-          },
-          "image",
-          "name"
-        ])
-        |> Query.qualify("[0]")
-        |> Query.build!(),
-      fn (conn, result) ->
-        result
-          |> Map.delete("ms")
-          |> Map.delete("query")
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
-      end
-    )
+                "subtitle",
+                "range",
+                %{"skills[]" => [
+                  "_id",
+                  "title",
+                  "slug"
+                ], :join => "->"},
+                "body"
+              ],
+              :join => "",
+            },
+            "image",
+            "name"
+          ])
+          |> Query.qualify("[0]")
+          |> Query.build!(),
+        fn (conn, result) ->
+          transformed_result = case params["lang"] do
+            "en" -> result
+            "fr" -> Translate.translate(:about, result, "fr", "en")
+            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+          end
+
+          case transformed_result do
+            {:error, message} ->
+              Logger.error("Error fetching about: #{inspect(message)}")
+              result
+            _ ->
+              transformed_result
+          end
+            |> Map.delete("ms")
+            |> Map.delete("query")
+            |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
+        end
+      )
+    else
+      _ -> conn |> error_res(400, "Invalid request", "Unknown error collecting params")
+    end
+  end
+
+  options "/config" do
+    conn
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_header("access-control-allow-methods", "GET, OPTIONS")
+    |> put_resp_header("access-control-allow-headers", "accept, authorization, content-type")
+    |> put_resp_header("allow", "GET, OPTIONS")
+    |> put_resp_header("cache-control", "max-age=7200, must-revalidate")
+    |> send_resp(200, "")
   end
 
   get "/config" do

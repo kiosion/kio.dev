@@ -5,6 +5,7 @@ defmodule Hexerei.Router do
 
   use Plug.Router
   use Plug.ErrorHandler
+
   use Hexerei.Response
 
   plug(Plug.Logger)
@@ -26,7 +27,13 @@ defmodule Hexerei.Router do
     {days, upt} = div_sub(upt, days_in_ms)
     {hours, upt} = div_sub(upt, hours_in_ms)
     {minutes, upt} = div_sub(upt, minutes_in_ms)
-    seconds = upt |> div(seconds_in_ms) |> round() |> Kernel.+(Kernel.round(Enum.random(-5..5))) |> Kernel.rem(60) |> Kernel.max(0)
+
+    seconds = upt
+    |> div(seconds_in_ms)
+    |> round()
+    |> Kernel.+(Kernel.round(Enum.random(-5..5)))
+    |> Kernel.rem(60)
+    |> Kernel.max(0)
 
     %{
       :days => days,
@@ -58,9 +65,9 @@ defmodule Hexerei.Router do
     mem = :memsup.get_system_memory_data()
     |> Kernel.then(fn data ->
       %{
-        :total => Kernel.round(data[:system_total_memory] / 1024 / 1024),
-        :free => Kernel.round(data[:free_memory] / 1024 / 1024),
-        :used => Kernel.round((data[:system_total_memory] - data[:free_memory]) / 1024 / 1024),
+        :total => Kernel.round(data[:system_total_memory] / 1024 / 1024 / 128),
+        :free => Kernel.round(data[:free_memory] / 1024 / 1024 / 128),
+        :used => Kernel.round((data[:system_total_memory] - data[:free_memory]) / 1024 / 1024 / 128),
       }
     end)
 
@@ -75,7 +82,7 @@ defmodule Hexerei.Router do
       _ -> false
     end
 
-    upt = System.system_time(:millisecond) - Application.get_env(:hexerei, :started_at)
+    upt = System.system_time(:millisecond) - Hexerei.Env.get!(:started_at)
     elixir = to_string(System.version())
     otp = to_string(:erlang.system_info(:otp_release))
     spec = Application.spec(:hexerei) |> Enum.into(%{})

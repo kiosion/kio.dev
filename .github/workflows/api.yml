@@ -53,6 +53,7 @@ jobs:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           API_TOKEN: ${{ secrets.DEV_API_TOKEN }}
+          GCLOUD_KEY: ${{ secrets.DEV_GCLOUD_KEY }}
         run: cd ./elixir-api && make prod-dev
 
   deploy-dev:
@@ -81,6 +82,7 @@ jobs:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
+          GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
         run: cd ./elixir-api && make prod
 
   deploy-prod:

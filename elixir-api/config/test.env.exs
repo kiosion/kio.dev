@@ -8,7 +8,8 @@ config :hexerei,
   sanity_token: {"SANITY_TOKEN", :system},
   sanity_api_version: {"SANITY_API_VERSION", "2021-06-07"},
   query_url: {"QUERY_URL", "query/"},
-  sanity_apicdn: {"SANITY_APICDN", "false", :boolean}
+  sanity_apicdn: {"SANITY_APICDN", "false", :boolean},
+  gcloud_key: {"GCLOUD_KEY", :system}
 
 config :os_mon,
   disk_space_check_interval: 5,
