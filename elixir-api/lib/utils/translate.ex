@@ -121,29 +121,51 @@ defmodule Hexerei.Translate do
     end
   end
 
-  defp translate_post(sanity_response, target_lang, source_lang, only \\ ["title"]) do
+  defp translate_post(sanity_response, target_lang, source_lang, only \\ ["title", "desc"]) do
     # For now, just translate the title of the post
     document = sanity_response["result"]
 
     # Only translate keys that are in the "only" array (they're strings in the map)
+    # Temporary fix until my dumbass figures out how to not send a ridiculous amt of requests
+    # For post bodies
     text_array = document |> Map.take(only) |> Map.values()
 
     try do
-      {:ok, translation} = Task.async(fn ->
-        body = construct_body(text_array, target_lang, source_lang)
-        send_request(body)
+      translations = Task.async(fn ->
+        text_array
+        |> Enum.map(fn text ->
+          body = construct_body([text], target_lang, source_lang)
+          Task.async(fn ->
+            send_request(body)
+          end)
+        end)
+        |> Enum.map(fn gcloud_response -> Task.await(gcloud_response) end)
+        |> Enum.map(fn response ->
+            case response do
+              {:ok, translations} -> translations
+              {:error, reason} ->
+                Logger.error("Error translating: #{reason}");
+                text_array
+              # Fall back to the original text if the translation fails
+              _ -> text_array
+            end
+          end)
       end)
-      |> Task.await(3000)
+      |> Task.await(12000)
 
-      # Replace the keys in the document with the translations
-      updated_document = Map.put(document, "title", translation |> List.first())
+      # Since they'll be in the same order, but reversed, we can just pop them off the list
+      updated_document = Enum.reduce(only, document, fn key, acc ->
+        index = only |> Enum.find_index(fn k -> k == key end)
+        {_list, [translation]} = translations |> List.pop_at(index)
+        Map.put(acc, key, translation |> List.first())
+      end)
 
       %{
         "result" => updated_document
       }
     rescue
-      _ ->
-        {:error, "Unhandled error while translating"}
+      e ->
+        {:error, "Unhandled error while translating: #{inspect(e)}"}
     end
   end
 
