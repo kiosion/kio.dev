@@ -10,7 +10,7 @@
 
 <IconHeader
   icon="comment"
-  text={t('Comments')}
+  text={$t('Comments')}
   classNames="mt-8 mb-4 w-full h-fit"
 />
 

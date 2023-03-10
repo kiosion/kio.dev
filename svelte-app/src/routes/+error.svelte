@@ -45,13 +45,15 @@
 
 <div data-test-route="error" class="mt-12">
   <ContentWrapper>
-    <h3 class="mb-4 text-center font-display text-3xl font-bold">{t(title)}</h3>
+    <h3 class="mb-4 text-center font-display text-3xl font-bold">
+      {$t(title)}
+    </h3>
     <div class="mx-12">
       <Divider />
     </div>
     <IconHeader
       icon="Downasaur"
-      text={t(
+      text={$t(
         $page.error?.message && $page.status !== 404
           ? $page.error.message
           : message

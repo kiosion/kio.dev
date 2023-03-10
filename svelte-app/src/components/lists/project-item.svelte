@@ -22,7 +22,7 @@
       if (external) {
         window.open(link, '_blank');
       } else {
-        goto(linkTo(`/work/${project.slug.current}`)).catch(() => undefined);
+        goto($linkTo(`/work/${project.slug.current}`)).catch(() => undefined);
       }
     }
   };
@@ -38,7 +38,7 @@
   $: link = (() => {
     return external && project.externalUrl
       ? project.externalUrl
-      : linkTo(`/work/${project.slug.current}`);
+      : $linkTo(`/work/${project.slug.current}`);
   })();
 </script>
 
@@ -50,7 +50,7 @@
     data-test-id="list-item"
     tabindex="0"
     role="button"
-    aria-label="{t('Project')} - {project.title}"
+    aria-label="{$t('Project')} - {project.title}"
     href={link}
     target={external ? '_blank' : undefined}
     data-sveltekit-preload-code

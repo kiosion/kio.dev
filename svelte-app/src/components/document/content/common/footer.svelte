@@ -34,7 +34,7 @@
   {#if data.tags && data.tags.length > 0}
     <IconHeader
       icon="CardText"
-      text={t('Tags')}
+      text={$t('Tags')}
       classNames="mt-8 mb-4 w-full h-fit"
     />
     <Tags {model} data={data.tags} size="lg" />
@@ -43,7 +43,7 @@
     <Divider />
     <IconHeader
       icon="link"
-      text={t('Links')}
+      text={$t('Links')}
       classNames="mt-8 mb-4 w-full h-fit"
     />
     <ul class="ml-8 list-disc">

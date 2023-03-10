@@ -150,17 +150,18 @@
 
 <style lang="scss">
   .main {
-    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900 transition-colors duration-150 lg:text-lg;
+    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900 transition-colors duration-150;
 
     div {
       @apply relative h-full w-full;
     }
 
     &.is-desktop {
-      @apply flex-row;
+      @apply flex-row text-lg;
 
       div {
-        @apply mt-[3rem] h-[calc(100%_-_3rem)];
+        margin-top: 1.2rem;
+        height: calc(100% - 1.2rem);
       }
     }
   }

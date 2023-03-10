@@ -125,7 +125,7 @@
       {#if footnotes?.length}
         <div class="footnotes mt-8">
           <h3 class="mb-6 block font-display text-2xl font-bold">
-            {t('Footnotes')}
+            {$t('Footnotes')}
           </h3>
           <ol class="ml-6 list-decimal leading-8">
             {#each footnotes as note}
@@ -137,7 +137,7 @@
                     class="ml-2 mb-0.5 inline"
                     id={`note-${note._key}`}
                     href={`#src-${note._key}`}
-                    aria-label={t('Go to footnote source')}
+                    aria-label={$t('Go to footnote source')}
                     on:click={(e) => customScrollTo(e, `src-${note._key}`)}
                     on:keydown={(e) => {
                       if (e.code === 'Space' || e.code === 'Enter') {

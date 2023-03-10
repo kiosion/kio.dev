@@ -86,10 +86,10 @@
       <div
         class="h-fit w-full overflow-hidden rounded-md bg-stone-50/80 p-2 dark:bg-stone-700/60"
       >
-        <LinkNonPt href={linkTo(`/auth/login?redirect=${$page.url.pathname}`)}
-          >{t('Log in')}</LinkNonPt
+        <LinkNonPt href={$linkTo(`/auth/login?redirect=${$page.url.pathname}`)}
+          >{$t('Log in')}</LinkNonPt
         >
-        {t('to leave a comment')}
+        {$t('to leave a comment')}
       </div>
     {/if}
 
@@ -106,7 +106,7 @@
         {#if loading}
           <Spinner classNames="mt-0 ml-0" />
         {/if}
-        {t('Post')}
+        {$t('Post')}
       </span>
     </Button>
   </div>

@@ -16,7 +16,7 @@
 </script>
 
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
-  <Tooltip text={t('Toggle summary')} fixed>
+  <Tooltip text={$t('Toggle summary')} fixed>
     <div
       class="focusOutline-sm flex flex-row items-center justify-between rounded-md py-4 px-4"
       role="button"
@@ -39,7 +39,7 @@
     >
       <div class="flex w-fit flex-row items-center justify-start gap-3">
         <Icon icon="List" />
-        <h3 class="font-lg select-none font-bold">{t('Summary')}</h3>
+        <h3 class="font-lg select-none font-bold">{$t('Summary')}</h3>
       </div>
       {#if floating}
         <div class="flex w-fit flex-row items-center justify-center gap-3 ">

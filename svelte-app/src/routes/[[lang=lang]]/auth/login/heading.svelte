@@ -2,7 +2,6 @@
   import PageHeading from '$components/headings/page-heading.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Icon from '$components/icon.svelte';
-  import { t } from '$i18n';
 
   export let title: string,
     text: string,

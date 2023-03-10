@@ -1,6 +1,6 @@
 <script lang="ts">
   import ListItem from '$components/lists/blog-item.svelte';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import { setupNavigation } from '$helpers/navigation';
@@ -12,23 +12,33 @@
   import type { PostDocument } from '$types';
   import ListSection from '$components/lists/blog-section.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import type { Unsubscriber } from 'svelte/store';
+
+  let unsubscribers = [] as Unsubscriber[];
 
   onMount(() => {
-    setupNavigation($page?.url?.pathname);
+    unsubscribers = [
+      t.subscribe((_) => {
+        setupNavigation($page?.url?.pathname);
+      })
+    ];
+  });
+
+  onDestroy(() => {
+    unsubscribers.forEach((unsub) => unsub());
   });
 
   export let data: PageData;
 
   let postsExceptPinned: PostDocument[] = [];
 
-  const pageTitle = `kio.dev | ${t('Thoughts').toLowerCase()}`,
-    description = t('Thoughts about tech, design, and development');
-
   $: ({ pinned, posts } = data);
   $: posts?.data &&
     (postsExceptPinned = posts?.data?.filter(
       (post) => post._id !== pinned?.data?._id
     ));
+  $: pageTitle = `kio.dev | ${$t('Thoughts').toLowerCase()}`;
+  $: description = $t('Thoughts about tech, design, and development');
 </script>
 
 <svelte:head>
@@ -46,11 +56,11 @@
 </svelte:head>
 
 {#if pinned?.data}
-  <IconHeader icon="Pin" text={t('Pinned')} classNames="mb-3" />
+  <IconHeader icon="Pin" text={$t('Pinned')} classNames="mb-3" />
   <ListItem post={pinned.data} />
 {/if}
 
-<IconHeader icon="bulletlist" text={t('Recent')} />
+<IconHeader icon="bulletlist" text={$t('Recent')} />
 {#if posts?.data?.length}
   <div class="flex flex-col">
     <ListSection posts={postsExceptPinned} />
@@ -66,10 +76,10 @@
     <a
       href="/blog/1"
       class="mt-8 block w-fit"
-      aria-label={t('View more posts')}
+      aria-label={$t('View more posts')}
       on:click={() => SFX.click.play()}
     >
-      <IconHeader icon="ArrowRight" text={t('View more')} />
+      <IconHeader icon="ArrowRight" text={$t('View more')} />
     </a>
   </Hoverable>
 {/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navigating } from '$app/stores';
   import { onMount, onDestroy } from 'svelte';
+  import { isDesktop } from '$helpers/responsive';
   import type { Unsubscriber } from 'svelte/store';
 
   export let element: HTMLDivElement;
@@ -22,13 +23,17 @@
   onDestroy(() => unsubscribe?.());
 </script>
 
-<div tabindex="-1" bind:this={element}>
+<div class:isDesktop={$isDesktop} tabindex="-1" bind:this={element}>
   <slot />
 </div>
 
 <style lang="scss">
   div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-2xl bg-stone-100 p-8 transition-colors md:rounded-t-none;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-100 p-8 transition-colors;
+
+    &:not(.isDesktop) {
+      @apply rounded-t-2xl;
+    }
   }
 
   :global(.dark) {

@@ -38,7 +38,7 @@ export const formatDate = (
       );
       const { years, months, days } = dur.toObject();
 
-      return t('{duration} ago', {
+      return get(t)('{duration} ago', {
         duration: dur
           .shiftTo(
             years ? 'years' : months ? 'months' : days ? 'days' : 'hours'

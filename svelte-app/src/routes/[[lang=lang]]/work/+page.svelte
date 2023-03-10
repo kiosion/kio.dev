@@ -19,8 +19,8 @@
 
   export let data: PageData;
 
-  const pageTitle = `kio.dev | ${t('My work')}`,
-    description = t(
+  const pageTitle = `kio.dev | ${$t('My work')}`,
+    description = $t(
       'A collection of my work, open-source contributions, and personal projects'
     );
 
@@ -41,12 +41,12 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<IconHeader icon="briefcase" text={t("Where I've worked")} />
+<IconHeader icon="briefcase" text={$t("Where I've worked")} />
 <div class="ml-2 w-full max-w-[42rem]">
   <Timeline data={about?.data.timeline} />
 </div>
 
-<IconHeader icon="bulletlist" text={t("What I've worked on")} />
+<IconHeader icon="bulletlist" text={$t("What I've worked on")} />
 {#if pinned?.data}
   <div class="mt-4">
     <ListItem project={pinned.data} />
@@ -74,10 +74,10 @@
     <a
       href="/work/1"
       class="mt-8 block w-fit"
-      aria-label={t('View more projects')}
+      aria-label={$t('View more projects')}
       on:click={() => SFX.click.play()}
     >
-      <IconHeader icon="ArrowRight" text={t('View more')} />
+      <IconHeader icon="ArrowRight" text={$t('View more')} />
     </a>
   </Hoverable>
 {/if}

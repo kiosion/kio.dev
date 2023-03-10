@@ -17,11 +17,11 @@
 </script>
 
 <Heading
-  title={t('Authenticated')}
+  title={$t('Authenticated')}
   text={provider
-    ? t('Successfully authenticated with {provider}', {
+    ? $t('Successfully authenticated with {provider}', {
         provider: provider.charAt(0).toUpperCase() + provider.substring(1)
       })
-    : t('Successfully authenticated')}
+    : $t('Successfully authenticated')}
   loading
 />

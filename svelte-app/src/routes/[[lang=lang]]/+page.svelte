@@ -4,24 +4,35 @@
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { pageHeading } from '$stores/navigation';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { t } from '$i18n';
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import type { PageData } from './$types';
+  import type { Unsubscriber } from 'svelte/store';
 
-  const pageTitle = `kio.dev | ${t('Index')}`,
-    description = t('A bit about me, my work, and what I do');
+  let subscribers = [] as Unsubscriber[];
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
-    pageHeading.set(pageTitle);
+
+    subscribers = [
+      t.subscribe((_) => {
+        pageHeading.set(`kio.dev | ${$t('Index')}`);
+      })
+    ];
+  });
+
+  onDestroy(() => {
+    subscribers.forEach((unsub) => unsub());
   });
 
   export let data: PageData;
 
   $: about = data.about?.data;
+  $: pageTitle = `kio.dev | ${$t('Index')}`;
+  $: description = $t('A bit about me, my work, and what I do');
 </script>
 
 <svelte:head>
@@ -41,7 +52,7 @@
 <div data-test-route="about">
   <ContentWrapper fixed>
     {#if about}
-      <IconHeader icon="User" text={t('About me')} />
+      <IconHeader icon="User" text={$t('About me')} />
       <div>
         <PortableText text={about.bio} />
       </div>
@@ -49,7 +60,7 @@
         <Divider />
       {/if}
       {#if about.now}
-        <IconHeader icon="Clock" text={t("What I'm up to now")} />
+        <IconHeader icon="Clock" text={$t("What I'm up to now")} />
         <div>
           <PortableText text={about.now} />
         </div>

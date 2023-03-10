@@ -19,9 +19,8 @@ COPY lib lib
 RUN echo "export SANITY_TOKEN=$SANITY_TOKEN" > .env &&\
     echo "export SANITY_PROJECT_ID=$SANITY_PROJECT_ID" >> .env &&\
     echo "export API_TOKEN=$API_TOKEN" >> .env &&\
-    echo "export GCLOUD_KEY=$GCLOUD_KEY" >> .env
-
-RUN ./release \
+    echo "export GCLOUD_KEY=$GCLOUD_KEY" >> .env &&\
+    ./release \
         --project_id $SANITY_PROJECT_ID \
         --sanity_token $SANITY_TOKEN \
         --api_token $API_TOKEN \

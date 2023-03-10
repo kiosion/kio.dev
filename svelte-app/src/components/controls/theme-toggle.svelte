@@ -8,10 +8,10 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={t('Toggle theme')} delay={150} fixed>
+  <Tooltip text={$t('Toggle theme')} delay={150} fixed>
     <button
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
-      aria-label={t('Toggle theme')}
+      aria-label={$t('Toggle theme')}
       data-test-id="theme-toggle"
       data-test-state={$theme}
       tabindex="0"

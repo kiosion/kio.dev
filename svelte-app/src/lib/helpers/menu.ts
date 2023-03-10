@@ -24,7 +24,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
           return [
             {
               icon: 'MailArrowRight',
-              text: `${t('Mail')} ${
+              text: `${get(t)('Mail')} ${
                 (target as HTMLAnchorElement).href.split(':')?.[1]
               }`,
               action: () =>
@@ -43,21 +43,14 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         }
         return [
           {
-            icon: 'Link',
-            text: `${t('Go to')} '${(target as HTMLAnchorElement).href}'`,
-            action: () =>
-              window.open((target as HTMLAnchorElement).href, '_self')
-          },
-          {},
-          {
             icon: 'Open',
-            text: t('Open link in new tab'),
+            text: get(t)('Open link in new tab'),
             action: () =>
               window.open((target as HTMLAnchorElement).href, '_blank')
           },
           {
             icon: 'Open',
-            text: t('Open link in new window'),
+            text: get(t)('Open link in new window'),
             action: () =>
               window.open(
                 (target as HTMLAnchorElement).href,
@@ -67,8 +60,15 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
           },
           {},
           {
+            icon: 'Link',
+            text: `${get(t)('Go to')} '${(target as HTMLAnchorElement).href}'`,
+            action: () =>
+              window.open((target as HTMLAnchorElement).href, '_self')
+          },
+          {},
+          {
             icon: 'Copy',
-            text: t('Copy link address'),
+            text: get(t)('Copy link address'),
             action: () =>
               navigator.clipboard.writeText((target as HTMLAnchorElement).href)
           }
@@ -77,13 +77,13 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         return [
           {
             icon: 'Open',
-            text: t('Open image in new tab'),
+            text: get(t)('Open image in new tab'),
             action: () =>
               window.open((target as HTMLImageElement).src, '_blank')
           },
           {
             icon: 'Open',
-            text: t('Open image in new window'),
+            text: get(t)('Open image in new window'),
             action: () =>
               window.open(
                 (target as HTMLImageElement).src,
@@ -94,7 +94,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {},
           {
             icon: 'Save',
-            text: t('Save image'),
+            text: get(t)('Save image'),
             action: () =>
               window.open(
                 `${(target as HTMLImageElement).src}&download`,
@@ -103,7 +103,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
           },
           {
             icon: 'Copy',
-            text: t('Copy image address'),
+            text: get(t)('Copy image address'),
             action: () =>
               navigator.clipboard.writeText((target as HTMLImageElement).src)
           }
@@ -112,7 +112,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         return [
           {
             icon: 'Copy',
-            text: t('Copy code block'),
+            text: get(t)('Copy code block'),
             action: () => navigator.clipboard.writeText(target.innerText)
           }
         ];
@@ -121,29 +121,29 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
         return [
           {
             icon: 'ArrowLeft',
-            text: t('Back'),
+            text: get(t)('Back'),
             action: () => history.back()
           },
           {
             icon: 'ArrowRight',
-            text: t('Forward'),
+            text: get(t)('Forward'),
             action: () => history.forward()
           },
           {
             icon: 'Reload',
-            text: t('Reload'),
+            text: get(t)('Reload'),
             action: () => location.reload()
           },
           {},
           {
             icon: 'Cast',
-            text: t('Cast'),
+            text: get(t)('Cast'),
             action: () => window.open('https://youtu.be/dQw4w9WgXcQ', '_blank')
           },
           {},
           {
             icon: 'Code',
-            text: t('View page source'),
+            text: get(t)('View page source'),
             action: () =>
               window.open('https://github.com/kiosion/kio.dev', '_blank')
           }
@@ -156,7 +156,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
     opts.unshift({});
     opts.unshift({
       icon: 'Copy',
-      text: t('Copy selection'),
+      text: get(t)('Copy selection'),
       action: () => navigator.clipboard.writeText(selection)
     });
   }

@@ -72,15 +72,33 @@
         </Breakpoints>
       </svelte:fragment>
       <svelte:fragment slot="title">
-        <h1
-          class="mb-4 h-fit w-fit font-display text-7xl font-bold leading-none"
-        >
-          {data.title}
-        </h1>
+        <Breakpoints queries={DEFAULT_BREAKPOINTS}>
+          <svelte:fragment slot="lg">
+            <h1
+              class="mb-4 h-fit w-fit font-display text-7xl font-bold leading-none"
+            >
+              {data.title}
+            </h1>
+          </svelte:fragment>
+          <svelte:fragment slot="sm">
+            <h1
+              class="mb-4 h-fit w-fit font-display text-4xl font-bold leading-none"
+            >
+              {data.title}
+            </h1>
+          </svelte:fragment>
+        </Breakpoints>
       </svelte:fragment>
       <svelte:fragment slot="tags">
         {#if data.tags && data.tags.length > 0}
-          <Tags {model} data={data.tags} size="lg" />
+          <Breakpoints queries={DEFAULT_BREAKPOINTS}>
+            <svelte:fragment slot="lg">
+              <Tags {model} data={data.tags} size="lg" />
+            </svelte:fragment>
+            <svelte:fragment slot="sm">
+              <Tags {model} data={data.tags} size="sm" />
+            </svelte:fragment>
+          </Breakpoints>
         {/if}
       </svelte:fragment>
       <svelte:fragment slot="desc">
@@ -94,10 +112,10 @@
         <div class="mt-6 flex flex-row items-center justify-start">
           {#if data.author?.name}
             <Hoverable>
-              <Tooltip text={t('View author')}>
+              <Tooltip text={$t('View author')}>
                 <button
                   class="focusOutline flex flex-row items-center gap-2 rounded-sm font-mono text-base"
-                  on:click={() => goto(linkTo('/about'))}
+                  on:click={() => goto($linkTo('/about'))}
                   tabindex="0"
                 >
                   <div class="aspect-square h-8">
@@ -121,7 +139,7 @@
                     {/if}
                   </div>
                   <p class="w-fit whitespace-nowrap">
-                    {t('By {author}', {
+                    {$t('By {author}', {
                       author: authorName
                     })}
                   </p>
@@ -132,7 +150,7 @@
           {:else if external}
             <div class="items-center font-mono text-base">
               <p class="w-fit whitespace-nowrap">
-                {t('By {author}', {
+                {$t('By {author}', {
                   author: authorName
                 })}
               </p>
@@ -145,12 +163,12 @@
               on:click={() => switchDate()}
               tabindex="0"
             >
-              {date ? date : t('Unknown date')}
+              {date ? date : $t('Unknown date')}
             </button>
           </Hoverable>
           <BulletPoint />
           <p class="cursor-default font-mono text-base">
-            {t('{length} min read', { length: Math.floor(readingTime / 60) })}
+            {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
           </p>
         </div>
       </svelte:fragment>

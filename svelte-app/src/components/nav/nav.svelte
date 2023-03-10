@@ -3,6 +3,7 @@
   import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
   import { t, linkTo } from '$i18n';
   import {
+    APP_LANGS,
     TOP_LEVEL_ROUTES,
     DEFAULT_BREAKPOINTS,
     BASE_ANIMATION_DURATION,
@@ -27,15 +28,7 @@
   import NavLinks from '$components/nav/nav-links.svelte';
   import type { Unsubscriber } from 'svelte/store';
   import type { AuthorDocument } from '$types';
-
-  navLinks.set(
-    TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
-      name: route.name,
-      url: linkTo(route.path),
-      active: false,
-      hovered: false
-    }))
-  );
+  import LanguageControls from '$components/controls/language-controls.svelte';
 
   interface SocialLink {
     attrs: {
@@ -54,7 +47,7 @@
   const socials =
     ($currentConfig.data?.socialLinks?.map((link) => ({
       attrs: {
-        href: linkTo(link.url),
+        href: $linkTo(link.url),
         target: link.internal ? undefined : '_blank',
         rel: link.rel?.join(' ') || undefined
       },
@@ -67,7 +60,7 @@
   const onLogoClick = () => {
     SFX.click.play();
     navOpen.set(false);
-    goto(linkTo('/'));
+    goto($linkTo('/'));
   };
 
   let typewriterName: typeof Typewriter | undefined,
@@ -85,7 +78,7 @@
 
     browser &&
       typewriterName
-        ?.typeString(t("Hi! I'm"))
+        ?.typeString($t("Hi! I'm"))
         .pauseFor(1000)
         .deleteAll()
         .typeString('Kiosion')
@@ -104,6 +97,16 @@
         } else {
           typewriterName?.deleteAll();
         }
+      }),
+      linkTo.subscribe((fn) => {
+        navLinks.set(
+          TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
+            name: route.name,
+            url: fn(route.path),
+            active: false,
+            hovered: false
+          }))
+        );
       })
     );
   });
@@ -182,6 +185,10 @@
           {#each $navLinks as link, index}
             <NavLink {link} {index} mobile />
           {/each}
+          <LanguageControls
+            classNames="-mt-2 mb-4 flex flex-row items-center justify-center font-mono text-base text-stone-800 dark:text-stone-300"
+            forNav
+          />
         </div>
       {/if}
     </nav>

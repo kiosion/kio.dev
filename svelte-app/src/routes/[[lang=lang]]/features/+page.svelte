@@ -14,7 +14,7 @@
   };
 
   navOptions.set({ down: '', up: '/' });
-  pageHeading.set(t('Features'));
+  pageHeading.set($t('Features'));
 
   export const hydrate = false,
     router = false;
@@ -33,8 +33,8 @@
 
 <div data-test-route="index" class="w-full">
   <PageHeading
-    heading={t('Features')}
-    text={t('Secret & work-in-progress features')}
+    heading={$t('Features')}
+    text={$t('Secret & work-in-progress features')}
     icon="AbTesting"
   />
   <div class="mt-6">
@@ -79,9 +79,9 @@
     <h3 class="text-xl font-bold">Other</h3>
     <div class="mt-4 flex flex-col items-start justify-start">
       <Button
-        href={linkTo(`/auth/login?redirect=${linkTo($page.url.pathname)}`)}
+        href={$linkTo(`/auth/login?redirect=${$linkTo($page.url.pathname)}`)}
       >
-        {t('Log in with {provider}', { provider: 'GitHub' })}
+        {$t('Log in with {provider}', { provider: 'GitHub' })}
       </Button>
     </div>
   </div>

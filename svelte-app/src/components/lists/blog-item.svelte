@@ -20,7 +20,7 @@
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {
       SFX.click.play();
-      goto(linkTo(`/blog/${post.slug.current}`)).catch(() => undefined);
+      goto($linkTo(`/blog/${post.slug.current}`)).catch(() => undefined);
     }
   };
 
@@ -51,24 +51,11 @@
     role="button"
     aria-label="Post - {post.title}"
     data-test-id="list-item"
-    href={linkTo(`/blog/${post.slug.current}`)}
+    href={$linkTo(`/blog/${post.slug.current}`)}
     data-sveltekit-preload-code
     on:click={() => SFX.click.play()}
     on:keydown={onKey}
   >
-    <!-- <a
-    class="justify-stretch flex h-fit w-full flex-col items-stretch gap-y-1.5 border-t border-b py-3 px-6 pl-5 {hovered
-      ? 'border-stone-400/80 dark:border-stone-500/80 '
-      : 'border-transparent'} focusOutline transition-colors"
-    tabindex="0"
-    role="button"
-    aria-label="Post - {post.title}"
-    data-test-id="list-item"
-    href={linkTo(`/blog/${post.slug.current}`)}
-    data-sveltekit-preload-code
-    on:click={() => SFX.click.play()}
-    on:keydown={onKey}
-  > -->
     <h1
       class="w-full text-ellipsis font-display text-xl font-bold decoration-[2px] underline-offset-[3px] line-clamp-1 {hovered
         ? 'underline'
@@ -78,21 +65,21 @@
     </h1>
     {#if post.desc}
       <p
-        class="my-0.5 mr-4 w-fit overflow-hidden text-ellipsis font-sans text-base text-gray-700 line-clamp-1 dark:text-gray-200 md:line-clamp-2"
+        class="my-0.5 mr-4 w-fit overflow-hidden text-ellipsis font-sans text-base text-stone-700 line-clamp-1 dark:text-stone-200 md:line-clamp-2"
       >
         {post.desc}
       </p>
     {/if}
     <div
-      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-gray-700 dark:text-gray-200"
+      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-stone-700 dark:text-stone-200"
     >
       {#if date}
         <p>{date}</p>
-        <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
+        <BulletPoint colors="bg-stone-600 dark:bg-stone-300" />
       {/if}
-      <p>{t('{length} min read', { length: Math.floor(readingTime / 60) })}</p>
+      <p>{$t('{length} min read', { length: Math.floor(readingTime / 60) })}</p>
       {#if post.tags && post.tags.length > 0}
-        <BulletPoint colors="bg-gray-600 dark:bg-gray-300" />
+        <BulletPoint colors="bg-stone-600 dark:bg-stone-300" />
         <Tags model="post" data={post.tags} />
       {/if}
     </div>

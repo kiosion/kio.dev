@@ -13,7 +13,7 @@
     ExternalUserInfo
   } from '$types';
   import type { Heading } from '$helpers/pt';
-  import { t } from '$lib/helpers/i18n';
+  import { t } from '$i18n';
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
@@ -22,13 +22,6 @@
     comments: ResDataMany<Comment> | undefined = undefined;
 
   const isPost = model === 'post',
-    pageName = `${isPost ? t('Thoughts') : t('My work')}${
-      data?.title ? ` | ${data.title}` : ''
-    }`,
-    pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`,
-    pageDescription = data?.desc
-      ? data.desc
-      : t(`A ${isPost ? 'post' : 'project'} on kio.dev`),
     allTags =
       (((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
         if (!tags) {
@@ -48,6 +41,13 @@
 
   $: $page && ScrollTo($page);
   $: comments ??= { data: [], meta: {} } as ResDataMany<Comment>;
+  $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
+    data?.title ? ` | ${data.title}` : ''
+  }`;
+  $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
+  $: pageDescription = data?.desc
+    ? data.desc
+    : $t(`A ${isPost ? 'post' : 'project'} on kio.dev`);
 </script>
 
 <svelte:head>
@@ -65,7 +65,7 @@
   <meta property="og:title" content={pageTitle} />
   <meta
     property="og:description"
-    content={data?.desc ? data.desc : t('A post on kio.dev')}
+    content={data?.desc ? data.desc : $t('A post on kio.dev')}
   />
   <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content={pageTitle} />

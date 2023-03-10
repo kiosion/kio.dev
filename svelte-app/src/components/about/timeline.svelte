@@ -23,7 +23,7 @@
         return `${new Intl.DateTimeFormat($currentLang, {
           month: 'long',
           year: 'numeric'
-        }).format(startDate)} ${t('to')} ${t('now')}`;
+        }).format(startDate)} ${$t('to')} ${$t('now')}`;
       }
 
       if (startDate.getFullYear() === endDate.getFullYear()) {
@@ -31,7 +31,7 @@
           return `${new Intl.DateTimeFormat($currentLang, {
             month: 'long',
             day: 'numeric'
-          }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat(
+          }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
             $currentLang,
             {
               day: 'numeric',
@@ -41,7 +41,7 @@
         }
         return `${new Intl.DateTimeFormat($currentLang, {
           month: 'long'
-        }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat(
+        }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
           $currentLang,
           {
             month: 'long'
@@ -52,12 +52,15 @@
       return `${new Intl.DateTimeFormat($currentLang, {
         month: 'long',
         year: 'numeric'
-      }).format(startDate)} ${t('to')} ${new Intl.DateTimeFormat($currentLang, {
-        month: 'long',
-        year: 'numeric'
-      }).format(endDate)}`;
+      }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
+        $currentLang,
+        {
+          month: 'long',
+          year: 'numeric'
+        }
+      ).format(endDate)}`;
     } catch (_) {
-      return t('Invalid date');
+      return $t('Invalid date');
     }
   };
 
@@ -88,8 +91,8 @@
             <Hoverable bind:hovered={data[i].hovered}>
               <Tooltip
                 text={selected === i
-                  ? t('Click to hide details')
-                  : t('Click to show details')}
+                  ? $t('Click to hide details')
+                  : $t('Click to show details')}
                 position="bottom"
                 disable={!item.body}
               >

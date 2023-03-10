@@ -22,7 +22,7 @@
     if (data.mode === 'authed') {
       redirect ||= data.redirect;
       setTimeout(() => {
-        goto(linkTo(redirect));
+        goto($linkTo(redirect));
       }, 1500);
     }
   });
@@ -31,11 +31,11 @@
 </script>
 
 {#if data.mode === 'authed'}
-  <Heading title={t('Logged in')} text={t('Redirecting')} loading />
+  <Heading title={$t('Logged in')} text={$t('Redirecting')} loading />
 {:else}
   <Heading
-    title={t('Log in')}
-    text={t('Authenticate with one of the following providers')}
+    title={$t('Log in')}
+    text={$t('Authenticate with one of the following providers')}
   />
   <div class="mx-auto mt-8 w-fit max-w-[80rem]">
     <ul class="flex w-64 flex-col gap-4">
@@ -44,7 +44,7 @@
           class="flex w-full flex-row items-center justify-between rounded-lg bg-stone-300/50 p-4 dark:bg-stone-900/50"
         >
           {provider.name.charAt(0).toUpperCase() + provider.name.slice(1)}
-          <Button href={provider.url}>{t('Log in')}</Button>
+          <Button href={provider.url}>{$t('Log in')}</Button>
         </li>
       {/each}
     </ul>

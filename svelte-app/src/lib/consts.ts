@@ -45,7 +45,7 @@ export const APP_ROUTES = [
   },
   {
     name: 'Meta + Contact',
-    path: '/more',
+    path: '/etc',
     hidden: false
   }
 ] as AppRoute[];
@@ -70,7 +70,7 @@ export const ROUTE_ORDER = [
   'work/*',
   'work/*/*',
   'work/+/*',
-  'more'
+  'etc'
 ];
 
 export const BASE_TRANSITION_DURATION = 200;

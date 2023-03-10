@@ -1,6 +1,6 @@
 <script lang="ts">
   import { setContext, createEventDispatcher } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { scale } from 'svelte/transition';
   import { key } from './menu';
   import { setState } from '$lib/helpers/menu';
 
@@ -55,11 +55,22 @@
 />
 
 <div
-  class="fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg bg-stone-300 py-2 text-stone-900 shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-stone-500/50 dark:bg-stone-400 dark:shadow-stone-500/20"
   style="top: {y}px; left: {x}px"
-  in:fade={{ duration: 100 }}
-  out:fade={{ duration: 100, delay: 10 }}
+  in:scale={{ duration: 100, start: 0.98 }}
+  out:scale={{ duration: 100, delay: 10, start: 0.98 }}
   bind:this={menuElement}
 >
   <slot />
 </div>
+
+<style lang="scss">
+  div {
+    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg bg-stone-200 py-2 text-stone-900 shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-stone-500/50;
+  }
+
+  :global(.dark) {
+    div {
+      @apply bg-stone-700 text-stone-200 shadow-stone-500/40;
+    }
+  }
+</style>

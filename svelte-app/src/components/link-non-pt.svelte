@@ -13,7 +13,7 @@
 <Hoverable bind:hovered>
   <Tooltip text={`Go to '${href}'`} position="bottom" disable={external}>
     <a
-      href={linkTo(href)}
+      href={$linkTo(href)}
       {target}
       rel={external ? 'noopener noreferrer' : undefined}
       class="underlined from-violet-300 {hovered

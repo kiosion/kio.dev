@@ -43,7 +43,7 @@ export const setupNavigation = (route: string): void => {
       });
       break;
   }
-  pageHeading.set(`kio.dev | ${t(TOP_LEVEL_ROUTES[index].name)}`);
+  pageHeading.set(`kio.dev | ${get(t)(TOP_LEVEL_ROUTES[index].name)}`);
 };
 
 let prevPath: string;

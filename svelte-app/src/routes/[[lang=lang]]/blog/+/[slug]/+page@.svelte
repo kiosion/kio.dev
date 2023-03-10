@@ -9,7 +9,7 @@
   import EmptyContent from '$components/empty-content.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
-  pageHeading.set(`${t('Blog')} | ${t('Tag')} | ${pageTitle}`);
+  pageHeading.set(`${$t('Blog')} | ${$t('Tag')} | ${pageTitle}`);
   navOptions.set({ down: '', up: '/blog' });
 
   export let data: PageData;
@@ -19,14 +19,14 @@
 
 <svelte:head>
   <title>
-    kio.dev | {t('Blog').toLowerCase()} | {pageTitle}
+    kio.dev | {$t('Blog').toLowerCase()} | {pageTitle}
   </title>
 </svelte:head>
 
 <div data-test-route="tag" class="w-full">
   <IconHeader
     icon="label"
-    text={t("Recent '{tag}' posts", { tag: pageTitle })}
+    text={$t("Recent '{tag}' posts", { tag: pageTitle })}
     classNames="mb-4"
   />
   <div class="pb-20">

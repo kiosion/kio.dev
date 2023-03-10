@@ -131,7 +131,7 @@
 >
   {#if showClipboard && !$navigating}
     <Hoverable>
-      <Tooltip text={t('Copy to clipboard')} position="top">
+      <Tooltip text={$t('Copy to clipboard')} position="top">
         {#key copied}
           <button
             class="copyButton focusOutline-sm"

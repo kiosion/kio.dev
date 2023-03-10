@@ -8,7 +8,7 @@
   import { t } from '$i18n';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
-  pageHeading.set(`${t('My work')} | Tag | ${pageTitle}`);
+  pageHeading.set(`${$t('My work')} | Tag | ${pageTitle}`);
   navOptions.set({ down: '', up: '/work' });
 
   export let data: PageData;
@@ -24,7 +24,7 @@
 
 <IconHeader
   icon="label"
-  text={t("Recent '{tag}' work", { tag: pageTitle })}
+  text={$t("Recent '{tag}' work", { tag: pageTitle })}
   classNames="mb-4"
 />
 <div class="pb-20">

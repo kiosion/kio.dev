@@ -12,7 +12,7 @@
     data: DocumentTags[];
 
   const tagLink = (slug: string) =>
-    linkTo(`/${model === 'post' ? 'blog' : 'work'}/+/${slug}`);
+    $linkTo(`/${model === 'post' ? 'blog' : 'work'}/+/${slug}`);
 
   $: tagClass = size === 'sm' ? 'categoryTag-sm' : 'categoryTag';
 </script>

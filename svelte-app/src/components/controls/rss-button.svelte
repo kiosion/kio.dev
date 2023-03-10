@@ -7,10 +7,10 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={t('Subscribe to RSS')} delay={150} fixed>
+  <Tooltip text={$t('Subscribe to RSS')} delay={150} fixed>
     <button
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400"
-      aria-label={t('Subscribe to RSS Feed')}
+      aria-label={$t('Subscribe to RSS Feed')}
       data-test-id="rss-button"
       tabindex="0"
       on:click={() => {

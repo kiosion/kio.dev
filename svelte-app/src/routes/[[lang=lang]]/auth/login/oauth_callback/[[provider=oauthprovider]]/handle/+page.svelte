@@ -11,17 +11,17 @@
 
   onMount(() => {
     if (data.error === null && data.jwt) {
-      goto(linkTo(data.redirect));
+      goto($linkTo(data.redirect));
     }
   });
 </script>
 
 {#if data.error}
   <Heading
-    title={t('Error')}
-    text={data.error || t('An error occurred authenticating')}
+    title={$t('Error')}
+    text={data.error || $t('An error occurred authenticating')}
   />
-  <Button href={linkTo('/auth/login')}>{t('Back to login')}</Button>
+  <Button href={$linkTo('/auth/login')}>{$t('Back to login')}</Button>
 {:else}
-  <Heading title={t('Authenticating')} text={t('Redirecting')} loading />
+  <Heading title={$t('Authenticating')} text={$t('Redirecting')} loading />
 {/if}

@@ -8,7 +8,7 @@
   onMount(() => {
     if (data.status === 'success') {
       setTimeout(() => {
-        goto(linkTo('/'));
+        goto($linkTo('/'));
       }, 1500);
     }
   });
@@ -20,16 +20,16 @@
 
 <div class="relative flex flex-col gap-3">
   {#if status === 'error'}
-    <h1 class="font-display text-7xl">{t('Error')}</h1>
+    <h1 class="font-display text-7xl">{$t('Error')}</h1>
     <p class="font-code text-base">
-      {t('Sorry, something went wrong while logging you out.')}
-      {t('Please try again.')}
+      {$t('Sorry, something went wrong while logging you out.')}
+      {$t('Please try again.')}
     </p>
   {:else}
-    <h1 class="font-display text-7xl">{t('Logged out')}</h1>
+    <h1 class="font-display text-7xl">{$t('Logged out')}</h1>
     <span class="flex flex-row items-center gap-3">
       <Spinner />
-      <p class="font-code text-base">{t('Redirecting')}...</p>
+      <p class="font-code text-base">{$t('Redirecting')}...</p>
     </span>
   {/if}
 </div>

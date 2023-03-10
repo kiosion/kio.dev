@@ -1,7 +1,7 @@
 import EN from '$langs/en.json';
 import FR from '$langs/fr.json';
 import { page } from '$app/stores';
-import { get, writable } from 'svelte/store';
+import { get, writable, readable } from 'svelte/store';
 import Logger from '$lib/logger';
 import { DEFAULT_APP_LANG, APP_LANGS } from '$lib/consts';
 
@@ -54,7 +54,7 @@ const getKey = <T extends keyof typeof EN>(
   }
 };
 
-const translate = (key: string, params?: Record<string, unknown>): string => {
+const _translate = (key: string, params?: Record<string, unknown>): string => {
   const lang = get(currentLang) || DEFAULT_APP_LANG;
 
   // For any provided params, replace the corresponding placeholders if any
@@ -75,7 +75,17 @@ const translate = (key: string, params?: Record<string, unknown>): string => {
     : notFound(key, lang || DEFAULT_APP_LANG);
 };
 
-const linkTo = (path: string, lang?: string): string => {
+// eslint-disable-next-line func-call-spacing
+const translate = readable<
+  (key: string, params?: Record<string, unknown>) => string
+>(_translate, (set) => {
+  const unsubscribe = currentLang.subscribe(() => {
+    set(_translate);
+  });
+  return unsubscribe;
+});
+
+const _linkTo = (path: string, lang?: string): string => {
   if (path.match(/(?:^(http|https|ftp|ssh)|^[^/].*\.([a-z]{2,6})).*?$/gim)) {
     return path;
   }
@@ -96,5 +106,15 @@ const linkTo = (path: string, lang?: string): string => {
     ? `/${lang}${path.startsWith('/') ? path : `/${path}`}`
     : path;
 };
+
+const linkTo = readable<(path: string, lang?: string) => string>(
+  _linkTo,
+  (set) => {
+    const unsubscribe = currentLang.subscribe(() => {
+      set(_linkTo);
+    });
+    return unsubscribe;
+  }
+);
 
 export { translate as t, linkTo, check, isLocalized, currentLang };

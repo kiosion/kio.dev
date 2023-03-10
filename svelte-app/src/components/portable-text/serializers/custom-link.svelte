@@ -17,7 +17,7 @@
 
 <Hoverable bind:hovered>
   <a
-    href={href ? linkTo(href) : '#'}
+    href={href ? $linkTo(href) : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
     class="focusOutline-sm"

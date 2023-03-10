@@ -64,7 +64,7 @@
     class:first={index === 0}
     class:last={index === $navLinks.length - 1}
     class:active={isActive || link.hovered}
-    aria-label={t(link.name)}
+    aria-label={$t(link.name)}
     href={link.url}
     role="menuitem"
     tabindex="0"
@@ -77,7 +77,7 @@
       }
     }}
   >
-    {t(link.name)}
+    {$t(link.name)}
     {#if mobile && (isActive || link.hovered)}
       <span
         class="indicator"

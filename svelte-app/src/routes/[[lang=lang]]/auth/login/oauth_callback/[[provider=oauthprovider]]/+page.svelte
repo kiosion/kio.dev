@@ -17,7 +17,7 @@
       setTimeout(
         () =>
           goto(
-            linkTo(
+            $linkTo(
               `/auth/login/oauth_callback/${
                 data.provider ? data.provider + '/' : ''
               }handle?code=${data.code}`
@@ -33,19 +33,19 @@
 
 {#if isErrored}
   <Heading
-    title={t('Error')}
-    text={t(
+    title={$t('Error')}
+    text={$t(
       'Sorry, something went wrong handling your login. Please try again.'
     )}
   />
-  <Button href={linkTo('/auth/login')}>{t('Back to login')}</Button>
+  <Button href={$linkTo('/auth/login')}>{$t('Back to login')}</Button>
 {:else}
   <Heading
-    title={t('Authenticating')}
-    text="{t('Verifying your login with {provider}', {
+    title={$t('Authenticating')}
+    text="{$t('Verifying your login with {provider}', {
       provider: data.provider
         ? data.provider.charAt(0).toUpperCase() + data.provider.substring(1)
-        : t('the provider')
+        : $t('the provider')
     })}..."
     loading
   />

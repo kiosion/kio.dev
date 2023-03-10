@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { t } from '$i18n';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { setupNavigation } from '$helpers/navigation';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import EmptyContent from '$components/empty-content.svelte';
@@ -10,17 +10,29 @@
   import type { PageData } from './$types';
   import LinkNonPt from '$components/link-non-pt.svelte';
   import Divider from '$components/divider.svelte';
+  import type { Unsubscriber } from 'svelte/store';
+
+  let subscribers = [] as Unsubscriber[];
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
+
+    subscribers = [
+      t.subscribe((fn) => {
+        setupNavigation($page?.url?.pathname);
+      })
+    ];
   });
 
-  const pageTitle = `kio.dev | ${t('Meta + Contact').toLowerCase()}`,
-    description = t('A peek into my current adventures in tech and beyond');
+  onDestroy(() => {
+    subscribers.forEach((unsub) => unsub());
+  });
 
   export let data: PageData;
 
   $: about = data?.about?.data;
+  $: pageTitle = `kio.dev | ${$t('Meta + Contact').toLowerCase()}`;
+  $: description = $t('A peek into my current adventures in tech and beyond');
 </script>
 
 <svelte:head>
@@ -40,17 +52,17 @@
 <div data-test-route="meta">
   <ContentWrapper fixed>
     {#if about}
-      <IconHeader icon="Message" text={t('Say hello')} />
+      <IconHeader icon="Message" text={$t('Say hello')} />
       <div>
         <PortableText text={about.contact} />
       </div>
 
       <Divider />
 
-      <IconHeader icon="LockOpen" text={t('PGP')} />
+      <IconHeader icon="LockOpen" text={$t('PGP')} />
       <div>
         <p>
-          {t("Want to send a secure message my way? Here's my main PGP key:")}
+          {$t("Want to send a secure message my way? Here's my main PGP key:")}
           <LinkNonPt href="/pgp.txt" target="_blank"
             >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
           >
@@ -59,7 +71,7 @@
 
       <Divider />
 
-      <IconHeader icon="InfoBox" text={t('Meta')} />
+      <IconHeader icon="InfoBox" text={$t('Meta')} />
       <div>
         <PortableText text={about.body} />
       </div>

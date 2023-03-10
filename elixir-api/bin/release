@@ -20,7 +20,7 @@ if [ -z "$ENV" ]; then
   exit 1
 fi
 
-REQ_ARGS=(SANITY_PROJECT_ID SANITY_TOKEN API_TOKEN)
+REQ_ARGS=(SANITY_PROJECT_ID SANITY_TOKEN API_TOKEN GCLOUD_KEY)
 for arg in "${REQ_ARGS[@]}"; do
   if [ -z "${!arg}" ]; then
     echo "ERROR: Missing '$arg' argument for release"
@@ -31,23 +31,22 @@ done
 printf "Starting release build for $ENV...\r"
 cd /app
 
-touch .env && chmod +x .env
-echo "export SANITY_PROJECT_ID=${SANITY_PROJECT_ID}" >> .env
-echo "export SANITY_TOKEN=${SANITY_TOKEN}" >> .env
-echo "export API_TOKEN=${API_TOKEN}" >> .env
-echo "export GCLOUD_KEY=${GCLOUD_KEY}" >> .env
+# If env == 'dev'
+if [ "$ENV" = "dev" ]; then
+  sed -i '/{:exsync, "~> 0.2", only: :dev}/d' ./mix.exs
+  touch .env && chmod +x .env
+  echo "export SANITY_PROJECT_ID=${SANITY_PROJECT_ID}" >> .env
+  echo "export SANITY_TOKEN=${SANITY_TOKEN}" >> .env
+  echo "export API_TOKEN=${API_TOKEN}" >> .env
+  echo "export GCLOUD_KEY=${GCLOUD_KEY}" >> .env
+fi
 
-mix local.hex --if-missing --force
-mix local.rebar --if-missing --force
+mix local.hex --if-missing --force && mix local.rebar --if-missing --force
 mix deps.get --only ${ENV}
 
 for arg in "${REQ_ARGS[@]}"; do
   sed -i "s/{{$arg}}/${!arg}/g" ./config/${ENV}.env.exs
 done
-sed -i "s/{{GCLOUD_KEY}}/${GCLOUD_KEY}/g" ./config/${ENV}.env.exs
-if [ "$ENV" = "dev" ]; then
-  sed -i '/{:exsync, "~> 0.2", only: :dev}/d' ./mix.exs
-fi
 
 MIX_ENV=${ENV} mix release --overwrite
 

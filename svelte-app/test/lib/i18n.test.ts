@@ -29,11 +29,11 @@ describe('i18n', () => {
   });
 
   it('should translate a given key', () => {
-    expect(t('Work')).toBe('Work');
+    expect(get(t)('Work')).toBe('Work');
 
     currentLang.set('fr');
     expect(get(currentLang)).toBe('fr');
-    expect(t('Work')).toBe('Travail');
+    expect(get(t)('Work')).toBe('Travail');
   });
 
   it('should return given key and log error when key is not found', () => {
@@ -41,7 +41,7 @@ describe('i18n', () => {
 
     const key = 'This key does not exist!';
 
-    expect(t(key)).toBe(key);
+    expect(get(t)(key)).toBe(key);
     expect(Logger.errorOnce).toHaveBeenCalledOnce();
     expect(Logger.errorOnce).toHaveBeenCalledWith(
       `[i18n] Missing translation for key "${key}" in en.json`
@@ -49,22 +49,22 @@ describe('i18n', () => {
 
     currentLang.set('fr');
     expect(get(currentLang)).toBe('fr');
-    expect(t(key)).toBe(key);
+    expect(get(t)(key)).toBe(key);
     expect(Logger.errorOnce).toHaveBeenCalledWith(
       `[i18n] Missing translation for key "${key}" in fr.json`
     );
   });
 
   it('should transform URL to localized URL', () => {
-    expect(linkTo('/')).toBe('/en/');
+    expect(get(linkTo)('/')).toBe('/en/');
 
     currentLang.set('fr');
     expect(get(currentLang)).toBe('fr');
-    expect(linkTo('/')).toBe('/fr/');
+    expect(get(linkTo)('/')).toBe('/fr/');
   });
 
   it('should transform URL to localized URL when lang is in path', () => {
     currentLang.set('fr');
-    expect(linkTo('/')).toBe('/fr/');
+    expect(get(linkTo)('/')).toBe('/fr/');
   });
 });
