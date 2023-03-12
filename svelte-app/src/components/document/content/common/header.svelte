@@ -179,7 +179,7 @@
 
 <style lang="scss">
   .gradient {
-    @apply absolute h-full w-full from-stone-100 transition-colors;
+    @apply absolute h-full w-full from-stone-100 transition-colors duration-150;
 
     background: linear-gradient(
       to top,

@@ -184,7 +184,7 @@
   @import '../styles/colors';
 
   .codeBlock--container {
-    @apply relative my-6 -mx-2 overflow-hidden rounded-md border border-stone-400/40 transition-colors;
+    @apply relative my-6 -mx-2 overflow-hidden rounded-md border border-stone-400/40 duration-150;
 
     &.active {
       @apply border-stone-400;

@@ -33,7 +33,7 @@
 
 <style lang="scss">
   div {
-    @apply rounded-md border border-stone-400/60 bg-stone-200/40 transition-[background-color,box-shadow,color,opacity];
+    @apply rounded-md border border-stone-400/60 bg-stone-200/40 transition-[background-color,border-color];
     z-index: 5;
 
     &:hover,

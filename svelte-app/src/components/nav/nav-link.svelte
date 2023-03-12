@@ -90,7 +90,7 @@
 
 <style lang="scss">
   a {
-    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-colors;
+    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
 
     &.active {
       @apply text-stone-800;
@@ -111,7 +111,7 @@
   }
 
   .indicator {
-    @apply absolute rounded-full bg-violet-400 transition-colors;
+    @apply absolute rounded-full bg-violet-400 transition-colors duration-150;
     width: 6px;
     height: 6px;
     // Account for font leading :/

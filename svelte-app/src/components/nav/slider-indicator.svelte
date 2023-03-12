@@ -111,7 +111,7 @@
 
 <style lang="scss">
   span {
-    @apply absolute bg-violet-400  transition-colors;
+    @apply absolute bg-violet-400  transition-colors duration-150;
     right: -1px;
 
     &.hovered {

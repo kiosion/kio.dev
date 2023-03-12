@@ -46,7 +46,7 @@
       position
     )} {hovered
       ? 'border-stone-400/80 bg-stone-200/80 dark:border-stone-500/80 dark:bg-stone-700/20'
-      : 'border-stone-400/60 bg-stone-200/40 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] transition-colors"
+      : 'border-stone-400/60 bg-stone-200/40 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] transition-[background-color]"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"

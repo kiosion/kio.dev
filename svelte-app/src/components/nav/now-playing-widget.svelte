@@ -60,14 +60,14 @@
         @apply aspect-square w-12 select-none rounded-sm;
       }
       .logo {
-        @apply absolute h-5 w-5 select-none rounded-full bg-stone-100 transition-colors;
+        @apply absolute h-5 w-5 select-none rounded-full bg-stone-100 transition-[background-color];
         padding: 3px;
         bottom: -5px;
         right: -5px;
       }
     }
     div {
-      @apply flex flex-col gap-2 font-sans text-stone-700 transition-colors;
+      @apply flex flex-col gap-2 font-sans text-stone-700;
 
       .text {
         &-title {

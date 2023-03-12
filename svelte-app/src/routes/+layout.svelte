@@ -104,6 +104,16 @@
   <Loader />
 {/if}
 
+{#if !$isDesktop && $loading}
+  <span
+    class="fixed top-0 left-0 z-[50] h-[3px] w-[100vw]"
+    in:fade={{ duration: 50 }}
+    out:fade={{ duration: 50, delay: 750 }}
+  >
+    <BarLoader width="100vw" height="3px" />
+  </span>
+{/if}
+
 {#if browser && $useCustomCursor}
   <CustomCursor showLoader={$loading || !appLoaded} />
 {/if}
@@ -122,15 +132,6 @@
   <Navigation author={data.author} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
-    {#if !$isDesktop && $loading}
-      <span
-        class="absolute top-0 left-0 z-[50] h-[3px] w-[100vw]"
-        in:fade={{ duration: 50 }}
-        out:fade={{ duration: 50, delay: 750 }}
-      >
-        <BarLoader width="100vw" height="3px" />
-      </span>
-    {/if}
     <div>
       {#if appLoaded}
         <PageTransition url={data.url}>
@@ -144,7 +145,7 @@
 
 <style lang="scss">
   .main {
-    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900 transition-colors duration-150;
+    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900;
 
     div {
       @apply relative h-full w-full;
@@ -164,9 +165,5 @@
     .main {
       @apply text-stone-50;
     }
-  }
-
-  :global(body) {
-    @apply h-full w-full overflow-x-hidden transition-colors;
   }
 </style>

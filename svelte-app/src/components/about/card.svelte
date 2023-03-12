@@ -20,7 +20,7 @@
 </script>
 
 <div
-  class="flex w-full flex-col items-start justify-start gap-6 rounded-xl border border-stone-400/60 bg-stone-300/60 p-6 transition-colors dark:border-stone-500/60 dark:bg-stone-900/50"
+  class="flex w-full flex-col items-start justify-start gap-6 rounded-xl border border-stone-400/60 bg-stone-300/60 p-6 dark:border-stone-500/60 dark:bg-stone-900/50"
 >
   <div
     class="flex h-fit w-full flex-row items-center justify-start gap-6 p-3 pb-1 md:gap-7 md:p-4 md:pb-2"
@@ -43,12 +43,12 @@
     </div>
     <div class="flex h-full w-full flex-1 flex-col items-start justify-start">
       <h3
-        class="font-heading text-2xl font-bold text-stone-800 transition-colors dark:text-stone-100"
+        class="font-heading text-2xl font-bold text-stone-800 dark:text-stone-100"
       >
         {name}
       </h3>
       <h4
-        class="font-mono text-xl font-bold text-stone-600 transition-colors dark:text-stone-300"
+        class="font-mono text-xl font-bold text-stone-600 dark:text-stone-300"
       >
         @{username}
       </h4>

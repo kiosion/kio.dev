@@ -27,7 +27,7 @@
   <div
     class="flex w-full max-w-[460px] items-center justify-start gap-4 px-4 py-2 {disabled
       ? 'cursor-not-allowed bg-stone-400/50 text-stone-800 dark:bg-stone-500/50'
-      : 'cursor-pointer hover:bg-stone-300/50 dark:hover:bg-stone-500/50'} transition-colors duration-75"
+      : 'cursor-pointer hover:bg-stone-300/50 dark:hover:bg-stone-500/50'}"
     data-test-option-index={index}
     role="button"
     tabindex="0"

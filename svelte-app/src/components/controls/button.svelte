@@ -57,7 +57,7 @@
 <style lang="scss">
   a,
   button {
-    @apply rounded-md border border-stone-400 bg-violet-300/50 p-2 text-sm transition-colors ease-out;
+    @apply rounded-md border border-stone-400 bg-violet-300/50 p-2 text-sm;
 
     &.active {
       @apply border-violet-800 bg-violet-300 text-stone-900;

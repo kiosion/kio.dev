@@ -8,9 +8,9 @@
 @import 'styles/fonts';
 
 .categoryTag {
-  @apply font-code text-base capitalize px-2 py-0.5 bg-stone-200/60 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/80 rounded-md transition-colors border border-stone-400/60 dark:border-stone-500/60;
+  @apply font-code text-base capitalize px-2 py-0.5 bg-stone-200/60 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/80 rounded-md transition-[background-color,border-color] border border-stone-400/60 dark:border-stone-500/60;
   &-sm {
-    @apply font-code text-sm capitalize px-2 py-0.5 bg-stone-300/20 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/60 border border-stone-400/60 dark:border-stone-500/80 rounded-md transition-colors;
+    @apply font-code text-sm capitalize px-2 py-0.5 bg-stone-300/20 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/60 border border-stone-400/60 dark:border-stone-500/80 rounded-md transition-[background-color,border-color];
   }
 }
 
@@ -37,12 +37,15 @@ img {
 }
 
 body {
+  @apply h-full w-full overflow-x-hidden;
+
   @media (min-width: 0px) {
     background-color: $stone-800;
   }
   @media (min-width: 830px) {
     background-color: $stone-900;
   }
+
   --textColour: $stone-50;
 
   &.light {
@@ -52,6 +55,7 @@ body {
     @media (min-width: 830px) {
       background-color: $stone-100;
     }
+
     --textColour: $stone-900;
   }
   &:not(.is-loaded) {
@@ -76,10 +80,6 @@ body {
     [role='button'] {
       cursor: none !important;
     }
-  }
-
-  p, div, span, a, h1, h2, h3, h4, h5 {
-    @apply transition-colors;
   }
 }
 

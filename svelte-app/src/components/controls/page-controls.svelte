@@ -45,7 +45,7 @@
               }}
             >
               <Icon icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'} />
-              <p class="ml-4 w-fit font-code text-base transition-colors">
+              <p class="ml-4 w-fit font-code text-base">
                 {$t(actionText)} ({navOption})
               </p>
             </a>
@@ -114,7 +114,7 @@
   .page-controls {
     &-top,
     &-bottom {
-      @apply fixed right-0 left-56 z-[3] flex flex-row items-start justify-between py-6 px-7 transition-colors;
+      @apply fixed right-0 left-56 z-[3] flex flex-row items-start justify-between py-6 px-7;
 
       .pseudo-bg-shadow {
         @apply absolute left-0 right-0 z-[2] transition-[box-shadow];

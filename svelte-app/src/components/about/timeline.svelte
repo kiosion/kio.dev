@@ -99,7 +99,7 @@
                 <div
                   class="relative ml-2 mt-2 w-full rounded-lg {data[i].hovered
                     ? 'border-stone-400/80 bg-stone-300/60 dark:border-stone-500/80 dark:bg-stone-700/20'
-                    : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline overflow-hidden border px-4 py-3 transition-all"
+                    : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline overflow-hidden border px-4 py-3 transition-[background-color]"
                   on:click={() => {
                     if (item.body) {
                       selected = selected === i ? null : i;

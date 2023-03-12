@@ -29,7 +29,7 @@
 
 <style lang="scss">
   div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-100 p-8 transition-colors;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-100 p-8  duration-150;
 
     &:not(.isDesktop) {
       @apply rounded-t-2xl;
