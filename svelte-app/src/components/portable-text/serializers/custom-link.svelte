@@ -30,7 +30,7 @@
 
 <style lang="scss">
   a {
-    @apply rounded-sm from-violet-300 px-[2px] no-underline;
+    @apply rounded-sm from-violet-300 px-[2px] text-stone-800 no-underline transition-colors;
 
     background-image: linear-gradient(
       to right,
@@ -48,8 +48,11 @@
   }
 
   :global(.dark) {
-    .active {
-      @apply text-stone-800;
+    a {
+      @apply text-stone-100;
+      &.active {
+        @apply text-stone-800;
+      }
     }
   }
 </style>

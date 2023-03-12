@@ -6,7 +6,6 @@
   import { LOADING_PHRASES } from '$lib/consts';
 
   export let classes = 'transparent',
-    segments = 12,
     width = '400px';
 
   let phrase = `${
@@ -16,35 +15,34 @@
       )
     ]
   }`;
-
-  export let theme = 'dark';
 </script>
 
 <svelte:body use:classList={'overflow-y-hidden'} />
 
-<div
-  class="fixed top-0 left-0 h-[100vh] w-[100vw] {theme === 'light'
-    ? ' bg-stone-200'
-    : ' bg-stone-900'} z-[100] flex flex-col items-center justify-between"
-  data-test-id="loader-full"
-  out:fade={{ duration: 200, delay: 200 }}
->
-  <div class="mt-[calc(50vh_-_4px)] h-fit w-full" out:fade={{ duration: 200 }}>
-    <Line {width} {segments} {classes} />
-  </div>
+<div data-test-id="loader-full" out:fade={{ duration: 200, delay: 200 }}>
+  <span out:fade={{ duration: 200 }}>
+    <Line {width} {classes} />
+  </span>
   {#if phrase !== ''}
-    <div
-      class="absolute bottom-[8vh] w-fit max-w-[50%]"
+    <p
+      class="w-fit font-mono text-base text-stone-200"
       out:fade={{ duration: 200 }}
     >
-      <p
-        class="{theme === 'light'
-          ? ' text-stone-800'
-          : ' text-stone-200'} w-fit font-mono text-base"
-        data-test-id="loader-full-phrase"
-      >
-        {phrase}
-      </p>
-    </div>
+      {phrase}
+    </p>
   {/if}
 </div>
+
+<style lang="scss">
+  div {
+    @apply fixed top-0 left-0 z-[100] grid grid-rows-3 gap-4 bg-stone-900;
+
+    height: 100vh;
+    width: 100vw;
+  }
+
+  p {
+    @apply self-center justify-self-center;
+    grid-row: 3;
+  }
+</style>

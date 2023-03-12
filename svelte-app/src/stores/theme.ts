@@ -6,11 +6,11 @@ const defaultTheme = 'dark',
   prefersDark = '(prefers-color-scheme: dark)',
   prefersLight = '(prefers-color-scheme: light)';
 
-const getInitialTheme = () => {
+const getInitialTheme = (): 'light' | 'dark' => {
   if (browser) {
     const localStorage = window.localStorage.getItem('theme');
     if (localStorage && ['dark', 'light'].includes(localStorage)) {
-      return localStorage;
+      return localStorage as 'dark' | 'light';
     }
     if (window.matchMedia(prefersDark).matches) {
       return 'dark';
@@ -21,7 +21,7 @@ const getInitialTheme = () => {
   return defaultTheme;
 };
 
-const theme = writable<string>(getInitialTheme());
+const theme = writable<'light' | 'dark'>(getInitialTheme());
 
 // Watch both mql's to watch for changes in the user's OS theme
 if (browser && ENV !== 'testing') {

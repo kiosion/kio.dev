@@ -45,7 +45,7 @@
               }}
             >
               <Icon icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'} />
-              <p class="ml-4 w-fit font-code text-base">
+              <p class="ml-4 w-fit font-code text-base transition-colors">
                 {$t(actionText)} ({navOption})
               </p>
             </a>
@@ -98,35 +98,46 @@
         </div>
       {:else}
         <LanguageControls
-          classNames="flex w-52 flex-row items-center justify-end gap-1 font-code text-base"
+          classNames="flex w-52 flex-row items-center justify-end gap-1 font-code text-base z-[3]"
         />
       {/if}
+      <div class="pseudo-bg-shadow" />
     </div>
   </svelte:fragment>
 </Breakpoints>
 
 <style lang="scss">
+  $colourLight: #f5f5f4;
+  $colourDark: #1c1917;
+  $boxShadowSpread: 28px 0px 42px 48px;
+
   .page-controls {
     &-top,
     &-bottom {
-      @apply fixed right-0 left-56 z-[3] flex flex-row items-start justify-between bg-transparent from-stone-100 py-6 px-7 transition-colors;
+      @apply fixed right-0 left-56 z-[3] flex flex-row items-start justify-between py-6 px-7 transition-colors;
+
+      .pseudo-bg-shadow {
+        @apply absolute left-0 right-0 z-[2] transition-[box-shadow];
+
+        height: 0px;
+        box-shadow: $boxShadowSpread $colourLight;
+      }
+      div:not(.pseudo-bg-shadow) {
+        @apply z-[3];
+      }
     }
 
     &-top {
       top: 0;
-      background: linear-gradient(
-        to bottom,
-        var(--tw-gradient-from) 20%,
-        var(--tw-gradient-to) 100%
-      );
+      .pseudo-bg-shadow {
+        @apply top-0;
+      }
     }
     &-bottom {
       bottom: 0;
-      background: linear-gradient(
-        to top,
-        var(--tw-gradient-from) 20%,
-        var(--tw-gradient-to) 100%
-      );
+      .pseudo-bg-shadow {
+        @apply bottom-0;
+      }
     }
   }
 
@@ -134,7 +145,9 @@
     .page-controls {
       &-top,
       &-bottom {
-        @apply from-stone-900;
+        .pseudo-bg-shadow {
+          box-shadow: $boxShadowSpread $colourDark;
+        }
       }
     }
   }

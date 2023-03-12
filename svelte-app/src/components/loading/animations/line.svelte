@@ -1,13 +1,12 @@
 <script lang="ts">
   export let width = '200px',
     height = '4px',
-    segments = 7,
     classes = '';
 </script>
 
 <div class="wrapper {classes}" style="width: {width}; height: {height};">
   <div data-test-id="loader-bar">
-    {#each Array(segments) as _}
+    {#each Array(7) as _}
       <div
         class="bg-violet-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-violet-300"
       />
@@ -31,7 +30,8 @@
 
       div {
         flex: 1;
-        animation: pulse 700ms infinite alternate ease;
+        animation: pulse 700ms infinite alternate
+          cubic-bezier(0.16, -0.05, 0.35, 1.02);
 
         @for $i from 1 through 8 {
           &:nth-child(#{$i}) {
@@ -46,7 +46,7 @@
     100% {
       background: transparent;
       flex: 10;
-      box-shadow: 0 0 0 transparent;
+      box-shadow: 0 0 0 rgba(196 181 253 / 0.25);
     }
   }
 </style>

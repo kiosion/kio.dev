@@ -3,7 +3,7 @@
   import 'cal-sans';
   import { onMount, onDestroy, setContext } from 'svelte';
   import { classList } from 'svelte-body';
-  import { fly } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
   import { loading, theme } from '$stores/theme';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
@@ -104,21 +104,6 @@
   <Loader />
 {/if}
 
-{#if !$isDesktop && $loading}
-  <div
-    class="fixed top-0 left-0 z-[50] h-[3px] w-[100vw]"
-    in:fly={{ x: 0, y: 3, duration: 600 }}
-    out:fly={{ x: 0, y: -3, duration: 600 }}
-  >
-    <BarLoader
-      width="100vw"
-      height="3px"
-      segments={16}
-      classes="bg-stone-300/50 dark:bg-stone-900/50"
-    />
-  </div>
-{/if}
-
 {#if browser && $useCustomCursor}
   <CustomCursor showLoader={$loading || !appLoaded} />
 {/if}
@@ -137,6 +122,15 @@
   <Navigation author={data.author} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
+    {#if !$isDesktop && $loading}
+      <span
+        class="absolute top-0 left-0 z-[50] h-[3px] w-[100vw]"
+        in:fade={{ duration: 50 }}
+        out:fade={{ duration: 50, delay: 750 }}
+      >
+        <BarLoader width="100vw" height="3px" />
+      </span>
+    {/if}
     <div>
       {#if appLoaded}
         <PageTransition url={data.url}>
@@ -160,8 +154,8 @@
       @apply flex-row text-lg;
 
       div {
-        margin-top: 1.2rem;
-        height: calc(100% - 1.2rem);
+        margin-top: 1.6rem;
+        height: calc(100% - 1.6rem);
       }
     }
   }
