@@ -90,7 +90,7 @@
     "svelte-loading-spinners": "^0.1.7",
     "svelte-maybe-transition": "^0.1.2",
     "svelte-preprocess": "^4.10.7",
-    "tailwindcss": "^3.2.4",
+    "tailwindcss": "^3.2.7",
     "terser": "^5.16.3",
     "tippy.js": "^6.3.7",
     "ts-essentials": "^9.3.0",
