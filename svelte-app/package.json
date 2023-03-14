@@ -51,7 +51,7 @@
     "@types/luxon": "^3",
     "@types/randomstring": "^1.1.8",
     "@types/seedrandom": "^3.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.54.0",
     "@vitest/ui": "^0.28.1",
     "autoprefixer": "^10.4.7",
