@@ -2217,12 +2217,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
+"prettier@npm:^2.8.5":
+  version: 2.8.5
+  resolution: "prettier@npm:2.8.5"
   bin:
     prettier: bin-prettier.js
-  checksum: e8a99b3a385d8d09881a64b759b9cd88e44ab7ba09832d55608fd7203efdc78f0d94773532f3bb3bbb3f579096f7011883df06a26eb61792e786ea4f5fc984f0
+  checksum: 9282783aa9c43379618f5b9242742794644296bdd25d437556b7678f6e0eb2c0770daef8cba3c110e091c37aeafd35b2f8ea9ee77cc7fc927b1776f6c0000c32
   languageName: node
   linkType: hard
 
@@ -2404,7 +2404,7 @@ __metadata:
     eslint: "npm:^8.36.0"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^13.1.2"
-    prettier: "npm:^2.8.4"
+    prettier: "npm:^2.8.5"
     prettier-eslint: "npm:^15.0.1"
     rimraf: "npm:^4.4.0"
     stylelint: "npm:^15.2.0"
