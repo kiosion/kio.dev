@@ -4660,10 +4660,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ace-builds@npm:^1.15.3":
-  version: 1.15.3
-  resolution: "ace-builds@npm:1.15.3"
-  checksum: 170457c8f2c3d101634c60a04a0a5c9ce51af09bf34a0aea75feca47ac368a98144182f8a86017dd554d1aafa237d3c39a09aff1a065fb86502128e51858b336
+"ace-builds@npm:^1.16.0":
+  version: 1.16.0
+  resolution: "ace-builds@npm:1.16.0"
+  checksum: 5a5815712dc8e0b21c2e054dd7d316c02204e95e120a51883c24bfd0347a201ecde5a13ee4f2b43b882b7e4fbd892ae95f4d10cc5e743375cf42aa4b367b502d
   languageName: node
   linkType: hard
 
@@ -11177,7 +11177,7 @@ __metadata:
     "@sanity/vision": "npm:^3.5.0"
     "@typescript-eslint/eslint-plugin": "npm:^5.52.0"
     "@typescript-eslint/parser": "npm:^5.52.0"
-    ace-builds: "npm:^1.15.3"
+    ace-builds: "npm:^1.16.0"
     dotenv: "npm:^16.0.3"
     eslint: "npm:^8.36.0"
     netlify-cli: "npm:^13.1.6"
