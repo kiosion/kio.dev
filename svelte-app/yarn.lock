@@ -15337,7 +15337,7 @@ __metadata:
     svelte-breakpoints: "npm:0.2.0"
     svelte-check: "npm:^3.0.1"
     svelte-eslint-parser: "npm:^0.23.0"
-    svelte-highlight: "npm:^7.1.2"
+    svelte-highlight: "npm:^7.2.0"
     svelte-loading-spinners: "npm:^0.1.7"
     svelte-maybe-transition: "npm:^0.1.2"
     svelte-preprocess: "npm:^4.10.7"
@@ -15409,12 +15409,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-highlight@npm:^7.1.2":
-  version: 7.1.2
-  resolution: "svelte-highlight@npm:7.1.2"
+"svelte-highlight@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "svelte-highlight@npm:7.2.0"
   dependencies:
     highlight.js: "npm:11.7.0"
-  checksum: c72fc19bab799f6bfc9dc49e84f2ecaba50b72e0a365ad49b362a435e15519da07f8cc7121b78fcf397723ac6954bbff4d97a9186f7e466ac6808f6f70398024
+  checksum: b886c20c9f4ecd24387b82ddd3e60ec457aebdf933848bd7f64d4c12c25e9804a763dabf04adf96f9357ae64c324f89d491a246d469b73c59cc13d9db8356703
   languageName: node
   linkType: hard
 
