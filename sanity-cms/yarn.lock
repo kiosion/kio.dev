@@ -91,6 +91,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/eslint-parser@npm:^7.21.3":
+  version: 7.21.3
+  resolution: "@babel/eslint-parser@npm:7.21.3"
+  dependencies:
+    "@nicolo-ribaudo/eslint-scope-5-internals": "npm:5.1.1-v1"
+    eslint-visitor-keys: "npm:^2.1.0"
+    semver: "npm:^6.3.0"
+  peerDependencies:
+    "@babel/core": ">=7.11.0"
+    eslint: ^7.5.0 || ^8.0.0
+  checksum: 1af4aa59ac89901a8fcc50a91d49bdbfee1a2b4459139ea2869b7e2c5f6fd7dd80c60244e0c3f5472fbc9569c41671b16eb3ee3db0e5d265f88e85ec107d85b5
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.20.7":
   version: 7.20.7
   resolution: "@babel/generator@npm:7.20.7"
@@ -11168,7 +11182,7 @@ __metadata:
   resolution: "kio.dev@workspace:."
   dependencies:
     "@babel/core": "npm:^7.21.0"
-    "@babel/eslint-parser": "npm:^7.19.1"
+    "@babel/eslint-parser": "npm:^7.21.3"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
     "@sanity/code-input": "npm:^4.0.0"
