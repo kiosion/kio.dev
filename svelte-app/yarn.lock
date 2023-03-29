@@ -3153,10 +3153,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/image-url@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@sanity/image-url@npm:1.0.1"
-  checksum: 495c074ccec57a92eef596668082a38e4fbe7eb5c50d660cdb8aa68a7c84405291ffc25b67d3098c2cebf590a4b5af4784394e6584192e4570905202d11caeb1
+"@sanity/image-url@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@sanity/image-url@npm:1.0.2"
+  checksum: 398960fa27e77b29e01e6aa7e0eb9da043a4af2db0b038649fa2edde885e3f69e61255cde29de18c82dbc23a8556b3c70795aeb869e762af880940bcf88989f4
   languageName: node
   linkType: hard
 
@@ -15282,7 +15282,7 @@ __metadata:
     "@popperjs/core": "npm:^2.11.6"
     "@portabletext/svelte": "npm:^1.0.1"
     "@rgossiaux/svelte-headlessui": "npm:^1.0.2"
-    "@sanity/image-url": "npm:^1.0.1"
+    "@sanity/image-url": "npm:^1.0.2"
     "@sveltejs/adapter-auto": "npm:^2.0.0"
     "@sveltejs/adapter-netlify": "npm:^2.0.5"
     "@sveltejs/adapter-node": "npm:^1.0.0"
