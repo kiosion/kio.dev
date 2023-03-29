@@ -2,11 +2,7 @@
   <h1>kio.dev</h1>
 </div>
 
-Welcome to the monorepo for my personal blog, development portfolio, nowpage, and CV site!
-
-You can see the project live at https://kio.dev.
-
-## 🔎 Previews
+Welcome to the monorepo for my blog, portfolio, Nowpage, and CV! You can see the site at https://kio.dev.
 
 <img width="49%" src="https://user-images.githubusercontent.com/34040324/220803703-a21ea52d-6864-4f14-976a-864b76cceede.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/220803750-8bcd8a3e-06d2-4d5a-8d88-c29199f4dfdf.png" />
 
@@ -15,8 +11,6 @@ The frontend is built with:
 * Sveltekit
 * Typescript
 * Tailwindcss + some SCSS utils/scoped styles
-* Vite (with Rollup)
-* Babel
 
 The API powering the site is built with:
 * Elixir
@@ -25,7 +19,6 @@ The API powering the site is built with:
 * Sanity.io
 
 For hosting and deploys, I use:
-* Self-hosted GHA runners
 * Vultr VPSs
 * Docker
 * Netlify
@@ -40,3 +33,8 @@ To build the project, you'll need the following:
 * Hex
 * Docker
 * docker-compose
+
+## 📃 License
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details. Any changes or derivatives must be released under the same license. 
+
+If you use any part of this code, please include attribution and a link to this repo in your source code or documentation.
