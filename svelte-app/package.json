@@ -86,7 +86,7 @@
     "svelte-breakpoints": "0.2.0",
     "svelte-check": "^3.0.1",
     "svelte-eslint-parser": "^0.23.0",
-    "svelte-highlight": "^7.1.2",
+    "svelte-highlight": "^7.2.0",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-maybe-transition": "^0.1.2",
     "svelte-preprocess": "^4.10.7",
