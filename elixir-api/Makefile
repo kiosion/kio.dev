@@ -22,12 +22,12 @@ prod-dev: # Run docker build for 'dev' dataset
 run-prod: SHELL:=/bin/bash
 run-prod: # Run docker container for 'production' dataset build
 	@docker stop hexerei-prod > /dev/null || true && docker rm -f hexerei-prod > /dev/null || true
-	@docker run -p 4000:4000 -it -d --name hexerei-prod --restart=always hexerei:prod
+	@docker run --dns 8.8.8.8 --dns 8.8.4.4 -p 4000:4000 -it -d --name hexerei-prod --restart=always hexerei:prod
 
 run-prod-dev: SHELL:=/bin/bash
 run-prod-dev: # Run docker container for 'dev' dataset build
 	@docker stop hexerei-dev > /dev/null || true && docker rm -f hexerei-dev > /dev/null || true
-	@docker run -p 4444:4444 -it -d --name hexerei-dev --restart=always hexerei:dev
+	@docker run --dns 8.8.8.8 --dns 8.8.4.4 -p 4444:4444 -it -d --name hexerei-dev --restart=always hexerei:dev
 
 test: SHELL:=/bin/bash
 test: install
