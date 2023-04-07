@@ -3345,9 +3345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:1.15.0":
-  version: 1.15.0
-  resolution: "@sveltejs/kit@npm:1.15.0"
+"@sveltejs/kit@npm:1.15.2":
+  version: 1.15.2
+  resolution: "@sveltejs/kit@npm:1.15.2"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.0.0"
     "@types/cookie": "npm:^0.5.1"
@@ -3361,13 +3361,13 @@ __metadata:
     set-cookie-parser: "npm:^2.5.1"
     sirv: "npm:^2.0.2"
     tiny-glob: "npm:^0.2.9"
-    undici: "npm:5.21.0"
+    undici: "npm:5.20.0"
   peerDependencies:
     svelte: ^3.54.0
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 806a2dbf53fd2c6bb0681eedaf933d031ff824b042737daecc2712edcc14bf55151f41d12032353c90c7fa38a831c6afb045c4b15a670e504c261349f8c1e7c0
+  checksum: f8b3e3adfe552b5be0a8df0439cbd32d02fb61a71ecc03a20a191c3946710d26483e48832cc8cf0b4dbbaa72e27946c7408bd1e5af2ce9a2e580edea7a0c68b5
   languageName: node
   linkType: hard
 
@@ -15446,7 +15446,7 @@ __metadata:
     "@sveltejs/adapter-auto": "npm:^2.0.0"
     "@sveltejs/adapter-netlify": "npm:^2.0.5"
     "@sveltejs/adapter-node": "npm:^1.0.0"
-    "@sveltejs/kit": "npm:1.15.0"
+    "@sveltejs/kit": "npm:1.15.2"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/line-clamp": "npm:^0.4.2"
     "@testing-library/cypress": "npm:^9.0.0"
@@ -16546,12 +16546,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:5.21.0":
-  version: 5.21.0
-  resolution: "undici@npm:5.21.0"
+"undici@npm:5.20.0":
+  version: 5.20.0
+  resolution: "undici@npm:5.20.0"
   dependencies:
     busboy: "npm:^1.6.0"
-  checksum: d312210d63d9bcd541e7476cb60f513a5da9aa5473890bf77a26ae44d9ebb50655da2ed92544a107c1be3570cfe32279332123e6ee55563b2c14fef65d6ac53d
+  checksum: b307c8aa8ca8858f814cb3c1bfcdc34ae2e6da38838b47d36f722555014f0519e18daaa981df7029fd51f314a59eb35375de9be275873ee94e6345c8bc1de488
   languageName: node
   linkType: hard
 
