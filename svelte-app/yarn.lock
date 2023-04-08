@@ -9048,6 +9048,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^9.2.0":
+  version: 9.3.4
+  resolution: "glob@npm:9.3.4"
+  dependencies:
+    fs.realpath: "npm:^1.0.0"
+    minimatch: "npm:^8.0.2"
+    minipass: "npm:^4.2.4"
+    path-scurry: "npm:^1.6.1"
+  checksum: 5b5de155321aea5a77dfc7ca34c6edceeb3871850955d6f0fe93f033e51869f233303b478f282c580935d1d429f410afcef06d0fd75c4792c2f00adaca876d55
+  languageName: node
+  linkType: hard
+
 "global-cache-dir@npm:^3.0.1":
   version: 3.0.1
   resolution: "global-cache-dir@npm:3.0.1"
@@ -11244,6 +11256,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^7.14.1":
+  version: 7.18.3
+  resolution: "lru-cache@npm:7.18.3"
+  checksum: 884c7cb51963cc45bc0d864c704d141c904c93db1bbc236be0eed759e35fc44b5e794a34b0666e193926e5a4320b66e787b1cf531f4f89ed8514a97156f07cb1
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^7.7.1":
   version: 7.14.1
   resolution: "lru-cache@npm:7.14.1"
@@ -11647,6 +11666,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "minimatch@npm:8.0.2"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 1729b30de17e7310cbf8a9a8550679b509055f303267e1df731d4b0ad04db179e21efd08860fa855ed7c4ed7b972aced34c32925258e1f1d7243b91bd5034ffa
+  languageName: node
+  linkType: hard
+
 "minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
@@ -11720,6 +11748,13 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 54b7be3d5d111832afcb7cc2bcb9e1bd21c3701731d1cd6dd91d673b7658f0c01bd52887764cf08f5dafe9a94abd7ce8fc800a2afe2bc19207bd83daac5ee052
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^4.0.2, minipass@npm:^4.2.4":
+  version: 4.2.5
+  resolution: "minipass@npm:4.2.5"
+  checksum: 9663cd373005095bc6b9f1c779e6beef3269e171a4049c2c6532ae430dea93647bfa6cf4fab43fc908f9e8ad333a3dbaadca20c15eb4ba9b697c764b7be90d65
   languageName: node
   linkType: hard
 
@@ -13035,6 +13070,16 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: ca291d7bced407e20480b686d7ef4f9dd112ef00d6f109faa50bbefe8ff9dd51e164781fa0670c7b5d67a88610008e83e594f8294ec809c1b7203c6577ca3777
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.6.1":
+  version: 1.6.3
+  resolution: "path-scurry@npm:1.6.3"
+  dependencies:
+    lru-cache: "npm:^7.14.1"
+    minipass: "npm:^4.0.2"
+  checksum: d47856b45f3e612d482614de40507dae60700e7e9b99937a7e6157afedf1eaa16169dbe8ba03dfbed6e76f45223d868992bf89f52f558736f102f0ce146d827b
   languageName: node
   linkType: hard
 
@@ -14409,6 +14454,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rimraf@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "rimraf@npm:4.4.1"
+  dependencies:
+    glob: "npm:^9.2.0"
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: 1dcc3cb6a13a806fc276996d2e0d20abae62a96f2a663a79e3e30be711a23da29f814a322412827b5b6e58b535382096cbaf261cbd2f7790c5a37e6ea31150dd
+  languageName: node
+  linkType: hard
+
 "rollup-plugin-babel@npm:^4.4.0":
   version: 4.4.0
   resolution: "rollup-plugin-babel@npm:4.4.0"
@@ -15515,7 +15571,7 @@ __metadata:
     prettier-plugin-svelte: "npm:^2.9.0"
     prettier-plugin-tailwindcss: "npm:^0.2.2"
     randomstring: "npm:^1.2.2"
-    rimraf: "npm:^3.0.2"
+    rimraf: "npm:^4.4.1"
     rollup: "npm:^3.15.0"
     rollup-plugin-babel: "npm:^4.4.0"
     sass: "npm:^1.58.3"
