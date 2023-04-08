@@ -72,7 +72,7 @@
     "node-html-to-image": "^3.2.4",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.7",
     "prettier-plugin-svelte": "^2.9.0",
     "prettier-plugin-tailwindcss": "^0.2.2",
     "randomstring": "^1.2.2",
