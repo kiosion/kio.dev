@@ -64,7 +64,8 @@
   };
 
   let typewriterName: typeof Typewriter | undefined,
-    typewriterElement: HTMLHeadingElement;
+    typewriterElement: HTMLHeadingElement,
+    currentString: '0xKI0' | 'Kiosion' = 'Kiosion';
 
   const unsubscribers: Unsubscriber[] = [],
     isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
@@ -72,13 +73,14 @@
   const initTypewriter = () => {
     typewriterName = browser
       ? new Typewriter(typewriterElement, {
-          autoStart: false
+          autoStart: false,
+          cursor: ''
         })
       : undefined;
 
     browser &&
       typewriterName
-        ?.typeString($t("Hi! I'm"))
+        ?.typeString('@0xKI0')
         .pauseFor(1000)
         .deleteAll()
         .typeString('Kiosion')
@@ -86,7 +88,16 @@
   };
 
   const typeName = () => {
-    typewriterName?.deleteAll().typeString('Kiosion').start();
+    switch (currentString) {
+      case '0xKI0':
+        typewriterName?.deleteAll().typeString('Kiosion').start();
+        currentString = 'Kiosion';
+        break;
+      case 'Kiosion':
+        typewriterName?.deleteAll().typeString('@0xKI0').start();
+        currentString = '0xKI0';
+        break;
+    }
   };
 
   onMount(() => {
