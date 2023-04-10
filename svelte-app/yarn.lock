@@ -13571,10 +13571,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "prettier-plugin-tailwindcss@npm:0.2.2"
+"prettier-plugin-tailwindcss@npm:^0.2.7":
+  version: 0.2.7
+  resolution: "prettier-plugin-tailwindcss@npm:0.2.7"
   peerDependencies:
+    "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-php": "*"
     "@prettier/plugin-pug": "*"
     "@shopify/prettier-plugin-liquid": "*"
@@ -13591,6 +13592,8 @@ __metadata:
     prettier-plugin-svelte: "*"
     prettier-plugin-twig-melody: "*"
   peerDependenciesMeta:
+    "@ianvs/prettier-plugin-sort-imports":
+      optional: true
     "@prettier/plugin-php":
       optional: true
     "@prettier/plugin-pug":
@@ -13619,7 +13622,7 @@ __metadata:
       optional: true
     prettier-plugin-twig-melody:
       optional: true
-  checksum: 13a343d9ffb2a9955f9c27ab56e7f07b1bf1b806d3a34091d1980740f7be456e0e9ef95ef6bb73a681c395b6b795d06f14ecca959391c5dd18e0dc06feacd577
+  checksum: 6d7ed6c1c38a3845313bcf1600dd14e1923743ac5eb9ea13f4e882e09e734cbb99fe1a334351182815a433f0c16d673fbf7c7f33f5e64cfa38dfb4d18fbb3f25
   languageName: node
   linkType: hard
 
@@ -15652,7 +15655,7 @@ __metadata:
     postcss-load-config: "npm:^4.0.1"
     prettier: "npm:^2.8.7"
     prettier-plugin-svelte: "npm:^2.9.0"
-    prettier-plugin-tailwindcss: "npm:^0.2.2"
+    prettier-plugin-tailwindcss: "npm:^0.2.7"
     randomstring: "npm:^1.2.2"
     rimraf: "npm:^4.4.1"
     rollup: "npm:^3.15.0"
