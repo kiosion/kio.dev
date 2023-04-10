@@ -90,7 +90,7 @@
 
 <style lang="scss">
   a {
-    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
+    @apply relative rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
 
     &.active {
       @apply text-stone-800;

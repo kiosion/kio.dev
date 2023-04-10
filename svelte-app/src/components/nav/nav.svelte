@@ -7,7 +7,7 @@
     DEFAULT_BREAKPOINTS,
     BASE_ANIMATION_DURATION
   } from '$lib/consts';
-  import { circInOut } from 'svelte/easing';
+  import { circInOut, circOut, quadIn, quadOut } from 'svelte/easing';
   import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
   import { slide } from 'svelte/transition';
@@ -23,8 +23,8 @@
   import NavLinks from '$components/nav/nav-links.svelte';
   import type { Unsubscriber } from 'svelte/store';
   import LanguageControls from '$components/controls/language-controls.svelte';
-  import gsap from 'gsap';
   import { browser } from '$app/environment';
+  import { tweened } from 'svelte/motion';
 
   interface SocialLink {
     attrs: {
@@ -74,7 +74,7 @@
     );
     if (browser) {
       onLogoFocusIn();
-      setTimeout(() => onLogoFocusOut(), 2000);
+      setTimeout(() => onLogoFocusOut(), 1500);
     }
   });
 
@@ -82,41 +82,29 @@
     unsubscribers.forEach((unsubscriber) => unsubscriber());
   });
 
-  let feDisplacement: SVGFEDisplacementMapElement,
-    feTurbulence: SVGFETurbulenceElement;
+  const feDisplacementScale = tweened(0, {
+      duration: BASE_ANIMATION_DURATION * 2,
+      easing: quadOut
+    }),
+    feTurbulenceBaseFreq1 = tweened(2.01, {
+      duration: BASE_ANIMATION_DURATION * 3,
+      easing: circOut
+    }),
+    feTurbulenceBaseFreq2 = tweened(0.01, {
+      duration: BASE_ANIMATION_DURATION * 3,
+      easing: circOut
+    });
 
   const onLogoFocusIn = () => {
-    gsap.to(feDisplacement, {
-      attr: {
-        scale: 100
-      },
-      duration: 1,
-      ease: 'circ.out'
-    });
-    gsap.to(feTurbulence, {
-      attr: {
-        baseFrequency: '2.08 .08'
-      },
-      duration: 1,
-      ease: 'circ.out'
-    });
+    feDisplacementScale.set(80);
+    feTurbulenceBaseFreq1.set(2.08);
+    feTurbulenceBaseFreq2.set(0.08);
   };
 
   const onLogoFocusOut = () => {
-    gsap.to(feDisplacement, {
-      attr: {
-        scale: 0
-      },
-      duration: 1,
-      ease: 'circ.out'
-    });
-    gsap.to(feTurbulence, {
-      attr: {
-        baseFrequency: '2.01 .01'
-      },
-      duration: 1,
-      ease: 'circ.out'
-    });
+    feDisplacementScale.set(0);
+    feTurbulenceBaseFreq1.set(2.01);
+    feTurbulenceBaseFreq2.set(0.01);
   };
 </script>
 
@@ -159,21 +147,20 @@
       <filter id="distortion">
         <feTurbulence
           type="fractalNoise"
-          baseFrequency="2.01 .01"
-          numOctaves="5"
-          seed="2"
+          baseFrequency={`${$feTurbulenceBaseFreq1} ${$feTurbulenceBaseFreq2}`}
+          numOctaves="1"
+          seed="39257"
           stitchTiles="noStitch"
           x="0%"
           y="0%"
           width="100%"
           height="100%"
           result="noise"
-          bind:this={feTurbulence}
         />
         <feDisplacementMap
           in="SourceGraphic"
           in2="noise"
-          scale="0"
+          scale={`${$feDisplacementScale}`}
           xChannelSelector="R"
           yChannelSelector="B"
           x="0%"
@@ -181,7 +168,6 @@
           width="100%"
           height="100%"
           filterUnits="userSpaceOnUse"
-          bind:this={feDisplacement}
         />
       </filter>
     </svg>
@@ -251,7 +237,7 @@
       @apply mx-auto -mt-2 mb-5 w-48;
 
       img {
-        @apply h-full py-4 px-10;
+        @apply h-full py-4 px-9;
         filter: url(#distortion);
       }
     }
