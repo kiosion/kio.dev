@@ -75,7 +75,7 @@
         <Breakpoints queries={DEFAULT_BREAKPOINTS}>
           <svelte:fragment slot="lg">
             <h1
-              class="mb-4 h-fit w-fit font-display text-7xl font-bold leading-none"
+              class="mb-4 h-fit w-fit font-display text-7xl font-black leading-none"
             >
               {data.title}
             </h1>

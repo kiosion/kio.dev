@@ -10,8 +10,7 @@ module.exports = {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
         mono: ['Work Sans', ...defaultTheme.fontFamily.mono],
         code: ['Ubuntu Mono', ...defaultTheme.fontFamily.mono],
-        heading: ['Poppins', ...defaultTheme.fontFamily.sans],
-        display: ['Cal Sans', ...defaultTheme.fontFamily.sans]
+        display: ['Hauora Sans', 'Poppins', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
         'xs': ['0.75rem', '1'],

@@ -1,34 +1,30 @@
 <script lang="ts">
   import { config as currentConfig } from '$stores/config';
   import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
-  import { t, linkTo } from '$i18n';
+  import { linkTo } from '$i18n';
   import {
-    APP_LANGS,
     TOP_LEVEL_ROUTES,
     DEFAULT_BREAKPOINTS,
-    BASE_ANIMATION_DURATION,
-    DEFAULT_DESKTOP_BREAKPOINT
+    BASE_ANIMATION_DURATION
   } from '$lib/consts';
   import { circInOut } from 'svelte/easing';
   import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
   import { slide } from 'svelte/transition';
-  import Breakpoints, { useMediaQuery } from 'svelte-breakpoints';
+  import Breakpoints from 'svelte-breakpoints';
   import MenuToggle from '$components/controls/menu-toggle.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
-  import Icon from '$components/icon.svelte';
   import NavSocial from '$components/nav/nav-social.svelte';
   import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
-  import Typewriter from 'typewriter-effect/dist/core';
-  import { browser } from '$app/environment';
   import { onDestroy, onMount } from 'svelte';
   import NavLink from '$components/nav/nav-link.svelte';
   import NavLinks from '$components/nav/nav-links.svelte';
   import type { Unsubscriber } from 'svelte/store';
-  import type { AuthorDocument } from '$types';
   import LanguageControls from '$components/controls/language-controls.svelte';
+  import gsap from 'gsap';
+  import { browser } from '$app/environment';
 
   interface SocialLink {
     attrs: {
@@ -41,8 +37,6 @@
     iconSize: number;
     iconRotation: number;
   }
-
-  export let author: AuthorDocument | undefined;
 
   const socials =
     ($currentConfig.data?.socialLinks?.map((link) => ({
@@ -63,52 +57,10 @@
     goto($linkTo('/'));
   };
 
-  let typewriterName: typeof Typewriter | undefined,
-    typewriterElement: HTMLHeadingElement,
-    currentString: '0xKI0' | 'Kiosion' = 'Kiosion';
-
-  const unsubscribers: Unsubscriber[] = [],
-    isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT);
-
-  const initTypewriter = () => {
-    typewriterName = browser
-      ? new Typewriter(typewriterElement, {
-          autoStart: false,
-          cursor: ''
-        })
-      : undefined;
-
-    browser &&
-      typewriterName
-        ?.typeString('@0xKI0')
-        .pauseFor(1000)
-        .deleteAll()
-        .typeString('Kiosion')
-        .start();
-  };
-
-  const typeName = () => {
-    switch (currentString) {
-      case '0xKI0':
-        typewriterName?.deleteAll().typeString('Kiosion').start();
-        currentString = 'Kiosion';
-        break;
-      case 'Kiosion':
-        typewriterName?.deleteAll().typeString('@0xKI0').start();
-        currentString = '0xKI0';
-        break;
-    }
-  };
+  const unsubscribers: Unsubscriber[] = [];
 
   onMount(() => {
     unsubscribers.push(
-      isDesktop.subscribe((value) => {
-        if (value) {
-          initTypewriter();
-        } else {
-          typewriterName?.deleteAll();
-        }
-      }),
       linkTo.subscribe((fn) => {
         navLinks.set(
           TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
@@ -120,46 +72,119 @@
         );
       })
     );
+    if (browser) {
+      onLogoFocusIn();
+      setTimeout(() => onLogoFocusOut(), 2000);
+    }
   });
 
   onDestroy(() => {
     unsubscribers.forEach((unsubscriber) => unsubscriber());
   });
+
+  let feDisplacement: SVGFEDisplacementMapElement,
+    feTurbulence: SVGFETurbulenceElement;
+
+  const onLogoFocusIn = () => {
+    gsap.to(feDisplacement, {
+      attr: {
+        scale: 100
+      },
+      duration: 1,
+      ease: 'circ.out'
+    });
+    gsap.to(feTurbulence, {
+      attr: {
+        baseFrequency: '2.08 .08'
+      },
+      duration: 1,
+      ease: 'circ.out'
+    });
+  };
+
+  const onLogoFocusOut = () => {
+    gsap.to(feDisplacement, {
+      attr: {
+        scale: 0
+      },
+      duration: 1,
+      ease: 'circ.out'
+    });
+    gsap.to(feTurbulence, {
+      attr: {
+        baseFrequency: '2.01 .01'
+      },
+      duration: 1,
+      ease: 'circ.out'
+    });
+  };
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav class="nav-desktop" data-test-id="navBar">
-      <div>
-        <div class="nameContainer">
-          <!-- svelte-ignore a11y-missing-content -->
-          <h3
-            on:mouseenter={() => {
-              typeName();
-            }}
-            on:focusin={() => {
-              typeName();
-            }}
-            bind:this={typewriterElement}
-          />
-          <span class="location-line">
-            <Icon icon="pin" width={17} />
-            <p>{author?.location}</p>
-          </span>
-        </div>
-        <NavLinks />
+      <div
+        class="logo-container relative"
+        role="button"
+        tabindex="0"
+        on:mouseenter={onLogoFocusIn}
+        on:mouseleave={onLogoFocusOut}
+        on:focusin={onLogoFocusIn}
+        on:focusout={onLogoFocusOut}
+        on:click={onLogoClick}
+        on:keydown={(e) => {
+          if (e.key === 'Enter' || e.key === 'Space') {
+            onLogoClick();
+          }
+        }}
+      >
+        <img src="/assets/logo-text--short.webp" alt="Kiosion" />
       </div>
-      <div class="linksContainer">
-        {#if $nowPlayingData}
-          <NowPlayingWidget data={$nowPlayingData} />
-        {/if}
-        <div>
-          {#each socials as social}
-            <NavSocial {social} />
-          {/each}
+      <span class="border-line" />
+      <div class="nav-inner">
+        <NavLinks />
+        <div class="links-container">
+          {#if $nowPlayingData}
+            <NowPlayingWidget data={$nowPlayingData} />
+          {/if}
+          <div>
+            {#each socials as social}
+              <NavSocial {social} />
+            {/each}
+          </div>
         </div>
       </div>
     </nav>
+    <svg>
+      <filter id="distortion">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="2.01 .01"
+          numOctaves="5"
+          seed="2"
+          stitchTiles="noStitch"
+          x="0%"
+          y="0%"
+          width="100%"
+          height="100%"
+          result="noise"
+          bind:this={feTurbulence}
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="noise"
+          scale="0"
+          xChannelSelector="R"
+          yChannelSelector="B"
+          x="0%"
+          y="0%"
+          width="100%"
+          height="100%"
+          filterUnits="userSpaceOnUse"
+          bind:this={feDisplacement}
+        />
+      </filter>
+    </svg>
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav class="nav--mobile" data-test-id="navBar">
@@ -176,7 +201,7 @@
             <img
               class="h-full"
               src="/assets/logo-text--short.webp"
-              alt="kiosion logo"
+              alt="Kiosion"
             />
           </button>
         </Hoverable>
@@ -207,24 +232,35 @@
 </Breakpoints>
 
 <style lang="scss">
+  svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -9999px;
+    pointer-events: none;
+  }
+
   .nav-desktop {
-    @apply my-6 ml-9 flex w-48 flex-shrink-0 flex-grow flex-col justify-between border-r border-stone-400/50 py-3;
+    @apply my-8 flex w-fit flex-col border-r border-stone-400/50;
 
-    .nameContainer {
-      @apply mr-9 border-b border-stone-400/50 pb-5;
+    .nav-inner {
+      @apply ml-9 flex w-48 flex-1 flex-col justify-between;
+    }
 
-      h3 {
-        @apply select-none font-heading text-xl font-bold leading-relaxed;
-      }
-      .location-line {
-        @apply mt-0.5 flex flex-row items-center gap-2 font-code text-base;
+    .logo-container {
+      @apply mx-auto -mt-2 mb-5 w-48;
 
-        p {
-          @apply -mt-0.5;
-        }
+      img {
+        @apply h-full py-4 px-10;
+        filter: url(#distortion);
       }
     }
-    .linksContainer {
+    .border-line {
+      @apply -ml-9 inline-block bg-stone-400/50;
+      height: 1px;
+      width: calc(100% + 2.25rem);
+    }
+    .links-container {
       @apply mr-9 flex flex-col;
 
       div {
@@ -235,8 +271,11 @@
 
   :global(.dark) {
     .nav-desktop,
-    .nameContainer {
+    .border-line {
       @apply border-stone-500/60;
+    }
+    .logo-container {
+      @apply invert;
     }
   }
 </style>

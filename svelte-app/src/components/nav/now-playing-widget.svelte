@@ -51,7 +51,7 @@
 
 <style lang="scss">
   .nowPlaying--container {
-    @apply mb-4 flex w-full flex-row items-center gap-3 border-b border-stone-400/50 py-4;
+    @apply mb-4 flex w-full flex-row items-center gap-3 border-b border-stone-400/50 pb-5;
 
     span {
       @apply relative h-fit w-fit flex-shrink-0;

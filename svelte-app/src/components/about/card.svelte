@@ -43,7 +43,7 @@
     </div>
     <div class="flex h-full w-full flex-1 flex-col items-start justify-start">
       <h3
-        class="font-heading text-2xl font-bold text-stone-800 dark:text-stone-100"
+        class="font-sans text-2xl font-bold text-stone-800 dark:text-stone-100"
       >
         {name}
       </h3>

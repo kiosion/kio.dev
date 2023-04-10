@@ -9333,6 +9333,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gsap@npm:^3.11.5":
+  version: 3.11.5
+  resolution: "gsap@npm:3.11.5"
+  checksum: 871e6ac8a25191d523586e9e28ed8ac6143d4a607f56a6b3dcf7a91969f06a7b285df47b44d0099d39475893fa7a419f9a60b622b64706148807d8aa90a9b790
+  languageName: node
+  linkType: hard
+
 "handlebars@npm:^4.5.3":
   version: 4.7.7
   resolution: "handlebars@npm:4.7.7"
@@ -15642,6 +15649,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-svelte: "npm:^2.16.0"
     fiona: "npm:^4.1.4"
+    gsap: "npm:^3.11.5"
     highlight.js: "npm:^11.7.0"
     jsdom: "npm:^21.1.1"
     luxon: "npm:^3.2.1"
