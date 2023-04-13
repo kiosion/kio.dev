@@ -15,7 +15,18 @@
 
 <style lang="scss">
   code {
-    @apply mx-0.5 rounded bg-stone-200/80 px-[0.35rem] pt-[0.25rem] pb-[0.35rem] font-code transition-[background-color];
+    @apply rounded bg-stone-200/80 font-code text-sm transition-[background-color];
+
+    padding: {
+      top: 0.125rem;
+      bottom: 0.125rem;
+      left: 0.25rem;
+      right: 0.25rem;
+    }
+    margin: {
+      left: 0.125rem;
+      right: 0.125rem;
+    }
   }
 
   :global(.dark) {
