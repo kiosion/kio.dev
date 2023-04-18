@@ -4,6 +4,7 @@
   import Summary from '$components/document/content/common/summary.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import Divider from '$components/divider.svelte';
   import type {
     PostDocument,
     ProjectDocument,
@@ -12,7 +13,6 @@
     ExternalUserInfo
   } from '$types';
   import type { Heading } from '$helpers/pt';
-  import Divider from '$components/divider.svelte';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
@@ -23,8 +23,10 @@
 
 <Header {model} {data} />
 {#if headings && headings.length > 0}
-  <Summary {headings} />
-  <Divider />
+  <div>
+    <Summary {headings} />
+    <Divider />
+  </div>
 {/if}
 <div class="mt-4 font-sans text-base">
   {#if data.body}

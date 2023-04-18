@@ -8,8 +8,7 @@
     height = width,
     classes = '',
     classNames = '',
-    style = '',
-    useTransition = true;
+    style = '';
 </script>
 
 <div class="w-[{width}px] {inline ? 'inline' : ''} {classes} {classNames}">

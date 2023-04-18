@@ -25,8 +25,8 @@ api:
 	@cd ./elixir-api && make dev
 
 sanity-%: SHELL:=/bin/bash
-sanity-%: install-sanity
 sanity-%:
+	@make install-sanity
 	@cd ./sanity-cms &&\
 	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) yarn dev
 
