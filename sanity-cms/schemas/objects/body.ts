@@ -90,9 +90,11 @@ export const BodyBlocks = [
       hotspot: true
     }
   },
-  Code,
+  Code(),
   { type: 'divider' },
-  { type: 'header' }
+  { type: 'header' },
+  { type: 'replitEmbed' },
+  { type: 'svelteEmbed' }
 ];
 
 export default {

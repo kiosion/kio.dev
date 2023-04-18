@@ -4,7 +4,7 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import ScrollTo from '$helpers/scrollTo';
+  import { attemptScroll } from '$helpers/scrollTo';
   import type {
     PostDocument,
     ProjectDocument,
@@ -12,8 +12,8 @@
     Comment,
     ExternalUserInfo
   } from '$types';
-  import type { Heading } from '$helpers/pt';
   import { t } from '$i18n';
+  import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
@@ -36,10 +36,11 @@
   onMount(() => {
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
     pageHeading.set(pageName);
-    ScrollTo($page);
+
+    attemptScroll($page);
   });
 
-  $: $page && ScrollTo($page);
+  $: $page && attemptScroll($page);
   $: comments ??= { data: [], meta: {} } as ResDataMany<Comment>;
   $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
     data?.title ? ` | ${data.title}` : ''

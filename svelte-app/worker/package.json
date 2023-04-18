@@ -1,0 +1,17 @@
+{
+  "name": "svelte-worker",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "rollup": "^3.20.2",
+    "rollup-plugin-polyfill-node": "patch:rollup-plugin-polyfill-node@npm%3A0.12.0#~/.yarn/patches/rollup-plugin-polyfill-node-npm-0.12.0-354897d3cf.patch",
+    "rollup-plugin-svelte": "^7.1.4"
+  },
+  "type": "module"
+}

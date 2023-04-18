@@ -55,13 +55,25 @@ export const languageAlternatives = [
   { title: 'XML', value: 'xml' }
 ];
 
-export default {
-  type: 'code',
-  name: 'code',
-  title: 'Code',
-  options: {
-    language: 'markdown',
-    languageAlternatives,
-    withFilename: true
+export default ({
+  defaultLang,
+  languageAlts
+}: { defaultLang?: string; languageAlts?: string[] } = {}) => {
+  let filteredLanguages = languageAlternatives;
+  if (languageAlts) {
+    filteredLanguages = languageAlternatives.filter((lang) =>
+      languageAlts.includes(lang.value)
+    );
   }
+
+  return {
+    type: 'code',
+    name: 'code',
+    title: 'Code',
+    options: {
+      language: defaultLang || 'markdown',
+      languageAlternatives: filteredLanguages,
+      withFilename: true
+    }
+  };
 };
