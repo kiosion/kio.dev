@@ -1,5 +1,7 @@
 import divider from './objects/divider';
 import header from './objects/header';
+import replitEmbed from './objects/replit-embed';
+import svelteEmbed from './objects/svelte-embed';
 
 import author from './author';
 import comment from './comment';
@@ -15,6 +17,8 @@ export const schemaTypes = [
   header,
   post,
   project,
+  replitEmbed,
+  svelteEmbed,
   tag,
   siteSettings
 ];

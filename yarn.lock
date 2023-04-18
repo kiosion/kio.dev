@@ -190,6 +190,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-virtual@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@rollup/plugin-virtual@npm:3.0.1"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 3503d7932d828cbb524fa5caf2af084395f84479ad82070d8edb46644afc46977acd8c8f89cf0fecba55ea8bb629020cea48dbd5407970212d13db829340290b
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^8.4.2":
   version: 8.4.5
   resolution: "@types/eslint@npm:8.4.5"
@@ -2401,6 +2413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@rollup/plugin-virtual": "npm:^3.0.1"
     eslint: "npm:^8.36.0"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^13.1.2"

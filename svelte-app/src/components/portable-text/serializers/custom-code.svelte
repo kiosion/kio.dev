@@ -15,8 +15,10 @@
 
 <style lang="scss">
   code {
-    @apply rounded bg-stone-200/80 font-code text-sm transition-[background-color];
+    @apply rounded bg-stone-200/80 font-code transition-[background-color];
 
+    // Make sure we don't overlap lines due to the padding
+    font-size: 0.95rem;
     padding: {
       top: 0.125rem;
       bottom: 0.125rem;

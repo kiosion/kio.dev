@@ -28,5 +28,6 @@ export interface CodeBlockComponentProps
     _type: string;
     code: string;
     language: string;
+    filename?: string;
   };
 }

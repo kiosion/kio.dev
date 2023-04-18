@@ -24,6 +24,8 @@
   import Logger from '$lib/logger';
   import { onMount } from 'svelte';
   import { parseEmoji } from '$helpers/emoji';
+  import ReplitEmbed from './embeds/replit-embed.svelte';
+  import SvelteEmbed from './embeds/svelte-embed.svelte';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
@@ -91,7 +93,9 @@
           types: {
             code: CodeBlock,
             divider: Divider,
-            image: Image
+            image: Image,
+            replitEmbed: ReplitEmbed,
+            svelteEmbed: SvelteEmbed
           },
           marks: {
             link: CustomLink,
