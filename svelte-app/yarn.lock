@@ -2297,14 +2297,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/build@npm:^29.6.7":
-  version: 29.7.0
-  resolution: "@netlify/build@npm:29.7.0"
+"@netlify/build@npm:^29.8.0":
+  version: 29.9.0
+  resolution: "@netlify/build@npm:29.9.0"
   dependencies:
     "@bugsnag/js": "npm:^7.0.0"
     "@netlify/cache-utils": "npm:^5.1.3"
-    "@netlify/config": "npm:^20.3.6"
-    "@netlify/edge-bundler": "npm:8.12.2"
+    "@netlify/config": "npm:^20.3.7"
+    "@netlify/edge-bundler": "npm:8.13.0"
     "@netlify/framework-info": "npm:^9.8.5"
     "@netlify/functions-utils": "npm:^5.2.1"
     "@netlify/git-utils": "npm:^5.1.1"
@@ -2356,7 +2356,7 @@ __metadata:
     yargs: "npm:^17.6.0"
   bin:
     netlify-build: bin.js
-  checksum: fbbbaf1ac94191d308e5e6096913840f5a202af7b99022986daf9e78f7b0c184316266e9e7e3a4757de9fbf27920277ec4bbbf66a004d447c4d40faf10c376a3
+  checksum: dfb81247f99f632b2479e7080caea76e993674ffed853187d7b92c88a60cd2bf56c312c269a14216b529747c37e337ec7dcdb60d50c1c5b5c6dcf87e22417f2f
   languageName: node
   linkType: hard
 
@@ -2377,9 +2377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/config@npm:^20.3.5, @netlify/config@npm:^20.3.6":
-  version: 20.3.6
-  resolution: "@netlify/config@npm:20.3.6"
+"@netlify/config@npm:^20.3.7":
+  version: 20.3.7
+  resolution: "@netlify/config@npm:20.3.7"
   dependencies:
     chalk: "npm:^5.0.0"
     cron-parser: "npm:^4.1.0"
@@ -2394,7 +2394,7 @@ __metadata:
     is-plain-obj: "npm:^4.0.0"
     js-yaml: "npm:^4.0.0"
     map-obj: "npm:^5.0.0"
-    netlify: "npm:^13.1.3"
+    netlify: "npm:^13.1.4"
     netlify-headers-parser: "npm:^7.1.2"
     netlify-redirect-parser: "npm:^14.1.2"
     omit.js: "npm:^2.0.2"
@@ -2406,13 +2406,13 @@ __metadata:
     yargs: "npm:^17.6.0"
   bin:
     netlify-config: bin.js
-  checksum: db8d31f4bf2e0158f73d0b9d972ee06e11271cfec27a079ac944e361fb4963d8c811c976c91c87606a993c519d21e63f8b513c4d4b3896ec2b1c42ec7f7247f7
+  checksum: 1367792afe2897cc43b00cc032ea5ce3d956179244a8f4c4603974b384865b7ea589b0b827079e27a470466144be3f15d2440e8b09e027f24b7f8d95177a4bf8
   languageName: node
   linkType: hard
 
-"@netlify/edge-bundler@npm:8.12.2, @netlify/edge-bundler@npm:^8.12.1":
-  version: 8.12.2
-  resolution: "@netlify/edge-bundler@npm:8.12.2"
+"@netlify/edge-bundler@npm:8.13.0, @netlify/edge-bundler@npm:^8.13.0":
+  version: 8.13.0
+  resolution: "@netlify/edge-bundler@npm:8.13.0"
   dependencies:
     "@import-maps/resolve": "npm:^1.0.1"
     ajv: "npm:^8.11.2"
@@ -2436,7 +2436,7 @@ __metadata:
     semver: "npm:^7.3.5"
     tmp-promise: "npm:^3.0.3"
     uuid: "npm:^9.0.0"
-  checksum: 053e01d14e9f293cd5b75c11ab94fb4706857ab3d071f77b6aeec9e6bbc0dda44ee6aac40f4c66c680ea5eff8f171bfbb75062a34279da5a7f3882dce3f3756d
+  checksum: ce819883cc47a4c3b988dd8f08f33b08a31f01dff162d0f6869bb874556abd437f5f6eed95ae0566efefe1e5ec61fdcb920a8f2cea54b14dad57398dd2832c78
   languageName: node
   linkType: hard
 
@@ -2847,10 +2847,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/open-api@npm:^2.15.0":
-  version: 2.15.0
-  resolution: "@netlify/open-api@npm:2.15.0"
-  checksum: 2d6a6a0daac8bd9ed91b61441d40d6769425273625f87a052d20e28e315c1aecb6ab17d50c586c4a2fdd3148952309f9f9bc68041b6b9937fb71e9e612527b99
+"@netlify/open-api@npm:^2.15.1":
+  version: 2.15.1
+  resolution: "@netlify/open-api@npm:2.15.1"
+  checksum: 486f997fe772b678a452977854d330d8537a4f1eadc89988b937a51ad67e5e8abd77eccd1385c9fb608090e962bd046360f678cb5b0f5ab0cd14afdf60d1f866
   languageName: node
   linkType: hard
 
@@ -12135,19 +12135,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:^13.1.6":
-  version: 13.1.6
-  resolution: "netlify-cli@npm:13.1.6"
+"netlify-cli@npm:^13.2.2":
+  version: 13.2.2
+  resolution: "netlify-cli@npm:13.2.2"
   dependencies:
     "@fastify/static": "npm:^6.6.0"
-    "@netlify/build": "npm:^29.6.7"
-    "@netlify/config": "npm:^20.3.5"
-    "@netlify/edge-bundler": "npm:^8.12.1"
+    "@netlify/build": "npm:^29.8.0"
+    "@netlify/config": "npm:^20.3.7"
+    "@netlify/edge-bundler": "npm:^8.13.0"
     "@netlify/framework-info": "npm:^9.8.5"
     "@netlify/local-functions-proxy": "npm:^1.1.1"
     "@netlify/zip-it-and-ship-it": "npm:^8.9.0"
     "@octokit/rest": "npm:^19.0.0"
-    ansi-escapes: "npm:^5.0.0"
+    ansi-escapes: "npm:^6.0.0"
     ansi-styles: "npm:^5.0.0"
     ansi-to-html: "npm:^0.7.2"
     ascii-table: "npm:0.0.9"
@@ -12208,7 +12208,7 @@ __metadata:
     log-update: "npm:^5.0.0"
     minimist: "npm:^1.2.5"
     multiparty: "npm:^4.2.1"
-    netlify: "npm:^13.1.2"
+    netlify: "npm:^13.1.4"
     netlify-headers-parser: "npm:^7.1.2"
     netlify-onegraph-internal: "npm:0.10.1"
     netlify-redirect-parser: "npm:^14.1.2"
@@ -12248,7 +12248,7 @@ __metadata:
   bin:
     netlify: bin/run.mjs
     ntl: bin/run.mjs
-  checksum: 7ece062a2dc2da1567fb391e66955c6cb4c6229a3638dd7825cad5d6e642919a09e44036347e932381b25a955ede04295ade1a71eee7ca4478c5ad0497a52d46
+  checksum: 59d99733085d50c2997aef8f2faf9d5ce33eec787e570aff18589aca2c34f45b58c6526f3c8d876018520e26ba1d78b2f41c224c40d22fd98ad280083f984a30
   languageName: node
   linkType: hard
 
@@ -12298,18 +12298,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify@npm:^13.1.2, netlify@npm:^13.1.3":
-  version: 13.1.3
-  resolution: "netlify@npm:13.1.3"
+"netlify@npm:^13.1.4":
+  version: 13.1.4
+  resolution: "netlify@npm:13.1.4"
   dependencies:
-    "@netlify/open-api": "npm:^2.15.0"
+    "@netlify/open-api": "npm:^2.15.1"
     lodash-es: "npm:^4.17.21"
     micro-api-client: "npm:^3.3.0"
     node-fetch: "npm:^3.0.0"
     omit.js: "npm:^2.0.2"
     p-wait-for: "npm:^4.0.0"
     qs: "npm:^6.9.6"
-  checksum: b2fa2d343a1a1edb8099f9f7414b249de69ff6fa931e1c74ceb454955a1c5e0289be4e71d5ca939d95b40e99b6f23b633217d2c26f3414ff7172bb58c7a53e6c
+  checksum: 3aebca9585c2542672281d77b3449544022128319e545d25b16febaef3c487a555aa5a7718e4aec3f2e7e53e2d120560bade2af0488d114bb975b3d0932da15b
   languageName: node
   linkType: hard
 
@@ -15752,7 +15752,7 @@ __metadata:
     highlight.js: "npm:^11.7.0"
     jsdom: "npm:^21.1.1"
     luxon: "npm:^3.2.1"
-    netlify-cli: "npm:^13.1.6"
+    netlify-cli: "npm:^13.2.2"
     node-html-to-image: "npm:^3.2.4"
     pixelarticons: "npm:^1.7.0"
     postcss: "npm:^8.4.14"
