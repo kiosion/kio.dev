@@ -11265,7 +11265,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-icons: "npm:^4.8.0"
     sanity: "npm:^3.8.3"
-    styled-components: "npm:^5.3.8"
+    styled-components: "npm:^5.3.10"
   languageName: unknown
   linkType: soft
 
@@ -15874,9 +15874,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^5.3.8":
-  version: 5.3.8
-  resolution: "styled-components@npm:5.3.8"
+"styled-components@npm:^5.3.10":
+  version: 5.3.10
+  resolution: "styled-components@npm:5.3.10"
   dependencies:
     "@babel/helper-module-imports": "npm:^7.0.0"
     "@babel/traverse": "npm:^7.4.5"
@@ -15892,7 +15892,7 @@ __metadata:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
     react-is: ">= 16.8.0"
-  checksum: 379bfdf3e82fe774a66dcbcdbabe2666224867042d10cca2e7fe8d0d8e82cd3d725ed304c8bebbfa9f1d940b7c145212d0e4600dd16fc48cd909fd1b751b8722
+  checksum: 12860f07d80b280330c0dc7670cc974a9f438ce0572c9159763cca622a035dc350e5997449cb4c1dbb8ca0e4f54129eacae188db37d9b1599c6069eea4d1d104
   languageName: node
   linkType: hard
 
