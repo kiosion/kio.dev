@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
+    "lint-staged": "^13.2.2",
     "rimraf": "^4.4.1"
   },
   "scripts": {
