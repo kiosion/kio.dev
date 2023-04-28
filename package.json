@@ -4,7 +4,7 @@
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "rimraf": "^4.4.1"
+    "rimraf": "^5.0.0"
   },
   "scripts": {
     "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
