@@ -61,5 +61,5 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       .catch((_err) => ({}));
   }
 
-  return { post, headings, authState: authValid, userInfo };
+  return { post, headings, authState: authValid, userInfo, routeFetch: fetch };
 };

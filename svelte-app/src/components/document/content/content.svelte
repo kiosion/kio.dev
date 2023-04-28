@@ -10,7 +10,8 @@
     ProjectDocument,
     Comment,
     ResDataMany,
-    ExternalUserInfo
+    ExternalUserInfo,
+    RouteFetch
   } from '$types';
   import type { Heading } from '$helpers/pt';
 
@@ -18,7 +19,8 @@
     data: PostDocument | ProjectDocument,
     headings: Heading[] | undefined,
     userInfo: ExternalUserInfo | null = null,
-    comments: ResDataMany<Comment> | undefined = undefined;
+    comments: ResDataMany<Comment> | undefined = undefined,
+    routeFetch: RouteFetch | undefined = undefined;
 </script>
 
 <Header {model} {data} />
@@ -30,7 +32,7 @@
 {/if}
 <div class="mt-4 font-sans text-base">
   {#if data.body}
-    <PortableText text={data.body} />
+    <PortableText text={data.body} {routeFetch} />
   {:else}
     <EmptyContent />
   {/if}

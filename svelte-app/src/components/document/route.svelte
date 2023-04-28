@@ -10,7 +10,8 @@
     ProjectDocument,
     ResDataMany,
     Comment,
-    ExternalUserInfo
+    ExternalUserInfo,
+    RouteFetch
   } from '$types';
   import { t } from '$i18n';
   import type { Heading } from '$helpers/pt';
@@ -19,7 +20,8 @@
     data: ProjectDocument | PostDocument | undefined,
     headings: Heading[],
     userInfo: ExternalUserInfo | null = null,
-    comments: ResDataMany<Comment> | undefined = undefined;
+    comments: ResDataMany<Comment> | undefined = undefined,
+    routeFetch: RouteFetch | undefined = undefined;
 
   const isPost = model === 'post',
     allTags =
@@ -77,7 +79,7 @@
 <div data-test-route={isPost ? 'blog' : 'work'}>
   {#if data}
     <ContentWrapper>
-      <Content {model} {data} {headings} {comments} {userInfo} />
+      <Content {model} {data} {headings} {comments} {userInfo} {routeFetch} />
     </ContentWrapper>
   {/if}
 </div>

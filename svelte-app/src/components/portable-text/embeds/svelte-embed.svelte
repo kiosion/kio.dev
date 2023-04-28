@@ -4,6 +4,7 @@
   // import { createWorker } from '$lib/embeds/svelte-worker';
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import type { TypedObject } from '@portabletext/types';
+  import type { RouteFetch } from '$types';
 
   export let portableText: Omit<CustomBlockComponentProps, 'value'> & {
     value: TypedObject & {
@@ -27,7 +28,7 @@
           throw new Error('No target or source found');
         }
 
-        const result = await fetch('/api/v1/transform/svelte', {
+        const result = await routeFetch('/api/v1/transform/svelte', {
           method: 'POST',
           body: source.replaceAll('\n', '')
         }).then((res) => res.json());
@@ -70,6 +71,9 @@
   $: if (target && source) {
     render();
   }
+  $: routeFetch =
+    (portableText.global.context as { routeFetch?: RouteFetch }).routeFetch ||
+    fetch;
 </script>
 
 <div class="target-container" class:active>

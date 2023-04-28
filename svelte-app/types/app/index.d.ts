@@ -21,9 +21,10 @@ export interface MenuState {
 }
 
 // Some internal Sveltekit types
-export interface RouteFetch {
-  (info: RequestInfo, init?: RequestInit): Promise<Response>;
-}
+export type RouteFetch = (
+  info: RequestInfo,
+  init?: RequestInit
+) => Promise<Response>;
 
 export type Subscriber<T> = (value: T) => void;
 export type Unsubscriber = () => void;

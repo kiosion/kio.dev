@@ -26,6 +26,7 @@
   import { parseEmoji } from '$helpers/emoji';
   import ReplitEmbed from './embeds/replit-embed.svelte';
   import SvelteEmbed from './embeds/svelte-embed.svelte';
+  import type { RouteFetch } from '$types';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
@@ -33,7 +34,8 @@
   }
 
   export let text: (PortableTextBlock | ArbitraryTypedObject)[],
-    plainText = false;
+    plainText = false,
+    routeFetch: RouteFetch | undefined = undefined;
 
   let ptContainer: HTMLElement;
 
@@ -123,7 +125,8 @@
           }
         }}
         context={{
-          footnotes
+          footnotes,
+          routeFetch
         }}
       />
       {#if footnotes?.length}
