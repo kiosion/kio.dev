@@ -2,15 +2,9 @@
   "private": true,
   "version": "0.0.0",
   "devDependencies": {
-    "eslint": "^8.36.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "prettier": "^2.8.7",
-    "prettier-eslint": "^15.0.1",
-    "rimraf": "^4.4.1",
-    "stylelint": "^15.2.0",
-    "stylelint-config-standard-scss": "^7.0.1",
-    "typescript": "^5.0.2"
+    "rimraf": "^4.4.1"
   },
   "scripts": {
     "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
