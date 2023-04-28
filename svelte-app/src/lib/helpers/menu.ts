@@ -1,9 +1,40 @@
 import { get } from 'svelte/store';
 import { state } from '$stores/menu';
-import { t } from '$i18n';
+import { t, isLocalized } from '$i18n';
+import { page } from '$app/stores';
+import { APP_LANGS } from '$lib/consts';
 import type { MenuStateOpt } from '$types';
 
-export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
+const appLangsRegex = `(${APP_LANGS.map((lang) => lang.toLowerCase()).join(
+  '|'
+)}|${APP_LANGS.map((lang) => lang.toUpperCase()).join('|')})`;
+
+const findSourceFile = (path: string) => {
+  if (get(isLocalized)) {
+    path = path.replace(new RegExp(`^/${appLangsRegex}`), '/');
+  }
+
+  const gitHubBase = 'https://github.com/kiosion/kio.dev/blob/main/svelte-app/',
+    baseDir = gitHubBase + 'src/routes/[[lang=lang]]/',
+    srcDirs = new Map<RegExp, string>([
+      [/^\/$/, '+page.svelte'],
+      [/^\/blog\/?$/, 'blog/+page.svelte'],
+      [/^\/blog\/([^/]+)\/?$/, 'blog/[slug]/+page@.svelte'],
+      [/^\/work\/?$/, 'work/+page.svelte'],
+      [/^\/work\/([^/]+)\/?$/, 'work/[slug]/+page@.svelte'],
+      [/^\/etc\/?$/, 'etc/+page.svelte']
+    ]);
+
+  for (const [re, dir] of srcDirs) {
+    if (re.test(path)) {
+      return baseDir + dir;
+    }
+  }
+
+  return gitHubBase;
+};
+
+export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
     return state.set({
       ...get(state),
@@ -17,7 +48,7 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
   target = (target?.closest('a') as HTMLAnchorElement) || target;
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  const opts = (await (async () => {
+  const opts = (() => {
     switch (target?.tagName.toUpperCase()) {
       case 'A':
         if ((target as HTMLAnchorElement).href.indexOf('mailto:') >= 0) {
@@ -145,11 +176,11 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
             icon: 'Code',
             text: get(t)('View page source'),
             action: () =>
-              window.open('https://github.com/kiosion/kio.dev', '_blank')
+              window.open(findSourceFile(get(page).url.pathname), '_blank')
           }
         ];
     }
-  })()) as MenuStateOpt[];
+  })() as MenuStateOpt[];
 
   const selection = window.getSelection()?.toString();
   if (selection && selection.trim() !== '') {
@@ -177,10 +208,11 @@ export const setState = async (e?: MouseEvent, pageContainer?: HTMLElement) => {
       ...get(state),
       open: false
     });
+
     return setTimeout(() => {
       state.set(res);
     }, 200);
-  } else {
-    return state.set(res);
   }
+
+  return state.set(res);
 };
