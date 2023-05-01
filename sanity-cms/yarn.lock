@@ -3658,6 +3658,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/icons@npm:^2.3.0":
+  version: 2.3.1
+  resolution: "@sanity/icons@npm:2.3.1"
+  peerDependencies:
+    react: ^18
+  checksum: 138362042c2ab1fc241558793d78e131c8e89679e6162af4dd1a21f79937393f7e25acffcf8960b649df6d1d5baaca117e335b243ea01b9e56a3daa90df7430c
+  languageName: node
+  linkType: hard
+
 "@sanity/image-url@npm:^1.0.2":
   version: 1.0.2
   resolution: "@sanity/image-url@npm:1.0.2"
@@ -3864,9 +3873,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/vision@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "@sanity/vision@npm:3.5.0"
+"@sanity/vision@npm:^3.9.1":
+  version: 3.9.1
+  resolution: "@sanity/vision@npm:3.9.1"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.1.0"
     "@codemirror/commands": "npm:^6.0.1"
@@ -3879,8 +3888,8 @@ __metadata:
     "@rexxars/react-json-inspector": "npm:^8.0.1"
     "@rexxars/react-split-pane": "npm:^0.1.93"
     "@sanity/color": "npm:^2.1.20"
-    "@sanity/icons": "npm:^2.1.0"
-    "@sanity/ui": "npm:^1.0.0"
+    "@sanity/icons": "npm:^2.3.0"
+    "@sanity/ui": "npm:^1.3.0"
     "@uiw/react-codemirror": "npm:^4.11.4"
     hashlru: "npm:^2.3.0"
     is-hotkey: "npm:^0.1.6"
@@ -3889,7 +3898,7 @@ __metadata:
   peerDependencies:
     react: ^18
     styled-components: ^5.2
-  checksum: b131d74fda0aa28823a6699495ff79809d1f514c6967ef8e432ea0f3b068e9a9f3fa34fc15d40af18895400fe0c97f9b1530c7719923b14f0d4f52e77cee2079
+  checksum: 600659436be1446414a8a49941babdfa8c2cd6e61ce6473f51157ba9a8e7424ab773c9aeb770efd6ae90e1cdd810697c84a699839bc787b9c12f52048a1d1005
   languageName: node
   linkType: hard
 
@@ -11253,7 +11262,7 @@ __metadata:
     "@sanity/code-input": "npm:^4.1.0"
     "@sanity/eslint-config-studio": "npm:^2.0.1"
     "@sanity/ui": "npm:^1.3.0"
-    "@sanity/vision": "npm:^3.5.0"
+    "@sanity/vision": "npm:^3.9.1"
     "@typescript-eslint/eslint-plugin": "npm:^5.52.0"
     "@typescript-eslint/parser": "npm:^5.57.0"
     ace-builds: "npm:^1.16.0"
