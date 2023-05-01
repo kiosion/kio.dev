@@ -19,7 +19,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin-search-dir=. ./src/**/*.{ts,svelte}",
     "format:json": "deno run --no-npm --allow-read --allow-write ./scripts/sort-json.ts ./src/languages/en.json ./src/languages/fr.json --fix",
-    "lint": "format && eslint --fix ./src/**/*.{ts,svelte}"
+    "lint": "pnpm format && pnpm eslint --fix ./src/**/*.{ts,svelte}"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",

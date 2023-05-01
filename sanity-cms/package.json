@@ -10,7 +10,7 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "format": "prettier --write './**/*.js'",
-    "lint": "format && eslint --fix './**/*.{ts,js}'"
+    "lint": "pnpm format && pnpm eslint --fix './**/*.{ts,js}'"
   },
   "dependencies": {
     "@sanity/code-input": "^4.1.0",
