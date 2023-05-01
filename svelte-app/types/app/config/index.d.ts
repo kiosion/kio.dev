@@ -15,8 +15,4 @@ export interface SiteConfig extends SanityAsset {
     iconSize: number;
     iconRotation?: number;
   }[];
-  commentsVisible: boolean;
-  commentsRequireAuth: boolean;
-  commentsRequireApproval: boolean;
-  commentsEnabled: boolean;
 }

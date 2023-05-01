@@ -21,7 +21,6 @@ const defaultFeatureFlags = new Map([
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
   ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)],
-  ['comments', writable({ value: false, updated: '1671500535' } as Setting)],
   ['new_nav', writable({ value: false, updated: '1671500535' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
 

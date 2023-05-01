@@ -3,7 +3,8 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import svg from '@poppanator/sveltekit-svg';
-import babel from 'rollup-plugin-babel';
+// import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 
 export default defineConfig(({ command, mode }) => {
   const isProduction = ['production', 'staging', 'build'].some(
@@ -26,7 +27,7 @@ export default defineConfig(({ command, mode }) => {
         command === 'build' &&
         babel({
           extensions: ['.js', '.mjs', '.html', '.svelte'],
-          runtimeHelpers: true,
+          // runtimeHelpers: true,
           exclude: ['node_modules/@babel/**'],
           presets: [
             [
@@ -45,6 +46,7 @@ export default defineConfig(({ command, mode }) => {
     ],
     optimizeDeps: {
       include: [
+        'fiona',
         'twemoji',
         'svelte-highlight',
         'highlight.js',
@@ -91,6 +93,9 @@ export default defineConfig(({ command, mode }) => {
           }
         }
       }
+    },
+    ssr: {
+      noExternal: ['@portabletext/toolkit']
     },
     appType: 'custom'
   };

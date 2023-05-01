@@ -32,7 +32,7 @@ jobs:
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-18-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-18-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-nm-18-
       - name: Install dependencies

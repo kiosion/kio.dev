@@ -4,13 +4,7 @@
 
   export let data: PageData;
 
-  $: ({ post, headings, userInfo, routeFetch } = data);
+  $: ({ post, headings, routeFetch } = data);
 </script>
 
-<DocumentRoute
-  model="post"
-  data={post?.data}
-  {headings}
-  {userInfo}
-  {routeFetch}
-/>
+<DocumentRoute model="post" data={post?.data} {headings} {routeFetch} />

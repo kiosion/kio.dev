@@ -23,12 +23,5 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   const headings = await getHeadings((project?.data.body ?? []) as PTBlock[]);
 
-  const comments = Store.find<Comment>(fetch, 'comment', {
-    id: params.slug
-  }).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
-  }) as Promise<ResDataMany<Comment>> | undefined;
-
-  return { project, headings, comments };
+  return { project, headings };
 };

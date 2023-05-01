@@ -1,23 +1,12 @@
 <script lang="ts">
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
-  import CommentSection from '$components/document/comments/comment-section.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
   import { t } from '$i18n';
-  import Features from '$stores/features';
-  import type {
-    PostDocument,
-    ProjectDocument,
-    ResDataMany,
-    Comment,
-    ExternalUserInfo
-  } from '$types';
+  import type { PostDocument, ProjectDocument } from '$types';
 
-  export let model: 'post' | 'project',
-    data: PostDocument | ProjectDocument,
-    userInfo: ExternalUserInfo | null = null,
-    comments: ResDataMany<Comment> | undefined = undefined;
+  export let model: 'post' | 'project', data: PostDocument | ProjectDocument;
 
   $: extLinks =
     model === 'project' &&
@@ -26,7 +15,6 @@
       {
         hovered: boolean;
       }[]);
-  $: canSeeComments = Features.can('see comments');
 </script>
 
 <div class="mt-4" data-test-id="{model}-footer">
@@ -65,10 +53,6 @@
         </li>
       {/each}
     </ul>
-  {/if}
-  {#if $canSeeComments && comments}
-    <Divider />
-    <CommentSection {comments} {userInfo} />
   {/if}
 </div>
 

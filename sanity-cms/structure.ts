@@ -4,10 +4,7 @@ import {
   BsFillFileImageFill,
   BsFillTagsFill,
   BsGearFill,
-  BsFillChatLeftTextFill,
   BsListUl,
-  BsShieldFillCheck,
-  BsShieldFillExclamation,
   BsFillFileTextFill,
   BsFillFileEarmarkTextFill
 } from 'react-icons/bs';
@@ -98,35 +95,5 @@ export const structure = (
       S.listItem()
         .title('Tags')
         .icon(BsFillTagsFill)
-        .child(S.documentTypeList('tag')),
-      S.listItem()
-        .title('Comments')
-        .icon(BsFillChatLeftTextFill)
-        .child(
-          S.list()
-            .title('Comments')
-            .items([
-              S.listItem()
-                .title('Approved')
-                .icon(BsShieldFillCheck)
-                .child(
-                  S.documentTypeList('comment')
-                    .title('Approved')
-                    .filter('_type == "comment" && approved == true')
-                ),
-              S.listItem()
-                .title('Awaiting approval')
-                .icon(BsShieldFillExclamation)
-                .child(
-                  S.documentTypeList('comment')
-                    .title('Awaiting approval')
-                    .filter('_type == "comment" && !approved')
-                ),
-              S.divider(),
-              S.listItem()
-                .title('All comments')
-                .icon(BsListUl)
-                .child(S.documentTypeList('comment').title('All comments'))
-            ])
-        )
+        .child(S.documentTypeList('tag'))
     ]);

@@ -31,25 +31,25 @@ jobs:
         id: nm-cache
         with:
           path: 'sanity-cms/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('sanity-cms/yarn.lock') }}
+          key: ${{ runner.os }}-nm-16-${{ hashFiles('sanity-cms/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-nm-16-
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: (cd ./sanity-cms && yarn install 2> >(grep -v warning 1>&2))
+        run: (cd ./sanity-cms && pnpm install --frozen-lockfile)
       # - name: Lint check
       #   run: (cd ./sanity-cms && yarn lint)
       - name: Build for development
-        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" yarn sanity build)
+        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" pnpm sanity build)
       - name: Deploy development studio
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
+        run: (cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod)
       - name: Build for production
-        run: (cd ./sanity-cms && yarn sanity build)
+        run: (cd ./sanity-cms && pnpm sanity build)
       - name: Deploy production studio
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && yarn netlify deploy --dir=./dist --prod)
+        run: (cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod)

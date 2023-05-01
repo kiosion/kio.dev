@@ -23,7 +23,6 @@
   $: CanUseSounds = Features.can('use sounds');
   $: CanUseCustomCursor = Features.can('use custom cursor');
   $: CanUseComicSans = Features.can('use comic sans');
-  $: CanSeeComments = Features.can('see comments');
   $: CanUseNewNav = Features.can('use new nav');
 </script>
 
@@ -61,12 +60,6 @@
       target={'comic-sans'}
       state={$CanUseComicSans}
       label="Comic Sans 😃"
-    />
-    <SwitchItem
-      action={onChange}
-      target={'comments'}
-      state={$CanSeeComments}
-      label="View Comments"
     />
     <SwitchItem
       action={onChange}

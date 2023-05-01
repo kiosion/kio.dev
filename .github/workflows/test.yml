@@ -13,9 +13,6 @@ jobs:
   vitest:
     name: Vitest
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16, 18 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,9 +25,9 @@ jobs:
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-${{ matrix.node-version }}-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-nm-${{ matrix.node-version }}-
+            ${{ runner.os }}-nm-16-
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0
