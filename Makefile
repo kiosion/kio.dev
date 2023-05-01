@@ -26,7 +26,7 @@ sanity-%: SHELL:=/bin/bash
 sanity-%:
 	@make install-sanity
 	@cd ./sanity-cms &&\
-	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) yarn dev
+	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) pnpm dev
 
 web: SHELL:=/bin/bash
 web: install-web
@@ -88,7 +88,7 @@ cypress:
 
 lint: SHELL:=/bin/bash
 lint:
-	@cd ./svelte-app && yarn lint
+	@cd ./svelte-app && pnpm lint
 
 # Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash
