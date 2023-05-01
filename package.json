@@ -6,6 +6,6 @@
     "lint-staged": "^13.1.2"
   },
   "scripts": {
-    "prepare": "test -d .husky || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
+    "prepare": "test -f ./.husky/pre-commit || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
   }
 }
