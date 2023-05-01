@@ -3,8 +3,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import svg from '@poppanator/sveltekit-svg';
-// import babel from 'rollup-plugin-babel';
-import babel from '@rollup/plugin-babel';
+import viteBabel from 'vite-plugin-babel';
 
 export default defineConfig(({ command, mode }) => {
   const isProduction = ['production', 'staging', 'build'].some(
@@ -25,9 +24,9 @@ export default defineConfig(({ command, mode }) => {
       // compile to good ol' ES5-compatible code
       (isProduction || isTesting) &&
         command === 'build' &&
-        babel({
+        viteBabel({
           extensions: ['.js', '.mjs', '.html', '.svelte'],
-          // runtimeHelpers: true,
+          babelHelpers: 'runtime',
           exclude: ['node_modules/@babel/**'],
           presets: [
             [
