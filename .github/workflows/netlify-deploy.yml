@@ -14,17 +14,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v3
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-nm-16-
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: (cd ./svelte-app && yarn install 2> >(grep -v warning 1>&2))
+        run: (cd ./svelte-app && pnpm install --frozen-lockfile)
       - name: Build for production
         env:
           SVELTE_NETLIFY_ENV: netlify
@@ -37,4 +43,4 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: cd ./svelte-app && yarn netlify deploy --dir=./build --prod
+        run: cd ./svelte-app && pnpm netlify deploy --dir=./build --prod

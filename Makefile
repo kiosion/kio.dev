@@ -3,22 +3,20 @@
 install: SHELL:=/bin/bash
 install:
 	@echo "Installing dependencies..."
-	@yarn install
+	@pnpm install
 
 install-web: SHELL:=/bin/bash
 install-web: install
 install-web:
 	@echo "Installing svelte dependencies..."
-	@cd ./svelte-app &&\
-	yarn install
+	@cd ./svelte-app && pnpm install
 
 # install sanity deps
 install-sanity: SHELL:=/bin/bash
 install-sanity: install
 install-sanity:
 	@echo "Installing sanity dependencies..."
-	@cd ./sanity-cms &&\
-	yarn install
+	@cd ./sanity-cms && pnpm install
 
 api: SHELL:=/bin/bash
 api:
@@ -33,8 +31,7 @@ sanity-%:
 web: SHELL:=/bin/bash
 web: install-web
 web:
-	@cd ./svelte-app &&\
-	yarn dev
+	@cd ./svelte-app && pnpm dev
 
 server: SHELL:=/bin/bash
 server: install-web
@@ -46,53 +43,48 @@ server:
 backed: SHELL:=/bin/bash
 backed: install-web
 backed:
-	@cd ./svelte-app &&\
-	yarn dev:backed
+	@cd ./svelte-app && pnpm dev:backed
 
 # Build svelte app for prod
 prod: SHELL:=/bin/bash
 prod:
 	@cd ./svelte-app &&\
-	SVELTE_ADAPTER_ENV=netlify yarn build
+	SVELTE_ADAPTER_ENV=netlify pnpm build
 
 sanity-upgrade: SHELL:=/bin/bash
 sanity-upgrade: install-sanity
 sanity-upgrade:
-	@cd ./sanity-cms &&\
-	yarn sanity upgrade
+	@cd ./sanity-cms && pnpm sanity upgrade
 
 # Deploy sanity
 sanity-deploy: sanity-upgrade
 sanity-deploy:
-	@cd ./sanity-cms &&\
-	yarn netlify deploy --dir=./dist --prod
+	@cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod
 
 # Push to netlify
 netlify-deploy: SHELL:=/bin/bash
 netlify-deploy:
-	@cd ./svelte-app &&\
-	yarn netlify deploy --dir=./build --prod
+	@cd ./svelte-app && pnpm netlify deploy --dir=./build --prod
 
 # Build svelte app for testing
 test: SHELL:=/bin/bash
 test:
 	@cd ./svelte-app &&\
-	SVELTE_ADAPTER_ENV=node \
-	yarn build:test
+	SVELTE_ADAPTER_ENV=node pnpm build:test
 
 # vitest
 vitest: SHELL:=/bin/bash
 vitest:
 	@cd ./svelte-app &&\
-	yarn test:vitest
+	pnpm test:vitest
 
 
 # cypress tests
 cypress: SHELL:=/bin/bash
 cypress:
 	@cd ./svelte-app &&\
-	yarn cypress install
-	./scripts/cypress.sh
+	pnpm cypress install
+	@./scripts/cypress.sh
 
 lint: SHELL:=/bin/bash
 lint:

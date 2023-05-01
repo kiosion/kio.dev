@@ -4,7 +4,7 @@
 
   export let data: PageData;
 
-  $: ({ project, headings, comments } = data);
+  $: ({ project, headings } = data);
 </script>
 
-<DocumentRoute model="project" data={project?.data} {headings} {comments} />
+<DocumentRoute model="project" data={project?.data} {headings} />

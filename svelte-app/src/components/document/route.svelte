@@ -5,22 +5,13 @@
   import { onMount } from 'svelte';
   import { navOptions, pageHeading } from '$stores/navigation';
   import { attemptScroll } from '$helpers/scrollTo';
-  import type {
-    PostDocument,
-    ProjectDocument,
-    ResDataMany,
-    Comment,
-    ExternalUserInfo,
-    RouteFetch
-  } from '$types';
+  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
   import { t } from '$i18n';
   import type { Heading } from '$helpers/pt';
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
     headings: Heading[],
-    userInfo: ExternalUserInfo | null = null,
-    comments: ResDataMany<Comment> | undefined = undefined,
     routeFetch: RouteFetch | undefined = undefined;
 
   const isPost = model === 'post',
@@ -43,7 +34,6 @@
   });
 
   $: $page && attemptScroll($page);
-  $: comments ??= { data: [], meta: {} } as ResDataMany<Comment>;
   $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
     data?.title ? ` | ${data.title}` : ''
   }`;
@@ -79,7 +69,7 @@
 <div data-test-route={isPost ? 'blog' : 'work'}>
   {#if data}
     <ContentWrapper>
-      <Content {model} {data} {headings} {comments} {userInfo} {routeFetch} />
+      <Content {model} {data} {headings} {routeFetch} />
     </ContentWrapper>
   {/if}
 </div>

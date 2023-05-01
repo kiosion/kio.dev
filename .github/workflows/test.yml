@@ -13,24 +13,27 @@ jobs:
   vitest:
     name: Vitest
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16, 18 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Node ${{ matrix.node-version }}
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v3
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-${{ matrix.node-version }}-${{ hashFiles('svelte-app/yarn.lock') }}
+          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-nm-${{ matrix.node-version }}-
+            ${{ runner.os }}-nm-16-
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0

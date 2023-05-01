@@ -3,14 +3,9 @@
   "version": "0.0.0",
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
-    "rimraf": "^4.4.1"
+    "lint-staged": "^13.1.2"
   },
   "scripts": {
-    "prepare": "rimraf ./.husky && husky install && chmod ug+x .husky/* && husky add .husky/pre-commit 'yarn lint-staged'"
-  },
-  "packageManager": "yarn@4.0.0-rc.25",
-  "dependencies": {
-    "@rollup/plugin-virtual": "^3.0.1"
+    "prepare": "test -f ./.husky/pre-commit || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
   }
 }

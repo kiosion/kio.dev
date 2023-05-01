@@ -1,13 +1,12 @@
 {
-  "**/sanity-cms/**/*.{ts,js}": [
+  "sanity-cms/**/*.{ts,js}": [
     "./sanity-cms/node_modules/.bin/prettier --write"
   ],
-  "**/express-api/**/*.{ts,js}": [
-    "./express-api/node_modules/.bin/prettier --write",
-    "./express-api/node_modules/.bin/eslint --fix"
-  ],
-  "**/svelte-app/**/*.{svelte,ts,js}": [
+  "svelte-app/**/*.{svelte,ts,js}": [
     "./svelte-app/node_modules/.bin/prettier --write",
     "./svelte-app/node_modules/.bin/eslint --fix"
+  ],
+  "svelte-app/src/languages/*.json": [
+    "deno run --no-npm --allow-read --allow-write ./svelte-app/scripts/sort-json.ts"
   ]
 }

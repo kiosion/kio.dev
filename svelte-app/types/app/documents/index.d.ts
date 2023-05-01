@@ -21,4 +21,3 @@ export type {
   AuthorDocument,
   AuthorTimelineItem
 } from '$types/documents/author';
-export type { Comment } from '$types/documents/comment';

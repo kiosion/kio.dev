@@ -79,7 +79,7 @@ export default {
       subtitle: string;
     }) {
       return {
-        title: title,
+        title,
         subtitle: `${
           date
             ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(
