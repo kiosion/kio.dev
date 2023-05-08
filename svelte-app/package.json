@@ -69,7 +69,7 @@
     "highlight.js": "^11.7.0",
     "jsdom": "^21.1.1",
     "luxon": "^3.2.1",
-    "netlify-cli": "^13.2.2",
+    "netlify-cli": "^15.0.0",
     "node-html-to-image": "^3.2.4",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
