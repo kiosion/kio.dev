@@ -13,7 +13,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "$schema/*": ["./schemas/*"],
+      "$fields/*": ["./schemas/fields/*"],
+      "$objects/*": ["./schemas/objects/*"],
+      "$renderers/*": ["./renderers/*"],
+      "$components/*": ["./components/*"],
+      "$/*": ["./*"]
+    },
+    "rootDir": "./",
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

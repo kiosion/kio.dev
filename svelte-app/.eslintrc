@@ -1,29 +1,31 @@
 {
-  "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "requireConfigFile": false,
-    "babelOptions": {
-      "presets": [
-        ["@babel/preset-env", { "targets": "maintained node versions" }],
-        "@babel/preset-react"
-      ]
-    }
+    "extraFileExtensions": [".svelte"]
   },
   "env": {
     "browser": true,
-    "es2017": true,
-    "node": true
+    "node": true,
+    "es2017": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "@sanity/eslint-config-studio"
+    "plugin:svelte/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "@typescript-eslint"],
   "rules": {
+    "svelte/valid-compile": ["off"],
+    "@typescript-eslint/restrict-template-expressions": ["off"],
+    "@typescript-eslint/no-unused-vars": [
+      "error", {
+        "varsIgnorePattern": "^_*",
+        "argsIgnorePattern": "^_*"
+      }
+    ],
+    "no-unused-vars": ["off"],
     "prettier/prettier": ["error"],
     "array-bracket-spacing": ["error", "never"],
     "arrow-spacing": ["error"],
@@ -37,7 +39,6 @@
     "dot-notation": ["error"],
     "eqeqeq": ["error"],
     "func-call-spacing": ["error", "never"],
-    "indent": ["off"],
     "key-spacing": ["error"],
     "keyword-spacing": ["error"],
     "linebreak-style": ["error"],
@@ -57,9 +58,10 @@
     "no-script-url": ["error"],
     "object-shorthand": ["error"],
     "one-var-declaration-per-line": ["error"],
+    "@typescript-eslint/prefer-namespace-keyword": "off",
+    "@typescript-eslint/no-namespace": "off",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "quote-props": ["error", "as-needed"],
-    "react-hooks/rules-of-hooks": ["off"],
     "semi": ["error", "always"],
     "semi-spacing": ["error"],
     "space-in-parens": ["error", "never"],
@@ -71,12 +73,36 @@
       }
     ]
   },
+  "overrides": [
+    { 
+      "files": [
+        "*.svelte"
+      ], 
+      "parser": "svelte-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser"
+      }
+    },
+    {
+      "files": [
+        "*.test.ts",
+        "*.spec.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-empty-function": ["off"]
+      }
+    }
+  ],
+  "settings": {
+    "svelte3/typescript": true
+  },
   "ignorePatterns": [
     "**/.DS_Store",
     "**/*.cjs",
     "**/node_modules",
     "**/dist",
     "**/build",
+    "**/.svelte-kit/**",
     "**/package",
     "**/.env",
     "**/.env.*",

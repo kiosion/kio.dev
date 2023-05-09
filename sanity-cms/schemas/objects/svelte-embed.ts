@@ -1,3 +1,4 @@
+import { PreviewConfig, PreviewValue } from 'sanity';
 import Code from '../fields/code';
 
 export default {
@@ -9,12 +10,11 @@ export default {
     select: {
       code: 'code'
     },
-    prepare({ code }: { code: { filename: string; code: string } }) {
+    prepare: ({ code }) => {
       return {
         title: code?.filename + '.svelte' || 'unnamed.svelte',
-        subtitle: 'Svelte Embed',
-        media: ''
-      };
+        subtitle: 'Svelte Embed'
+      } as PreviewValue;
     }
-  }
+  } satisfies PreviewConfig
 };

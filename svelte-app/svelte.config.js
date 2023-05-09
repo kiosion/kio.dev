@@ -42,5 +42,3 @@ export default {
     }
   }
 };
-
-// export default config;

@@ -1,27 +1,12 @@
-import Body from './objects/body';
-import type { Rule } from 'sanity';
+import BaseDocument from './base-document';
+import type { PreviewConfig, Rule, PreviewValue } from 'sanity';
 
 export default {
   name: 'project',
   title: 'Projects',
   type: 'document',
   fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'slug',
-      title: 'URL Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96
-      },
-      validation: (Rule: Rule) => Rule.required()
-    },
+    ...BaseDocument.filter((field) => field.name !== 'author'),
     {
       name: 'external',
       title: 'External',
@@ -57,36 +42,10 @@ export default {
       }
     },
     {
-      name: 'desc',
-      title: 'Description',
-      type: 'text'
-    },
-    {
       name: 'language',
       title: 'Language',
       type: 'string',
       description: 'Primary programming language used in project'
-    },
-    {
-      name: 'date',
-      title: 'Date',
-      type: 'date',
-      options: {
-        dateFormat: 'MMMM Do, YYYY'
-      },
-      initialValue: () => new Date()
-    },
-    Body,
-    {
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'tag' }]
-        }
-      ]
     },
     {
       name: 'externalLinks',
@@ -119,15 +78,7 @@ export default {
       date: 'date',
       subtitle: 'desc'
     },
-    prepare({
-      title,
-      date,
-      subtitle
-    }: {
-      title: string;
-      date: string;
-      subtitle: string;
-    }) {
+    prepare: ({ title, date, subtitle }) => {
       return {
         title,
         subtitle: `${
@@ -137,7 +88,7 @@ export default {
               )
             : ''
         }${date && subtitle ? ' - ' : ''}${subtitle ? subtitle : ''}`
-      };
+      } as PreviewValue;
     }
-  }
+  } satisfies PreviewConfig
 };

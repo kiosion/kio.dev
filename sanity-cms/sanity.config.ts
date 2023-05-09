@@ -1,14 +1,15 @@
 import { defineConfig, SanityDocumentLike } from 'sanity';
 import { studioTheme } from '@sanity/ui';
 import { deskTool } from 'sanity/desk';
-import { schemaTypes } from './schemas/schema';
-import { structure } from './structure';
+import { schemaTypes } from '$schema/schema';
+import { structure } from '$/structure';
 import { codeInput } from '@sanity/code-input';
 import { visionTool } from '@sanity/vision';
-import { BrandLogo } from './components/BrandLogo';
+import { BrandLogo } from '$components/BrandLogo';
 
-// @ts-expect-error
-const dataset = import.meta.env.SANITY_STUDIO_DATASET || 'production';
+const dataset =
+  (import.meta as { env?: Record<string, string> }).env
+    ?.SANITY_STUDIO_DATASET || 'production';
 
 export default defineConfig({
   name: 'default',
@@ -55,7 +56,7 @@ export default defineConfig({
         case 'project':
           return `${baseUrl}/work/${slug.current}`;
         case 'author':
-          return `${baseUrl}/about`;
+          return `${baseUrl}/`;
       }
       return prev;
     }

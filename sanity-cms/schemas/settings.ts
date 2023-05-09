@@ -4,7 +4,6 @@ export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  // __experimental_actions: ['update', /* 'delete', */ 'publish'],
   groups: [
     {
       name: 'pages',

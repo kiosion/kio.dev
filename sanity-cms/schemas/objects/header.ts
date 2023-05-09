@@ -1,4 +1,4 @@
-import type { Rule } from '@sanity/types';
+import type { PreviewConfig, PreviewValue, Rule } from 'sanity';
 
 export default {
   name: 'header',
@@ -21,12 +21,11 @@ export default {
       title: 'title',
       icon: 'icon'
     },
-    prepare({ title, icon }: { title: string; icon: string }) {
+    prepare: ({ title, icon }) => {
       return {
         title,
-        subtitle: icon,
-        media: ''
-      };
+        subtitle: icon
+      } as PreviewValue;
     }
-  }
+  } satisfies PreviewConfig
 };

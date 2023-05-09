@@ -3,7 +3,8 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 import Inspect from 'vite-plugin-inspect';
 import svg from '@poppanator/sveltekit-svg';
-import viteBabel from 'vite-plugin-babel';
+// import viteBabel from 'vite-plugin-babel';
+import type { TransformOptions } from '@babel/core';
 
 export default defineConfig(({ command, mode }) => {
   const isProduction = ['production', 'staging', 'build'].some(
@@ -12,36 +13,39 @@ export default defineConfig(({ command, mode }) => {
     isTesting = mode === 'testing',
     isDev = ['development', 'backed'].some((m) => m === mode);
 
+  // const babelConfig = {
+  //   configFile: false,
+  //   presets: [
+  //     [
+  //       '@babel/preset-env',
+  //       {
+  //         targets: 'defaults, last 3 versions and not dead and not IE 11'
+  //       }
+  //     ],
+  //     '@babel/preset-typescript'
+  //   ],
+  //   plugins: [
+  //     '@babel/plugin-syntax-dynamic-import',
+  //     '@babel/plugin-transform-runtime'
+  //   ],
+  //   parserOpts: {}
+  // } satisfies TransformOptions;
+
   return {
     plugins: [
       svg(),
       sveltekit(),
       StripTestSelectors({
-        // confusingly named, 'dev' decides whether to strip or not for build or dev server
         dev: isProduction
       }),
-      (isDev || isTesting) && Inspect(),
-      // compile to good ol' ES5-compatible code
-      (isProduction || isTesting) &&
-        command === 'build' &&
-        viteBabel({
-          extensions: ['.js', '.mjs', '.html', '.svelte'],
-          babelHelpers: 'runtime',
-          exclude: ['node_modules/@babel/**'],
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: 'defaults, last 3 versions and not dead and not IE 11'
-              }
-            ],
-            '@babel/preset-typescript'
-          ],
-          plugins: [
-            '@babel/plugin-syntax-dynamic-import',
-            '@babel/plugin-transform-runtime'
-          ]
-        })
+      (isDev || isTesting) && Inspect()
+      // Disable babel for now, need to write custom plugin for svelte/vite compat
+      // (isProduction || isTesting) &&
+      //   command === 'build' &&
+      //   viteBabel({
+      //     babelConfig,
+      //     filter: /\.(?:m?js|ts)?$/
+      //   })
     ],
     optimizeDeps: {
       include: [
