@@ -6,31 +6,29 @@ Welcome to the monorepo for my blog, portfolio, Nowpage, and CV! You can see the
 
 <img width="49%" src="https://user-images.githubusercontent.com/34040324/220803703-a21ea52d-6864-4f14-976a-864b76cceede.png" /> <img width="49%" src="https://user-images.githubusercontent.com/34040324/220803750-8bcd8a3e-06d2-4d5a-8d88-c29199f4dfdf.png" />
 
-## 📚 Tech
-The frontend is built with:
+## 📚 Stack
+#### Frontend
 * Sveltekit
 * Typescript
 * Tailwindcss + some SCSS utils/scoped styles
 
-The API powering the site is built with:
+#### API
 * Elixir
 * Poison
 * Cowboy
 * Sanity.io
 
-For hosting and deploys, I use:
+#### Hosting / Deploys
 * Vultr VPSs
 * Docker
 * Netlify
 
 ## 📦 Dependencies
-To build the project, you'll need the following:
+To build the project, you'll need:
 
-* Node >= 16.16
-* Yarn >= 3.0
-* Elixir >= 1.13
-* Rebar3
-* Hex
+* Node ~16.16
+* PNPM ~8.0
+* Elixir ~1.14 (with OTP 24, Rebar3, & Hex)
 * Docker
 * docker-compose
 
