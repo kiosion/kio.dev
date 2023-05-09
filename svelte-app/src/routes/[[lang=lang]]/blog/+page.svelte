@@ -12,6 +12,8 @@
   import type { PostDocument } from '$types';
   import ListSection from '$components/lists/blog-section.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import { browser } from '$app/environment';
+  import { invalidate } from '$app/navigation';
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[];
@@ -39,6 +41,7 @@
     ));
   $: pageTitle = `kio.dev | ${$t('Thoughts')}`;
   $: description = $t('Thoughts about tech, design, and development');
+  $: browser && (!pinned || !posts) && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

@@ -3,6 +3,7 @@ import { config } from '$stores/config';
 import { get } from 'svelte/store';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
+import tryFetch from '$lib/try-fetch';
 import type {
   SiteConfig,
   RouteFetch,
@@ -59,7 +60,7 @@ class StoreClass extends CacheClass {
     }
     const url = this.constructUrl(model, params, true);
     try {
-      const res = await fetch(url);
+      const res = await tryFetch(fetch(url));
       const response = (await res.json()) as ResDataMany<T> & ResError;
       if (!response.meta || response.error) {
         Logger.error('Failed to get data');
@@ -83,15 +84,15 @@ class StoreClass extends CacheClass {
     }
     const url = this.constructUrl(model, params);
     try {
-      const res = await fetch(url);
+      const res = await tryFetch(fetch(url));
       const response = (await res.json()) as ResData<T> & ResError;
       if (!response.meta || response.error) {
-        Logger.error('Failed to get data');
+        Logger.error('Failed to get data', {}, response.error);
         return;
       }
       return response as ResData<T>;
     } catch (err: unknown) {
-      Logger.error('Failed to query endpoint');
+      Logger.error('Failed to query endpoint', {}, err);
       return;
     }
   };

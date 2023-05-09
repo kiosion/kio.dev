@@ -2,6 +2,7 @@
   import '../app.scss';
   import 'cal-sans';
   import { onMount, onDestroy, setContext } from 'svelte';
+  import { get, type Unsubscriber } from 'svelte/store';
   import { classList } from 'svelte-body';
   import { fade, fly } from 'svelte/transition';
   import { page, navigating } from '$app/stores';
@@ -24,8 +25,9 @@
   import { useMediaQuery } from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { init as initAudio } from '$lib/sfx';
+  import { config } from '$stores/config';
+  import { invalidateAll } from '$app/navigation';
   import type { LayoutData } from './$types';
-  import type { Unsubscriber } from 'svelte/store';
 
   interface DevToolsEvent extends Event {
     detail: {
@@ -83,6 +85,7 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
+  $: browser && (!data.author || !get(config)?.data) && invalidateAll();
 </script>
 
 <svelte:head>

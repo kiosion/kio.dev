@@ -10,6 +10,8 @@
   import LinkNonPt from '$components/link-non-pt.svelte';
   import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import { invalidate } from '$app/navigation';
+  import { browser } from '$app/environment';
   import type { Unsubscriber } from 'svelte/store';
 
   let subscribers = [] as Unsubscriber[];
@@ -33,6 +35,7 @@
   $: about = data?.about?.data;
   $: pageTitle = `kio.dev | ${$t('Meta + Contact')}`;
   $: description = $t('A peek into my current adventures in tech and beyond');
+  $: browser && !about && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

@@ -12,6 +12,8 @@
   import EmptyContent from '$components/empty-content.svelte';
   import Timeline from '$components/about/timeline.svelte';
   import Divider from '$components/divider.svelte';
+  import { browser } from '$app/environment';
+  import { invalidate } from '$app/navigation';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -25,6 +27,9 @@
     );
 
   $: ({ about, pinned, projects } = data);
+  $: browser &&
+    (!about || !pinned || !projects) &&
+    invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

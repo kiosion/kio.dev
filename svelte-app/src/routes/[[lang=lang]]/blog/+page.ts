@@ -12,13 +12,13 @@ export const ssr = !(ENV === 'testing');
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
 
-  const currentConfig = get(config);
+  const currentConfig = get(config)?.data;
 
   let pinned: ResData<PostDocument> | undefined;
 
-  if (currentConfig?.data?.pinnedPost?._ref) {
+  if (currentConfig?.pinnedPost?._ref) {
     pinned = await Store.findOne<PostDocument>(fetch, 'post', {
-      id: currentConfig.data.pinnedPost._ref,
+      id: currentConfig.pinnedPost._ref,
       lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
