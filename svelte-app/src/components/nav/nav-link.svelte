@@ -17,7 +17,8 @@
     mobile = false,
     navigatingIsActive = false;
 
-  let isHovered = false;
+  let isHovered = false,
+    isActive = false;
 
   const updateActive = () => {
       $navLinks[index].active !== isActive &&
@@ -41,7 +42,7 @@
 
   $: splitPath = $page?.url.pathname.split('/') || [];
   $: truePath = link.url.slice($isLocalized ? 4 : 1);
-  $: isActive = (() => {
+  $: (isActive = (() => {
     let urlIncludesLink = $page?.url.pathname === link.url;
 
     if (navigatingIsActive) {
@@ -52,7 +53,8 @@
       urlIncludesLink ||
       (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0)
     );
-  })();
+  })()),
+    navOpen;
   $: updateActive(), isActive;
   $: updateHovered(), isHovered;
 </script>
