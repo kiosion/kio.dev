@@ -72,10 +72,6 @@
         );
       })
     );
-    if (browser) {
-      onLogoFocusIn();
-      setTimeout(() => onLogoFocusOut(), 1500);
-    }
   });
 
   onDestroy(() => {
@@ -96,16 +92,15 @@
     });
 
   const onLogoFocusIn = () => {
-    feDisplacementScale.set(80);
-    feTurbulenceBaseFreq1.set(2.08);
-    feTurbulenceBaseFreq2.set(0.08);
-  };
-
-  const onLogoFocusOut = () => {
-    feDisplacementScale.set(0);
-    feTurbulenceBaseFreq1.set(2.01);
-    feTurbulenceBaseFreq2.set(0.01);
-  };
+      feDisplacementScale.set(80);
+      feTurbulenceBaseFreq1.set(2.08);
+      feTurbulenceBaseFreq2.set(0.08);
+    },
+    onLogoFocusOut = () => {
+      feDisplacementScale.set(0);
+      feTurbulenceBaseFreq1.set(2.01);
+      feTurbulenceBaseFreq2.set(0.01);
+    };
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>

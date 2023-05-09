@@ -16,12 +16,7 @@ const defaultFeatureFlags = new Map([
     writable({ value: false, updated: '1671500535' } as Setting)
   ],
   ['sounds', writable({ value: true, updated: '1671500535' } as Setting)],
-  [
-    'custom_cursor',
-    writable({ value: false, updated: '1671500535' } as Setting)
-  ],
-  ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)],
-  ['new_nav', writable({ value: false, updated: '1671500535' } as Setting)]
+  ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
 
 let featureFlags: typeof defaultFeatureFlags;

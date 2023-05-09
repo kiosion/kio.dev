@@ -4,7 +4,6 @@
   import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import ListSection from '$components/lists/blog-section.svelte';
-  // import ListItem from '$components/lists/blog-item.svelte';
   import { t } from '$i18n';
   import EmptyContent from '$components/empty-content.svelte';
 
@@ -23,19 +22,14 @@
   </title>
 </svelte:head>
 
-<div data-test-route="tag" class="w-full">
-  <IconHeader
-    icon="label"
-    text={$t("Recent '{tag}' posts", { tag: pageTitle })}
-    classNames="mb-4"
-  />
-  <div class="pb-20">
-    {#if posts?.data?.length}
-      <ListSection posts={posts.data} />
-    {:else}
-      <div class="flex w-full flex-row items-center justify-center">
-        <EmptyContent />
-      </div>
-    {/if}
+<IconHeader
+  icon="label"
+  text={$t("Recent '{tag}' posts", { tag: pageTitle })}
+/>
+{#if posts?.data?.length}
+  <ListSection posts={posts.data} />
+{:else}
+  <div class="flex w-full flex-row items-center justify-center">
+    <EmptyContent />
   </div>
-</div>
+{/if}

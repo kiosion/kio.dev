@@ -1,3 +1,7 @@
-<div data-test-route="work" class="mt-8 w-full max-w-[64rem] pb-20">
+<script lang="ts">
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+</script>
+
+<ContentWrapper fixed wide>
   <slot />
-</div>
+</ContentWrapper>

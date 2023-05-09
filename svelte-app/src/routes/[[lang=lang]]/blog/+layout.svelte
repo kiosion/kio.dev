@@ -1,10 +1,7 @@
-<div data-test-route="blog">
-  <slot />
-</div>
+<script lang="ts">
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+</script>
 
-<style lang="scss">
-  div {
-    @apply mt-8 w-full pb-20;
-    max-width: 64rem;
-  }
-</style>
+<ContentWrapper fixed wide>
+  <slot />
+</ContentWrapper>

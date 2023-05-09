@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { state } from '$stores/menu';
-  import { setState } from '$lib/helpers/menu';
+  import { state, setState } from '$lib/helpers/menu';
   import Menu from './context-menu/menu.svelte';
   import Option from './context-menu/option.svelte';
   import Divider from './context-menu/divider.svelte';

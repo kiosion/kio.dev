@@ -16,7 +16,7 @@
     />
     <Hoverable>
       <Tooltip
-        text="LastFM: {data.title} - {data.artist}"
+        text="Now playing: {data.title} - {data.artist}"
         delay={500}
         position="right"
         fixed
@@ -26,7 +26,7 @@
           alt="LastFM"
           class="focusOutline-sm logo"
           role="button"
-          tabindex={0}
+          tabindex="0"
           on:click={() => {
             window.open('https://github.com/kiosion/toru', '_blank');
           }}

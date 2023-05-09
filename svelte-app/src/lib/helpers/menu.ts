@@ -1,9 +1,10 @@
-import { get } from 'svelte/store';
-import { state } from '$stores/menu';
+import { get, writable } from 'svelte/store';
 import { t, isLocalized } from '$i18n';
 import { page } from '$app/stores';
 import { APP_LANGS } from '$lib/consts';
-import type { MenuStateOpt } from '$types';
+import type { MenuState, MenuStateOpt } from '$types';
+
+const state = writable({} as MenuState);
 
 const appLangsRegex = `(${APP_LANGS.map((lang) => lang.toLowerCase()).join(
   '|'
@@ -34,7 +35,7 @@ const findSourceFile = (path: string) => {
   return gitHubBase;
 };
 
-export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
+const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
   if (!e) {
     return state.set({
       ...get(state),
@@ -216,3 +217,5 @@ export const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
 
   return state.set(res);
 };
+
+export { state, setState };

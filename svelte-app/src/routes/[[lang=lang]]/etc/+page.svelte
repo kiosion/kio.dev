@@ -6,10 +6,10 @@
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
   import type { PageData } from './$types';
   import LinkNonPt from '$components/link-non-pt.svelte';
   import Divider from '$components/divider.svelte';
+  import HeadedBlock from '$components/headings/headed-block.svelte';
   import type { Unsubscriber } from 'svelte/store';
 
   let subscribers = [] as Unsubscriber[];
@@ -31,7 +31,7 @@
   export let data: PageData;
 
   $: about = data?.about?.data;
-  $: pageTitle = `kio.dev | ${$t('Meta + Contact').toLowerCase()}`;
+  $: pageTitle = `kio.dev | ${$t('Meta + Contact')}`;
   $: description = $t('A peek into my current adventures in tech and beyond');
 </script>
 
@@ -49,54 +49,35 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<div data-test-route="meta">
-  <ContentWrapper fixed>
-    {#if about}
-      <IconHeader icon="Message" text={$t('Say hello')} />
-      <div>
-        <PortableText text={about.contact} />
-      </div>
+<ContentWrapper fixed>
+  {#if about}
+    <HeadedBlock icon="Message" heading={$t('Say hello')}>
+      <PortableText text={about.contact} />
+    </HeadedBlock>
 
-      <Divider />
+    <Divider />
 
-      <IconHeader icon="LockOpen" text={$t('PGP')} />
-      <div>
-        <p>
-          {$t("Want to send a secure message my way? Here's my main PGP key:")}
-          <LinkNonPt href="/pgp.txt" target="_blank"
-            >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
-          >
-        </p>
-      </div>
+    <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
+      <p>
+        {$t("Want to send a secure message my way? Here's my main PGP key:")}
+        <LinkNonPt href="/pgp.txt" target="_blank"
+          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
+        >
+      </p>
+    </HeadedBlock>
 
-      <Divider />
+    <Divider />
 
-      <IconHeader icon="InfoBox" text={$t('Meta')} />
-      <div>
-        <PortableText text={about.body} />
-      </div>
-    {:else}
-      <EmptyContent />
-    {/if}
-  </ContentWrapper>
-</div>
+    <HeadedBlock icon="InfoBox" heading={$t('Meta')}>
+      <PortableText text={about.body} />
+    </HeadedBlock>
+  {:else}
+    <EmptyContent />
+  {/if}
+</ContentWrapper>
 
 <style lang="scss">
-  div {
-    div {
-      @apply mx-1 font-sans text-base text-stone-700;
-
-      p {
-        @apply my-4;
-      }
-    }
-  }
-
-  :global(.dark) {
-    div {
-      div {
-        @apply text-stone-200;
-      }
-    }
+  p {
+    @apply my-4;
   }
 </style>

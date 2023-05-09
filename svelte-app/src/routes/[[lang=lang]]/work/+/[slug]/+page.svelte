@@ -22,21 +22,15 @@
   </title>
 </svelte:head>
 
-<IconHeader
-  icon="label"
-  text={$t("Recent '{tag}' work", { tag: pageTitle })}
-  classNames="mb-4"
-/>
-<div class="pb-20">
-  {#if projects?.data?.length}
-    <div
-      class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
-    >
-      {#each projects.data as project}
-        <ListItem {project} />
-      {/each}
-    </div>
-  {:else}
-    <EmptyContent />
-  {/if}
-</div>
+<IconHeader icon="label" text={$t("Recent '{tag}' work", { tag: pageTitle })} />
+{#if projects?.data?.length}
+  <div
+    class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
+  >
+    {#each projects.data as project}
+      <ListItem {project} />
+    {/each}
+  </div>
+{:else}
+  <EmptyContent />
+{/if}

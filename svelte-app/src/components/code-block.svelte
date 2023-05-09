@@ -204,7 +204,11 @@
   }
 
   .copyButton {
-    @apply absolute top-0 right-0 z-10 m-2 cursor-pointer rounded-sm p-2 text-stone-600 opacity-0 transition-opacity duration-150 hover:text-stone-800;
+    @apply absolute top-0 right-0 z-10 m-2 cursor-pointer rounded-sm p-2 text-stone-600 opacity-0 transition-opacity duration-150;
+
+    &:hover {
+      @apply text-stone-800;
+    }
 
     &.visible {
       @apply opacity-100;
@@ -228,7 +232,11 @@
       }
     }
     .copyButton {
-      @apply text-stone-400 hover:text-stone-200;
+      @apply text-stone-400;
+
+      &:hover {
+        @apply text-stone-200;
+      }
     }
   }
 

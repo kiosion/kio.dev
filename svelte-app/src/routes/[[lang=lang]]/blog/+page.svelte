@@ -37,7 +37,7 @@
     (postsExceptPinned = posts?.data?.filter(
       (post) => post._id !== pinned?.data?._id
     ));
-  $: pageTitle = `kio.dev | ${$t('Thoughts').toLowerCase()}`;
+  $: pageTitle = `kio.dev | ${$t('Thoughts')}`;
   $: description = $t('Thoughts about tech, design, and development');
 </script>
 
@@ -56,7 +56,7 @@
 </svelte:head>
 
 {#if pinned?.data}
-  <IconHeader icon="Pin" text={$t('Pinned')} classNames="mb-3" />
+  <IconHeader icon="Pin" text={$t('Pinned')} />
   <ListItem post={pinned.data} />
 {/if}
 

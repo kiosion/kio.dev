@@ -11,14 +11,15 @@
   import BarLoader from '$components/loading/bar.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
-  import Navigation from '$components/nav/nav.svelte';
+  import Navigation from '$components/nav.svelte';
   import PageControls from '$components/controls/page-controls.svelte';
   import Features from '$stores/features';
   import { browser } from '$app/environment';
   import ContextMenu from '$components/context-menu.svelte';
-  import { state as menuState } from '$stores/menu';
-  import { setState as setMenuState } from '$lib/helpers/menu';
-  import CustomCursor from '$components/custom-cursor.svelte';
+  import {
+    state as menuState,
+    setState as setMenuState
+  } from '$lib/helpers/menu';
   import { isDesktop } from '$helpers/responsive';
   import { useMediaQuery } from 'svelte-breakpoints';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
@@ -73,7 +74,6 @@
 
   export let data: LayoutData;
 
-  $: useCustomCursor = Features.can('use custom cursor');
   $: useComicSans = Features.can('use comic sans');
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
@@ -94,9 +94,7 @@
 <svelte:body
   use:classList={`${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${$useComicSans ? 'comicSans' : ''} ${
-    $useCustomCursor ? 'custom-cursor' : ''
-  }`}
+  } ${$useComicSans ? 'comicSans' : ''}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
 
@@ -112,10 +110,6 @@
   >
     <BarLoader width="100vw" height="3px" />
   </span>
-{/if}
-
-{#if browser && $useCustomCursor}
-  <CustomCursor showLoader={$loading || !appLoaded} />
 {/if}
 
 {#if $menuState.open}

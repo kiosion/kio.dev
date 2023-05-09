@@ -7,8 +7,8 @@
   import { onMount, onDestroy } from 'svelte';
   import { t } from '$i18n';
   import Divider from '$components/divider.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import HeadedBlock from '$components/headings/headed-block.svelte';
   import type { PageData } from './$types';
   import type { Unsubscriber } from 'svelte/store';
 
@@ -49,40 +49,20 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<div data-test-route="about">
-  <ContentWrapper fixed>
-    {#if about}
-      <IconHeader icon="User" text={$t('About me')} />
-      <div>
-        <PortableText text={about.bio} />
-      </div>
-      {#if about.bio && about.now}
-        <Divider />
-      {/if}
-      {#if about.now}
-        <IconHeader icon="Clock" text={$t("What I'm up to now")} />
-        <div>
-          <PortableText text={about.now} />
-        </div>
-      {/if}
-    {:else}
-      <EmptyContent />
+<ContentWrapper fixed>
+  {#if about}
+    <HeadedBlock icon="User" heading={$t('About me')}>
+      <PortableText text={about.bio} />
+    </HeadedBlock>
+    {#if about.bio && about.now}
+      <Divider />
     {/if}
-  </ContentWrapper>
-</div>
-
-<style lang="scss">
-  div {
-    div {
-      @apply mx-1 font-sans text-base text-stone-700;
-    }
-  }
-
-  :global(.dark) {
-    div {
-      div {
-        @apply text-stone-200;
-      }
-    }
-  }
-</style>
+    {#if about.now}
+      <HeadedBlock icon="Clock" heading={$t("What I'm up to now")}>
+        <PortableText text={about.now} />
+      </HeadedBlock>
+    {/if}
+  {:else}
+    <EmptyContent />
+  {/if}
+</ContentWrapper>
