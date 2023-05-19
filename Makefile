@@ -36,7 +36,6 @@ web:
 server: SHELL:=/bin/bash
 server: install-web
 server:
-	@echo "Starting dev servers..."
 	@./scripts/server.sh
 
 # run dev backed
@@ -51,12 +50,8 @@ prod:
 	@cd ./svelte-app &&\
 	SVELTE_ADAPTER_ENV=netlify pnpm build
 
-sanity-upgrade: SHELL:=/bin/bash
-sanity-upgrade: install-sanity
-sanity-upgrade:
-	@cd ./sanity-cms && pnpm sanity upgrade
-
 # Deploy sanity
+sanity-deploy: SHELL:=/bin/bash
 sanity-deploy: sanity-upgrade
 sanity-deploy:
 	@cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod
@@ -87,15 +82,11 @@ cypress:
 	@./scripts/cypress.sh
 
 lint: SHELL:=/bin/bash
+lint: install-web install-sanity
 lint:
-	@cd ./svelte-app && pnpm lint
+	@(cd ./svelte-app && pnpm lint) & (cd ./sanity-cms && pnpm lint)
 
 # Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash
 cleanup:
-	@echo "Cleaning up elixir-api..."
-	@rm -rf ./elixir-api/_build ./elixir-api/deps
-	@echo "Cleaning up sanity-cms..."
-	@rm -rf ./sanity-cms/dist
-	@echo "Cleaning up svelte-app..."
-	@rm -rf ./svelte-app/.netlify ./svelte-app/.svelte-kit ./svelte-app/build ./svelte-app/dist
+	@rm -rf ./elixir-api/_build ./elixir-api/deps ./sanity-cms/dist ./svelte-app/.netlify ./svelte-app/.svelte-kit ./svelte-app/build ./svelte-app/dist

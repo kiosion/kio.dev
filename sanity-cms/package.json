@@ -9,7 +9,7 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "format": "prettier --write './**/*.js'",
+    "format": "prettier --write './**/*.{ts,js}'",
     "lint": "pnpm format && pnpm eslint --fix './**/*.{ts,js}'"
   },
   "dependencies": {
