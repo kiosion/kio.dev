@@ -2,8 +2,12 @@ import { aboutRes } from '../../fixtures/about';
 import type { AboutSetupParams } from '../../types';
 
 describe('E2E | About', () => {
-  const setupContext = ({ delay = 800, content = true }: AboutSetupParams) => {
-    return cy.intercept('GET', '/api/get/about', (req) => {
+  const setupIntercept = ({
+    url = '/api/get/about',
+    delay = 800,
+    content = true
+  }: AboutSetupParams = {}) =>
+    cy.intercept('GET', url, (req) =>
       req.reply({
         headers: {
           'Content-Type': 'application/json'
@@ -17,33 +21,33 @@ describe('E2E | About', () => {
           data: content ? aboutRes() : undefined
         },
         delay
-      });
-    });
-  };
+      })
+    );
 
   it('should render about route with no data', () => {
-    setupContext({ content: false }).as('getAbout');
+    setupIntercept({ content: false }).as('getAboutSSR');
+    setupIntercept({ url: '/api/get/about?lang=en', content: false }).as(
+      'getAboutCSR'
+    );
 
-    cy.visit('/about');
-    cy.wait('@getAbout');
+    cy.visit('/');
+    cy.wait('@getAboutSSR');
+    cy.wait('@getAboutCSR');
 
-    cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
-    cy.get('[data-test-id="error-text"]').should('exist');
-
-    cy.reload();
-
-    cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
+    cy.get('body.is-loaded', { timeout: 4000 }).should('exist');
     cy.get('[data-test-id="error-text"]').should('exist');
   });
 
   it('should render about route and content', () => {
-    setupContext({}).as('getAbout');
+    setupIntercept().as('getAboutSSR');
+    setupIntercept({ url: '/api/get/about?lang=en' }).as('getAboutCSR');
 
-    cy.visit('/about');
-    cy.wait('@getAbout');
+    cy.visit('/');
+    cy.wait('@getAboutSSR');
+    cy.wait('@getAboutCSR');
 
-    cy.get('[data-test-route="about"]', { timeout: 4000 }).should('exist');
-    cy.get('[data-test-route="about"]').contains(
+    cy.get('body.is-loaded', { timeout: 4000 }).should('exist');
+    cy.get('body.is-loaded').contains(
       'This is a demo structure for the about page'
     );
   });

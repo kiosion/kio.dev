@@ -15,23 +15,17 @@ describe('E2E | features | theme', () => {
       })
     );
     cy.visit('/');
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
+    cy.get('body.is-loaded', { timeout: 4000 }).should('exist');
   });
 
-  it('should toggle between light/dark mode', () => {
-    cy.get('[data-test-theme="dark"]').should('exist');
+  it('should persist between loads', () => {
+    cy.get('body').should('have.class', 'dark');
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('[data-test-theme="light"]').should('exist');
-  });
-
-  it('should store preference in localStorage', () => {
-    cy.get('[data-test-theme="dark"]').should('exist');
-    cy.get('[data-test-id="theme-toggle"]').filter(':visible').click();
-    cy.get('[data-test-theme="light"]').should('exist');
+    cy.get('body').should('have.class', 'light');
 
     cy.reload();
 
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
-    cy.get('[data-test-theme="light"]').should('exist');
+    cy.get('body.is-loaded', { timeout: 4000 }).should('exist');
+    cy.get('body').should('have.class', 'light');
   });
 });

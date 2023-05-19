@@ -14,10 +14,6 @@ describe('E2E | Blog', () => {
     cy.visit('/blog');
 
     cy.get('[data-test-route="blog"]', { timeout: 4000 }).should('exist');
-
-    cy.reload();
-
-    cy.get('[data-test-route="blog"]', { timeout: 4000 }).should('exist');
   });
 
   // TODO: This should be a separate test

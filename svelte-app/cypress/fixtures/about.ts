@@ -2,8 +2,7 @@ export const aboutRes = () => {
   return {
     _id: 'f253a368-6a43-48e1-819e-25f780810e4d',
     _type: 'author',
-    bio: 'Some bio or something.',
-    body: [
+    bio: [
       {
         _key: '6d5e56da014e',
         _type: 'block',

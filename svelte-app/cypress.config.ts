@@ -14,12 +14,5 @@ export default defineConfig({
     env: {
       VITE_TESTING: 'cypress'
     }
-  },
-
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'vite'
-    }
   }
 });

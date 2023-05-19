@@ -12,6 +12,7 @@ export interface ReturnDocumentsParams {
 }
 
 export interface AboutSetupParams {
+  url?: string;
   delay?: number;
   content?: boolean;
 }

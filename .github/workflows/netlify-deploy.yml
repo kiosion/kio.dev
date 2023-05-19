@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - uses: pnpm/action-setup@v2
         name: Install pnpm
         id: pnpm-install
@@ -25,7 +25,7 @@ jobs:
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
-          key: ${{ runner.os }}-nm-16-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-nm-16-
       - name: Install Dependencies
