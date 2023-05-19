@@ -279,8 +279,16 @@ defmodule Router.Api.V1 do
   end
 
   get "#{@query_url}/project/:id" do
-    with params <- validate_query_params(%{ "id" => id }, %{ "id" => nil }),
-         true <- not is_nil(params["id"])
+    with params <- validate_query_params(
+                      Map.merge(
+                        fetch_query_params(conn).query_params,
+                        %{ "id" => conn.params["id"] }
+                      ),
+                      %{
+                        "id" => nil,
+                        "lang" => "en"
+                      }
+                    )
     do
       query = Query.new()
         |> Query.filter([
@@ -329,7 +337,20 @@ defmodule Router.Api.V1 do
           nil -> 0
           _ -> 1
         end
-        result
+
+        transformed_result = case params["lang"] do
+          "en" -> result
+          "fr" -> Translate.translate(:project, result, "fr", "en")
+          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+        end
+
+        case transformed_result do
+          {:error, message} ->
+            Logger.error("Error fetching post: #{inspect(message)}")
+            result
+          _ ->
+            transformed_result
+        end
           |> Map.put("meta", %{
               "total" => count,
               "count" => count,
@@ -361,7 +382,8 @@ defmodule Router.Api.V1 do
                         "s" => "date",
                         "o" => "desc",
                         "date" => nil,
-                        "tags" => nil
+                        "tags" => nil,
+                        "lang" => "en"
                       })
                     |> params_to_integer([:limit, :skip])
                     |> empty_to_nil([:date]),
@@ -438,16 +460,39 @@ defmodule Router.Api.V1 do
       conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
         parsed_counts = Task.await(counts)
 
-        result
-          |> Map.put("meta", %{
-              "total" => parsed_counts["result"]["total"],
-              "count" => parsed_counts["result"]["count"],
-              "sort" => params["s"],
-              "order" => params["o"]
-            })
-          |> Map.update("ms", duration, &(&1 + (duration - &1)))
-          |> Map.delete("query")
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        transformed_result = case params["lang"] do
+          "en" -> result
+          "fr" -> Translate.translate(:projects, result, "fr", "en")
+          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+        end
+
+        case transformed_result do
+          {:error, message} ->
+            Logger.error("Error fetching projects: #{inspect(message)}")
+            result
+          _ ->
+            transformed_result
+        end
+        |> Map.put("meta", %{
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"],
+            "sort" => params["s"],
+            "order" => params["o"]
+          })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        # parsed_counts = Task.await(counts)
+
+        # result
+        #   |> Map.put("meta", %{
+        #       "total" => parsed_counts["result"]["total"],
+        #       "count" => parsed_counts["result"]["count"],
+        #       "sort" => params["s"],
+        #       "order" => params["o"]
+        #     })
+        #   |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        #   |> Map.delete("query")
+        #   |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")

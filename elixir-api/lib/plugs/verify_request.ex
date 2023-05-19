@@ -28,7 +28,7 @@ defmodule Hexerei.Plug.VerifyRequest do
     token
     |> verify_token()
     |> case do
-      {:error, message} -> conn |> error_res(401, message)
+      {:error, message} -> conn |> error_res(401, message) |> halt()
       {:ok, _token} -> conn
     end
   end

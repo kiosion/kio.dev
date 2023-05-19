@@ -14,7 +14,7 @@ import type {
 } from '$types';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent, fetch }) => {
+export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
 
   const currentConfig = get(config);
@@ -23,7 +23,8 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 
   if (currentConfig?.data?.pinnedProject?._ref) {
     pinned = await Store.findOne<ProjectDocument>(fetch, 'project', {
-      id: currentConfig.data.pinnedProject._ref
+      id: currentConfig.data.pinnedProject._ref,
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;
@@ -40,7 +41,8 @@ export const load: PageLoad = async ({ parent, fetch }) => {
   const projects: ResDataMany<ProjectDocument> | undefined =
     await Store.find<ProjectDocument>(fetch, 'project', {
       ...DEFAULT_PROJECT_QUERY_PARAMS,
-      limit: RECENT_PROJECTS_COUNT
+      limit: RECENT_PROJECTS_COUNT,
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;

@@ -1,13 +1,7 @@
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 import { getHeadings } from '$helpers/pt';
-import type {
-  ResData,
-  ResDataMany,
-  ProjectDocument,
-  PTBlock,
-  Comment
-} from '$types';
+import type { ResData, ProjectDocument, PTBlock } from '$types';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
@@ -15,7 +9,8 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   const project: ResData<ProjectDocument> | undefined =
     await Store.findOne<ProjectDocument>(fetch, 'project', {
-      id: params.slug
+      id: params.slug,
+      lang: params.lang ?? 'en'
     }).catch((err: unknown) => {
       Logger.error(err as string);
       return undefined;

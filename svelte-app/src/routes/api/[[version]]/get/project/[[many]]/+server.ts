@@ -22,7 +22,8 @@ export const GET: RequestHandler = async ({
     );
   }
 
-  const endpoint = many
+  const lang = url.searchParams.get('lang') || 'en',
+    endpoint = many
       ? `${REMOTE_API_URL}/query/projects?${url.searchParams}`
       : `${REMOTE_API_URL}/query/project/${
           url.searchParams.get('id') ||
@@ -30,7 +31,7 @@ export const GET: RequestHandler = async ({
             (url.searchParams.get('idb') as string) || '',
             'base64'
           ).toString('utf-8')
-        }`,
+        }?lang=${lang}`,
     remoteRes = await fetchRemote({ endpoint });
 
   if (remoteRes instanceof Error) {
