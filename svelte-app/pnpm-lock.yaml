@@ -148,14 +148,14 @@ devDependencies:
     specifier: ^11.7.0
     version: 11.7.0
   jsdom:
-    specifier: ^21.1.1
-    version: 21.1.1
+    specifier: ^21.1.2
+    version: 21.1.2
   luxon:
     specifier: ^3.2.1
     version: 3.2.1
   netlify-cli:
     specifier: ^13.2.2
-    version: 13.2.2(@types/node@18.16.3)
+    version: 13.2.2(@types/node@20.2.1)
   node-html-to-image:
     specifier: ^3.2.4
     version: 3.2.4
@@ -245,7 +245,7 @@ devDependencies:
     version: 2.0.7
   vite:
     specifier: ^4.2.0
-    version: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+    version: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
   vite-plugin-babel:
     specifier: ^1.1.3
     version: 1.1.3(@babel/core@7.21.5)(vite@4.2.0)
@@ -257,7 +257,7 @@ devDependencies:
     version: 0.0.2(vite@4.2.0)
   vitest:
     specifier: ^0.29.8
-    version: 0.29.8(@vitest/ui@0.28.1)(jsdom@21.1.1)(sass@1.58.3)(terser@5.16.3)
+    version: 0.29.8(@vitest/ui@0.28.1)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3)
 
 packages:
 
@@ -2052,7 +2052,7 @@ packages:
     resolution: {integrity: sha512-4wMPu9iN3/HL97QblBsBay3E1etIciR84izI3U+4iALY+JHCrI+a2jO0qbAZ/nxKoegypYEaiiqWXylm+/zfrw==}
     dev: true
 
-  /@netlify/build@29.10.1(@types/node@18.16.3):
+  /@netlify/build@29.10.1(@types/node@20.2.1):
     resolution: {integrity: sha512-kJEePqL70nLQrTWT8y4Aucb/uSesCdPnVpDGHWQoraBT+4catSwDRoT7O+VSL1ZY8OfeqynodRbb3cyiwk9srw==}
     engines: {node: ^14.16.0 || >=16.0.0}
     hasBin: true
@@ -2106,7 +2106,7 @@ packages:
       supports-color: 9.3.1
       terminal-link: 3.0.0
       tmp-promise: 3.0.3
-      ts-node: 10.9.1(@types/node@18.16.3)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@20.2.1)(typescript@5.0.4)
       typescript: 5.0.4
       uuid: 8.3.2
       yargs: 17.7.2
@@ -2844,7 +2844,7 @@ packages:
     dependencies:
       svelte: 3.58.0
       svgo: 3.0.2
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
   /@popperjs/core@2.11.6:
@@ -3060,7 +3060,7 @@ packages:
       svelte: 3.58.0
       tiny-glob: 0.2.9
       undici: 5.22.0
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3078,7 +3078,7 @@ packages:
       magic-string: 0.30.0
       svelte: 3.58.0
       svelte-hmr: 0.15.1(svelte@3.58.0)
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
       vitefu: 0.2.4(vite@4.2.0)
     transitivePeerDependencies:
       - supports-color
@@ -3323,6 +3323,10 @@ packages:
 
   /@types/node@18.16.3:
     resolution: {integrity: sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==}
+    dev: true
+
+  /@types/node@20.2.1:
+    resolution: {integrity: sha512-DqJociPbZP1lbZ5SQPk4oag6W7AyaGMO6gSfRwq3PWl4PXTwJpRQJhDq4W0kzrg3w6tJ1SwlvGZ5uKFHY13LIg==}
     dev: true
 
   /@types/normalize-package-data@2.4.1:
@@ -8381,8 +8385,8 @@ packages:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
     dev: true
 
-  /jsdom@21.1.1:
-    resolution: {integrity: sha512-Jjgdmw48RKcdAIQyUD1UdBh2ecH7VqwaXPN3ehoZN6MqgVbMn+lRm1aAT1AsdJRAJpwfa4IpwgzySn61h2qu3w==}
+  /jsdom@21.1.2:
+    resolution: {integrity: sha512-sCpFmK2jv+1sjff4u7fzft+pUh2KSUbUrEHYHyfSIbGTIcmnjyp83qg6qLwdJ/I3LpTXx33ACxeRL7Lsyc6lGQ==}
     engines: {node: '>=14'}
     peerDependencies:
       canvas: ^2.5.0
@@ -9385,14 +9389,14 @@ packages:
     resolution: {integrity: sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==}
     dev: true
 
-  /netlify-cli@13.2.2(@types/node@18.16.3):
+  /netlify-cli@13.2.2(@types/node@20.2.1):
     resolution: {integrity: sha512-1MtWHKI6P9WxA1pACsSvt4wXKY9QC+moTWLwYmo3EphkmqZjAtdFBa+WBzMaJovHbz1j6vKddlDhg/5KMTehEg==}
     engines: {node: ^14.16.0 || >=16.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@fastify/static': 6.10.1
-      '@netlify/build': 29.10.1(@types/node@18.16.3)
+      '@netlify/build': 29.10.1(@types/node@20.2.1)
       '@netlify/config': 20.4.1
       '@netlify/edge-bundler': 8.13.2
       '@netlify/framework-info': 9.8.6
@@ -12559,7 +12563,7 @@ packages:
       typescript: 4.9.4
     dev: true
 
-  /ts-node@10.9.1(@types/node@18.16.3)(typescript@5.0.4):
+  /ts-node@10.9.1(@types/node@20.2.1)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -12578,7 +12582,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.16.3
+      '@types/node': 20.2.1
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -13040,7 +13044,7 @@ packages:
       vite: ^2.7.0 || ^3.0.0 || ^4.0.0
     dependencies:
       '@babel/core': 7.21.5
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
   /vite-plugin-inspect@0.7.12(rollup@3.21.2)(vite@4.2.0):
@@ -13055,7 +13059,7 @@ packages:
       kolorist: 1.8.0
       sirv: 2.0.3
       ufo: 1.1.1
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -13066,7 +13070,7 @@ packages:
     peerDependencies:
       vite: ^3.0.0
     dependencies:
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
   /vite@4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3):
@@ -13105,6 +13109,42 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /vite@4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3):
+    resolution: {integrity: sha512-AbDTyzzwuKoRtMIRLGNxhLRuv1FpRgdIw+1y6AQG73Q5+vtecmvzKo/yk8X/vrHDpETRTx01ABijqUHIzBXi0g==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.2.1
+      esbuild: 0.17.18
+      postcss: 8.4.23
+      resolve: 1.22.2
+      rollup: 3.21.2
+      sass: 1.58.3
+      terser: 5.16.3
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /vitefu@0.2.4(vite@4.2.0):
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
     peerDependencies:
@@ -13113,10 +13153,10 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.2.0(@types/node@18.16.3)(sass@1.58.3)(terser@5.16.3)
+      vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
-  /vitest@0.29.8(@vitest/ui@0.28.1)(jsdom@21.1.1)(sass@1.58.3)(terser@5.16.3):
+  /vitest@0.29.8(@vitest/ui@0.28.1)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3):
     resolution: {integrity: sha512-JIAVi2GK5cvA6awGpH0HvH/gEG9PZ0a/WoxdiV3PmqK+3CjQMf8c+J/Vhv4mdZ2nRyXFw66sAg6qz7VNkaHfDQ==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -13160,7 +13200,7 @@ packages:
       cac: 6.7.14
       chai: 4.3.7
       debug: 4.3.4(supports-color@9.3.1)
-      jsdom: 21.1.1
+      jsdom: 21.1.2
       local-pkg: 0.4.3
       pathe: 1.1.0
       picocolors: 1.0.0
