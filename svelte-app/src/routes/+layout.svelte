@@ -39,7 +39,9 @@
     scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
     preloadUrls = ['/assets/logo-text--short.webp'],
-    unsubscribers = [] as Unsubscriber[];
+    unsubscribers = [] as Unsubscriber[],
+    invalidateAttempts = 0,
+    invalidationTimeout: ReturnType<typeof setTimeout> | undefined;
 
   const msg = (e: DevToolsEvent) =>
     e.detail?.isOpen &&
@@ -85,7 +87,19 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && (!data.author || !get(config)?.data) && invalidateAll();
+  $: browser &&
+    (!data.author || !get(config)?.data) &&
+    (() => {
+      if (invalidateAttempts > 10 || invalidationTimeout !== undefined) {
+        return;
+      }
+
+      invalidateAttempts++;
+      invalidationTimeout = setTimeout(() => {
+        invalidateAll();
+        invalidationTimeout = undefined;
+      }, (1500 * invalidateAttempts) / 2);
+    })();
 </script>
 
 <svelte:head>

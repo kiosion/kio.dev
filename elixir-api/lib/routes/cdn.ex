@@ -8,34 +8,26 @@ defmodule Router.Cdn do
   use Hexerei.Response
   use Hexerei.CDNCache
 
-  plug(:match)
-
-  plug(:fetch_query_params)
-
-  plug(:dispatch)
+  plug :match
+  plug :fetch_query_params
+  plug :dispatch
 
   defp parse_url(url) do
-    # Split url on '?' if it exists
     [url, query] = try do
       String.split(url, "?", parts: 2)
     rescue
       _ -> [url, nil]
     end
 
-    # Split url on '/' and get last element
     asset = List.last(String.split(url, "/"))
-
-    # Get filetype from asset by splitting on '.' if present
     split_asset = String.split(asset, ".", parts: 2)
 
-    # If split_asset has 2 elements, we have a filetype
     [_, filetype] = if length(split_asset) == 2 do
       split_asset
     else
       [asset, nil]
     end
 
-    # Return map with asset, query and file_ext
     %{
       asset: asset,
       query: if query == nil do "" else query end,
@@ -43,9 +35,6 @@ defmodule Router.Cdn do
     }
   end
 
-  ## Routes
-
-  # Parse image asset URLs
   get "/images/*path" do
     url = conn.request_path <> "?" <> conn.query_string
     url_parts = url |> parse_url()
@@ -82,12 +71,10 @@ defmodule Router.Cdn do
     end
   end
 
-  # Fallback route
   match _ do
     conn |> error_res(404, %{code: 404, message: "Not found"})
   end
 
-  # Handle unexpected errors
   @impl Plug.ErrorHandler
   def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
     conn |> generic_error()

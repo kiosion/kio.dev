@@ -51,7 +51,12 @@ class ToruSync {
   private update = async () => {
     try {
       const res = await this._fetch(TORU_API_URL, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
       });
 
       const data = (await res.json()) as Response;

@@ -38,18 +38,18 @@
     iconRotation: number;
   }
 
-  const socials =
-    ($currentConfig.data?.socialLinks?.map((link) => ({
-      attrs: {
-        href: $linkTo(link.url),
-        target: link.internal ? undefined : '_blank',
-        rel: link.rel?.join(' ') || undefined
-      },
-      name: link.name,
-      icon: link.icon,
-      iconSize: link.iconSize,
-      iconRotation: link.iconRotation
-    })) as SocialLink[]) || ([{}] as SocialLink[]);
+  // const socials =
+  //   ($currentConfig.data?.socialLinks?.map((link) => ({
+  //     attrs: {
+  //       href: $linkTo(link.url),
+  //       target: link.internal ? undefined : '_blank',
+  //       rel: link.rel?.join(' ') || undefined
+  //     },
+  //     name: link.name,
+  //     icon: link.icon,
+  //     iconSize: link.iconSize,
+  //     iconRotation: link.iconRotation
+  //   })) as SocialLink[]) || ([{}] as SocialLink[]);
 
   const onLogoClick = () => {
     SFX.click.play();
@@ -101,6 +101,19 @@
       feTurbulenceBaseFreq1.set(2.01);
       feTurbulenceBaseFreq2.set(0.01);
     };
+
+  $: socials =
+    ($currentConfig.data?.socialLinks?.map((link) => ({
+      attrs: {
+        href: $linkTo(link.url),
+        target: link.internal ? undefined : '_blank',
+        rel: link.rel?.join(' ') || undefined
+      },
+      name: link.name,
+      icon: link.icon,
+      iconSize: link.iconSize,
+      iconRotation: link.iconRotation
+    })) as SocialLink[]) || ([{}] as SocialLink[]);
 </script>
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>

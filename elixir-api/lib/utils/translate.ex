@@ -50,13 +50,17 @@ defmodule Hexerei.Translate do
     with key <- Hexerei.Env.get!(:gcloud_key),
          true <- key != nil
     do
-      case type do
-        :post -> translate_post(sanity_response, target_lang, source_lang)
-        :posts -> translate_posts(sanity_response, target_lang, source_lang)
-        :project -> translate_project(sanity_response, target_lang, source_lang)
-        :projects -> translate_projects(sanity_response, target_lang, source_lang)
-        :about -> translate_about(sanity_response, target_lang, source_lang)
-        _ -> {:error, "Invalid type"}
+      try do
+        case type do
+          :post -> translate_post(sanity_response, target_lang, source_lang)
+          :posts -> translate_posts(sanity_response, target_lang, source_lang)
+          :project -> translate_project(sanity_response, target_lang, source_lang)
+          :projects -> translate_projects(sanity_response, target_lang, source_lang)
+          :about -> translate_about(sanity_response, target_lang, source_lang)
+          _ -> {:error, "Invalid type"}
+        end
+      rescue
+        _ -> sanity_response
       end
     else
       _ ->
@@ -66,51 +70,13 @@ defmodule Hexerei.Translate do
   end
 
   defp translate_about(sanity_response, target_lang, source_lang) do
-    document = sanity_response["result"]
+    with document <- sanity_response["result"],
+         true <- document != nil
+    do
+      block_names = ["bio", "body", "contact", "now"]
 
-    text_blocks = document |> Map.take ["bio", "body", "contact", "now"]
+      text_blocks = document |> Map.take(block_names)
 
-    translated_blocks = case translate_pt_blocks text_blocks, target_lang, source_lang do
-      {:ok, translated_blocks} -> translated_blocks
-      {:error, reason} ->
-        Logger.error "Error translating: #{reason}"
-        text_blocks
-    end
-
-    %{
-      "result" => document |> Map.merge(translated_blocks |> Enum.into(%{}))
-    }
-  end
-
-  defp translate_post(sanity_response, target_lang, source_lang, ignore_blocks \\ false) do
-    document = sanity_response["result"]
-
-    field_names = ["title", "desc"]
-    block_names = ["body"]
-
-    text_fields = document |> Map.take(field_names) |> Map.values()
-    text_blocks = document |> Map.take(block_names)
-
-    translated_fields = case translate_pt_fields text_fields, target_lang, source_lang do
-      {:ok, translated_fields} -> translated_fields
-      {:error, reason} ->
-        Logger.error "Error translating: #{reason}"
-        text_fields
-    end
-
-    # Since field translations will be in reverse order we can just pop them off
-    updated_document = Enum.reduce(field_names, document, fn key, acc ->
-      index = field_names |> Enum.find_index(fn k -> k == key end)
-      {_list, [translation]} = translated_fields |> List.pop_at(index)
-      Map.put(acc, key, translation |> List.first())
-    end)
-
-    # For lists of posts we don't want to translate the blocks since they aren't visible anyways
-    if ignore_blocks do
-      %{
-        "result" => updated_document
-      }
-    else
       translated_blocks = case translate_pt_blocks text_blocks, target_lang, source_lang do
         {:ok, translated_blocks} -> translated_blocks
         {:error, reason} ->
@@ -119,8 +85,60 @@ defmodule Hexerei.Translate do
       end
 
       %{
-        "result" => updated_document |> Map.merge(translated_blocks |> Enum.into(%{}))
+        "result" => document |> Map.merge(translated_blocks |> Enum.into(%{}))
       }
+    else
+      _ ->
+        Logger.error "Provided document is nil"
+        sanity_response
+    end
+  end
+
+  defp translate_post(sanity_response, target_lang, source_lang, ignore_blocks \\ false) do
+    with document <- sanity_response["result"],
+         true <- document != nil
+    do
+      field_names = ["title", "desc"]
+      block_names = ["body"]
+
+      text_fields = document |> Map.take(field_names) |> Map.values()
+      text_blocks = document |> Map.take(block_names)
+
+      translated_fields = case translate_pt_fields text_fields, target_lang, source_lang do
+        {:ok, translated_fields} -> translated_fields
+        {:error, reason} ->
+          Logger.error "Error translating: #{reason}"
+          text_fields
+      end
+
+      # Since field translations will be in reverse order we can just pop them off
+      updated_document = Enum.reduce(field_names, document, fn key, acc ->
+        index = field_names |> Enum.find_index(fn k -> k == key end)
+        {_list, [translation]} = translated_fields |> List.pop_at(index)
+        Map.put(acc, key, translation |> List.first())
+      end)
+
+      # For lists of posts we don't want to translate the blocks since they aren't visible anyways
+      if ignore_blocks do
+        %{
+          "result" => updated_document
+        }
+      else
+        translated_blocks = case translate_pt_blocks text_blocks, target_lang, source_lang do
+          {:ok, translated_blocks} -> translated_blocks
+          {:error, reason} ->
+            Logger.error "Error translating: #{reason}"
+            text_blocks
+        end
+
+        %{
+          "result" => updated_document |> Map.merge(translated_blocks |> Enum.into(%{}))
+        }
+      end
+    else
+      _ ->
+        Logger.error "Provided document is nil"
+        sanity_response
     end
   end
 
@@ -137,42 +155,48 @@ defmodule Hexerei.Translate do
   end
 
   defp translate_project sanity_response, target_lang, source_lang, ignore_blocks \\ false do
-    document = sanity_response["result"]
+    with document <- sanity_response["result"],
+         true <- document != nil
+    do
+      field_names = ["title", "desc"]
+      block_names = ["body"]
 
-    field_names = ["title", "desc"]
-    block_names = ["body"]
+      text_fields = document |> Map.take(field_names) |> Map.values()
+      text_blocks = document |> Map.take(block_names)
 
-    text_fields = document |> Map.take(field_names) |> Map.values()
-    text_blocks = document |> Map.take(block_names)
-
-    translated_fields = case translate_pt_fields text_fields, target_lang, source_lang do
-      {:ok, translated_fields} -> translated_fields
-      {:error, reason} ->
-        Logger.error "Error translating: #{reason}"
-        text_fields
-    end
-
-    updated_document = Enum.reduce(field_names, document, fn key, acc ->
-      index = field_names |> Enum.find_index(fn k -> k == key end)
-      {_list, [translation]} = translated_fields |> List.pop_at(index)
-      Map.put acc, key, translation |> List.first()
-    end)
-
-    if ignore_blocks do
-      %{
-        "result" => updated_document
-      }
-    else
-      translated_blocks = case translate_pt_blocks text_blocks, target_lang, source_lang do
-        {:ok, translated_blocks} -> translated_blocks
+      translated_fields = case translate_pt_fields text_fields, target_lang, source_lang do
+        {:ok, translated_fields} -> translated_fields
         {:error, reason} ->
           Logger.error "Error translating: #{reason}"
-          text_blocks
+          text_fields
       end
 
-      %{
-        "result" => updated_document |> Map.merge(translated_blocks |> Enum.into(%{}))
-      }
+      updated_document = Enum.reduce(field_names, document, fn key, acc ->
+        index = field_names |> Enum.find_index(fn k -> k == key end)
+        {_list, [translation]} = translated_fields |> List.pop_at(index)
+        Map.put acc, key, translation |> List.first()
+      end)
+
+      if ignore_blocks do
+        %{
+          "result" => updated_document
+        }
+      else
+        translated_blocks = case translate_pt_blocks text_blocks, target_lang, source_lang do
+          {:ok, translated_blocks} -> translated_blocks
+          {:error, reason} ->
+            Logger.error "Error translating: #{reason}"
+            text_blocks
+        end
+
+        %{
+          "result" => updated_document |> Map.merge(translated_blocks |> Enum.into(%{}))
+        }
+      end
+    else
+      _ ->
+        Logger.error "Provided document is nil"
+        sanity_response
     end
   end
 

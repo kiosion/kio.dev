@@ -3,6 +3,10 @@ defmodule Hexerei.Utils do
   Generic utility funcs
   """
 
+  use Hexerei.Response
+
+  alias Hexerei.SanityClient, as: Sanity
+
   defmacro __using__(_opts) do
     quote do
       import Hexerei.Utils
