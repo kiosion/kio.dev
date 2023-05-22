@@ -14,9 +14,9 @@ defmodule Hexerei.Application do
         plug: Hexerei.Router,
         options: [
           port: port(),
-          ip: {127, 0, 0, 1},
+          # ip: {127, 0, 0, 1},
           # Explicitly specify IPv4 using :inet, IPv6 using :inet6
-          net: :inet
+          # net: :inet
         ]
       },
       {
