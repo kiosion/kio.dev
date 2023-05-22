@@ -9,7 +9,7 @@ export const REMOTE_API_BASE_URL =
     ? 'https://kio.sh'
     : ['backed', 'testing'].includes(ENV)
     ? 'https://dev.kio.sh'
-    : 'http://localhost:4444';
+    : 'http://127.0.0.1:4444';
 export const REMOTE_API_URL = `${REMOTE_API_BASE_URL}/api/${REMOTE_API_VERSION}`;
 export const REMOTE_CDN_URL = `${REMOTE_API_BASE_URL}/cdn`;
 

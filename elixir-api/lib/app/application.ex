@@ -5,13 +5,18 @@ defmodule Hexerei.Application do
 
   @impl true
   def start(_type, _args) do
+    Logger.info "Starting Hexerei"
+
     children = [
       {
         Plug.Cowboy,
         scheme: :http,
         plug: Hexerei.Router,
         options: [
-          port: port()
+          port: port(),
+          ip: {127, 0, 0, 1},
+          # Explicitly specify IPv4 using :inet, IPv6 using :inet6
+          net: :inet
         ]
       },
       {
@@ -24,7 +29,15 @@ defmodule Hexerei.Application do
         Hexerei.CDNCache,
         [
           options: [
-            max_size: 256
+            max_size: 100
+          ]
+        ]
+      },
+      {
+        Hexerei.Cache.QueryCache,
+        [
+          options: [
+            max_size: 200
           ]
         ]
       }
@@ -32,22 +45,22 @@ defmodule Hexerei.Application do
 
     opts = [strategy: :one_for_one, name: __MODULE__]
 
-    start_res = CliSpinners.spin_fun([frames: :simple_dots_scrolling, text: "Starting Hexerei", done: "Started Hexerei"], fn ->
-      case Supervisor.start_link(children, opts) do
+    start_res = case Supervisor.start_link(children, opts) do
         {:ok, pid} ->
           Application.put_env :hexerei, :started_at, {"STARTED_AT", System.system_time(:millisecond), :int}
-          :timer.sleep 500
           Application.ensure_all_started :os_mon
           {:ok, pid}
         {:error, reason} -> {:error, reason}
       end
-    end)
 
     case start_res do
       {:ok, pid} ->
+        Logger.info "Started Hexerei"
         Logger.info "Listening on port #{port()}"
         {:ok, pid}
-      {:error, reason} -> {:error, reason}
+      {:error, reason} ->
+        Logger.error "Failed to start Hexerei: #{inspect reason}"
+        {:error, reason}
     end
   end
 

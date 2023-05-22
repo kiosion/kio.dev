@@ -35,41 +35,92 @@ defmodule Router.Cdn do
     }
   end
 
+  # defp parse_url(url) do
+  #   parsed_url = URI.parse(url)
+  #   path_parts = String.split(parsed_url.path, "/", trim: true)
+  #   asset = List.last(path_parts)
+  #   [asset_name, filetype] = String.split(asset, ".", parts: 2)
+
+  #   %{
+  #     asset: asset_name,
+  #     query: parsed_url.query || "",
+  #     filetype: filetype
+  #   }
+  # end
+
   get "/images/*path" do
     url = conn.request_path <> "?" <> conn.query_string
     url_parts = url |> parse_url()
 
     with true <- is_binary(url_parts.filetype),
-        {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string)
+         {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string),
+         cache_result <- CDNCache.get(url)
     do
-        case CDNCache.get(url) do
-          {:ok, value} ->
+      case cache_result do
+        {:ok, value} ->
+          conn
+            |> put_resp_content_type("image/#{url_parts.filetype}")
+            |> send_resp(200, value)
+
+        _ ->
+          with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- HTTPoison.get(url) do
+            CDNCache.put(url, body)
+
             conn
               |> put_resp_content_type("image/#{url_parts.filetype}")
-              |> send_resp(200, value)
-          _ ->
-            with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- HTTPoison.get(url) do
-              CDNCache.put(url, body)
-
-              conn
-                |> put_resp_content_type("image/#{url_parts.filetype}")
-                |> send_resp(200, body)
-            else
-              {:ok, %HTTPoison.Response{status_code: 404}} ->
-                error_res(conn, 404, "Image not found")
-              {:ok, %HTTPoison.Response{status_code: 400}} ->
-                error_res(conn, 400, "Bad request")
-              {:ok, %HTTPoison.Response{}} ->
-                error_res(conn, 500, "Something went wrong")
-              {:error, %HTTPoison.Error{reason: reason}} ->
-                error_res(conn, 500, "Something went wrong: #{reason}")
-            end
-        end
+              |> send_resp(200, body)
+          else
+            {:ok, %HTTPoison.Response{status_code: 404}} ->
+              error_res(conn, 404, "Image not found")
+            {:ok, %HTTPoison.Response{status_code: 400}} ->
+              error_res(conn, 400, "Bad request")
+            {:ok, %HTTPoison.Response{}} ->
+              error_res(conn, 500, "Something went wrong")
+            {:error, %HTTPoison.Error{reason: reason}} ->
+              error_res(conn, 500, "Something went wrong: #{reason}")
+          end
+      end
     else
       {:error, reason} -> conn |> error_res(500, reason)
       _ -> conn |> error_res(400, "Invalid request", "No filetype specified or invalid URL")
     end
   end
+
+  # get "/images/*path" do
+  #   url = conn.request_path <> "?" <> conn.query_string
+  #   url_parts = url |> parse_url()
+
+  #   with true <- is_binary(url_parts.filetype),
+  #       {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string)
+  #   do
+  #       case CDNCache.get(url) do
+  #         {:ok, value} ->
+  #           conn
+  #             |> put_resp_content_type("image/#{url_parts.filetype}")
+  #             |> send_resp(200, value)
+  #         _ ->
+  #           with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- HTTPoison.get(url) do
+  #             CDNCache.put(url, body)
+
+  #             conn
+  #               |> put_resp_content_type("image/#{url_parts.filetype}")
+  #               |> send_resp(200, body)
+  #           else
+  #             {:ok, %HTTPoison.Response{status_code: 404}} ->
+  #               error_res(conn, 404, "Image not found")
+  #             {:ok, %HTTPoison.Response{status_code: 400}} ->
+  #               error_res(conn, 400, "Bad request")
+  #             {:ok, %HTTPoison.Response{}} ->
+  #               error_res(conn, 500, "Something went wrong")
+  #             {:error, %HTTPoison.Error{reason: reason}} ->
+  #               error_res(conn, 500, "Something went wrong: #{reason}")
+  #           end
+  #       end
+  #   else
+  #     {:error, reason} -> conn |> error_res(500, reason)
+  #     _ -> conn |> error_res(400, "Invalid request", "No filetype specified or invalid URL")
+  #   end
+  # end
 
   match _ do
     conn |> error_res(404, %{code: 404, message: "Not found"})

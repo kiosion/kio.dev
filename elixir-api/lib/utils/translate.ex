@@ -34,6 +34,9 @@ defmodule Hexerei.Translate do
   end
 
   defp construct_body(text_array, target_lang, source_lang) do
+    # Ensure that text_array is always a list
+    text_array = if is_list(text_array), do: text_array, else: [text_array]
+
     # Construct form body for gcloud request
     {
       :form,
@@ -213,121 +216,74 @@ defmodule Hexerei.Translate do
   end
 
   defp translate_pt_fields(pt_fields, target_lang, source_lang) do
-    try do
-      translations = Task.async(fn ->
-        pt_fields
-        |> Enum.map(fn text ->
-          Task.async(fn ->
-            if text == "" || text == nil do
-              text
-            else
-              construct_body([text], target_lang, source_lang) |> send_request
-            end
-          end)
-        end)
-        |> Enum.map(fn gcp_response -> Task.await gcp_response end)
-        |> Enum.map(fn response ->
-            case response do
-              {:ok, translations} -> translations
-              {:error, reason} ->
-                Logger.error "Error translating fields: #{reason}"
-                pt_fields
-              _ -> pt_fields
-            end
-          end)
-      end)
-      |> Task.await(12000)
+    translations = pt_fields
+    |> Task.async_stream(&translate_field(&1, target_lang, source_lang), max_concurrency: Enum.count(pt_fields))
+    |> Enum.map(fn
+      {:ok, {:ok, result}} -> result
+      {:ok, {:error, _}} -> {:error, "Error translating fields"}
+      {:exit, reason} ->
+        Logger.error "Error translating fields: #{inspect(reason)}"
+        {:error, "Error translating fields"}
+    end)
 
-      {:ok, translations}
-    rescue
-      e ->
-        {:error, "Unhandled error while translating fields: #{inspect(e)}"}
-    catch
-      :exit, _ ->
-        {:error, "Async task timeout while translating fields"}
-    end
+    {:ok, translations}
   end
 
   defp translate_pt_blocks(pt_blocks, target_lang, source_lang) do
-    try do
-      updated_fields = for {key, value} <- pt_blocks do
-        text_array = get_text_from_blocks value
+    updated_fields = pt_blocks
+    |> Enum.map(fn {key, value} ->
+      text_array = get_text_from_blocks(value)
 
-        # This sucks for overhead and # of req's, but it's the only way around
-        # accidentally combining separate marks/sentences into one translation
-        # TODO: Find way to bundle all text into one request
-        translations = Task.async(fn ->
-          text_array
-          |> Enum.map(fn text ->
-            body = construct_body [text], target_lang, source_lang
-            Task.async(fn ->
-              send_request body
-            end)
-          end)
-          |> Enum.map(fn gcp_response -> Task.await gcp_response end)
-          |> Enum.map(fn response ->
-            case response do
-              {:ok, translations} -> translations
-              {:error, reason} ->
-                Logger.error "Error translating block: #{inspect(reason)}"
-                text_array
-              _ -> text_array
-            end
-          end)
-          |> List.flatten()
-        end)
-        |> Task.await(12000)
+      translations = text_array
+      |> Task.async_stream(&translate_field(&1, target_lang, source_lang), max_concurrency: Enum.count(text_array))
+      |> Enum.to_list()
+      |> Enum.map(fn
+        {:ok, {:ok, result}} -> result
+        {:ok, {:error, _}} -> {:error, "Error translating block"}
+        {:exit, reason} ->
+          Logger.error "Error translating block: #{inspect(reason)}"
+          {:error, "Error translating block"}
+      end)
 
-        updated_blocks = replace_text_in_children value, text_array, translations
+      updated_blocks = replace_text_in_children(value, text_array, translations)
 
-        {key, updated_blocks}
-      end
+      {key, updated_blocks}
+    end)
 
-      {:ok, updated_fields}
-    rescue
-      e -> {:error, "Unhandled error while translating blocks: #{inspect(e)}"}
-    catch
-      :exit, _ -> {:error, "Async task timeout while translating blocks"}
+    {:ok, updated_fields |> Enum.into(%{})}
+  end
+
+  defp translate_field(text, target_lang, source_lang) do
+    if text == "" || text == nil do
+      {:ok, text}
+    else
+      construct_body([text], target_lang, source_lang) |> send_request
     end
   end
 
   defp get_text_from_blocks(blocks) do
     blocks
-    |> Enum.map(fn block ->
-      # Handle 'children' being potentially nil
-      if block["children"] == nil do
-        []
-      else
-        block["children"]
-        |> Enum.map(fn child ->
-          child["text"]
-        end)
-      end
-    end)
-    |> List.flatten()
-    |> Enum.reject(fn text -> text == nil end)
+    # flat_map applies a fn to each block & concats the resulting lists
+    |> Enum.flat_map(fn block -> block["children"] || [] end)
+    |> Enum.map(& &1["text"])
+    |> Enum.reject(&is_nil/1)
   end
 
   defp replace_text_in_children(blocks, original_text, translations) do
-    blocks
-    |> Enum.with_index()
-    |> Enum.map(fn {block, _block_index} ->
-      # Handle 'children' being potentially nil
-      if block["children"] == nil do
-        block
-      else
-        block["children"]
-        |> Enum.with_index()
-        # Map over each child, while keeping track of the index
-        |> Enum.map(fn {child, _child_index} ->
-          string_to_replace = child["text"]
-          translated_replacement = translations |> Enum.at(Enum.find_index(original_text, fn text -> text == string_to_replace end))
+    # Build a map from original_text to translations for quick lookup
+    translation_map = original_text |> Enum.zip(translations) |> Map.new()
 
-          Map.put(child, "text", translated_replacement)
-        end)
-        # Replace the children array with the updated one
-        |> fn updated_children -> Map.put(block, "children", updated_children) end.()
-      end
+    Enum.map(blocks, fn block ->
+      children = block["children"] || []
+
+      updated_children = Enum.map(children, fn child ->
+        original = child["text"]
+        translated = Map.get translation_map, original, original
+
+        Map.put child, "text", translated
+      end)
+
+      Map.put block, "children", updated_children
     end)
   end
 end

@@ -95,11 +95,9 @@ const fetchRemote = async ({
     const jsonResponse = (await response.json()) as ResponseOrError;
 
     if (response.status !== 200 || !jsonResponse?.data?.result) {
-      Logger.error(
-        `Failed to fetch from API: ${endpoint} returned ${response.status}`
-      );
+      Logger.error(`Failed to fetch from ${endpoint}: ${response.status}`);
       return new Error(
-        `Endpoint error: Failed to fetch from API. Remote API returned status code: ${response.status}`
+        `Endpoint error: Failed to fetch from API - status ${response.status}`
       );
     }
 
@@ -108,7 +106,7 @@ const fetchRemote = async ({
     return normalizedResponse;
   } catch (err: unknown) {
     Logger.error(
-      `Failed to fetch from API: Unknown error occured: ${err}`,
+      `Failed to fetch from ${endpoint}: Unknown error occured: ${err}`,
       {},
       { err }
     );
