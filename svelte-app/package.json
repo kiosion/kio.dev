@@ -67,7 +67,7 @@
     "eslint-plugin-svelte": "^2.16.0",
     "fiona": "^4.1.4",
     "highlight.js": "^11.7.0",
-    "jsdom": "^21.1.2",
+    "jsdom": "^22.0.0",
     "luxon": "^3.2.1",
     "netlify-cli": "^15.1.1",
     "node-html-to-image": "^3.2.4",
