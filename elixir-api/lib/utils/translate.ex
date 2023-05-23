@@ -257,7 +257,7 @@ defmodule Hexerei.Translate do
     if text == "" || text == nil do
       {:ok, text}
     else
-      construct_body([text], target_lang, source_lang) |> send_request
+      construct_body(text, target_lang, source_lang) |> send_request
     end
   end
 
@@ -278,7 +278,10 @@ defmodule Hexerei.Translate do
 
       updated_children = Enum.map(children, fn child ->
         original = child["text"]
-        translated = Map.get translation_map, original, original
+        translated = case Map.get translation_map, original, original do
+          [res] -> res
+          res -> res
+        end
 
         Map.put child, "text", translated
       end)
