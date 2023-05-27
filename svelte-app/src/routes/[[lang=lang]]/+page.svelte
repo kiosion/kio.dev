@@ -1,14 +1,17 @@
 <script lang="ts">
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import PortableText from '$components/portable-text/portable-text.svelte';
+  import { onDestroy, onMount } from 'svelte';
+
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
-  import { pageHeading } from '$stores/navigation';
-  import { onMount, onDestroy } from 'svelte';
   import { t } from '$i18n';
+  import { pageHeading } from '$stores/navigation';
+
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+
   import type { PageData } from './$types';
   import type { Unsubscriber } from 'svelte/store';
 

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
+
   import Loader from '$components/loading/spinner.svelte';
+
   // import { createWorker } from '$lib/embeds/svelte-worker';
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import type { TypedObject } from '@portabletext/types';
@@ -72,8 +74,7 @@
     render();
   }
   $: routeFetch =
-    (portableText.global.context as { routeFetch?: RouteFetch }).routeFetch ||
-    fetch;
+    (portableText.global.context as { routeFetch?: RouteFetch }).routeFetch || fetch;
 </script>
 
 <div class="target-container" class:active>
@@ -83,16 +84,11 @@
       {#if error}
         <p>{error}</p>
       {:else}
-        <button class="focusOutline-sm" on:click={showLoader}
-          >Render Svelte</button
-        >
+        <button class="focusOutline-sm" on:click={showLoader}>Render Svelte</button>
       {/if}
     </div>
   {:else}
-    <div
-      class="svelte-target-container"
-      transition:fade={{ duration: 250, delay: 250 }}
-    >
+    <div class="svelte-target-container" transition:fade={{ duration: 250, delay: 250 }}>
       {#if loading}
         <div class="loader">
           <Loader />

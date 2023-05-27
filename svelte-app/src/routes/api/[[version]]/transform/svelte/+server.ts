@@ -1,7 +1,8 @@
-import { rollup, type InternalModuleFormat, type Plugin } from 'rollup';
-import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import { type InternalModuleFormat, type Plugin, rollup } from 'rollup';
+import svelte from 'rollup-plugin-svelte';
+
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -20,15 +21,12 @@ export const POST: RequestHandler = async ({ request }) => {
     const result = await bundle(body);
 
     if (result instanceof Error) {
-      return new Response(
-        JSON.stringify({ error: result?.message || 'Unknown error' }),
-        {
-          status: 500,
-          headers: {
-            'Content-Type': 'application/json'
-          }
+      return new Response(JSON.stringify({ error: result?.message || 'Unknown error' }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json'
         }
-      );
+      });
     }
 
     return new Response(JSON.stringify({ code: result }), {
@@ -52,14 +50,10 @@ const virtualInput = (input: string, code: string): Plugin => {
       name: 'svelte-virtual',
       resolveId: (id: string) => (id === input ? id : null),
       load: (id: string) => {
-        return id === input
-          ? { code, moduleSideEffects: 'no-treeshake' }
-          : null;
+        return id === input ? { code, moduleSideEffects: 'no-treeshake' } : null;
       },
       transform: (code: string, id: string) => {
-        return id === input
-          ? { code, moduleSideEffects: 'no-treeshake' }
-          : null;
+        return id === input ? { code, moduleSideEffects: 'no-treeshake' } : null;
       }
     };
   },

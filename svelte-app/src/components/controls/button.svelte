@@ -1,8 +1,10 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
+  import { createEventDispatcher } from 'svelte';
+
   import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
-  import { createEventDispatcher } from 'svelte';
+
+  import Hoverable from '$components/hoverable.svelte';
 
   const dispatch = createEventDispatcher();
 

@@ -1,7 +1,8 @@
-import { TORU_API_URL } from '$lib/consts';
-import { nowPlayingData } from '$stores/navigation';
 import { browser } from '$app/environment';
+import { TORU_API_URL } from '$lib/consts';
 import Logger from '$lib/logger';
+import { nowPlayingData } from '$stores/navigation';
+
 import type { RouteFetch } from '$types';
 
 type Response =
@@ -62,9 +63,7 @@ class ToruSync {
       const data = (await res.json()) as Response;
 
       if (data.status !== 200) {
-        throw new Error(
-          `${data.message}${data.detail ? `: ${data.detail}` : ''}`
-        );
+        throw new Error(`${data.message}${data.detail ? `: ${data.detail}` : ''}`);
       }
 
       return data.data;

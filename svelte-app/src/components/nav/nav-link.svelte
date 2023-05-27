@@ -1,11 +1,13 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
-  import { page, navigating } from '$app/stores';
-  import { t, isLocalized } from '$i18n';
+  import { fade } from 'svelte/transition';
+
   import { goto } from '$app/navigation';
+  import { navigating, page } from '$app/stores';
+  import { isLocalized, t } from '$i18n';
   import SFX from '$lib/sfx';
   import { navLinks, navOpen } from '$stores/navigation';
-  import { fade } from 'svelte/transition';
+
+  import Hoverable from '$components/hoverable.svelte';
 
   export let link: {
       name: string;
@@ -49,10 +51,7 @@
       urlIncludesLink ||= $navigating?.to?.url.pathname === link.url;
     }
 
-    return (
-      urlIncludesLink ||
-      (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0)
-    );
+    return urlIncludesLink || (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0);
   })()),
     navOpen;
   $: updateActive(), isActive;

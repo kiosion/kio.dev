@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { maybe } from 'svelte-maybe-transition';
   import { quartIn, quartOut } from 'svelte/easing';
-  import Features from '$stores/features';
+
+  import { maybe } from 'svelte-maybe-transition';
+
   import { onNav } from '$helpers/navigation';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import Features from '$stores/features';
 
   export let url: URL | undefined;
 

@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
+
   import { navigating } from '$app/stores';
-  import { onMount, onDestroy } from 'svelte';
   import { isDesktop } from '$helpers/responsive';
+
   import type { Unsubscriber } from 'svelte/store';
 
   export let element: HTMLDivElement;

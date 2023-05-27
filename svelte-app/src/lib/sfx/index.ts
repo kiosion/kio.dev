@@ -1,5 +1,6 @@
-import { browser } from '$app/environment';
 import { get } from 'svelte/store';
+
+import { browser } from '$app/environment';
 import Features from '$stores/features';
 
 const imports = new Map<string, Promise<typeof import('*.wav')>>([

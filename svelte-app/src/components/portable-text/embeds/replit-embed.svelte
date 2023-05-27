@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
+
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import type { TypedObject } from '@portabletext/types';
 

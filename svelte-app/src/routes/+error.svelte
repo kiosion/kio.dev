@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import { navOptions, pageHeading } from '$stores/navigation';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import Divider from '$components/divider.svelte';
   import { onMount } from 'svelte';
+
+  import { page } from '$app/stores';
   import { t } from '$i18n';
+  import { navOptions, pageHeading } from '$stores/navigation';
+
+  import Divider from '$components/divider.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
 
   onMount(() => {
     navOptions.set({ down: '', up: '/' });
@@ -54,9 +56,7 @@
     <IconHeader
       icon="Downasaur"
       text={$t(
-        $page.error?.message && $page.status !== 404
-          ? $page.error.message
-          : message
+        $page.error?.message && $page.status !== 404 ? $page.error.message : message
       )}
       classNames="mx-auto w-fit"
     />

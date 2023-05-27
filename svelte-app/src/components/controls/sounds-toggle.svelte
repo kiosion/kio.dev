@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Features from '$stores/features';
-  import Icon from '$components/icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
-  import SFX from '$lib/sfx';
   import { t } from '$i18n';
+  import SFX from '$lib/sfx';
+  import Features from '$stores/features';
+
+  import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
   $: CanUseSounds = Features.can('use sounds');

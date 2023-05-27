@@ -19,7 +19,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin-search-dir=. ./src/**/*.{ts,svelte}",
     "format:json": "deno run --no-npm --allow-read --allow-write ./scripts/sort-json.ts ./src/languages/en.json ./src/languages/fr.json --fix",
-    "lint": "pnpm format && pnpm eslint --fix ./src/**/*.{ts,svelte}"
+    "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\""
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -64,7 +64,9 @@
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-svelte": "^2.16.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "fiona": "^4.1.4",
     "highlight.js": "^11.7.0",
     "jsdom": "^21.1.2",

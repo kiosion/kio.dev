@@ -1,17 +1,18 @@
 <script lang="ts">
+  import { t } from '$i18n';
+
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
-  import { t } from '$i18n';
+
   import type { PostDocument, ProjectDocument } from '$types';
 
   export let model: 'post' | 'project', data: PostDocument | ProjectDocument;
 
   $: extLinks =
     model === 'project' &&
-    ((data as ProjectDocument)
-      .externalLinks as ProjectDocument['externalLinks'] &
+    ((data as ProjectDocument).externalLinks as ProjectDocument['externalLinks'] &
       {
         hovered: boolean;
       }[]);
@@ -20,20 +21,12 @@
 <div class="mt-4" data-test-id="{model}-footer">
   <Divider />
   {#if data.tags && data.tags.length > 0}
-    <IconHeader
-      icon="CardText"
-      text={$t('Tags')}
-      classNames="mt-8 mb-4 w-full h-fit"
-    />
+    <IconHeader icon="CardText" text={$t('Tags')} classNames="mt-8 mb-4 w-full h-fit" />
     <Tags {model} data={data.tags} size="lg" />
   {/if}
   {#if extLinks && extLinks.length > 0}
     <Divider />
-    <IconHeader
-      icon="link"
-      text={$t('Links')}
-      classNames="mt-8 mb-4 w-full h-fit"
-    />
+    <IconHeader icon="link" text={$t('Links')} classNames="mt-8 mb-4 w-full h-fit" />
     <ul class="ml-8 list-disc">
       {#each extLinks as link}
         <li>

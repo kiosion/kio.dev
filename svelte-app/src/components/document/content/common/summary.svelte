@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+
   import Heading from '$components/document/content/common/summary/heading.svelte';
   import Items from '$components/document/content/common/summary/items.svelte';
+
   import type { Heading as PTHeading } from '$helpers/pt';
 
   const dispatch = createEventDispatcher();
@@ -23,11 +25,7 @@
     on:hide={() => dispatch('hide')}
   />
   {#if expanded}
-    <Items
-      {headings}
-      {headingsExist}
-      on:toggle={() => (expanded = !expanded)}
-    />
+    <Items {headings} {headingsExist} on:toggle={() => (expanded = !expanded)} />
   {/if}
 </div>
 

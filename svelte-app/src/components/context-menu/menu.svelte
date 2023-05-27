@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { setContext, createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, setContext } from 'svelte';
   import { scale } from 'svelte/transition';
-  import { key } from './menu';
+
   import { setState } from '$lib/helpers/menu';
+
+  import { key } from './menu';
 
   export let x: number;
   export let y: number;
@@ -20,10 +22,7 @@
     const pageRect = pageContainer.getBoundingClientRect();
 
     x = Math.min(window.innerWidth - rect.width - 18, x);
-    if (
-      y >
-      Math.min(window.innerHeight, pageRect.height + pageRect.top) - rect.height
-    ) {
+    if (y > Math.min(window.innerHeight, pageRect.height + pageRect.top) - rect.height) {
       y -= rect.height;
     }
   })();

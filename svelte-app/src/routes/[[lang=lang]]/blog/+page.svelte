@@ -1,19 +1,22 @@
 <script lang="ts">
-  import ListItem from '$components/lists/blog-item.svelte';
   import { onDestroy, onMount } from 'svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import type { PageData } from './$types';
-  import { setupNavigation } from '$helpers/navigation';
+
+  import { browser } from '$app/environment';
+  import { invalidate } from '$app/navigation';
   import { page } from '$app/stores';
-  import Hoverable from '$components/hoverable.svelte';
+  import { setupNavigation } from '$helpers/navigation';
   import { RECENT_POSTS_COUNT } from '$lib/consts';
   import { t } from '$lib/helpers/i18n';
   import SFX from '$lib/sfx';
-  import type { PostDocument } from '$types';
-  import ListSection from '$components/lists/blog-section.svelte';
+
   import EmptyContent from '$components/empty-content.svelte';
-  import { browser } from '$app/environment';
-  import { invalidate } from '$app/navigation';
+  import IconHeader from '$components/headings/icon-header.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+  import ListItem from '$components/lists/blog-item.svelte';
+  import ListSection from '$components/lists/blog-section.svelte';
+
+  import type { PageData } from './$types';
+  import type { PostDocument } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[];
@@ -36,9 +39,7 @@
 
   $: ({ pinned, posts } = data);
   $: posts?.data &&
-    (postsExceptPinned = posts?.data?.filter(
-      (post) => post._id !== pinned?.data?._id
-    ));
+    (postsExceptPinned = posts?.data?.filter((post) => post._id !== pinned?.data?._id));
   $: pageTitle = `kio.dev | ${$t('Thoughts')}`;
   $: description = $t('Thoughts about tech, design, and development');
   $: browser && (!pinned || !posts) && invalidate($page.url.pathname);

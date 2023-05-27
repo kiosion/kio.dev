@@ -1,8 +1,11 @@
 <script lang="ts">
-  import type { Placement } from '@popperjs/core';
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+
   import Logger from '$lib/logger';
+
   import tippy, { followCursor, type Instance } from 'tippy.js';
+
+  import type { Placement } from '@popperjs/core';
 
   export let text = '',
     position: Placement = 'bottom',
@@ -60,9 +63,7 @@
     return div;
   };
 
-  $: if (
-    text !== (instance?.props.content as Element | undefined)?.textContent
-  ) {
+  $: if (text !== (instance?.props.content as Element | undefined)?.textContent) {
     instance?.setContent(createContent(text));
   }
   $: if (!disable) {

@@ -1,6 +1,7 @@
+import { writable } from 'svelte/store';
+
 import { browser } from '$app/environment';
 import { ENV } from '$lib/env';
-import { writable } from 'svelte/store';
 
 const defaultTheme = 'dark',
   prefersDark = '(prefers-color-scheme: dark)',

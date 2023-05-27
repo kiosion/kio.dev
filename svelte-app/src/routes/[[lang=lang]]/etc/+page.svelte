@@ -1,17 +1,20 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { t } from '$i18n';
-  import { onMount, onDestroy } from 'svelte';
-  import { setupNavigation } from '$helpers/navigation';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import EmptyContent from '$components/empty-content.svelte';
-  import PortableText from '$components/portable-text/portable-text.svelte';
-  import type { PageData } from './$types';
-  import LinkNonPt from '$components/link-non-pt.svelte';
-  import Divider from '$components/divider.svelte';
-  import HeadedBlock from '$components/headings/headed-block.svelte';
-  import { invalidate } from '$app/navigation';
+  import { onDestroy, onMount } from 'svelte';
+
   import { browser } from '$app/environment';
+  import { invalidate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { setupNavigation } from '$helpers/navigation';
+  import { t } from '$i18n';
+
+  import Divider from '$components/divider.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
+  import HeadedBlock from '$components/headings/headed-block.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+  import LinkNonPt from '$components/link-non-pt.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+
+  import type { PageData } from './$types';
   import type { Unsubscriber } from 'svelte/store';
 
   let subscribers = [] as Unsubscriber[];

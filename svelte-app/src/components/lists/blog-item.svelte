@@ -1,21 +1,22 @@
 <script lang="ts">
-  import BulletPoint from '../bullet-point.svelte';
-  import { getTotalWords } from '$lib/helpers/pt';
-  import { formatDate, getReadingTime } from '$lib/helpers/date';
-  import type { PostDocument, PTBlock } from '$types';
   import { goto } from '$app/navigation';
-  import Hoverable from '$components/hoverable.svelte';
-  import { t, linkTo } from '$i18n';
+  import { linkTo, t } from '$i18n';
+  import { formatDate, getReadingTime } from '$lib/helpers/date';
+  import { getTotalWords } from '$lib/helpers/pt';
   import SFX from '$lib/sfx';
+
+  import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
+
+  import BulletPoint from '../bullet-point.svelte';
+
+  import type { PostDocument, PTBlock } from '$types';
 
   export let post: PostDocument,
     position: 'first' | 'last' | 'middle' | 'solo' = 'solo';
 
   let hovered: boolean;
-  let readingTime = getReadingTime(
-    getTotalWords((post.body ?? []) as PTBlock[])
-  );
+  let readingTime = getReadingTime(getTotalWords((post.body ?? []) as PTBlock[]));
 
   const onKey = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Space') {

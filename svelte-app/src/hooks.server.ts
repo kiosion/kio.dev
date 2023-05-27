@@ -1,13 +1,12 @@
 import { APP_LANGS } from '$lib/consts';
+
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
 export const handle = (async ({ event, resolve }): Promise<Response> => {
   let response: Response;
 
   const lang = event.request.url.match(
-    new RegExp(
-      `^.*(?:(?:.[a-z]{3})|(?:[a-z]+:[0-9]{4}))/(${APP_LANGS.join('|')})/?`
-    )
+    new RegExp(`^.*(?:(?:.[a-z]{3})|(?:[a-z]+:[0-9]{4}))/(${APP_LANGS.join('|')})/?`)
   );
 
   if (lang) {

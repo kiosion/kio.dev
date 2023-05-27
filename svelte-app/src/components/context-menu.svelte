@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { state, setState } from '$lib/helpers/menu';
-  import Menu from './context-menu/menu.svelte';
-  import Option from './context-menu/option.svelte';
-  import Divider from './context-menu/divider.svelte';
   import { getContext } from 'svelte';
 
-  const pageContainer = (
-    getContext('getPageContainer') as () => HTMLDivElement
-  )();
+  import { setState, state } from '$lib/helpers/menu';
+
+  import Divider from './context-menu/divider.svelte';
+  import Menu from './context-menu/menu.svelte';
+  import Option from './context-menu/option.svelte';
+
+  const pageContainer = (getContext('getPageContainer') as () => HTMLDivElement)();
 </script>
 
 <Menu

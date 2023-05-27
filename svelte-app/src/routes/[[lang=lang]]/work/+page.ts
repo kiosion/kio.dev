@@ -1,18 +1,12 @@
-import Logger from '$lib/logger';
-import {
-  RECENT_PROJECTS_COUNT,
-  DEFAULT_PROJECT_QUERY_PARAMS
-} from '$lib/consts';
-import { config } from '$stores/config';
 import { get } from 'svelte/store';
+
+import { DEFAULT_PROJECT_QUERY_PARAMS, RECENT_PROJECTS_COUNT } from '$lib/consts';
+import Logger from '$lib/logger';
 import Store from '$lib/store';
-import type {
-  AuthorDocument,
-  ProjectDocument,
-  ResData,
-  ResDataMany
-} from '$types';
+import { config } from '$stores/config';
+
 import type { PageLoad } from './$types';
+import type { AuthorDocument, ProjectDocument, ResData, ResDataMany } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();

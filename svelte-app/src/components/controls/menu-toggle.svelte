@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { navOpen } from '$stores/navigation';
-  import Icon from '../icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import SFX from '$lib/sfx';
+  import { navOpen } from '$stores/navigation';
+
+  import Hoverable from '$components/hoverable.svelte';
+
+  import Icon from '../icon.svelte';
 </script>
 
 <Hoverable>

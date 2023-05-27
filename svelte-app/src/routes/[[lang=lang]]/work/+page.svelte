@@ -1,19 +1,22 @@
 <script lang="ts">
-  import ListItem from '$components/lists/project-item.svelte';
   import { onMount } from 'svelte';
-  import type { PageData } from './$types';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import { page } from '$app/stores';
-  import { setupNavigation } from '$helpers/navigation';
-  import Hoverable from '$components/hoverable.svelte';
-  import { RECENT_PROJECTS_COUNT } from '$lib/consts';
-  import { t } from '$i18n';
-  import SFX from '$lib/sfx';
-  import EmptyContent from '$components/empty-content.svelte';
-  import Timeline from '$components/about/timeline.svelte';
-  import Divider from '$components/divider.svelte';
+
   import { browser } from '$app/environment';
   import { invalidate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { setupNavigation } from '$helpers/navigation';
+  import { t } from '$i18n';
+  import { RECENT_PROJECTS_COUNT } from '$lib/consts';
+  import SFX from '$lib/sfx';
+
+  import Timeline from '$components/about/timeline.svelte';
+  import Divider from '$components/divider.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+  import ListItem from '$components/lists/project-item.svelte';
+
+  import type { PageData } from './$types';
 
   onMount(() => {
     setupNavigation($page?.url?.pathname);
@@ -27,9 +30,7 @@
     );
 
   $: ({ about, pinned, projects } = data);
-  $: browser &&
-    (!about || !pinned || !projects) &&
-    invalidate($page.url.pathname);
+  $: browser && (!about || !pinned || !projects) && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

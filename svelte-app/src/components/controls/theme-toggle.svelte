@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { theme } from '$stores/theme';
-  import Icon from '../icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
-  import SFX from '$lib/sfx';
   import { t } from '$i18n';
+  import SFX from '$lib/sfx';
+  import { theme } from '$stores/theme';
+
+  import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
+
+  import Icon from '../icon.svelte';
 </script>
 
 <Hoverable>

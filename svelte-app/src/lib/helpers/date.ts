@@ -1,5 +1,7 @@
-import { t, currentLang } from '$i18n';
 import { get } from 'svelte/store';
+
+import { currentLang, t } from '$i18n';
+
 import { DateTime } from 'luxon';
 
 /**
@@ -32,17 +34,17 @@ export const formatDate = (
     case 'short':
       return date.toLocaleString(DateTime.DATE_SHORT);
     case 'rel': {
-      const dur = DateTime.local({ locale: get(currentLang) || 'en' }).diff(
-        date,
-        ['years', 'months', 'days', 'hours']
-      );
+      const dur = DateTime.local({ locale: get(currentLang) || 'en' }).diff(date, [
+        'years',
+        'months',
+        'days',
+        'hours'
+      ]);
       const { years, months, days } = dur.toObject();
 
       return get(t)('{duration} ago', {
         duration: dur
-          .shiftTo(
-            years ? 'years' : months ? 'months' : days ? 'days' : 'hours'
-          )
+          .shiftTo(years ? 'years' : months ? 'months' : days ? 'days' : 'hours')
           .toHuman({
             listStyle: 'long',
             maximumFractionDigits: 0,

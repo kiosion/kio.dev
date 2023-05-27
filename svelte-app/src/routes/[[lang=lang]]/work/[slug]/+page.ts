@@ -1,8 +1,9 @@
+import { getHeadings } from '$helpers/pt';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
-import { getHeadings } from '$helpers/pt';
-import type { ResData, ProjectDocument, PTBlock } from '$types';
+
 import type { PageLoad } from './$types';
+import type { ProjectDocument, PTBlock, ResData } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();

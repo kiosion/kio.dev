@@ -1,30 +1,31 @@
 <script lang="ts">
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-nocheck Need to fix typing for {data}
-  import Divider from '$components/divider.svelte';
+  import Breakpoints from 'svelte-breakpoints';
+
+  import { goto } from '$app/navigation';
+  import { fionaPlaceholder } from '$helpers/placeholders';
+  import { linkTo, t } from '$i18n';
+  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+  import { formatDate, getReadingTime } from '$lib/helpers/date';
+  import { getCrop, urlFor } from '$lib/helpers/image';
+  import { getTotalWords } from '$lib/helpers/pt';
+
   import BulletPoint from '$components/bullet-point.svelte';
-  import Hoverable from '$components/hoverable.svelte';
+  import Divider from '$components/divider.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
-  import { goto } from '$app/navigation';
-  import { getCrop, urlFor } from '$lib/helpers/image';
-  import { getReadingTime, formatDate } from '$lib/helpers/date';
-  import { getTotalWords } from '$lib/helpers/pt';
-  import { t, linkTo } from '$i18n';
-  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
+  import Hoverable from '$components/hoverable.svelte';
   import Tags from '$components/tags.svelte';
-  import { fionaPlaceholder } from '$helpers/placeholders';
   import Tooltip from '$components/tooltip.svelte';
-  import Breakpoints from 'svelte-breakpoints';
-  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
+
+  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
 
   export let model: 'post' | 'project';
   export let data: PostDocument | ProjectDocument;
 
   let dateFormat = model === 'project' ? 'med' : 'rel',
-    readingTime = getReadingTime(
-      getTotalWords((data?.body ?? []) as PTBlock[])
-    );
+    readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
 
   const switchDate = () => {
     if (model === 'project') {
@@ -37,9 +38,7 @@
   };
 
   $: date =
-    model === 'project'
-      ? formatDate(data.date, 'med')
-      : formatDate(data.date, 'rel');
+    model === 'project' ? formatDate(data.date, 'med') : formatDate(data.date, 'rel');
   $: pfpRef = data.author?.image?.asset?._ref;
   $: pfpCrop = pfpRef && getCrop(data.author?.image);
   $: external = model === 'project' && (data as ProjectDocument).external;
@@ -52,10 +51,7 @@
 
 <div class="mb-4" data-test-id="{model}-header">
   <div class="flex flex-col">
-    <svelte:component
-      this={model === 'post' ? PostHeader : ProjectHeader}
-      {data}
-    >
+    <svelte:component this={model === 'post' ? PostHeader : ProjectHeader} {data}>
       <svelte:fragment slot="image">
         <Breakpoints queries={DEFAULT_BREAKPOINTS}>
           <svelte:fragment slot="lg">
@@ -74,16 +70,12 @@
       <svelte:fragment slot="title">
         <Breakpoints queries={DEFAULT_BREAKPOINTS}>
           <svelte:fragment slot="lg">
-            <h1
-              class="mb-4 h-fit w-fit font-display text-7xl font-black leading-none"
-            >
+            <h1 class="mb-4 h-fit w-fit font-display text-7xl font-black leading-none">
               {data.title}
             </h1>
           </svelte:fragment>
           <svelte:fragment slot="sm">
-            <h1
-              class="mb-4 h-fit w-fit font-display text-4xl font-bold leading-none"
-            >
+            <h1 class="mb-4 h-fit w-fit font-display text-4xl font-bold leading-none">
               {data.title}
             </h1>
           </svelte:fragment>
@@ -124,12 +116,7 @@
                         class="aspect-square h-full select-none rounded-full border border-stone-500 dark:border-stone-500/60"
                         src={urlFor(pfpRef)
                           .size(50, 50)
-                          .rect(
-                            pfpCrop.left,
-                            pfpCrop.top,
-                            pfpCrop.width,
-                            pfpCrop.height
-                          )
+                          .rect(pfpCrop.left, pfpCrop.top, pfpCrop.width, pfpCrop.height)
                           .fit('crop')
                           .format('webp')
                           .url()}

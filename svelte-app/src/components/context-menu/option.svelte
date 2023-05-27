@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { getContext, createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
+
+  import Hoverable from '$components/hoverable.svelte';
+
   import Icon from '../icon.svelte';
   import { key } from './menu';
-  import Hoverable from '$components/hoverable.svelte';
 
   export let disabled = false;
   export let icon: string;

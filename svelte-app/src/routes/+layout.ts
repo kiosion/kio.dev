@@ -1,6 +1,7 @@
+import ToruSync from '$helpers/toru';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
-import ToruSync from '$helpers/toru';
+
 import type { LayoutLoad } from './$types';
 import type { AuthorDocument } from '$types';
 

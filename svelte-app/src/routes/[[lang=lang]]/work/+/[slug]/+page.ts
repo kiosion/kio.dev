@@ -1,12 +1,11 @@
-import { error, redirect } from '@sveltejs/kit';
+import { DEFAULT_PROJECT_QUERY_PARAMS, PAGINATION_PROJECTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
-import {
-  PAGINATION_PROJECTS_PER_PAGE,
-  DEFAULT_PROJECT_QUERY_PARAMS
-} from '$lib/consts';
 import Store from '$lib/store';
+
+import { error, redirect } from '@sveltejs/kit';
+
 import type { PageLoad } from './$types';
-import type { ResDataMany, ProjectDocument, DocumentTags } from '$types';
+import type { DocumentTags, ProjectDocument, ResDataMany } from '$types';
 
 export const prerender = false;
 
@@ -17,14 +16,17 @@ export const load = (async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags: ResDataMany<DocumentTags> | undefined =
-    await Store.find<DocumentTags>(fetch, 'tag', {
+  const allTags: ResDataMany<DocumentTags> | undefined = await Store.find<DocumentTags>(
+    fetch,
+    'tag',
+    {
       type: 'project',
       limit: 0
-    }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+    }
+  ).catch((err: unknown) => {
+    Logger.error(err as string);
+    return undefined;
+  });
 
   if (
     !allTags?.data?.some(

@@ -1,5 +1,6 @@
 <script lang="ts">
   import IconHeader from '$components/headings/icon-header.svelte';
+
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import type { ArbitraryTypedObject } from '@portabletext/types';
 

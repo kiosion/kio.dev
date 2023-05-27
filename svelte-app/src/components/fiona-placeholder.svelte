@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fionaPlaceholder } from '$helpers/placeholders';
+
   import seedrandom from 'seedrandom';
 
   export let seed: string | undefined,

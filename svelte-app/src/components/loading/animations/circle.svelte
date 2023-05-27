@@ -28,8 +28,8 @@
       top: 37px;
       left: 19px;
       transform: translate(-18px, -18px);
-      animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-        infinite reverse;
+      animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite
+        reverse;
     }
   }
 
@@ -43,11 +43,10 @@
       stroke-width: 10px;
       stroke-linejoin: round;
       stroke-linecap: round;
-      stroke-dasharray: calc(200 / 4 * 3) calc(200 / 4) calc(200 / 4 * 3)
-        calc(200 / 4);
+      stroke-dasharray: calc(200 / 4 * 3) calc(200 / 4) calc(200 / 4 * 3) calc(200 / 4);
       stroke-dashoffset: 75;
-      animation: pathCircle var(--duration)
-        cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite reverse;
+      animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+        infinite reverse;
     }
   }
 

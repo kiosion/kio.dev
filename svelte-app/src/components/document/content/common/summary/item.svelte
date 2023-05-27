@@ -1,8 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+
   import sfx from '$lib/sfx';
-  import Hoverable from '$components/hoverable.svelte';
+
   import BulletPoint from '$components/bullet-point.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+
   import type { Heading } from '$helpers/pt';
 
   const dispatch = createEventDispatcher();

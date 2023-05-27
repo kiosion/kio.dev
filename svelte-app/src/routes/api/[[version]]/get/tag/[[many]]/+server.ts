@@ -1,6 +1,7 @@
-import type { RequestEvent, RequestHandler } from './$types';
-import { REMOTE_API_URL } from '$lib/env';
 import { fetchRemote } from '$lib/data.server';
+import { REMOTE_API_URL } from '$lib/env';
+
+import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({
   url,

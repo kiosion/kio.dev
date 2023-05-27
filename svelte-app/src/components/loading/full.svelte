@@ -1,18 +1,20 @@
 <script lang="ts">
-  import { classList } from 'svelte-body';
-  import Line from './animations/line.svelte';
   import { fade } from 'svelte/transition';
-  import seedrandom from 'seedrandom';
+
+  import { classList } from 'svelte-body';
+
   import { LOADING_PHRASES } from '$lib/consts';
+
+  import seedrandom from 'seedrandom';
+
+  import Line from './animations/line.svelte';
 
   export let classes = 'transparent',
     width = '400px';
 
   let phrase = `${
     LOADING_PHRASES[
-      Math.floor(
-        seedrandom(`${new Date().getMinutes()}`)() * LOADING_PHRASES.length
-      )
+      Math.floor(seedrandom(`${new Date().getMinutes()}`)() * LOADING_PHRASES.length)
     ]
   }`;
 </script>
@@ -24,10 +26,7 @@
     <Line {width} {classes} />
   </span>
   {#if phrase !== ''}
-    <p
-      class="w-fit font-mono text-base text-stone-200"
-      out:fade={{ duration: 200 }}
-    >
+    <p class="w-fit font-mono text-base text-stone-200" out:fade={{ duration: 200 }}>
       {phrase}
     </p>
   {/if}

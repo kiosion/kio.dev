@@ -1,8 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+
+  import { t } from '$i18n';
+
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
-  import { t } from '$i18n';
   import Tooltip from '$components/tooltip.svelte';
 
   export let headingsExist = false,

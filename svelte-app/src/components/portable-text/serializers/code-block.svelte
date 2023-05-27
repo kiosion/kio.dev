@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { CodeBlockComponentProps } from '$types';
   import CodeBlock from '$components/code-block.svelte';
+
+  import type { CodeBlockComponentProps } from '$types';
 
   export let portableText: CodeBlockComponentProps;
 

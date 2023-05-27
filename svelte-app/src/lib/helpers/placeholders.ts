@@ -63,9 +63,7 @@ export const fionaPlaceholder = (
   opts = { width: 1000, height: 400 } as FionaImgOpts
 ) => {
   const { bg, colors } =
-    possibleColours[
-      Math.floor(Seedrandom(seed?.toString())() * possibleColours.length)
-    ];
+    possibleColours[Math.floor(Seedrandom(seed?.toString())() * possibleColours.length)];
   const scrambledSeed = seed
     .toString()
     .split('')
@@ -81,10 +79,7 @@ export const fionaPlaceholder = (
   });
 };
 
-export const embedPlaceholder = (
-  seed: string | number,
-  opts?: FionaImgOpts
-) => {
+export const embedPlaceholder = (seed: string | number, opts?: FionaImgOpts) => {
   const img = fionaPlaceholder(seed, opts);
 
   // Construct an SVG using ForeignObject to have text inside the image

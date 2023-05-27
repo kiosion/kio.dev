@@ -1,7 +1,9 @@
 import { get, writable } from 'svelte/store';
-import { t, isLocalized } from '$i18n';
+
 import { page } from '$app/stores';
+import { isLocalized, t } from '$i18n';
 import { APP_LANGS } from '$lib/consts';
+
 import type { MenuState, MenuStateOpt } from '$types';
 
 const state = writable({} as MenuState);
@@ -59,17 +61,14 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
               text: `${get(t)('Mail')} ${
                 (target as HTMLAnchorElement).href.split(':')?.[1]
               }`,
-              action: () =>
-                window.open((target as HTMLAnchorElement).href, '_self')
+              action: () => window.open((target as HTMLAnchorElement).href, '_self')
             },
             {},
             {
               icon: 'Copy',
               text: 'Copy email address',
               action: () =>
-                navigator.clipboard.writeText(
-                  (target as HTMLAnchorElement).href
-                )
+                navigator.clipboard.writeText((target as HTMLAnchorElement).href)
             }
           ];
         }
@@ -77,8 +76,7 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {
             icon: 'Open',
             text: get(t)('Open link in new tab'),
-            action: () =>
-              window.open((target as HTMLAnchorElement).href, '_blank')
+            action: () => window.open((target as HTMLAnchorElement).href, '_blank')
           },
           {
             icon: 'Open',
@@ -94,8 +92,7 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {
             icon: 'Link',
             text: `${get(t)('Go to')} '${(target as HTMLAnchorElement).href}'`,
-            action: () =>
-              window.open((target as HTMLAnchorElement).href, '_self')
+            action: () => window.open((target as HTMLAnchorElement).href, '_self')
           },
           {},
           {
@@ -110,8 +107,7 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {
             icon: 'Open',
             text: get(t)('Open image in new tab'),
-            action: () =>
-              window.open((target as HTMLImageElement).src, '_blank')
+            action: () => window.open((target as HTMLImageElement).src, '_blank')
           },
           {
             icon: 'Open',
@@ -128,16 +124,12 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
             icon: 'Save',
             text: get(t)('Save image'),
             action: () =>
-              window.open(
-                `${(target as HTMLImageElement).src}&download`,
-                '_blank'
-              )
+              window.open(`${(target as HTMLImageElement).src}&download`, '_blank')
           },
           {
             icon: 'Copy',
             text: get(t)('Copy image address'),
-            action: () =>
-              navigator.clipboard.writeText((target as HTMLImageElement).src)
+            action: () => navigator.clipboard.writeText((target as HTMLImageElement).src)
           }
         ];
       case 'CODE':
@@ -176,8 +168,7 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           {
             icon: 'Code',
             text: get(t)('View page source'),
-            action: () =>
-              window.open(findSourceFile(get(page).url.pathname), '_blank')
+            action: () => window.open(findSourceFile(get(page).url.pathname), '_blank')
           }
         ];
     }
@@ -218,4 +209,4 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
   return state.set(res);
 };
 
-export { state, setState };
+export { setState, state };

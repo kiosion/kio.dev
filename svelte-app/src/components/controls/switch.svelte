@@ -1,6 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+
   import { theme } from '$stores/theme';
+
   import Hoverable from '$components/hoverable.svelte';
 
   const dispatch = createEventDispatcher();
@@ -32,9 +34,7 @@
         class="before:bg-gray-600 after:bg-gray-600 dark:before:bg-gray-400 dark:after:bg-gray-400"
       >
         <span
-          class="text-gray-800 dark:text-gray-100 {$theme === 'light'
-            ? 'light'
-            : 'dark'}"
+          class="text-gray-800 dark:text-gray-100 {$theme === 'light' ? 'light' : 'dark'}"
         />
       </div>
     </label>

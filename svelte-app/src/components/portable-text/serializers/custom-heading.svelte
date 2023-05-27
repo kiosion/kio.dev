@@ -1,5 +1,6 @@
 <script lang="ts">
   import Hoverable from '$components/hoverable.svelte';
+
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;

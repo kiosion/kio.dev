@@ -1,8 +1,9 @@
-import Logger from '$lib/logger';
 import { ENV } from '$lib/env';
+import Logger from '$lib/logger';
 import Store from '$lib/store';
-import type { AuthorDocument } from '$types';
+
 import type { PageLoad } from './$types';
+import type { AuthorDocument } from '$types';
 
 export const ssr = !(ENV === 'testing');
 

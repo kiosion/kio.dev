@@ -1,9 +1,11 @@
-import { error, redirect } from '@sveltejs/kit';
 import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
+
+import { error, redirect } from '@sveltejs/kit';
+
 import type { PageLoad } from './$types';
-import type { ResDataMany, PostDocument, DocumentTags } from '$types';
+import type { DocumentTags, PostDocument, ResDataMany } from '$types';
 
 export const prerender = false;
 
@@ -14,14 +16,17 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags: ResDataMany<DocumentTags> | undefined =
-    await Store.find<DocumentTags>(fetch, 'tag', {
+  const allTags: ResDataMany<DocumentTags> | undefined = await Store.find<DocumentTags>(
+    fetch,
+    'tag',
+    {
       type: 'post',
       limit: 0
-    }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+    }
+  ).catch((err: unknown) => {
+    Logger.error(err as string);
+    return undefined;
+  });
 
   if (
     !allTags?.data?.some(
@@ -40,14 +45,17 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const posts: ResDataMany<PostDocument> | undefined =
-    await Store.find<PostDocument>(fetch, 'post', {
+  const posts: ResDataMany<PostDocument> | undefined = await Store.find<PostDocument>(
+    fetch,
+    'post',
+    {
       limit: PAGINATION_POSTS_PER_PAGE,
       tags: [params.slug]
-    }).catch((err: unknown) => {
-      Logger.error(err as string, `routes/blog/+/${params.slug}`);
-      return undefined;
-    });
+    }
+  ).catch((err: unknown) => {
+    Logger.error(err as string, `routes/blog/+/${params.slug}`);
+    return undefined;
+  });
 
   return { posts };
 };

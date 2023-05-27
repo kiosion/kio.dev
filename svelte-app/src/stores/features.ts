@@ -1,20 +1,12 @@
+import { get, type Readable, readable, type Writable, writable } from 'svelte/store';
+
 import { browser } from '$app/environment';
 import Logger from '$lib/logger';
-import {
-  readable,
-  writable,
-  get,
-  type Readable,
-  type Writable
-} from 'svelte/store';
 
 type Setting = { value: boolean; updated: string };
 
 const defaultFeatureFlags = new Map([
-  [
-    'reduce_motion',
-    writable({ value: false, updated: '1671500535' } as Setting)
-  ],
+  ['reduce_motion', writable({ value: false, updated: '1671500535' } as Setting)],
   ['sounds', writable({ value: true, updated: '1671500535' } as Setting)],
   ['comic_sans', writable({ value: false, updated: '1671500535' } as Setting)]
 ]) as Map<string, Writable<Setting>>;
@@ -25,9 +17,7 @@ if (!browser) {
   featureFlags = defaultFeatureFlags;
 } else {
   const storedFlags = localStorage.getItem('featureFlags'),
-    parsed = storedFlags
-      ? (JSON.parse(atob(storedFlags)) as [string, Setting][])
-      : [];
+    parsed = storedFlags ? (JSON.parse(atob(storedFlags)) as [string, Setting][]) : [];
   const writableFlags = new Map(
     parsed
       .filter(([key, savedValue]) => {
@@ -70,9 +60,10 @@ class FeaturesClass {
             })
         });
         feature.subscribe((_value) => {
-          const flags = Array.from(this.features.entries()).map(
-            ([key, value]) => [key, get(value)]
-          );
+          const flags = Array.from(this.features.entries()).map(([key, value]) => [
+            key,
+            get(value)
+          ]);
           localStorage.setItem('featureFlags', btoa(JSON.stringify(flags)));
         });
       });

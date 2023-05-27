@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { navLinks } from '$stores/navigation';
+
   import NavLink from '$components/nav/nav-link.svelte';
   import SliderIndicator from '$components/nav/slider-indicator.svelte';
-  import { navLinks } from '$stores/navigation';
 
   let navLinksContainer: HTMLElement;
 </script>

@@ -1,12 +1,13 @@
 <script lang="ts">
-  import Dialog from '$components/dialog.svelte';
-  import { t, linkTo } from '$i18n';
   import { goto } from '$app/navigation';
-  import { APP_LANGS } from '$lib/consts';
   import { page } from '$app/stores';
-  import Hoverable from '$components/hoverable.svelte';
-  import { navOpen } from '$stores/navigation';
+  import { linkTo, t } from '$i18n';
+  import { APP_LANGS } from '$lib/consts';
   import SFX from '$lib/sfx';
+  import { navOpen } from '$stores/navigation';
+
+  import Dialog from '$components/dialog.svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let langs = [
       { lang: 'en', name: 'English' },

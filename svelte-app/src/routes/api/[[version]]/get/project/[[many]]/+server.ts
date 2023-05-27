@@ -1,6 +1,7 @@
-import type { RequestEvent, RequestHandler } from './$types';
-import { REMOTE_API_URL } from '$lib/env';
 import { fetchRemote } from '$lib/data.server';
+import { REMOTE_API_URL } from '$lib/env';
+
+import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({
   url,
@@ -27,10 +28,9 @@ export const GET: RequestHandler = async ({
       ? `${REMOTE_API_URL}/query/projects?${url.searchParams}`
       : `${REMOTE_API_URL}/query/project/${
           url.searchParams.get('id') ||
-          Buffer.from(
-            (url.searchParams.get('idb') as string) || '',
-            'base64'
-          ).toString('utf-8')
+          Buffer.from((url.searchParams.get('idb') as string) || '', 'base64').toString(
+            'utf-8'
+          )
         }?lang=${lang}`,
     remoteRes = await fetchRemote({ endpoint });
 

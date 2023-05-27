@@ -1,13 +1,12 @@
-import { TOP_LEVEL_ROUTES, ROUTE_ORDER } from '$lib/consts';
-import { navOptions, pageHeading } from '$stores/navigation';
 import { get } from 'svelte/store';
-import { t, isLocalized } from '$i18n';
+
+import { isLocalized, t } from '$i18n';
+import { ROUTE_ORDER, TOP_LEVEL_ROUTES } from '$lib/consts';
+import { navOptions, pageHeading } from '$stores/navigation';
 
 export const setupNavigation = (route: string): void => {
   get(isLocalized) === true &&
-    (route = route.slice(3).startsWith('/')
-      ? route.slice(3)
-      : `/${route.slice(3)}`);
+    (route = route.slice(3).startsWith('/') ? route.slice(3) : `/${route.slice(3)}`);
 
   if (!route || route === '') {
     navOptions.set({ down: '', up: '' });

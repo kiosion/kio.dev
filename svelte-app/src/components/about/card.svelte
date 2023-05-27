@@ -1,13 +1,16 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
+
+  import { getCrop, type ImageCrop, urlFor } from '$lib/helpers/image';
+
+  import EmptyContent from '$components/empty-content.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import { urlFor, getCrop, type ImageCrop } from '$lib/helpers/image';
+
   import type {
-    PortableTextBlock,
     ArbitraryTypedObject,
+    PortableTextBlock,
     SanityImageObject
   } from '$types/sanity';
-  import EmptyContent from '$components/empty-content.svelte';
 
   let pfpCrop: ImageCrop;
 
@@ -42,14 +45,10 @@
       {/if}
     </div>
     <div class="flex h-full w-full flex-1 flex-col items-start justify-start">
-      <h3
-        class="font-sans text-2xl font-bold text-stone-800 dark:text-stone-100"
-      >
+      <h3 class="font-sans text-2xl font-bold text-stone-800 dark:text-stone-100">
         {name}
       </h3>
-      <h4
-        class="font-mono text-xl font-bold text-stone-600 dark:text-stone-300"
-      >
+      <h4 class="font-mono text-xl font-bold text-stone-600 dark:text-stone-300">
         @{username}
       </h4>
     </div>

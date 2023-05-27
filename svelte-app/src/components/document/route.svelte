@@ -1,13 +1,16 @@
 <script lang="ts">
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import Content from '$components/document/content/content.svelte';
-  import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import { navOptions, pageHeading } from '$stores/navigation';
+
+  import { page } from '$app/stores';
   import { attemptScroll } from '$helpers/scrollTo';
-  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
   import { t } from '$i18n';
+  import { navOptions, pageHeading } from '$stores/navigation';
+
+  import Content from '$components/document/content/content.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+
   import type { Heading } from '$helpers/pt';
+  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
@@ -48,9 +51,7 @@
   <meta name="description" content={pageDescription} />
   <meta
     name="keywords"
-    content="{allTags}blog, {isPost
-      ? 'post'
-      : 'project'}, kio.dev, kio, kiosion"
+    content="{allTags}blog, {isPost ? 'post' : 'project'}, kio.dev, kio, kiosion"
   />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />

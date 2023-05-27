@@ -5,7 +5,7 @@
   "bracketSameLine": false,
   "singleQuote": true,
   "trailingComma": "none",
-  "printWidth": 80,
+  "printWidth": 90,
   "plugins": [
     "./node_modules/prettier-plugin-svelte",
     "./node_modules/prettier-plugin-tailwindcss"

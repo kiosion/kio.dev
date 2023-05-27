@@ -15,18 +15,17 @@
     "plugin:svelte/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["prettier", "@typescript-eslint"],
+  "plugins": [
+    "prettier",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "unused-imports"
+  ],
   "rules": {
-    "svelte/valid-compile": ["off"],
+    "@typescript-eslint/prefer-namespace-keyword": ["off"],
+    "@typescript-eslint/no-namespace": ["off"],
     "@typescript-eslint/restrict-template-expressions": ["off"],
-    "@typescript-eslint/no-unused-vars": [
-      "error", {
-        "varsIgnorePattern": "^_*",
-        "argsIgnorePattern": "^_*"
-      }
-    ],
-    "no-unused-vars": ["off"],
-    "prettier/prettier": ["error"],
+    "@typescript-eslint/no-unused-vars": ["off"],
     "array-bracket-spacing": ["error", "never"],
     "arrow-spacing": ["error"],
     "block-scoped-var": ["error"],
@@ -56,20 +55,47 @@
     "no-redeclare": ["error"],
     "no-setter-return": ["error"],
     "no-script-url": ["error"],
+    "no-unused-vars": ["off"],
     "object-shorthand": ["error"],
     "one-var-declaration-per-line": ["error"],
-    "@typescript-eslint/prefer-namespace-keyword": "off",
-    "@typescript-eslint/no-namespace": "off",
+    "prettier/prettier": ["error"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "quote-props": ["error", "as-needed"],
     "semi": ["error", "always"],
     "semi-spacing": ["error"],
+    "simple-import-sort/imports": ["error", { "groups": [
+      // Side effect imports
+      ["^\u0000(?!.*\u0000$)"],
+      // Svelte internal imports
+      ["^svelte(/)?(?!.*\u0000$)"],
+      // Svelte-related deps
+      ["^svelte-(?!.*\u0000$)"],
+      // Non-component path-aliased '$' imports
+      ["^\\$(?!components)(/)?(?!.*\u0000$)"],
+      // Component imports
+      ["^\\$components(/)?(?!.*\u0000$)"],
+      // Absolute imports
+      ["^[^.](?!.*\u0000$)"],
+      // Relative imports
+      ["^\\.(?!.*\u0000$)"],
+      // Type imports
+      ["\u0000$"]
+    ] }],
+    "simple-import-sort/exports": ["error"],
     "space-in-parens": ["error", "never"],
     "spaced-comment": [
       "error",
       "always",
       {
         "block": { "balanced": true }
+      }
+    ],
+    "svelte/valid-compile": ["off"],
+    "unused-imports/no-unused-imports": ["error"],
+    "unused-imports/no-unused-vars": [
+      "error", {
+        "varsIgnorePattern": "^_*",
+        "argsIgnorePattern": "^_*"
       }
     ]
   },

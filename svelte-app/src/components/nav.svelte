@@ -1,30 +1,33 @@
 <script lang="ts">
-  import { config as currentConfig } from '$stores/config';
-  import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
+  import { onDestroy, onMount } from 'svelte';
+  import { circInOut, circOut, quadOut } from 'svelte/easing';
+  import { tweened } from 'svelte/motion';
+  import { slide } from 'svelte/transition';
+
+  import Breakpoints from 'svelte-breakpoints';
+
+  import { goto } from '$app/navigation';
   import { linkTo } from '$i18n';
   import {
-    TOP_LEVEL_ROUTES,
+    BASE_ANIMATION_DURATION,
     DEFAULT_BREAKPOINTS,
-    BASE_ANIMATION_DURATION
+    TOP_LEVEL_ROUTES
   } from '$lib/consts';
-  import { circInOut, circOut, quadIn, quadOut } from 'svelte/easing';
-  import { goto } from '$app/navigation';
   import SFX from '$lib/sfx';
-  import { slide } from 'svelte/transition';
-  import Breakpoints from 'svelte-breakpoints';
+  import { config as currentConfig } from '$stores/config';
+  import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
+
+  import LanguageControls from '$components/controls/language-controls.svelte';
   import MenuToggle from '$components/controls/menu-toggle.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import SoundsToggle from '$components/controls/sounds-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
-  import NavSocial from '$components/nav/nav-social.svelte';
-  import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
-  import { onDestroy, onMount } from 'svelte';
+  import Hoverable from '$components/hoverable.svelte';
   import NavLink from '$components/nav/nav-link.svelte';
   import NavLinks from '$components/nav/nav-links.svelte';
+  import NavSocial from '$components/nav/nav-social.svelte';
+  import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
+
   import type { Unsubscriber } from 'svelte/store';
-  import LanguageControls from '$components/controls/language-controls.svelte';
-  import { browser } from '$app/environment';
-  import { tweened } from 'svelte/motion';
 
   interface SocialLink {
     attrs: {
@@ -37,19 +40,6 @@
     iconSize: number;
     iconRotation: number;
   }
-
-  // const socials =
-  //   ($currentConfig.data?.socialLinks?.map((link) => ({
-  //     attrs: {
-  //       href: $linkTo(link.url),
-  //       target: link.internal ? undefined : '_blank',
-  //       rel: link.rel?.join(' ') || undefined
-  //     },
-  //     name: link.name,
-  //     icon: link.icon,
-  //     iconSize: link.iconSize,
-  //     iconRotation: link.iconRotation
-  //   })) as SocialLink[]) || ([{}] as SocialLink[]);
 
   const onLogoClick = () => {
     SFX.click.play();
@@ -192,11 +182,7 @@
             data-test-id="nav-logo"
             on:click={() => onLogoClick()}
           >
-            <img
-              class="h-full"
-              src="/assets/logo-text--short.webp"
-              alt="Kiosion"
-            />
+            <img class="h-full" src="/assets/logo-text--short.webp" alt="Kiosion" />
           </button>
         </Hoverable>
         <div class="align-center flex w-fit flex-row justify-start gap-4 pt-1">

@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { slide } from 'svelte/transition';
   import { circInOut } from 'svelte/easing';
+  import { slide } from 'svelte/transition';
+
   import Divider from '$components/divider.svelte';
   import Item from '$components/document/content/common/summary/item.svelte';
+
   import type { Heading as PTHeading } from '$helpers/pt';
 
   export let headings: PTHeading[],

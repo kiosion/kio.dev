@@ -1,32 +1,34 @@
 <script lang="ts">
   import '../app.scss';
   import 'cal-sans';
-  import { onMount, onDestroy, setContext } from 'svelte';
+
+  import { onDestroy, onMount, setContext } from 'svelte';
   import { get, type Unsubscriber } from 'svelte/store';
-  import { classList } from 'svelte-body';
   import { fade, fly } from 'svelte/transition';
-  import { page, navigating } from '$app/stores';
-  import { loading, theme } from '$stores/theme';
-  import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
-  import Loader from '$components/loading/full.svelte';
-  import BarLoader from '$components/loading/bar.svelte';
-  import PageTransition from '$components/layouts/page-transition.svelte';
-  import ScrollContainer from '$components/layouts/scroll-container.svelte';
-  import Navigation from '$components/nav.svelte';
-  import PageControls from '$components/controls/page-controls.svelte';
-  import Features from '$stores/features';
-  import { browser } from '$app/environment';
-  import ContextMenu from '$components/context-menu.svelte';
-  import {
-    state as menuState,
-    setState as setMenuState
-  } from '$lib/helpers/menu';
-  import { isDesktop } from '$helpers/responsive';
+
+  import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
+
+  import { browser } from '$app/environment';
+  import { invalidateAll } from '$app/navigation';
+  import { navigating, page } from '$app/stores';
+  import { isDesktop } from '$helpers/responsive';
+  import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
+  import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import { init as initAudio } from '$lib/sfx';
   import { config } from '$stores/config';
-  import { invalidateAll } from '$app/navigation';
+  import Features from '$stores/features';
+  import { loading, theme } from '$stores/theme';
+
+  import ContextMenu from '$components/context-menu.svelte';
+  import PageControls from '$components/controls/page-controls.svelte';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import ScrollContainer from '$components/layouts/scroll-container.svelte';
+  import BarLoader from '$components/loading/bar.svelte';
+  import Loader from '$components/loading/full.svelte';
+  import Navigation from '$components/nav.svelte';
+
   import type { LayoutData } from './$types';
 
   interface DevToolsEvent extends Event {
@@ -44,8 +46,7 @@
     invalidationTimeout: ReturnType<typeof setTimeout> | undefined;
 
   const msg = (e: DevToolsEvent) =>
-    e.detail?.isOpen &&
-    console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
+    e.detail?.isOpen && console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
 
   unsubscribers.push(
     navigating.subscribe((res) => {

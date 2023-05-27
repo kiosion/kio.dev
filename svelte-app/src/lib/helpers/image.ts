@@ -1,9 +1,11 @@
-import imageUrlBuilder from '@sanity/image-url';
 import { REMOTE_CDN_URL } from '$lib/env';
+
+import imageUrlBuilder from '@sanity/image-url';
+
 import type {
-  SanityImageSource,
   SanityClientLike,
-  SanityImageObject
+  SanityImageObject,
+  SanityImageSource
 } from '@sanity/image-url/lib/types/types';
 
 export interface ImageCrop {

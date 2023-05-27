@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { linkTo } from '$i18n';
+
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
-  import { linkTo } from '$i18n';
 
   export let href: string,
     external = false,

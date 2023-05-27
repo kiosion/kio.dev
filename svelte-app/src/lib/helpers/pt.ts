@@ -71,10 +71,7 @@ export const getHeadings = async (input: PTBlock[]): Promise<Heading[]> => {
           if (current.parent) {
             const parent = headings.find((h) => h.key === current.parent);
             if (parent) {
-              if (
-                parseInt(parent.type.charAt(1)) >=
-                parseInt(heading.type.charAt(1))
-              ) {
+              if (parseInt(parent.type.charAt(1)) >= parseInt(heading.type.charAt(1))) {
                 return checkForParent(parent, heading);
               }
               heading.parent = parent.key;
@@ -87,14 +84,12 @@ export const getHeadings = async (input: PTBlock[]): Promise<Heading[]> => {
         };
         switch (true) {
           // If the heading is smaller than the current heading, it's a child
-          case parseInt(heading.type.charAt(1)) >
-            parseInt(current.type.charAt(1)):
+          case parseInt(heading.type.charAt(1)) > parseInt(current.type.charAt(1)):
             heading.parent = current.key;
             current.children.push(heading);
             break;
           // If the heading is the same level as the current heading, check for a parent
-          case parseInt(heading.type.charAt(1)) ===
-            parseInt(current.type.charAt(1)):
+          case parseInt(heading.type.charAt(1)) === parseInt(current.type.charAt(1)):
             checkForParent(current, heading);
             break;
           // Fall back to checking for a parent

@@ -1,9 +1,11 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
-  import SFX from '$lib/sfx';
   import { goto } from '$app/navigation';
-  import Icon from '@iconify/svelte';
+  import SFX from '$lib/sfx';
+
+  import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
+
+  import Icon from '@iconify/svelte';
 
   interface SocialLink {
     attrs: {

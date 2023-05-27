@@ -1,12 +1,13 @@
 <script lang="ts">
-  import Header from '$components/document/content/common/header.svelte';
-  import Footer from '$components/document/content/common/footer.svelte';
-  import Summary from '$components/document/content/common/summary.svelte';
-  import PortableText from '$components/portable-text/portable-text.svelte';
-  import EmptyContent from '$components/empty-content.svelte';
   import Divider from '$components/divider.svelte';
-  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
+  import Footer from '$components/document/content/common/footer.svelte';
+  import Header from '$components/document/content/common/header.svelte';
+  import Summary from '$components/document/content/common/summary.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+
   import type { Heading } from '$helpers/pt';
+  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,

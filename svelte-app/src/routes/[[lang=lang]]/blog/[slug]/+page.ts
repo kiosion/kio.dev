@@ -1,23 +1,28 @@
 import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
+
 import { error } from '@sveltejs/kit';
-import type { ResData, PostDocument } from '$types';
+
 import type { PageLoad } from './$types';
+import type { PostDocument, ResData } from '$types';
 
 export const ssr = !(ENV === 'testing');
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
 
-  const post: ResData<PostDocument> | undefined =
-    await Store.findOne<PostDocument>(fetch, 'post', {
+  const post: ResData<PostDocument> | undefined = await Store.findOne<PostDocument>(
+    fetch,
+    'post',
+    {
       idb: btoa(params.slug),
       lang: params.lang ?? 'en'
-    }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+    }
+  ).catch((err: unknown) => {
+    Logger.error(err as string);
+    return undefined;
+  });
 
   if (!post) {
     throw error(404, {

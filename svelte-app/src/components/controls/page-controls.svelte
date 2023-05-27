@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { navOptions, pageHeading } from '$stores/navigation';
-  import { goto } from '$app/navigation';
-  import Icon from '$components/icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import Breakpoints from 'svelte-breakpoints';
+
+  import { goto } from '$app/navigation';
+  import { linkTo, t } from '$i18n';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
-  import ThemeToggle from '$components/controls/theme-toggle.svelte';
-  import SoundsToggle from '$components/controls/sounds-toggle.svelte';
-  import { t, linkTo } from '$i18n';
   import SFX from '$lib/sfx';
+  import { navOptions, pageHeading } from '$stores/navigation';
+
+  import SoundsToggle from '$components/controls/sounds-toggle.svelte';
+  import ThemeToggle from '$components/controls/theme-toggle.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltip.svelte';
+
   import LanguageControls from './language-controls.svelte';
 
   let scrollNavHovered = false;
@@ -76,8 +79,7 @@
                 <button
                   class="focusOutline flex w-fit cursor-pointer select-none flex-row items-center gap-4 rounded-sm text-center font-code text-lg drop-shadow-md md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem]"
                   aria-label="Scroll to top"
-                  on:click={() =>
-                    appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}
+                  on:click={() => appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}
                   on:keydown={(e) =>
                     (e.code === 'Enter' || e.code === 'Space') &&
                     appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}

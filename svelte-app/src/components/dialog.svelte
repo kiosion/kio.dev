@@ -1,13 +1,15 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import { fade, scale } from 'svelte/transition';
+
+  import { t } from '$i18n';
+
   import {
     Dialog,
+    DialogDescription,
     DialogOverlay,
-    DialogTitle,
-    DialogDescription
+    DialogTitle
   } from '@rgossiaux/svelte-headlessui';
-  import { createEventDispatcher } from 'svelte';
-  import { t } from '$i18n';
-  import { fade, scale } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
 
@@ -42,13 +44,9 @@
     <slot />
 
     <div class="hui-dialog-actions">
-      <button class="focusOutline-sm" on:click={onConfirm}
-        >{$t(confirmText)}</button
-      >
+      <button class="focusOutline-sm" on:click={onConfirm}>{$t(confirmText)}</button>
       {#if !hideCancel}
-        <button class="focusOutline-sm" on:click={onCancel}
-          >{$t(cancelText)}</button
-        >
+        <button class="focusOutline-sm" on:click={onCancel}>{$t(cancelText)}</button>
       {/if}
     </div>
   </div>

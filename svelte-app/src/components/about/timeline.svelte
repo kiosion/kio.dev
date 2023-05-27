@@ -1,14 +1,17 @@
 <script lang="ts">
-  import type { AuthorTimelineItem } from '$types';
-  import PortableText from '$components/portable-text/portable-text.svelte';
-  import Icon from '$components/icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import { maybe } from 'svelte-maybe-transition';
+
+  import { currentLang, t } from '$i18n';
   import Features from '$stores/features';
-  import { t, currentLang } from '$i18n';
+
+  import EmptyContent from '$components/empty-content.svelte';
+  import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
   import Tags from '$components/tags.svelte';
   import Tooltip from '$components/tooltip.svelte';
-  import EmptyContent from '$components/empty-content.svelte';
+
+  import type { AuthorTimelineItem } from '$types';
 
   let selected: number | null = null;
 
@@ -31,34 +34,25 @@
           return `${new Intl.DateTimeFormat($currentLang, {
             month: 'long',
             day: 'numeric'
-          }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
-            $currentLang,
-            {
-              day: 'numeric',
-              year: 'numeric'
-            }
-          ).format(endDate)}`;
+          }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat($currentLang, {
+            day: 'numeric',
+            year: 'numeric'
+          }).format(endDate)}`;
         }
         return `${new Intl.DateTimeFormat($currentLang, {
           month: 'long'
-        }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
-          $currentLang,
-          {
-            month: 'long'
-          }
-        ).format(endDate)} ${endDate.getFullYear()}`;
+        }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat($currentLang, {
+          month: 'long'
+        }).format(endDate)} ${endDate.getFullYear()}`;
       }
 
       return `${new Intl.DateTimeFormat($currentLang, {
         month: 'long',
         year: 'numeric'
-      }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat(
-        $currentLang,
-        {
-          month: 'long',
-          year: 'numeric'
-        }
-      ).format(endDate)}`;
+      }).format(startDate)} ${$t('to')} ${new Intl.DateTimeFormat($currentLang, {
+        month: 'long',
+        year: 'numeric'
+      }).format(endDate)}`;
     } catch (_) {
       return $t('Invalid date');
     }
@@ -106,10 +100,7 @@
                     }
                   }}
                   on:keydown={(e) => {
-                    if (
-                      item.body &&
-                      (e.code === 'Enter' || e.code === 'Space')
-                    ) {
+                    if (item.body && (e.code === 'Enter' || e.code === 'Space')) {
                       selected = selected === i ? null : i;
                     }
                   }}
@@ -117,9 +108,7 @@
                   tabindex={0}
                   role="button"
                 >
-                  <div
-                    class="select-none font-sans text-base font-bold line-clamp-1"
-                  >
+                  <div class="select-none font-sans text-base font-bold line-clamp-1">
                     {item.title}
                   </div>
                   {#if item.subtitle}

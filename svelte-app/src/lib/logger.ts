@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function, prefer-rest-params */
 import { ENV } from '$lib/env';
+
 import type { LogOptions } from 'vite';
 
 export class LoggerClass {

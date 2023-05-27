@@ -1,7 +1,9 @@
-import Alert from 'pixelarticons/svg/alert.svg';
-import Sun from 'pixelarticons/svg/sun.svg';
-import MoonStars from 'pixelarticons/svg/moon-stars.svg';
 import Logger from '$lib/logger';
+
+import Alert from 'pixelarticons/svg/alert.svg';
+import MoonStars from 'pixelarticons/svg/moon-stars.svg';
+import Sun from 'pixelarticons/svg/sun.svg';
+
 import type { PixelIcon } from '$types';
 
 const transformName = (name: string) => {

@@ -7,9 +7,7 @@
 <div class="wrapper {classes}" style="width: {width}; height: {height};">
   <div data-test-id="loader-bar">
     {#each Array(7) as _}
-      <div
-        class="bg-violet-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-violet-300"
-      />
+      <div class="bg-violet-300 shadow-[0_0_16px_var(--tw-shadow)] shadow-violet-300" />
     {/each}
   </div>
 </div>
@@ -30,8 +28,7 @@
 
       div {
         flex: 1;
-        animation: pulse 700ms infinite alternate
-          cubic-bezier(0.16, -0.05, 0.35, 1.02);
+        animation: pulse 700ms infinite alternate cubic-bezier(0.16, -0.05, 0.35, 1.02);
 
         @for $i from 1 through 8 {
           &:nth-child(#{$i}) {

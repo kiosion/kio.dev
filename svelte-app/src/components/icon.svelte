@@ -17,9 +17,7 @@
       this={svg}
       {width}
       {height}
-      class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline
-        ? 'inline'
-        : ''}"
+      class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline ? 'inline' : ''}"
       {style}
     />
   {/await}

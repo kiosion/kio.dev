@@ -1,20 +1,24 @@
 <script lang="ts">
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-nocheck Need to fix typings for hlAuto and hlHighlight
-  import { theme } from '$stores/theme';
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { navigating } from '$app/stores';
-  import Icon from './icon.svelte';
-  import Hoverable from '$components/hoverable.svelte';
+
   import {
-    LineNumbers,
-    type HighlightAuto,
     type Highlight,
-    type LanguageType
+    type HighlightAuto,
+    type LanguageType,
+    LineNumbers
   } from 'svelte-highlight';
-  import Tooltip from './tooltip.svelte';
+
+  import { navigating } from '$app/stores';
   import { t } from '$i18n';
+  import { theme } from '$stores/theme';
+
+  import Hoverable from '$components/hoverable.svelte';
+
+  import Icon from './icon.svelte';
+  import Tooltip from './tooltip.svelte';
 
   export let content: string,
     showClipboard = false,
@@ -89,19 +93,14 @@
           }
           default: {
             imp = (
-              await import(
-                `../../node_modules/svelte-highlight/languages/${lang}.js`
-              )
+              await import(`../../node_modules/svelte-highlight/languages/${lang}.js`)
             )[lang];
             break;
           }
         }
       } catch (e) {
-        imp = (
-          await import(
-            '../../node_modules/svelte-highlight/languages/markdown.js'
-          )
-        ).markdown;
+        imp = (await import('../../node_modules/svelte-highlight/languages/markdown.js'))
+          .markdown;
       }
       return imp as LanguageType;
     })();
@@ -169,11 +168,7 @@
             <LineNumbers {highlighted} hideBorder wrapLines />
           </svelte:component>
         {:else}
-          <svelte:component
-            this={hlHighlight}
-            code={content}
-            language={resolvedLang}
-          />
+          <svelte:component this={hlHighlight} code={content} language={resolvedLang} />
         {/if}
       {/await}
     </div>
@@ -247,8 +242,8 @@
   :global(code) {
     &,
     &.hljs {
-      font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+      font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        'Liberation Mono', 'Courier New', monospace !important;
       font-size: 1rem;
       line-height: 1.2rem;
       max-width: 100%;
@@ -264,8 +259,8 @@
 
   :global(tbody.hljs) {
     background-color: transparent !important;
-    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
-      Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New', monospace !important;
     font-size: 1rem;
     line-height: 1.2rem;
   }

@@ -33,8 +33,7 @@ const normalize = (data: Response | Record<string, unknown>) => {
   if (!data?.code || (!data?.message && !data?.data)) {
     return {
       code: 500,
-      error:
-        'Endpoint error: Failed to normalize data. Remote API returned invalid data.'
+      error: 'Endpoint error: Failed to normalize data. Remote API returned invalid data.'
     };
   }
 

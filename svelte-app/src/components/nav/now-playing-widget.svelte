@@ -1,7 +1,9 @@
 <script lang="ts">
+  import LastFM from '$lib/assets/last_fm-512.png';
+
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
-  import LastFM from '$lib/assets/last_fm-512.png';
+
   import type { Data } from '$helpers/toru';
 
   export let data: Data;

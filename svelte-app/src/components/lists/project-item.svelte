@@ -1,13 +1,16 @@
 <script lang="ts">
-  import type { ProjectDocument } from '$types';
   import { goto } from '$app/navigation';
-  import BulletPoint from '../bullet-point.svelte';
   import { formatDate } from '$helpers/date';
-  import Hoverable from '$components/hoverable.svelte';
-  import { t, linkTo } from '$i18n';
-  import SFX from '$lib/sfx';
+  import { linkTo, t } from '$i18n';
   import { LANGUAGE_COLOURS } from '$lib/consts';
+  import SFX from '$lib/sfx';
+
+  import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
+
+  import BulletPoint from '../bullet-point.svelte';
+
+  import type { ProjectDocument } from '$types';
 
   export let project: ProjectDocument;
 
@@ -92,9 +95,8 @@
             class="relative mb-0.5 block h-3 w-3 rounded-full opacity-90 bg-[{LANGUAGE_COLOURS.get(
               project.language.toLowerCase()
             )}] -m-[0.5px] border-[0.5px] border-gray-700/25 dark:border-gray-300/25"
-            style="background: {LANGUAGE_COLOURS.get(
-              project.language.toLowerCase()
-            )}">&nbsp;</span
+            style="background: {LANGUAGE_COLOURS.get(project.language.toLowerCase())}"
+            >&nbsp;</span
           >
           <span>{project.language}</span>
         </div>

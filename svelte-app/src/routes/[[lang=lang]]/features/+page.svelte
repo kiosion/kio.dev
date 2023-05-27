@@ -1,10 +1,11 @@
 <script lang="ts">
-  import SwitchItem from '$components/controls/switch-item.svelte';
-  import { navOptions, pageHeading } from '$stores/navigation';
-  import Features from '$stores/features';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import SFX from '$lib/sfx';
   import { t } from '$i18n';
+  import SFX from '$lib/sfx';
+  import Features from '$stores/features';
+  import { navOptions, pageHeading } from '$stores/navigation';
+
+  import SwitchItem from '$components/controls/switch-item.svelte';
+  import IconHeader from '$components/headings/icon-header.svelte';
 
   const onChange = (event: CustomEvent, target: string) => {
     Features.set(target, event?.detail?.state === true ? true : false);

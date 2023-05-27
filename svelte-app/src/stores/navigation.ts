@@ -1,4 +1,5 @@
-import { get, writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
+
 import type { Data } from '$helpers/toru';
 
 const navOpen = writable(false);
@@ -13,4 +14,4 @@ const navLinks = writable<
   { name: string; url: string; active: boolean; hovered: boolean }[]
 >([]);
 
-export { navLinks, navOpen, navOptions, pageHeading, nowPlayingData };
+export { navLinks, navOpen, navOptions, nowPlayingData, pageHeading };

@@ -1,9 +1,10 @@
+import { get, readable, writable } from 'svelte/store';
+
+import { page } from '$app/stores';
 import EN from '$langs/en.json';
 import FR from '$langs/fr.json';
-import { page } from '$app/stores';
-import { get, writable, readable } from 'svelte/store';
+import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
 import Logger from '$lib/logger';
-import { DEFAULT_APP_LANG, APP_LANGS } from '$lib/consts';
 
 const isLocalized = writable(false);
 const currentLang = writable(DEFAULT_APP_LANG);
@@ -13,9 +14,7 @@ const notFound = (key: string, lang: string, abbr = 0) => {
     ? Logger.errorOnce(
         `[i18n] Missing translation for key "${key}" in ${lang}.json & ${abbr} others}`
       )
-    : Logger.errorOnce(
-        `[i18n] Missing translation for key "${key}" in ${lang}.json`
-      );
+    : Logger.errorOnce(`[i18n] Missing translation for key "${key}" in ${lang}.json`);
   return key;
 };
 
@@ -40,10 +39,7 @@ const check = () => {
   }
 };
 
-const getKey = <T extends keyof typeof EN>(
-  lang: string,
-  key: T
-): string | undefined => {
+const getKey = <T extends keyof typeof EN>(lang: string, key: T): string | undefined => {
   switch (lang) {
     case 'en':
       return EN[key];
@@ -70,20 +66,19 @@ const _translate = (key: string, params?: Record<string, unknown>): string => {
   };
 
   const string = getKey(lang || DEFAULT_APP_LANG, key as keyof typeof EN);
-  return string
-    ? replaceParams(string)
-    : notFound(key, lang || DEFAULT_APP_LANG);
+  return string ? replaceParams(string) : notFound(key, lang || DEFAULT_APP_LANG);
 };
 
 // eslint-disable-next-line func-call-spacing
-const translate = readable<
-  (key: string, params?: Record<string, unknown>) => string
->(_translate, (set) => {
-  const unsubscribe = currentLang.subscribe(() => {
-    set(_translate);
-  });
-  return unsubscribe;
-});
+const translate = readable<(key: string, params?: Record<string, unknown>) => string>(
+  _translate,
+  (set) => {
+    const unsubscribe = currentLang.subscribe(() => {
+      set(_translate);
+    });
+    return unsubscribe;
+  }
+);
 
 const _linkTo = (path: string, lang?: string): string => {
   if (path.match(/(?:^(http|https|ftp|ssh)|^[^/].*\.([a-z]{2,6})).*?$/gim)) {
@@ -107,14 +102,11 @@ const _linkTo = (path: string, lang?: string): string => {
     : path;
 };
 
-const linkTo = readable<(path: string, lang?: string) => string>(
-  _linkTo,
-  (set) => {
-    const unsubscribe = currentLang.subscribe(() => {
-      set(_linkTo);
-    });
-    return unsubscribe;
-  }
-);
+const linkTo = readable<(path: string, lang?: string) => string>(_linkTo, (set) => {
+  const unsubscribe = currentLang.subscribe(() => {
+    set(_linkTo);
+  });
+  return unsubscribe;
+});
 
-export { translate as t, linkTo, check, isLocalized, currentLang };
+export { check, currentLang, isLocalized, linkTo, translate as t };

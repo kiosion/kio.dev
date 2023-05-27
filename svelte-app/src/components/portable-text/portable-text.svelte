@@ -1,31 +1,36 @@
 <script lang="ts">
-  import { PortableText } from '@portabletext/svelte';
+  import { onMount } from 'svelte';
+
+  import { parseEmoji } from '$helpers/emoji';
   import { t } from '$i18n';
-  import CustomHeading from './serializers/custom-heading.svelte';
-  import CustomLink from './serializers/custom-link.svelte';
-  import CodeBlock from './serializers/code-block.svelte';
-  import CustomParagraph from './serializers/custom-paragraph.svelte';
-  import CustomCode from './serializers/custom-code.svelte';
-  import CustomQuote from './serializers/custom-quote.svelte';
-  import CustomHighlight from './serializers/custom-highlight.svelte';
-  import Divider from './serializers/divider.svelte';
-  import OlWrapper from './serializers/ol-wrapper.svelte';
-  import UlWrapper from './serializers/ul-wrapper.svelte';
-  import OlItem from './serializers/ol-item.svelte';
-  import UlItem from './serializers/ul-item.svelte';
-  import Image from './serializers/image.svelte';
-  import Footnote from './footnote.svelte';
+  import Logger from '$lib/logger';
+
   import Icon from '$components/icon.svelte';
+
+  import { PortableText } from '@portabletext/svelte';
+
+  import ReplitEmbed from './embeds/replit-embed.svelte';
+  import SvelteEmbed from './embeds/svelte-embed.svelte';
+  import Footnote from './footnote.svelte';
+  import CodeBlock from './serializers/code-block.svelte';
+  import CustomCode from './serializers/custom-code.svelte';
+  import CustomHeading from './serializers/custom-heading.svelte';
+  import CustomHighlight from './serializers/custom-highlight.svelte';
+  import CustomLink from './serializers/custom-link.svelte';
+  import CustomParagraph from './serializers/custom-paragraph.svelte';
+  import CustomQuote from './serializers/custom-quote.svelte';
+  import Divider from './serializers/divider.svelte';
+  import Image from './serializers/image.svelte';
+  import OlItem from './serializers/ol-item.svelte';
+  import OlWrapper from './serializers/ol-wrapper.svelte';
+  import UlItem from './serializers/ul-item.svelte';
+  import UlWrapper from './serializers/ul-wrapper.svelte';
+
   import type {
     ArbitraryTypedObject,
     PortableTextBlock,
     PortableTextMarkDefinition
   } from '@portabletext/types';
-  import Logger from '$lib/logger';
-  import { onMount } from 'svelte';
-  import { parseEmoji } from '$helpers/emoji';
-  import ReplitEmbed from './embeds/replit-embed.svelte';
-  import SvelteEmbed from './embeds/svelte-embed.svelte';
   import type { RouteFetch } from '$types';
 
   interface FootnoteProps extends PortableTextMarkDefinition {

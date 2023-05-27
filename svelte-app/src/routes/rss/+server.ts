@@ -1,6 +1,7 @@
-import { REMOTE_API_URL } from '$lib/env';
 import { fetchRemote } from '$lib/data.server';
+import { REMOTE_API_URL } from '$lib/env';
 import Logger from '$lib/logger';
+
 import type { RequestHandler } from '@sveltejs/kit';
 import type { PostDocument, ResDataMany } from '$types';
 
@@ -55,10 +56,7 @@ const XML_HEADERS = `
   `.trim();
 
 const stinkyTextCleaner = (text?: string) => {
-  return (
-    text?.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') ||
-    ''
-  );
+  return text?.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') || '';
 };
 
 const uriEncode = (text?: string) => {

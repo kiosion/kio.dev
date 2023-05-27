@@ -1,15 +1,14 @@
 <script lang="ts">
+  import { cubicOut } from 'svelte/easing';
+  import { tweened } from 'svelte/motion';
+
+  import { useMediaQuery } from 'svelte-breakpoints';
+
+  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { isLocalized } from '$i18n';
-  import { tweened } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
-  import { browser } from '$app/environment';
+  import { BASE_ANIMATION_DURATION, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
   import { navLinks } from '$stores/navigation';
-  import {
-    BASE_ANIMATION_DURATION,
-    DEFAULT_DESKTOP_BREAKPOINT
-  } from '$lib/consts';
-  import { useMediaQuery } from 'svelte-breakpoints';
 
   export let container: HTMLElement,
     showHoverState = false;
@@ -74,9 +73,7 @@
     // Accounting for container's top voffset
     top -= containerBoundingRect.top;
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, BASE_ANIMATION_DURATION / 2)
-    );
+    await new Promise((resolve) => setTimeout(resolve, BASE_ANIMATION_DURATION / 2));
 
     switch (status) {
       case 'hover':
@@ -95,10 +92,7 @@
   };
 
   $: truePageUrl = getTrueLinkUrl($page?.url.pathname);
-  $: setTimeout(
-    () => (containerBoundingRect = container?.getBoundingClientRect()),
-    50
-  ),
+  $: setTimeout(() => (containerBoundingRect = container?.getBoundingClientRect()), 50),
     $isDesktop;
   $: setPositionalClassNames(), containerBoundingRect, $page?.url, $navLinks;
   $: isHoveringLink = showHoverState && $navLinks.some((link) => link.hovered);

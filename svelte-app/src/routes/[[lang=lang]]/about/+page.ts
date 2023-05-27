@@ -1,6 +1,9 @@
-import { redirect } from '@sveltejs/kit';
 import { get } from 'svelte/store';
+
 import { linkTo } from '$i18n';
+
+import { redirect } from '@sveltejs/kit';
+
 import type { PageLoad } from './$types';
 
 export const load = (({ params }) => {

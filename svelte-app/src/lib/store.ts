@@ -1,16 +1,18 @@
-import CacheClass from '$lib/cache';
-import { config } from '$stores/config';
 import { get } from 'svelte/store';
+
+import CacheClass from '$lib/cache';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
+import { config } from '$stores/config';
+
 import type {
-  SiteConfig,
-  RouteFetch,
-  StoreRes,
   ResData,
   ResDataMany,
-  ResError
+  ResError,
+  RouteFetch,
+  SiteConfig,
+  StoreRes
 } from '$types';
 
 interface PossibleParams {
@@ -27,24 +29,17 @@ const endpoints = new Map([
 ]);
 
 class StoreClass extends CacheClass {
-  constructUrl = (
-    model: string,
-    params: PossibleParams,
-    many = false
-  ): string => {
+  constructUrl = (model: string, params: PossibleParams, many = false): string => {
     const url = new URL(
       `http://localhost${API_URL}${endpoints.get(model)}${many ? '/many' : ''}`
     );
     Object.entries(params).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        return value.length
-          ? url.searchParams.append(key, value.join(','))
-          : undefined;
+        return value.length ? url.searchParams.append(key, value.join(',')) : undefined;
       }
       return typeof value === 'boolean'
         ? url.searchParams.set(key, value.toString())
-        : value.toString() !== '' &&
-            url.searchParams.set(key, value.toString());
+        : value.toString() !== '' && url.searchParams.set(key, value.toString());
     });
     return url.toString().replace('http://localhost', '');
   };
@@ -107,9 +102,7 @@ class StoreClass extends CacheClass {
       return this.get(cacheKey) as ResDataMany<T>;
     }
     const response = await this.query(fetch, model, params);
-    return response?.data
-      ? (this.set(cacheKey, response) as ResDataMany<T>)
-      : undefined;
+    return response?.data ? (this.set(cacheKey, response) as ResDataMany<T>) : undefined;
   };
 
   findOne = async <T>(
@@ -122,9 +115,7 @@ class StoreClass extends CacheClass {
       return this.get(cacheKey) as unknown as ResData<T>;
     }
     const response = await this.queryOne(fetch, model, params);
-    return response?.data
-      ? (this.set(cacheKey, response) as ResData<T>)
-      : undefined;
+    return response?.data ? (this.set(cacheKey, response) as ResData<T>) : undefined;
   };
 
   findReload = async <T>(
@@ -167,9 +158,7 @@ class StoreClass extends CacheClass {
     });
   };
 
-  findConfig = async (
-    fetch: RouteFetch
-  ): Promise<StoreRes<ResData<SiteConfig>>> => {
+  findConfig = async (fetch: RouteFetch): Promise<StoreRes<ResData<SiteConfig>>> => {
     if (get(config)?.data) {
       return get(config);
     }

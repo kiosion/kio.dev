@@ -1,7 +1,10 @@
 <script lang="ts">
-  import { linkTo } from '$i18n';
-  import Hoverable from '$components/hoverable.svelte';
   import { maybe } from 'svelte-maybe-transition';
+
+  import { linkTo } from '$i18n';
+
+  import Hoverable from '$components/hoverable.svelte';
+
   import type { DocumentTags } from '$types';
 
   export let size: 'sm' | 'lg' = 'sm',

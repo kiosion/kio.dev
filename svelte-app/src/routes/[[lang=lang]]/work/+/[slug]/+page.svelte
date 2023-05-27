@@ -1,11 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { t } from '$i18n';
   import { navOptions, pageHeading } from '$stores/navigation';
-  import type { PageData } from './$types';
-  import ListItem from '$components/lists/project-item.svelte';
+
   import EmptyContent from '$components/empty-content.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
-  import { t } from '$i18n';
+  import ListItem from '$components/lists/project-item.svelte';
+
+  import type { PageData } from './$types';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
   pageHeading.set(`${$t('My work')} | Tag | ${pageTitle}`);

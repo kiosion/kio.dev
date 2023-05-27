@@ -43,9 +43,7 @@ interface Normalized extends Record<string, unknown> {
  */
 const normalize = (data: ResponseOrError) => {
   if (!data?.code || (!data?.message && !data?.data)) {
-    throw new Error(
-      'Failed to normalize data: Invalid or undefined data recieved'
-    );
+    throw new Error('Failed to normalize data: Invalid or undefined data recieved');
   }
 
   const normalized = {} as Normalized;
@@ -110,10 +108,8 @@ const fetchRemote = async ({
       {},
       { err }
     );
-    return new Error(
-      `Endpoint error: Unknown or unhandled error occured: ${err}`
-    );
+    return new Error(`Endpoint error: Unknown or unhandled error occured: ${err}`);
   }
 };
 
-export { normalize, fetchRemote };
+export { fetchRemote, normalize };

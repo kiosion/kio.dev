@@ -1,5 +1,6 @@
-import { security } from '$lib/fixtures/well-known';
 import Robots from '$lib/fixtures/robots';
+import { security } from '$lib/fixtures/well-known';
+
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }): Promise<Response> => {
