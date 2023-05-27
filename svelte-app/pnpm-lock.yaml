@@ -123,9 +123,6 @@ devDependencies:
   devalue:
     specifier: 4.3.0
     version: 4.3.0
-  devtools-detect:
-    specifier: ^4.0.0
-    version: 4.0.0
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
@@ -5631,11 +5628,6 @@ packages:
 
   /devalue@4.3.0:
     resolution: {integrity: sha512-n94yQo4LI3w7erwf84mhRUkUJfhLoCZiLyoOZ/QFsDbcWNZePrLwbQpvZBUG2TNxwV3VjCKPxkiiQA6pe3TrTA==}
-    dev: true
-
-  /devtools-detect@4.0.0:
-    resolution: {integrity: sha512-BnCKIj1DDWite4sml9z8baFlkZWdtFH0rl1+HcBZ6ORm3HG7JSuehQUVzdOUxbPDLLVmEVuqkrvy3y8y2GOXyQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /devtools-protocol@0.0.981744:

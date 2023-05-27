@@ -59,7 +59,6 @@
     "cypress": "12.5.1",
     "cypress-svelte-unit-test": "^3.3.4",
     "devalue": "4.3.0",
-    "devtools-detect": "^4.0.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",

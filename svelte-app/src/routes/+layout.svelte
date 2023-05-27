@@ -31,12 +31,6 @@
 
   import type { LayoutData } from './$types';
 
-  interface DevToolsEvent extends Event {
-    detail: {
-      isOpen: boolean;
-    };
-  }
-
   let appLoaded: boolean,
     scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
@@ -44,9 +38,6 @@
     unsubscribers = [] as Unsubscriber[],
     invalidateAttempts = 0,
     invalidationTimeout: ReturnType<typeof setTimeout> | undefined;
-
-  const msg = (e: DevToolsEvent) =>
-    e.detail?.isOpen && console.log('%cHi there :)', 'font-size:18px;font-weight:bold;');
 
   unsubscribers.push(
     navigating.subscribe((res) => {
@@ -66,16 +57,12 @@
     initAudio({ volume: 0.1 }).catch(() => undefined);
     checkTranslations();
     if (browser) {
-      window.addEventListener('devtoolschange', (e) => msg(e as DevToolsEvent));
       setTimeout(() => loading.set(false), 1000);
       appLoaded = true;
     }
   });
 
-  onDestroy(() => {
-    unsubscribers.forEach((u) => u());
-    browser && window.removeEventListener('devtoolschange', () => msg);
-  });
+  onDestroy(() => unsubscribers.forEach((u) => u()));
 
   export let data: LayoutData;
 
