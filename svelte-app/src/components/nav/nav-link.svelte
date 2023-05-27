@@ -79,7 +79,7 @@
       }
     }}
   >
-    {$t(link.name)}
+    <span>{$t(link.name)}</span>
     {#if mobile && (isActive || link.hovered)}
       <span
         class="indicator"
@@ -92,7 +92,7 @@
 
 <style lang="scss">
   a {
-    @apply relative rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
+    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
 
     &.active {
       @apply text-stone-800;
@@ -109,6 +109,10 @@
       &.last {
         @apply mb-4;
       }
+    }
+
+    span {
+      @apply ml-9;
     }
   }
 

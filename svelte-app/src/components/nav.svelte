@@ -238,7 +238,7 @@
     @apply my-8 flex w-fit flex-col border-r border-stone-400/50;
 
     .nav-inner {
-      @apply ml-9 flex w-48 flex-1 flex-col justify-between;
+      @apply flex w-56 flex-1 flex-col justify-between;
     }
 
     .logo-container {
@@ -250,12 +250,12 @@
       }
     }
     .border-line {
-      @apply -ml-9 inline-block bg-stone-400/50;
+      @apply inline-block bg-stone-400/50;
       height: 1px;
       width: calc(100% + 2.25rem);
     }
     .links-container {
-      @apply mr-9 flex flex-col;
+      @apply mx-9 flex flex-col;
 
       div {
         @apply flex flex-row flex-wrap items-center justify-center;
