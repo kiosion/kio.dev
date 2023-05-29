@@ -33,7 +33,7 @@
     "@popperjs/core": "^2.11.6",
     "@portabletext/svelte": "^1.0.1",
     "@rgossiaux/svelte-headlessui": "^1.0.2",
-    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@sanity/image-url": "^1.0.2",
     "@sveltejs/adapter-auto": "^2.0.1",
