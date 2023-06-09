@@ -263,9 +263,15 @@ defmodule Hexerei.Translate do
 
   defp get_text_from_blocks(blocks) do
     blocks
-    # flat_map applies a fn to each block & concats the resulting lists
-    |> Enum.flat_map(fn block -> block["children"] || [] end)
-    |> Enum.map(& &1["text"])
+    |> Enum.flat_map(fn block ->
+      case block do
+        %{"children" => children} -> children
+        _ -> []
+      end
+    end)
+    |> Enum.map(fn child ->
+      if Map.has_key?(child, "text"), do: child["text"], else: nil
+    end)
     |> Enum.reject(&is_nil/1)
   end
 
@@ -274,19 +280,23 @@ defmodule Hexerei.Translate do
     translation_map = original_text |> Enum.zip(translations) |> Map.new()
 
     Enum.map(blocks, fn block ->
-      children = block["children"] || []
-
-      updated_children = Enum.map(children, fn child ->
-        original = child["text"]
-        translated = case Map.get translation_map, original, original do
-          [res] -> res
-          res -> res
-        end
-
-        Map.put child, "text", translated
-      end)
-
-      Map.put block, "children", updated_children
+      case Map.fetch(block, "children") do
+        {:ok, children} ->
+          updated_children = Enum.map(children, fn child ->
+            case child do
+              %{"text" => text} when text != nil ->
+                translated = case translation_map[text] do
+                  [single_translation] -> single_translation  # Unwrap single-item list
+                  _ -> text
+                end
+                Map.put(child, "text", translated)
+              _ ->
+                child
+            end
+          end)
+          Map.put(block, "children", updated_children)
+        :error -> block
+      end
     end)
   end
 end
