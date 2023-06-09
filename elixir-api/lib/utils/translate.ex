@@ -270,7 +270,7 @@ defmodule Hexerei.Translate do
       end
     end)
     |> Enum.map(fn child ->
-      if Map.has_key?(child, "text"), do: child["text"], else: nil
+      if "notranslate" in (Map.get(child, "marks", [])), do: nil, else: Map.get(child, "text")
     end)
     |> Enum.reject(&is_nil/1)
   end
@@ -284,12 +284,17 @@ defmodule Hexerei.Translate do
         {:ok, children} ->
           updated_children = Enum.map(children, fn child ->
             case child do
-              %{"text" => text} when text != nil ->
-                translated = case translation_map[text] do
-                  [single_translation] -> single_translation  # Unwrap single-item list
-                  _ -> text
+              # Check if the child is a text node and it's not marked w/ "notranslate"
+              %{"text" => text, "marks" => marks} when text != nil ->
+                if Enum.member?(marks || [], "notranslate") do
+                  child
+                else
+                  translated = case translation_map[text] do
+                    [single_translation] -> single_translation  # Unwrap single-item list
+                    _ -> text
+                  end
+                  Map.put(child, "text", translated)
                 end
-                Map.put(child, "text", translated)
               _ ->
                 child
             end

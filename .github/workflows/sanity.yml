@@ -30,7 +30,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 7
+          version: 8
           run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v3
@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-npm-
       - name: Install Dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: (cd ./sanity-cms && pnpm install --frozen-lockfile)
+        run: (cd ./sanity-cms && pnpm install)
       - name: Lint check
         run: (cd ./sanity-cms && pnpm lint)
       - name: Build for development

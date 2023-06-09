@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default (props: any) => (
-  <span style={{ backgroundColor: '#ccffcc' }}>{props.children}</span>
+  <span style={{ backgroundColor: '#ccffcc80' }}>{props.children}</span>
 );

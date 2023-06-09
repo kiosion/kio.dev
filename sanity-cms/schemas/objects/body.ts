@@ -1,10 +1,12 @@
 import HightlightRenderer from '../renderers/highlight';
+import NoTranslateRenderer from '../renderers/notranslate';
 import FootnoteRenderer from '../renderers/footnote';
 import LinkRenderer from '../renderers/link';
 import Code from '../fields/code';
 
 import { BsLink45Deg } from 'react-icons/bs';
 import { BiHighlight, BiNote } from 'react-icons/bi';
+import { HiTranslate } from 'react-icons/hi';
 
 export const CustomMarks = {
   decorators: [
@@ -18,6 +20,12 @@ export const CustomMarks = {
       value: 'highlight',
       icon: BiHighlight,
       component: HightlightRenderer
+    },
+    {
+      title: 'No translate',
+      value: 'notranslate',
+      icon: HiTranslate,
+      component: NoTranslateRenderer
     }
   ],
   annotations: [
