@@ -1,4 +1,3 @@
-import ToruSync from '$helpers/toru';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -8,8 +7,6 @@ import type { AuthorDocument } from '$types';
 export const trailingSlash = 'ignore';
 
 export const load = (async ({ url, fetch }) => {
-  ToruSync.start(fetch);
-
   const promises = await Promise.all([
     Store.findOne<AuthorDocument>(fetch, 'about')
       .then((res) => res?.data)
