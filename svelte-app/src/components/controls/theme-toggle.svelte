@@ -7,13 +7,15 @@
   import Tooltip from '$components/tooltip.svelte';
 
   import Icon from '../icon.svelte';
+
+  $: tooltipText = $theme === 'light' ? 'Use dark theme' : 'Use light theme';
 </script>
 
 <Hoverable>
-  <Tooltip text={$t('Toggle theme')} delay={150} fixed>
+  <Tooltip text={$t(tooltipText)} delay={150} fixed>
     <button
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
-      aria-label={$t('Toggle theme')}
+      aria-label={$t(tooltipText)}
       data-test-id="theme-toggle"
       data-test-state={$theme}
       tabindex="0"
@@ -23,9 +25,9 @@
       }}
     >
       {#if $theme === 'light'}
-        <Icon icon={'MoonStars'} useTransition={false} />
+        <Icon icon={'MoonStars'} />
       {:else}
-        <Icon icon={'Sun'} useTransition={false} />
+        <Icon icon={'Sun'} />
       {/if}
     </button>
   </Tooltip>
