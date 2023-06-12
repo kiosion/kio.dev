@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { quartIn, quartOut } from 'svelte/easing';
+  import { backIn, backOut } from 'svelte/easing';
 
   import { maybe } from 'svelte-maybe-transition';
 
@@ -9,7 +9,7 @@
 
   export let url: URL | undefined;
 
-  const dist = 18,
+  const dist = 16,
     duration = BASE_ANIMATION_DURATION;
 
   let navDir: 'forward' | 'backward' = 'forward';
@@ -29,14 +29,14 @@
       fn: $reduceMotion ? 'fade' : 'fly',
       delay: duration,
       duration: duration * 2,
-      easing: quartOut,
+      easing: backOut,
       y: navDir === 'backward' ? -dist : dist
     }}
     out:maybe={{
       enable: true,
       fn: $reduceMotion ? 'fade' : 'fly',
       duration,
-      easing: quartIn,
+      easing: backIn,
       y: navDir === 'backward' ? dist : -dist
     }}
   >

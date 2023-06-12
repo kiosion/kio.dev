@@ -6,7 +6,7 @@
   export let portableText: CodeBlockComponentProps;
 
   $: ({ value } = portableText);
-  $: ({ code, language } = value);
+  $: ({ code, language, filename } = value);
 </script>
 
-<CodeBlock content={code} showClipboard={true} lang={language} />
+<CodeBlock content={code} showClipboard={true} lang={language} {filename} />

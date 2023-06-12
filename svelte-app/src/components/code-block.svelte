@@ -21,6 +21,7 @@
   import Tooltip from './tooltip.svelte';
 
   export let content: string,
+    filename: string | undefined,
     showClipboard = false,
     showLineNumbers = true,
     lang: string | undefined = undefined;
@@ -128,6 +129,11 @@
   on:focusout={() => (hovered = false)}
   on:blur={() => (hovered = false)}
 >
+  {#if filename}
+    <div class="codeBlock--filename">
+      <span>{filename}</span>
+    </div>
+  {/if}
   {#if showClipboard && !$navigating}
     <Hoverable>
       <Tooltip text={$t('Copy to clipboard')} position="top">
@@ -135,7 +141,7 @@
           <button
             class="copyButton focusOutline-sm"
             on:click={() => copy()}
-            class:visible={hovered}
+            class:visible={hovered || filename}
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
           >
@@ -186,6 +192,10 @@
     }
   }
 
+  .codeBlock--filename {
+    @apply mt-0.5 border-b border-stone-400/40 pt-3 pl-5 pb-3 font-mono text-base;
+  }
+
   .codeBlock--codeContainer {
     @apply relative h-[0px] w-full overflow-hidden rounded-md text-lg transition-[height];
 
@@ -217,6 +227,10 @@
       &.active {
         @apply border-stone-500/80;
       }
+    }
+
+    .codeBlock--filename {
+      @apply border-stone-500/60;
     }
 
     .codeBlock--codeContainer .inner {
