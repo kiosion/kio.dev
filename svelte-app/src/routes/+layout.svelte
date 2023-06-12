@@ -17,6 +17,7 @@
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import ToruSync from '$lib/helpers/toru';
+  import Logger from '$lib/logger';
   import { init as initAudio } from '$lib/sfx';
   import { config } from '$stores/config';
   import Features from '$stores/features';
@@ -59,9 +60,13 @@
     checkTranslations();
 
     if (browser) {
-      ToruSync.init();
       setTimeout(() => loading.set(false), 1000);
       appLoaded = true;
+      try {
+        ToruSync.init();
+      } catch (e) {
+        Logger.error(e as string);
+      }
     }
   });
 
