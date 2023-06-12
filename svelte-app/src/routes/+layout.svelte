@@ -16,6 +16,7 @@
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
+  import ToruSync from '$lib/helpers/toru';
   import { init as initAudio } from '$lib/sfx';
   import { config } from '$stores/config';
   import Features from '$stores/features';
@@ -54,15 +55,21 @@
   ].forEach(([k, v]) => setContext(k, v));
 
   onMount(() => {
-    initAudio({ volume: 0.1 }).catch(() => undefined);
+    initAudio({ volume: 0.1 }).catch(console.error);
     checkTranslations();
+
     if (browser) {
+      ToruSync.init();
       setTimeout(() => loading.set(false), 1000);
       appLoaded = true;
     }
   });
 
-  onDestroy(() => unsubscribers.forEach((u) => u()));
+  onDestroy(() => {
+    ToruSync.stop();
+
+    unsubscribers.forEach((u) => u());
+  });
 
   export let data: LayoutData;
 

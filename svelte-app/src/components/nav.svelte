@@ -2,7 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { circInOut, circOut, quadOut } from 'svelte/easing';
   import { tweened } from 'svelte/motion';
-  import { slide } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
 
   import Breakpoints from 'svelte-breakpoints';
 
@@ -131,7 +131,9 @@
         <NavLinks />
         <div class="links-container">
           {#if $nowPlayingData}
-            <NowPlayingWidget data={$nowPlayingData} />
+            <div transition:fade>
+              <NowPlayingWidget data={$nowPlayingData} />
+            </div>
           {/if}
           <div>
             {#each socials as social}

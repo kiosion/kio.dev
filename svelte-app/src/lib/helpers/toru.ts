@@ -1,103 +1,96 @@
 import { browser } from '$app/environment';
-import { TORU_API_URL } from '$lib/consts';
+import { TORU_WS_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import { nowPlayingData } from '$stores/navigation';
 
-import type { RouteFetch } from '$types';
+type ToruData = {
+  title: string;
+  playing: boolean;
+  cover_art: {
+    mime_type: string;
+    data: string;
+  };
+  artist: string;
+  album: string;
+};
 
-type Response =
-  | {
-      status: 200;
-      data: {
-        title: string;
-        playing: boolean;
-        cover_art: {
-          mime_type: string;
-          data: string;
-        };
-        artist: string;
-        album: string;
-      };
-      message: never;
-      detail: never;
-    }
-  | {
-      status: number;
-      data: never;
-      message: string;
-      detail?: string;
-    };
+type ToruResponse = string | unknown;
 
-export type Data = Exclude<Response['data'], undefined>;
+let socketInstance: WebSocket | undefined,
+  repeat: number | NodeJS.Timer | undefined,
+  retries = 0;
 
-class ToruSync {
-  private interval: number;
+const interval = 36_000;
 
-  private repeat?: number | NodeJS.Timer;
-
-  private callback: (data: Data) => void;
-
-  private _fetch!: RouteFetch;
-
-  private lastData: Data | undefined;
-
-  constructor() {
-    this.interval = 36_000;
-    this.callback = (data: Data) => {
-      nowPlayingData.set(data);
-    };
-    this.lastData = undefined;
+const init = () => {
+  if (!browser) {
+    return;
   }
 
-  private update = async () => {
-    try {
-      const res = await this._fetch(TORU_API_URL, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+  if (socketInstance && socketInstance.readyState === WebSocket.OPEN) {
+    return;
+  }
 
-      const data = (await res.json()) as Response;
+  socketInstance = new WebSocket(TORU_WS_URL);
 
-      if (data.status !== 200) {
-        throw new Error(`${data.message}${data.detail ? `: ${data.detail}` : ''}`);
-      }
+  socketInstance.addEventListener('open', () => {
+    Logger.info('[ToruSync] Connected');
 
-      return data.data;
-    } catch (err) {
-      Logger.error('[ToruSync] Failed to load status', {}, err);
-    }
-  };
+    retries = 0;
+  });
 
-  public start(fetch: RouteFetch): void {
-    if (!browser) {
+  socketInstance.addEventListener('message', (event: MessageEvent<ToruResponse>) => {
+    if (!event.data || event.data === 'pong') {
       return;
     }
-    if (!this._fetch) {
-      this._fetch = fetch;
-      this.sync();
-    }
-  }
 
-  public stop(): void {
-    clearInterval(this.repeat);
-  }
+    try {
+      const res = JSON.parse(event.data as string) as ToruData;
 
-  private async sync(): Promise<void> {
-    if (!document?.hidden) {
-      const data = await this.update();
+      Logger.info('[ToruSync] Got update:', {}, res);
 
-      if (data && data !== this.lastData) {
-        this.lastData = data;
-        this.callback(data);
+      if (res.title || res.album || res.artist) {
+        nowPlayingData.set(res);
       }
+    } catch (err) {
+      Logger.error('[ToruSync] Failed to parse message:', {}, err as Error);
     }
+  });
 
-    this.repeat ||= setInterval(() => this.sync(), this.interval);
+  socketInstance.addEventListener('close', () => {
+    Logger.info('[ToruSync] Disconnected');
+
+    stop();
+
+    if (retries < 4) {
+      retries += 1;
+      setTimeout(() => {
+        init();
+      }, retries * 1000);
+    }
+  });
+
+  repeat = setInterval(() => {
+    if (socketInstance && socketInstance.readyState === WebSocket.OPEN) {
+      socketInstance.send('ping');
+    }
+  }, interval);
+};
+
+const stop = () => {
+  if (!browser || !socketInstance) {
+    return;
   }
-}
 
-export default new ToruSync();
+  if (repeat) {
+    clearInterval(repeat);
+  }
+
+  if (socketInstance.readyState !== WebSocket.CLOSED) {
+    socketInstance.close();
+  }
+};
+
+export default { init, stop };
+
+export type { ToruData as Data };

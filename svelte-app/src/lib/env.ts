@@ -13,6 +13,10 @@ export const REMOTE_API_BASE_URL =
 export const REMOTE_API_URL = `${REMOTE_API_BASE_URL}/api/${REMOTE_API_VERSION}`;
 export const REMOTE_CDN_URL = `${REMOTE_API_BASE_URL}/cdn`;
 
+export const TORU_WS_URL = ['production', 'backed', 'testing'].includes(ENV)
+  ? 'ws://toru.kio.dev/api/v1/ws/kiosion'
+  : 'ws://localhost:3333/api/v1/ws/kiosion';
+
 export const SELF_BASE_URL = (() => {
   switch (ENV) {
     case 'backed':
