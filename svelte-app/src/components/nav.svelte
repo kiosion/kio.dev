@@ -135,7 +135,7 @@
               <NowPlayingWidget data={$nowPlayingData} />
             </div>
           {/if}
-          <div>
+          <div class="links-inner">
             {#each socials as social}
               <NavSocial {social} />
             {/each}
@@ -220,44 +220,5 @@
     height: 0;
     left: -9999px;
     pointer-events: none;
-  }
-
-  .nav-desktop {
-    @apply my-8 flex w-fit flex-col border-r border-stone-400/50;
-
-    .nav-inner {
-      @apply flex w-56 flex-1 flex-col justify-between;
-    }
-
-    .logo-container {
-      @apply mx-auto -mt-2 mb-5 w-48;
-
-      img {
-        @apply h-full py-4 px-9;
-        filter: url(#distortion);
-      }
-    }
-    .border-line {
-      @apply inline-block bg-stone-400/50;
-      height: 1px;
-      width: calc(100% + 2.25rem);
-    }
-    .links-container {
-      @apply mx-9 flex flex-col;
-
-      div {
-        @apply flex flex-row flex-wrap items-center justify-center;
-      }
-    }
-  }
-
-  :global(.dark) {
-    .nav-desktop,
-    .border-line {
-      @apply border-stone-500/60;
-    }
-    .logo-container {
-      @apply invert;
-    }
   }
 </style>

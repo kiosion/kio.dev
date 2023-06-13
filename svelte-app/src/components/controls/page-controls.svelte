@@ -153,42 +153,4 @@
       }
     }
   }
-
-  @keyframes bounceUp {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-3px);
-    }
-    60% {
-      transform: translateY(-1.5px);
-    }
-  }
-  @keyframes bounceDown {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(3px);
-    }
-    60% {
-      transform: translateY(1.5px);
-    }
-  }
-
-  :global(.scroll-hover-up svg) {
-    animation: bounceUp 2s infinite;
-  }
-  :global(.scroll-hover-down svg) {
-    animation: bounceDown 2s infinite;
-  }
 </style>

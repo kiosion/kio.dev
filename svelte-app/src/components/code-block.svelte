@@ -141,7 +141,7 @@
       <Tooltip text={$t('Copy to clipboard')} position="top">
         {#key copied}
           <button
-            class="copyButton focusOutline-sm"
+            class="codeBlock--copyButton focusOutline-sm"
             on:click={() => copy()}
             class:visible={hovered || filename}
             in:fade={{ duration: 100, delay: 100 }}
@@ -182,102 +182,3 @@
     </div>
   </div>
 </div>
-
-<style lang="scss">
-  @import '../styles/colors';
-
-  .codeBlock--container {
-    @apply relative my-6 -mx-2 overflow-hidden rounded-md border border-stone-400/40 duration-150;
-
-    &.active {
-      @apply border-stone-400;
-    }
-  }
-
-  .codeBlock--filename {
-    @apply mt-0.5 border-b border-stone-400/40 pt-3 pl-5 pb-3 font-mono text-base;
-  }
-
-  .codeBlock--codeContainer {
-    @apply relative h-[0px] w-full overflow-hidden rounded-md text-lg transition-[height];
-
-    .inner {
-      @apply h-fit w-fit min-w-full rounded-md bg-stone-200/40 p-1 transition-all;
-
-      &.active {
-        @apply bg-stone-200/60;
-      }
-    }
-  }
-
-  .copyButton {
-    @apply absolute top-0 right-0 z-10 m-2 cursor-pointer rounded-sm p-2 text-stone-600 opacity-0 transition-opacity duration-150;
-
-    &:hover {
-      @apply text-stone-800;
-    }
-
-    &.visible {
-      @apply opacity-100;
-    }
-  }
-
-  :global(.dark) {
-    .codeBlock--container {
-      @apply border-stone-500/60;
-
-      &.active {
-        @apply border-stone-500/80;
-      }
-    }
-
-    .codeBlock--filename {
-      @apply border-stone-500/60;
-    }
-
-    .codeBlock--codeContainer .inner {
-      @apply bg-stone-800/40;
-
-      &.active {
-        @apply bg-stone-800/60;
-      }
-    }
-    .copyButton {
-      @apply text-stone-400;
-
-      &:hover {
-        @apply text-stone-200;
-      }
-    }
-  }
-
-  :global(.hljs) {
-    background-color: transparent !important;
-  }
-
-  :global(code) {
-    &,
-    &.hljs {
-      font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        'Liberation Mono', 'Courier New', monospace !important;
-      font-size: 1rem;
-      line-height: 1.2rem;
-      max-width: 100%;
-
-      & {
-        &::selection {
-          background: $violet-300 !important;
-          color: $gray-900 !important;
-        }
-      }
-    }
-  }
-
-  :global(tbody.hljs) {
-    background-color: transparent !important;
-    font-family: 'Ubuntu Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      'Liberation Mono', 'Courier New', monospace !important;
-    font-size: 1rem;
-    line-height: 1.2rem;
-  }
-</style>
