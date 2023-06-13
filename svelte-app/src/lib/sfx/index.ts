@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 
 import { browser } from '$app/environment';
-import Features from '$stores/features';
+import Settings from '$stores/settings';
 
 const imports = new Map<string, Promise<typeof import('*.wav')>>([
   ['click', import('./interface-click.wav')],
@@ -32,7 +32,7 @@ const init = async (opts?: { volume: number }): Promise<void> => {
 
 const soundsProxy = new Proxy(sounds, {
   get: (target, prop: string) => {
-    if (!browser || !get(Features.can('use sounds')) || !target.has(prop)) {
+    if (!browser || !get(Settings.sounds) || !target.has(prop)) {
       return {
         play: () => undefined
       };

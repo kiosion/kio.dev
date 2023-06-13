@@ -13,7 +13,7 @@
 
   import { navigating } from '$app/stores';
   import { t } from '$i18n';
-  import { theme } from '$stores/theme';
+  import Settings from '$stores/settings';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -50,6 +50,8 @@
       }, 1200);
     }
   };
+
+  const { theme } = Settings;
 
   const unsubscribe = theme.subscribe(async (res) => {
     if (res === 'light') {

@@ -20,8 +20,7 @@
   import Logger from '$lib/logger';
   import { init as initAudio } from '$lib/sfx';
   import { config } from '$stores/config';
-  import Features from '$stores/features';
-  import { loading, theme } from '$stores/theme';
+  import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
   import PageControls from '$components/controls/page-controls.svelte';
@@ -32,6 +31,8 @@
   import Navigation from '$components/nav.svelte';
 
   import type { LayoutData } from './$types';
+
+  const { theme, comicSans, reduceMotion } = Settings;
 
   let appLoaded: boolean,
     scrollContainer: HTMLDivElement,
@@ -46,7 +47,7 @@
       !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
     }),
     useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
-      Features.set('reduce motion', value);
+      reduceMotion?.set(value);
     })
   );
 
@@ -78,7 +79,6 @@
 
   export let data: LayoutData;
 
-  $: useComicSans = Features.can('use comic sans');
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -111,7 +111,7 @@
 <svelte:body
   use:classList={`${$theme ?? 'dark'} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${$useComicSans ? 'comicSans' : ''}`}
+  } ${$comicSans ? 'comicSans' : ''}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
 

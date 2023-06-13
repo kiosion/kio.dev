@@ -5,9 +5,11 @@
 
   import { onNav } from '$helpers/navigation';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import Features from '$stores/features';
+  import Settings from '$stores/settings';
 
   export let url: URL | undefined;
+
+  const { reduceMotion } = Settings;
 
   const dist = 16,
     duration = BASE_ANIMATION_DURATION;
@@ -16,7 +18,6 @@
 
   $: ({ pathname } = url || { pathname: '' });
   $: navDir = onNav(pathname);
-  $: reduceMotion = Features.can('reduce motion');
 </script>
 
 <!-- TODO: This method is broken (& has been for a while), see https://github.com/sveltejs/svelte/issues/6152 -->

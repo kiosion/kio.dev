@@ -1,12 +1,14 @@
 <script lang="ts">
   import { t } from '$i18n';
   import SFX from '$lib/sfx';
-  import { theme } from '$stores/theme';
+  import Settings from '$stores/settings';
 
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
   import Icon from '../icon.svelte';
+
+  const { theme } = Settings;
 
   $: tooltipText = $theme === 'light' ? 'Use dark theme' : 'Use light theme';
 </script>

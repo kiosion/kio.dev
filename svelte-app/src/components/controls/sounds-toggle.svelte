@@ -1,14 +1,15 @@
 <script lang="ts">
   import { t } from '$i18n';
   import SFX from '$lib/sfx';
-  import Features from '$stores/features';
+  import Settings from '$stores/settings';
 
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
-  $: CanUseSounds = Features.can('use sounds');
-  $: tooltipText = $CanUseSounds ? 'Disable sounds' : 'Enable sounds';
+  const { sounds } = Settings;
+
+  $: tooltipText = $sounds ? 'Disable sounds' : 'Enable sounds';
 </script>
 
 <Hoverable>
@@ -17,14 +18,14 @@
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
       aria-label={$t(tooltipText)}
       data-test-id="sfx-toggle"
-      data-test-state={$CanUseSounds ? 'on' : 'off'}
+      data-test-state={$sounds ? 'on' : 'off'}
       tabindex="0"
       on:click={() => {
-        Features.set('use sounds', $CanUseSounds ? false : true);
+        sounds.set($sounds ? false : true);
         SFX.click.play();
       }}
     >
-      {#if $CanUseSounds}
+      {#if $sounds}
         <Icon icon={'Volume2'} />
       {:else}
         <Icon icon={'VolumeX'} />

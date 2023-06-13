@@ -2,7 +2,7 @@
   import { maybe } from 'svelte-maybe-transition';
 
   import { currentLang, t } from '$i18n';
-  import Features from '$stores/features';
+  import Settings from '$stores/settings';
 
   import EmptyContent from '$components/empty-content.svelte';
   import Hoverable from '$components/hoverable.svelte';
@@ -58,7 +58,7 @@
     }
   };
 
-  $: reduceMotion = Features.can('reduce motion');
+  const { reduceMotion } = Settings;
 </script>
 
 <div class="relative ml-0 mr-2 mt-4 h-fit">

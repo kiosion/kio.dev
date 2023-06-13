@@ -57,7 +57,6 @@ export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
 }) as Omit<AppRoute, 'children'>[];
 
 export const ROUTE_ORDER = [
-  'features',
   'index',
   'about',
   'blog',
