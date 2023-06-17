@@ -12,24 +12,25 @@ defmodule Router.Api.V1.Post do
   end
 
   get "/:id" do
-    with params <- validate_query_params(
-                      Map.merge(
-                        fetch_query_params(conn).query_params,
-                        %{ "id" => conn.params["id"] }
-                      ),
-                      %{
-                        "id" => nil,
-                        "lang" => "en"
-                      }
-                    )
-    do
-      query = Query.new()
+    with params <-
+           validate_query_params(
+             Map.merge(
+               fetch_query_params(conn).query_params,
+               %{"id" => conn.params["id"]}
+             ),
+             %{
+               "id" => nil,
+               "lang" => "en"
+             }
+           ) do
+      query =
+        Query.new()
         |> Query.filter([
-          %{ "_type" => "'post'" },
+          %{"_type" => "'post'"},
           [
-            %{ "_id" => "'#{params["id"]}'" },
-            %{ "slug.current" => "'#{params["id"]}'" },
-            %{ :join => "||" }
+            %{"_id" => "'#{params["id"]}'"},
+            %{"slug.current" => "'#{params["id"]}'"},
+            %{:join => "||"}
           ]
         ])
         |> Query.project([
@@ -67,36 +68,44 @@ defmodule Router.Api.V1.Post do
         |> Query.qualify("[0]")
         |> Query.build!()
 
-        conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
-          count = case result["result"] do
+      conn
+      |> handle_sanity_fetch(query, fn conn, result, duration ->
+        count =
+          case result["result"] do
             nil -> 0
             _ -> 1
           end
 
-          transformed_result = case params["lang"] do
+        transformed_result =
+          case params["lang"] do
             "en" -> result
             "fr" -> Translate.translate(:post, result, "fr", "en")
             _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
           end
 
-          case transformed_result do
-            {:error, message} ->
-              Logger.error("Error fetching post: #{inspect(message)}")
-              result
-            _ ->
-              transformed_result
-          end
-            |> Map.put("meta", %{
-                "total" => count,
-                "count" => count,
-                "id" => if result["result"] != nil do params["id"] else nil end
-              })
-            |> Map.update("ms", duration, &(&1 + (duration - &1)))
-            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
-        end)
+        case transformed_result do
+          {:error, message} ->
+            Logger.error("Error fetching post: #{inspect(message)}")
+            result
+
+          _ ->
+            transformed_result
+        end
+        |> Map.put("meta", %{
+          "total" => count,
+          "count" => count,
+          "id" =>
+            if result["result"] != nil do
+              params["id"]
+            else
+              nil
+            end
+        })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+      end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
     end
   end
-
 end

@@ -8,29 +8,36 @@ defmodule Router.Cdn do
   use Hexerei.Response
   use Hexerei.CDNCache
 
-  plug :match
-  plug :fetch_query_params
-  plug :dispatch
+  plug(:match)
+  plug(:fetch_query_params)
+  plug(:dispatch)
 
   defp parse_url(url) do
-    [url, query] = try do
-      String.split(url, "?", parts: 2)
-    rescue
-      _ -> [url, nil]
-    end
+    [url, query] =
+      try do
+        String.split(url, "?", parts: 2)
+      rescue
+        _ -> [url, nil]
+      end
 
     asset = List.last(String.split(url, "/"))
     split_asset = String.split(asset, ".", parts: 2)
 
-    [_, filetype] = if length(split_asset) == 2 do
-      split_asset
-    else
-      [asset, nil]
-    end
+    [_, filetype] =
+      if length(split_asset) == 2 do
+        split_asset
+      else
+        [asset, nil]
+      end
 
     %{
       asset: asset,
-      query: if query == nil do "" else query end,
+      query:
+        if query == nil do
+          ""
+        else
+          query
+        end,
       filetype: filetype
     }
   end
@@ -54,28 +61,30 @@ defmodule Router.Cdn do
 
     with true <- is_binary(url_parts.filetype),
          {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string),
-         cache_result <- CDNCache.get(url)
-    do
+         cache_result <- CDNCache.get(url) do
       case cache_result do
         {:ok, value} ->
           conn
-            |> put_resp_content_type("image/#{url_parts.filetype}")
-            |> send_resp(200, value)
+          |> put_resp_content_type("image/#{url_parts.filetype}")
+          |> send_resp(200, value)
 
         _ ->
           with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- HTTPoison.get(url) do
             CDNCache.put(url, body)
 
             conn
-              |> put_resp_content_type("image/#{url_parts.filetype}")
-              |> send_resp(200, body)
+            |> put_resp_content_type("image/#{url_parts.filetype}")
+            |> send_resp(200, body)
           else
             {:ok, %HTTPoison.Response{status_code: 404}} ->
               error_res(conn, 404, "Image not found")
+
             {:ok, %HTTPoison.Response{status_code: 400}} ->
               error_res(conn, 400, "Bad request")
+
             {:ok, %HTTPoison.Response{}} ->
               error_res(conn, 500, "Something went wrong")
+
             {:error, %HTTPoison.Error{reason: reason}} ->
               error_res(conn, 500, "Something went wrong: #{reason}")
           end

@@ -5,7 +5,7 @@ defmodule Router.Api.V1 do
 
   use Router.Api.Base, auth: true, query_params: false
 
-  @query_url Hexerei.Env.get! :query_url
+  @query_url Hexerei.Env.get!(:query_url)
 
   @routes %{
     "/post" => Router.Api.V1.Post,
@@ -18,12 +18,14 @@ defmodule Router.Api.V1 do
   }
 
   for {path, handler} <- @routes do
-    forward @query_url <> path, to: handler
+    forward(@query_url <> path, to: handler)
   end
 
-  forward "/config", to: Router.Api.V1.Config
+  forward("/config", to: Router.Api.V1.Config)
 
   match _ do
-    conn |> error_res(404, "Not found", "The requested resource could not be found or does not exist") |> halt()
+    conn
+    |> error_res(404, "Not found", "The requested resource could not be found or does not exist")
+    |> halt()
   end
 end

@@ -12,17 +12,20 @@ defmodule Router.Api.V1.Tag do
   end
 
   get "/:id" do
-    with true   <- is_binary(id),
-          true   <- String.trim(id) != "",
-          params <- fetch_query_params(conn).query_params |> validate_query_params(%{ "type" => nil }),
-          true   <- params["type"] in ["post", "project"] do
-
-      query = Query.new()
-        |> Query.filter([%{
+    with true <- is_binary(id),
+         true <- String.trim(id) != "",
+         params <-
+           fetch_query_params(conn).query_params |> validate_query_params(%{"type" => nil}),
+         true <- params["type"] in ["post", "project"] do
+      query =
+        Query.new()
+        |> Query.filter([
+          %{
             "_type" => "'#{params["type"]}'"
           },
           %{
-            "references" => Query.new()
+            "references" =>
+              Query.new()
               |> Query.filter(["_type", "'tag'"])
               |> Query.filter(["slug.current", "'#{id}'"])
               |> Query.project(["_id"])
@@ -64,27 +67,30 @@ defmodule Router.Api.V1.Tag do
         ])
         |> Query.build!()
 
-      counts = Task.async(fn ->
-        conn |> handle_sanity_fetch(
-          Query.new(%{:direct_query => true})
-          |> Query.project([["'total'", "count(#{query})"]])
-          |> Query.build!(),
-          fn (_, result) -> result
+      counts =
+        Task.async(fn ->
+          conn
+          |> handle_sanity_fetch(
+            Query.new(%{:direct_query => true})
+            |> Query.project([["'total'", "count(#{query})"]])
+            |> Query.build!(),
+            fn _, result -> result end
+          )
         end)
-      end)
 
-      conn |> handle_sanity_fetch(query, fn (conn, result, duration) ->
+      conn
+      |> handle_sanity_fetch(query, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
         result
-          |> Map.put("meta", %{
-              "total" => parsed_counts["result"]["total"] || 0,
-              "count" => parsed_counts["result"]["total"] || 0,
-              "id" => id,
-              "type" => params["type"]
-            })
-          |> Map.update("ms", duration, &(&1 + (duration - &1)))
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        |> Map.put("meta", %{
+          "total" => parsed_counts["result"]["total"] || 0,
+          "count" => parsed_counts["result"]["total"] || 0,
+          "id" => id,
+          "type" => params["type"]
+        })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Missing ID or invalid type")

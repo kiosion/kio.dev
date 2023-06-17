@@ -20,17 +20,27 @@ jobs:
     name: Test
     environment: API
     runs-on: ubuntu-latest
+    env:
+      ImageOS: ubuntu22
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Elixir
-        uses: erlef/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
+          elixir-version: 1.14.0
           otp-version: 25
-          elixir-version: 1.13
           rebar3-version: 3.16
+      - name: Check formatting
+        run: (cd ./elixir-api && mix format --check-formatted)
+      - name: Restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: elixir-api/deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock')}}
+          restore-keys: ${{ runner.os }}-mix-
       - name: Install Dependencies
-        run: (cd ./elixir-api && make install)
+        run: (cd ./elixir-api && mix deps.get --only test)
       - name: Run tests
         run: |
           cd ./elixir-api &&\

@@ -12,15 +12,16 @@ defmodule Router.Api.V1.Config do
   end
 
   get "/" do
-    conn |> handle_sanity_fetch(
+    conn
+    |> handle_sanity_fetch(
       Query.new()
-        |> Query.filter([%{ "_type" => "'siteSettings'" }])
-        |> Query.qualify("[0]")
-        |> Query.build!(),
-      fn (conn, result) ->
+      |> Query.filter([%{"_type" => "'siteSettings'"}])
+      |> Query.qualify("[0]")
+      |> Query.build!(),
+      fn conn, result ->
         result
-          |> Map.delete("ms")
-          |> fn data -> conn |> json_res(200, %{code: 200, data: data }) end.()
+        |> Map.delete("ms")
+        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
       end
     )
   end

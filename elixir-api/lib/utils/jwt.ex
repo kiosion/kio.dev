@@ -7,7 +7,7 @@ defmodule Hexerei.JWT do
   # @jwt_secret Application.compile_env(:hexerei, :jwt_secret)
   @jwt_secret "1234567890"
   # Expiration time is 48 hours
-  @jwt_exp 172800
+  @jwt_exp 172_800
 
   def provision do
     jwk = %{
@@ -50,8 +50,8 @@ defmodule Hexerei.JWT do
 
   def verify_claims(%JOSE.JWT{fields: fields} = claims) do
     with %{"exp" => exp} = fields,
-        {:ok, expiration_as_datetime} = DateTime.from_unix(exp),
-        :gt <- DateTime.compare(expiration_as_datetime, DateTime.utc_now()) do
+         {:ok, expiration_as_datetime} = DateTime.from_unix(exp),
+         :gt <- DateTime.compare(expiration_as_datetime, DateTime.utc_now()) do
       {:ok, claims}
     else
       _ -> {:error, "Token has expired"}

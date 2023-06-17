@@ -6,7 +6,8 @@ defmodule ApiTest do
   @bearer Hexerei.Env.get!(:api_token)
 
   test "Get API endpoint with no auth" do
-    conn = conn(:get, "/api/v1/")
+    conn =
+      conn(:get, "/api/v1/")
       |> Hexerei.Router.call(@opts)
 
     assert conn.state == :sent
@@ -16,8 +17,10 @@ defmodule ApiTest do
 
     assert body["message"] == "Missing authorization"
   end
+
   test "Get API endpoint with auth" do
-    conn = conn(:get, "/api/v1/")
+    conn =
+      conn(:get, "/api/v1/")
       |> put_req_header("authorization", "Bearer #{@bearer}")
       |> Hexerei.Router.call(@opts)
 
@@ -26,7 +29,8 @@ defmodule ApiTest do
   end
 
   test "Get /config" do
-    conn = conn(:get, "/api/v1/config")
+    conn =
+      conn(:get, "/api/v1/config")
       |> put_req_header("authorization", "Bearer #{@bearer}")
       |> Hexerei.Router.call(@opts)
 
@@ -40,7 +44,8 @@ defmodule ApiTest do
   end
 
   test "Get /posts with default params" do
-    conn = conn(:get, "/api/v1/query/posts")
+    conn =
+      conn(:get, "/api/v1/query/posts")
       |> put_req_header("authorization", "Bearer #{@bearer}")
       |> Hexerei.Router.call(@opts)
 
@@ -56,7 +61,8 @@ defmodule ApiTest do
   end
 
   test "Get /posts with invalid params" do
-    conn = conn(:get, "/api/v1/query/posts?limit=-1")
+    conn =
+      conn(:get, "/api/v1/query/posts?limit=-1")
       |> put_req_header("authorization", "Bearer #{@bearer}")
       |> Hexerei.Router.call(@opts)
 
@@ -73,11 +79,11 @@ defmodule ApiTest do
   end
 
   test "Get all tags" do
-
   end
 
   test "Get about" do
-    conn = conn(:get, "/api/v1/query/about")
+    conn =
+      conn(:get, "/api/v1/query/about")
       |> put_req_header("authorization", "Bearer #{@bearer}")
       |> Hexerei.Router.call(@opts)
 

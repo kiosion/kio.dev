@@ -4,8 +4,8 @@ defmodule Router.Api.Base do
   """
 
   defmacro __using__(opts \\ []) do
-    auth = Keyword.get opts, :auth, false
-    qp = Keyword.get opts, :query_params, true
+    auth = Keyword.get(opts, :auth, false)
+    qp = Keyword.get(opts, :query_params, true)
 
     quote do
       use Plug.Router
@@ -21,17 +21,17 @@ defmodule Router.Api.Base do
       alias Hexerei.SanityClient.Query, as: Query
       alias Hexerei.Translate
 
-      plug :match
+      plug(:match)
 
       if unquote(auth) do
-        plug Hexerei.Plug.VerifyRequest
+        plug(Hexerei.Plug.VerifyRequest)
       end
 
       if unquote(qp) do
-        plug :fetch_query_params
+        plug(:fetch_query_params)
       end
 
-      plug :dispatch
+      plug(:dispatch)
 
       unquote(opts)
     end

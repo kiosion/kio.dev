@@ -12,18 +12,19 @@ defmodule Router.Api.V1.Tags do
   end
 
   get "/" do
-    with params <- fetch_query_params(conn).query_params
-                      |> validate_query_params(%{
-                          "type" => nil,
-                          "limit" => 10,
-                          "skip" => 0,
-                          "s" => "title",
-                          "o" => "asc"
-                        })
-                      |> params_to_integer([:limit, :skip]),
-          true   <- params["limit"] >= 0 and params["skip"] >= 0
-    do
-      query = Query.new()
+    with params <-
+           fetch_query_params(conn).query_params
+           |> validate_query_params(%{
+             "type" => nil,
+             "limit" => 10,
+             "skip" => 0,
+             "s" => "title",
+             "o" => "asc"
+           })
+           |> params_to_integer([:limit, :skip]),
+         true <- params["limit"] >= 0 and params["skip"] >= 0 do
+      query =
+        Query.new()
         |> Query.filter(%{"_type" => "'tag'"})
         |> Query.project([
           "_id",
@@ -34,51 +35,58 @@ defmodule Router.Api.V1.Tags do
           "slug"
         ])
 
-      query = case params["type"] do
-        nil ->
-          query
-        _ ->
-          query |> Query.project([
-            [
-              "'referencedBy'",
-              Query.new()
+      query =
+        case params["type"] do
+          nil ->
+            query
+
+          _ ->
+            query
+            |> Query.project([
+              [
+                "'referencedBy'",
+                Query.new()
                 |> Query.filter([
-                    %{"_type" => "'#{params["type"]}'"},
-                    %{"references" => "^._id", :nest => true}
-                  ])
+                  %{"_type" => "'#{params["type"]}'"},
+                  %{"references" => "^._id", :nest => true}
+                ])
                 |> Query.project([
                   "_id"
                 ])
                 |> Query.build!()
-            ]
-          ])
-      end
+              ]
+            ])
+        end
 
-      query_limited = query
+      query_limited =
+        query
         |> Query.limit({params["skip"], params["limit"]})
         |> Query.order("#{params["s"]} #{params["o"]}")
         |> Query.build!()
 
       query = query |> Query.build!()
 
-      counts = Task.async(fn ->
-        conn |> handle_sanity_fetch(document_counts_query(query, query_limited), fn (_, result) ->
-          result
+      counts =
+        Task.async(fn ->
+          conn
+          |> handle_sanity_fetch(document_counts_query(query, query_limited), fn _, result ->
+            result
+          end)
         end)
-      end)
 
-      conn |> handle_sanity_fetch(query_limited, fn (conn, result, duration) ->
-          parsed_counts = Task.await(counts)
+      conn
+      |> handle_sanity_fetch(query_limited, fn conn, result, duration ->
+        parsed_counts = Task.await(counts)
 
-          result
-            |> Map.put("meta", %{
-                "total" => parsed_counts["result"]["total"],
-                "count" => parsed_counts["result"]["count"],
-                "sort" => params["s"],
-                "order" => params["o"]
-              })
-            |> Map.update("ms", duration, &(&1 + (duration - &1)))
-            |> fn data -> conn |> json_res(200, %{code: 200, data: data}) end.()
+        result
+        |> Map.put("meta", %{
+          "total" => parsed_counts["result"]["total"],
+          "count" => parsed_counts["result"]["count"],
+          "sort" => params["s"],
+          "order" => params["o"]
+        })
+        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
       end)
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")

@@ -13,7 +13,7 @@ defmodule Hexerei.Router do
   @spec div_sub(integer, integer) :: tuple
   defp div_sub(upt, divisor) do
     result = upt |> div(divisor)
-    upt = upt - (result * divisor)
+    upt = upt - result * divisor
     {result, upt}
   end
 
@@ -28,12 +28,13 @@ defmodule Hexerei.Router do
     {hours, upt} = div_sub(upt, hours_in_ms)
     {minutes, upt} = div_sub(upt, minutes_in_ms)
 
-    seconds = upt
-    |> div(seconds_in_ms)
-    |> round()
-    |> Kernel.+(Kernel.round(Enum.random(-5..5)))
-    |> Kernel.rem(60)
-    |> Kernel.max(0)
+    seconds =
+      upt
+      |> div(seconds_in_ms)
+      |> round()
+      |> Kernel.+(Kernel.round(Enum.random(-5..5)))
+      |> Kernel.rem(60)
+      |> Kernel.max(0)
 
     %{
       :days => days,
@@ -62,25 +63,29 @@ defmodule Hexerei.Router do
 
   get "/info" do
     # Call memsup with Kernel.then since it's not synchronous
-    mem = :memsup.get_system_memory_data()
-    |> Kernel.then(fn data ->
-      %{
-        :total => Kernel.round(data[:system_total_memory] / 1024 / 1024 / 128),
-        :free => Kernel.round(data[:free_memory] / 1024 / 1024 / 128),
-        :used => Kernel.round((data[:system_total_memory] - data[:free_memory]) / 1024 / 1024 / 128),
-      }
-    end)
+    mem =
+      :memsup.get_system_memory_data()
+      |> Kernel.then(fn data ->
+        %{
+          :total => Kernel.round(data[:system_total_memory] / 1024 / 1024 / 128),
+          :free => Kernel.round(data[:free_memory] / 1024 / 1024 / 128),
+          :used =>
+            Kernel.round((data[:system_total_memory] - data[:free_memory]) / 1024 / 1024 / 128)
+        }
+      end)
 
-    sanity = with {:ok, result} <- Hexerei.SanityClient.fetch("{ 'total': count(*[_type == 'post']) }") do
-      result = Poison.decode!(result)
-      if result["result"]["total"] != nil do
-        true
+    sanity =
+      with {:ok, result} <- Hexerei.SanityClient.fetch("{ 'total': count(*[_type == 'post']) }") do
+        result = Poison.decode!(result)
+
+        if result["result"]["total"] != nil do
+          true
+        else
+          false
+        end
       else
-        false
+        _ -> false
       end
-    else
-      _ -> false
-    end
 
     upt = System.system_time(:millisecond) - Hexerei.Env.get!(:started_at)
     elixir = to_string(System.version())
@@ -93,23 +98,34 @@ defmodule Hexerei.Router do
     statusInfo = %{
       "status" => %{
         "self" => "ok",
-        "sanity" => if sanity do "ok" else "error" end,
+        "sanity" =>
+          if sanity do
+            "ok"
+          else
+            "error"
+          end
       },
       "runtime" => %{
         "self" => "#{app_name} v#{app_version}",
         "elixir" => elixir,
-        "otp" => otp,
+        "otp" => otp
       },
       "usage" => "#{Map.get(mem, :used)}/#{Map.get(mem, :total)} MB",
-      "uptime" => "#{app_uptime.days}d #{app_uptime.hours}h #{app_uptime.minutes}m #{app_uptime.seconds}s"
+      "uptime" =>
+        "#{app_uptime.days}d #{app_uptime.hours}h #{app_uptime.minutes}m #{app_uptime.seconds}s"
     }
 
-    conn |> json_res(200, %{code: 200, data: statusInfo })
+    conn |> json_res(200, %{code: 200, data: statusInfo})
   end
 
   # Fallback route
   match _ do
-    conn |> error_res(404, "Not Found", "Resource not found or method not allowed: #{conn.method} #{conn.request_path}")
+    conn
+    |> error_res(
+      404,
+      "Not Found",
+      "Resource not found or method not allowed: #{conn.method} #{conn.request_path}"
+    )
   end
 
   # Error handling

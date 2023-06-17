@@ -17,21 +17,24 @@ defmodule Hexerei.MixProject do
 
   def application do
     [
-      extra_applications: case @lr_enabled do
-        true ->
-          [
-            :logger,
-            :runtime_tools,
-            :os_mon
-          ]
-        _ ->
-          [
-            :logger,
-            :os_mon
-          ]
-      end,
+      extra_applications:
+        case @lr_enabled do
+          true ->
+            [
+              :logger,
+              :runtime_tools,
+              :os_mon
+            ]
+
+          _ ->
+            [
+              :logger,
+              :os_mon
+            ]
+        end,
       mod: {
-        Hexerei.Application, []
+        Hexerei.Application,
+        []
       }
     ]
   end
@@ -64,6 +67,7 @@ defmodule Hexerei.MixProject do
           {:exsync, "~> 0.2"},
           {:file_system, "~> 0.2"}
         ]
+
       _ ->
         [
           {:plug_cowboy, "~> 2.5"},

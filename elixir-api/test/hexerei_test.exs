@@ -6,7 +6,8 @@ defmodule HexereiTest do
   @bearer Hexerei.Env.get!(:api_token)
 
   test "GET /" do
-    conn = conn(:get, "/")
+    conn =
+      conn(:get, "/")
       |> Hexerei.Router.call(@opts)
 
     assert conn.state == :sent

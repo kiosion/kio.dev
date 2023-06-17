@@ -25,6 +25,7 @@ defmodule Hexerei.Utils do
 
   def params_to_integer(params, keys \\ [:limit, :skip]) do
     keys = Enum.map(keys, &to_string/1)
+
     Enum.reduce(params, %{}, fn {key, value}, acc ->
       if key in keys do
         if value != nil and not is_integer(value) do
@@ -40,6 +41,7 @@ defmodule Hexerei.Utils do
 
   def empty_to_nil(params, keys \\ [:date]) do
     keys = Enum.map(keys, &to_string/1)
+
     Enum.reduce(params, %{}, fn {key, value}, acc ->
       if key in keys do
         if value == "" do
