@@ -6,4 +6,4 @@
   $: ({ value: _value } = portableText);
 </script>
 
-<p class="my-4 leading-[1.4]"><slot /></p>
+<p class="my-4 leading-[1.5]"><slot /></p>

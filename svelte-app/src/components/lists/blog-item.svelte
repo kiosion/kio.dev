@@ -43,7 +43,7 @@
 
 <Hoverable bind:hovered>
   <a
-    class="justify-stretch flex h-fit w-full flex-col items-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
+    class="flex h-fit w-full flex-col items-stretch justify-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
       position
     )} {hovered
       ? 'border-stone-400/80 bg-stone-200/80 dark:border-stone-500/80 dark:bg-stone-700/20'
@@ -58,7 +58,7 @@
     on:keydown={onKey}
   >
     <h1
-      class="w-full text-ellipsis font-display text-xl font-bold decoration-[2px] underline-offset-[3px] line-clamp-1 {hovered
+      class="line-clamp-1 w-full text-ellipsis font-display text-xl font-bold decoration-[2px] underline-offset-[3px] {hovered
         ? 'underline'
         : ''}"
     >
@@ -66,7 +66,7 @@
     </h1>
     {#if post.desc}
       <p
-        class="my-0.5 mr-4 w-fit overflow-hidden text-ellipsis font-sans text-base text-stone-700 line-clamp-1 dark:text-stone-200 md:line-clamp-2"
+        class="my-0.5 mr-4 line-clamp-1 w-fit overflow-hidden text-ellipsis font-sans text-base text-stone-700 dark:text-stone-200 md:line-clamp-2"
       >
         {post.desc}
       </p>

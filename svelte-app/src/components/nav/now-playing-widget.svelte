@@ -73,11 +73,11 @@
 
       .text {
         &-title {
-          @apply font-bold leading-tight line-clamp-2;
+          @apply line-clamp-2 font-bold leading-tight;
           font-size: 13px;
         }
         &-sub {
-          @apply -mt-0.5 leading-tight line-clamp-2;
+          @apply -mt-0.5 line-clamp-2 leading-tight;
           font-size: 11px;
         }
       }

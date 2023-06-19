@@ -3,8 +3,10 @@ export const LOG_DIR = '$logs';
 export const LIGHT_THEME = 'light';
 export const DARK_THEME = 'dark';
 
-export const APP_LANGS = ['en' as const, 'fr' as const];
+export const APP_LANGS = ['en', 'fr'] as const;
 export const DEFAULT_APP_LANG = 'en';
+
+export const VALID_DOC_TYPES = ['post', 'project', 'tag', 'about', 'config'] as const;
 
 interface AppRoute {
   name: string;

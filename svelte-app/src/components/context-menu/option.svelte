@@ -45,7 +45,7 @@
         <Icon {icon} />
       </div>
       <p
-        class="mr-2 w-fit max-w-full overflow-ellipsis break-all font-sans text-base line-clamp-1"
+        class="mr-2 line-clamp-1 w-fit max-w-full overflow-ellipsis break-all font-sans text-base"
       >
         {text}
       </p>

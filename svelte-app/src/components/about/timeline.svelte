@@ -108,12 +108,12 @@
                   tabindex={0}
                   role="button"
                 >
-                  <div class="select-none font-sans text-base font-bold line-clamp-1">
+                  <div class="line-clamp-1 select-none font-sans text-base font-bold">
                     {item.title}
                   </div>
                   {#if item.subtitle}
                     <div
-                      class="mt-1 select-none font-sans text-base italic text-gray-700 line-clamp-1 dark:text-gray-200"
+                      class="mt-1 line-clamp-1 select-none font-sans text-base italic text-gray-700 dark:text-gray-200"
                     >
                       {item.subtitle}
                     </div>
@@ -139,7 +139,7 @@
                           classes="my-2 select-none"
                         />
                       {/if}
-                      <div class="mt-4 -mb-5">
+                      <div class="-mb-5 mt-4">
                         <PortableText text={item.body} />
                       </div>
                     </div>

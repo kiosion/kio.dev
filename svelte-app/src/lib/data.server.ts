@@ -60,12 +60,15 @@ const normalize = (data: ResponseOrError) => {
   normalized.meta = {} as Normalized['meta'];
   resData?.meta && (normalized.meta = { ...resData.meta });
 
-  Object.keys(resData).forEach((key) => {
-    if (!['result', 'meta'].includes(key)) {
-      (normalized.meta as ResData['meta'] & { [key: string]: unknown })[key] =
-        resData[key];
+  const keys = Object.keys(resData);
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    if (['result', 'meta'].includes(key)) {
+      continue;
     }
-  });
+    (normalized.meta as ResData['meta'] & { [key: string]: unknown })[key] = resData[key];
+  }
 
   !['development', 'backed', 'test'].includes(ENV) &&
     normalized.meta?.query &&
