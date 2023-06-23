@@ -106,8 +106,8 @@ devDependencies:
     specifier: ^5.57.0
     version: 5.57.0(eslint@8.32.0)(typescript@5.1.3)
   '@vitest/ui':
-    specifier: ^0.32.0
-    version: 0.32.0(vitest@0.32.0)
+    specifier: ^0.32.2
+    version: 0.32.2(vitest@0.32.0)
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.14)
@@ -260,7 +260,7 @@ devDependencies:
     version: 0.0.2(vite@4.2.0)
   vitest:
     specifier: ^0.32.0
-    version: 0.32.0(@vitest/ui@0.32.0)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3)
+    version: 0.32.0(@vitest/ui@0.32.2)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3)
 
 packages:
 
@@ -3612,25 +3612,33 @@ packages:
       tinyspy: 2.1.0
     dev: true
 
-  /@vitest/ui@0.32.0(vitest@0.32.0):
-    resolution: {integrity: sha512-55gugh6+owrOqW83RCgLm9q+o3SlzvFVgl1lyfnr0WB8ABxLoM+3pgusEjosscgEYGzTjTXaZY6xLd4qlfH/RQ==}
+  /@vitest/ui@0.32.2(vitest@0.32.0):
+    resolution: {integrity: sha512-N5JKftnB8qzKFtpQC5OcUGxYTLo6wiB/95Lgyk6MF52t74Y7BJOWbf6EFYhXqt9J0MSbhOR2kapq+WKKUGDW0g==}
     peerDependencies:
       vitest: '>=0.30.1 <1'
     dependencies:
-      '@vitest/utils': 0.32.0
+      '@vitest/utils': 0.32.2
       fast-glob: 3.2.12
       fflate: 0.7.4
       flatted: 3.2.7
       pathe: 1.1.0
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 0.32.0(@vitest/ui@0.32.0)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3)
+      vitest: 0.32.0(@vitest/ui@0.32.2)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
   /@vitest/utils@0.32.0:
     resolution: {integrity: sha512-53yXunzx47MmbuvcOPpLaVljHaeSu1G2dHdmy7+9ngMnQIkBQcvwOcoclWFnxDMxFbnq8exAfh3aKSZaK71J5A==}
     dependencies:
       concordance: 5.0.4
+      loupe: 2.3.6
+      pretty-format: 27.5.1
+    dev: true
+
+  /@vitest/utils@0.32.2:
+    resolution: {integrity: sha512-lnJ0T5i03j0IJaeW73hxe2AuVnZ/y1BhhCOuIcl9LIzXnbpXJT9Lrt6brwKHXLOiA7MZ6N5hSJjt0xE1dGNCzQ==}
+    dependencies:
+      diff-sequences: 29.4.3
       loupe: 2.3.6
       pretty-format: 27.5.1
     dev: true
@@ -5628,6 +5636,11 @@ packages:
 
   /didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
+    dev: true
+
+  /diff-sequences@29.4.3:
+    resolution: {integrity: sha512-ofrBgwpPhCD85kMKtE9RYFFq6OC1A89oW2vvgWZNCwxrUpRUILopY7lsYyMDSjc8g6U6aiO0Qubg6r4Wgt5ZnA==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dev: true
 
   /diff@4.0.2:
@@ -12520,7 +12533,7 @@ packages:
       vite: 4.2.0(@types/node@20.2.1)(sass@1.58.3)(terser@5.16.3)
     dev: true
 
-  /vitest@0.32.0(@vitest/ui@0.32.0)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3):
+  /vitest@0.32.0(@vitest/ui@0.32.2)(jsdom@21.1.2)(sass@1.58.3)(terser@5.16.3):
     resolution: {integrity: sha512-SW83o629gCqnV3BqBnTxhB10DAwzwEx3z+rqYZESehUB+eWsJxwcBQx7CKy0otuGMJTYh7qCVuUX23HkftGl/Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -12558,7 +12571,7 @@ packages:
       '@vitest/runner': 0.32.0
       '@vitest/snapshot': 0.32.0
       '@vitest/spy': 0.32.0
-      '@vitest/ui': 0.32.0(vitest@0.32.0)
+      '@vitest/ui': 0.32.2(vitest@0.32.0)
       '@vitest/utils': 0.32.0
       acorn: 8.8.2
       acorn-walk: 8.2.0
