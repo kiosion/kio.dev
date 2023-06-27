@@ -9,7 +9,6 @@ on:
       - '**/.husky'
       - 'sanity-cms/**'
       - 'svelte-app/**'
-      - 'express-api/**'
 
 concurrency: 
   group: api
@@ -45,65 +44,66 @@ jobs:
         run: |
           cd ./elixir-api &&\
           touch ./.env &&\
+          echo "export PORT=4444" >> .env &&\
           echo "export SANITY_TOKEN=${{ secrets.SANITY_TOKEN }}" >> .env &&\
           echo "export SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}" >> .env &&\
           echo "export API_TOKEN=${{ secrets.DEV_API_TOKEN }}" >> .env &&\
           make test
 
-  build-dev:
-    name: Build Development
+  build:
+    name: Build and Push
     environment: API
     needs: [ test ]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [ dev, prod ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build for development
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-          API_TOKEN: ${{ secrets.DEV_API_TOKEN }}
-          GCLOUD_KEY: ${{ secrets.DEV_GCLOUD_KEY }}
-        run: cd ./elixir-api && make prod-dev
-
-  deploy-dev:
-    name: Deploy Development
-    environment: API
-    needs: [ test, build-dev ]
-    runs-on: self-hosted
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to GCP Artifact Registry
+        uses: docker/login-action@v1
+        with:
+          registry: us-central1-docker.pkg.dev
+          username: _json_key
+          password: ${{ secrets.GCP_AR_PRIVATE_KEY }}
+      - name: Set API token
+        id: apitoken
+        run: |
+          if [[ "${{ matrix.environment }}" == "dev" ]]; then
+            echo "::set-output name=token::${{ secrets.DEV_API_TOKEN }}"
+          else
+            echo "::set-output name=token::${{ secrets.API_TOKEN }}"
+          fi
+      - name: Build and Push ${{ matrix.environment }} image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./elixir-api
+          push: true
+          tags: |
+            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-${{ github.sha }}
+            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-latest
+          build-args: |
+            SANITY_TOKEN=${{ secrets.SANITY_TOKEN }}
+            SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
+            API_TOKEN=${{ steps.apitoken.outputs.token }}
+            ENV=${{ matrix.environment }}
+            GCLOUD_KEY=${{ secrets.GCLOUD_KEY }}
+  deploy:
+    name: Deploy
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [ dev, prod ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Deploy to development
-        run: cd ./elixir-api && make run-prod-dev
-      - name: Status check
-        run: sleep 15 && docker ps | grep hexerei:dev || exit 1
-
-  build-prod:
-    name: Build Production
-    environment: API
-    needs: [ test, deploy-dev ]
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build for production
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-          GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
-        run: cd ./elixir-api && make prod
-
-  deploy-prod:
-    name: Deploy Production
-    environment: API
-    needs: [ test, build-prod ]
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Deploy to production
-        run: cd ./elixir-api && make run-prod
-      - name: Status check
-        run: sleep 15 && docker ps | grep hexerei:prod || exit 1
+      - name: Setup GCloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.1
+        with:
+          service_account_key: ${{ secrets.GCP_CR_PRIVATE_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      - name: Deploy ${{ matrix.environment }} to Cloud Run
+        run: |
+          gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-latest --region us-central1 --platform managed

@@ -1,7 +1,7 @@
 import Mix.Config
 
 config :hexerei,
-  port: {"PORT", "4444", :int},
+  port: {"PORT", :system},
   api_token: {"DEV_API_TOKEN", "1234567890"},
   sanity_project_id: {"SANITY_PROJECT_ID", :system},
   sanity_dataset: {"SANITY_DATASET", "dev"},

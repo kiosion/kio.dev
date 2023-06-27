@@ -1,7 +1,7 @@
 import Mix.Config
 
 config :hexerei,
-  port: {"PORT", "4000", :int},
+  port: {"PORT", :system},
   # TODO: Oauth bearer instead of hardcoded token
   api_token: {"API_TOKEN", "{{API_TOKEN}}"},
   sanity_project_id: {"SANITY_PROJECT_ID", "{{SANITY_PROJECT_ID}}"},

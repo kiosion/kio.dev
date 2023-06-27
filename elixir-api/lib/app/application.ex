@@ -13,7 +13,7 @@ defmodule Hexerei.Application do
         scheme: :http,
         plug: Hexerei.Router,
         options: [
-          port: port()
+          port: String.to_integer(port())
           # ip: {127, 0, 0, 1},
           # Explicitly specify IPv4 using :inet, IPv6 using :inet6
           # net: :inet
