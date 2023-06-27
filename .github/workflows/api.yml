@@ -83,8 +83,8 @@ jobs:
           context: ./elixir-api
           push: true
           tags: |
-            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-${{ github.sha }}
-            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-latest
+            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:${{ github.sha }}
+            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest
           build-args: |
             SANITY_TOKEN=${{ secrets.SANITY_TOKEN }}
             SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
@@ -106,4 +106,4 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       - name: Deploy ${{ matrix.environment }} to Cloud Run
         run: |
-          gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei:${{ matrix.environment }}-latest --region us-central1 --platform managed
+          gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest --region us-central1 --platform managed
