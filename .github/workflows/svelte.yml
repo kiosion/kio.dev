@@ -49,6 +49,7 @@ jobs:
   tests:
     name: Tests
     uses: ./.github/workflows/test.yml
+    secrets: inherit
   deploy:
     name: Deploy
     needs: [ lint, tests ]

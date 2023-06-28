@@ -19,6 +19,7 @@
   import ToruSync from '$lib/helpers/toru';
   import Logger from '$lib/logger';
   import { init as initAudio } from '$lib/sfx';
+  import { createExponentialBackoffStrategy } from '$lib/try-fetch';
   import { config } from '$stores/config';
   import Settings, { loading } from '$stores/settings';
 
@@ -39,8 +40,11 @@
     pageContainer: HTMLDivElement,
     preloadUrls = ['/assets/logo-text--short.webp'],
     unsubscribers = [] as Unsubscriber[],
-    invalidateAttempts = 0,
-    invalidationTimeout: ReturnType<typeof setTimeout> | undefined;
+    invalidationStrategy = createExponentialBackoffStrategy({
+      maxRetries: 5,
+      baseDelay: 1000,
+      onAttempt: invalidateAll
+    });
 
   unsubscribers.push(
     navigating.subscribe((res) => {
@@ -87,19 +91,7 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser &&
-    (!data.author || !get(config)?.data) &&
-    (() => {
-      if (invalidateAttempts > 10 || invalidationTimeout !== undefined) {
-        return;
-      }
-
-      invalidateAttempts++;
-      invalidationTimeout = setTimeout(() => {
-        invalidateAll();
-        invalidationTimeout = undefined;
-      }, (1500 * invalidateAttempts) / 2);
-    })();
+  $: browser && (!data.author || !get(config)?.data) && invalidationStrategy();
 </script>
 
 <svelte:head>
@@ -121,7 +113,7 @@
 
 {#if !$isDesktop && $loading}
   <span
-    class="fixed top-0 left-0 z-[50] h-[3px] w-[100vw]"
+    class="fixed left-0 top-0 z-[50] h-[3px] w-[100vw]"
     in:fade={{ duration: 50 }}
     out:fade={{ duration: 50, delay: 750 }}
   >
