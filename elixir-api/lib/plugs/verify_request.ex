@@ -33,6 +33,12 @@ defmodule Hexerei.Plug.VerifyRequest do
     end
   end
 
+  defp verify_request({conn, _invalid}) do
+    conn
+    |> error_res(401, "Invalid authorization")
+    |> halt()
+  end
+
   defp verify_request({conn}) do
     conn
     |> error_res(401, "Missing authorization")

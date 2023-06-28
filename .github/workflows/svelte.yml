@@ -47,7 +47,7 @@ jobs:
       - name: Run lint check
         run: make lint
   tests:
-    name: Run tests
+    name: Tests
     uses: ./.github/workflows/test.yml
   deploy:
     name: Deploy
