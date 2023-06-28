@@ -131,7 +131,7 @@
         <NavLinks />
         <div class="links-container">
           {#if $nowPlayingData}
-            <div transition:fade>
+            <div in:fade>
               <NowPlayingWidget data={$nowPlayingData} />
             </div>
           {/if}

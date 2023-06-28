@@ -100,7 +100,7 @@
       @apply -mt-2;
     }
     &.mobile {
-      @apply mx-auto w-fit;
+      @apply -ml-10 w-fit;
 
       &.first {
         @apply mt-4;
