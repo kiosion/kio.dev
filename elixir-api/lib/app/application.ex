@@ -5,7 +5,8 @@ defmodule Hexerei.Application do
 
   @impl true
   def start(_type, _args) do
-    Logger.info("Starting Hexerei")
+    port = port()
+    Logger.info("Starting Hexerei on port #{port}")
 
     children = [
       {
@@ -13,7 +14,7 @@ defmodule Hexerei.Application do
         scheme: :http,
         plug: Hexerei.Router,
         options: [
-          port: String.to_integer(port())
+          port: port
           # ip: {127, 0, 0, 1},
           # Explicitly specify IPv4 using :inet, IPv6 using :inet6
           # net: :inet
@@ -64,7 +65,6 @@ defmodule Hexerei.Application do
     case start_res do
       {:ok, pid} ->
         Logger.info("Started Hexerei")
-        Logger.info("Listening on port #{port()}")
         {:ok, pid}
 
       {:error, reason} ->
@@ -73,5 +73,20 @@ defmodule Hexerei.Application do
     end
   end
 
-  defp port, do: Hexerei.Env.get!(:port)
+  defp port() do
+    case Hexerei.Env.get!(:port) do
+      var when is_integer(var) ->
+        var
+
+      var when is_binary(var) ->
+        String.to_integer(var)
+
+      nil ->
+        Logger.warn("No port specified, falling back to 8080")
+        8080
+
+      var ->
+        raise "Invalid port data type: #{inspect(var)}"
+    end
+  end
 end

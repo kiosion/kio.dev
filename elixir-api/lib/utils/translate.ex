@@ -15,7 +15,11 @@ defmodule Hexerei.Translate do
 
   defp send_request(body) do
     with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
-           HTTPoison.post(req_url(), body, []) do
+           Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).post(
+             req_url(),
+             body,
+             []
+           ) do
       try do
         {:ok, parsed_body} = Poison.decode(body)
         {:ok, parsed_body["data"]["translations"] |> Enum.map(& &1["translatedText"])}

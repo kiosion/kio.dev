@@ -18,12 +18,12 @@ prod: # Run docker build for 'production' dataset
 run: SHELL:=/bin/bash
 run: # Run docker container for 'production' dataset build
 	@docker stop hexerei-prod > /dev/null || true && docker rm -f hexerei-prod > /dev/null || true
-	@docker run --dns 8.8.8.8 --dns 8.8.4.4 -p 4000:4000 -it -d --name hexerei-prod --restart=always hexerei:prod
+	@docker run --dns 8.8.8.8 --dns 8.8.4.4 -p 8080:8080 -it -d --name hexerei-prod --restart=always hexerei:prod
 
 test: SHELL:=/bin/bash
 test: install
 test:
-	@. .env && MIX_ENV=test mix test ./test/hexerei_test.exs ./test/api_test.exs ./test/query_test.exs
+	@. .env && MIX_ENV=test mix test
 
 cleanup: SHELL:=/bin/bash
 cleanup:

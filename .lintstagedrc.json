@@ -1,4 +1,7 @@
 {
+  "elixir-api/**/*.{ex,exs}": [
+    "mix format"
+  ],
   "sanity-cms/**/*.{ts,js}": [
     "./sanity-cms/node_modules/.bin/prettier --write"
   ],

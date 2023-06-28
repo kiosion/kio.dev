@@ -5,8 +5,20 @@ defmodule Hexerei.Env do
   @spec get!(atom()) :: term()
   def get!(key), do: resolve(Application.fetch_env!(:hexerei, key))
 
+  @doc """
+  Get a variable from System / Application env and ensure the type.
+  """
+  @spec get(atom(), term()) :: term()
+  def get(key, default \\ nil) do
+    case Application.fetch_env(:hexerei, key) do
+      {:ok, value} -> resolve(value)
+      :error -> default
+    end
+  end
+
   defp resolve({var, :boolean}), do: System.get_env(var) == "true"
   defp resolve({var, :system}), do: System.get_env(var)
+  defp resolve({var, :system, :int}), do: resolve({var, :system}) |> parse_int(nil)
   defp resolve({var, default}), do: System.get_env(var) || default
   defp resolve({var, default, :int}), do: resolve({var, default}) |> parse_int(default)
 

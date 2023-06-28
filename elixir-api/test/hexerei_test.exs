@@ -3,7 +3,6 @@ defmodule HexereiTest do
   use Plug.Test
 
   @opts Hexerei.Router.init([])
-  @bearer Hexerei.Env.get!(:api_token)
 
   test "GET /" do
     conn =

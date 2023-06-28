@@ -1,8 +1,6 @@
 defmodule Hexerei.MixProject do
   use Mix.Project
 
-  @lr_enabled System.get_env("LIVE_RELOAD", "false") == "true"
-
   def project do
     [
       app: :hexerei,
@@ -17,21 +15,11 @@ defmodule Hexerei.MixProject do
 
   def application do
     [
-      extra_applications:
-        case @lr_enabled do
-          true ->
-            [
-              :logger,
-              :runtime_tools,
-              :os_mon
-            ]
-
-          _ ->
-            [
-              :logger,
-              :os_mon
-            ]
-        end,
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :os_mon
+      ],
       mod: {
         Hexerei.Application,
         []
@@ -56,26 +44,16 @@ defmodule Hexerei.MixProject do
   end
 
   defp deps do
-    case @lr_enabled do
-      true ->
-        [
-          {:plug_cowboy, "~> 2.5"},
-          {:poison, "~> 3.1"},
-          {:httpoison, "~> 1.8"},
-          {:cli_spinners, "~> 0.1.0"},
-          {:jose, "~> 1.10.1"},
-          {:exsync, "~> 0.2"},
-          {:file_system, "~> 0.2"}
-        ]
-
-      _ ->
-        [
-          {:plug_cowboy, "~> 2.5"},
-          {:poison, "~> 3.1"},
-          {:httpoison, "~> 1.8"},
-          {:cli_spinners, "~> 0.1.0"},
-          {:jose, "~> 1.10.1"}
-        ]
-    end
+    [
+      {:cli_spinners, "~> 0.1.0"},
+      {:exsync, "~> 0.2", only: :dev},
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false},
+      {:file_system, "~> 0.2", only: :dev},
+      {:httpoison, "~> 1.8"},
+      {:jose, "~> 1.10.1"},
+      {:mox, "~> 1.0", only: :test},
+      {:plug_cowboy, "~> 2.5"},
+      {:poison, "~> 3.1"}
+    ]
   end
 end

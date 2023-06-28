@@ -76,7 +76,10 @@ defmodule Hexerei.SanityClient do
 
       Logger.info("Sanity Client: Sending GET request to #{url}")
 
-      case HTTPoison.get(url, get_headers()) do
+      case Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).get(
+             url,
+             get_headers()
+           ) do
         {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
           {:ok, body}
 
