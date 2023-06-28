@@ -11,6 +11,7 @@ config :hexerei,
   query_url: {"QUERY_URL", "query/"},
   sanity_apicdn: {"SANITY_APICDN", "true", :boolean},
   gcloud_key: {"GCLOUD_KEY", "{{GCLOUD_KEY}}"},
+  redis_uri: {"REDIS_URI", :system},
   app_env: {"APP_ENV", "prod"}
 
 config :os_mon,

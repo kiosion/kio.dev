@@ -7,9 +7,10 @@ install:
 	@mix deps.get > /dev/null
 
 dev: SHELL:=/bin/bash
-dev: install
+dev: start-redis install
 dev:
 	@. .env && MIX_ENV=dev mix run --no-halt
+	@make stop-redis
 
 prod: SHELL:=/bin/bash
 prod: # Run docker build for 'production' dataset
@@ -19,6 +20,14 @@ run: SHELL:=/bin/bash
 run: # Run docker container for 'production' dataset build
 	@docker stop hexerei-prod > /dev/null || true && docker rm -f hexerei-prod > /dev/null || true
 	@docker run --dns 8.8.8.8 --dns 8.8.4.4 -p 4000:4000 -it -d --name hexerei-prod --restart=always hexerei:prod
+
+start-redis: SHELL:=/bin/bash
+start-redis: # Run a local Redis instance for dev
+	@docker run --name hexerei-redis -p 6379:6379 -d redis:alpine || true
+
+stop-redis: SHELL:=/bin/bash
+stop-redis:
+	@docker rm -f hexerei-redis > /dev/null || true
 
 test: SHELL:=/bin/bash
 test: install

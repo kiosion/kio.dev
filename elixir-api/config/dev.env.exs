@@ -10,6 +10,7 @@ config :hexerei,
   query_url: {"QUERY_URL", "query/"},
   sanity_apicdn: {"SANITY_APICDN", "false", :boolean},
   gcloud_key: {"GCLOUD_KEY", :system},
+  redis_uri: {"REDIS_URI", :system},
   app_env: {"APP_ENV", "dev"}
 
 config :os_mon,

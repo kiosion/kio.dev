@@ -1,9 +1,9 @@
 defmodule Hexerei.SanityClient.Utils do
   use Hexerei.Response
   use Hexerei.Utils
-  use Hexerei.Cache.QueryCache
 
   alias Hexerei.SanityClient, as: Sanity
+  alias Hexerei.RedisCache
 
   require Logger
 
@@ -16,7 +16,7 @@ defmodule Hexerei.SanityClient.Utils do
   def handle_sanity_fetch(conn, query, cb, init_duration \\ nil) do
     start = System.system_time(:millisecond)
 
-    with result <- QueryCache.get("#{query}"),
+    with result <- RedisCache.get("#{query}", prefix: "sanity"),
          true <- result != nil do
       with {:arity, 3} <- :erlang.fun_info(cb, :arity) do
         cb.(conn, Poison.decode!(result), init_duration || 0)
@@ -29,8 +29,7 @@ defmodule Hexerei.SanityClient.Utils do
           decoded = Poison.decode!(result)
 
           if decoded["result"] != nil do
-            # 30m cache
-            QueryCache.put("#{query}", result, 30 * 60)
+            RedisCache.set("#{query}", result, prefix: "sanity")
           end
 
           duration =

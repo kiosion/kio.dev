@@ -56,26 +56,37 @@ defmodule Hexerei.MixProject do
   end
 
   defp deps do
-    case @lr_enabled do
-      true ->
-        [
-          {:plug_cowboy, "~> 2.5"},
-          {:poison, "~> 3.1"},
-          {:httpoison, "~> 1.8"},
-          {:cli_spinners, "~> 0.1.0"},
-          {:jose, "~> 1.10.1"},
-          {:exsync, "~> 0.2"},
-          {:file_system, "~> 0.2"}
-        ]
+    [
+      {:plug_cowboy, "~> 2.5"},
+      {:poison, "~> 3.1"},
+      {:httpoison, "~> 1.8"},
+      {:cli_spinners, "~> 0.1.0"},
+      {:jose, "~> 1.10.1"},
+      {:exsync, "~> 0.2", only: :dev},
+      {:file_system, "~> 0.2", only: :dev},
+      {:redix, "~> 1.2.3"}
+    ]
 
-      _ ->
-        [
-          {:plug_cowboy, "~> 2.5"},
-          {:poison, "~> 3.1"},
-          {:httpoison, "~> 1.8"},
-          {:cli_spinners, "~> 0.1.0"},
-          {:jose, "~> 1.10.1"}
-        ]
-    end
+    # case @lr_enabled do
+    #   true ->
+    #     [
+    #       {:plug_cowboy, "~> 2.5"},
+    #       {:poison, "~> 3.1"},
+    #       {:httpoison, "~> 1.8"},
+    #       {:cli_spinners, "~> 0.1.0"},
+    #       {:jose, "~> 1.10.1"},
+    #       {:exsync, "~> 0.2", only: :dev},
+    #       {:file_system, "~> 0.2", only: :dev}
+    #     ]
+
+    #   _ ->
+    #     [
+    #       {:plug_cowboy, "~> 2.5"},
+    #       {:poison, "~> 3.1"},
+    #       {:httpoison, "~> 1.8"},
+    #       {:cli_spinners, "~> 0.1.0"},
+    #       {:jose, "~> 1.10.1"}
+    #     ]
+    # end
   end
 end

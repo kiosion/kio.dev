@@ -5,6 +5,8 @@ defmodule Hexerei.Translate do
 
   use Hexerei.Utils
 
+  alias Hexerei.RedisCache
+
   require Logger
 
   @gcloud_endpoint "https://translation.googleapis.com/language/translate/v2"
@@ -290,7 +292,24 @@ defmodule Hexerei.Translate do
     if text == "" || text == nil do
       {:ok, text}
     else
-      construct_body(text, target_lang, source_lang) |> send_request
+      case RedisCache.get(text, prefix: "translate-#{source_lang}-#{target_lang}") do
+        {:ok, translation} ->
+          {:ok, translation}
+
+        _ ->
+          case construct_body(text, target_lang, source_lang) |> send_request do
+            {:ok, parsed_body} ->
+              RedisCache.set(text, parsed_body,
+                prefix: "translate-#{source_lang}-#{target_lang}",
+                ttl: 86_400
+              )
+
+              {:ok, parsed_body}
+
+            {:error, reason} ->
+              {:error, reason}
+          end
+      end
     end
   end
 

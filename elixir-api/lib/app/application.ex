@@ -24,24 +24,27 @@ defmodule Hexerei.Application do
         refs: [
           :all
         ]
-      },
-      {
-        Hexerei.CDNCache,
-        [
-          options: [
-            max_size: 100
-          ]
-        ]
-      },
-      {
-        Hexerei.Cache.QueryCache,
-        [
-          options: [
-            max_size: 200
-          ]
-        ]
       }
     ]
+
+    children =
+      with redis_uri <- Hexerei.Env.get!(:redis_uri),
+           true <- redis_uri != nil and redis_uri != "" do
+        children ++
+          [
+            {
+              Hexerei.RedisCache,
+              redis_uri
+            }
+          ]
+      else
+        _ ->
+          Logger.error(
+            "Invalid Redis URI, not attempting to connect: #{inspect(Hexerei.Env.get!(:redis_uri))}"
+          )
+
+          children
+      end
 
     opts = [strategy: :one_for_one, name: __MODULE__]
 
