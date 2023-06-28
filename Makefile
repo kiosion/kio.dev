@@ -1,22 +1,28 @@
-.PHONY: install, dev, test, cypress, cleanup
+.PHONY: install, install-web, install-sanity, install-api, api, sanity-dev, sanity-prod, web, backed, prod, sanity-deploy, netlify-deploy, test-web, vitest, cypress, lint, cleanup
 
 install: SHELL:=/bin/bash
 install:
-	@echo "Installing dependencies..."
+	@echo "Installing monorepo deps..."
 	@pnpm install
 
 install-web: SHELL:=/bin/bash
 install-web: install
 install-web:
-	@echo "Installing svelte dependencies..."
+	@echo "Installing sveltekit deps..."
 	@cd ./svelte-app && pnpm install
 
 # install sanity deps
 install-sanity: SHELL:=/bin/bash
 install-sanity: install
 install-sanity:
-	@echo "Installing sanity dependencies..."
+	@echo "Installing sanity deps..."
 	@cd ./sanity-cms && pnpm install
+
+install-api: SHELL:=/bin/bash
+install-api: install
+install-api:
+	@echo "Installing elixir deps..."
+	@cd ./elixir-api && make install
 
 api: SHELL:=/bin/bash
 api:
@@ -25,8 +31,7 @@ api:
 sanity-%: SHELL:=/bin/bash
 sanity-%:
 	@make install-sanity
-	@cd ./sanity-cms &&\
-	SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) pnpm dev
+	@cd ./sanity-cms && SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) pnpm dev
 
 web: SHELL:=/bin/bash
 web: install-web
@@ -42,8 +47,7 @@ backed:
 # Build svelte app for prod
 prod: SHELL:=/bin/bash
 prod:
-	@cd ./svelte-app &&\
-	SVELTE_ADAPTER_ENV=netlify pnpm build
+	@cd ./svelte-app && SVELTE_ADAPTER_ENV=netlify pnpm build
 
 # Deploy sanity
 sanity-deploy: SHELL:=/bin/bash
@@ -57,16 +61,14 @@ netlify-deploy:
 	@cd ./svelte-app && pnpm netlify deploy --dir=./build --prod
 
 # Build svelte app for testing
-test: SHELL:=/bin/bash
-test:
-	@cd ./svelte-app &&\
-	SVELTE_ADAPTER_ENV=node pnpm build:test
+test-web: SHELL:=/bin/bash
+test-web:
+	@cd ./svelte-app && SVELTE_ADAPTER_ENV=node pnpm build:test
 
 # vitest
 vitest: SHELL:=/bin/bash
 vitest:
-	@cd ./svelte-app &&\
-	pnpm test:vitest
+	@cd ./svelte-app && pnpm test:vitest
 
 # cypress tests
 cypress: SHELL:=/bin/bash
@@ -77,7 +79,8 @@ cypress:
 lint: SHELL:=/bin/bash
 lint: install-web install-sanity
 lint:
-	@(cd ./svelte-app && pnpm lint) & (cd ./sanity-cms && pnpm lint)
+	@cd ./svelte-app && pnpm lint
+	@cd ./sanity-cms && pnpm lint
 
 # Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash

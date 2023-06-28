@@ -51,6 +51,6 @@ jobs:
     uses: ./.github/workflows/test.yml
   deploy:
     name: Deploy
-    needs: [ tests ]
+    needs: [ lint, tests ]
     uses: ./.github/workflows/netlify-deploy.yml
     secrets: inherit

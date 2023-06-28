@@ -1,4 +1,4 @@
-.PHONY: dev prod prod-dev run-prod run-prod-dev test cleanup install
+.PHONY: dev prod run test cleanup install
 
 install: SHELL:=/bin/bash
 install:
