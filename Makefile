@@ -33,11 +33,6 @@ web: install-web
 web:
 	@cd ./svelte-app && pnpm dev
 
-server: SHELL:=/bin/bash
-server: install-web
-server:
-	@./scripts/server.sh
-
 # run dev backed
 backed: SHELL:=/bin/bash
 backed: install-web
@@ -73,13 +68,11 @@ vitest:
 	@cd ./svelte-app &&\
 	pnpm test:vitest
 
-
 # cypress tests
 cypress: SHELL:=/bin/bash
 cypress:
-	@cd ./svelte-app &&\
-	pnpm cypress install
-	@./scripts/cypress.sh
+	@cd ./svelte-app && pnpm cypress install
+	@(cd ./svelte-app; exec node ./dist) & (cd ./svelte-app; exec pnpm run test:cypress)
 
 lint: SHELL:=/bin/bash
 lint: install-web install-sanity

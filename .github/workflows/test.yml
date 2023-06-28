@@ -24,7 +24,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 8.6.0
           run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v3
@@ -46,29 +46,33 @@ jobs:
     name: Cypress
     runs-on: ubuntu-latest
     steps:
-      - name: Skip until refactored
-        run: exit 0
-      # - name: Checkout
-      #   uses: actions/checkout@v3
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
-      # - name: Use node_modules cache
-      #   uses: actions/cache@v3
-      #   id: nm-cache
-      #   with:
-      #     path: 'svelte-app/node_modules'
-      #     key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-npm-
-      # - name: Install dependencies
-      #   env:
-      #     CYPRESS_INSTALL_BINARY: 0
-      #   if: steps.nm-cache.outputs.cache-hit != 'true'
-      #   run: make install-web
-      # - name: Build testing environment
-      #   env:
-      #     SVELTE_ADAPTER_ENV: 'node'
-      #   run: make test
-      # - name: Run tests
-      #   run: make cypress
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.6.0
+          run_install: false
+      - name: Use node_modules cache
+        uses: actions/cache@v3
+        id: nm-cache
+        with:
+          path: 'svelte-app/node_modules'
+          key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install dependencies
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: make install-web
+      - name: Build testing environment
+        env:
+          SVELTE_ADAPTER_ENV: 'node'
+        run: make test
+      - name: Run tests
+        run: make cypress

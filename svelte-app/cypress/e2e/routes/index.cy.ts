@@ -3,12 +3,12 @@ describe('E2E | Index', () => {
     cy.intercept('GET', '/api/get/config');
     cy.visit('/');
 
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
+    cy.get('div.main', { timeout: 4000 }).should('contain', 'kio.dev | Index');
     cy.get('[data-test-id="error-text"]').should('not.exist');
 
     cy.reload();
 
-    cy.get('[data-test-route="index"]', { timeout: 4000 }).should('exist');
+    cy.get('div.main', { timeout: 4000 }).should('contain', 'kio.dev | Index');
     cy.get('[data-test-id="error-text"]').should('not.exist');
   });
 });
