@@ -19,16 +19,16 @@ Welcome to the monorepo for my blog, portfolio, Nowpage, and CV! You can see the
 * Sanity.io
 
 #### Hosting / Deploys
-* Vultr VPSs
 * Docker
 * Netlify
+* GCP Cloud Run
 
 ## 📦 Dependencies
 To build the project, you'll need:
 
-* Node ~16.16
+* Node ~16.13
 * PNPM ~8.0
-* Elixir ~1.14 (with OTP 24, Rebar3, & Hex)
+* Elixir ~1.14 (with OTP 25, Rebar3, & Hex)
 * Docker
 * docker-compose
 
