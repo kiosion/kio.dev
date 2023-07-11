@@ -1,21 +1,28 @@
 <script lang="ts">
   import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
 
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;
 
+  let hovered: false;
+
   $: ({ value } = portableText);
   $: ({ style } = value);
 </script>
 
-<Hoverable>
+<Hoverable bind:hovered>
   <a
     class="focusOutline-sm"
     class:large={style && ['h1', 'h2'].indexOf(style) !== -1}
     id={`heading-${value._key}`}
     href={`#${value._key}`}
   >
+    {#if hovered}
+      <Icon icon="link" classNames="absolute -left-8 top-1/2 -translate-y-1/2" />
+    {/if}
+
     {#if style === 'h1'}
       <h1>
         <slot />
@@ -42,10 +49,10 @@
 
 <style lang="scss">
   a {
-    @apply mt-6 mb-2 block w-fit rounded-sm font-extrabold;
+    @apply relative mb-2 mt-6 block w-fit rounded-sm font-extrabold;
 
     &.large {
-      @apply mt-12 mb-6;
+      @apply mb-6 mt-12;
     }
 
     h1 {

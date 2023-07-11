@@ -147,11 +147,7 @@
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
           >
-            {#if copied}
-              <Icon icon="Check" />
-            {:else}
-              <Icon icon="Copy" />
-            {/if}
+            <Icon icon={copied ? 'Check' : 'Copy'} />
           </button>
         {/key}
       </Tooltip>

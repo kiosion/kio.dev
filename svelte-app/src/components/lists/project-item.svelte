@@ -63,7 +63,7 @@
   >
     <div class="mb-0.5 flex w-full flex-row items-center gap-x-3">
       <Icon
-        classes="-ml-0.5 text-stone-900 dark:text-stone-100 {project.external
+        classNames="-ml-0.5 text-stone-900 dark:text-stone-100 {project.external
           ? 'mb-0.5'
           : ''}"
         icon={project.external ? 'open' : 'book-open'}

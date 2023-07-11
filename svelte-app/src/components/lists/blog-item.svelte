@@ -38,7 +38,6 @@
     }
   };
 
-  $: console.log('got post:', post);
   $: date = formatDate(post.date, 'full');
 </script>
 

@@ -20,7 +20,7 @@
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
   <Tooltip text={$t('Toggle summary')} fixed>
     <div
-      class="focusOutline-sm flex flex-row items-center justify-between rounded-md py-4 px-4"
+      class="focusOutline-sm flex flex-row items-center justify-between rounded-md px-4 py-4"
       role="button"
       tabindex="0"
       on:click={(_) => {
@@ -47,7 +47,7 @@
         <div class="flex w-fit flex-row items-center justify-center gap-3 ">
           <Icon
             icon="ChevronDown"
-            classes="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
+            classNames="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
           />
           <Hoverable bind:hovered={closeHovered}>
             <div

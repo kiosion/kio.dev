@@ -18,9 +18,9 @@
     }}
   >
     {#if $navOpen}
-      <Icon icon={'CloseBox'} useTransition={false} />
+      <Icon icon="CloseBox" />
     {:else}
-      <Icon icon={'Menu'} useTransition={false} />
+      <Icon icon="Menu" />
     {/if}
   </button>
 </Hoverable>

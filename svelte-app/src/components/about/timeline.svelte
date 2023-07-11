@@ -73,7 +73,7 @@
             width={24}
             height={24}
             icon="CornerDownRight"
-            classes="text-stone-400 dark:text-stone-400/40 -translate-x-[1px]"
+            classNames="text-stone-400 dark:text-stone-400/40 -translate-x-[1px]"
             style="clip-path: inset(24px 18px 24px 24px)"
           />
           <div class="mr-6 flex w-full flex-col items-start justify-start">
@@ -147,7 +147,7 @@
                   {#if item.body}
                     <Icon
                       icon="ChevronDown"
-                      classes="{selected === i
+                      classNames="{selected === i
                         ? 'rotate-0'
                         : 'rotate-90'} transition-all absolute top-4 right-4"
                     />

@@ -60,7 +60,7 @@
             >
               <Icon
                 icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'}
-                classes="text-stone-500 dark:text-stone-100/60"
+                classNames="text-stone-500 dark:text-stone-100/60"
               />
               <p
                 class="ml-4 w-fit font-code text-base text-stone-500 dark:text-stone-100/60"
@@ -116,7 +116,7 @@
   .page-controls {
     &-top,
     &-bottom {
-      @apply fixed right-0 left-56 z-[3] flex flex-row items-start justify-between py-6 px-7;
+      @apply fixed left-56 right-0 z-[3] flex flex-row items-start justify-between px-7 py-6;
 
       .pseudo-bg-shadow {
         @apply absolute left-0 right-0 z-[2] transition-[box-shadow];

@@ -146,7 +146,7 @@
                   <!-- Allow recursion with PT styles in footnotes -->
                   <svelte:self text={note.note} plaintext />
                   <a
-                    class="ml-2 mb-0.5 inline"
+                    class="mb-0.5 ml-2 inline"
                     id={`note-${note._key}`}
                     href={`#src-${note._key}`}
                     aria-label={$t('Go to footnote source')}

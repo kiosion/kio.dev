@@ -26,9 +26,9 @@
       }}
     >
       {#if $sounds}
-        <Icon icon={'Volume2'} />
+        <Icon icon="Volume2" />
       {:else}
-        <Icon icon={'VolumeX'} />
+        <Icon icon="VolumeX" />
       {/if}
     </button>
   </Tooltip>

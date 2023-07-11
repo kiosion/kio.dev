@@ -26,11 +26,7 @@
         SFX.click.play();
       }}
     >
-      {#if $theme === 'light'}
-        <Icon icon={'MoonStars'} />
-      {:else}
-        <Icon icon={'Sun'} />
-      {/if}
+      <Icon icon={$theme === 'light' ? 'MoonStars' : 'Sun'} />
     </button>
   </Tooltip>
 </Hoverable>
