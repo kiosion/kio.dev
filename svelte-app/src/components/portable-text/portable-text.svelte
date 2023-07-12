@@ -9,8 +9,6 @@
 
   import { PortableText } from '@portabletext/svelte';
 
-  import ReplitEmbed from './embeds/replit-embed.svelte';
-  import SvelteEmbed from './embeds/svelte-embed.svelte';
   import Footnote from './footnote.svelte';
   import CodeBlock from './serializers/code-block.svelte';
   import CustomCode from './serializers/custom-code.svelte';
@@ -100,9 +98,7 @@
           types: {
             code: CodeBlock,
             divider: Divider,
-            image: Image,
-            replitEmbed: ReplitEmbed,
-            svelteEmbed: SvelteEmbed
+            image: Image
           },
           marks: {
             link: CustomLink,

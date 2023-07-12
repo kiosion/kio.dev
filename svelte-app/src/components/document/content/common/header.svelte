@@ -2,7 +2,6 @@
   import Breakpoints from 'svelte-breakpoints';
 
   import { formatDate, getReadingTime } from '$helpers/date';
-  import { fionaPlaceholder } from '$helpers/placeholders';
   import { getTotalWords } from '$helpers/pt';
   import { t } from '$i18n';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
@@ -33,8 +32,6 @@
 
   $: date =
     model === 'project' ? formatDate(data.date, 'med') : formatDate(data.date, 'rel');
-  $: slug = data.slug.current;
-  $: imageSrc = fionaPlaceholder(slug);
 </script>
 
 <div class="mb-4" data-test-id="{model}-header">
