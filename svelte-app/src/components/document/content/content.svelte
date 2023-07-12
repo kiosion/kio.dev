@@ -12,7 +12,8 @@
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
     headings: Heading[] | undefined,
-    routeFetch: RouteFetch | undefined = undefined;
+    routeFetch: RouteFetch | undefined = undefined,
+    container: HTMLDivElement | undefined = undefined;
 </script>
 
 <Header {model} {data} />
@@ -22,7 +23,7 @@
     <Divider />
   </div>
 {/if}
-<div class="mt-4 font-sans text-base">
+<div class="mt-4 font-sans text-base" bind:this={container}>
   {#if data.body}
     <PortableText text={data.body} {routeFetch} />
   {:else}

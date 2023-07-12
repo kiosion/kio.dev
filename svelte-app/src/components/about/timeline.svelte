@@ -64,7 +64,7 @@
 <div class="relative ml-0 mr-2 mt-4 h-fit">
   {#if data}
     <div
-      class="absolute left-0 top-[14px] h-[calc(100%_-_14px)] w-[1px] rounded-full bg-stone-400 dark:bg-stone-400/40"
+      class="absolute left-0 top-[14px] h-[calc(100%_-_14px)] w-[1px] rounded-full bg-dark/40 dark:bg-light/40"
     />
     <div class="-ml-[4px] flex flex-col items-start justify-start gap-4">
       {#each data as item, i}
@@ -72,14 +72,11 @@
           <Icon
             width={24}
             height={24}
-            icon="CornerDownRight"
-            classNames="text-stone-400 dark:text-stone-400/40 -translate-x-[1px]"
-            style="clip-path: inset(24px 18px 24px 24px)"
+            icon="ArrowRight"
+            classNames="text-dark/40 dark:text-light/40 translate-y-[1px]"
           />
           <div class="mr-6 flex w-full flex-col items-start justify-start">
-            <h1
-              class="select-none font-code text-base text-stone-800 dark:text-stone-50/90"
-            >
+            <h1 class="select-none font-code text-base text-dark/90 dark:text-light/90">
               {dateDisplay(item.range.start, item.range.end)}
             </h1>
             <Hoverable bind:hovered={data[i].hovered}>
@@ -92,8 +89,8 @@
               >
                 <div
                   class="relative ml-2 mt-2 w-full rounded-lg {data[i].hovered
-                    ? 'border-stone-400/80 bg-stone-300/60 dark:border-stone-500/80 dark:bg-stone-700/20'
-                    : 'border-stone-400/60 bg-stone-300/20 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline overflow-hidden border px-4 py-3 transition-[background-color]"
+                    ? 'border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40'
+                    : 'border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20'} focusOutline overflow-hidden border px-4 py-3 transition-[background-color,border-color]"
                   on:click={() => {
                     if (item.body) {
                       selected = selected === i ? null : i;
@@ -113,7 +110,7 @@
                   </div>
                   {#if item.subtitle}
                     <div
-                      class="mt-1 line-clamp-1 select-none font-sans text-base italic text-gray-700 dark:text-gray-200"
+                      class="text-gray-700 dark:text-gray-200 mt-1 line-clamp-1 select-none font-sans text-base italic"
                     >
                       {item.subtitle}
                     </div>

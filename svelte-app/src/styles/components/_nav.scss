@@ -1,5 +1,5 @@
 .nav-desktop {
-  @apply my-8 flex w-fit flex-col border-r border-stone-400/50;
+  @apply my-8 flex w-fit flex-col border-r border-dark/40;
 
   .nav-inner {
     @apply flex w-56 flex-1 flex-col justify-between;
@@ -14,7 +14,7 @@
     }
   }
   .border-line {
-    @apply inline-block bg-stone-400/50;
+    @apply inline-block bg-dark/40;
     height: 1px;
     width: calc(100% + 2.25rem);
   }
@@ -28,9 +28,11 @@
 }
 
 .dark {
-  .nav-desktop,
+  .nav-desktop {
+    @apply border-light/40;
+  }
   .border-line {
-    @apply border-stone-500/60;
+    @apply bg-light/40;
   }
   .logo-container {
     @apply invert;

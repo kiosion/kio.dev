@@ -9,7 +9,7 @@
   }
 
   .quoteBar {
-    @apply mr-3 block rounded-sm bg-stone-500 opacity-80;
+    @apply mr-3 block rounded-sm bg-dark/40 opacity-80;
     width: 2px;
   }
 
@@ -19,7 +19,7 @@
 
   :global(.dark) {
     .quoteBar {
-      @apply bg-stone-300;
+      @apply bg-light/40;
     }
   }
 </style>

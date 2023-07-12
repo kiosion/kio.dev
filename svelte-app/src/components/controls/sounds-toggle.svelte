@@ -15,7 +15,7 @@
 <Hoverable>
   <Tooltip text={$t(tooltipText)} delay={150} fixed>
     <button
-      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
+      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark"
       aria-label={$t(tooltipText)}
       data-test-id="sfx-toggle"
       data-test-state={$sounds ? 'on' : 'off'}

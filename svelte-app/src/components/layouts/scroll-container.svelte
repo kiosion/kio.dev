@@ -31,7 +31,7 @@
 
 <style lang="scss">
   div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-stone-100 p-8  duration-150;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-light p-8  duration-150;
 
     &:not(.isDesktop) {
       @apply rounded-t-2xl;
@@ -40,7 +40,7 @@
 
   :global(.dark) {
     div {
-      @apply bg-stone-900;
+      @apply bg-black;
     }
   }
 </style>

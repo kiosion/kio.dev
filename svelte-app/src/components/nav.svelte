@@ -204,7 +204,7 @@
             <NavLink {link} {index} mobile />
           {/each}
           <LanguageControls
-            classNames="-mt-2 mb-4 flex flex-row items-center justify-center font-mono text-base text-stone-800 dark:text-stone-300"
+            classNames="-mt-2 mb-4 flex flex-row items-center justify-center font-mono text-base text-dark/80 dark:text-light/80"
             forNav
           />
         </div>

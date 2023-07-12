@@ -31,23 +31,23 @@ body {
   @apply h-full w-full overflow-x-hidden;
 
   @media (min-width: 0px) {
-    background-color: $stone-800;
+    background-color: $dark;
   }
   @media (min-width: 830px) {
-    background-color: $stone-900;
+    background-color: $black;
   }
 
-  --textColour: $stone-50;
+  --textColour: $light;
 
   &.light {
     @media (min-width: 0px) {
-      background-color: $stone-200;
+      background-color: $white;
     }
     @media (min-width: 830px) {
-      background-color: $stone-100;
+      background-color: $light;
     }
 
-    --textColour: $stone-900;
+    --textColour: $dark;
   }
   &:not(.is-loaded) {
     cursor: wait !important;
@@ -84,8 +84,15 @@ body {
 }
 
 ::selection {
-  background: rgba($violet-300, 0.8);
-  color: $stone-900;
+  background: rgba($accent-light, 0.8);
+  color: $light;
+}
+
+.dark {
+  ::selection {
+    background: rgba($accent-dark, 0.8);
+    color: $dark;
+  }
 }
 
 .click-through {

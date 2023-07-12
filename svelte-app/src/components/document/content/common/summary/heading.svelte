@@ -7,14 +7,11 @@
   import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
-  export let headingsExist = false,
-    floating = false,
-    closeButton: HTMLDivElement | undefined;
+  export let headingsExist = false;
 
   const dispatch = createEventDispatcher();
 
-  let closeHovered: boolean,
-    expanded = false;
+  let expanded = false;
 </script>
 
 <Hoverable classes={headingsExist ? '' : 'not-allowed'}>
@@ -43,43 +40,10 @@
         <Icon icon="List" />
         <h3 class="font-lg select-none font-bold">{$t('Summary')}</h3>
       </div>
-      {#if floating}
-        <div class="flex w-fit flex-row items-center justify-center gap-3 ">
-          <Icon
-            icon="ChevronDown"
-            classNames="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
-          />
-          <Hoverable bind:hovered={closeHovered}>
-            <div
-              role="button"
-              on:click={(e) => {
-                e.cancelBubble = true;
-                dispatch('hide');
-              }}
-              on:keydown={(e) => {
-                if (e.code === 'Enter' || e.code === 'Space') {
-                  e.preventDefault();
-                  e.cancelBubble = true;
-                  dispatch('hide');
-                }
-              }}
-              bind:this={closeButton}
-            >
-              <Icon
-                icon="Close"
-                classes="{closeHovered
-                  ? 'text-violet-400 dark:text-violet-300'
-                  : ''} transition-none"
-              />
-            </div>
-          </Hoverable>
-        </div>
-      {:else}
-        <Icon
-          icon="ChevronDown"
-          classes="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
-        />
-      {/if}
+      <Icon
+        icon="ChevronDown"
+        classNames="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
+      />
     </div>
   </Tooltip>
 </Hoverable>

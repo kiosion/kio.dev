@@ -25,12 +25,12 @@
 
 <style lang="scss">
   svg {
-    @apply -ml-1 h-5 w-5 animate-spin text-violet-500;
+    @apply -ml-1 h-5 w-5 animate-spin text-accent-light;
   }
 
   :global(.dark) {
     svg {
-      @apply text-violet-200;
+      @apply text-accent-dark;
     }
   }
 </style>

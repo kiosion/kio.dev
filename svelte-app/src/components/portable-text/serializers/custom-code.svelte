@@ -15,7 +15,7 @@
 
 <style lang="scss">
   code {
-    @apply rounded bg-stone-200/80 font-code transition-[background-color];
+    @apply rounded bg-dark/5 font-code transition-[background-color];
 
     // Make sure we don't overlap lines due to the padding
     font-size: 0.95rem;
@@ -33,7 +33,7 @@
 
   :global(.dark) {
     code {
-      @apply bg-stone-500/20;
+      @apply bg-light/10;
     }
   }
 </style>

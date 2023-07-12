@@ -32,7 +32,7 @@
 
 <style lang="scss">
   a {
-    @apply rounded-sm from-violet-300 px-[2px] text-stone-700 no-underline;
+    @apply rounded-sm from-accent-light px-[2px] text-dark/90 no-underline;
 
     background-image: linear-gradient(
       to right,
@@ -42,18 +42,20 @@
     background-position: bottom center;
     background-repeat: no-repeat;
     background-size: calc(100% - 4px) 2px;
-    transition: background-size 50ms ease, color 150ms ease !important;
+    transition: background-size 50ms ease, color 50ms ease !important;
 
     &.active {
+      @apply text-light;
+
       background-size: calc(100% - 4px) 100%;
     }
   }
 
   :global(.dark) {
     a {
-      @apply text-stone-200;
+      @apply from-accent-dark text-light;
       &.active {
-        @apply text-stone-800;
+        @apply text-dark;
       }
     }
   }

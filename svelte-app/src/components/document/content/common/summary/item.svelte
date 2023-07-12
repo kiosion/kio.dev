@@ -53,19 +53,19 @@
 
 <style lang="scss">
   a {
-    @apply ml-3 flex w-full select-none flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-[.65rem] text-sm text-[15px] font-medium text-stone-700 transition-[color];
+    @apply ml-3 flex w-full select-none flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-[.65rem] text-[15px] text-sm font-medium text-dark/80 transition-[color];
 
     &.active {
-      @apply text-stone-900;
+      @apply text-dark;
     }
   }
 
   :global(.dark) {
     a {
-      @apply text-stone-300;
+      @apply text-light/80;
 
       &.active {
-        @apply text-stone-100;
+        @apply text-light;
       }
     }
   }

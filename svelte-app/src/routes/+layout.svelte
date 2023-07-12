@@ -3,7 +3,6 @@
   import 'cal-sans';
 
   import { onDestroy, onMount, setContext } from 'svelte';
-  import { get, type Unsubscriber } from 'svelte/store';
   import { fade, fly } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
@@ -32,6 +31,7 @@
   import Navigation from '$components/nav.svelte';
 
   import type { LayoutData } from './$types';
+  import type { Unsubscriber } from 'svelte/store';
 
   const { theme, comicSans, reduceMotion } = Settings;
 
@@ -91,7 +91,8 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && (!data.author || !get(config)?.data) && invalidationStrategy();
+  $: browser && data.config && config.set(data.config);
+  $: browser && (!data.author || !data.config) && invalidationStrategy();
 </script>
 
 <svelte:head>
@@ -108,7 +109,7 @@
 />
 
 {#if !appLoaded}
-  <Loader />
+  <Loader theme={data.theme} />
 {/if}
 
 {#if !$isDesktop && $loading}
@@ -137,7 +138,7 @@
     <PageControls appBody={scrollContainer} position="top" />
     <div>
       {#if appLoaded}
-        <PageTransition url={data.url}>
+        <PageTransition pathname={data.pathname}>
           <slot />
         </PageTransition>
       {/if}
@@ -148,7 +149,7 @@
 
 <style lang="scss">
   .main {
-    @apply flex h-full w-full flex-col overflow-x-hidden text-stone-900;
+    @apply flex h-full w-full flex-col overflow-x-hidden text-dark;
 
     div {
       @apply relative h-full w-full;
@@ -166,7 +167,7 @@
 
   :global(.dark) {
     .main {
-      @apply text-stone-50;
+      @apply text-light;
     }
   }
 </style>

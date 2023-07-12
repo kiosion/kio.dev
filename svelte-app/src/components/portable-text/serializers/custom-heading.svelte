@@ -55,20 +55,28 @@
       @apply mb-6 mt-12;
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      @apply inline font-display font-bold text-black dark:text-white;
+    }
+
     h1 {
-      @apply inline font-display text-5xl font-bold;
+      @apply text-5xl;
     }
     h2 {
-      @apply inline font-display text-4xl font-bold;
+      @apply text-4xl;
     }
     h3 {
-      @apply inline font-display text-3xl font-bold;
+      @apply text-3xl;
     }
     h4 {
-      @apply inline font-display text-2xl font-bold;
+      @apply text-2xl;
     }
     h5 {
-      @apply inline font-display text-xl font-bold;
+      @apply text-xl;
     }
   }
 </style>

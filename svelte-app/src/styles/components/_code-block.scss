@@ -1,32 +1,36 @@
 .codeBlock--container {
-  @apply relative my-6 -mx-2 overflow-hidden rounded-md border border-stone-400/40 duration-150;
+  @apply relative my-6 -mx-2 overflow-hidden rounded-sm border border-dark/40 duration-150;
 
   &.active {
-    @apply border-stone-400;
+    @apply border-dark/60;
+
+    .codeBlock--filename {
+      @apply border-dark/60;
+    }
   }
 }
 
 .codeBlock--filename {
-  @apply mt-0.5 border-b border-stone-400/40 pt-3 pl-5 pb-3 font-mono text-base;
+  @apply border-b bg-dark/5 border-dark/40 py-[13px] pl-5 font-mono text-base duration-150;
 }
 
 .codeBlock--codeContainer {
-  @apply relative h-[0px] w-full overflow-hidden rounded-md text-lg transition-[height];
+  @apply relative h-[0px] w-full overflow-hidden rounded-sm text-lg transition-[height];
 
   .inner {
-    @apply h-fit w-fit min-w-full rounded-md bg-stone-200/40 p-1 transition-all;
+    @apply h-fit w-fit min-w-full rounded-sm p-1 transition-all;
 
     &.active {
-      @apply bg-stone-200/60;
+      @apply bg-dark/5;
     }
   }
 }
 
 .codeBlock--copyButton {
-  @apply absolute top-0 right-0 z-10 m-2 cursor-pointer rounded-sm p-2 text-stone-600 opacity-0 transition-opacity duration-150;
+  @apply absolute top-0 right-0 z-10 cursor-pointer rounded-sm p-4 text-dark/60 opacity-0 transition-opacity duration-150;
 
   &:hover {
-    @apply text-stone-800;
+    @apply text-dark;
   }
 
   &.visible {
@@ -36,30 +40,34 @@
 
 .dark {
   .codeBlock--container {
-    @apply border-stone-500/60;
+    @apply border-light/40;
 
     &.active {
-      @apply border-stone-500/80;
+      @apply border-light/60;
+
+      .codeBlock--filename {
+        @apply border-light/60;
+      }
     }
   }
 
   .codeBlock--filename {
-    @apply border-stone-500/60;
+    @apply border-light/40 bg-dark/40;
   }
 
   .codeBlock--copyButton {
-    @apply text-stone-400;
+    @apply text-light/60;
 
     &:hover {
-      @apply text-stone-200;
+      @apply text-light;
     }
   }
 
   .codeBlock--codeContainer .inner {
-    @apply bg-stone-800/40;
+    @apply bg-dark/10;
 
     &.active {
-      @apply bg-stone-800/60;
+      @apply bg-dark/40;
     }
   }
 }
@@ -86,8 +94,14 @@ code {
 
     & {
       &::selection {
-        background: $violet-300 !important;
-        color: $gray-900 !important;
+        background: $accent-light !important;
+        color: $light !important;
+      }
+      .dark & {
+        &::selection {
+          background: $accent-dark !important;
+          color: $dark !important;
+        }
       }
     }
   }

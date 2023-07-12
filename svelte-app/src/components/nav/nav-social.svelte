@@ -26,7 +26,7 @@
   <Tooltip text={social.name} delay={150} position="top" fixed>
     <!-- svelte-ignore a11y-missing-attribute -->
     <a
-      class="align-center focusOutline-sm flex cursor-pointer justify-center rounded-sm p-2 transition-colors duration-150 hover:text-violet-400 dark:hover:text-violet-300"
+      class="align-center focusOutline-sm flex cursor-pointer justify-center rounded-sm p-2 transition-colors duration-150 hover:text-accent-light dark:hover:text-accent-dark"
       role="menuitem"
       aria-label={social.name}
       tabindex="0"

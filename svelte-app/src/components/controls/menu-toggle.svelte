@@ -9,7 +9,7 @@
 
 <Hoverable>
   <button
-    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-violet-400 dark:hover:text-violet-300"
+    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark"
     aria-label="Toggle navigation"
     data-test-id="nav-toggle"
     on:click={() => {

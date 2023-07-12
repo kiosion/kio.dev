@@ -1,13 +1,27 @@
 .categoryTag {
-  @apply font-code text-base capitalize px-2 py-0.5 bg-stone-200/60 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/80 rounded-md transition-[background-color,border-color] border border-stone-400/60 dark:border-stone-500/60;
+  @apply text-base;
+
+  &,
   &-sm {
-    @apply font-code text-sm capitalize px-2 py-0.5 bg-stone-300/20 dark:bg-stone-800/60 hover:bg-stone-300/60 dark:hover:bg-stone-700/60 border border-stone-400/60 dark:border-stone-500/80 rounded-md transition-[background-color,border-color];
+    @apply font-code capitalize px-2 py-0.5 border rounded-md bg-dark/5 dark:bg-dark/60 hover:bg-dark/10 dark:hover:bg-dark border-dark/20 hover:border-dark/40 dark:border-light/20 dark:hover:border-light/40 transition-[background-color,border-color];
+  }
+  &-sm {
+    @apply text-sm;
   }
 }
 
 .focusOutline {
-  @apply focus-visible:outline outline-offset-4 outline-violet-400 outline-2;
+  @apply outline-offset-4;
+
+  &,
   &-sm {
-    @apply focus-visible:outline outline-offset-2 outline-violet-400 outline-2;
+    @apply focus-visible:outline outline-accent-light outline-2;
+
+    .dark & {
+      @apply outline-accent-dark;
+    }
+  }
+  &-sm {
+    @apply outline-offset-2;
   }
 }

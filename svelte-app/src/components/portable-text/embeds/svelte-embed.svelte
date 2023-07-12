@@ -101,7 +101,7 @@
 
 <style lang="scss">
   .target-container {
-    @apply relative mt-6 mb-8 h-[10rem] w-full transition-[height] duration-200;
+    @apply relative mb-8 mt-6 h-[10rem] w-full transition-[height] duration-200;
 
     &.active {
       height: fit-content;
@@ -112,10 +112,10 @@
     @apply relative h-full w-full;
 
     > div {
-      @apply h-full w-full bg-stone-300 bg-opacity-50 blur-md;
+      @apply h-full w-full bg-dark/10 bg-opacity-40 blur-md;
 
       + button {
-        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded px-4 py-2 font-code font-medium text-stone-800 decoration-violet-400 decoration-2 underline-offset-[6px];
+        @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded px-4 py-2 font-code font-medium text-dark decoration-accent-light decoration-2 underline-offset-[6px];
 
         &:hover,
         &:focus-visible {
@@ -123,7 +123,7 @@
         }
       }
       + p {
-        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform px-4 py-2 font-code font-medium text-stone-800;
+        @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform px-4 py-2 font-code font-medium text-dark;
       }
     }
   }
@@ -136,7 +136,7 @@
         @apply w-full;
       }
       &.loader {
-        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform;
+        @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform;
       }
     }
   }
@@ -144,11 +144,11 @@
   :global(.dark) {
     .hidden-bg {
       > div {
-        @apply bg-stone-700 bg-opacity-40;
+        @apply bg-light/10;
 
         + button,
         + p {
-          @apply text-stone-100;
+          @apply text-light decoration-accent-dark;
         }
       }
     }
