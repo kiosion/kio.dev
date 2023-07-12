@@ -15,12 +15,12 @@
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
-    headings: Heading[],
+    headings: Heading[] | never[],
     routeFetch: RouteFetch | undefined = undefined;
 
   const isPost = model === 'post',
     allTags =
-      (((tags: PostDocument['tags'] | ProjectDocument['tags'] | undefined) => {
+      (((tags: NonNullable<typeof data>['tags'] | undefined) => {
         if (!tags) {
           return undefined;
         }

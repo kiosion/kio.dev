@@ -33,7 +33,6 @@
 
   export let data: PageData;
 
-  $: about = data.about?.data;
   $: pageTitle = `kio.dev | ${$t('Index')}`;
   $: description = $t('A bit about me, my work, and what I do');
 </script>
@@ -53,16 +52,16 @@
 </svelte:head>
 
 <ContentWrapper fixed>
-  {#if about}
+  {#if data.about}
     <HeadedBlock icon="User" heading={$t('About me')}>
-      <PortableText text={about.bio} />
+      <PortableText text={data.about.bio} />
     </HeadedBlock>
-    {#if about.bio && about.now}
+    {#if data.about.bio && data.about.now}
       <Divider />
     {/if}
-    {#if about.now}
+    {#if data.about.now}
       <HeadedBlock icon="Clock" heading={$t("What I'm up to now")}>
-        <PortableText text={about.now} />
+        <PortableText text={data.about.now} />
       </HeadedBlock>
     {/if}
   {:else}

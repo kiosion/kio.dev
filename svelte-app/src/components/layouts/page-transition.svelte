@@ -12,11 +12,10 @@
   const { reduceMotion } = Settings;
 
   const dist = 16,
-    duration = BASE_ANIMATION_DURATION;
+    duration = BASE_ANIMATION_DURATION / 1.25;
 
   let navDir: 'forward' | 'backward' = 'forward';
 
-  // $: ({ pathname } = url || { pathname: '' });
   $: navDir = onNav(pathname || '');
 </script>
 

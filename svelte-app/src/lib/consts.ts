@@ -74,8 +74,8 @@ export const ROUTE_ORDER = [
   'etc'
 ];
 
-export const BASE_TRANSITION_DURATION = 200;
-export const BASE_ANIMATION_DURATION = 300;
+export const BASE_TRANSITION_DURATION = 200 as const;
+export const BASE_ANIMATION_DURATION = 300 as const;
 
 export const PAGINATION_POSTS_PER_PAGE = 12;
 export const PAGINATION_PROJECTS_PER_PAGE = 12;

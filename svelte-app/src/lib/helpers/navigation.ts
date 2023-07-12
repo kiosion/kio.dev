@@ -27,7 +27,6 @@ export const setupNavigation = (route: string): void => {
         up: ''
       });
       pageHeading.set('');
-      // console.log('index 0 for:', route);
       return;
     case TOP_LEVEL_ROUTES.length - 1:
       navOptions.set({

@@ -1,4 +1,5 @@
 import { ENV } from '$lib/env';
+import { getHeadings } from '$lib/helpers/pt';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -30,19 +31,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const headings =
-    (await (
-      await fetch('/api/transform/parsept', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'parseHeadings',
-          data: post?.data.body ?? []
-        })
-      })
-    )?.json()) ?? [];
+  const headings = getHeadings(post?.data.body ?? []);
 
   return { post, headings, routeFetch: fetch };
 };

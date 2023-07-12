@@ -5,7 +5,7 @@ import Store from '$lib/store';
 import { error, redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { DocumentTags, ProjectDocument, ResDataMany } from '$types';
+import type { DocumentTags, ProjectDocument } from '$types';
 
 export const prerender = false;
 
@@ -16,27 +16,25 @@ export const load = (async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags: ResDataMany<DocumentTags> | undefined = await Store.find<DocumentTags>(
-    fetch,
-    'tag',
-    {
-      type: 'project',
-      limit: 0
-    }
-  ).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
-  });
+  const allTags = await Store.find<DocumentTags>(fetch, 'tag', {
+    type: 'project',
+    limit: 0
+  })
+    .then((res) => res?.data)
+    .catch((err: unknown) => {
+      Logger.error(err as string);
+      return undefined;
+    });
 
   if (
-    !allTags?.data?.some(
+    !allTags?.some(
       (tag) =>
         tag.slug.current?.toLowerCase() === params.slug?.toLowerCase() ||
         tag.title?.toLowerCase() === params.slug?.toLowerCase()
     )
   ) {
     Logger.info('Tag not found', {}, params.slug);
-    if (!allTags?.data) {
+    if (!allTags) {
       console.warn('Failed to fetch tags');
     }
     throw error(404, {
@@ -44,12 +42,13 @@ export const load = (async ({ parent, fetch, params }) => {
     });
   }
 
-  const projects: ResDataMany<ProjectDocument> | undefined =
-    await Store.find<ProjectDocument>(fetch, 'project', {
-      ...DEFAULT_PROJECT_QUERY_PARAMS,
-      limit: PAGINATION_PROJECTS_PER_PAGE,
-      tags: [params.slug]
-    }).catch((err: unknown) => {
+  const projects = await Store.find<ProjectDocument>(fetch, 'project', {
+    ...DEFAULT_PROJECT_QUERY_PARAMS,
+    limit: PAGINATION_PROJECTS_PER_PAGE,
+    tags: [params.slug]
+  })
+    .then((res) => res?.data)
+    .catch((err: unknown) => {
       Logger.error(err as string, {}, `routes/work/+/${params.slug}`);
       return undefined;
     });

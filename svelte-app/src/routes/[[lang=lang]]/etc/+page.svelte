@@ -35,10 +35,9 @@
 
   export let data: PageData;
 
-  $: about = data?.about?.data;
   $: pageTitle = `kio.dev | ${$t('Meta + Contact')}`;
   $: description = $t('A peek into my current adventures in tech and beyond');
-  $: browser && !about && invalidate($page.url.pathname);
+  $: browser && !data.about && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>
@@ -56,9 +55,9 @@
 </svelte:head>
 
 <ContentWrapper fixed>
-  {#if about}
+  {#if data.about}
     <HeadedBlock icon="Message" heading={$t('Say hello')}>
-      <PortableText text={about.contact} />
+      <PortableText text={data.about.contact} />
     </HeadedBlock>
 
     <Divider />
@@ -75,7 +74,7 @@
     <Divider />
 
     <HeadedBlock icon="InfoBox" heading={$t('Meta')}>
-      <PortableText text={about.body} />
+      <PortableText text={data.about.body} />
     </HeadedBlock>
   {:else}
     <EmptyContent />

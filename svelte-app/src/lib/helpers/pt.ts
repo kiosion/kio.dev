@@ -37,70 +37,70 @@ export type Heading = {
   key: string;
   type: HeadingType;
   children: Heading[];
+  typeLevel: number;
   parent?: Heading['key'];
 };
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getHeadings = async (input: PTBlock[]): Promise<Heading[]> => {
+export const getHeadings = (input: PTBlock[]): Heading[] => {
   if (!input?.length) {
     return [];
   }
+
+  const headingsMap: { [key: string]: Heading } = {};
+
   const headings = (
     input.filter((block) => HeadingTypes.includes(block.style)) as (Omit<
       PTBlock,
       'style'
     > & { style: HeadingType })[]
   ).map((block) => {
-    return {
+    const heading: Heading = {
       text: block.children[0].text,
       key: block._key,
       type: block.style,
-      children: [] as Heading[],
+      typeLevel: parseInt(block.style.charAt(1)),
+      children: [],
       parent: undefined
     };
+    headingsMap[block._key] = heading;
+    return heading;
   });
 
-  const makeTree = async (headings: Heading[]): Promise<Heading[]> => {
+  const makeTree = (headings: Heading[]): Heading[] => {
     const tree: Heading[] = [];
     let current: Heading | undefined;
 
-    return new Promise((resolve) => {
-      headings.forEach((heading) => {
-        current = current || heading;
-        const checkForParent = (current: Heading, heading: Heading): void => {
-          if (current.parent) {
-            const parent = headings.find((h) => h.key === current.parent);
-            if (parent) {
-              if (parseInt(parent.type.charAt(1)) >= parseInt(heading.type.charAt(1))) {
-                return checkForParent(parent, heading);
-              }
-              heading.parent = parent.key;
-              parent.children.push(heading);
-              return;
-            }
+    headings.forEach((heading) => {
+      current = current || heading;
+      const checkForParent = (current: Heading, heading: Heading): void => {
+        if (current.parent) {
+          const parent = headingsMap[current.parent];
+          if (parent && parent.typeLevel >= heading.typeLevel) {
+            return checkForParent(parent, heading);
           }
-          // If no parent, push to root
-          tree.push(heading);
-        };
-        switch (true) {
-          // If the heading is smaller than the current heading, it's a child
-          case parseInt(heading.type.charAt(1)) > parseInt(current.type.charAt(1)):
-            heading.parent = current.key;
-            current.children.push(heading);
-            break;
-          // If the heading is the same level as the current heading, check for a parent
-          case parseInt(heading.type.charAt(1)) === parseInt(current.type.charAt(1)):
-            checkForParent(current, heading);
-            break;
-          // Fall back to checking for a parent
-          default:
-            checkForParent(current, heading);
-            break;
+          heading.parent = parent.key;
+          parent.children.push(heading);
+          return;
         }
-        current = heading;
-      });
-      resolve(tree);
+        // If no parent, push to root
+        tree.push(heading);
+      };
+      switch (true) {
+        case heading.typeLevel > current.typeLevel:
+          heading.parent = current.key;
+          current.children.push(heading);
+          break;
+        case heading.typeLevel === current.typeLevel:
+          checkForParent(current, heading);
+          break;
+        default:
+          checkForParent(current, heading);
+          break;
+      }
+      current = heading;
     });
+
+    return tree;
   };
 
   return makeTree(headings);

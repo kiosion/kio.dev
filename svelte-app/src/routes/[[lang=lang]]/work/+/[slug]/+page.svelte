@@ -25,11 +25,11 @@
 </svelte:head>
 
 <IconHeader icon="label" text={$t("Recent '{tag}' work", { tag: pageTitle })} />
-{#if projects?.data?.length}
+{#if projects?.length}
   <div
     class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
   >
-    {#each projects.data as project}
+    {#each projects as project}
       <ListItem {project} />
     {/each}
   </div>

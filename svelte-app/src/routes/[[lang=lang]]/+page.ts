@@ -8,14 +8,17 @@ import type { AuthorDocument } from '$types';
 export const ssr = !(ENV === 'testing');
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
-  await parent();
-
-  const about = await Store.findOne<AuthorDocument>(fetch, 'about', {
-    lang: params.lang ?? 'en'
-  }).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
-  });
+  const parentData = await parent(),
+    about =
+      parentData?.author ??
+      (await Store.findOne<AuthorDocument>(fetch, 'about', {
+        lang: params.lang ?? 'en'
+      })
+        .then((res) => res?.data)
+        .catch((err: unknown) => {
+          Logger.error(err as string);
+          return undefined;
+        }));
 
   return { about };
 };

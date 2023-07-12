@@ -6,41 +6,62 @@ import Store from '$lib/store';
 import { config } from '$stores/config';
 
 import type { PageLoad } from './$types';
-import type { AuthorDocument, ProjectDocument, ResData, ResDataMany } from '$types';
+import type { AuthorDocument, ProjectDocument } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
-  await parent();
+  const parentData = await parent(),
+    aboutData = parentData?.author,
+    currentConfig = parentData?.config?.data ?? get(config)?.data;
 
-  const currentConfig = get(config);
+  const promiseArray = [];
 
-  let pinned: ResData<ProjectDocument> | undefined;
-
-  if (currentConfig?.data?.pinnedProject?._ref) {
-    pinned = await Store.findOne<ProjectDocument>(fetch, 'project', {
-      id: currentConfig.data.pinnedProject._ref,
-      lang: params.lang ?? 'en'
-    }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+  if (!aboutData) {
+    promiseArray.push(
+      Store.findOne<AuthorDocument>(fetch, 'about', {
+        lang: params.lang ?? 'en'
+      })
+        .then((res) => res?.data)
+        .catch((err: unknown) => {
+          Logger.error(err as string);
+          return undefined;
+        })
+    );
+  } else {
+    promiseArray.push(Promise.resolve(aboutData));
   }
 
-  const about = await Store.findOne<AuthorDocument>(fetch, 'about').catch(
-    (err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    }
-  );
-
-  const projects: ResDataMany<ProjectDocument> | undefined =
-    await Store.find<ProjectDocument>(fetch, 'project', {
+  promiseArray.push(
+    Store.find<ProjectDocument>(fetch, 'project', {
       ...DEFAULT_PROJECT_QUERY_PARAMS,
       limit: RECENT_PROJECTS_COUNT,
       lang: params.lang ?? 'en'
-    }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+    })
+      .then((res) => res?.data)
+      .catch((err: unknown) => {
+        Logger.error(err as string);
+        return undefined;
+      })
+  );
+
+  if (currentConfig?.pinnedProject?._ref) {
+    promiseArray.push(
+      Store.findOne<ProjectDocument>(fetch, 'project', {
+        id: currentConfig.pinnedProject._ref,
+        lang: params.lang ?? 'en'
+      })
+        .then((res) => res?.data)
+        .catch((err: unknown) => {
+          Logger.error(err as string);
+          return undefined;
+        })
+    );
+  }
+
+  const [about, projects, pinned] = (await Promise.all(promiseArray)) as [
+    AuthorDocument | undefined,
+    ProjectDocument[] | undefined,
+    ProjectDocument | undefined
+  ];
 
   return { about, pinned, projects };
 };

@@ -2,8 +2,10 @@ import { getHeadings } from '$helpers/pt';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
+import { error } from '@sveltejs/kit';
+
 import type { PageLoad } from './$types';
-import type { ProjectDocument, PTBlock, ResData } from '$types';
+import type { ProjectDocument, ResData } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
@@ -17,7 +19,13 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       return undefined;
     });
 
-  const headings = await getHeadings((project?.data.body ?? []) as PTBlock[]);
+  if (!project) {
+    throw error(404, {
+      message: "Sorry, that project couldn't be found or doesn't exist"
+    });
+  }
+
+  const headings = getHeadings(project?.data.body ?? []);
 
   return { project, headings };
 };

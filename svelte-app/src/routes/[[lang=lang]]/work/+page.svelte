@@ -6,14 +6,11 @@
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { t } from '$i18n';
-  import { RECENT_PROJECTS_COUNT } from '$lib/consts';
-  import SFX from '$lib/sfx';
 
   import Timeline from '$components/about/timeline.svelte';
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import ListItem from '$components/lists/project-item.svelte';
 
   import type { PageData } from './$types';
@@ -49,23 +46,23 @@
 
 <IconHeader icon="briefcase" text={$t("Where I've worked")} />
 <div class="ml-2 w-full max-w-[42rem]">
-  <Timeline data={about?.data.timeline} />
+  <Timeline data={about?.timeline} />
 </div>
 
 <IconHeader icon="bulletlist" text={$t("What I've worked on")} />
-{#if pinned?.data}
+{#if pinned}
   <div class="mt-4">
-    <ListItem project={pinned.data} />
+    <ListItem project={pinned} />
   </div>
 
   <Divider />
 {/if}
-{#if projects?.data?.length}
+{#if projects?.length}
   <div
     class="mt-6 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
   >
-    {#each projects.data as project}
-      {#if project._id !== pinned?.data?._id}
+    {#each projects as project}
+      {#if project._id !== pinned?._id}
         <ListItem {project} />
       {/if}
     {/each}
@@ -74,16 +71,4 @@
   <div class="flex w-full flex-row items-center justify-center">
     <EmptyContent />
   </div>
-{/if}
-{#if projects?.meta?.total > RECENT_PROJECTS_COUNT}
-  <Hoverable>
-    <a
-      href="/work/1"
-      class="mt-8 block w-fit"
-      aria-label={$t('View more projects')}
-      on:click={() => SFX.click.play()}
-    >
-      <IconHeader icon="ArrowRight" text={$t('View more')} />
-    </a>
-  </Hoverable>
 {/if}
