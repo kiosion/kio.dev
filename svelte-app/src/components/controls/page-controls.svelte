@@ -60,11 +60,9 @@
             >
               <Icon
                 icon={position === 'bottom' ? 'ArrowDown' : 'ArrowUp'}
-                classNames="text-stone-500 dark:text-stone-100/60"
+                classNames="text-dark/70 dark:text-light/70"
               />
-              <p
-                class="ml-4 w-fit font-code text-base text-stone-500 dark:text-stone-100/60"
-              >
+              <p class="ml-4 w-fit font-code text-base text-dark/70 dark:text-light/70">
                 {$t(actionText)}
               </p>
             </div>
@@ -109,8 +107,8 @@
 </Breakpoints>
 
 <style lang="scss">
-  $colourLight: #f5f5f4;
-  $colourDark: #1c1917;
+  @import '../../styles/colors';
+
   $boxShadowSpread: 28px 0px 42px 48px;
 
   .page-controls {
@@ -122,7 +120,7 @@
         @apply absolute left-0 right-0 z-[2] transition-[box-shadow];
 
         height: 0px;
-        box-shadow: $boxShadowSpread $colourLight;
+        box-shadow: $boxShadowSpread $light;
       }
       div:not(.pseudo-bg-shadow) {
         @apply z-[3];
@@ -148,7 +146,7 @@
       &-top,
       &-bottom {
         .pseudo-bg-shadow {
-          box-shadow: $boxShadowSpread $colourDark;
+          box-shadow: $boxShadowSpread $black;
         }
       }
     }

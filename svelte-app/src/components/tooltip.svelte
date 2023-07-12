@@ -54,9 +54,10 @@
       'py-1',
       'px-2',
       'shadow-md',
-      'bg-stone-200',
-      'text-stone-900',
-      'dark:bg-stone-300',
+      'bg-light',
+      'text-dark',
+      'dark:bg-gray',
+      'dark:text-light',
       'font-code',
       'text-sm'
     );

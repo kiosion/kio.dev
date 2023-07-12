@@ -91,10 +91,10 @@
 
 <style lang="scss">
   a {
-    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-stone-600 transition-[color];
+    @apply relative w-full rounded-[0.1rem] py-3 font-mono text-base text-dark/80 transition-[color];
 
     &.active {
-      @apply text-stone-800;
+      @apply text-dark;
     }
     &.first {
       @apply -mt-2;
@@ -116,7 +116,7 @@
   }
 
   .indicator {
-    @apply absolute rounded-full bg-violet-400 transition-colors duration-150;
+    @apply absolute rounded-full bg-accent-light transition-colors duration-150;
     width: 6px;
     height: 6px;
     // Account for font leading :/
@@ -125,24 +125,24 @@
     transform: translate(-50%, -50%);
 
     &.hovered {
-      @apply bg-violet-400/60;
+      @apply bg-accent-light/60;
     }
   }
 
   :global(.dark) {
     a {
-      @apply text-stone-300;
+      @apply text-light/80;
 
       &.active {
-        @apply text-stone-100;
+        @apply text-light;
       }
     }
 
     .indicator {
-      @apply bg-violet-300;
+      @apply bg-accent-dark;
 
       &.hovered {
-        @apply bg-violet-300/60;
+        @apply bg-accent-dark/60;
       }
     }
   }

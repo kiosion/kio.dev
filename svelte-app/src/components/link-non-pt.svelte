@@ -17,8 +17,8 @@
       href={$linkTo(href)}
       {target}
       rel={external ? 'noopener noreferrer' : undefined}
-      class="underlined from-violet-300 {hovered
-        ? 'active dark:text-stone-900'
+      class="underlined from-accent-light dark:from-accent-dark {hovered
+        ? 'active text-light dark:text-dark'
         : ''} focusOutline-sm -mx[2px] rounded-sm px-[2px]"
       tabindex="0"
     >

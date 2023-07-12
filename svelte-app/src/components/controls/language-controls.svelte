@@ -103,11 +103,11 @@
       @apply px-1;
 
       &.active {
-        @apply text-stone-900;
+        @apply text-dark;
       }
     }
     &:not(.forNav) {
-      @apply decoration-violet-400 decoration-2;
+      @apply decoration-accent-light decoration-2;
 
       &.active {
         @apply underline;
@@ -119,11 +119,11 @@
     a {
       &.forNav {
         &.active {
-          @apply text-stone-100;
+          @apply text-light;
         }
       }
       &:not(.forNav) {
-        @apply decoration-violet-300;
+        @apply decoration-accent-dark;
       }
     }
   }

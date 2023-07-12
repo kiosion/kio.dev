@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { getContext, onDestroy, onMount } from 'svelte';
 
+  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { attemptScroll } from '$helpers/scrollTo';
   import { t } from '$i18n';
@@ -27,19 +28,48 @@
           tag.title && acc.push(tag.title.toLowerCase());
           return acc;
         }, [] as string[]);
-      })(data?.tags)?.join(', ') as string) + ', ' || '';
+      })(data?.tags)?.join(', ') as string) + ', ' || '',
+    scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)();
+
+  let isAtTop = true,
+    timer: ReturnType<typeof setTimeout> | undefined,
+    pageContainer: HTMLDivElement;
+
+  const updateTop = (_e?: Event) => (
+    clearTimeout(timer),
+    (timer = setTimeout(
+      () =>
+        (isAtTop =
+          !pageContainer ||
+          Math.floor(
+            Math.round(pageContainer.getBoundingClientRect().top) -
+              Math.round(pageContainer.offsetTop)
+          ) >= -38),
+      250
+    ))
+  );
 
   onMount(() => {
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
-    pageHeading.set(pageName);
 
     attemptScroll($page);
+    updateTop();
+
+    scrollContainer?.addEventListener('scroll', updateTop);
+    scrollContainer?.addEventListener('wheel', updateTop);
+  });
+
+  onDestroy(() => {
+    scrollContainer?.removeEventListener('scroll', updateTop);
+    scrollContainer?.removeEventListener('wheel', updateTop);
+    clearTimeout(timer);
   });
 
   $: $page && attemptScroll($page);
   $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
-    data?.title ? ` | ${data.title}` : ''
+    !isAtTop && data?.title ? ` | ${data.title}` : ''
   }`;
+  $: browser && pageHeading.set(pageName);
   $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
     ? data.desc
@@ -67,7 +97,7 @@
   <slot name="meta" />
 </svelte:head>
 
-<div data-test-route={isPost ? 'blog' : 'work'}>
+<div data-test-route={isPost ? 'blog' : 'work'} bind:this={pageContainer}>
   {#if data}
     <ContentWrapper>
       <Content {model} {data} {headings} {routeFetch} />

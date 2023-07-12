@@ -102,8 +102,7 @@
           }
         }
       } catch (e) {
-        imp = (await import('../../node_modules/svelte-highlight/languages/markdown.js'))
-          .markdown;
+        imp = (await import('svelte-highlight/languages/markdown')).markdown;
       }
       return imp as LanguageType;
     })();
@@ -138,7 +137,7 @@
   {/if}
   {#if showClipboard && !$navigating}
     <Hoverable>
-      <Tooltip text={$t('Copy to clipboard')} position="top">
+      <Tooltip text={$t('Copy to clipboard')} position="left" delay={150} fixed>
         {#key copied}
           <button
             class="codeBlock--copyButton focusOutline-sm"

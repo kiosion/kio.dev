@@ -28,13 +28,13 @@
   const getClassNames = (pos: typeof position) => {
     switch (pos) {
       case 'first':
-        return 'rounded-t-xl mt-2 pb-4 pt-5';
+        return 'rounded-t-md mt-2 pb-4 pt-5';
       case 'middle':
         return 'py-4 -mt-[1px]';
       case 'last':
-        return 'rounded-b-xl mb-2 pt-4 pb-5 -mt-[1px]';
+        return 'rounded-b-md mb-2 pt-4 pb-5 -mt-[1px]';
       case 'solo':
-        return 'rounded-xl my-2 py-4';
+        return 'rounded-md my-2 py-4';
     }
   };
 
@@ -46,8 +46,8 @@
     class="flex h-fit w-full flex-col items-stretch justify-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
       position
     )} {hovered
-      ? 'border-stone-400/80 bg-stone-200/80 dark:border-stone-500/80 dark:bg-stone-700/20'
-      : 'border-stone-400/60 bg-stone-200/40 dark:border-stone-500/60 dark:bg-stone-900/40'} focusOutline -ml-[1px] transition-[background-color]"
+      ? 'border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40'
+      : 'border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20'} focusOutline -ml-[1px] transition-[background-color,border-color]"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
@@ -66,21 +66,21 @@
     </h1>
     {#if post.desc}
       <p
-        class="my-0.5 mr-4 line-clamp-1 w-fit overflow-hidden text-ellipsis font-sans text-base text-stone-700 dark:text-stone-200 md:line-clamp-2"
+        class="my-0.5 mr-4 line-clamp-1 w-fit overflow-hidden text-ellipsis font-sans text-base text-dark/80 dark:text-light/90 md:line-clamp-2"
       >
         {post.desc}
       </p>
     {/if}
     <div
-      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-stone-700 dark:text-stone-200"
+      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-dark/80 dark:text-light/90"
     >
       {#if date}
         <p>{date}</p>
-        <BulletPoint colors="bg-stone-600 dark:bg-stone-300" />
+        <BulletPoint />
       {/if}
       <p>{$t('{length} min read', { length: Math.floor(readingTime / 60) })}</p>
-      {#if post.tags && post.tags.length > 0}
-        <BulletPoint colors="bg-stone-600 dark:bg-stone-300" />
+      {#if post.tags?.length}
+        <BulletPoint />
         <Tags model="post" data={post.tags} />
       {/if}
     </div>

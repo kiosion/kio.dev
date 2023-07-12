@@ -6,6 +6,17 @@ module.exports = {
   content: ['./src/**/*.{html,svelte,js,ts}'],
   theme: {
     extend: {
+      colors: {
+        black: '#000b00',
+        white: '#f3f3f2',
+        dark: '#16160e',
+        light: '#e5e4e6',
+        gray: '#2b2b2b',
+        accent: {
+          light: '#6c848d',
+          dark: '#b7dbcc'
+        }
+      },
       fontFamily: {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
         mono: ['Work Sans', ...defaultTheme.fontFamily.mono],

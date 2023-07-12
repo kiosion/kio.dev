@@ -5,6 +5,6 @@
 
 <span
   class="my-6 block h-[1px] w-full {accent
-    ? 'bg-violet-500'
-    : 'bg-stone-400 dark:bg-stone-500/60'} {classes}"
+    ? 'bg-accent-light dark:bg-accent-dark'
+    : 'bg-dark/40 dark:bg-light/40'} {classes}"
 />

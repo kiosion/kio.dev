@@ -105,20 +105,20 @@
 
 <style lang="scss">
   span {
-    @apply absolute bg-violet-400  transition-colors duration-150;
+    @apply absolute bg-accent-light  transition-colors duration-150;
     right: -1px;
 
     &.hovered {
-      @apply bg-violet-400/70;
+      @apply bg-accent-light/70;
     }
   }
 
   :global(.dark) {
     span {
-      @apply bg-violet-300;
+      @apply bg-accent-dark;
 
       &.hovered {
-        @apply bg-violet-300/70;
+        @apply bg-accent-dark/70;
       }
     }
   }

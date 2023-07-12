@@ -7,7 +7,7 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Settings from '$stores/settings';
 
-  export let url: URL | undefined;
+  export let pathname: string | undefined;
 
   const { reduceMotion } = Settings;
 
@@ -16,8 +16,8 @@
 
   let navDir: 'forward' | 'backward' = 'forward';
 
-  $: ({ pathname } = url || { pathname: '' });
-  $: navDir = onNav(pathname);
+  // $: ({ pathname } = url || { pathname: '' });
+  $: navDir = onNav(pathname || '');
 </script>
 
 <!-- TODO: This method is broken (& has been for a while), see https://github.com/sveltejs/svelte/issues/6152 -->
@@ -47,6 +47,6 @@
 
 <style lang="scss">
   div {
-    @apply absolute top-0 left-0 h-full w-full;
+    @apply absolute left-0 top-0 h-full w-full;
   }
 </style>

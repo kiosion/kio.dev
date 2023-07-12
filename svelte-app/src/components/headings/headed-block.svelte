@@ -14,14 +14,14 @@
 <style lang="scss">
   section {
     div {
-      @apply mx-1 font-sans text-base text-stone-700;
+      @apply mx-1 font-sans text-base text-dark/90;
     }
   }
 
   :global(.dark) {
     section {
       div {
-        @apply text-stone-200;
+        @apply text-light/90;
       }
     }
   }

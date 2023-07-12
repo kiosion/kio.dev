@@ -47,6 +47,7 @@ for (const key in defaultSettings) {
         get(setting)
       ]);
       localStorage.setItem('settings', btoa(JSON.stringify(settings)));
+      document.cookie = `settings=${btoa(JSON.stringify(settings))}; path=/`;
     }
   });
 }

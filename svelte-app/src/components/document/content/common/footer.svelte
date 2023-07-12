@@ -35,7 +35,7 @@
               href={link.url}
               target={'_blank'}
               rel={'noopener noreferrer'}
-              class="underlined from-violet-300 {link.hovered
+              class="underlined from-accent-light dark:from-accent-dark {link.hovered
                 ? 'active dark:text-gray-800'
                 : ''} focusOutline-sm -mx[2px] rounded-sm px-[2px]"
               tabindex="0"

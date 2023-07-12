@@ -64,12 +64,12 @@
 
 <style lang="scss">
   div {
-    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg bg-stone-200 py-2 text-stone-900 shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-stone-500/50;
+    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg bg-light py-2 text-dark shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-dark/40;
   }
 
   :global(.dark) {
     div {
-      @apply bg-stone-700 text-stone-200 shadow-stone-500/40;
+      @apply bg-gray text-light shadow-gray/80;
     }
   }
 </style>

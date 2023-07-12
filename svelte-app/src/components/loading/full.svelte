@@ -9,7 +9,8 @@
 
   import Line from './animations/line.svelte';
 
-  export let classes = 'transparent',
+  export let theme = 'dark',
+    classes = 'transparent',
     width = '400px';
 
   let phrase = `${
@@ -21,12 +22,16 @@
 
 <svelte:body use:classList={'overflow-y-hidden'} />
 
-<div data-test-id="loader-full" out:fade={{ duration: 200, delay: 200 }}>
+<div
+  class={`loader-${theme}`}
+  data-test-id="loader-full"
+  out:fade={{ duration: 200, delay: 200 }}
+>
   <span out:fade={{ duration: 200 }}>
-    <Line {width} {classes} />
+    <Line {theme} {width} {classes} />
   </span>
   {#if phrase !== ''}
-    <p class="w-fit font-mono text-base text-stone-200" out:fade={{ duration: 200 }}>
+    <p out:fade={{ duration: 200 }}>
       {phrase}
     </p>
   {/if}
@@ -34,14 +39,28 @@
 
 <style lang="scss">
   div {
-    @apply fixed top-0 left-0 z-[100] grid grid-rows-3 gap-4 bg-stone-900;
+    @apply fixed left-0 top-0 z-[100] grid grid-rows-3 gap-4;
 
     height: 100vh;
     width: 100vw;
+
+    &.loader-dark {
+      @apply bg-black;
+    }
+    &.loader-light {
+      @apply bg-light;
+    }
   }
 
   p {
-    @apply self-center justify-self-center;
+    @apply w-fit self-center justify-self-center font-mono text-base transition-none;
     grid-row: 3;
+
+    .loader-dark & {
+      @apply text-light/80;
+    }
+    .loader-light & {
+      @apply text-dark/80;
+    }
   }
 </style>

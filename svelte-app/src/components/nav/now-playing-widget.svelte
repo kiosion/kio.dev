@@ -53,23 +53,23 @@
 
 <style lang="scss">
   .nowPlaying--container {
-    @apply mb-4 flex w-full flex-row items-center gap-3 border-b border-stone-400/50 pb-5;
+    @apply mb-4 flex w-full flex-row items-center gap-3 border-b border-dark/40 pb-5;
 
     span {
       @apply relative h-fit w-fit flex-shrink-0;
 
       .cover {
-        @apply aspect-square w-12 select-none rounded-sm;
+        @apply aspect-square w-12 select-none rounded-sm border border-dark/40;
       }
       .logo {
-        @apply absolute h-5 w-5 select-none rounded-full bg-stone-100 transition-[background-color];
+        @apply absolute h-5 w-5 select-none rounded-full bg-light transition-[background-color];
         padding: 3px;
         bottom: -5px;
         right: -5px;
       }
     }
     div {
-      @apply flex flex-col gap-2 font-sans text-stone-700;
+      @apply flex flex-col gap-2 font-sans text-dark/80;
 
       .text {
         &-title {
@@ -86,14 +86,18 @@
 
   :global(.dark) {
     .nowPlaying--container {
-      @apply border-stone-500/60;
+      @apply border-light/40;
 
       div {
-        @apply text-stone-200;
+        @apply text-light/90;
       }
 
       .logo {
-        @apply bg-stone-900;
+        @apply bg-dark;
+      }
+
+      span .cover {
+        @apply border-light/40;
       }
     }
   }
