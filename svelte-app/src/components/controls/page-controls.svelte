@@ -75,7 +75,7 @@
             <Hoverable>
               <Tooltip text={$t('Scroll to top')} position="bottom" fixed>
                 <button
-                  class="focusOutline flex w-fit cursor-pointer select-none flex-row items-center gap-4 rounded-sm text-center font-code text-lg drop-shadow-md md:max-w-[14rem] lg:max-w-[30rem] 2xl:max-w-[54rem]"
+                  class="focusOutline flex w-fit cursor-pointer select-none flex-row items-center gap-4 rounded-sm text-center font-code text-lg drop-shadow-md md:max-w-[18rem] lg:max-w-[30rem] xl:max-w-[42rem]"
                   aria-label="Scroll to top"
                   on:click={() => appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}
                   on:keydown={(e) =>
@@ -83,7 +83,7 @@
                     appBody?.scrollTo?.({ top: 0, behavior: 'smooth' })}
                 >
                   <p
-                    class="block w-fit overflow-hidden overflow-ellipsis whitespace-nowrap md:max-w-[10rem] lg:max-w-[30rem] 2xl:max-w-[54rem]"
+                    class="block w-fit overflow-hidden overflow-ellipsis whitespace-nowrap"
                   >
                     {$pageHeading}
                   </p>
