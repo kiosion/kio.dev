@@ -10,8 +10,7 @@
   import { BASE_ANIMATION_DURATION, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
   import { navLinks } from '$stores/navigation';
 
-  export let container: HTMLElement,
-    showHoverState = false;
+  export let container: HTMLElement;
 
   const topValue = tweened(0, {
       duration: 350,
@@ -23,7 +22,6 @@
     });
 
   let activeSizeOffset = -6,
-    hoverSizeOffset = -12,
     normalSizeOffset = -20,
     isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT),
     containerBoundingRect = container?.getBoundingClientRect();
@@ -33,14 +31,6 @@
   };
 
   const getActiveLink = () => {
-    if (showHoverState) {
-      const hoveredLink = $navLinks.find((link) => link.hovered);
-
-      if (hoveredLink) {
-        return { status: 'hover' as const, link: hoveredLink };
-      }
-    }
-
     const activeLink = $navLinks.find((link) => link.active);
 
     if (activeLink) {
@@ -76,10 +66,6 @@
     await new Promise((resolve) => setTimeout(resolve, BASE_ANIMATION_DURATION / 2));
 
     switch (status) {
-      case 'hover':
-        topValue.set(top - hoverSizeOffset / 2);
-        heightValue.set(height + hoverSizeOffset);
-        break;
       case 'root':
         topValue.set(top - activeSizeOffset / 2);
         heightValue.set(height + activeSizeOffset);
@@ -95,31 +81,19 @@
   $: setTimeout(() => (containerBoundingRect = container?.getBoundingClientRect()), 50),
     $isDesktop;
   $: setPositionalClassNames(), containerBoundingRect, $page?.url, $navLinks;
-  $: isHoveringLink = showHoverState && $navLinks.some((link) => link.hovered);
 </script>
 
-<span
-  class:hovered={isHoveringLink}
-  style="top: {$topValue}px; height: {$heightValue}px; width: 2px;"
-/>
+<span style="top: {$topValue}px; height: {$heightValue}px; width: 2px;" />
 
 <style lang="scss">
   span {
     @apply absolute bg-accent-light  transition-colors duration-150;
     right: -1px;
-
-    &.hovered {
-      @apply bg-accent-light/70;
-    }
   }
 
   :global(.dark) {
     span {
       @apply bg-accent-dark;
-
-      &.hovered {
-        @apply bg-accent-dark/70;
-      }
     }
   }
 </style>
