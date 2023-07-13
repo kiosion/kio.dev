@@ -27,12 +27,10 @@
         class:active={heading.active}
         on:click={() => {
           sfx.click.play();
-          dispatch('click', heading);
         }}
         on:keydown={(e) => {
           if (e.code === 'Enter' || e.code === 'Space') {
             e.preventDefault();
-            sfx.click.play();
             dispatch('click', heading);
           }
         }}
