@@ -100,9 +100,7 @@ export const BodyBlocks = [
   },
   Code(),
   { type: 'divider' },
-  { type: 'header' },
-  { type: 'replitEmbed' },
-  { type: 'svelteEmbed' }
+  { type: 'header' }
 ];
 
 export default {
