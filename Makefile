@@ -31,7 +31,7 @@ api:
 sanity-%: SHELL:=/bin/bash
 sanity-%:
 	@make install-sanity
-	@cd ./sanity-cms && SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,prod) pnpm dev
+	@cd ./sanity-cms && SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,production) pnpm dev
 
 web: SHELL:=/bin/bash
 web: install-web
