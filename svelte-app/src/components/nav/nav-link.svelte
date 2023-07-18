@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
 
   import { goto } from '$app/navigation';
@@ -20,7 +21,8 @@
     navigatingIsActive = false;
 
   let isHovered = false,
-    isActive = false;
+    isActive = false,
+    linkEl: HTMLAnchorElement;
 
   const updateActive = () => {
       $navLinks[index].active !== isActive &&
@@ -41,6 +43,10 @@
       }
       goto(link.url).catch(() => undefined);
     };
+
+  onMount(() => {
+    $navLinks[index].element = linkEl;
+  });
 
   $: splitPath = $page?.url.pathname.split('/') || [];
   $: truePath = link.url.slice($isLocalized ? 4 : 1);
@@ -77,6 +83,7 @@
         handleAction(e);
       }
     }}
+    bind:this={linkEl}
   >
     <span>{$t(link.name)}</span>
     {#if mobile && (isActive || link.hovered)}

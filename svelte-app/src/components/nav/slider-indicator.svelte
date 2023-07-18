@@ -1,13 +1,12 @@
 <script lang="ts">
+  /* eslint-disable @typescript-eslint/no-non-null-assertion */
   import { cubicOut } from 'svelte/easing';
   import { tweened } from 'svelte/motion';
-
-  import { useMediaQuery } from 'svelte-breakpoints';
 
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { isLocalized } from '$i18n';
-  import { BASE_ANIMATION_DURATION, DEFAULT_DESKTOP_BREAKPOINT } from '$lib/consts';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { navLinks } from '$stores/navigation';
 
   export let container: HTMLElement;
@@ -22,48 +21,54 @@
     });
 
   let activeSizeOffset = -6,
-    normalSizeOffset = -20,
-    isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT),
-    containerBoundingRect = container?.getBoundingClientRect();
+    normalSizeOffset = -20;
 
   const getTrueLinkUrl = (url: string) => {
     return url.slice($isLocalized ? 4 : 1);
   };
 
-  const getActiveLink = () => {
+  const getActiveLinks = () => {
     const activeLink = $navLinks.find((link) => link.active);
 
     if (activeLink) {
       const isRoot = truePageUrl === getTrueLinkUrl(activeLink.url);
       return {
         status: isRoot ? ('root' as const) : ('sub' as const),
-        link: activeLink
+        active: activeLink,
+        rest: $navLinks.slice(0, $navLinks.indexOf(activeLink)) || []
       };
     }
 
-    return null;
+    return { status: 'root', active: null, rest: [] };
   };
 
   const setPositionalClassNames = async () => {
-    if (!browser || !containerBoundingRect) {
+    if (!browser || !container) {
       return;
     }
 
-    const { status, link } = getActiveLink() || {};
+    const { status, active, rest } = getActiveLinks() || {};
 
-    const linkElement = container?.querySelector(
-      `a[href="${link?.url}"]`
-    ) satisfies HTMLAnchorElement | null;
+    const activeElement = active?.element,
+      htmlElements = rest?.map((link) => link.element);
 
-    if (!linkElement) {
+    if (!activeElement) {
       return;
     }
-
-    let { top, height } = linkElement.getBoundingClientRect();
-    // Accounting for container's top voffset
-    top -= containerBoundingRect.top;
 
     await new Promise((resolve) => setTimeout(resolve, BASE_ANIMATION_DURATION / 2));
+
+    const top =
+        htmlElements.reduce(
+          (acc, link) => acc + (link?.getBoundingClientRect?.()?.height ?? 0),
+          0
+        ) -
+        parseInt(
+          window.getComputedStyle(activeElement).paddingTop.replace('px', '') ?? 0 / 2
+        ) +
+        // account for font-size, this whole file sucks but it works
+        5,
+      height = activeElement?.getBoundingClientRect?.()?.height ?? 0;
 
     switch (status) {
       case 'root':
@@ -78,9 +83,7 @@
   };
 
   $: truePageUrl = getTrueLinkUrl($page?.url.pathname);
-  $: setTimeout(() => (containerBoundingRect = container?.getBoundingClientRect()), 50),
-    $isDesktop;
-  $: setPositionalClassNames(), containerBoundingRect, $page?.url, $navLinks;
+  $: setPositionalClassNames(), container, $page?.url, $navLinks;
 </script>
 
 <span style="top: {$topValue}px; height: {$heightValue}px; width: 2px;" />

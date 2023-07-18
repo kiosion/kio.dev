@@ -18,6 +18,6 @@
 
 <style lang="scss">
   ul {
-    @apply relative flex flex-col items-start pt-5 text-base;
+    @apply relative mt-5 flex flex-col items-start text-base;
   }
 </style>

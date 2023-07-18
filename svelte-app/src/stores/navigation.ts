@@ -11,7 +11,13 @@ const pageHeading = writable('');
 const nowPlayingData = writable<Data | undefined>(undefined);
 
 const navLinks = writable<
-  { name: string; url: string; active: boolean; hovered: boolean }[]
+  {
+    name: string;
+    url: string;
+    active: boolean;
+    hovered: boolean;
+    element?: HTMLAnchorElement;
+  }[]
 >([]);
 
 export { navLinks, navOpen, navOptions, nowPlayingData, pageHeading };
