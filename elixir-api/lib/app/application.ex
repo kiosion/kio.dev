@@ -82,7 +82,7 @@ defmodule Hexerei.Application do
         String.to_integer(var)
 
       nil ->
-        Logger.warn("No port specified, falling back to 8080")
+        Logger.warning("No port specified, falling back to 8080")
         8080
 
       var ->

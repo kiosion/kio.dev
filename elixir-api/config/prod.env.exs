@@ -1,4 +1,4 @@
-import Mix.Config
+import Config
 
 config :hexerei,
   port: {"PORT", :system},
