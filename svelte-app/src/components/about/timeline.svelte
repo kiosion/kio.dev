@@ -73,7 +73,7 @@
             width={24}
             height={24}
             icon="ArrowRight"
-            classNames="text-dark/40 dark:text-light/40 translate-y-[1px]"
+            classNames="text-dark/40 dark:text-light/40 translate-y-[2.5px] translate-x-[1px]"
           />
           <div class="mr-6 flex w-full flex-col items-start justify-start">
             <h1 class="select-none font-code text-base text-dark/90 dark:text-light/90">

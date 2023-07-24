@@ -46,8 +46,14 @@
     class="flex h-fit w-full flex-col items-stretch justify-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
       position
     )} {hovered
-      ? 'border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40'
-      : 'border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20'} focusOutline -ml-[1px] transition-[background-color,border-color]"
+      ? `border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40 ${
+          ['first', 'middle'].includes(position)
+            ? 'dark: border-light/60 border-b-dark/60'
+            : ''
+        }`
+      : `border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20 ${
+          ['first', 'middle'].includes(position) ? '!border-b-transparent' : ''
+        }`} focusOutline -ml-[1px] transition-[background-color,border-color]"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
