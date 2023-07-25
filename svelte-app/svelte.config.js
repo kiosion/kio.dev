@@ -25,7 +25,7 @@ export default {
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
         ? NetlifyAdapter({
             edge: false,
-            split: true
+            split: false
           })
         : NodeAdapter({ out: './dist' }),
     files: {
