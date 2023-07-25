@@ -1,7 +1,8 @@
-import NodeAdapter from '@sveltejs/adapter-node';
-import NetlifyAdapter from '@sveltejs/adapter-netlify';
-import { vitePreprocess } from '@sveltejs/kit/vite';
 import preprocess from 'svelte-preprocess';
+
+import NetlifyAdapter from '@sveltejs/adapter-netlify';
+import NodeAdapter from '@sveltejs/adapter-node';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -22,7 +23,10 @@ export default {
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
-        ? NetlifyAdapter()
+        ? NetlifyAdapter({
+            edge: false,
+            split: true
+          })
         : NodeAdapter({ out: './dist' }),
     files: {
       lib: 'src/lib',

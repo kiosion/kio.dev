@@ -53,23 +53,12 @@ body {
     cursor: wait !important;
   }
   &.is-loading {
-    cursor: progress !important;
+    cursor: wait !important;
 
     & a,
     & button,
     & [role='button'] {
       cursor: wait !important;
-    }
-  }
-  &.custom-cursor {
-    &,
-    &.is-loading,
-    &:not(.is-loaded),
-    .cursor-pointer,
-    a,
-    button,
-    [role='button'] {
-      cursor: none !important;
     }
   }
 }
