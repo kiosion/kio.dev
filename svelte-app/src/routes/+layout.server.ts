@@ -1,3 +1,4 @@
+import { DEFAULT_APP_LANG } from '$lib/consts';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -6,8 +7,10 @@ import type { AuthorDocument } from '$types';
 
 export const trailingSlash = 'ignore';
 
-export const load = (async ({ cookies, url, fetch }) => {
+export const load = (async ({ params, cookies, url, fetch }) => {
   let theme = '';
+
+  const lang = params.lang || DEFAULT_APP_LANG;
 
   const settings = cookies.get('settings');
 
@@ -32,7 +35,7 @@ export const load = (async ({ cookies, url, fetch }) => {
   }
 
   const promises = await Promise.all([
-    Store.findOne<AuthorDocument>(fetch, 'about')
+    Store.findOne<AuthorDocument>(fetch, 'about', { lang })
       .then((res) => res?.data)
       .catch((err: unknown) => {
         Logger.error(err as string);
