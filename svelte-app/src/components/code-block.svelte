@@ -16,6 +16,7 @@
   import Settings from '$stores/settings';
 
   import Hoverable from '$components/hoverable.svelte';
+  import Spinner from '$components/loading/spinner.svelte';
 
   import Icon from './icon.svelte';
   import Tooltip from './tooltip.svelte';
@@ -158,22 +159,28 @@
       class:active={hovered}
       bind:clientHeight={innerHeight}
     >
-      {#await hlLang then resolvedLang}
-        {#if !lang}
-          <svelte:component this={hlAuto} code={content} />
-        {:else if showLineNumbers === true}
-          <svelte:component
-            this={hlHighlight}
-            code={content}
-            language={resolvedLang}
-            let:highlighted
-          >
-            <LineNumbers {highlighted} hideBorder wrapLines />
-          </svelte:component>
-        {:else}
-          <svelte:component this={hlHighlight} code={content} language={resolvedLang} />
-        {/if}
-      {/await}
+      {#if !lang}
+        <svelte:component this={hlAuto} code={content} />
+      {:else}
+        {#await hlLang}
+          <div class="mx-auto my-4 w-fit"><Spinner /></div>
+        {:then resolvedLang}
+          {#if showLineNumbers === true}
+            <svelte:component
+              this={hlHighlight}
+              code={content}
+              language={resolvedLang}
+              let:highlighted
+            >
+              <LineNumbers {highlighted} hideBorder wrapLines />
+            </svelte:component>
+          {:else}
+            <svelte:component this={hlHighlight} code={content} language={resolvedLang} />
+          {/if}
+        {:catch error}
+          <div>Error loading: {error.message}</div>
+        {/await}
+      {/if}
     </div>
   </div>
 </div>
