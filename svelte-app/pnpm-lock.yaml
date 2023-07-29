@@ -72,7 +72,7 @@ devDependencies:
     version: 9.0.1
   '@types/luxon':
     specifier: ^3
-    version: 3.0.0
+    version: 3.3.0
   '@types/randomstring':
     specifier: ^1.1.8
     version: 1.1.8
@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^21.1.2
     version: 21.1.2
   luxon:
-    specifier: ^3.2.1
-    version: 3.2.1
+    specifier: ^3.3.0
+    version: 3.3.0
   netlify-cli:
     specifier: ^15.1.1
     version: 15.1.1(@types/node@20.2.1)
@@ -2140,8 +2140,8 @@ packages:
       '@types/node': 20.2.1
     dev: true
 
-  /@types/luxon@3.0.0:
-    resolution: {integrity: sha512-Lx+EZoJxUKw4dp8uei9XiUVNlgkYmax5+ovqt6Xf3LzJOnWhlfJw/jLBmqfGVwOP/pDr4HT8bI1WtxK0IChMLw==}
+  /@types/luxon@3.3.0:
+    resolution: {integrity: sha512-uKRI5QORDnrGFYgcdAVnHvEIvEZ8noTpP/Bg+HeUzZghwinDlIS87DEenV5r1YoOF9G4x600YsUXLWZ19rmTmg==}
     dev: true
 
   /@types/node@14.18.43:
@@ -3986,7 +3986,7 @@ packages:
     resolution: {integrity: sha512-jbokKWGcyU4gl6jAfX97E1gDpY12DJ1cLJZmoDzaAln/shZ+S3KBFBuA2Q6WeUN4gJf/8klnV1EfvhA2lK5IRQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
-      luxon: 3.2.1
+      luxon: 3.3.0
     dev: true
 
   /cross-fetch@3.1.5:
@@ -7473,8 +7473,8 @@ packages:
     engines: {node: 14 || >=16.14}
     dev: true
 
-  /luxon@3.2.1:
-    resolution: {integrity: sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==}
+  /luxon@3.3.0:
+    resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
     engines: {node: '>=12'}
     dev: true
 
