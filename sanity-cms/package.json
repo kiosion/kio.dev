@@ -13,7 +13,7 @@
     "lint": "pnpm format && pnpm eslint --fix './**/*.{ts,js}'"
   },
   "dependencies": {
-    "@sanity/code-input": "^4.1.0",
+    "@sanity/code-input": "^4.1.1",
     "@sanity/ui": "^1.3.2",
     "@sanity/vision": "^3.14.3",
     "ace-builds": "^1.16.0",
