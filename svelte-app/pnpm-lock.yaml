@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^5.0.4
     version: 5.0.4
   '@iconify/svelte':
-    specifier: ^3.1.0
-    version: 3.1.0(svelte@3.59.1)
+    specifier: ^3.1.4
+    version: 3.1.4(svelte@3.59.1)
   '@poppanator/sveltekit-svg':
     specifier: ^3.0.0
     version: 3.0.0(svelte@3.59.1)(vite@4.4.7)
@@ -926,10 +926,10 @@ packages:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
 
-  /@iconify/svelte@3.1.0(svelte@3.59.1):
-    resolution: {integrity: sha512-G1w1dcO7eiD+JmQJNwNW4qnAn86oQxKLe1P/iAPjJ0qYYuF7Pb60TPrlcj4+2gu4SXe3a0Jrv++8YmceG+gX/g==}
+  /@iconify/svelte@3.1.4(svelte@3.59.1):
+    resolution: {integrity: sha512-YDwQlN46ka8KPRayDb7TivmkAPizfTXi6BSRNqa1IV0+byA907n8JcgQafA7FD//pW5XCuuAhVx6uRbKTo+CfA==}
     peerDependencies:
-      svelte: '>=3'
+      svelte: '*'
     dependencies:
       '@iconify/types': 2.0.0
       svelte: 3.59.1
