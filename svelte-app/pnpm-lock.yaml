@@ -170,8 +170,8 @@ devDependencies:
     specifier: ^3.59.1
     version: 3.59.1
   svelte-body:
-    specifier: ^1.3.6
-    version: 1.3.6
+    specifier: ^1.4.0
+    version: 1.4.0(svelte@3.59.1)
   svelte-breakpoints:
     specifier: 0.2.0
     version: 0.2.0(svelte@3.59.1)
@@ -11015,11 +11015,14 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-body@1.3.6:
-    resolution: {integrity: sha512-wTGLVlhWJPauViy56AdtJop0fTaEJMqnCadjrlhcIe76R+KrnW+QvHBx69Xots8GaXgds8y+yBAr0cV7YNIeGw==}
+  /svelte-body@1.4.0(svelte@3.59.1):
+    resolution: {integrity: sha512-OCxtAozo/HaS57AZJOoARJHrOabjjhob1sLW8JgG+rrvHY0AZquf2Qcn9PT+jpVh9Y6DVNMMMSB1CZxQk5rrPw==}
+    peerDependencies:
+      svelte: ^3.47.0 || ^4.0.0
     dependencies:
       clsx: 1.2.1
       csstype: 3.1.2
+      svelte: 3.59.1
     dev: true
 
   /svelte-breakpoints@0.2.0(svelte@3.59.1):
