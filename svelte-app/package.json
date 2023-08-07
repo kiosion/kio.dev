@@ -58,7 +58,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-svelte": "^2.16.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "highlight.js": "^11.7.0",
+    "highlight.js": "^11.8.0",
     "jsdom": "^22.1.0",
     "luxon": "^3.3.0",
     "netlify-cli": "^15.10.0",
