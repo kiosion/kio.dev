@@ -1,14 +1,8 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
-  import sfx from '$lib/sfx';
-
   import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
   import type { Heading } from '$helpers/pt';
-
-  const dispatch = createEventDispatcher();
 
   export let headings: Heading[],
     classNames = '';
@@ -21,30 +15,13 @@
 >
   {#each localHeadings as heading}
     <Hoverable bind:hovered={heading.active}>
-      <a
-        href={`#${heading.key}`}
-        class="focusOutline-sm"
-        class:active={heading.active}
-        on:click={() => {
-          sfx.click.play();
-        }}
-        on:keydown={(e) => {
-          if (e.code === 'Enter' || e.code === 'Space') {
-            e.preventDefault();
-            dispatch('click', heading);
-          }
-        }}
-      >
+      <a href={`#${heading.key}`} class="focusOutline-sm" class:active={heading.active}>
         <BulletPoint />
         {heading.text}
       </a>
     </Hoverable>
     {#if heading.children.length}
-      <svelte:self
-        headings={heading.children}
-        classNames="ml-6"
-        on:click={(eventData) => dispatch('click', eventData)}
-      />
+      <svelte:self headings={heading.children} classNames="ml-6" />
     {/if}
   {/each}
 </div>

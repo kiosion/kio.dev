@@ -48,7 +48,7 @@
     )} {hovered
       ? `border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40 ${
           ['first', 'middle'].includes(position)
-            ? 'dark: border-light/60 border-b-dark/60'
+            ? 'border-b-dark/60 dark:border-light/60'
             : ''
         }`
       : `border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20 ${
