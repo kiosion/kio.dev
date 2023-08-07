@@ -1,4 +1,5 @@
 {
+  "A bit about me, my work, and what I do": "Un peu à propos de moi, de mon travail et de ce que je fais",
   "A blog post on kio.dev": "Un article de blog sur kio.dev",
   "A collection of my work, open-source contributions, and personal projects": "Une collection de mon travail, de mes contributions open-source et de mes projets personnels",
   "A peek into my current adventures in tech and beyond": "Un aperçu de mes aventures actuelles dans le monde de la technologie et au-delà",
@@ -14,6 +15,7 @@
   "By {author}": "Par {author}",
   "Cancel": "Annuler",
   "Cast": "Cast",
+  "Change language": "Changer de langue",
   "Click me a few times!": "Cliquez-moi quelques fois!",
   "Continue": "Continuer",
   "Copy code block": "Copier le bloc de code",

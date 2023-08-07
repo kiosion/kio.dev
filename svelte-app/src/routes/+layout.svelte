@@ -109,7 +109,7 @@
 />
 
 {#if !appLoaded}
-  <Loader theme={data.theme} />
+  <Loader theme={data.theme} phrase={data.loadingPhrase} />
 {/if}
 
 {#if !$isDesktop && $loading}

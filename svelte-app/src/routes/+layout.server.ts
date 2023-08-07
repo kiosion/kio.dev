@@ -1,4 +1,4 @@
-import { DEFAULT_APP_LANG } from '$lib/consts';
+import { DEFAULT_APP_LANG, LOADING_PHRASES } from '$lib/consts';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -10,9 +10,9 @@ export const trailingSlash = 'ignore';
 export const load = (async ({ params, cookies, url, fetch }) => {
   let theme = '';
 
-  const lang = params.lang || DEFAULT_APP_LANG;
-
-  const settings = cookies.get('settings');
+  const lang = params.lang || DEFAULT_APP_LANG,
+    settings = cookies.get('settings'),
+    loadingPhrase = LOADING_PHRASES[Math.floor(Math.random() * LOADING_PHRASES.length)];
 
   if (settings) {
     try {
@@ -46,5 +46,11 @@ export const load = (async ({ params, cookies, url, fetch }) => {
     })
   ]);
 
-  return { theme, pathname: url.pathname, author: promises[0], config: promises[1] };
+  return {
+    theme,
+    loadingPhrase,
+    pathname: url.pathname,
+    author: promises[0],
+    config: promises[1]
+  };
 }) satisfies LayoutServerLoad;

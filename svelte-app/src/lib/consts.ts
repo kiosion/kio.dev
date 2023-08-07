@@ -177,33 +177,20 @@ export const LANGUAGE_COLOURS = new Proxy(
   }
 );
 
-export const AVAILABLE_OAUTH_PROVIDERS = ['github' as const];
-export const GH_OAUTH_COOKIE_NAME = 'gh_oauth_token';
-export const OAUTH_COOKIE_TTL_S = 1000 * 60 * 60 * 24 * 6; // 6 days
-export const OAUTH_COOKIE_TTL_DAYS = '6d';
-export const OAUTH_REDIRECT_COOKIE_NAME = 'oauth_redirect';
-
 export const LOADING_PHRASES = [
   'Spinning violently around the y-axis',
   'Assembling from source',
   'Hunting for bugs',
   'Dusting the cobwebs',
   'Looking for missing semicolons',
-  'Getting a bigger boat',
   ':3',
-  'Waiting for the eventual heat-death of the universe',
   'Calculating the airspeed velocity of an unladen swallow',
-  'Why do they call it oven when you of in the cold food of out hot eat the food',
   'Brewing some coffee',
-  'Reticulating splines',
-  'Translating from English to English',
   'Browsing StackOverflow',
   'Warming up your CPU',
   'Rotating the earth',
   'Decompiling binaries',
+  'RTFM-ing',
   'Parsing XML',
-  'Asking ChatGPT for help'
+  'Grokking the hypersphere'
 ];
-
-export const TORU_API_URL =
-  'https://toru.kio.dev/api/v1/kiosion?res=json&cover_size=medium';

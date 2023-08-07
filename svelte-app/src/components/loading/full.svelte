@@ -3,21 +3,12 @@
 
   import { classList } from 'svelte-body';
 
-  import { LOADING_PHRASES } from '$lib/consts';
-
-  import seedrandom from 'seedrandom';
-
   import Line from './animations/line.svelte';
 
   export let theme = 'dark',
     classes = 'transparent',
-    width = '400px';
-
-  let phrase = `${
-    LOADING_PHRASES[
-      Math.floor(seedrandom(`${new Date().getMinutes()}`)() * LOADING_PHRASES.length)
-    ]
-  }`;
+    width = '400px',
+    phrase: string;
 </script>
 
 <svelte:body use:classList={'overflow-y-hidden'} />

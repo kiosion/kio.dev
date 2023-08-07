@@ -24,7 +24,6 @@ export default defineConfig(({ command, mode }) => {
         'svelte-highlight',
         'highlight.js',
         'highlight.js/lib/core',
-        'seedrandom',
         '@sanity/image-url'
       ]
     },
