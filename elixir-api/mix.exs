@@ -45,7 +45,6 @@ defmodule Hexerei.MixProject do
 
   defp deps do
     [
-      {:cli_spinners, "~> 0.1.0"},
       {:exsync, "~> 0.2", only: :dev},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:file_system, "~> 0.2", only: :dev},
@@ -53,7 +52,8 @@ defmodule Hexerei.MixProject do
       {:jose, "~> 1.10.1"},
       {:mox, "~> 1.0", only: :test},
       {:plug_cowboy, "~> 2.5"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ssl_verify_fun, "~> 1.1.7", manager: :rebar3, override: true}
     ]
   end
 end

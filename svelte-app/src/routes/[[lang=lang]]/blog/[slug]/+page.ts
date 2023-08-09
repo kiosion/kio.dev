@@ -1,5 +1,4 @@
 import { ENV } from '$lib/env';
-import { getHeadings } from '$lib/helpers/pt';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -20,9 +19,12 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
       idb: btoa(params.slug),
       lang: params.lang ?? 'en'
     }
-  ).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
+  ).catch((err: Error) => {
+    Logger.error('', err);
+
+    throw error(500, {
+      message: 'Sorry, something went wrong loading that post.'
+    });
   });
 
   if (!post) {
@@ -31,7 +33,5 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const headings = getHeadings(post?.data.body ?? []);
-
-  return { post, headings, routeFetch: fetch };
+  return { post, routeFetch: fetch };
 };

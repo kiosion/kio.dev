@@ -113,20 +113,18 @@ defmodule Router.Api.V1.Projects do
       |> handle_sanity_fetch(query_limited, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
-        transformed_result =
-          case params["lang"] do
-            "en" -> result
-            "fr" -> Translate.translate(:projects, result, "fr", "en")
-            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-          end
-
-        case transformed_result do
+        case params["lang"] do
+          "en" -> result
+          "fr" -> Translate.translate(:projects, result, "fr", "en")
+          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+        end
+        |> case do
           {:error, message} ->
             Logger.error("Error fetching projects: #{inspect(message)}")
             result
 
-          _ ->
-            transformed_result
+          translated_result ->
+            translated_result
         end
         |> Map.put("meta", %{
           "total" => parsed_counts["result"]["total"],

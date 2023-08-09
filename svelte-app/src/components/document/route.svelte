@@ -10,12 +10,16 @@
   import Content from '$components/document/content/content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
 
-  import type { Heading } from '$helpers/pt';
-  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
+  import type {
+    DocumentHeadings,
+    PostDocument,
+    ProjectDocument,
+    RouteFetch
+  } from '$types';
 
   export let model: 'post' | 'project',
     data: ProjectDocument | PostDocument | undefined,
-    headings: Heading[] | never[],
+    headings: DocumentHeadings[] | never[],
     routeFetch: RouteFetch | undefined = undefined;
 
   const isPost = model === 'post',

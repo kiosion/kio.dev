@@ -1,5 +1,5 @@
-import type { Document, DocumentTags } from '$types/documents';
-import type { SanityImageObject, SanityAsset } from '$types/sanity';
+import type { Document, DocumentHeadings, DocumentTags } from '$types/documents';
+import type { SanityAsset, SanityImageObject } from '$types/sanity';
 
 export interface ProjectDocument extends Document {
   author?: {
@@ -9,6 +9,7 @@ export interface ProjectDocument extends Document {
     image: SanityImageObject;
     slug: SanityAsset & { current: string };
   };
+  headings: DocumentHeadings[];
   external: boolean;
   externalAuthor?: string;
   externalUrl?: string;

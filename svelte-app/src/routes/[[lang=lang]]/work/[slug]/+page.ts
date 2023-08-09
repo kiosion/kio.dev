@@ -1,4 +1,3 @@
-import { getHeadings } from '$helpers/pt';
 import Logger from '$lib/logger';
 import Store from '$lib/store';
 
@@ -25,7 +24,5 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const headings = getHeadings(project?.data.body ?? []);
-
-  return { project, headings };
+  return { project };
 };

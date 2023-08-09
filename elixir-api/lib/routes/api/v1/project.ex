@@ -1,6 +1,8 @@
 defmodule Router.Api.V1.Project do
   use Router.Api.Base
 
+  alias Hexerei.PT
+
   options "/:id" do
     conn
     |> put_resp_header("access-control-allow-origin", "*")
@@ -68,26 +70,32 @@ defmodule Router.Api.V1.Project do
 
       conn
       |> handle_sanity_fetch(query, fn conn, result, duration ->
-        count =
+        {result, count} =
           case result["result"] do
-            nil -> 0
-            _ -> 1
+            nil ->
+              {result, 0}
+
+            _ ->
+              %{"result" => %{"body" => body}} = result
+
+              {
+                Kernel.put_in(result, ["result", "headings"], PT.build_summary(body)),
+                1
+              }
           end
 
-        transformed_result =
-          case params["lang"] do
-            "en" -> result
-            "fr" -> Translate.translate(:project, result, "fr", "en")
-            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-          end
-
-        case transformed_result do
+        case params["lang"] do
+          "en" -> result
+          "fr" -> Translate.translate(:project, result, "fr", "en")
+          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+        end
+        |> case do
           {:error, message} ->
-            Logger.error("Error fetching post: #{inspect(message)}")
+            Logger.error("Error translating post: #{inspect(message)}")
             result
 
-          _ ->
-            transformed_result
+          translated_result ->
+            translated_result
         end
         |> Map.put("meta", %{
           "total" => count,

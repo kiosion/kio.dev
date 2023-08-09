@@ -1,4 +1,4 @@
-import type { Document, DocumentTags } from '$types/documents';
+import type { Document, DocumentHeadings, DocumentTags } from '$types/documents';
 import type { SanityAsset, SanityImageObject } from '$types/sanity';
 
 export interface PostDocument extends Document {
@@ -9,6 +9,7 @@ export interface PostDocument extends Document {
       current: string;
     };
   };
+  headings: DocumentHeadings[];
   desc?: string;
   tags?: DocumentTags[];
   title: string;

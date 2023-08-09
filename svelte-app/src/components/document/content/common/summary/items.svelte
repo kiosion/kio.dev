@@ -5,9 +5,9 @@
   import Divider from '$components/divider.svelte';
   import Item from '$components/document/content/common/summary/item.svelte';
 
-  import type { Heading as PTHeading } from '$helpers/pt';
+  import type { DocumentHeadings } from '$types';
 
-  export let headings: PTHeading[],
+  export let headings: DocumentHeadings[],
     headingsExist = false;
 </script>
 

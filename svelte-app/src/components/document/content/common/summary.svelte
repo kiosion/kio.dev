@@ -2,9 +2,9 @@
   import Heading from '$components/document/content/common/summary/heading.svelte';
   import Items from '$components/document/content/common/summary/items.svelte';
 
-  import type { Heading as PTHeading } from '$helpers/pt';
+  import type { DocumentHeadings } from '$types';
 
-  export let headings: PTHeading[],
+  export let headings: DocumentHeadings[],
     expanded = false;
 
   $: headingsExist = headings.length > 0;

@@ -2,12 +2,12 @@
   import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
-  import type { Heading } from '$helpers/pt';
+  import type { DocumentHeadings } from '$types';
 
-  export let headings: Heading[],
+  export let headings: DocumentHeadings[],
     classNames = '';
 
-  $: localHeadings = headings as (Heading & { active: boolean })[];
+  $: localHeadings = headings as (DocumentHeadings & { active: boolean })[];
 </script>
 
 <div
@@ -20,7 +20,7 @@
         {heading.text}
       </a>
     </Hoverable>
-    {#if heading.children.length}
+    {#if heading.children?.length}
       <svelte:self headings={heading.children} classNames="ml-6" />
     {/if}
   {/each}

@@ -5,8 +5,6 @@ defmodule Hexerei.Utils do
 
   use Hexerei.Response
 
-  alias Hexerei.SanityClient, as: Sanity
-
   defmacro __using__(_opts) do
     quote do
       import Hexerei.Utils

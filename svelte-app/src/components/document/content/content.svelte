@@ -6,12 +6,16 @@
   import EmptyContent from '$components/empty-content.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { Heading } from '$helpers/pt';
-  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
+  import type {
+    DocumentHeadings,
+    PostDocument,
+    ProjectDocument,
+    RouteFetch
+  } from '$types';
 
   export let model: 'post' | 'project',
     data: PostDocument | ProjectDocument,
-    headings: Heading[] | undefined,
+    headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined,
     container: HTMLDivElement | undefined = undefined;
 </script>
