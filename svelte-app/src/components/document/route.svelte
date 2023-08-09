@@ -3,7 +3,7 @@
 
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
-  import { attemptScroll } from '$helpers/scrollTo';
+  import scrollTo from '$helpers/scrollTo';
   import { t } from '$i18n';
   import { navOptions, pageHeading } from '$stores/navigation';
 
@@ -56,7 +56,7 @@
   onMount(() => {
     navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
 
-    attemptScroll($page);
+    scrollTo($page?.url);
     updateTop();
 
     scrollContainer?.addEventListener('scroll', updateTop);
@@ -69,7 +69,7 @@
     clearTimeout(timer);
   });
 
-  $: $page && attemptScroll($page);
+  $: $page?.url && scrollTo($page.url);
   $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
     !isAtTop && data?.title ? ` | ${data.title}` : ''
   }`;

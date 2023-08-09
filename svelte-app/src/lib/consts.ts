@@ -1,5 +1,3 @@
-export const LOG_DIR = '$logs';
-
 export const LIGHT_THEME = 'light';
 export const DARK_THEME = 'dark';
 

@@ -60,14 +60,5 @@ export const formatDate = (
  * @param text String or array of strings to calculate reading time for
  * @returns Estimated reading time in minutes
  */
-export const getReadingTime = (text: string | string[]): number => {
-  if (!text) {
-    return 0;
-  } else if (typeof text !== 'string') {
-    text = text.join(' ');
-  }
-
-  const words = text.split(/\s+/).filter((word) => word.length > 0).length;
-
-  return Math.ceil(words / (100 / 60));
-};
+export const getReadingTime = (words: number): number =>
+  Math.ceil(words ?? 0 / (100 / 60));

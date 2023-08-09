@@ -1,21 +1,19 @@
 import type { Page as PageStore } from '@sveltejs/kit';
 
-export const attemptScroll = (page: PageStore, scrollParams = {}) => {
-  const { url } = page,
-    { hash } = url;
+export default (url: PageStore['url'], scrollParams = {}) => {
+  const { hash } = url || { hash: '' };
 
-  if (hash && hash.length > 1) {
-    const target =
-      document.getElementById(hash.slice(1)) ||
-      document.getElementById(`heading-${hash.slice(1)}`);
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        ...scrollParams
-      });
-    }
+  if (!hash.length) {
+    return;
   }
-};
 
-export default attemptScroll;
+  const target =
+    document.getElementById(hash.slice(1)) ||
+    document.getElementById(`heading-${hash.slice(1)}`);
+
+  target?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+    ...scrollParams
+  });
+};

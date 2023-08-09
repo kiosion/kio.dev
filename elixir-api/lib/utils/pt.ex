@@ -3,14 +3,12 @@ defmodule Hexerei.PT do
 
   def build_summary(blocks) do
     try do
-      headings =
-        blocks
-        |> Enum.filter(fn b ->
-          b["style"] != nil and b["style"] in ["h1", "h2", "h3", "h4", "h5", "h6"]
-        end)
-        |> Enum.map(&build_heading/1)
-
-      make_tree(headings)
+      blocks
+      |> Enum.filter(fn b ->
+        b["style"] != nil and b["style"] in ["h1", "h2", "h3", "h4", "h5", "h6"]
+      end)
+      |> Enum.map(&build_heading/1)
+      |> Enum.reduce({[], nil}, fn heading, {tree, prev} -> make_tree(tree, heading, prev) end)
       |> elem(0)
     rescue
       e ->
@@ -30,33 +28,55 @@ defmodule Hexerei.PT do
     }
   end
 
-  defp make_tree(headings) do
-    Enum.reduce(headings, {[], nil}, fn heading, {tree, prev} ->
-      prev =
-        case prev do
-          nil ->
-            heading
+  defp make_tree(tree, heading, nil), do: make_tree(tree, heading, heading)
 
-          _ ->
-            prev
+  defp make_tree(tree, %{typeLevel: headingLevel} = heading, %{typeLevel: prevLevel} = prev)
+       when prevLevel < headingLevel,
+       do: insert_child(tree, prev, heading) |> update_tree()
+
+  defp make_tree(tree, %{typeLevel: headingLevel} = heading, %{typeLevel: prevLevel} = prev)
+       when prevLevel >= headingLevel,
+       do: check_for_parent(tree, prev, heading) |> update_tree()
+
+  defp update_tree({tree, prev, heading}),
+    do: {tree |> update_tree(prev) |> update_tree(heading), heading}
+
+  defp update_tree(tree, node) do
+    Enum.reduce_while(tree, {[], false}, fn
+      t, {acc, true} ->
+        {:cont, {acc ++ [t], true}}
+
+      t, {acc, false} ->
+        case replace_top_level_or_update_children(t, node) do
+          {:halt, replacement} -> {:cont, {acc ++ [replacement], true}}
+          {:cont, updated} -> {:cont, {acc ++ [updated], false}}
         end
-
-      {updated_tree, updated_prev, updated_heading} =
-        cond do
-          prev.typeLevel < heading.typeLevel ->
-            insert_child(tree, prev, heading)
-
-          prev.typeLevel >= heading.typeLevel ->
-            check_for_parent(tree, prev, heading)
-        end
-
-      updated_tree2 =
-        update_tree(updated_tree, updated_prev)
-        |> update_tree(updated_heading)
-
-      {updated_tree2, updated_heading}
     end)
+    |> case do
+      {result, true} -> result
+      {result, false} -> Enum.map(result, &update_children(&1, node))
+    end
   end
+
+  defp replace_top_level_or_update_children(%{key: key}, %{key: key_to_match} = node)
+       when key == key_to_match do
+    {:halt, node}
+  end
+
+  defp replace_top_level_or_update_children(%{children: children} = t, node)
+       when children != [] do
+    {:cont, %{t | children: update_tree(children, node)}}
+  end
+
+  defp replace_top_level_or_update_children(t, _node) do
+    {:cont, t}
+  end
+
+  defp update_children(%{children: children} = t, node) when children != [] do
+    %{t | children: update_tree(children, node)}
+  end
+
+  defp update_children(t, _), do: t
 
   defp check_for_parent(tree, prev, heading) do
     case find_parent(tree, prev.parent) do
@@ -87,63 +107,20 @@ defmodule Hexerei.PT do
     # Start by inverting; it's more likely to be near the end
     tree
     |> Enum.reverse()
-    |> Enum.reduce(nil, fn t, acc ->
-      case acc do
-        nil ->
-          cond do
-            t.key == parent_key ->
-              t
-
-            t.children != [] ->
-              find_parent(t.children, parent_key)
-
-            true ->
-              nil
-          end
-
-        _ ->
-          acc
-      end
-    end)
+    |> Enum.reduce(nil, &find_parent_reducer(&1, &2, parent_key))
   end
+
+  defp find_parent_reducer(%{key: key} = t, nil, parent_key) when key == parent_key, do: t
+
+  defp find_parent_reducer(%{children: children}, nil, parent_key) when children != [],
+    do: find_parent(children, parent_key)
+
+  defp find_parent_reducer(_t, nil, _parent_key), do: nil
+  defp find_parent_reducer(_t, acc, _parent_key), do: acc
 
   defp insert_child(tree, prev, heading) do
     heading = heading |> Map.put(:parent, prev.key)
     prev = prev |> Map.put(:children, prev.children ++ [heading])
     {tree, prev, heading}
-  end
-
-  defp update_tree(tree, prev) do
-    result =
-      Enum.map(tree, fn t ->
-        if t.key == prev.key do
-          {:ok, prev}
-        else
-          t
-        end
-      end)
-
-    case Enum.find(result, fn r -> r == {:ok, prev} end) do
-      nil ->
-        Enum.map(result, fn r ->
-          if r.children != [] do
-            Map.update!(r, :children, &update_tree(&1, prev))
-          else
-            r
-          end
-        end)
-
-      _ ->
-        result
-        |> Enum.map(fn r ->
-          case r do
-            {:ok, prev} ->
-              prev
-
-            _ ->
-              r
-          end
-        end)
-    end
   end
 end

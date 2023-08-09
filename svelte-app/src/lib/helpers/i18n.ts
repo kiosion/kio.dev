@@ -28,14 +28,14 @@ const check = () => {
 
   if (enKeysNotInFr.length) {
     enKeysNotInFr.length > 3
-      ? notFound(enKeysNotInFr[0], 'en', enKeysNotInFr.length - 1)
-      : enKeysNotInFr.forEach((key) => notFound(key, 'en'));
+      ? notFound(enKeysNotInFr[0], 'fr', enKeysNotInFr.length - 1)
+      : enKeysNotInFr.forEach((key) => notFound(key, 'fr'));
   }
 
   if (frKeysNotInEn.length) {
     frKeysNotInEn.length > 3
-      ? notFound(frKeysNotInEn[0], 'fr', frKeysNotInEn.length - 1)
-      : frKeysNotInEn.forEach((key) => notFound(key, 'fr'));
+      ? notFound(frKeysNotInEn[0], 'en', frKeysNotInEn.length - 1)
+      : frKeysNotInEn.forEach((key) => notFound(key, 'en'));
   }
 };
 
