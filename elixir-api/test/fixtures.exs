@@ -213,4 +213,252 @@ defmodule TestFixtures do
       :ms => 1
     }
   end
+
+  def mixed_headings() do
+    [
+      %{
+        "_type" => "block",
+        "_key" => "e7030c8c5faa",
+        "style" => "normal",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "a65907d2f969",
+            "marks" => [],
+            "text" => "Some normal text content here."
+          }
+        ]
+      },
+      %{
+        "_type" => "block",
+        "_key" => "3135635709d3",
+        "style" => "h2",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "6227b317763e",
+            "marks" => [],
+            "text" => "Another heading"
+          }
+        ]
+      },
+      %{
+        "_type" => "block",
+        "_key" => "16ad7ff860f2",
+        "style" => "normal",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "bed2acdf1244",
+            "marks" => [],
+            "text" => "Another line, this time a blockquote. Maybe a link or two."
+          }
+        ]
+      },
+      %{
+        "_type" => "block",
+        "_key" => "a1b7fde2cd38",
+        "style" => "normal",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "923b78bf4abe",
+            "marks" => [],
+            "text" => ""
+          }
+        ]
+      },
+      %{
+        "_type" => "block",
+        "_key" => "5ea211472b6f",
+        "style" => "h3",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "4c8e01512357",
+            "marks" => [],
+            "text" => "And another heading"
+          }
+        ]
+      },
+      %{
+        "_type" => "block",
+        "_key" => "cedf3bb66b84",
+        "style" => "normal",
+        "markDefs" => [],
+        "children" => [
+          %{
+            "_type" => "span",
+            "_key" => "5d19aa101a49",
+            "marks" => [],
+            "text" => "One more final line."
+          }
+        ]
+      }
+    ]
+  end
+
+  def headings() do
+    [
+      %{
+        "_key" => "81ebbf39b332",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "0459e5e00fc1",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 1"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h1"
+      },
+      %{
+        "_key" => "53d275fbb268",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "99021f0fab04",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 2"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h2"
+      },
+      %{
+        "_key" => "ce008c13f24d",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "ddcbd17465a2",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 3"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h3"
+      },
+      %{
+        "_key" => "083e9e538995",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "64f5740ae068",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 4"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h4"
+      },
+      %{
+        "_key" => "ce96ed413470",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "740dafaaf8a8",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 2"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h2"
+      },
+      %{
+        "_key" => "8474017212a9",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "ed4aa2a251a3",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 3"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h3"
+      },
+      %{
+        "_key" => "7825c76daa60",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "53f46d213e1a",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 3"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h3"
+      },
+      %{
+        "_key" => "7ea9d8a61d32",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "e33bb3239f32",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 1"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h1"
+      },
+      %{
+        "_key" => "dd9c233b3339",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "65f291019c42",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 5"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h5"
+      },
+      %{
+        "_key" => "c57de3c19b12",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "5e60e4a171d6",
+            "_type" => "span",
+            "marks" => [],
+            "text" => "Heading 6"
+          }
+        ],
+        "markDefs" => [],
+        "style" => "h6"
+      },
+      %{
+        "_key" => "a43be4cf59a7",
+        "_type" => "block",
+        "children" => [
+          %{
+            "_key" => "f98cc8be8be0",
+            "_type" => "span",
+            "marks" => [],
+            "text" => ""
+          }
+        ],
+        "markDefs" => [],
+        "style" => "normal"
+      }
+    ]
+  end
 end
