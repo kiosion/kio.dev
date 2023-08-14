@@ -176,8 +176,8 @@ devDependencies:
     specifier: ^0.32.2
     version: 0.32.2(svelte@4.1.2)
   svelte-highlight:
-    specifier: ^7.2.0
-    version: 7.2.0
+    specifier: ^7.3.0
+    version: 7.3.0
   svelte-loading-spinners:
     specifier: ^0.1.7
     version: 0.1.7
@@ -6183,6 +6183,7 @@ packages:
 
   /file-uri-to-path@1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
+    requiresBuild: true
     dev: true
 
   /filename-reserved-regex@3.0.0:
@@ -6867,11 +6868,6 @@ packages:
       minimist: 1.2.8
       process: 0.10.1
       xtend: 4.0.2
-    dev: true
-
-  /highlight.js@11.7.0:
-    resolution: {integrity: sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==}
-    engines: {node: '>=12.0.0'}
     dev: true
 
   /highlight.js@11.8.0:
@@ -11220,10 +11216,10 @@ packages:
       svelte: 4.1.2
     dev: true
 
-  /svelte-highlight@7.2.0:
-    resolution: {integrity: sha512-mOJltSmozHNuaIE4tglrOBQ9X/8sKoQMJfqm+YZUuHvzfAcefWtZVDFml2oUrEv8iehM79mdA9+0orhUWIrxWw==}
+  /svelte-highlight@7.3.0:
+    resolution: {integrity: sha512-59oE9/xOFXAdT97qXIt6HMlzL2f+0YNQ+BArzRONwCW96ElxX7TGme1kU5s3tsk1D88G5dhBixcP1chOGOkVsg==}
     dependencies:
-      highlight.js: 11.7.0
+      highlight.js: 11.8.0
     dev: true
 
   /svelte-hmr@0.15.1(svelte@4.1.2):
