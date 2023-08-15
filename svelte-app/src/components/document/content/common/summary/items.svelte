@@ -13,7 +13,7 @@
 
 <div
   class="mx-7 h-fit overflow-hidden px-1 pb-3"
-  transition:slide={{ duration: 300, easing: circInOut }}
+  transition:slide={{ duration: 200 + headings.length * 10, easing: circInOut }}
 >
   <Divider classes="mb-3 mt-0" />
 

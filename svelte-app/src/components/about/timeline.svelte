@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { circInOut } from 'svelte/easing';
+
   import { maybe } from 'svelte-maybe-transition';
 
   import { currentLang, t } from '$i18n';
@@ -121,12 +123,14 @@
                       in:maybe={{
                         fn: $reduceMotion ? 'fade' : 'slide',
                         enable: true,
-                        duration: 150
+                        duration: 200,
+                        easing: circInOut
                       }}
                       out:maybe={{
                         fn: $reduceMotion ? 'fade' : 'slide',
                         enable: true,
-                        duration: 150
+                        duration: 150,
+                        easing: circInOut
                       }}
                     >
                       {#if item.skills}

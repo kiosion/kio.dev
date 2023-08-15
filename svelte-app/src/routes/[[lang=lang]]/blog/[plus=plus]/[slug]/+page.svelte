@@ -5,7 +5,7 @@
 
   import EmptyContent from '$components/empty-content.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
-  import ListSection from '$components/lists/blog-section.svelte';
+  import ListItem from '$components/lists/blog-item.svelte';
 
   import type { PageData } from './$types';
 
@@ -25,8 +25,12 @@
 </svelte:head>
 
 <IconHeader icon="label" text={$t("Recent '{tag}' posts", { tag: pageTitle })} />
-{#if posts?.data?.length}
-  <ListSection posts={posts.data} />
+{#if posts?.length}
+  <div class="flex flex-col gap-y-4">
+    {#each posts as post}
+      <ListItem {post} />
+    {/each}
+  </div>
 {:else}
   <div class="flex w-full flex-row items-center justify-center">
     <EmptyContent />

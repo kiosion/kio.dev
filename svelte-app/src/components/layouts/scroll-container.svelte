@@ -25,22 +25,11 @@
   onDestroy(() => unsubscribe?.());
 </script>
 
-<div class:isDesktop={$isDesktop} tabindex="-1" bind:this={element}>
+<div
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-light p-8 duration-150 dark:bg-black"
+  class:rounded-t-2xl={!$isDesktop}
+  tabindex="-1"
+  bind:this={element}
+>
   <slot />
 </div>
-
-<style lang="scss">
-  div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-light p-8  duration-150;
-
-    &:not(.isDesktop) {
-      @apply rounded-t-2xl;
-    }
-  }
-
-  :global(.dark) {
-    div {
-      @apply bg-black;
-    }
-  }
-</style>

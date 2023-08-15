@@ -10,7 +10,6 @@
   import EmptyContent from '$components/empty-content.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import ListItem from '$components/lists/blog-item.svelte';
-  import ListSection from '$components/lists/blog-section.svelte';
 
   import type { PageData } from './$types';
   import type { PostDocument } from '$types';
@@ -62,8 +61,10 @@
 
 <IconHeader icon="bulletlist" text={$t('Recent')} />
 {#if posts?.length}
-  <div class="flex flex-col">
-    <ListSection posts={postsExceptPinned} />
+  <div class="flex flex-col gap-y-4">
+    {#each posts as post}
+      <ListItem {post} />
+    {/each}
   </div>
 {:else}
   <div class="flex w-full flex-row items-center justify-center">

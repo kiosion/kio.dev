@@ -5,7 +5,7 @@ import Store from '$lib/store';
 import { error, redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { DocumentTags, PostDocument, ResDataMany } from '$types';
+import type { DocumentTags, PostDocument } from '$types';
 
 export const prerender = false;
 
@@ -16,27 +16,25 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags: ResDataMany<DocumentTags> | undefined = await Store.find<DocumentTags>(
-    fetch,
-    'tag',
-    {
-      type: 'post',
-      limit: 0
-    }
-  ).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
-  });
+  const allTags = await Store.find<DocumentTags>(fetch, 'tag', {
+    type: 'post',
+    limit: 0
+  })
+    .then((res) => res?.data)
+    .catch((err: unknown) => {
+      Logger.error(err as string);
+      return undefined;
+    });
 
   if (
-    !allTags?.data?.some(
+    !allTags?.some(
       (tag) =>
         tag.slug.current?.toLowerCase() === params.slug?.toLowerCase() ||
         tag.title?.toLowerCase() === params.slug?.toLowerCase()
     )
   ) {
     Logger.info('Tag not found', params.slug);
-    if (!allTags?.data) {
+    if (!allTags) {
       console.warn('Failed to fetch tags');
     }
     // TODO: Find i18n alternative since linkTo can't work outside client component ctx
@@ -45,17 +43,15 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const posts: ResDataMany<PostDocument> | undefined = await Store.find<PostDocument>(
-    fetch,
-    'post',
-    {
-      limit: PAGINATION_POSTS_PER_PAGE,
-      tags: [params.slug]
-    }
-  ).catch((err: unknown) => {
-    Logger.error(err as string, `routes/blog/+/${params.slug}`);
-    return undefined;
-  });
+  const posts = await Store.find<PostDocument>(fetch, 'post', {
+    limit: PAGINATION_POSTS_PER_PAGE,
+    tags: [params.slug]
+  })
+    .then((res) => res?.data)
+    .catch((err: unknown) => {
+      Logger.error(err as string, `routes/blog/+/${params.slug}`);
+      return undefined;
+    });
 
   return { posts };
 };

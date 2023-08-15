@@ -24,6 +24,7 @@
 <!-- in each individual subroute... which is Not happening, lol -->
 {#key pathname}
   <div
+    class="absolute left-0 top-0 h-full w-full"
     in:maybe={{
       enable: true,
       fn: $reduceMotion ? 'fade' : 'fly',
@@ -43,9 +44,3 @@
     <slot />
   </div>
 {/key}
-
-<style lang="scss">
-  div {
-    @apply absolute left-0 top-0 h-full w-full;
-  }
-</style>

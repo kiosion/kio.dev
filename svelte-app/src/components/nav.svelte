@@ -47,11 +47,11 @@
     goto($linkTo('/'));
   };
 
-  const unsubscribers: Unsubscriber[] = [];
+  let linkToUnsubscriber: Unsubscriber;
 
-  onMount(() => {
-    unsubscribers.push(
-      linkTo.subscribe((fn) => {
+  onMount(
+    () =>
+      (linkToUnsubscriber = linkTo.subscribe((fn) => {
         navLinks.set(
           TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map((route) => ({
             name: route.name,
@@ -60,13 +60,10 @@
             hovered: false
           }))
         );
-      })
-    );
-  });
+      }))
+  );
 
-  onDestroy(() => {
-    unsubscribers.forEach((unsubscriber) => unsubscriber());
-  });
+  onDestroy(() => linkToUnsubscriber?.());
 
   const feDisplacementScale = tweened(0, {
       duration: BASE_ANIMATION_DURATION * 2,

@@ -9,10 +9,12 @@
   export let data: Data;
 </script>
 
-<div class="nowPlaying--container">
-  <span>
+<div
+  class="mb-4 flex w-full flex-row items-center gap-3 border-b border-dark/40 pb-5 dark:border-light/40"
+>
+  <span class="relative h-fit w-fit flex-shrink-0">
     <img
-      class="cover"
+      class="aspect-square w-12 select-none rounded-sm border border-dark/40 dark:border-light/40"
       src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
       alt={data.title}
     />
@@ -23,82 +25,32 @@
         position="right"
         fixed
       >
-        <img
-          src={LastFM}
-          alt="LastFM"
-          class="focusOutline-sm logo"
+        <a
+          class="focusOutline-sm absolute block h-5 w-5 select-none rounded-full bg-light transition-[background-color] dark:bg-black"
+          target="_blank"
+          href="https://github.com/kiosion/toru"
           role="button"
           tabindex="0"
-          on:click={() => {
-            window.open('https://github.com/kiosion/toru', '_blank');
-          }}
-          on:keydown={(e) => {
-            if (e.code === 'Enter' || e.code === 'Space') {
-              window.open('https://github.com/kiosion/toru', '_blank');
-            }
-          }}
-        />
+        >
+          <img src={LastFM} alt="LastFM" class="rounded-full" />
+        </a>
       </Tooltip>
     </Hoverable>
   </span>
-  <div>
-    <p class="text-title ">
+  <div class="flex flex-col gap-2 font-sans text-dark/80 dark:text-light/90">
+    <p class="line-clamp-2 text-[13px] font-bold leading-tight">
       {data.title}
     </p>
-    <p class="text-sub ">
+    <p class="-mt-0.5 line-clamp-2 text-[11px] leading-tight">
       {data.artist}
     </p>
   </div>
 </div>
 
 <style lang="scss">
-  .nowPlaying--container {
-    @apply mb-4 flex w-full flex-row items-center gap-3 border-b border-dark/40 pb-5;
-
-    span {
-      @apply relative h-fit w-fit flex-shrink-0;
-
-      .cover {
-        @apply aspect-square w-12 select-none rounded-sm border border-dark/40;
-      }
-      .logo {
-        @apply absolute h-5 w-5 select-none rounded-full bg-light transition-[background-color];
-        padding: 3px;
-        bottom: -5px;
-        right: -5px;
-      }
-    }
-    div {
-      @apply flex flex-col gap-2 font-sans text-dark/80;
-
-      .text {
-        &-title {
-          @apply line-clamp-2 font-bold leading-tight;
-          font-size: 13px;
-        }
-        &-sub {
-          @apply -mt-0.5 line-clamp-2 leading-tight;
-          font-size: 11px;
-        }
-      }
-    }
-  }
-
-  :global(.dark) {
-    .nowPlaying--container {
-      @apply border-light/40;
-
-      div {
-        @apply text-light/90;
-      }
-
-      .logo {
-        @apply bg-dark;
-      }
-
-      span .cover {
-        @apply border-light/40;
-      }
-    }
+  a {
+    padding: 3px;
+    bottom: -5px;
+    right: -5px;
   }
 </style>

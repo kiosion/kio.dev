@@ -12,8 +12,7 @@
 
   import type { PostDocument, PTBlock } from '$types';
 
-  export let post: PostDocument,
-    position: 'first' | 'last' | 'middle' | 'solo' = 'solo';
+  export let post: PostDocument;
 
   let hovered: boolean;
   let readingTime = getReadingTime(getTotalWords((post.body ?? []) as PTBlock[]));
@@ -25,35 +24,14 @@
     }
   };
 
-  const getClassNames = (pos: typeof position) => {
-    switch (pos) {
-      case 'first':
-        return 'rounded-t-md mt-2 pb-4 pt-5';
-      case 'middle':
-        return 'py-4 -mt-[1px]';
-      case 'last':
-        return 'rounded-b-md mb-2 pt-4 pb-5 -mt-[1px]';
-      case 'solo':
-        return 'rounded-md my-2 py-4';
-    }
-  };
-
   $: date = formatDate(post.date, 'full');
 </script>
 
 <Hoverable bind:hovered>
   <a
-    class="flex h-fit w-full flex-col items-stretch justify-stretch gap-y-1.5 border px-6 pl-5 {getClassNames(
-      position
-    )} {hovered
-      ? `border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40 ${
-          ['first', 'middle'].includes(position)
-            ? 'border-b-dark/60 dark:border-light/60'
-            : ''
-        }`
-      : `border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20 ${
-          ['first', 'middle'].includes(position) ? '!border-b-transparent' : ''
-        }`} focusOutline -ml-[1px] transition-[background-color,border-color]"
+    class="flex h-fit w-full flex-col items-stretch justify-stretch gap-y-1.5 rounded-md border px-6 py-4 pl-5 {hovered
+      ? 'border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40'
+      : 'border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20'} focusOutline -ml-[1px] transition-[background-color,border-color]"
     tabindex="0"
     role="button"
     aria-label="Post - {post.title}"
@@ -70,15 +48,8 @@
     >
       {post.title}
     </h1>
-    {#if post.desc}
-      <p
-        class="my-0.5 mr-4 line-clamp-1 w-fit overflow-hidden text-ellipsis font-sans text-base text-dark/80 dark:text-light/90 md:line-clamp-2"
-      >
-        {post.desc}
-      </p>
-    {/if}
     <div
-      class="flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-dark/80 dark:text-light/90"
+      class="mt-0.5 flex w-full flex-row flex-wrap items-center justify-start gap-y-2 font-sans text-sm text-dark/80 dark:text-light/90"
     >
       {#if date}
         <p>{date}</p>
@@ -90,5 +61,12 @@
         <Tags model="post" data={post.tags} />
       {/if}
     </div>
+    {#if post.desc}
+      <p
+        class="mr-4 mt-1 line-clamp-1 w-fit overflow-hidden text-ellipsis font-sans text-base text-dark/80 dark:text-light/90 md:line-clamp-2"
+      >
+        {post.desc}
+      </p>
+    {/if}
   </a>
 </Hoverable>
