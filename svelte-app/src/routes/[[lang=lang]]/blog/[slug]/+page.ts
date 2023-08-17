@@ -1,27 +1,19 @@
 import { ENV } from '$lib/env';
-import Logger from '$lib/logger';
-import Store from '$lib/store';
+import { findOne } from '$lib/store';
 
 import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { PostDocument, ResData } from '$types';
 
 export const ssr = !(ENV === 'testing');
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
 
-  const post: ResData<PostDocument> | undefined = await Store.findOne<PostDocument>(
-    fetch,
-    'post',
-    {
-      idb: btoa(params.slug),
-      lang: params.lang ?? 'en'
-    }
-  ).catch((err: Error) => {
-    Logger.error('', err);
-
+  const post = await findOne(fetch, 'post', {
+    idb: btoa(params.slug),
+    lang: params.lang ?? 'en'
+  }).catch((_e: Error) => {
     throw error(500, {
       message: 'Sorry, something went wrong loading that post.'
     });

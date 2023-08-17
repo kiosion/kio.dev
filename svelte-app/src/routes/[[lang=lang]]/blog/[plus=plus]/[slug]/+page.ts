@@ -1,11 +1,10 @@
 import { PAGINATION_POSTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
-import Store from '$lib/store';
+import { find } from '$lib/store';
 
 import { error, redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { DocumentTags, PostDocument } from '$types';
 
 export const prerender = false;
 
@@ -16,15 +15,10 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags = await Store.find<DocumentTags>(fetch, 'tag', {
+  const allTags = await find(fetch, 'tag', {
     type: 'post',
     limit: 0
-  })
-    .then((res) => res?.data)
-    .catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+  });
 
   if (
     !allTags?.some(
@@ -35,7 +29,7 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
   ) {
     Logger.info('Tag not found', params.slug);
     if (!allTags) {
-      console.warn('Failed to fetch tags');
+      Logger.warn('Failed to fetch tags');
     }
     // TODO: Find i18n alternative since linkTo can't work outside client component ctx
     throw error(404, {
@@ -43,15 +37,10 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     });
   }
 
-  const posts = await Store.find<PostDocument>(fetch, 'post', {
+  const posts = await find(fetch, 'post', {
     limit: PAGINATION_POSTS_PER_PAGE,
     tags: [params.slug]
-  })
-    .then((res) => res?.data)
-    .catch((err: unknown) => {
-      Logger.error(err as string, `routes/blog/+/${params.slug}`);
-      return undefined;
-    });
+  });
 
   return { posts };
 };

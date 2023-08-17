@@ -19,9 +19,8 @@
   import CustomQuote from './serializers/custom-quote.svelte';
   import Divider from './serializers/divider.svelte';
   import Image from './serializers/image.svelte';
-  import OlItem from './serializers/ol-item.svelte';
+  import ListItem from './serializers/list-item.svelte';
   import OlWrapper from './serializers/ol-wrapper.svelte';
-  import UlItem from './serializers/ul-item.svelte';
   import UlWrapper from './serializers/ul-wrapper.svelte';
 
   import type {
@@ -120,9 +119,9 @@
             number: OlWrapper
           },
           listItem: {
-            bullet: UlItem,
-            number: OlItem,
-            normal: UlItem
+            bullet: ListItem,
+            number: ListItem,
+            normal: ListItem
           }
         }}
         context={{

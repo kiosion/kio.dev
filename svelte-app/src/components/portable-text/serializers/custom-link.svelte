@@ -12,8 +12,6 @@
   $: ({ value } = portableText);
   $: ({ plainTextContent } = portableText);
   $: href = value.href as string;
-  // TODO: Eventually use 'external' to show tooltip or not.
-  $: _external = !!value.external as boolean;
   $: newtab = !!value.newtab as boolean;
 </script>
 
@@ -22,7 +20,7 @@
     href={href ? $linkTo(href) : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
-    class="focusOutline-sm"
+    class="focusOutline-sm rounded-sm from-accent-light px-[2px] text-dark/90 no-underline dark:from-accent-dark dark:text-light"
     class:active={hovered}
     tabindex="0"
   >
@@ -32,8 +30,6 @@
 
 <style lang="scss">
   a {
-    @apply rounded-sm from-accent-light px-[2px] text-dark/90 no-underline;
-
     background-image: linear-gradient(
       to right,
       var(--tw-gradient-from) 0%,
@@ -52,11 +48,8 @@
   }
 
   :global(.dark) {
-    a {
-      @apply from-accent-dark text-light;
-      &.active {
-        @apply text-dark;
-      }
+    a.active {
+      @apply text-dark;
     }
   }
 </style>

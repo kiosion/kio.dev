@@ -23,27 +23,12 @@
       <Icon icon="link" classNames="absolute -left-8 top-1/2 -translate-y-1/2" />
     {/if}
 
-    {#if style === 'h1'}
-      <h1>
-        <slot />
-      </h1>
-    {:else if style === 'h2'}
-      <h2>
-        <slot />
-      </h2>
-    {:else if style === 'h3'}
-      <h3>
-        <slot />
-      </h3>
-    {:else if style === 'h4'}
-      <h4>
-        <slot />
-      </h4>
-    {:else}
-      <h5>
-        <slot />
-      </h5>
-    {/if}
+    <svelte:element
+      this={style}
+      class="inline font-display font-bold text-black dark:text-white"
+    >
+      <slot />
+    </svelte:element>
   </a>
 </Hoverable>
 
@@ -53,14 +38,6 @@
 
     &.large {
       @apply mb-6 mt-12;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-      @apply inline font-display font-bold text-black dark:text-white;
     }
 
     h1 {

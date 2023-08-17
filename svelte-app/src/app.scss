@@ -100,3 +100,27 @@ body {
     outline: none !important;
   }
 }
+
+.pt-ol,
+.pt-ul {
+  li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4rem;
+  }
+}
+
+.pt-ol {
+  li {
+    ol {
+      @apply list-[lower-alpha] my-3;
+    }
+  }
+}
+
+.pt-ul {
+  li {
+    ul {
+      @apply list-disc my-3;
+    }
+  }
+}

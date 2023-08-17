@@ -1,9 +1,8 @@
 import { DEFAULT_APP_LANG, LOADING_PHRASES } from '$lib/consts';
 import Logger from '$lib/logger';
-import Store from '$lib/store';
+import { findOne } from '$lib/store';
 
 import type { LayoutServerLoad } from './$types';
-import type { AuthorDocument } from '$types';
 
 export const trailingSlash = 'ignore';
 
@@ -35,14 +34,13 @@ export const load = (async ({ params, cookies, url, fetch }) => {
   }
 
   const promises = await Promise.all([
-    Store.findOne<AuthorDocument>(fetch, 'about', { lang })
-      .then((res) => res?.data)
-      .catch((err: unknown) => {
-        Logger.error(err as string);
-        return undefined;
-      }),
-    Store.findConfig(fetch).catch((err: unknown) => {
-      Logger.error(`Failed to load config: ${err}`);
+    findOne(fetch, 'about', { lang }).catch((err: unknown) => {
+      Logger.error(err as string);
+      return undefined;
+    }),
+    findOne(fetch, 'config').catch((err: Error) => {
+      Logger.error('Failed to load config', err);
+      return undefined;
     })
   ]);
 

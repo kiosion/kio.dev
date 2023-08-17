@@ -14,7 +14,6 @@
     TOP_LEVEL_ROUTES
   } from '$lib/consts';
   import SFX from '$lib/sfx';
-  import { config as currentConfig } from '$stores/config';
   import { navLinks, navOpen, nowPlayingData } from '$stores/navigation';
 
   import LanguageControls from '$components/controls/language-controls.svelte';
@@ -27,6 +26,7 @@
   import NavSocial from '$components/nav/nav-social.svelte';
   import NowPlayingWidget from '$components/nav/now-playing-widget.svelte';
 
+  import type { SiteConfig } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
   interface SocialLink {
@@ -48,6 +48,8 @@
   };
 
   let linkToUnsubscriber: Unsubscriber;
+
+  export let config: SiteConfig | undefined;
 
   onMount(
     () =>
@@ -89,8 +91,8 @@
       feTurbulenceBaseFreq2.set(0.01);
     };
 
-  $: socials =
-    ($currentConfig.data?.socialLinks?.map((link) => ({
+  const socials =
+    (config?.socialLinks?.map((link) => ({
       attrs: {
         href: $linkTo(link.url),
         target: link.internal ? undefined : '_blank',

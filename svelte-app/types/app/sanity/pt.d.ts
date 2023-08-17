@@ -21,8 +21,7 @@ export interface PTBlock {
   markDefs: PTMarkDef[];
 }
 
-export interface CodeBlockComponentProps
-  extends Omit<BlockComponentProps, 'value'> {
+export interface CodeBlockComponentProps extends Omit<BlockComponentProps, 'value'> {
   value: {
     _key: string;
     _type: string;

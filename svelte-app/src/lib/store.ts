@@ -1,117 +1,117 @@
-import { get } from 'svelte/store';
-
-import CacheClass from '$lib/cache';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
-import { config } from '$stores/config';
 
-import type { VALID_DOC_TYPES } from '$lib/consts';
 import type {
-  ResData,
-  ResDataMany,
-  ResError,
+  AuthorDocument,
+  DocumentTags,
+  PostDocument,
+  ProjectDocument,
   RouteFetch,
-  SiteConfig,
-  StoreRes
+  SiteConfig
 } from '$types';
 
 interface PossibleParams {
   [key: string]: string | number | boolean | string[] | number[] | boolean[];
 }
 
-class StoreClass extends CacheClass {
-  constructUrl = (model: string, params: PossibleParams, many = false): string => {
-    const url = new URL(`http://localhost${API_URL}get/${model}${many ? '/many' : ''}`);
-    Object.entries(params).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        return value.length ? url.searchParams.append(key, value.join(',')) : undefined;
-      }
-      return typeof value === 'boolean'
-        ? url.searchParams.set(key, value.toString())
-        : value.toString() !== '' && url.searchParams.set(key, value.toString());
-    });
-    return url.toString().replace('http://localhost', '');
-  };
-
-  query = async <T>(
-    fetch: RouteFetch,
-    model: (typeof VALID_DOC_TYPES)[number],
-    params: PossibleParams = {}
-  ): Promise<StoreRes<ResDataMany<T>>> => {
-    const url = this.constructUrl(model, params, true);
-    try {
-      const res = await tryFetch(fetch(url));
-      const response = (await res.json()) as ResDataMany<T> & ResError;
-      if (!response.meta || response.error) {
-        Logger.error('Failed to get data', response.error);
-        return;
-      }
-      return response as ResDataMany<T>;
-    } catch (err: unknown) {
-      Logger.error('Failed to query endpoint', err);
-      return;
-    }
-  };
-
-  queryOne = async <T>(
-    fetch: RouteFetch,
-    model: (typeof VALID_DOC_TYPES)[number],
-    params: PossibleParams = {}
-  ): Promise<StoreRes<ResData<T>>> => {
-    const url = this.constructUrl(model, params);
-    try {
-      const res = await tryFetch(fetch(url));
-      const response = (await res.json()) as ResData<T> & ResError;
-      if (!response.meta || response.error) {
-        Logger.error('Failed to get data', response.error);
-        return;
-      }
-      return response as ResData<T>;
-    } catch (err: unknown) {
-      Logger.error('Failed to query endpoint', err);
-      return;
-    }
-  };
-
-  find = async <T>(
-    fetch: RouteFetch,
-    model: (typeof VALID_DOC_TYPES)[number],
-    params: PossibleParams = {}
-  ): Promise<StoreRes<ResDataMany<T>>> => {
-    const cacheKey = this.getCacheKey(model, params);
-    if (this.has(cacheKey)) {
-      return this.get(cacheKey) as ResDataMany<T>;
-    }
-    const response = await this.query(fetch, model, params);
-    return response?.data ? (this.set(cacheKey, response) as ResDataMany<T>) : undefined;
-  };
-
-  findOne = async <T>(
-    fetch: RouteFetch,
-    model: (typeof VALID_DOC_TYPES)[number],
-    params: PossibleParams = {}
-  ): Promise<StoreRes<ResData<T>>> => {
-    const cacheKey = this.getCacheKey(model, params);
-    if (this.has(cacheKey)) {
-      return this.get(cacheKey) as unknown as ResData<T>;
-    }
-    const response = await this.queryOne(fetch, model, params);
-    return response?.data ? (this.set(cacheKey, response) as ResData<T>) : undefined;
-  };
-
-  findConfig = async (fetch: RouteFetch): Promise<StoreRes<ResData<SiteConfig>>> => {
-    if (get(config)?.data) {
-      return get(config);
-    }
-    const response = await this.queryOne(fetch, 'config');
-    if (response?.data) {
-      config.set(response as ResData<SiteConfig>);
-    }
-    return response as ResData<SiteConfig>;
-  };
+interface DocumentRegistry {
+  about: AuthorDocument;
+  config: SiteConfig;
+  post: PostDocument;
+  project: ProjectDocument;
+  tag: DocumentTags;
 }
 
-const Store = new StoreClass();
+const documentCache = {} as {
+  [query: string]: unknown[] | unknown;
+};
 
-export default Store;
+const constructUrl = (
+  model: keyof DocumentRegistry,
+  params: PossibleParams,
+  many = false
+) => {
+  const url = new URL(`http://fake${API_URL}get/${model}${many ? '/many' : ''}`);
+  Object.entries(params).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      return value.length ? url.searchParams.append(key, value.join(',')) : undefined;
+    }
+    return typeof value === 'boolean'
+      ? url.searchParams.set(key, value.toString())
+      : value.toString() !== '' && url.searchParams.set(key, value.toString());
+  });
+  return url.toString().replace('http://fake', '');
+};
+
+const query = async <T extends keyof DocumentRegistry>(
+  fetch: RouteFetch,
+  model: T,
+  params: PossibleParams = {}
+): Promise<DocumentRegistry[T][] | undefined> => {
+  const url = constructUrl(model, params, true);
+  try {
+    const res = await tryFetch(fetch(url)).then(async (r) => await r.json());
+    if (res.error || !res.meta) {
+      Logger.error(`Failed to query ${model}`, res.error);
+      return undefined;
+    }
+    return res?.data as DocumentRegistry[T][] | undefined;
+  } catch (e) {
+    Logger.error(`Failed to query ${model}`, e);
+    return undefined;
+  }
+};
+
+const queryOne = async <T extends keyof DocumentRegistry>(
+  fetch: RouteFetch,
+  model: T,
+  params: PossibleParams = {}
+): Promise<DocumentRegistry[T] | undefined> => {
+  const url = constructUrl(model, params);
+  try {
+    const res = await tryFetch(fetch(url)).then(async (r) => await r.json());
+    if (!res.meta || res.error) {
+      Logger.error(`Failed to query ${model}`, res.error);
+      return undefined;
+    }
+    return res?.data as DocumentRegistry[T] | undefined;
+  } catch (e) {
+    Logger.error(`Failed to query ${model}`, e);
+    return undefined;
+  }
+};
+
+const find = async <T extends keyof DocumentRegistry>(
+  fetch: RouteFetch,
+  model: T,
+  params: PossibleParams = {}
+): ReturnType<Awaited<typeof query<T>>> => {
+  const cacheKey = JSON.stringify({ model, params, many: true });
+  if (cacheKey in documentCache) {
+    return documentCache[cacheKey] as DocumentRegistry[T][];
+  }
+  const response = await query(fetch, model, params);
+  if (response) {
+    documentCache[cacheKey] = response;
+  }
+  return response;
+};
+
+const findOne = async <T extends keyof DocumentRegistry>(
+  fetch: RouteFetch,
+  model: T,
+  params: PossibleParams = {}
+): ReturnType<Awaited<typeof queryOne<T>>> => {
+  const cacheKey = JSON.stringify({ model, params, many: false });
+  if (cacheKey in documentCache) {
+    return documentCache[cacheKey] as DocumentRegistry[T];
+  }
+  const response = await queryOne(fetch, model, params);
+  if (response) {
+    documentCache[cacheKey] = response;
+  }
+  return response;
+};
+
+export { find, findOne, query, queryOne };

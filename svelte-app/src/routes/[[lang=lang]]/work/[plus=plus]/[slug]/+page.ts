@@ -1,11 +1,10 @@
 import { DEFAULT_PROJECT_QUERY_PARAMS, PAGINATION_PROJECTS_PER_PAGE } from '$lib/consts';
 import Logger from '$lib/logger';
-import Store from '$lib/store';
+import { find } from '$lib/store';
 
 import { error, redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { DocumentTags, ProjectDocument } from '$types';
 
 export const prerender = false;
 
@@ -16,15 +15,13 @@ export const load = (async ({ parent, fetch, params }) => {
 
   await parent();
 
-  const allTags = await Store.find<DocumentTags>(fetch, 'tag', {
+  const allTags = await find(fetch, 'tag', {
     type: 'project',
     limit: 0
-  })
-    .then((res) => res?.data)
-    .catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    });
+  }).catch((err: unknown) => {
+    Logger.error(err as string);
+    return undefined;
+  });
 
   if (
     !allTags?.some(
@@ -42,16 +39,14 @@ export const load = (async ({ parent, fetch, params }) => {
     });
   }
 
-  const projects = await Store.find<ProjectDocument>(fetch, 'project', {
+  const projects = await find(fetch, 'project', {
     ...DEFAULT_PROJECT_QUERY_PARAMS,
     limit: PAGINATION_PROJECTS_PER_PAGE,
     tags: [params.slug]
-  })
-    .then((res) => res?.data)
-    .catch((err: unknown) => {
-      Logger.error(err as string, {}, `routes/work/+/${params.slug}`);
-      return undefined;
-    });
+  }).catch((err: unknown) => {
+    Logger.error(err as string, {}, `routes/work/+/${params.slug}`);
+    return undefined;
+  });
 
   return { projects };
 }) satisfies PageLoad;

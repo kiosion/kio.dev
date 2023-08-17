@@ -1,7 +1,3 @@
-<script lang="ts">
-  export let classNames = '';
-</script>
-
 <div
-  class="mx-2 h-1 w-1 rounded-full bg-dark/80 transition-all duration-150 dark:bg-light/90 {classNames}"
+  class="mx-2 h-1 w-1 rounded-full bg-dark/80 transition-all duration-150 dark:bg-light/90"
 />

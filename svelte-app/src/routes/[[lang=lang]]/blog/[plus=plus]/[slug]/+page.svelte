@@ -7,13 +7,11 @@
   import IconHeader from '$components/headings/icon-header.svelte';
   import ListItem from '$components/lists/blog-item.svelte';
 
-  import type { PageData } from './$types';
-
   const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
   pageHeading.set(`${$t('Blog')} | ${$t('Tag')} | ${pageTitle}`);
   navOptions.set({ down: '', up: '/blog' });
 
-  export let data: PageData;
+  export let data;
 
   $: ({ posts } = data);
 </script>

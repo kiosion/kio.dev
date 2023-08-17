@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
-  import { invalidate } from '$app/navigation';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { t } from '$lib/helpers/i18n';
@@ -11,7 +9,6 @@
   import IconHeader from '$components/headings/icon-header.svelte';
   import ListItem from '$components/lists/blog-item.svelte';
 
-  import type { PageData } from './$types';
   import type { PostDocument } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
@@ -29,7 +26,7 @@
     unsubscribers.forEach((unsub) => unsub());
   });
 
-  export let data: PageData;
+  export let data;
 
   let postsExceptPinned: PostDocument[] = [];
 
@@ -37,7 +34,6 @@
   $: posts && (postsExceptPinned = posts?.filter((post) => post._id !== pinned?._id));
   $: pageTitle = `kio.dev | ${$t('Thoughts')}`;
   $: description = $t('Thoughts about tech, design, and development');
-  $: browser && (!pinned || !posts) && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

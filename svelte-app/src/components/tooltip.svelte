@@ -74,15 +74,11 @@
   }
 </script>
 
-<div data-test-id="tooltip-container" bind:this={container}>
+<div class="contents h-fit w-fit" data-test-id="tooltip-container" bind:this={container}>
   <slot />
 </div>
 
 <style lang="scss">
-  div {
-    @apply contents h-fit w-fit;
-  }
-
   :global(.tippy-box[data-animation='fade'][data-state='hidden']) {
     opacity: 0;
     will-change: opacity;

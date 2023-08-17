@@ -98,7 +98,7 @@
           >
           <span>{project.language}</span>
         </div>
-        <BulletPoint classNames="mb-[1px]" />
+        <span class="mb-[1px]"><BulletPoint /></span>
       {/if}
       <p class="text-gray-700 dark:text-gray-200 font-sans text-sm">
         {date}

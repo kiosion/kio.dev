@@ -19,7 +19,6 @@
   import Logger from '$lib/logger';
   import { init as initAudio } from '$lib/sfx';
   import { createExponentialBackoffStrategy } from '$lib/try-fetch';
-  import { config } from '$stores/config';
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
@@ -30,7 +29,6 @@
   import Loader from '$components/loading/full.svelte';
   import Navigation from '$components/nav.svelte';
 
-  import type { LayoutData } from './$types';
   import type { Unsubscriber } from 'svelte/store';
 
   const { theme, comicSans, reduceMotion } = Settings;
@@ -81,8 +79,9 @@
     unsubscribers.forEach((u) => u());
   });
 
-  export let data: LayoutData;
+  export let data;
 
+  $: ({ config } = data);
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -91,7 +90,6 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && data.config && config.set(data.config);
   $: browser && (!data.author || !data.config) && invalidationStrategy();
 </script>
 
@@ -133,7 +131,7 @@
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Navigation />
+  <Navigation {config} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
     <div>

@@ -1,16 +1,9 @@
 <script lang="ts">
   import DocumentRoute from '$components/document/route.svelte';
 
-  import type { PageData } from './$types';
-
-  export let data: PageData;
+  export let data;
 
   $: ({ post, routeFetch } = data);
 </script>
 
-<DocumentRoute
-  model="post"
-  data={post?.data}
-  headings={data.post?.data.headings}
-  {routeFetch}
-/>
+<DocumentRoute model="post" data={post} headings={data.post?.headings} {routeFetch} />

@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
-  import { invalidate } from '$app/navigation';
   import { page } from '$app/stores';
   import { setupNavigation } from '$helpers/navigation';
   import { t } from '$i18n';
@@ -27,7 +25,6 @@
     );
 
   $: ({ about, pinned, projects } = data);
-  $: browser && (!about || !pinned || !projects) && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

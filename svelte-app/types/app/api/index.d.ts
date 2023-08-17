@@ -1,4 +1,3 @@
-// Params
 export interface SingleDocumentQueryParams {
   slug?: string;
   id?: string;
@@ -13,7 +12,6 @@ export interface DocumentQueryParams {
   tags?: string[];
 }
 
-// Responses
 export interface ResData<T> {
   meta: {
     count: string | number;
@@ -22,15 +20,3 @@ export interface ResData<T> {
   };
   data: T;
 }
-
-export interface ResError {
-  code: string | number;
-  error: string;
-  status: string;
-}
-
-export interface ResDataMany<T> extends Omit<ResData, 'data'> {
-  data: T[];
-}
-
-export type StoreRes<T> = T | undefined;

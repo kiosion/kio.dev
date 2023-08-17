@@ -58,11 +58,11 @@
 />
 
 <div class={classNames}>
-  <span>{$t('Language')} (</span>
+  <span class="cursor-default select-none">{$t('Language')} (</span>
   {#each _langs as lang, i}
     <Hoverable bind:hovered={lang.active}>
       <a
-        class="focusOutline-sm"
+        class="focusOutline-sm rounded-sm"
         class:active={lang.active}
         class:forNav
         aria-label={$t('Switch language to {lang}', {
@@ -85,20 +85,14 @@
       </a>
     </Hoverable>
     {#if i < _langs.length - 1}
-      <span>/</span>
+      <span class="cursor-default select-none">/</span>
     {/if}
   {/each}
-  <span>)</span>
+  <span class="cursor-default select-none">)</span>
 </div>
 
 <style lang="scss">
-  span {
-    @apply cursor-default select-none;
-  }
-
   a {
-    @apply rounded-sm;
-
     &.forNav {
       @apply px-1;
 
