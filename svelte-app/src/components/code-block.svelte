@@ -122,6 +122,7 @@
 </svelte:head>
 
 <div
+  role="group"
   class="codeBlock--container"
   class:active={hovered}
   bind:this={container}

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { circInOut, circOut, quadOut } from 'svelte/easing';
-  import { tweened } from 'svelte/motion';
+  import { circInOut } from 'svelte/easing';
   import { fade, slide } from 'svelte/transition';
 
   import Breakpoints from 'svelte-breakpoints';
@@ -67,30 +66,6 @@
 
   onDestroy(() => linkToUnsubscriber?.());
 
-  const feDisplacementScale = tweened(0, {
-      duration: BASE_ANIMATION_DURATION * 2,
-      easing: quadOut
-    }),
-    feTurbulenceBaseFreq1 = tweened(2.01, {
-      duration: BASE_ANIMATION_DURATION * 3,
-      easing: circOut
-    }),
-    feTurbulenceBaseFreq2 = tweened(0.01, {
-      duration: BASE_ANIMATION_DURATION * 3,
-      easing: circOut
-    });
-
-  const onLogoFocusIn = () => {
-      feDisplacementScale.set(80);
-      feTurbulenceBaseFreq1.set(2.08);
-      feTurbulenceBaseFreq2.set(0.08);
-    },
-    onLogoFocusOut = () => {
-      feDisplacementScale.set(0);
-      feTurbulenceBaseFreq1.set(2.01);
-      feTurbulenceBaseFreq2.set(0.01);
-    };
-
   const socials =
     (config?.socialLinks?.map((link) => ({
       attrs: {
@@ -108,14 +83,9 @@
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
     <nav class="nav-desktop" data-test-id="navBar">
-      <div
+      <button
         class="logo-container relative"
-        role="button"
         tabindex="0"
-        on:mouseenter={onLogoFocusIn}
-        on:mouseleave={onLogoFocusOut}
-        on:focusin={onLogoFocusIn}
-        on:focusout={onLogoFocusOut}
         on:click={onLogoClick}
         on:keydown={(e) => {
           if (e.key === 'Enter' || e.key === 'Space') {
@@ -124,7 +94,7 @@
         }}
       >
         <img src="/assets/logo-text--short.webp" alt="Kiosion" />
-      </div>
+      </button>
       <span class="border-line" />
       <div class="nav-inner">
         <NavLinks />
@@ -142,34 +112,6 @@
         </div>
       </div>
     </nav>
-    <svg>
-      <filter id="distortion">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency={`${$feTurbulenceBaseFreq1} ${$feTurbulenceBaseFreq2}`}
-          numOctaves="1"
-          seed="39257"
-          stitchTiles="noStitch"
-          x="0%"
-          y="0%"
-          width="100%"
-          height="100%"
-          result="noise"
-        />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="noise"
-          scale={`${$feDisplacementScale}`}
-          xChannelSelector="R"
-          yChannelSelector="B"
-          x="0%"
-          y="0%"
-          width="100%"
-          height="100%"
-          filterUnits="userSpaceOnUse"
-        />
-      </filter>
-    </svg>
   </svelte:fragment>
   <svelte:fragment slot="sm">
     <nav class="nav--mobile" data-test-id="navBar">
@@ -211,13 +153,3 @@
     </nav>
   </svelte:fragment>
 </Breakpoints>
-
-<style lang="scss">
-  svg {
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: -9999px;
-    pointer-events: none;
-  }
-</style>

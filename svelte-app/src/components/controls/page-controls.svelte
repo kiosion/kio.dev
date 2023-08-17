@@ -27,8 +27,10 @@
 
 <Breakpoints queries={DEFAULT_BREAKPOINTS}>
   <svelte:fragment slot="lg">
-    <div class="page-controls-{position}">
-      <div class="w-52">
+    <div
+      class="page-controls-{position} fixed left-56 right-0 z-[3] flex flex-row items-start justify-between px-7 py-6"
+    >
+      <div class="z-[3] w-52">
         <Hoverable bind:hovered={scrollNavHovered}>
           {#if hasNavOption}
             <a
@@ -54,7 +56,7 @@
             </a>
           {:else}
             <div
-              class="flex w-fit cursor-not-allowed select-none flex-row items-center"
+              class="z-[3] flex w-fit cursor-not-allowed select-none flex-row items-center"
               role="button"
               aria-disabled="true"
             >
@@ -70,7 +72,7 @@
         </Hoverable>
       </div>
       {#if position === 'top'}
-        <div class="flex flex-1 justify-center">
+        <div class="z-[3] flex flex-1 justify-center">
           {#if $pageHeading && $pageHeading !== ''}
             <Hoverable>
               <Tooltip text={$t('Scroll to top')} position="bottom" fixed>
@@ -92,7 +94,7 @@
             </Hoverable>
           {/if}
         </div>
-        <div class="flex w-40 flex-row items-center justify-end gap-4">
+        <div class="z-[3] flex w-40 flex-row items-center justify-end gap-4">
           <ThemeToggle />
           <SoundsToggle />
         </div>
@@ -101,7 +103,9 @@
           classNames="flex w-52 flex-row items-center justify-end gap-1 font-code text-base z-[3]"
         />
       {/if}
-      <div class="pseudo-bg-shadow" />
+      <div
+        class="pseudo-bg-shadow absolute left-0 right-0 z-[2] transition-[box-shadow]"
+      />
     </div>
   </svelte:fragment>
 </Breakpoints>
@@ -111,44 +115,29 @@
 
   $boxShadowSpread: 28px 0px 42px 48px;
 
+  .pseudo-bg-shadow {
+    height: 0px;
+    box-shadow: $boxShadowSpread $light;
+  }
+
   .page-controls {
-    &-top,
-    &-bottom {
-      @apply fixed left-56 right-0 z-[3] flex flex-row items-start justify-between px-7 py-6;
-
-      .pseudo-bg-shadow {
-        @apply absolute left-0 right-0 z-[2] transition-[box-shadow];
-
-        height: 0px;
-        box-shadow: $boxShadowSpread $light;
-      }
-      div:not(.pseudo-bg-shadow) {
-        @apply z-[3];
-      }
-    }
-
     &-top {
-      top: 0;
+      &,
       .pseudo-bg-shadow {
-        @apply top-0;
+        top: 0;
       }
     }
     &-bottom {
-      bottom: 0;
+      &,
       .pseudo-bg-shadow {
-        @apply bottom-0;
+        bottom: 0;
       }
     }
   }
 
   :global(.dark) {
-    .page-controls {
-      &-top,
-      &-bottom {
-        .pseudo-bg-shadow {
-          box-shadow: $boxShadowSpread $black;
-        }
-      }
+    .pseudo-bg-shadow {
+      box-shadow: $boxShadowSpread $black;
     }
   }
 </style>
