@@ -27,29 +27,37 @@
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import BarLoader from '$components/loading/bar.svelte';
   import Loader from '$components/loading/full.svelte';
-  import Navigation from '$components/nav.svelte';
+  import Nav from '$components/nav.svelte';
 
+  import type { Navigation } from '@sveltejs/kit';
   import type { Unsubscriber } from 'svelte/store';
-
-  const { theme, comicSans, reduceMotion } = Settings;
 
   let appLoaded: boolean,
     scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
     preloadUrls = ['/assets/logo-text--short.webp'],
     unsubscribers = [] as Unsubscriber[],
+    setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
     invalidationStrategy = createExponentialBackoffStrategy({
       maxRetries: 5,
       baseDelay: 1000,
       onAttempt: invalidateAll
     });
 
+  const { theme, reduce_motion } = Settings,
+    setLoading = (navigating: Navigation | null) => {
+      clearTimeout(setLoadingTimer);
+      if (navigating && navigating.from !== navigating.to) {
+        setLoadingTimer = setTimeout(() => loading.set(true), 500);
+      } else {
+        loading.set(false);
+      }
+    };
+
   unsubscribers.push(
-    navigating.subscribe((res) => {
-      !res ? setTimeout(() => loading.set(false), 750) : loading.set(true);
-    }),
+    navigating.subscribe(setLoading),
     useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
-      reduceMotion?.set(value);
+      reduce_motion?.set(value);
     })
   );
 
@@ -63,25 +71,24 @@
     checkTranslations();
 
     if (browser) {
-      setTimeout(() => loading.set(false), 1000);
-      appLoaded = true;
       try {
         ToruSync.init();
       } catch (e) {
         Logger.error(e as string);
       }
     }
+
+    setTimeout(() => loading.set(false), 1000);
+    appLoaded = true;
   });
 
   onDestroy(() => {
     ToruSync.stop();
-
     unsubscribers.forEach((u) => u());
   });
 
   export let data;
 
-  $: ({ config } = data);
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -100,9 +107,9 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`${$theme ?? 'dark'} ${
+  use:classList={`${$theme || data.theme} ${
     !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  } ${$comicSans ? 'comicSans' : ''}`}
+  }`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
 
@@ -114,7 +121,7 @@
   <span
     class="fixed left-0 top-0 z-[50] h-[3px] w-[100vw]"
     in:fade={{ duration: 50 }}
-    out:fade={{ duration: 50, delay: 750 }}
+    out:fade={{ duration: 50, delay: 500 }}
   >
     <BarLoader width="100vw" height="3px" />
   </span>
@@ -125,47 +132,24 @@
 {/if}
 
 <div
-  class="main"
-  class:is-desktop={$isDesktop}
-  data-test-theme={$theme}
+  class="main flex h-full w-full overflow-x-hidden text-dark dark:text-light {$isDesktop
+    ? 'flex-row text-lg'
+    : 'flex-col'}"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Navigation {config} />
+  <Nav config={data.config} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageControls appBody={scrollContainer} position="top" />
-    <div>
-      {#if appLoaded}
-        <PageTransition pathname={data.pathname}>
-          <slot />
-        </PageTransition>
-      {/if}
+    <div
+      class="relative max-h-full w-full {$isDesktop
+        ? 'mt-[1.6rem] h-[calc(100%-1.6rem)]'
+        : ''}"
+    >
+      <PageTransition pathname={data.pathname}>
+        <slot />
+      </PageTransition>
     </div>
     <PageControls position="bottom" />
   </ScrollContainer>
 </div>
-
-<style lang="scss">
-  .main {
-    @apply flex h-full w-full flex-col overflow-x-hidden text-dark;
-
-    div {
-      @apply relative h-full w-full;
-    }
-
-    &.is-desktop {
-      @apply flex-row text-lg;
-
-      div {
-        margin-top: 1.6rem;
-        height: calc(100% - 1.6rem);
-      }
-    }
-  }
-
-  :global(.dark) {
-    .main {
-      @apply text-light;
-    }
-  }
-</style>

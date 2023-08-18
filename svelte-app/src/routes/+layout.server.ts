@@ -34,14 +34,8 @@ export const load = (async ({ params, cookies, url, fetch }) => {
   }
 
   const promises = await Promise.all([
-    findOne(fetch, 'about', { lang }).catch((err: unknown) => {
-      Logger.error(err as string);
-      return undefined;
-    }),
-    findOne(fetch, 'config').catch((err: Error) => {
-      Logger.error('Failed to load config', err);
-      return undefined;
-    })
+    findOne(fetch, 'about', { lang }),
+    findOne(fetch, 'config')
   ]);
 
   return {
