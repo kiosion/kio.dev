@@ -49,7 +49,7 @@
     "c8": "^7.12.0",
     "cypress": "12.14.0",
     "cypress-svelte-unit-test": "^3.3.4",
-    "devalue": "4.3.0",
+    "devalue": "4.3.2",
     "dotenv": "^16.0.3",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
