@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
 
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
-  import { isLocalized, t } from '$i18n';
+  import { currentLang, isLocalized, t } from '$i18n';
   import SFX from '$lib/sfx';
   import { navLinks, navOpen } from '$stores/navigation';
 
@@ -44,10 +43,7 @@
       goto(link.url).catch(() => undefined);
     };
 
-  onMount(() => {
-    $navLinks[index].element = linkEl;
-  });
-
+  $: ($navLinks[index].element = linkEl), [$currentLang];
   $: splitPath = $page?.url.pathname.split('/') || [];
   $: truePath = link.url.slice($isLocalized ? 4 : 1);
   $: (isActive = (() => {

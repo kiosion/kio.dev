@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { formatDate } from '$helpers/date';
-  import { linkTo, t } from '$i18n';
+  import { currentLang, linkTo, t } from '$i18n';
   import { LANGUAGE_COLOURS } from '$lib/consts';
   import SFX from '$lib/sfx';
 
@@ -36,7 +36,7 @@
     }
   };
 
-  $: date = formatDate(project.date, 'med');
+  $: date = formatDate(project.date, 'med', $currentLang);
   $: external = project.external;
   $: link = (() => {
     return external && project.externalUrl

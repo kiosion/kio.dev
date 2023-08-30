@@ -1,8 +1,6 @@
 import { get } from 'svelte/store';
 
-import { currentLang, t } from '$i18n';
-
-import { DateTime } from 'luxon';
+import { currentLang } from '$i18n';
 
 /**
  * Date helper to return various common human-readable date formats
@@ -17,40 +15,51 @@ import { DateTime } from 'luxon';
  */
 export const formatDate = (
   dateStr: string,
-  format: 'huge' | 'full' | 'med' | 'short' | 'rel' = 'full'
+  format: 'huge' | 'full' | 'med' | 'short' | 'rel' = 'full',
+  lang: string = get(currentLang) || 'en'
 ) => {
-  const date = DateTime.fromISO(dateStr).setLocale(get(currentLang) || 'en');
-
+  const date = new Date(dateStr);
   switch (format) {
-    case 'huge':
-      return date.toLocaleString(DateTime.DATE_HUGE);
     case 'full':
-      return date.toLocaleString(DateTime.DATE_FULL);
+      return new Intl.DateTimeFormat(lang, {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(date);
     case 'med':
-      return date.toLocaleString({
+      return new Intl.DateTimeFormat(lang, {
         month: 'short',
         year: 'numeric'
-      });
+      }).format(date);
     case 'short':
-      return date.toLocaleString(DateTime.DATE_SHORT);
+      return new Intl.DateTimeFormat(lang, {
+        month: 'numeric',
+        day: 'numeric',
+        year: '2-digit'
+      }).format(date);
     case 'rel': {
-      const dur = DateTime.local({ locale: get(currentLang) || 'en' }).diff(date, [
-        'years',
-        'months',
-        'days',
-        'hours'
-      ]);
-      const { years, months, days } = dur.toObject();
+      const rtf = new Intl.RelativeTimeFormat(lang, {
+          numeric: 'auto'
+        }),
+        diff = new Date().getTime() - date.getTime(),
+        years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)),
+        months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30)),
+        days = Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours = Math.floor(diff / (1000 * 60 * 60));
 
-      return get(t)('{duration} ago', {
-        duration: dur
-          .shiftTo(years ? 'years' : months ? 'months' : days ? 'days' : 'hours')
-          .toHuman({
-            listStyle: 'long',
-            maximumFractionDigits: 0,
-            localeMatcher: 'best fit'
-          })
-      });
+      let str = 'now';
+
+      if (years > 0) {
+        str = rtf.format(-years, 'year');
+      } else if (months > 0) {
+        str = rtf.format(-months, 'month');
+      } else if (days > 0) {
+        str = rtf.format(-days, 'day');
+      } else if (hours > 0) {
+        str = rtf.format(-hours, 'hour');
+      }
+
+      return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
     }
   }
 };

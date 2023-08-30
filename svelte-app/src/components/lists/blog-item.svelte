@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { linkTo, t } from '$i18n';
+  import { currentLang, linkTo, t } from '$i18n';
   import { formatDate, getReadingTime } from '$lib/helpers/date';
   import { getTotalWords } from '$lib/helpers/pt';
   import SFX from '$lib/sfx';
@@ -24,7 +24,7 @@
     }
   };
 
-  $: date = formatDate(post.date, 'full');
+  $: date = formatDate(post.date, 'full', $currentLang);
 </script>
 
 <Hoverable bind:hovered>

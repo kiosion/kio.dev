@@ -3,7 +3,7 @@
 
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
-  import { t } from '$i18n';
+  import { currentLang, t } from '$i18n';
   import { DEFAULT_BREAKPOINTS } from '$lib/consts';
 
   import BulletPoint from '$components/bullet-point.svelte';
@@ -23,15 +23,17 @@
   const switchDate = () => {
     if (model === 'project') {
       dateFormat = dateFormat === 'med' ? 'full' : 'med';
-      date = formatDate(data.date, dateFormat);
+      date = formatDate(data.date, dateFormat, $currentLang);
     } else {
       dateFormat = dateFormat === 'rel' ? 'full' : 'rel';
-      date = formatDate(data.date, dateFormat);
+      date = formatDate(data.date, dateFormat, $currentLang);
     }
   };
 
   $: date =
-    model === 'project' ? formatDate(data.date, 'med') : formatDate(data.date, 'rel');
+    model === 'project'
+      ? formatDate(data.date, 'med', $currentLang)
+      : formatDate(data.date, 'rel', $currentLang);
 </script>
 
 <div class="mb-4" data-test-id="{model}-header">

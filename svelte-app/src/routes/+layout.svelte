@@ -1,6 +1,5 @@
 <script lang="ts">
   import '../app.scss';
-  import 'cal-sans';
 
   import { onDestroy, onMount, setContext } from 'svelte';
   import { fade, fly } from 'svelte/transition';

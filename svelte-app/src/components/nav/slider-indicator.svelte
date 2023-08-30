@@ -83,7 +83,7 @@
   };
 
   $: truePageUrl = getTrueLinkUrl($page?.url.pathname);
-  $: setPositionalClassNames(), container, $page?.url, $navLinks;
+  $: setPositionalClassNames(), [container, truePageUrl, $navLinks];
 </script>
 
 <span style="top: {$topValue}px; height: {$heightValue}px; width: 2px;" />
