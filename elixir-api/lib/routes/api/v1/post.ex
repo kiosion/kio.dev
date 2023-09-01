@@ -93,7 +93,7 @@ defmodule Router.Api.V1.Post do
         end
         |> case do
           {:error, message} ->
-            Logger.error("Error fetching post: #{inspect(message)}")
+            Logger.error("Error translating post: #{inspect(message)}")
             result
 
           translated_result ->

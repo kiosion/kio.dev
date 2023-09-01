@@ -57,6 +57,8 @@ defmodule Hexerei.Translate do
   end
 
   def translate(type, sanity_response, target_lang, source_lang \\ "en") do
+    Logger.info("Handling translation for #{type} to '#{target_lang}'")
+
     with key <- Hexerei.Env.get!(:gcloud_key),
          true <- key != nil do
       try do
