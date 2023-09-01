@@ -102,7 +102,7 @@ defmodule Hexerei.Translate do
       }
     else
       _ ->
-        Logger.error("Provided document is nil")
+        Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
         sanity_response
     end
   end
@@ -113,7 +113,7 @@ defmodule Hexerei.Translate do
       field_names = ["title", "desc"]
       block_names = ["body"]
 
-      text_fields = document |> Map.take(field_names) |> Map.values()
+      text_fields = Enum.map(field_names, &Map.get(document, &1))
       text_blocks = document |> Map.take(block_names)
 
       translated_fields =
@@ -129,9 +129,19 @@ defmodule Hexerei.Translate do
       # Since field translations will be in reverse order we can just pop them off
       updated_document =
         Enum.reduce(field_names, document, fn key, acc ->
+          original_value = Map.get(acc, key)
           index = field_names |> Enum.find_index(fn k -> k == key end)
-          {_list, [translation]} = translated_fields |> List.pop_at(index)
-          Map.put(acc, key, translation |> List.first())
+          translation = Enum.at(translated_fields, index)
+
+          translation =
+            case translation do
+              [translation] -> translation
+              translation when is_binary(translation) -> translation
+              # Gracefully fall back to original value if translation is invalid
+              _ -> original_value
+            end
+
+          Map.put(acc, key, translation)
         end)
 
       # For lists of posts we don't want to translate the blocks since they aren't visible anyways
@@ -156,7 +166,7 @@ defmodule Hexerei.Translate do
       end
     else
       _ ->
-        Logger.error("Provided document is nil")
+        Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
         sanity_response
     end
   end
@@ -221,7 +231,7 @@ defmodule Hexerei.Translate do
       end
     else
       _ ->
-        Logger.error("Provided document is nil")
+        Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
         sanity_response
     end
   end
@@ -249,8 +259,8 @@ defmodule Hexerei.Translate do
         {:ok, {:ok, result}} ->
           result
 
-        {:ok, {:error, _}} ->
-          {:error, "Error translating fields"}
+        {:ok, {:error, reason}} ->
+          {:error, "Error translating fields: #{inspect(reason)}"}
 
         {:exit, reason} ->
           Logger.error("Error translating fields: #{inspect(reason)}")
