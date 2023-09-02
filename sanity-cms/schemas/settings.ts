@@ -51,8 +51,12 @@ export default {
               name: 'url',
               title: 'URL',
               type: 'string',
-              validation: (Rule: Rule) =>
-                Rule.regex(/^\/.*|^https?:\/\/.*/).required()
+              validation: (Rule: Rule) => {
+                return Rule.uri({
+                  allowRelative: true,
+                  scheme: ['https', 'http', 'mailto', 'tel']
+                });
+              }
             },
             {
               name: 'internal',
