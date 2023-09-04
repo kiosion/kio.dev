@@ -16,7 +16,7 @@
     "@sanity/code-input": "^4.1.1",
     "@sanity/ui": "^1.7.11",
     "@sanity/vision": "^3.15.1",
-    "ace-builds": "^1.23.4",
+    "ace-builds": "^1.24.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
