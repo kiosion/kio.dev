@@ -70,18 +70,10 @@ defmodule Router.Api.V1.Project do
 
       conn
       |> handle_sanity_fetch(query, fn conn, result, duration ->
-        {result, count} =
+        count =
           case result["result"] do
-            nil ->
-              {result, 0}
-
-            _ ->
-              %{"result" => %{"body" => body}} = result
-
-              {
-                Kernel.put_in(result, ["result", "headings"], PT.build_summary(body)),
-                1
-              }
+            nil -> 0
+            _ -> 1
           end
 
         case params["lang"] do
@@ -97,6 +89,7 @@ defmodule Router.Api.V1.Project do
           translated_result ->
             translated_result
         end
+        |> Kernel.put_in(["result", "headings"], PT.build_summary(& &1["result"]["body"]))
         |> Map.put("meta", %{
           "total" => count,
           "count" => count,

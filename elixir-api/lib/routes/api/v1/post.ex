@@ -72,33 +72,32 @@ defmodule Router.Api.V1.Post do
 
       conn
       |> handle_sanity_fetch(query, fn conn, result, duration ->
-        {result, count} =
+        count =
           case result["result"] do
-            nil ->
-              {result, 0}
-
-            _ ->
-              %{"result" => %{"body" => body}} = result
-
-              {
-                Kernel.put_in(result, ["result", "headings"], PT.build_summary(body)),
-                1
-              }
+            nil -> 0
+            _ -> 1
           end
 
-        case params["lang"] do
-          "en" -> result
-          "fr" -> Translate.translate(:post, result, "fr", "en")
-          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-        end
-        |> case do
-          {:error, message} ->
-            Logger.error("Error translating post: #{inspect(message)}")
-            result
+        translated_result =
+          case params["lang"] do
+            "en" -> result
+            "fr" -> Translate.translate(:post, result, "fr", "en")
+            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+          end
+          |> case do
+            {:error, message} ->
+              Logger.error("Error translating post: #{inspect(message)}")
+              result
 
-          translated_result ->
-            translated_result
-        end
+            translated_result ->
+              translated_result
+          end
+
+        Kernel.put_in(
+          translated_result,
+          ["result", "headings"],
+          PT.build_summary(translated_result["result"]["body"])
+        )
         |> Map.put("meta", %{
           "total" => count,
           "count" => count,

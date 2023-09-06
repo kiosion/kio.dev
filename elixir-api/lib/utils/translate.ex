@@ -336,7 +336,7 @@ defmodule Hexerei.Translate do
               case child do
                 # Check if the child is a text node and it's not marked w/ "notranslate"
                 %{"text" => text, "marks" => marks} when text != nil ->
-                  if Enum.member?(marks || [], "notranslate") do
+                  if Enum.member?(marks || [], "notranslate") or Enum.member?(marks || [], "code") do
                     child
                   else
                     translated =
