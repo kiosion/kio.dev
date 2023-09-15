@@ -22,6 +22,8 @@
 
 <div
   class="page-controls-{position} absolute left-0 right-0 z-[3] hidden flex-row items-start justify-between px-7 py-6 lg:flex"
+  role="group"
+  aria-label={position === 'top' ? $t('Top bar controls') : $t('Bottom bar controls')}
 >
   <div class="z-[3] w-52">
     <Hoverable bind:hovered={scrollNavHovered}>

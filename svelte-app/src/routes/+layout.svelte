@@ -12,12 +12,7 @@
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
-  import {
-    APP_LANGS,
-    BASE_ANIMATION_DURATION,
-    BASE_TRANSITION_DURATION,
-    DEFAULT_APP_LANG
-  } from '$lib/consts';
+  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import { createExponentialBackoffStrategy } from '$lib/try-fetch';
   import Settings, { loading } from '$stores/settings';
@@ -52,6 +47,19 @@
         setLoadingTimer = setTimeout(() => loading.set(true), 500);
       } else {
         loading.set(false);
+      }
+    },
+    skipToContent = (e: KeyboardEvent) => {
+      if (e.code === 'Enter') {
+        e.preventDefault();
+        const content = document.getElementById('content-wrapper'),
+          focusable = content?.querySelectorAll(
+            '[tabindex="0"], a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+          ),
+          elem = focusable?.[0] as HTMLElement | null;
+        elem?.focus();
+        // @ts-expect-error - scrollToOptions is not yet in the DOM typings
+        elem?.scrollTo({ behavior: 'smooth', block: 'center' });
       }
     };
 
@@ -120,11 +128,22 @@
 {#if !appLoaded}
   <div
     class="absolute left-0 top-0 z-[100] flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
-    out:fade={{ duration: BASE_ANIMATION_DURATION, delay: BASE_TRANSITION_DURATION }}
+    out:fade={{ duration: BASE_ANIMATION_DURATION }}
+    aria-hidden="true"
   >
     <Spinner />
   </div>
 {/if}
+
+<span
+  class="focusOutline-sm absolute left-1/2 top-0 z-[10] -mt-10 translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-dark dark:text-light"
+  role="button"
+  aria-label="Skip to content"
+  tabindex="0"
+  in:fly={{ delay: 100, duration: 100, y: -40 }}
+  out:fly={{ duration: 100, y: 40 }}
+  on:keydown={skipToContent}>Skip to content</span
+>
 
 <div
   class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"

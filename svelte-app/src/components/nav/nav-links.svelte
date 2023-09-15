@@ -7,11 +7,15 @@
   let navLinksContainer: HTMLElement;
 </script>
 
-<div bind:this={navLinksContainer}>
-  <ul class="relative flex flex-col items-start text-base">
-    {#each $navLinks as link, index}
-      <NavLink {link} {index} />
-    {/each}
-    <SliderIndicator container={navLinksContainer} />
-  </ul>
+<div
+  id="nav-links"
+  class="relative flex flex-col items-start text-base"
+  aria-label="Navigation links"
+  role="menubar"
+  bind:this={navLinksContainer}
+>
+  {#each $navLinks as link, index}
+    <NavLink {link} {index} />
+  {/each}
+  <SliderIndicator container={navLinksContainer} />
 </div>

@@ -57,7 +57,7 @@
 
 <IconHeader icon="bulletlist" text={$t('Recent')} />
 {#if posts?.length}
-  <div class="flex flex-col gap-y-4">
+  <div class="flex flex-col gap-y-4" role="group" aria-label={$t('Posts')}>
     {#each posts as post}
       <ListItem {post} />
     {/each}

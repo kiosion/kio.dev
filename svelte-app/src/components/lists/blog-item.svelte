@@ -19,7 +19,7 @@
       e.preventDefault();
       goto($linkTo(`/blog/${post.slug.current}`)).catch(() => undefined);
     },
-    onKey = (e: KeyboardEvent) => e.code === 'Enter' && onClick(e);
+    onKey = (e: KeyboardEvent) => e.code === 'space' && onClick(e);
 
   $: date = formatDate(post.date, 'full', $currentLang);
 </script>

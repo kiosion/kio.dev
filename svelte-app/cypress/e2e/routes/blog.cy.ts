@@ -19,7 +19,7 @@ describe('E2E | Blog', () => {
     cy.visit('/blog');
 
     cy.get('div.main', { timeout: 4000 }).should('exist');
-    cy.get('div.main').should('contain', 'kio.dev | Thoughts');
+    cy.get('div.main').should('contain', 'kio.dev | Blog');
   });
 
   // TODO: This should be a separate test

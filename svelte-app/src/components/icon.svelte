@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$i18n';
   import icons from '$lib/icons';
 
   export let icon: string,
@@ -16,6 +17,7 @@
       {width}
       {height}
       class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline ? 'inline' : ''}"
+      aria-label={icon + $t(' icon')}
       {style}
     />
   {/await}

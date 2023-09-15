@@ -67,17 +67,14 @@
 <nav
   class="relative my-20 ml-12 hidden w-fit flex-col gap-y-5 rounded-lg border border-dark/40 pb-3 pt-5 transition-[background-color,border-color] focus-within:border-dark/60 focus-within:bg-dark/5 hover:border-dark/60 hover:bg-dark/5 dark:border-light/40 dark:focus-within:border-light/60
   dark:focus-within:bg-dark/30 dark:hover:border-light/60 dark:hover:bg-dark/30 lg:flex"
+  aria-label="Main navigation"
+  role="group"
   data-test-id="navBar"
 >
   <button
-    class="relative mx-auto w-48"
-    tabindex="0"
+    class="focusOutline relative mx-auto w-48 rounded-sm"
+    aria-label="Home"
     on:click={onLogoClick}
-    on:keydown={(e) => {
-      if (e.key === 'Enter' || e.key === 'Space') {
-        onLogoClick();
-      }
-    }}
   >
     <img
       class="h-full px-9 py-4 dark:invert"
@@ -85,14 +82,18 @@
       alt="Kiosion"
     />
   </button>
-  <span class="block h-[1px] w-full bg-dark/40 dark:bg-light/40" />
+  <div class="block h-[1px] w-full bg-dark/40 dark:bg-light/40" />
   <div class="flex w-56 flex-1 flex-col justify-between">
     <NavLinks />
     <div>
       {#if socials.length}
-        <span class="block h-[1px] w-full bg-dark/40 dark:bg-light/40" />
+        <div class="block h-[1px] w-full bg-dark/40 dark:bg-light/40" />
       {/if}
-      <div class="flex flex-row flex-wrap items-center justify-center gap-x-1 pt-3">
+      <div
+        class="flex flex-row flex-wrap items-center justify-center gap-x-1 pt-3"
+        aria-label="Social links"
+        role="menubar"
+      >
         {#each socials as social}
           <NavSocial {social} />
         {/each}

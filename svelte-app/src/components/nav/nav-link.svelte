@@ -65,10 +65,11 @@
     class:first={index === 0}
     class:last={index === $navLinks.length - 1}
     class:active={isActive || link.hovered}
+    aria-current={isActive ? 'page' : undefined}
     aria-label={$t(link.name)}
     href={link.url}
-    role="menuitem"
     tabindex="0"
+    role="menuitem"
     data-sveltekit-preload-data
     data-sveltekit-preload-code
     on:click={handleAction}
