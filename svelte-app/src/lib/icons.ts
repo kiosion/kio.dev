@@ -24,12 +24,10 @@ const iconProxy = new Proxy(
     get: (target, prop) => {
       switch (prop) {
         case 'get': {
-          return async (iconName: string) => {
+          return (iconName: string) => {
             iconName = transformName(iconName);
             if (!target.has(iconName)) {
-              const icon = await import(
-                `../../node_modules/pixelarticons/svg/${iconName}.svg`
-              )
+              return import(`../../node_modules/pixelarticons/svg/${iconName}.svg`)
                 .then((res: { default: PixelIcon } | undefined) => {
                   if (!res) {
                     Logger.error(`Icon ${iconName} not found`);
@@ -39,7 +37,6 @@ const iconProxy = new Proxy(
                   return res.default;
                 })
                 .catch(() => target.get('alert'));
-              return icon;
             }
             return target.get(iconName);
           };
@@ -50,6 +47,8 @@ const iconProxy = new Proxy(
       }
     }
   }
-);
+) as unknown as {
+  get: (iconName: string) => PixelIcon;
+};
 
 export default iconProxy;

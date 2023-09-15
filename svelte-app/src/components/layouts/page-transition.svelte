@@ -9,7 +9,7 @@
 
   export let pathname: string | undefined;
 
-  const { reduceMotion } = Settings;
+  const { reduce_motion } = Settings;
 
   const dist = 18,
     duration = BASE_ANIMATION_DURATION / 1.25;
@@ -27,18 +27,18 @@
     class="absolute left-0 top-0 h-full w-full"
     in:maybe={{
       enable: true,
-      fn: $reduceMotion ? 'fade' : 'fly',
+      fn: $reduce_motion ? 'fade' : 'fly',
       delay: duration,
       duration: duration * 2,
-      easing: backOut,
-      y: navDir === 'backward' ? -dist : dist
+      y: navDir === 'backward' ? -dist : dist,
+      easing: backOut
     }}
     out:maybe={{
       enable: true,
-      fn: $reduceMotion ? 'fade' : 'fly',
+      fn: $reduce_motion ? 'fade' : 'fly',
       duration,
-      easing: backIn,
-      y: navDir === 'backward' ? dist : -dist
+      y: navDir === 'backward' ? dist : -dist,
+      easing: backIn
     }}
   >
     <slot />

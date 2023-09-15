@@ -2,6 +2,4 @@
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
 </script>
 
-<ContentWrapper fixed wide>
-  <slot />
-</ContentWrapper>
+<ContentWrapper wide><slot /></ContentWrapper>

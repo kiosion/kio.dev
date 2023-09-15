@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { currentLang, isLocalized, t } from '$i18n';
-  import SFX from '$lib/sfx';
   import { navLinks, navOpen } from '$stores/navigation';
 
   import Hoverable from '$components/hoverable.svelte';
@@ -36,7 +35,6 @@
       if ($page?.url.pathname.slice($isLocalized ? 3 : 0) === link.url) {
         return;
       }
-      SFX.click.play();
       if (mobile) {
         navOpen.set(false);
       }

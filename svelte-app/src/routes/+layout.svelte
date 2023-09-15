@@ -12,11 +12,13 @@
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
-  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
+  import {
+    APP_LANGS,
+    BASE_ANIMATION_DURATION,
+    BASE_TRANSITION_DURATION,
+    DEFAULT_APP_LANG
+  } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
-  import ToruSync from '$lib/helpers/toru';
-  import Logger from '$lib/logger';
-  import { init as initAudio } from '$lib/sfx';
   import { createExponentialBackoffStrategy } from '$lib/try-fetch';
   import Settings, { loading } from '$stores/settings';
 
@@ -25,14 +27,13 @@
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import BarLoader from '$components/loading/bar.svelte';
-  import Loader from '$components/loading/full.svelte';
+  import Spinner from '$components/loading/spinner.svelte';
   import Nav from '$components/nav.svelte';
 
   import type { Navigation } from '@sveltejs/kit';
   import type { Unsubscriber } from 'svelte/store';
 
-  let appLoaded: boolean,
-    scrollContainer: HTMLDivElement,
+  let scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
     preloadUrls = ['/assets/logo-text--short.webp'],
     unsubscribers = [] as Unsubscriber[],
@@ -41,7 +42,8 @@
       maxRetries: 5,
       baseDelay: 1000,
       onAttempt: invalidateAll
-    });
+    }),
+    appLoaded = false;
 
   const { theme, reduce_motion } = Settings,
     setLoading = (navigating: Navigation | null) => {
@@ -66,23 +68,14 @@
   ].forEach(([k, v]) => setContext(k, v));
 
   onMount(() => {
-    initAudio({ volume: 0.1 }).catch(console.error);
     checkTranslations();
-
-    if (browser) {
-      try {
-        ToruSync.init();
-      } catch (e) {
-        Logger.error(e as string);
-      }
-    }
-
-    setTimeout(() => loading.set(false), 1000);
+    setTimeout(() => {
+      loading.set(false);
+    }, 1000);
     appLoaded = true;
   });
 
   onDestroy(() => {
-    ToruSync.stop();
     unsubscribers.forEach((u) => u());
   });
 
@@ -106,15 +99,9 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`${$theme || data.theme} ${
-    !appLoaded || $navigating ? 'is-loading' : 'is-loaded'
-  }`}
+  use:classList={`${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
-
-{#if !appLoaded}
-  <Loader theme={data.theme} phrase={data.loadingPhrase} />
-{/if}
 
 {#if !$isDesktop && $loading}
   <span
@@ -130,25 +117,28 @@
   <ContextMenu />
 {/if}
 
+{#if !appLoaded}
+  <div
+    class="absolute left-0 top-0 z-[100] flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
+    out:fade={{ duration: BASE_ANIMATION_DURATION, delay: BASE_TRANSITION_DURATION }}
+  >
+    <Spinner />
+  </div>
+{/if}
+
 <div
-  class="main flex h-full w-full overflow-x-hidden text-dark dark:text-light {$isDesktop
-    ? 'flex-row text-lg'
-    : 'flex-col'}"
+  class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
   <Nav config={data.config} />
+  <PageControls appBody={scrollContainer} position="top" />
   <ScrollContainer bind:element={scrollContainer}>
-    <PageControls appBody={scrollContainer} position="top" />
-    <div
-      class="relative max-h-full w-full {$isDesktop
-        ? 'mt-[1.6rem] h-[calc(100%-1.6rem)]'
-        : ''}"
-    >
+    <div class="relative max-h-full w-full lg:mt-6 lg:h-[calc(100%_-_1.5rem)]">
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
     </div>
-    <PageControls position="bottom" />
   </ScrollContainer>
+  <PageControls position="bottom" />
 </div>

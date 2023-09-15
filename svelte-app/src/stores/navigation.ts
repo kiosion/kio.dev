@@ -1,14 +1,10 @@
 import { writable } from 'svelte/store';
 
-import type { Data } from '$helpers/toru';
-
 const navOpen = writable(false);
 
 const navOptions = writable({ down: '', up: '' });
 
 const pageHeading = writable('');
-
-const nowPlayingData = writable<Data | undefined>(undefined);
 
 const navLinks = writable<
   {
@@ -20,4 +16,4 @@ const navLinks = writable<
   }[]
 >([]);
 
-export { navLinks, navOpen, navOptions, nowPlayingData, pageHeading };
+export { navLinks, navOpen, navOptions, pageHeading };

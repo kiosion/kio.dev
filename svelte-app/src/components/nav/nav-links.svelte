@@ -8,16 +8,10 @@
 </script>
 
 <div bind:this={navLinksContainer}>
-  <ul>
+  <ul class="relative flex flex-col items-start text-base">
     {#each $navLinks as link, index}
       <NavLink {link} {index} />
     {/each}
     <SliderIndicator container={navLinksContainer} />
   </ul>
 </div>
-
-<style lang="scss">
-  ul {
-    @apply relative mt-5 flex flex-col items-start text-base;
-  }
-</style>

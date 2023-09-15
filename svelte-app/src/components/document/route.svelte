@@ -70,7 +70,7 @@
   });
 
   $: $page?.url && scrollTo($page.url);
-  $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
+  $: pageName = `${isPost ? $t('Blog') : $t('My work')}${
     !isAtTop && data?.title ? ` | ${data.title}` : ''
   }`;
   $: browser && pageHeading.set(pageName);

@@ -60,7 +60,7 @@
     }
   };
 
-  const { reduceMotion } = Settings;
+  const { reduce_motion } = Settings;
 </script>
 
 <div class="relative ml-0 mr-2 mt-4 h-fit">
@@ -75,7 +75,7 @@
             width={24}
             height={24}
             icon="ArrowRight"
-            classNames="text-dark/40 dark:text-light/40 translate-y-[2.5px] translate-x-[1px]"
+            class="translate-x-[1px] translate-y-[2.5px] text-dark/40 dark:text-light/40"
           />
           <div class="mr-6 flex w-full flex-col items-start justify-start">
             <h1 class="select-none font-code text-base text-dark/90 dark:text-light/90">
@@ -121,13 +121,13 @@
                     <div
                       class="pb-2 font-sans text-base"
                       in:maybe={{
-                        fn: $reduceMotion ? 'fade' : 'slide',
+                        fn: $reduce_motion ? 'fade' : 'slide',
                         enable: true,
                         duration: 200,
                         easing: circInOut
                       }}
                       out:maybe={{
-                        fn: $reduceMotion ? 'fade' : 'slide',
+                        fn: $reduce_motion ? 'fade' : 'slide',
                         enable: true,
                         duration: 150,
                         easing: circInOut
@@ -148,9 +148,9 @@
                   {#if item.body}
                     <Icon
                       icon="ChevronDown"
-                      classNames="{selected === i
+                      class="{selected === i
                         ? 'rotate-0'
-                        : 'rotate-90'} transition-all absolute top-4 right-4"
+                        : 'rotate-90'} absolute right-4 top-4 transition-all"
                     />
                   {/if}
                 </div>

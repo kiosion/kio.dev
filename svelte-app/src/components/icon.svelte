@@ -6,11 +6,10 @@
     inline = false,
     width = 20,
     height = width,
-    classNames = '',
     style = '';
 </script>
 
-<div class="w-[{width}px] {inline ? 'inline' : ''} {classNames}">
+<div class="w-[{width}px] {inline ? 'inline' : ''} {$$props.class || ''}">
   {#await icons.get(icon) then svg}
     <svelte:component
       this={svg}

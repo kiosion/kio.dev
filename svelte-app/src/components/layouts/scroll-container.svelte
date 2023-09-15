@@ -2,7 +2,6 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { navigating } from '$app/stores';
-  import { isDesktop } from '$helpers/responsive';
 
   import type { Unsubscriber } from 'svelte/store';
 
@@ -26,8 +25,7 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll bg-light p-8 duration-150 dark:bg-black"
-  class:rounded-t-2xl={!$isDesktop}
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-2xl bg-light p-8 duration-150 dark:bg-black lg:rounded-t-none lg:bg-transparent"
   tabindex="-1"
   bind:this={element}
 >

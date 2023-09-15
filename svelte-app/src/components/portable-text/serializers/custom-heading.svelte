@@ -20,7 +20,7 @@
     href={`#${value._key}`}
   >
     {#if hovered}
-      <Icon icon="link" classNames="absolute -left-8 top-1/2 -translate-y-1/2" />
+      <Icon icon="link" class="absolute -left-8 top-1/2 -translate-y-1/2" />
     {/if}
 
     <svelte:element

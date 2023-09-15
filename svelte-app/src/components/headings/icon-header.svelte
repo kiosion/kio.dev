@@ -1,12 +1,10 @@
 <script lang="ts">
   import Icon from '$components/icon.svelte';
 
-  export let text: string,
-    icon: string,
-    classNames = 'mt-8 mb-2 w-full h-fit';
+  export let text: string, icon: string;
 </script>
 
-<div class={classNames}>
+<div class={$$props.class || 'mb-2 mt-8 h-fit w-full'}>
   <Icon {icon} />
   <h3>{text}</h3>
 </div>

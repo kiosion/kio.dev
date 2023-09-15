@@ -1,10 +1,7 @@
 <script lang="ts">
-  import Breakpoints from 'svelte-breakpoints';
-
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
   import { currentLang, t } from '$i18n';
-  import { DEFAULT_BREAKPOINTS } from '$lib/consts';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import Divider from '$components/divider.svelte';
@@ -40,27 +37,11 @@
   <div class="flex flex-col">
     <svelte:component this={model === 'post' ? PostHeader : ProjectHeader}>
       <svelte:fragment slot="title">
-        <Breakpoints queries={DEFAULT_BREAKPOINTS}>
-          <svelte:fragment slot="lg">
-            <h1
-              class="mb-4 mt-10 h-fit w-fit font-display text-7xl font-black leading-none text-black dark:text-white"
-            >
-              {data.title}
-            </h1>
-          </svelte:fragment>
-          <svelte:fragment slot="sm">
-            <h1 class="my-4 h-fit w-fit font-display text-4xl font-bold leading-none">
-              {data.title}
-            </h1>
-          </svelte:fragment>
-        </Breakpoints>
-      </svelte:fragment>
-      <svelte:fragment slot="desc">
-        {#if data.desc}
-          <div class="mt-4">
-            <p class="font-mono text-base">{data.desc}</p>
-          </div>
-        {/if}
+        <h1
+          class="my-4 h-fit w-fit font-display text-4xl font-bold text-black dark:text-white lg:mt-10 lg:text-6xl lg:font-black"
+        >
+          {data.title}
+        </h1>
       </svelte:fragment>
       <svelte:fragment slot="meta">
         <div class="flex flex-row flex-wrap items-center justify-start gap-y-2">

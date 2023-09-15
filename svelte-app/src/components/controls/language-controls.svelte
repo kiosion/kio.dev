@@ -3,7 +3,6 @@
   import { page } from '$app/stores';
   import { linkTo, t } from '$i18n';
   import { APP_LANGS } from '$lib/consts';
-  import SFX from '$lib/sfx';
   import { navOpen } from '$stores/navigation';
 
   import Dialog from '$components/dialog.svelte';
@@ -13,7 +12,6 @@
       { lang: 'en', name: 'English' },
       { lang: 'fr', name: 'Français' }
     ],
-    classNames = '',
     forNav = false;
 
   let modalOpen = false;
@@ -34,7 +32,6 @@
       }
     },
     modalConfirm = () => {
-      SFX.click.play();
       goto($linkTo($page.url.pathname, APP_LANGS[1]), {
         invalidateAll: true,
         replaceState: true
@@ -57,7 +54,7 @@
   on:confirm={modalConfirm}
 />
 
-<div class={classNames}>
+<div class={$$props.class || ''}>
   <span class="cursor-default select-none">{$t('Language')} (</span>
   {#each _langs as lang, i}
     <Hoverable bind:hovered={lang.active}>

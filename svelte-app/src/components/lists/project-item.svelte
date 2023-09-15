@@ -3,38 +3,24 @@
   import { formatDate } from '$helpers/date';
   import { currentLang, linkTo, t } from '$i18n';
   import { LANGUAGE_COLOURS } from '$lib/consts';
-  import SFX from '$lib/sfx';
 
+  import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
-
-  import BulletPoint from '../bullet-point.svelte';
 
   import type { ProjectDocument } from '$types';
 
   export let project: ProjectDocument;
 
   let hovered = false;
-  let self: HTMLAnchorElement;
 
-  const onClick = (e?: MouseEvent) => {
-    SFX.click.play();
-
-    if (!e || e.target === self) {
-      e?.preventDefault();
-      if (external) {
-        window.open(link, '_blank');
-      } else {
-        goto($linkTo(`/work/${project.slug.current}`)).catch(() => undefined);
-      }
-    }
-  };
-
-  const onKey = (e: KeyboardEvent) => {
-    if (e.code === 'Enter' || e.code === 'Space') {
-      onClick();
-    }
-  };
+  const onClick = (e: MouseEvent | KeyboardEvent) => {
+      e.preventDefault();
+      external
+        ? window.open(link, '_blank')
+        : goto($linkTo(`/work/${project.slug.current}`)).catch(() => undefined);
+    },
+    onKey = (e: KeyboardEvent) => e.code === 'Enter' && onClick(e);
 
   $: date = formatDate(project.date, 'med', $currentLang);
   $: external = project.external;
@@ -46,29 +32,26 @@
 </script>
 
 <Hoverable bind:hovered>
-  <a
+  <button
     class="relative flex w-full flex-col items-stretch justify-start gap-y-1.5 rounded-xl px-6 py-5 lg:w-[calc(50%_-_12px)] 3xl:w-[calc(50%_-_12px)] {hovered
       ? 'border-dark/60 bg-dark/10 dark:border-light/60 dark:bg-dark/40'
       : 'border-dark/40 bg-dark/5 dark:border-light/40 dark:bg-dark/20'} focusOutline -ml-[1px] -mt-[1px] border transition-[background-color,border-color]"
     data-test-id="list-item"
     tabindex="0"
-    role="button"
     aria-label="{$t('Project')} - {project.title}"
-    href={link}
-    target={external ? '_blank' : undefined}
     data-sveltekit-preload-code
+    data-sveltekit-preload-data
     on:click={onClick}
     on:keydown={onKey}
-    bind:this={self}
   >
     <div class="mb-0.5 flex w-full flex-row items-center gap-x-3">
       <Icon
-        classNames="-ml-0.5 text-dark dark:text-light {project.external ? 'mb-0.5' : ''}"
+        class="-ml-0.5 text-dark dark:text-light {project.external ? 'mb-0.5' : ''}"
         icon={project.external ? 'open' : 'book-open'}
         width={20}
       />
       <h1
-        class="line-clamp-1 w-full overflow-hidden text-ellipsis whitespace-nowrap font-display text-xl font-bold decoration-[2px] underline-offset-[3px] {hovered
+        class="line-clamp-1 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left font-display text-xl font-bold decoration-[2px] underline-offset-[3px] {hovered
           ? 'underline'
           : ''}"
       >
@@ -78,7 +61,7 @@
     <div class="">
       {#if project.desc}
         <p
-          class="line-clamp-2 w-full overflow-hidden text-ellipsis pr-6 font-sans text-base"
+          class="line-clamp-2 w-full overflow-hidden text-ellipsis pr-6 text-left font-sans text-base"
         >
           {project.desc}
         </p>
@@ -104,5 +87,5 @@
         {date}
       </p>
     </div>
-  </a>
+  </button>
 </Hoverable>

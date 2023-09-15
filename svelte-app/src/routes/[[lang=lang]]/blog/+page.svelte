@@ -32,7 +32,7 @@
 
   $: ({ pinned, posts } = data);
   $: posts && (postsExceptPinned = posts?.filter((post) => post._id !== pinned?._id));
-  $: pageTitle = `kio.dev | ${$t('Thoughts')}`;
+  $: pageTitle = `kio.dev | ${$t('Blog')}`;
   $: description = $t('Thoughts about tech, design, and development');
 </script>
 

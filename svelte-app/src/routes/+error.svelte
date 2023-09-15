@@ -58,7 +58,7 @@
       text={$t(
         $page.error?.message && $page.status !== 404 ? $page.error.message : message
       )}
-      classNames="mx-auto w-fit"
+      class="mx-auto w-fit"
     />
   </ContentWrapper>
 </div>

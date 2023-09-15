@@ -54,7 +54,7 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<ContentWrapper fixed>
+<ContentWrapper>
   {#if data.about}
     <HeadedBlock icon="Message" heading={$t('Say hello')}>
       <PortableText text={data.about.contact} />

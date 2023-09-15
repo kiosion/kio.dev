@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import SFX from '$lib/sfx';
 
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
@@ -31,11 +30,9 @@
       aria-label={social.name}
       tabindex="0"
       {...social.attrs}
-      on:click={() => SFX.click.play()}
       on:keydown={(e) => {
         if (e.code === 'Enter' || e.code === 'Space') {
           e.preventDefault();
-          SFX.click.play();
           goto(social.attrs.href).catch(() => undefined);
         }
       }}

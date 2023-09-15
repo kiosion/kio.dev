@@ -21,12 +21,12 @@
 <div class="mt-4" data-test-id="{model}-footer">
   <Divider />
   {#if data.tags && data.tags.length > 0}
-    <IconHeader icon="CardText" text={$t('Tags')} classNames="mt-8 mb-4 w-full h-fit" />
+    <IconHeader icon="CardText" text={$t('Tags')} class="mb-4 mt-8 h-fit w-full" />
     <Tags {model} data={data.tags} size="lg" />
   {/if}
   {#if extLinks && extLinks.length > 0}
     <Divider />
-    <IconHeader icon="link" text={$t('Links')} classNames="mt-8 mb-4 w-full h-fit" />
+    <IconHeader icon="link" text={$t('Links')} class="mb-4 mt-8 h-fit w-full" />
     <ul class="ml-8 list-disc">
       {#each extLinks as link}
         <li>

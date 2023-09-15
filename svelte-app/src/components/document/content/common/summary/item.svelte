@@ -4,14 +4,14 @@
 
   import type { DocumentHeadings } from '$types';
 
-  export let headings: DocumentHeadings[],
-    classNames = '';
+  export let headings: DocumentHeadings[];
 
   $: localHeadings = headings as (DocumentHeadings & { active: boolean })[];
 </script>
 
 <div
-  class="relative flex h-fit w-full flex-col items-start justify-start text-ellipsis {classNames}"
+  class="relative flex h-fit w-full flex-col items-start justify-start text-ellipsis {$$props.class ||
+    ''}"
 >
   {#each localHeadings as heading}
     <Hoverable bind:hovered={heading.active}>
@@ -21,7 +21,7 @@
       </a>
     </Hoverable>
     {#if heading.children?.length}
-      <svelte:self headings={heading.children} classNames="ml-6" />
+      <svelte:self headings={heading.children} class="ml-6" />
     {/if}
   {/each}
 </div>
