@@ -74,7 +74,7 @@
     "terser": "^5.16.3",
     "tippy.js": "^6.3.7",
     "ts-essentials": "^9.3.0",
-    "tslib": "^2.5.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vite-plugin-inspect": "^0.7.35",
