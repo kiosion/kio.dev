@@ -1,37 +1,14 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-
   import { page } from '$app/stores';
-  import { setupNavigation } from '$helpers/navigation';
-  import { t } from '$i18n';
-  import { pageHeading } from '$stores/navigation';
+  import { linkTo, t } from '$i18n';
 
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+  import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { PageData } from './$types';
-  import type { Unsubscriber } from 'svelte/store';
-
-  let subscribers = [] as Unsubscriber[];
-
-  onMount(() => {
-    setupNavigation($page?.url?.pathname);
-
-    subscribers = [
-      t.subscribe((_) => {
-        pageHeading.set(`kio.dev | ${$t('Index')}`);
-      })
-    ];
-  });
-
-  onDestroy(() => {
-    subscribers.forEach((unsub) => unsub());
-  });
-
-  export let data: PageData;
+  export let data;
 
   $: pageTitle = `kio.dev | ${$t('Index')}`;
   $: description = $t('A bit about me, my work, and what I do');
@@ -56,14 +33,55 @@
     <HeadedBlock icon="User" heading={$t('About me')}>
       <PortableText text={data.about.bio} />
     </HeadedBlock>
-    {#if data.about.bio && data.about.now}
-      <Divider />
-    {/if}
-    {#if data.about.now}
-      <HeadedBlock icon="Clock" heading={$t("What I'm up to now")}>
-        <PortableText text={data.about.now} />
+
+    <div class="align-center flex flex-col justify-start gap-4">
+      <HeadedBlock icon="list" heading={$t('Recent posts')} class="flex-[1]">
+        {#if data.posts?.length}
+          <div class="flex flex-col gap-y-5 pt-4" role="group" aria-label={$t('Posts')}>
+            {#each data.posts as post}
+              <ListItem document={post} small />
+            {/each}
+          </div>
+          <a
+            href={$linkTo('/blog')}
+            class="ml-[72px] mt-4 inline-block pl-[8px] font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
+          >
+            {$t('See more')} &rarr;
+          </a>
+        {:else}
+          <div class="flex flex-col gap-y-5 pt-4">
+            <p class="p-4 font-code">
+              {$t('No content')}
+            </p>
+          </div>
+        {/if}
       </HeadedBlock>
-    {/if}
+      <HeadedBlock icon="list" heading={$t('Recent projects')} class="flex-[1]">
+        {#if data.projects?.length}
+          <div
+            class="flex flex-col gap-y-5 pt-4"
+            role="group"
+            aria-label={$t('Projects')}
+          >
+            {#each data.projects as project}
+              <ListItem document={project} small />
+            {/each}
+          </div>
+          <a
+            href={$linkTo('/work')}
+            class="ml-[72px] mt-4 inline-block pl-[8px] font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
+          >
+            {$t('See more')} &rarr;
+          </a>
+        {:else}
+          <div class="flex flex-col gap-y-5 pt-4">
+            <p class="p-4 font-code">
+              {$t('No content')}
+            </p>
+          </div>
+        {/if}
+      </HeadedBlock>
+    </div>
   {:else}
     <EmptyContent />
   {/if}

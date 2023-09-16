@@ -33,7 +33,7 @@ body {
   @media (min-width: 0px) {
     background-color: $dark;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     background-color: $black;
   }
 
@@ -43,7 +43,7 @@ body {
     @media (min-width: 0px) {
       background-color: $white;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) {
       background-color: $light;
     }
 

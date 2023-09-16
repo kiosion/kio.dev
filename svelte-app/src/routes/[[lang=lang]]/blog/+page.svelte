@@ -1,37 +1,16 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-
   import { page } from '$app/stores';
-  import { setupNavigation } from '$helpers/navigation';
+  import { sortDocumentsByYear } from '$lib/helpers/date';
   import { t } from '$lib/helpers/i18n';
 
   import EmptyContent from '$components/empty-content.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import ListItem from '$components/lists/blog-item.svelte';
-
-  import type { PostDocument } from '$types';
-  import type { Unsubscriber } from 'svelte/store';
-
-  let unsubscribers = [] as Unsubscriber[];
-
-  onMount(() => {
-    unsubscribers = [
-      t.subscribe((_) => {
-        setupNavigation($page?.url?.pathname);
-      })
-    ];
-  });
-
-  onDestroy(() => {
-    unsubscribers.forEach((unsub) => unsub());
-  });
+  import ListItem from '$components/lists/list-item.svelte';
 
   export let data;
 
-  let postsExceptPinned: PostDocument[] = [];
+  const sortedPosts = data.posts?.length ? sortDocumentsByYear(data.posts) : [];
 
-  $: ({ pinned, posts } = data);
-  $: posts && (postsExceptPinned = posts?.filter((post) => post._id !== pinned?._id));
+  $: ({ posts } = data);
   $: pageTitle = `kio.dev | ${$t('Blog')}`;
   $: description = $t('Thoughts about tech, design, and development');
 </script>
@@ -50,16 +29,22 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-{#if pinned}
-  <IconHeader icon="Pin" text={$t('Pinned')} />
-  <ListItem post={pinned} />
-{/if}
-
-<IconHeader icon="bulletlist" text={$t('Recent')} />
+<h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Recent posts')}</h1>
 {#if posts?.length}
-  <div class="flex flex-col gap-y-4" role="group" aria-label={$t('Posts')}>
-    {#each posts as post}
-      <ListItem {post} />
+  <div class="mt-12 flex flex-col gap-14">
+    {#each sortedPosts as yearObj}
+      <div class="flex flex-row items-start justify-start">
+        <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
+        {#if yearObj.items.length}
+          <div class="mt-2 flex flex-col items-start justify-start gap-4">
+            {#each yearObj.items as item}
+              <ListItem document={item} />
+            {/each}
+          </div>
+        {:else}
+          <p class="p-4 font-code">{$t('No content')}</p>
+        {/if}
+      </div>
     {/each}
   </div>
 {:else}

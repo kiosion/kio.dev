@@ -1,18 +1,19 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { linkTo, t } from '$i18n';
+  import { currentLang, linkTo, t } from '$i18n';
   import { APP_LANGS } from '$lib/consts';
   import { navOpen } from '$stores/navigation';
 
   import Dialog from '$components/dialog.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
   export let langs = [
-      { lang: 'en', name: 'English' },
-      { lang: 'fr', name: 'Français' }
-    ],
-    forNav = false;
+    { lang: 'en', name: 'English' },
+    { lang: 'fr', name: 'Français' }
+  ];
 
   let modalOpen = false;
 
@@ -54,7 +55,31 @@
   on:confirm={modalConfirm}
 />
 
-<div class={$$props.class || ''}>
+<Hoverable>
+  <Tooltip
+    text={$t(
+      $currentLang === 'en' ? 'Switch language to French' : 'Switch language to English'
+    )}
+    delay={150}
+    fixed
+  >
+    <button
+      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
+        ''}"
+      aria-label={$t(
+        $currentLang === 'en' ? 'Switch language to French' : 'Switch language to English'
+      )}
+      tabindex="0"
+      on:click={(e) => {
+        handleClick(e, $currentLang === 'en' ? 'fr' : 'en');
+      }}
+    >
+      <Icon icon="script" />
+    </button>
+  </Tooltip>
+</Hoverable>
+
+<!-- <div class={$$props.class || ''}>
   <span class="cursor-default select-none">{$t('Language')} (</span>
   {#each _langs as lang, i}
     <Hoverable bind:hovered={lang.active}>
@@ -86,8 +111,7 @@
     {/if}
   {/each}
   <span class="cursor-default select-none">)</span>
-</div>
-
+</div> -->
 <style lang="scss">
   a {
     &.forNav {

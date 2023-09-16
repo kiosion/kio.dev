@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-
   import { browser } from '$app/environment';
   import { invalidate } from '$app/navigation';
   import { page } from '$app/stores';
-  import { setupNavigation } from '$helpers/navigation';
   import { t } from '$i18n';
 
   import Divider from '$components/divider.svelte';
@@ -14,26 +11,7 @@
   import LinkNonPt from '$components/link-non-pt.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { PageData } from './$types';
-  import type { Unsubscriber } from 'svelte/store';
-
-  let subscribers = [] as Unsubscriber[];
-
-  onMount(() => {
-    setupNavigation($page?.url?.pathname);
-
-    subscribers = [
-      t.subscribe((fn) => {
-        setupNavigation($page?.url?.pathname);
-      })
-    ];
-  });
-
-  onDestroy(() => {
-    subscribers.forEach((unsub) => unsub());
-  });
-
-  export let data: PageData;
+  export let data;
 
   $: pageTitle = `kio.dev | ${$t('Meta + Contact')}`;
   $: description = $t('A peek into my current adventures in tech and beyond');

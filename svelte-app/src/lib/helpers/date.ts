@@ -10,12 +10,13 @@ import { currentLang } from '$i18n';
  * @example
  * formatDate('2020-01-02', 'full') // January 2, 2020
  * formatDate('2020-01-02', 'med') // Jan, 2020
+ * formatDate('2020-01-02', 'dayMonth') // 2 Jan
  * formatDate('2020-01-02', 'short') // 1/2/20
  * formatDate('2020-01-02', 'rel') // 1 year ago
  */
 export const formatDate = (
   dateStr: string,
-  format: 'huge' | 'full' | 'med' | 'short' | 'rel' = 'full',
+  format: 'huge' | 'full' | 'med' | 'short' | 'dayMonth' | 'rel' = 'full',
   lang: string = get(currentLang) || 'en'
 ) => {
   const date = new Date(dateStr);
@@ -36,6 +37,11 @@ export const formatDate = (
         month: 'numeric',
         day: 'numeric',
         year: '2-digit'
+      }).format(date);
+    case 'dayMonth':
+      return new Intl.DateTimeFormat(lang, {
+        month: 'short',
+        day: 'numeric'
       }).format(date);
     case 'rel': {
       const rtf = new Intl.RelativeTimeFormat(lang, {
@@ -71,3 +77,33 @@ export const formatDate = (
  */
 export const getReadingTime = (words: number): number =>
   Math.ceil(words ?? 0 / (100 / 60));
+
+export const sortDocumentsByYear = <T extends { date?: string; _createdAt: string }>(
+  documents: T[]
+) => {
+  const _years =
+    documents.reduce((acc, doc) => {
+      const year = new Date(doc.date || doc._createdAt).getFullYear();
+
+      if (!acc[year]) {
+        acc[year] = [doc];
+      } else {
+        acc[year].push(doc);
+      }
+
+      return acc;
+    }, {} as Record<string, NonNullable<T[]>>) || {};
+
+  return Object.keys(_years)
+    .sort((a, b) => parseInt(b, 10) - parseInt(a, 10))
+    .map((year) => {
+      return {
+        year: parseInt(year, 10),
+        items: _years[year].sort((a, b) => {
+          const aDate = new Date(a.date || a._createdAt);
+          const bDate = new Date(b.date || b._createdAt);
+          return bDate.getTime() - aDate.getTime();
+        })
+      };
+    });
+};

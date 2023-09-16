@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { backIn, backOut } from 'svelte/easing';
+  import { circIn, circOut } from 'svelte/easing';
 
   import { maybe } from 'svelte-maybe-transition';
 
@@ -11,7 +11,7 @@
 
   const { reduce_motion } = Settings;
 
-  const dist = 18,
+  const dist = 28,
     duration = BASE_ANIMATION_DURATION / 1.25;
 
   let navDir: 'forward' | 'backward' = 'forward';
@@ -30,15 +30,15 @@
       fn: $reduce_motion ? 'fade' : 'fly',
       delay: duration,
       duration: duration * 2,
-      y: navDir === 'backward' ? -dist : dist,
-      easing: backOut
+      x: navDir === 'backward' ? -dist : dist,
+      easing: circOut
     }}
     out:maybe={{
       enable: true,
       fn: $reduce_motion ? 'fade' : 'fly',
       duration,
-      y: navDir === 'backward' ? dist : -dist,
-      easing: backIn
+      x: navDir === 'backward' ? dist : -dist,
+      easing: circIn
     }}
   >
     <slot />

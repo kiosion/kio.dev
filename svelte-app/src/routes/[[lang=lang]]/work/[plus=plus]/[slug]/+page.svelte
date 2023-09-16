@@ -1,21 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { t } from '$i18n';
-  import { navOptions, pageHeading } from '$stores/navigation';
 
   import EmptyContent from '$components/empty-content.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import ListItem from '$components/lists/project-item.svelte';
-
-  import type { PageData } from './$types';
+  import ListItem from '$components/lists/list-item.svelte';
 
   const pageTitle = $page.params.slug.toLowerCase().replace(/[-_]/g, ' ');
-  pageHeading.set(`${$t('My work')} | Tag | ${pageTitle}`);
-  navOptions.set({ down: '', up: '/work' });
-
-  export let data: PageData;
-
-  $: ({ projects } = data);
 </script>
 
 <svelte:head>
@@ -24,13 +14,13 @@
   </title>
 </svelte:head>
 
-<IconHeader icon="label" text={$t("Recent '{tag}' work", { tag: pageTitle })} />
-{#if projects?.length}
-  <div
-    class="mt-4 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-4"
-  >
-    {#each projects as project}
-      <ListItem {project} />
+<h1 class="mb-8 mt-10 font-code text-3xl font-black">
+  {$t("Recent '{tag}' projects", { tag: pageTitle })}
+</h1>
+{#if $page.data.projects?.length}
+  <div class="mt-12 flex flex-col items-start justify-start gap-4">
+    {#each $page.data.projects as project}
+      <ListItem document={project} />
     {/each}
   </div>
 {:else}

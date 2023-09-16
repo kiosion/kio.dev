@@ -18,7 +18,6 @@
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
-  import PageControls from '$components/controls/page-controls.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import BarLoader from '$components/loading/bar.svelte';
@@ -77,6 +76,7 @@
 
   onMount(() => {
     checkTranslations();
+
     setTimeout(() => {
       loading.set(false);
     }, 1000);
@@ -125,18 +125,8 @@
   <ContextMenu />
 {/if}
 
-{#if !appLoaded}
-  <div
-    class="absolute left-0 top-0 z-[100] flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
-    out:fade={{ duration: BASE_ANIMATION_DURATION }}
-    aria-hidden="true"
-  >
-    <Spinner />
-  </div>
-{/if}
-
 <span
-  class="focusOutline-sm absolute left-1/2 top-0 z-[10] -mt-10 translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-dark dark:text-light"
+  class="focusOutline-sm absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-dark dark:text-light"
   role="button"
   aria-label="Skip to content"
   tabindex="0"
@@ -145,19 +135,27 @@
   on:keydown={skipToContent}>Skip to content</span
 >
 
+{#if !appLoaded}
+  <div
+    class="absolute left-0 top-0 z-50 flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
+    out:fade={{ duration: BASE_ANIMATION_DURATION }}
+    aria-hidden="true"
+  >
+    <Spinner />
+  </div>
+{/if}
+
 <div
   class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Nav config={data.config} />
-  <PageControls appBody={scrollContainer} position="top" />
+  <Nav />
   <ScrollContainer bind:element={scrollContainer}>
-    <div class="relative max-h-full w-full lg:mt-6 lg:h-[calc(100%_-_1.5rem)]">
+    <div class="relative max-h-full w-full md:mt-16 md:h-[calc(100%_-_4rem)]">
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
     </div>
   </ScrollContainer>
-  <PageControls position="bottom" />
 </div>

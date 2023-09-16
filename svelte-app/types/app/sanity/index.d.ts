@@ -1,15 +1,12 @@
 export type { InputValue } from '@portabletext/svelte/ptTypes';
-export type {
-  PortableTextBlock,
-  ArbitraryTypedObject
-} from '@portabletext/types';
+export type { ArbitraryTypedObject, PortableTextBlock } from '@portabletext/types';
 
 export interface SanityAsset {
   _id: string;
-  _type?: string;
-  _createdAt?: string;
-  _rev?: string;
-  _updatedAt?: string;
+  _type: string;
+  _createdAt: string;
+  _rev: string;
+  _updatedAt: string;
   url?: string;
   path?: string;
   assetId?: string;

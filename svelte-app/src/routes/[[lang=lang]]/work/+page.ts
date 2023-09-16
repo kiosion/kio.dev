@@ -6,8 +6,7 @@ import type { AuthorDocument, ProjectDocument } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   const parentData = await parent(),
-    aboutData = parentData.author,
-    currentConfig = parentData.config;
+    aboutData = parentData.author;
 
   const promiseArray = [];
 
@@ -29,20 +28,10 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     })
   );
 
-  if (currentConfig?.pinnedProject?._ref) {
-    promiseArray.push(
-      findOne(fetch, 'project', {
-        id: currentConfig.pinnedProject._ref,
-        lang: params.lang ?? 'en'
-      })
-    );
-  }
-
-  const [about, projects, pinned] = (await Promise.all(promiseArray)) as [
+  const [about, projects] = (await Promise.all(promiseArray)) as [
     AuthorDocument | undefined,
-    ProjectDocument[] | undefined,
-    ProjectDocument | undefined
+    ProjectDocument[] | undefined
   ];
 
-  return { about, pinned, projects };
+  return { about, projects };
 };
