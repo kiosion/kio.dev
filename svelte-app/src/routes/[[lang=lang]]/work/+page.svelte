@@ -1,30 +1,21 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { page } from '$app/stores';
-  import { setupNavigation } from '$helpers/navigation';
   import { t } from '$i18n';
+  import { sortDocumentsByYear } from '$lib/helpers/date';
 
-  import Timeline from '$components/about/timeline.svelte';
-  import Divider from '$components/divider.svelte';
+  import NewTimeline from '$components/about/timeline.svelte';
   import EmptyContent from '$components/empty-content.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import ListItem from '$components/lists/project-item.svelte';
+  import ListItem from '$components/lists/list-item.svelte';
 
-  import type { PageData } from './$types';
-
-  onMount(() => {
-    setupNavigation($page?.url?.pathname);
-  });
-
-  export let data: PageData;
+  export let data;
 
   const pageTitle = `kio.dev | ${$t('My work')}`,
     description = $t(
       'A collection of my work, open-source contributions, and personal projects'
-    );
+    ),
+    sortedProjects = data.projects?.length ? sortDocumentsByYear(data.projects) : [];
 
-  $: ({ about, pinned, projects } = data);
+  $: ({ about, projects } = data);
 </script>
 
 <svelte:head>
@@ -41,31 +32,35 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<IconHeader icon="briefcase" text={$t("Where I've worked")} />
-<div class="ml-2 w-full max-w-[42rem]">
-  <Timeline data={about?.timeline} />
-</div>
-
-<IconHeader icon="bulletlist" text={$t("What I've worked on")} />
-{#if pinned}
-  <div class="mt-4">
-    <ListItem project={pinned} />
+<h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t("Where I've worked")}</h1>
+{#if about?.timeline?.length}
+  <NewTimeline data={about.timeline} />
+{:else}
+  <div class="w-full">
+    <EmptyContent />
   </div>
-
-  <Divider />
 {/if}
+
+<h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Projects & Talks')}</h1>
 {#if projects?.length}
-  <div
-    class="mt-6 flex w-full flex-row flex-wrap items-stretch justify-between gap-x-3 gap-y-6"
-  >
-    {#each projects as project}
-      {#if project._id !== pinned?._id}
-        <ListItem {project} />
-      {/if}
+  <div class="flex flex-col gap-14">
+    {#each sortedProjects as yearObj}
+      <div class="flex flex-row items-start justify-start">
+        <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
+        {#if yearObj.items.length}
+          <div class="mt-2 flex flex-col items-start justify-start gap-4">
+            {#each yearObj.items as item}
+              <ListItem document={item} />
+            {/each}
+          </div>
+        {:else}
+          <p class="p-4 font-code">{$t('No content')}</p>
+        {/if}
+      </div>
     {/each}
   </div>
 {:else}
-  <div class="flex w-full flex-row items-center justify-center">
+  <div class="w-full">
     <EmptyContent />
   </div>
 {/if}

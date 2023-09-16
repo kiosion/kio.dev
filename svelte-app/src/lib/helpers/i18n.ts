@@ -66,7 +66,13 @@ const _translate = (key: string, params?: Record<string, unknown>): string => {
   };
 
   const string = getKey(lang || DEFAULT_APP_LANG, key as keyof typeof EN);
-  return string ? replaceParams(string) : notFound(key, lang || DEFAULT_APP_LANG);
+
+  if (string) {
+    return replaceParams(string);
+  } else {
+    notFound(key, lang || DEFAULT_APP_LANG);
+    return replaceParams(key);
+  }
 };
 
 // eslint-disable-next-line func-call-spacing

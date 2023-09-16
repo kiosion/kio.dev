@@ -15,12 +15,12 @@ interface AppRoute {
 
 export const APP_ROUTES = [
   {
-    name: 'About me',
+    name: 'Home',
     path: '/',
     hidden: false
   },
   {
-    name: 'Thoughts',
+    name: 'Blog',
     path: '/blog',
     children: [
       { name: 'Post', path: '/blog/:slug' },
@@ -30,7 +30,7 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'My work',
+    name: 'Work',
     path: '/work',
     children: [
       { name: 'Project', path: '/work/:slug' },
@@ -44,7 +44,7 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'Meta + Contact',
+    name: 'Meta',
     path: '/etc',
     hidden: false
   }
@@ -96,7 +96,7 @@ export const DEFAULT_PROJECT_QUERY_PARAMS = {
   limit: PAGINATION_PROJECTS_PER_PAGE
 };
 
-export const DEFAULT_DESKTOP_WIDTH = 830;
+export const DEFAULT_DESKTOP_WIDTH = 768;
 export const DEFAULT_MOBILE_WIDTH = DEFAULT_DESKTOP_WIDTH - 1;
 
 export const DEFAULT_DESKTOP_BREAKPOINT = `(min-width: ${DEFAULT_DESKTOP_WIDTH}px)`;

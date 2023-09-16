@@ -27,7 +27,7 @@
 }
 
 .codeBlock--copyButton {
-  @apply absolute top-0 right-0 z-10 cursor-pointer rounded-sm p-4 text-dark/60 opacity-0 transition-opacity duration-150;
+  @apply absolute top-0 right-0 z-[1] cursor-pointer rounded-sm p-4 text-dark/60 opacity-0 transition-opacity duration-150;
 
   &:hover {
     @apply text-dark;

@@ -2,6 +2,7 @@ import type { Document, DocumentHeadings, DocumentTags } from '$types/documents'
 import type { SanityAsset, SanityImageObject } from '$types/sanity';
 
 export interface ProjectDocument extends Document {
+  _type: 'project';
   author?: {
     _id: string;
     _type: string;

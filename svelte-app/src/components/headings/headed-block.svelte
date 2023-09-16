@@ -1,11 +1,9 @@
 <script lang="ts">
-  import IconHeader from '$components/headings/icon-header.svelte';
-
-  export let icon: string, heading: string;
+  export let heading: string;
 </script>
 
-<section>
-  <IconHeader {icon} text={heading} />
+<section class={$$props.class || ''}>
+  <h1 class="mb-2 mt-8 font-code text-3xl font-black">{heading}</h1>
   <div>
     <slot />
   </div>

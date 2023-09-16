@@ -21,7 +21,10 @@
 </script>
 
 <div
-  class="flex flex-row flex-wrap items-center justify-start gap-2 {classes}"
+  class="flex flex-row flex-wrap items-center justify-start gap-2 {$$props.class ||
+    classes}"
+  aria-label="Tags"
+  role="group"
   in:maybe={{ enable, fn: 'slide', duration: 150 }}
   out:maybe={{ enable, fn: 'slide', duration: 150 }}
 >

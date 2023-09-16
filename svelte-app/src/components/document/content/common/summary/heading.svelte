@@ -42,7 +42,7 @@
       </div>
       <Icon
         icon="ChevronDown"
-        classNames="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
+        class="{expanded ? 'rotate-0' : 'rotate-90'} transition-all"
       />
     </div>
   </Tooltip>

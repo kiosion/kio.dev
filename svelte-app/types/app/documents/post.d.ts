@@ -2,6 +2,7 @@ import type { Document, DocumentHeadings, DocumentTags } from '$types/documents'
 import type { SanityAsset, SanityImageObject } from '$types/sanity';
 
 export interface PostDocument extends Document {
+  _type: 'post';
   author?: Pick<SanityAsset, '_id' | '_type'> & {
     name: string;
     image: SanityImageObject;

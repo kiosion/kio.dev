@@ -1,18 +1,10 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { page } from '$app/stores';
   import { t } from '$i18n';
-  import { navOptions, pageHeading } from '$stores/navigation';
 
   import Divider from '$components/divider.svelte';
   import IconHeader from '$components/headings/icon-header.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-
-  onMount(() => {
-    navOptions.set({ down: '', up: '/' });
-    pageHeading.set(`Error${$page.status ? ` | ${$page.status}` : ''}`);
-  });
 
   let message = 'Sorry, something went very wrong';
   let title = 'Unknown Error';
@@ -58,7 +50,7 @@
       text={$t(
         $page.error?.message && $page.status !== 404 ? $page.error.message : message
       )}
-      classNames="mx-auto w-fit"
+      class="mx-auto w-fit"
     />
   </ContentWrapper>
 </div>

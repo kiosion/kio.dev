@@ -1,48 +1,7 @@
 import { get } from 'svelte/store';
 
-import { isLocalized, t } from '$i18n';
-import { ROUTE_ORDER, TOP_LEVEL_ROUTES } from '$lib/consts';
-import { navOptions, pageHeading } from '$stores/navigation';
-
-export const setupNavigation = (route: string): void => {
-  get(isLocalized) === true &&
-    (route = route.slice(3).startsWith('/') ? route.slice(3) : `/${route.slice(3)}`);
-
-  if (!route || route === '') {
-    navOptions.set({ down: '', up: '' });
-    pageHeading.set('');
-    return;
-  }
-
-  const index = TOP_LEVEL_ROUTES.findIndex((r) => r.path === route);
-
-  switch (index) {
-    case -1:
-      navOptions.set({ down: '', up: '' });
-      pageHeading.set('');
-      return;
-    case 0:
-      navOptions.set({
-        down: TOP_LEVEL_ROUTES[index + 1].path,
-        up: ''
-      });
-      pageHeading.set('');
-      return;
-    case TOP_LEVEL_ROUTES.length - 1:
-      navOptions.set({
-        down: '',
-        up: TOP_LEVEL_ROUTES[index - 1].path
-      });
-      break;
-    default:
-      navOptions.set({
-        down: TOP_LEVEL_ROUTES[index + 1].path,
-        up: TOP_LEVEL_ROUTES[index - 1].path
-      });
-      break;
-  }
-  pageHeading.set(`kio.dev | ${get(t)(TOP_LEVEL_ROUTES[index].name)}`);
-};
+import { isLocalized } from '$i18n';
+import { ROUTE_ORDER } from '$lib/consts';
 
 let prevPath: string;
 

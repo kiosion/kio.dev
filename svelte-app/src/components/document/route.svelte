@@ -1,11 +1,9 @@
 <script lang="ts">
   import { getContext, onDestroy, onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import scrollTo from '$helpers/scrollTo';
   import { t } from '$i18n';
-  import { navOptions, pageHeading } from '$stores/navigation';
 
   import Content from '$components/document/content/content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -33,29 +31,26 @@
           return acc;
         }, [] as string[]);
       })(data?.tags)?.join(', ') as string) + ', ' || '',
-    scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)();
+    scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)(),
+    updateTop = (_e?: Event) => (
+      clearTimeout(timer),
+      (timer = setTimeout(
+        () =>
+          (isAtTop =
+            !pageContainer ||
+            Math.floor(
+              Math.round(pageContainer.getBoundingClientRect().top) -
+                Math.round(pageContainer.offsetTop)
+            ) >= -38),
+        250
+      ))
+    );
 
   let isAtTop = true,
     timer: ReturnType<typeof setTimeout> | undefined,
     pageContainer: HTMLDivElement;
 
-  const updateTop = (_e?: Event) => (
-    clearTimeout(timer),
-    (timer = setTimeout(
-      () =>
-        (isAtTop =
-          !pageContainer ||
-          Math.floor(
-            Math.round(pageContainer.getBoundingClientRect().top) -
-              Math.round(pageContainer.offsetTop)
-          ) >= -38),
-      250
-    ))
-  );
-
   onMount(() => {
-    navOptions.set({ down: '', up: isPost ? '/blog' : '/work' });
-
     scrollTo($page?.url);
     updateTop();
 
@@ -70,10 +65,9 @@
   });
 
   $: $page?.url && scrollTo($page.url);
-  $: pageName = `${isPost ? $t('Thoughts') : $t('My work')}${
+  $: pageName = `${isPost ? $t('Blog') : $t('My work')}${
     !isAtTop && data?.title ? ` | ${data.title}` : ''
   }`;
-  $: browser && pageHeading.set(pageName);
   $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
     ? data.desc

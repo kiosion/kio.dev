@@ -1,19 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { t } from '$i18n';
-  import { navOptions, pageHeading } from '$stores/navigation';
 
   import EmptyContent from '$components/empty-content.svelte';
-  import IconHeader from '$components/headings/icon-header.svelte';
-  import ListItem from '$components/lists/blog-item.svelte';
-
-  const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
-  pageHeading.set(`${$t('Blog')} | ${$t('Tag')} | ${pageTitle}`);
-  navOptions.set({ down: '', up: '/blog' });
+  import ListItem from '$components/lists/list-item.svelte';
 
   export let data;
 
-  $: ({ posts } = data);
+  const pageTitle = $page.params.slug.toLowerCase().replace(/[_]/g, ' ');
 </script>
 
 <svelte:head>
@@ -22,15 +16,17 @@
   </title>
 </svelte:head>
 
-<IconHeader icon="label" text={$t("Recent '{tag}' posts", { tag: pageTitle })} />
-{#if posts?.length}
-  <div class="flex flex-col gap-y-4">
-    {#each posts as post}
-      <ListItem {post} />
+<h1 class="mb-8 mt-10 font-code text-3xl font-black">
+  {$t("Recent '{tag}' posts", { tag: pageTitle })}
+</h1>
+{#if data.posts?.length}
+  <div class="mt-12 flex flex-col items-start justify-start gap-4">
+    {#each data.posts as post}
+      <ListItem document={post} />
     {/each}
   </div>
 {:else}
-  <div class="flex w-full flex-row items-center justify-center">
+  <div class="w-full">
     <EmptyContent />
   </div>
 {/if}

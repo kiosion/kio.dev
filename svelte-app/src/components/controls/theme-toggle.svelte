@@ -1,6 +1,5 @@
 <script lang="ts">
   import { t } from '$i18n';
-  import SFX from '$lib/sfx';
   import Settings from '$stores/settings';
 
   import Hoverable from '$components/hoverable.svelte';
@@ -23,7 +22,6 @@
       tabindex="0"
       on:click={() => {
         theme.set($theme === 'light' ? 'dark' : 'light');
-        SFX.click.play();
       }}
     >
       <Icon icon={$theme === 'light' ? 'MoonStars' : 'Sun'} />
