@@ -39,6 +39,12 @@ body {
   }
   &:not(.is-loaded) {
     cursor: wait !important;
+
+    & a,
+    & button,
+    & [role='button'] {
+      cursor: not-allowed !important;
+    }
   }
   &.is-loading {
     cursor: wait !important;
@@ -46,7 +52,7 @@ body {
     & a,
     & button,
     & [role='button'] {
-      cursor: wait !important;
+      cursor: not-allowed !important;
     }
   }
 }

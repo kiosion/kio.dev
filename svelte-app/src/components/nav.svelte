@@ -16,7 +16,7 @@
 </script>
 
 <div class="fixed left-6 right-6 top-4 z-10 flex items-center justify-center">
-  <Hoverable bind:hovered>
+  <Hoverable setPointer={false} bind:hovered>
     <nav
       class="flex w-full max-w-6xl flex-col items-center justify-center rounded-lg border px-6 py-2 backdrop-blur-lg transition-[background-color,border-color] {hovered
         ? 'border-dark/60 bg-light/60 dark:border-light/60 dark:bg-dark/70'

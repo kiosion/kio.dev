@@ -28,7 +28,6 @@
 
   let scrollContainer: HTMLDivElement,
     pageContainer: HTMLDivElement,
-    preloadUrls = ['/assets/logo-text--short.webp'],
     unsubscribers = [] as Unsubscriber[],
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
     invalidationStrategy = createExponentialBackoffStrategy({
@@ -98,12 +97,6 @@
   );
   $: browser && (!data.author || !data.config) && invalidationStrategy();
 </script>
-
-<svelte:head>
-  {#each preloadUrls as image}
-    <link rel="preload" as="image" href={image} />
-  {/each}
-</svelte:head>
 
 <svelte:body
   use:classList={`${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`}

@@ -14,7 +14,7 @@
   let expanded = false;
 </script>
 
-<Hoverable classes={headingsExist ? '' : 'not-allowed'}>
+<Hoverable class={headingsExist ? '' : 'not-allowed'}>
   <Tooltip text={$t('Toggle summary')} fixed>
     <div
       class="focusOutline-sm flex flex-row items-center justify-between rounded-md px-4 py-4"
