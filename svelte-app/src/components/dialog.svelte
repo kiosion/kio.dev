@@ -47,20 +47,20 @@
       leaveTo="opacity-0"
     >
       <DialogOverlay
-        class="fixed left-0 top-0 z-[5] h-[100vh] w-[100vw] bg-light opacity-40 backdrop-blur-sm dark:bg-dark dark:opacity-40"
+        class="fixed left-0 top-0 z-[5] h-[100vh] w-[100vw] bg-light opacity-40 dark:bg-dark dark:opacity-40"
       />
     </TransitionChild>
 
     <TransitionChild
       enter="ease-out duration-100"
-      enterFrom="opacity-90 scale-90"
+      enterFrom="opacity-80 scale-90"
       enterTo="opacity-100 scale-100"
       leave="ease-out duration-100"
       leaveFrom="opacity-100 scale-100"
       leaveTo="opacity-0 scale-90"
     >
       <div
-        class="relative z-[5] m-4 flex max-w-lg flex-col items-start justify-between gap-4 rounded-lg bg-white p-6 shadow-[0_0_20px_-2px_var(--tw-shadow)] shadow-dark/20 dark:bg-gray dark:shadow-gray"
+        class="relative z-[5] m-4 flex max-w-lg flex-col items-start justify-between gap-4 rounded-lg border border-dark/40 bg-light/60 p-6 backdrop-blur-md dark:border-light/40 dark:bg-dark/60"
       >
         <DialogTitle class="text-lg font-medium text-dark dark:text-light"
           >{title}</DialogTitle
