@@ -4,6 +4,7 @@
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { isLocalized, linkTo, t } from '$i18n';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { navOpen } from '$stores/navigation';
 
   import Hoverable from '$components/hoverable.svelte';
@@ -12,11 +13,6 @@
       name: string;
       url: string;
     },
-    links: {
-      name: string;
-      url: string;
-    }[],
-    index: number,
     mobile = false,
     navigatingIsActive = false;
 
@@ -31,11 +27,10 @@
     if (mobile) {
       navOpen.set(false);
     }
-    goto(link.url).catch(() => undefined);
+    goto($linkTo(link.url)).catch(() => undefined);
   };
 
   $: splitPath = $page?.url.pathname.split('/') || [];
-  $: truePath = link.url.slice($isLocalized ? 4 : 1);
   $: (isActive = (() => {
     let urlIncludesLink = $page?.url.pathname === link.url;
 
@@ -43,17 +38,18 @@
       urlIncludesLink ||= $navigating?.to?.url.pathname === link.url;
     }
 
-    return urlIncludesLink || (splitPath?.length > 1 && splitPath.indexOf(truePath) > 0);
+    return (
+      urlIncludesLink ||
+      (splitPath?.length > 1 && splitPath.indexOf(link.url.slice(1)) > 0)
+    );
   })()),
     navOpen;
 </script>
 
 <Hoverable bind:hovered={isHovered}>
   <a
-    class="focusOutline-sm no-select"
+    class="focusOutline-sm no-select relative"
     class:mobile
-    class:first={index === 0}
-    class:last={index === links.length - 1}
     class:active={isActive || isHovered}
     aria-current={isActive ? 'page' : undefined}
     aria-label={$t(link.name)}
@@ -70,11 +66,19 @@
     }}
   >
     <span>{$t(link.name)}</span>
+    {#if !mobile && (isActive || isHovered)}
+      <span
+        class="absolute block rounded-md {isHovered
+          ? 'bg-accent-light/60 dark:bg-accent-dark/60'
+          : 'bg-accent-light dark:bg-accent-dark'} bottom-1 left-0 right-0 h-[2px] transition-[background-color]"
+        transition:fade={{ duration: BASE_ANIMATION_DURATION / 3 }}
+      />
+    {/if}
     {#if mobile && (isActive || isHovered)}
       <span
         class="indicator"
         class:hovered={isHovered}
-        transition:fade={{ duration: 100 }}
+        transition:fade={{ duration: BASE_ANIMATION_DURATION / 3 }}
       />
     {/if}
   </a>
@@ -82,25 +86,14 @@
 
 <style lang="scss">
   a {
-    @apply relative w-full whitespace-nowrap rounded-[0.1rem] py-3 font-mono text-base text-dark/80 transition-[color];
+    @apply w-full whitespace-nowrap rounded-[0.1rem] py-3 font-mono text-base text-dark/80 transition-[color];
 
     &.active {
       @apply text-dark;
     }
     &.mobile {
-      @apply -ml-1 w-fit;
-
-      &.first {
-        @apply mt-4;
-      }
-      &.last {
-        @apply mb-4;
-      }
+      @apply ml-14 w-full;
     }
-
-    // span {
-    //   @apply ml-9;
-    // }
   }
 
   .indicator {

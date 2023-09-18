@@ -8,7 +8,8 @@
 
 <Hoverable>
   <button
-    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark"
+    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
+      ''}"
     aria-label="Toggle navigation"
     data-test-id="nav-toggle"
     on:click={() => navOpen.set(!$navOpen)}

@@ -30,23 +30,11 @@ img {
 body {
   @apply h-full w-full overflow-x-hidden;
 
-  @media (min-width: 0px) {
     background-color: $dark;
-  }
-  @media (min-width: 768px) {
-    background-color: $black;
-  }
-
   --textColour: $light;
 
   &.light {
-    @media (min-width: 0px) {
-      background-color: $white;
-    }
-    @media (min-width: 768px) {
-      background-color: $light;
-    }
-
+    background-color: $light;
     --textColour: $dark;
   }
   &:not(.is-loaded) {

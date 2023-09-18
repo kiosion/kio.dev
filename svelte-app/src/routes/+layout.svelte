@@ -12,7 +12,7 @@
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
-  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
+  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import { createExponentialBackoffStrategy } from '$lib/try-fetch';
   import Settings, { loading } from '$stores/settings';
@@ -21,7 +21,6 @@
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import BarLoader from '$components/loading/bar.svelte';
-  import Spinner from '$components/loading/spinner.svelte';
   import Nav from '$components/nav.svelte';
 
   import type { Navigation } from '@sveltejs/kit';
@@ -135,7 +134,7 @@
   on:keydown={skipToContent}>Skip to content</span
 >
 
-{#if !appLoaded}
+<!-- {#if !appLoaded}
   <div
     class="absolute left-0 top-0 z-50 flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
     out:fade={{ duration: BASE_ANIMATION_DURATION }}
@@ -143,7 +142,7 @@
   >
     <Spinner />
   </div>
-{/if}
+{/if} -->
 
 <div
   class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"
@@ -152,7 +151,7 @@
 >
   <Nav />
   <ScrollContainer bind:element={scrollContainer}>
-    <div class="relative max-h-full w-full md:mt-16 md:h-[calc(100%_-_4rem)]">
+    <div class="relative mt-16 h-[calc(100%_-_4rem)] max-h-full w-full">
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>

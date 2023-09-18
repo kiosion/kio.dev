@@ -9,12 +9,12 @@
 
   export let data;
 
-  const pageTitle = `kio.dev | ${$t('My work')}`,
-    description = $t(
-      'A collection of my work, open-source contributions, and personal projects'
-    ),
-    sortedProjects = data.projects?.length ? sortDocumentsByYear(data.projects) : [];
+  const sortedProjects = data.projects?.length ? sortDocumentsByYear(data.projects) : [];
 
+  $: pageTitle = `kio.dev | ${$t('My work')}`;
+  $: description = $t(
+    'A collection of my work, open-source contributions, and personal projects'
+  );
   $: ({ about, projects } = data);
 </script>
 
@@ -45,10 +45,10 @@
 {#if projects?.length}
   <div class="flex flex-col gap-14">
     {#each sortedProjects as yearObj}
-      <div class="flex flex-row items-start justify-start">
+      <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
         <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
         {#if yearObj.items.length}
-          <div class="mt-2 flex flex-col items-start justify-start gap-4">
+          <div class="ml-1 mt-2 flex flex-col items-start justify-start gap-4 md:ml-0">
             {#each yearObj.items as item}
               <ListItem document={item} />
             {/each}

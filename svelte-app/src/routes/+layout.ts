@@ -14,7 +14,6 @@ export const load = (async ({ params, url, fetch }) => {
   ]);
 
   return {
-    // theme,
     pathname: url.pathname,
     author: promises[0],
     config: promises[1]

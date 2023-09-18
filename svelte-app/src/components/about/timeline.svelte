@@ -75,22 +75,24 @@
               icon="ChevronDown"
               class="{selected === i ? 'rotate-0' : '-rotate-90'} transition-all"
             />
-            <p
-              class="min-w-[10rem] select-none font-code text-base text-dark/90 dark:text-light/90"
-            >
-              {dateDisplay(item.range.start, item.range.end)}
-            </p>
-            <div class="flex flex-row items-center justify-start">
-              <h1
-                class="text-lg font-bold decoration-accent-light decoration-[3px] underline-offset-4 dark:decoration-accent-dark"
-                class:underline={data[i].hovered}
+            <div class="flex flex-row flex-wrap items-center justify-start gap-x-4">
+              <p
+                class="min-w-[10rem] select-none font-code text-base text-dark/90 dark:text-light/90"
               >
-                {item.title}
-              </h1>
-              {#if item.subtitle}
-                <BulletPoint />
-                <p class="text-base">{item.subtitle}</p>
-              {/if}
+                {dateDisplay(item.range.start, item.range.end)}
+              </p>
+              <div class="flex flex-row items-center justify-start">
+                <h1
+                  class="text-lg font-bold decoration-accent-light decoration-[3px] underline-offset-4 dark:decoration-accent-dark"
+                  class:underline={data[i].hovered}
+                >
+                  {item.title}
+                </h1>
+                {#if item.subtitle}
+                  <BulletPoint />
+                  <p class="text-base">{item.subtitle}</p>
+                {/if}
+              </div>
             </div>
           </div>
           {#if selected === i && item.body}

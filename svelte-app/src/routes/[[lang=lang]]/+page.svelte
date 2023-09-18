@@ -10,14 +10,14 @@
 
   export let data;
 
-  $: pageTitle = `kio.dev | ${$t('Index')}`;
+  $: pageTitle = `kio.dev | ${$t('Home')}`;
   $: description = $t('A bit about me, my work, and what I do');
 </script>
 
 <svelte:head>
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="About, kio.dev, kio, kiosion" />
+  <meta name="keywords" content="about, index, homepage, home, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page.url.href} />

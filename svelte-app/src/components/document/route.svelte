@@ -65,9 +65,6 @@
   });
 
   $: $page?.url && scrollTo($page.url);
-  $: pageName = `${isPost ? $t('Blog') : $t('My work')}${
-    !isAtTop && data?.title ? ` | ${data.title}` : ''
-  }`;
   $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
     ? data.desc
@@ -79,7 +76,9 @@
   <meta name="description" content={pageDescription} />
   <meta
     name="keywords"
-    content="{allTags}blog, {isPost ? 'post' : 'project'}, kio.dev, kio, kiosion"
+    content="{allTags}blog, {isPost
+      ? 'post, blog post'
+      : 'project'}, kio.dev, kio, kiosion"
   />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />

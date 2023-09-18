@@ -18,11 +18,11 @@
 <svelte:head>
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="blog, posts, kio.dev, kio, kiosion" />
+  <meta name="keywords" content="blog, posts, blog posts, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page?.url?.href} />
-  <meta property="og:title" content="kio.dev | blog" />
+  <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:title" content="kio.dev | blog" />
@@ -33,10 +33,10 @@
 {#if posts?.length}
   <div class="mt-12 flex flex-col gap-14">
     {#each sortedPosts as yearObj}
-      <div class="flex flex-row items-start justify-start">
+      <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
         <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
         {#if yearObj.items.length}
-          <div class="mt-2 flex flex-col items-start justify-start gap-4">
+          <div class="ml-1 mt-2 flex flex-col items-start justify-start gap-4 md:ml-0">
             {#each yearObj.items as item}
               <ListItem document={item} />
             {/each}
