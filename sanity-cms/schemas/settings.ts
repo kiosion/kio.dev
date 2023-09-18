@@ -10,10 +10,6 @@ export default {
       title: 'Pages'
     },
     {
-      name: 'experiments',
-      title: 'Experiments'
-    },
-    {
       name: 'links',
       title: 'Links'
     },

@@ -30,7 +30,7 @@ img {
 body {
   @apply h-full w-full overflow-x-hidden;
 
-    background-color: $dark;
+  background-color: $dark;
   --textColour: $light;
 
   &.light {

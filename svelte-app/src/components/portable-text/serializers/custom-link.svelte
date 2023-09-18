@@ -20,36 +20,11 @@
     href={href ? $linkTo(href) : '#'}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : ''}
-    class="focusOutline-sm rounded-sm from-accent-light px-[2px] text-dark/90 no-underline dark:from-accent-dark dark:text-light"
-    class:active={hovered}
+    class="focusOutline-sm rounded-sm from-accent-light text-dark/90 underline decoration-accent-light underline-offset-[2px] dark:text-light dark:decoration-accent-dark {hovered
+      ? 'decoration-[3px]'
+      : 'decoration-2'}"
     tabindex="0"
   >
     {plainTextContent}
   </a>
 </Hoverable>
-
-<style lang="scss">
-  a {
-    background-image: linear-gradient(
-      to right,
-      var(--tw-gradient-from) 0%,
-      var(--tw-gradient-from) 100%
-    );
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-size: calc(100% - 4px) 2px;
-    transition: background-size 50ms ease, color 50ms ease !important;
-
-    &.active {
-      @apply text-light;
-
-      background-size: calc(100% - 4px) 100%;
-    }
-  }
-
-  :global(.dark) {
-    a.active {
-      @apply text-dark;
-    }
-  }
-</style>

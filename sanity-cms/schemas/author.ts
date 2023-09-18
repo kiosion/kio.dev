@@ -15,18 +15,6 @@ export default {
       validation: (Rule: Rule) => Rule.required()
     },
     {
-      name: 'fullname',
-      title: 'Full name',
-      type: 'string',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'at',
-      title: '@username',
-      type: 'string',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
       name: 'image',
       title: 'Image',
       type: 'image',
@@ -37,13 +25,6 @@ export default {
     {
       name: 'bio',
       title: 'Bio',
-      type: 'array',
-      of: BodyBlocks,
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'now',
-      title: 'Now',
       type: 'array',
       of: BodyBlocks,
       validation: (Rule: Rule) => Rule.required()

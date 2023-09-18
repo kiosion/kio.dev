@@ -32,13 +32,9 @@ defmodule Router.Api.V1.About do
           ["'objectID'", "_id"],
           "_rev",
           "_type",
-          "at",
           "bio",
           "body",
-          "now",
-          "location",
           "contact",
-          "fullname",
           %{
             "timeline[]" => [
               "title",

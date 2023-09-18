@@ -1,13 +1,10 @@
-import type {
-  SanityImageObject,
-  InputValue,
-  SanityAsset,
-  PTBlock,
-  ArbitraryTypedObject,
-  PortableTextBlock
-} from '$types/sanity';
-
 import type { Document } from '$types/documents';
+import type {
+  ArbitraryTypedObject,
+  PortableTextBlock,
+  SanityAsset,
+  SanityImageObject
+} from '$types/sanity';
 
 export type AuthorTimelineItem = SanityAsset & {
   title: string;
@@ -25,13 +22,8 @@ export type AuthorTimelineItem = SanityAsset & {
 };
 
 export interface AuthorDocument extends Omit<Document, 'slug' | 'date'> {
-  at: string;
   bio: (PortableTextBlock | ArbitraryTypedObject)[];
-  now: (PortableTextBlock | ArbitraryTypedObject)[];
   name: string;
-  fullname: string;
-  at: string;
-  location: string;
   image: SanityImageObject;
   timeline: AuthorTimelineItem[];
   contact: (PortableTextBlock | ArbitraryTypedObject)[];

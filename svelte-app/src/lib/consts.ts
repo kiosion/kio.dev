@@ -72,6 +72,13 @@ export const ROUTE_ORDER = [
   'etc'
 ];
 
+export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
+  (route) => ({
+    name: route.name,
+    url: route.path
+  })
+);
+
 export const BASE_TRANSITION_DURATION = 200 as const;
 export const BASE_ANIMATION_DURATION = 300 as const;
 
