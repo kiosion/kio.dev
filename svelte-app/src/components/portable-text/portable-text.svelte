@@ -111,6 +111,7 @@
             h3: CustomHeading,
             h4: CustomHeading,
             h5: CustomHeading,
+            h6: CustomHeading,
             normal: CustomParagraph,
             blockquote: CustomQuote
           },

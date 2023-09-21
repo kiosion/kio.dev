@@ -9,4 +9,4 @@
   $: ({ code, language, filename } = value);
 </script>
 
-<CodeBlock content={code} showClipboard={true} lang={language} {filename} />
+<CodeBlock content={code} showLineNumbers={false} lang={language} {filename} />

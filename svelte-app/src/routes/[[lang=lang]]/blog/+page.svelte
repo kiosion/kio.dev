@@ -36,7 +36,9 @@
       <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
         <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
         {#if yearObj.items.length}
-          <div class="ml-1 mt-2 flex flex-col items-start justify-start gap-4 md:ml-0">
+          <div
+            class="ml-1 mt-2 flex w-full flex-col items-start justify-start gap-4 md:ml-0"
+          >
             {#each yearObj.items as item}
               <ListItem document={item} />
             {/each}

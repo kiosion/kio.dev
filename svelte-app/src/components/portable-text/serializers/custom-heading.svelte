@@ -13,12 +13,7 @@
 </script>
 
 <Hoverable bind:hovered>
-  <a
-    class="focusOutline-sm"
-    class:large={style && ['h1', 'h2'].indexOf(style) !== -1}
-    id={`heading-${value._key}`}
-    href={`#${value._key}`}
-  >
+  <a class="focusOutline-sm {style}" id={`heading-${value._key}`} href={`#${value._key}`}>
     {#if hovered}
       <Icon icon="link" class="absolute -left-8 top-1/2 -translate-y-1/2" />
     {/if}
@@ -34,10 +29,25 @@
 
 <style lang="scss">
   a {
-    @apply relative mb-2 mt-6 block w-fit rounded-sm font-extrabold;
+    @apply relative block w-fit rounded-sm font-extrabold;
 
-    &.large {
+    &.h1 {
+      @apply mb-6 mt-14;
+    }
+    &.h2 {
       @apply mb-6 mt-12;
+    }
+    &.h3 {
+      @apply mb-5 mt-10;
+    }
+    &.h4 {
+      @apply mb-4 mt-8;
+    }
+    &.h5 {
+      @apply mb-4 mt-6;
+    }
+    &.h6 {
+      @apply mb-3 mt-5;
     }
 
     h1 {
@@ -54,6 +64,9 @@
     }
     h5 {
       @apply text-xl;
+    }
+    h6 {
+      @apply text-lg;
     }
   }
 </style>

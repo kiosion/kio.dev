@@ -37,17 +37,24 @@
     <div class="align-center flex flex-col justify-start gap-4">
       <HeadedBlock icon="list" heading={$t('Recent posts')} class="flex-[1]">
         {#if data.posts?.length}
-          <div class="flex flex-col gap-y-5 pt-4" role="group" aria-label={$t('Posts')}>
+          <div
+            class="flex w-full flex-col gap-y-5 pt-4"
+            role="group"
+            aria-label={$t('Posts')}
+          >
             {#each data.posts as post}
               <ListItem document={post} small />
             {/each}
+            <div class="flex w-full flex-row items-start justify-start gap-2">
+              <span class="block w-[72px] flex-shrink-0" />
+              <a
+                href={$linkTo('/blog')}
+                class="inline-block w-full font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
+              >
+                {$t('See more')} &rarr;
+              </a>
+            </div>
           </div>
-          <a
-            href={$linkTo('/blog')}
-            class="ml-[72px] mt-4 inline-block pl-[8px] font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
-          >
-            {$t('See more')} &rarr;
-          </a>
         {:else}
           <div class="flex flex-col gap-y-5 pt-4">
             <p class="p-4 font-code">
@@ -66,13 +73,16 @@
             {#each data.projects as project}
               <ListItem document={project} small />
             {/each}
+            <div class="flex w-full flex-row items-start justify-start gap-2">
+              <span class="block w-[72px] flex-shrink-0" />
+              <a
+                href={$linkTo('/work')}
+                class="inline-block w-full font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
+              >
+                {$t('See more')} &rarr;
+              </a>
+            </div>
           </div>
-          <a
-            href={$linkTo('/work')}
-            class="ml-[72px] mt-4 inline-block pl-[8px] font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
-          >
-            {$t('See more')} &rarr;
-          </a>
         {:else}
           <div class="flex flex-col gap-y-5 pt-4">
             <p class="p-4 font-code">

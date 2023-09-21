@@ -11,6 +11,7 @@
     LineNumbers
   } from 'svelte-highlight';
 
+  import { browser } from '$app/environment';
   import { navigating } from '$app/stores';
   import { t } from '$i18n';
   import Settings from '$stores/settings';
@@ -23,7 +24,6 @@
 
   export let content: string,
     filename: string | undefined,
-    showClipboard = false,
     showLineNumbers = true,
     lang: string | undefined = undefined;
 
@@ -33,34 +33,30 @@
   let hlHighlight: Highlight,
     hlAuto: HighlightAuto,
     hlLang: Promise<LanguageType>,
-    hlStyles: unknown,
+    hlStyles: string | undefined,
     container: HTMLElement,
     codeContainer: HTMLElement,
     innerHeight: number;
 
-  const copy = () => {
-    content && navigator.clipboard.writeText(content);
-    clicked();
-  };
+  const id = Math.random().toString(36).substring(2),
+    copy = () => {
+      content && navigator.clipboard.writeText(content);
 
-  const clicked = () => {
-    if (!copied && hovered) {
-      copied = true;
-      setTimeout(() => {
-        copied = false;
-      }, 1200);
-    }
-  };
-
-  const { theme } = Settings;
-
-  const unsubscribe = theme.subscribe(async (res) => {
-    if (res === 'light') {
-      hlStyles = (await import('svelte-highlight/styles/github')).default;
-    } else {
-      hlStyles = (await import('svelte-highlight/styles/github-dark')).default;
-    }
-  });
+      if (!copied && hovered) {
+        copied = true;
+        setTimeout(() => {
+          copied = false;
+        }, 1200);
+      }
+    },
+    { theme } = Settings,
+    unsubscribe = theme.subscribe(
+      async (res) =>
+        (hlStyles =
+          res === 'light'
+            ? (await import('svelte-highlight/styles/github')).default
+            : (await import('svelte-highlight/styles/github-dark')).default)
+    );
 
   onMount(async () => {
     !lang
@@ -111,7 +107,7 @@
 
   onDestroy(() => unsubscribe());
 
-  $: codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
+  $: browser && codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
 </script>
 
 <svelte:head>
@@ -122,9 +118,12 @@
 </svelte:head>
 
 <div
+  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 duration-150 dark:border-light/40 {hovered
+    ? 'border-dark/60 dark:border-light/60'
+    : ''}"
   role="group"
-  class="codeBlock--container"
-  class:active={hovered}
+  aria-label={$t('Code block')}
+  aria-labelledby={filename ? `${id}-filename` : undefined}
   bind:this={container}
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
@@ -133,18 +132,23 @@
   on:blur={() => (hovered = false)}
 >
   {#if filename}
-    <div class="codeBlock--filename">
-      <span>{filename}</span>
+    <div
+      class="border-b border-dark/40 bg-dark/5 py-[13px] pl-5 font-mono text-base duration-150 dark:border-light/40 dark:bg-dark/40 {hovered
+        ? 'border-dark/60 dark:border-light/60'
+        : ''}"
+      id="{id}-filename"
+    >
+      {filename}
     </div>
   {/if}
-  {#if showClipboard && !$navigating}
+  {#if !$navigating}
     <Hoverable>
       <Tooltip text={$t('Copy to clipboard')} position="left" delay={150} fixed>
         {#key copied}
           <button
-            class="codeBlock--copyButton focusOutline-sm"
+            class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-150 hover:text-dark dark:text-light/60 dark:hover:text-light"
+            class:opacity-100={hovered || filename}
             on:click={() => copy()}
-            class:visible={hovered || filename}
             in:fade={{ duration: 100, delay: 100 }}
             out:fade={{ delay: 100, duration: 100 }}
           >
@@ -154,13 +158,20 @@
       </Tooltip>
     </Hoverable>
   {/if}
-  <div class="codeBlock--codeContainer focusOutline" bind:this={codeContainer}>
+  <div
+    class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height]"
+    bind:this={codeContainer}
+  >
     <div
-      class="inner is-{$theme} transition-all"
-      class:active={hovered}
+      class="h-fit w-full min-w-full rounded-sm p-1 transition-all dark:bg-dark/10 {hovered
+        ? 'bg-dark/5 dark:bg-dark/40'
+        : ''}"
+      id="hljs-container"
       bind:clientHeight={innerHeight}
     >
-      {#if !lang}
+      {#if !browser}
+        <div class="mx-auto my-4 w-fit"><Spinner /></div>
+      {:else if !lang}
         <svelte:component this={hlAuto} code={content} />
       {:else}
         {#await hlLang}

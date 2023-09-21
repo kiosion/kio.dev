@@ -11,8 +11,7 @@ const prefersLight = '(prefers-color-scheme: light)';
 
 const defaultSettings = {
   theme: writable<Setting>('dark'),
-  reduce_motion: writable<Setting>(false),
-  sounds: writable<Setting>(true)
+  reduce_motion: writable<Setting>(false)
 };
 
 if (browser) {
