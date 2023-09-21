@@ -13,8 +13,8 @@
     RouteFetch
   } from '$types';
 
-  export let model: 'post' | 'project',
-    data: PostDocument | ProjectDocument,
+  export let data: PostDocument | ProjectDocument,
+    model = data._type,
     headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined,
     container: HTMLDivElement | undefined = undefined;

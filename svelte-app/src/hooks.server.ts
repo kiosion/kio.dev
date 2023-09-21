@@ -1,4 +1,4 @@
-import { APP_LANGS } from '$lib/consts';
+import { APP_LANGS, LOCAL_SETTINGS_KEY } from '$lib/consts';
 
 import type { Handle, HandleServerError, ResolveOptions } from '@sveltejs/kit';
 
@@ -31,7 +31,7 @@ export const handle = (async ({ event, resolve }) => {
   const lang = event.request.url.match(
       new RegExp(`^.*(?:(?:.[a-z]{3})|(?:[a-z]+:[0-9]{4}))/(${APP_LANGS.join('|')})/?`)
     ),
-    settings = event.cookies.get('settings');
+    settings = event.cookies.get(LOCAL_SETTINGS_KEY);
 
   if (lang) {
     transforms.push((html) =>

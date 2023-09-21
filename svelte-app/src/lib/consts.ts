@@ -6,6 +6,8 @@ export const DEFAULT_APP_LANG = 'en';
 
 export const VALID_DOC_TYPES = ['post', 'project', 'tag', 'about', 'config'] as const;
 
+export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
+
 interface AppRoute {
   name: string;
   path: string;

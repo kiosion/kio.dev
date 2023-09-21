@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   import { page } from '$app/stores';
   import scrollTo from '$helpers/scrollTo';
@@ -15,60 +15,31 @@
     RouteFetch
   } from '$types';
 
-  export let model: 'post' | 'project',
-    data: ProjectDocument | PostDocument | undefined,
+  export let data: ProjectDocument | PostDocument,
+    model = data._type,
     headings: DocumentHeadings[] | never[],
     routeFetch: RouteFetch | undefined = undefined;
 
-  const isPost = model === 'post',
-    allTags =
-      (((tags: NonNullable<typeof data>['tags'] | undefined) => {
-        if (!tags) {
-          return undefined;
-        }
-        return tags.reduce((acc, tag) => {
-          tag.title && acc.push(tag.title.toLowerCase());
-          return acc;
-        }, [] as string[]);
-      })(data?.tags)?.join(', ') as string) + ', ' || '',
-    scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)(),
-    updateTop = (_e?: Event) => (
-      clearTimeout(timer),
-      (timer = setTimeout(
-        () =>
-          (isAtTop =
-            !pageContainer ||
-            Math.floor(
-              Math.round(pageContainer.getBoundingClientRect().top) -
-                Math.round(pageContainer.offsetTop)
-            ) >= -38),
-        250
-      ))
-    );
-
-  let isAtTop = true,
-    timer: ReturnType<typeof setTimeout> | undefined,
-    pageContainer: HTMLDivElement;
+  const allTags =
+    (((tags: NonNullable<typeof data>['tags'] | undefined) => {
+      if (!tags) {
+        return undefined;
+      }
+      return tags.reduce((acc, tag) => {
+        tag.title && acc.push(tag.title.toLowerCase());
+        return acc;
+      }, [] as string[]);
+    })(data?.tags)?.join(', ') as string) + ', ' || '';
 
   onMount(() => {
     scrollTo($page?.url);
-    updateTop();
-
-    scrollContainer?.addEventListener('scroll', updateTop);
-    scrollContainer?.addEventListener('wheel', updateTop);
-  });
-
-  onDestroy(() => {
-    scrollContainer?.removeEventListener('scroll', updateTop);
-    scrollContainer?.removeEventListener('wheel', updateTop);
-    clearTimeout(timer);
   });
 
   $: $page?.url && scrollTo($page.url);
   $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
     ? data.desc
-    : $t(`A ${isPost ? 'post' : 'project'} on kio.dev`);
+    : $t(`A ${model === 'post' ? 'post' : 'project'} on kio.dev`);
 </script>
 
 <svelte:head>
@@ -76,7 +47,7 @@
   <meta name="description" content={pageDescription} />
   <meta
     name="keywords"
-    content="{allTags}blog, {isPost
+    content="{allTags}blog, {model === 'post'
       ? 'post, blog post'
       : 'project'}, kio.dev, kio, kiosion"
   />
@@ -94,12 +65,10 @@
   <slot name="meta" />
 </svelte:head>
 
-<div data-test-route={isPost ? 'blog' : 'work'} bind:this={pageContainer}>
-  {#if data}
-    <ContentWrapper>
-      <Content {model} {data} {headings} {routeFetch} />
-    </ContentWrapper>
-  {/if}
+<div data-test-route={model === 'post' ? 'blog' : 'work'}>
+  <ContentWrapper>
+    <Content {data} {headings} {routeFetch} />
+  </ContentWrapper>
 </div>
 
 <style lang="scss">

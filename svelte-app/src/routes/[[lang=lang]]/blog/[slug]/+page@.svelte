@@ -6,4 +6,4 @@
   $: ({ post, routeFetch } = data);
 </script>
 
-<DocumentRoute model="post" data={post} headings={data.post?.headings} {routeFetch} />
+<DocumentRoute data={post} headings={data.post?.headings} {routeFetch} />

@@ -1,6 +1,7 @@
 import { get, writable } from 'svelte/store';
 
 import { browser } from '$app/environment';
+import { LOCAL_SETTINGS_KEY } from '$lib/consts';
 import Logger from '$lib/logger';
 
 type Setting = boolean | string;
@@ -15,7 +16,7 @@ const defaultSettings = {
 };
 
 if (browser) {
-  const storedSettings = localStorage.getItem('settings');
+  const storedSettings = localStorage.getItem(LOCAL_SETTINGS_KEY);
   if (storedSettings) {
     const parsedSettings: [string, Setting][] = JSON.parse(atob(storedSettings));
 
@@ -37,8 +38,8 @@ for (const key in defaultSettings) {
         key,
         get(setting)
       ]);
-      localStorage.setItem('settings', btoa(JSON.stringify(settings)));
-      document.cookie = `settings=${btoa(JSON.stringify(settings))}; path=/`;
+      localStorage.setItem(LOCAL_SETTINGS_KEY, btoa(JSON.stringify(settings)));
+      document.cookie = `${LOCAL_SETTINGS_KEY}=${btoa(JSON.stringify(settings))}; path=/`;
     }
   });
 }

@@ -95,7 +95,7 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && (!data.author || !data.config) && invalidationStrategy();
+  $: browser && !data.author && invalidationStrategy();
 </script>
 
 <svelte:body
@@ -127,22 +127,12 @@
   on:keydown={skipToContent}>Skip to content</span
 >
 
-<!-- {#if !appLoaded}
-  <div
-    class="absolute left-0 top-0 z-50 flex h-[100vh] w-[100vw] items-center justify-center bg-light dark:bg-black"
-    out:fade={{ duration: BASE_ANIMATION_DURATION }}
-    aria-hidden="true"
-  >
-    <Spinner />
-  </div>
-{/if} -->
-
 <div
   class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Nav />
+  <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
     <div class="relative mt-16 h-[calc(100%_-_4rem)] max-h-full w-full">
       <PageTransition pathname={data.pathname}>

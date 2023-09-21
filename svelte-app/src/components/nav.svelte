@@ -10,7 +10,10 @@
   import MenuToggle from '$components/controls/menu-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import Spinner from '$components/loading/spinner.svelte';
   import NavLink from '$components/nav/nav-link.svelte';
+
+  export let loaded = false;
 
   let hovered = false;
 </script>
@@ -33,13 +36,22 @@
               ? 'bg-accent-light dark:bg-accent-dark'
               : 'bg-accent-light/60 dark:bg-accent-dark/60'}"
           />
-          <a
-            class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none"
-            href={$linkTo('/')}
-            aria-label="Home"
-          >
-            kio.dev
-          </a>
+          <span class="relative h-fit w-fit">
+            <a
+              class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
+              class:opacity-0={!loaded}
+              href={$linkTo('/')}
+              aria-label="Home"
+            >
+              kio.dev
+            </a>
+            <span
+              class="pointer-events-none absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 transition-opacity"
+              class:opacity-0={loaded}
+            >
+              <Spinner class="pointer-events-none" />
+            </span>
+          </span>
           <span
             class="hidden h-[24px] w-[2px] transition-[background-color] md:block {hovered
               ? 'bg-accent-light dark:bg-accent-dark'

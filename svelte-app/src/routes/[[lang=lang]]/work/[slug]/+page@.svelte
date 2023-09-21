@@ -6,4 +6,4 @@
   $: ({ project } = data);
 </script>
 
-<DocumentRoute model="project" data={project} headings={project?.headings} />
+<DocumentRoute data={project} headings={project?.headings} />

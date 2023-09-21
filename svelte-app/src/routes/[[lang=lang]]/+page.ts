@@ -1,10 +1,7 @@
-import { ENV } from '$lib/env';
 import { find, findOne } from '$lib/store';
 
 import type { PageLoad } from './$types';
 import type { AuthorDocument, PostDocument, ProjectDocument } from '$types';
-
-export const ssr = !(ENV === 'testing');
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   const parentData = await parent();

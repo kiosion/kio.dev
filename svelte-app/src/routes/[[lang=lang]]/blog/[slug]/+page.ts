@@ -1,11 +1,8 @@
-import { ENV } from '$lib/env';
 import { findOne } from '$lib/store';
 
 import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-
-export const ssr = !(ENV === 'testing');
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
   await parent();
