@@ -58,13 +58,13 @@ export const GET: RequestHandler = async ({
 
   const remoteRes = await fetchRemote({ endpoint });
 
-  if (remoteRes instanceof Error) {
+  if (remoteRes.error) {
     return endpointResponse(
       {
-        status: 500,
-        error: remoteRes.message
+        status: remoteRes.code,
+        error: remoteRes.error
       },
-      500
+      remoteRes.code
     );
   }
 
@@ -84,7 +84,9 @@ const getEndpoint = (
         : `${REMOTE_API_URL}/query/${type}/${
             params.get('id') ||
             Buffer.from((params.get('idb') as string) || '', 'base64').toString('utf-8')
-          }?lang=${params.get('lang') || 'en'}`;
+          }?lang=${params.get('lang') || 'en'}${
+            params.get('preview') === 'true' ? '&preview=true' : ''
+          }`;
     case 'tag':
       return `${REMOTE_API_URL}/query/tags?${params}`;
     case 'config':

@@ -22,11 +22,12 @@ defmodule Router.Api.V1.Project do
              ),
              %{
                "id" => nil,
-               "lang" => "en"
+               "lang" => "en",
+               "preview" => false
              }
            ) do
       query =
-        Query.new()
+        Query.new(%{:include_drafts => params["preview"]})
         |> Query.filter([
           %{"_type" => "'project'"},
           [%{"_id" => "'#{params["id"]}'"}, %{"slug.current" => "'#{params["id"]}'"}]
@@ -91,11 +92,24 @@ defmodule Router.Api.V1.Project do
               translated_result
           end
 
-        Kernel.put_in(
-          translated_result,
-          ["result", "headings"],
-          PT.build_summary(translated_result["result"]["body"])
-        )
+        code =
+          if count == 0 do
+            404
+          else
+            200
+          end
+
+        case count do
+          0 ->
+            translated_result
+
+          _ ->
+            Kernel.put_in(
+              translated_result,
+              ["result", "headings"],
+              PT.build_summary(translated_result["result"]["body"])
+            )
+        end
         |> Map.put("meta", %{
           "total" => count,
           "count" => count,
@@ -107,7 +121,7 @@ defmodule Router.Api.V1.Project do
             end
         })
         |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+        |> (fn data -> conn |> json_res(code, %{code: code, data: data}) end).()
       end)
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")

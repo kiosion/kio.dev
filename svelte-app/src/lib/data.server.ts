@@ -31,12 +31,19 @@ interface ResData extends Record<string, unknown> {
   };
 }
 
-interface Normalized extends Record<string, unknown> {
-  code?: number;
-  error?: string;
-  data?: ResData['result'];
-  meta?: ResData['meta'] & { [key: string]: unknown };
-}
+type Normalized =
+  | {
+      code: number;
+      error: string;
+      data?: undefined;
+      meta?: undefined;
+    }
+  | {
+      code?: undefined;
+      error?: undefined;
+      data: ResData['result'];
+      meta: ResData['meta'] & { [key: string]: unknown };
+    };
 
 /**
  * Util to serialize recieved API data to common types
@@ -83,7 +90,7 @@ const fetchRemote = async ({
 }: {
   endpoint: string | URL;
   options?: RequestInit;
-}): Promise<Normalized | Error> => {
+}): Promise<Normalized> => {
   try {
     const response = await fetch(endpoint, {
       method: 'GET',
@@ -97,21 +104,24 @@ const fetchRemote = async ({
 
     if (response.status !== 200 || !jsonResponse?.data?.result) {
       Logger.error(`Failed to fetch from ${endpoint}: ${response.status}`);
-      return new Error(
-        `Endpoint error: Failed to fetch from API - status ${response.status}`
-      );
+
+      return {
+        code: response.status,
+        error: jsonResponse?.message || `Failed to fetch from ${endpoint}`
+      };
     }
 
     const normalizedResponse = normalize(jsonResponse);
 
     return normalizedResponse;
   } catch (err: unknown) {
-    Logger.error(
-      `Failed to fetch from ${endpoint}: Unknown error occured: ${err}`,
-      {},
-      { err }
-    );
-    return new Error(`Endpoint error: Unknown or unhandled error occured: ${err}`);
+    Logger.error(`Failed to fetch from ${endpoint}: Unknown error occured`, {
+      err
+    });
+    return {
+      code: 500,
+      error: `Unknown or unhandled error occured: ${err}`
+    };
   }
 };
 

@@ -16,7 +16,8 @@ defmodule Hexerei.SanityClient.Utils do
   def handle_sanity_fetch(conn, query, cb, init_duration \\ nil) do
     start = System.system_time(:millisecond)
 
-    with result <- QueryCache.get("#{query}"),
+    with true <- String.contains?(query, "path('drafts.**')"),
+         result <- QueryCache.get("#{query}"),
          true <- result != nil do
       with {:arity, 3} <- :erlang.fun_info(cb, :arity) do
         cb.(conn, Poison.decode!(result), init_duration || 0)
@@ -28,7 +29,7 @@ defmodule Hexerei.SanityClient.Utils do
         with {:ok, result} <- Sanity.fetch(query) do
           decoded = Poison.decode!(result)
 
-          if decoded["result"] != nil do
+          if decoded["result"] != nil and String.contains?(query, "path('drafts.**')") == true do
             # 30m cache
             QueryCache.put("#{query}", result, 30 * 60)
           end

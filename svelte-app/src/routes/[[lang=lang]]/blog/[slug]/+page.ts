@@ -4,12 +4,15 @@ import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent, fetch, params }) => {
+export const load: PageLoad = async ({ parent, fetch, params, url }) => {
   await parent();
+
+  const preview = url.searchParams.get('preview') === 'true' || false;
 
   const post = await findOne(fetch, 'post', {
     idb: btoa(params.slug),
-    lang: params.lang ?? 'en'
+    lang: params.lang ?? 'en',
+    preview
   }).catch((_e: Error) => {
     throw error(500, {
       message: 'Sorry, something went wrong loading that post.'

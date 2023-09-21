@@ -14,7 +14,12 @@ defmodule Hexerei.Utils do
   def validate_query_params(params, expected) do
     Enum.reduce(expected, %{}, fn {key, default}, acc ->
       if Map.has_key?(params, key) do
-        Map.put(acc, key, params[key])
+        if is_boolean(default) and is_binary(params[key]) do
+          IO.puts("Coercing #{inspect(params[key])} to boolean")
+          Map.put(acc, key, params[key] == "true")
+        else
+          Map.put(acc, key, params[key])
+        end
       else
         Map.put(acc, key, default)
       end
