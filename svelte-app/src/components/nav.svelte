@@ -21,7 +21,7 @@
 <div class="fixed left-6 right-6 top-4 z-10 flex items-center justify-center">
   <Hoverable setPointer={false} bind:hovered>
     <nav
-      class="flex w-full max-w-6xl flex-col items-center justify-center rounded-lg border px-6 py-2 backdrop-blur-lg transition-[background-color,border-color] {hovered
+      class="flex w-full max-w-6xl flex-col items-center justify-center rounded-lg border px-6 py-5 backdrop-blur-lg transition-[background-color,border-color] md:py-2 {hovered
         ? 'border-dark/60 bg-light/60 dark:border-light/60 dark:bg-dark/70'
         : 'border-dark/40 bg-light/40 dark:border-light/40 dark:bg-dark/50'}"
       aria-label="Main navigation"

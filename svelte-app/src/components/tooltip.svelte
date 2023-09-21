@@ -50,14 +50,17 @@
     div.innerText = content;
     div.classList.add(
       'tooltip',
-      'rounded-md',
+      'rounded-sm',
       'py-1',
       'px-2',
-      'shadow-md',
-      'bg-light',
+      'backdrop-blur-sm',
+      'bg-light/50',
       'text-dark',
-      'dark:bg-gray',
+      'dark:bg-dark/50',
       'dark:text-light',
+      'border',
+      'border-dark/40',
+      'dark:border-light/40',
       'font-code',
       'text-sm'
     );

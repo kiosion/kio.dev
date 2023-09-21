@@ -23,7 +23,7 @@
 
     &:hover,
     &.expanded {
-      @apply border-dark/60 bg-dark/5;
+      @apply border-dark/60 bg-dark/[0.025];
     }
   }
 
@@ -33,7 +33,7 @@
 
       &:hover,
       &.expanded {
-        @apply border-light/60 bg-dark/30;
+        @apply border-light/60 bg-light/5;
       }
     }
   }

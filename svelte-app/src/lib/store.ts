@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
@@ -36,8 +37,62 @@ type QueryResponse<T> =
     }
   | undefined;
 
-const documentCache = {} as {
-  [query: string]: unknown[] | unknown;
+const EXP_TIME = 1000 * 60 * 30;
+
+const documentCache = new Proxy(
+  {} as Record<
+    string,
+    | {
+        exp: number;
+        data:
+          | DocumentRegistry[keyof DocumentRegistry][]
+          | DocumentRegistry[keyof DocumentRegistry];
+      }
+    | undefined
+  >,
+  {
+    get: (target, prop) => {
+      switch (prop) {
+        case 'get':
+          return (key: string) => {
+            if (!(key in target) || target[key] === undefined) {
+              return undefined;
+            }
+
+            if (target[key]!.exp <= Date.now()) {
+              target[key] = undefined;
+              return undefined;
+            }
+
+            return target[key]!.data;
+          };
+        case 'set':
+          return <T extends DocumentRegistry[keyof DocumentRegistry]>(
+            key: string,
+            value: T
+          ) =>
+            (target[key] = {
+              exp: Date.now() + EXP_TIME,
+              data: value
+            });
+        default:
+          return undefined;
+      }
+    }
+  }
+) as unknown as {
+  get: (
+    key: string
+  ) =>
+    | DocumentRegistry[keyof DocumentRegistry]
+    | DocumentRegistry[keyof DocumentRegistry][]
+    | undefined;
+  set: (
+    key: string,
+    value:
+      | DocumentRegistry[keyof DocumentRegistry]
+      | DocumentRegistry[keyof DocumentRegistry][]
+  ) => boolean;
 };
 
 const constructUrl = (
@@ -63,8 +118,8 @@ const find = async <T extends keyof DocumentRegistry>(
   params: PossibleParams = {}
 ) => {
   const cacheKey = JSON.stringify({ model, params, many: true });
-  if (cacheKey in documentCache) {
-    return documentCache[cacheKey] as DocumentRegistry[T][];
+  if (documentCache.get(cacheKey)) {
+    return documentCache.get(cacheKey) as DocumentRegistry[T][];
   }
 
   const url = constructUrl(model, params, true);
@@ -85,7 +140,7 @@ const find = async <T extends keyof DocumentRegistry>(
   }
 
   if (response) {
-    documentCache[cacheKey] = response;
+    documentCache.set(cacheKey, response);
   }
   return response;
 };
@@ -96,8 +151,8 @@ const findOne = async <T extends keyof DocumentRegistry>(
   params: PossibleParams = {}
 ) => {
   const cacheKey = JSON.stringify({ model, params, many: false });
-  if (cacheKey in documentCache) {
-    return documentCache[cacheKey] as DocumentRegistry[T];
+  if (!(params.preview === 'true') && documentCache.get(cacheKey)) {
+    return documentCache.get(cacheKey) as DocumentRegistry[T];
   }
 
   const url = constructUrl(model, params);
@@ -117,8 +172,8 @@ const findOne = async <T extends keyof DocumentRegistry>(
     return undefined;
   }
 
-  if (response) {
-    documentCache[cacheKey] = response;
+  if (!(params.preview === 'true') && response) {
+    documentCache.set(cacheKey, response);
   }
   return response;
 };

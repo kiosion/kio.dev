@@ -12,7 +12,6 @@
   } from 'svelte-highlight';
 
   import { browser } from '$app/environment';
-  import { navigating } from '$app/stores';
   import { t } from '$i18n';
   import Settings from '$stores/settings';
 
@@ -36,7 +35,8 @@
     hlStyles: string | undefined,
     container: HTMLElement,
     codeContainer: HTMLElement,
-    innerHeight: number;
+    innerHeight: number,
+    hideLoader = false;
 
   const id = Math.random().toString(36).substring(2),
     copy = () => {
@@ -108,6 +108,7 @@
   onDestroy(() => unsubscribe());
 
   $: browser && codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
+  $: browser && (hideLoader = innerHeight > 52);
 </script>
 
 <svelte:head>
@@ -141,42 +142,47 @@
       {filename}
     </div>
   {/if}
-  {#if !$navigating}
-    <Hoverable>
-      <Tooltip text={$t('Copy to clipboard')} position="left" delay={150} fixed>
-        {#key copied}
-          <button
-            class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-150 hover:text-dark dark:text-light/60 dark:hover:text-light"
-            class:opacity-100={hovered || filename}
-            on:click={() => copy()}
-            in:fade={{ duration: 100, delay: 100 }}
-            out:fade={{ delay: 100, duration: 100 }}
-          >
-            <Icon icon={copied ? 'Check' : 'Copy'} />
-          </button>
-        {/key}
-      </Tooltip>
-    </Hoverable>
-  {/if}
+  <Hoverable>
+    <Tooltip text={$t('Copy to clipboard')} position="left" delay={150} fixed>
+      {#key copied}
+        <button
+          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-150 hover:text-dark dark:text-light/60 dark:hover:text-light"
+          class:opacity-100={hovered || filename}
+          on:click={() => copy()}
+          in:fade={{ duration: 100, delay: 100 }}
+          out:fade={{ delay: 100, duration: 100 }}
+        >
+          <Icon icon={copied ? 'Check' : 'Copy'} />
+        </button>
+      {/key}
+    </Tooltip>
+  </Hoverable>
   <div
     class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height]"
     bind:this={codeContainer}
   >
     <div
       class="h-fit w-full min-w-full rounded-sm p-1 transition-all dark:bg-dark/10 {hovered
-        ? 'bg-dark/5 dark:bg-dark/40'
+        ? 'bg-dark/[0.025] dark:bg-light/5'
         : ''}"
       id="hljs-container"
       bind:clientHeight={innerHeight}
     >
-      {#if !browser}
-        <div class="mx-auto my-4 w-fit"><Spinner /></div>
-      {:else if !lang}
+      <div
+        class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
+        class:opacity-0={hideLoader}
+      >
+        <Spinner />
+      </div>
+      {#if !hideLoader}
+        <span class="mt-11 block" />
+      {/if}
+      {#if !lang}
         <svelte:component this={hlAuto} code={content} />
       {:else}
-        {#await hlLang}
-          <div class="mx-auto my-4 w-fit"><Spinner /></div>
-        {:then resolvedLang}
+        {#await hlLang then resolvedLang}
+          <!-- <div class="mx-auto my-4 w-fit"><Spinner /></div> -->
+          <!-- {:then resolvedLang} -->
           {#if showLineNumbers === true}
             <svelte:component
               this={hlHighlight}
