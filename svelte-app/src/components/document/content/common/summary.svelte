@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Heading from '$components/document/content/common/summary/heading.svelte';
-  import Items from '$components/document/content/common/summary/items.svelte';
+  import Heading from '$components/document/content/common/summary_old/heading.svelte';
+  import Items from '$components/document/content/common/summary_old/items.svelte';
 
   import type { DocumentHeadings } from '$types';
 

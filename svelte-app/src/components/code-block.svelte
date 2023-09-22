@@ -119,7 +119,7 @@
 </svelte:head>
 
 <div
-  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 duration-150 dark:border-light/40 {hovered
+  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 duration-75 dark:border-light/40 {hovered
     ? 'border-dark/60 dark:border-light/60'
     : ''}"
   role="group"
@@ -134,7 +134,7 @@
 >
   {#if filename}
     <div
-      class="border-b border-dark/40 bg-dark/5 py-[13px] pl-5 font-mono text-base duration-150 dark:border-light/40 dark:bg-dark/40 {hovered
+      class="border-b border-dark/40 bg-dark/5 py-[13px] pl-5 font-mono text-base duration-75 dark:border-light/40 dark:bg-dark/40 {hovered
         ? 'border-dark/60 dark:border-light/60'
         : ''}"
       id="{id}-filename"
@@ -143,10 +143,10 @@
     </div>
   {/if}
   <Hoverable>
-    <Tooltip text={$t('Copy to clipboard')} position="left" delay={150} fixed>
+    <Tooltip text={$t('Copy to clipboard')} position="left" delay={200} fixed>
       {#key copied}
         <button
-          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-150 hover:text-dark dark:text-light/60 dark:hover:text-light"
+          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-75 hover:text-dark dark:text-light/60 dark:hover:text-light"
           class:opacity-100={hovered || filename}
           on:click={() => copy()}
           in:fade={{ duration: 100, delay: 100 }}
@@ -162,9 +162,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm p-1 transition-all dark:bg-dark/10 {hovered
-        ? 'bg-dark/[0.025] dark:bg-light/5'
-        : ''}"
+      class="h-fit w-full min-w-full rounded-sm p-1 transition-all dark:bg-dark/10"
       id="hljs-container"
       bind:clientHeight={innerHeight}
     >
@@ -181,8 +179,6 @@
         <svelte:component this={hlAuto} code={content} />
       {:else}
         {#await hlLang then resolvedLang}
-          <!-- <div class="mx-auto my-4 w-fit"><Spinner /></div> -->
-          <!-- {:then resolvedLang} -->
           {#if showLineNumbers === true}
             <svelte:component
               this={hlHighlight}

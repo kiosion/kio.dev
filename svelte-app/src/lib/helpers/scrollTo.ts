@@ -1,6 +1,6 @@
 import type { Page as PageStore } from '@sveltejs/kit';
 
-export default (url: PageStore['url'], scrollParams = {}) => {
+export default (url: PageStore['url'], scrollParams: ScrollIntoViewOptions = {}) => {
   const { hash } = url || { hash: '' };
 
   if (!hash.length) {

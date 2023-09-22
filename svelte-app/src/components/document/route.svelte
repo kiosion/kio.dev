@@ -65,14 +65,6 @@
   <slot name="meta" />
 </svelte:head>
 
-<div data-test-route={model === 'post' ? 'blog' : 'work'}>
-  <ContentWrapper>
-    <Content {data} {headings} {routeFetch} />
-  </ContentWrapper>
-</div>
-
-<style lang="scss">
-  div {
-    @apply flex h-fit flex-row items-stretch justify-start;
-  }
-</style>
+<ContentWrapper>
+  <Content {data} {headings} {routeFetch} />
+</ContentWrapper>

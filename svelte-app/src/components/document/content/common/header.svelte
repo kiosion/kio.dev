@@ -4,18 +4,22 @@
   import { currentLang, t } from '$i18n';
 
   import BulletPoint from '$components/bullet-point.svelte';
+  import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
+  import SummaryItems from '$components/document/content/common/summary/items.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
   import Hoverable from '$components/hoverable.svelte';
-  import Tags from '$components/tags.svelte';
 
-  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
+  import type { DocumentHeadings, PostDocument, ProjectDocument, PTBlock } from '$types';
 
-  export let model: 'post' | 'project', data: PostDocument | ProjectDocument;
+  export let data: PostDocument | ProjectDocument,
+    model = data._type,
+    headings: DocumentHeadings[] | undefined;
 
   let dateFormat: 'med' | 'rel' | 'full' = model === 'project' ? 'med' : 'rel',
-    readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
+    readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[])),
+    summaryExpanded = false;
 
   const switchDate = () => {
     if (model === 'project') {
@@ -44,27 +48,39 @@
         </h1>
       </svelte:fragment>
       <svelte:fragment slot="meta">
-        <div class="flex flex-row flex-wrap items-center justify-start gap-y-2">
-          <Hoverable>
-            <button
-              class="focusOutline inline cursor-pointer rounded-sm font-mono text-base"
-              on:click={() => switchDate()}
-              tabindex="0"
-            >
-              {date ? date : $t('Unknown date')}
-            </button>
-          </Hoverable>
-          <BulletPoint />
-          <p class="cursor-default font-mono text-base">
-            {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
-          </p>
-          {#if data.tags && data.tags.length > 0}
+        <div class="flex flex-row items-center justify-between">
+          <div class="flex flex-row flex-wrap items-center justify-start gap-y-2">
+            <Hoverable>
+              <button
+                class="focusOutline inline cursor-pointer rounded-sm font-mono text-base"
+                on:click={() => switchDate()}
+                tabindex="0"
+              >
+                {date ? date : $t('Unknown date')}
+              </button>
+            </Hoverable>
             <BulletPoint />
-            <Tags {model} data={data.tags} size="sm" />
+            <p class="cursor-default font-mono text-base">
+              {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
+            </p>
+          </div>
+          {#if headings?.length}
+            <ArrowButton
+              class="text-right"
+              on:click={() => (summaryExpanded = !summaryExpanded)}
+            >
+              <span class="inline-block {summaryExpanded ? 'rotate-90' : '-rotate-90'}"
+                >&larr;</span
+              >
+              {$t(summaryExpanded ? 'Hide Contents' : 'Show Contents')}
+            </ArrowButton>
           {/if}
         </div>
       </svelte:fragment>
     </svelte:component>
   </div>
+  {#if headings?.length && summaryExpanded}
+    <SummaryItems {headings} />
+  {/if}
   <Divider />
 </div>

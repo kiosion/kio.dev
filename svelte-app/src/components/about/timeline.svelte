@@ -10,7 +10,7 @@
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-  import Tags from '$components/tags.svelte';
+  // import Tags from '$components/tags.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
   import type { AuthorTimelineItem } from '$types';
@@ -111,9 +111,9 @@
                 easing: circInOut
               }}
             >
-              {#if item.skills}
+              <!-- {#if item.skills}
                 <Tags model="project" data={item.skills} class="mt-4 select-none" />
-              {/if}
+              {/if} -->
               <div class="-mb-5">
                 <PortableText text={item.body} />
               </div>

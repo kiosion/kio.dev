@@ -1,23 +1,20 @@
 <script lang="ts">
-  import { circInOut } from 'svelte/easing';
+  import { cubicInOut } from 'svelte/easing';
   import { slide } from 'svelte/transition';
 
-  import Divider from '$components/divider.svelte';
-  import Item from '$components/document/content/common/summary/item.svelte';
+  import SummaryItem from '$components/document/content/common/summary/item.svelte';
 
   import type { DocumentHeadings } from '$types';
 
-  export let headings: DocumentHeadings[],
-    headingsExist = false;
+  export let headings: DocumentHeadings[];
 </script>
 
 <div
-  class="mx-7 h-fit overflow-hidden px-1 pb-3"
-  transition:slide={{ duration: 200 + headings.length * 10, easing: circInOut }}
+  class="relative my-6 border-t border-dark/50 px-4 pt-4 dark:border-light/50"
+  transition:slide={{
+    duration: 250 + headings.length * 10,
+    easing: cubicInOut
+  }}
 >
-  <Divider classes="mb-3 mt-0" />
-
-  {#if headingsExist}
-    <Item {headings} />
-  {/if}
+  <SummaryItem {headings} />
 </div>

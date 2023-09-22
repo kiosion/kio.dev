@@ -3,21 +3,28 @@
 
   import { navigating } from '$app/stores';
 
+  import type { Navigation } from '@sveltejs/kit';
   import type { Unsubscriber } from 'svelte/store';
 
   export let element: HTMLDivElement;
 
-  let unsubscribe: Unsubscriber;
+  let unsubscribe: Unsubscriber,
+    navState: Navigation | null = null;
 
   onMount(() => {
     unsubscribe ||= navigating.subscribe((state) => {
+      state && (navState = state);
+
       if (state !== null) {
         return;
       }
-      element.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+
+      if (navState) {
+        element.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
     });
   });
 
@@ -25,7 +32,7 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll rounded-t-2xl bg-light p-8 duration-150 dark:bg-black lg:rounded-t-none lg:bg-transparent"
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8"
   tabindex="-1"
   bind:this={element}
 >

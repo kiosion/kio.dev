@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import { linkTo, t } from '$i18n';
 
+  import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -47,12 +48,9 @@
             {/each}
             <div class="flex w-full flex-row items-start justify-start gap-2">
               <span class="block w-[72px] flex-shrink-0" />
-              <a
-                href={$linkTo('/blog')}
-                class="inline-block w-full font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
-              >
+              <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
                 {$t('See more')} &rarr;
-              </a>
+              </ArrowButton>
             </div>
           </div>
         {:else}
@@ -75,12 +73,9 @@
             {/each}
             <div class="flex w-full flex-row items-start justify-start gap-2">
               <span class="block w-[72px] flex-shrink-0" />
-              <a
-                href={$linkTo('/work')}
-                class="inline-block w-full font-code text-accent-light hover:text-dark dark:text-accent-dark dark:hover:text-light"
-              >
+              <ArrowButton class="w-full" href={$linkTo('/work')} preload>
                 {$t('See more')} &rarr;
-              </a>
+              </ArrowButton>
             </div>
           </div>
         {:else}

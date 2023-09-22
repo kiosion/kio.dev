@@ -134,7 +134,7 @@
 >
   <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
-    <div class="relative mt-16 h-[calc(100%_-_4rem)] max-h-full w-full">
+    <div class="relative mt-16 max-h-full w-full">
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
