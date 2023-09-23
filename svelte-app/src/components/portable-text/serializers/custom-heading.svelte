@@ -8,12 +8,17 @@
 
   let hovered: false;
 
-  $: ({ value } = portableText);
+  $: ({ value, indexInParent } = portableText);
   $: ({ style } = value);
 </script>
 
 <Hoverable bind:hovered>
-  <a class="focusOutline-sm {style}" id={`heading-${value._key}`} href={`#${value._key}`}>
+  <a
+    class="focusOutline-sm {style}"
+    class:first={indexInParent === 0}
+    id={`heading-${value._key}`}
+    href={`#${value._key}`}
+  >
     {#if hovered}
       <Icon icon="link" class="absolute -left-8 top-1/2 -translate-y-1/2" />
     {/if}
@@ -48,6 +53,17 @@
     }
     &.h6 {
       @apply mb-3 mt-5;
+    }
+
+    &.h1,
+    &.h2,
+    &.h3,
+    &.h4,
+    &.h5,
+    &.h6 {
+      &.first {
+        @apply mt-5;
+      }
     }
 
     h1 {
