@@ -1,36 +1,30 @@
+import { DEFAULT_APP_LANG } from '$lib/consts';
 import { find, findOne } from '$lib/store';
 
+import { error } from '@sveltejs/kit';
+
 import type { PageLoad } from './$types';
-import type { AuthorDocument, PostDocument, ProjectDocument } from '$types';
+import type { PostDocument, ProjectDocument } from '$types';
 
 export const load: PageLoad = async ({ parent, fetch, params }) => {
-  const parentData = await parent();
+  const parentData = await parent(),
+    about = parentData.about,
+    lang = params.lang || DEFAULT_APP_LANG,
+    promiseArray = [
+      find(fetch, 'post', { limit: 6, lang }),
+      findOne(fetch, 'project', { id: 'kio.dev', lang })
+    ];
 
-  const promiseArray = [];
+  if (!about) {
+    throw error(500, {
+      message: 'Sorry, something went wrong. Please try again.',
+      stack: new Error('Failed to load required data').stack
+    });
+  }
 
-  promiseArray.push(
-    find(fetch, 'post', {
-      limit: 6,
-      lang: params.lang ?? 'en'
-    }),
-    findOne(fetch, 'project', {
-      id: 'kio.dev',
-      lang: params.lang ?? 'en'
-    })
-  );
-
-  promiseArray.push(
-    parentData.author
-      ? Promise.resolve(parentData.author)
-      : findOne(fetch, 'about', {
-          lang: params.lang ?? 'en'
-        })
-  );
-
-  const [posts, project, about] = (await Promise.all(promiseArray)) as [
+  const [posts, project] = (await Promise.all(promiseArray)) as [
     PostDocument[],
-    ProjectDocument,
-    AuthorDocument
+    ProjectDocument
   ];
 
   return { posts, projects: [project], about };

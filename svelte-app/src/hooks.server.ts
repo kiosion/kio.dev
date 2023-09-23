@@ -74,16 +74,8 @@ export const handle = (async ({ event, resolve }) => {
   return await resolve(event, resolveOptions);
 }) satisfies Handle;
 
-export const handleError = (({ error, event }) => {
-  try {
-    return {
-      code: (error as Error & { code?: number })?.code ?? 500,
-      message: (error as Error)?.message ?? 'An unknown error occurred'
-    };
-  } catch {
-    return {
-      status: 500,
-      message: 'Internal server error'
-    };
-  }
-}) satisfies HandleServerError;
+export const handleError = (({ error }) => ({
+  code: (error as Error & { code?: number })?.code ?? 500,
+  message: (error as Error)?.message ?? 'An unknown error occured.',
+  stack: (error as Error)?.stack
+})) satisfies HandleServerError;

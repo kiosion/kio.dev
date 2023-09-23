@@ -13,15 +13,14 @@ export const load = (async ({ parent, fetch, params }) => {
     throw redirect(301, params.lang === 'fr' ? '/fr/work/' : '/work/');
   }
 
-  await parent();
-
-  const allTags = await find(fetch, 'tag', {
-    type: 'project',
-    limit: 0
-  }).catch((err: unknown) => {
-    Logger.error(err as string);
-    return undefined;
-  });
+  const _parentData = await parent(),
+    allTags = await find(fetch, 'tag', {
+      type: 'project',
+      limit: 0
+    }).catch((err: unknown) => {
+      Logger.error('', err);
+      return undefined;
+    });
 
   if (
     !allTags?.some(

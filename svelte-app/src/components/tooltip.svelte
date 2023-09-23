@@ -3,9 +3,10 @@
 
   import Logger from '$lib/logger';
 
-  import tippy, { followCursor, type Instance } from 'tippy.js';
+  import tippy, { followCursor } from 'tippy.js';
 
-  import type { Placement } from '@popperjs/core';
+  // eslint-disable-next-line no-duplicate-imports
+  import type { Instance, Placement } from 'tippy.js';
 
   export let text = '',
     position: Placement = 'bottom',
@@ -50,7 +51,7 @@
     div.innerText = content;
     div.classList.add(
       'tooltip',
-      'rounded-sm',
+      'rounded-md',
       'py-1',
       'px-2',
       'backdrop-blur-sm',

@@ -1,3 +1,4 @@
+import { DEFAULT_APP_LANG } from '$lib/consts';
 import { findOne } from '$lib/store';
 
 import { error } from '@sveltejs/kit';
@@ -5,19 +6,17 @@ import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent, fetch, params, url }) => {
-  await parent();
-
-  const preview = url.searchParams.get('preview') === 'true' || false;
-
-  const post = await findOne(fetch, 'post', {
-    idb: btoa(params.slug),
-    lang: params.lang ?? 'en',
-    preview
-  }).catch((_e: Error) => {
-    throw error(500, {
-      message: 'Sorry, something went wrong loading that post.'
-    });
-  });
+  const _parentData = await parent(),
+    lang = params.lang || DEFAULT_APP_LANG,
+    preview = url.searchParams.get('preview') === 'true' || false,
+    post = await findOne(fetch, 'post', { idb: btoa(params.slug), lang, preview }).catch(
+      (e: Error) => {
+        throw error(500, {
+          message: 'Sorry, something went wrong loading that post.',
+          stack: e.stack
+        });
+      }
+    );
 
   if (!post) {
     throw error(404, {

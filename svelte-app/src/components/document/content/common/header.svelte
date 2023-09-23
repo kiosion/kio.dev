@@ -9,7 +9,6 @@
   import SummaryItems from '$components/document/content/common/summary/items.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
-  import Hoverable from '$components/hoverable.svelte';
 
   import type { DocumentHeadings, PostDocument, ProjectDocument, PTBlock } from '$types';
 
@@ -17,24 +16,11 @@
     model = data._type,
     headings: DocumentHeadings[] | undefined;
 
-  let dateFormat: 'med' | 'rel' | 'full' = model === 'project' ? 'med' : 'rel',
-    readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[])),
-    summaryExpanded = false;
+  const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
 
-  const switchDate = () => {
-    if (model === 'project') {
-      dateFormat = dateFormat === 'med' ? 'full' : 'med';
-      date = formatDate(data.date, dateFormat, $currentLang);
-    } else {
-      dateFormat = dateFormat === 'rel' ? 'full' : 'rel';
-      date = formatDate(data.date, dateFormat, $currentLang);
-    }
-  };
+  let summaryExpanded = false;
 
-  $: date =
-    model === 'project'
-      ? formatDate(data.date, 'med', $currentLang)
-      : formatDate(data.date, 'rel', $currentLang);
+  $: date = formatDate(data.date, 'full', $currentLang);
 </script>
 
 <div class="mb-4" data-test-id="{model}-header">
@@ -48,17 +34,11 @@
         </h1>
       </svelte:fragment>
       <svelte:fragment slot="meta">
-        <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center justify-between gap-4">
           <div class="flex flex-row flex-wrap items-center justify-start gap-y-2">
-            <Hoverable>
-              <button
-                class="focusOutline inline cursor-pointer rounded-sm font-mono text-base"
-                on:click={() => switchDate()}
-                tabindex="0"
-              >
-                {date ? date : $t('Unknown date')}
-              </button>
-            </Hoverable>
+            <p class="cursor-default font-mono text-base">
+              {date ? date : $t('Unknown date')}
+            </p>
             <BulletPoint />
             <p class="cursor-default font-mono text-base">
               {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
@@ -66,7 +46,7 @@
           </div>
           {#if headings?.length}
             <ArrowButton
-              class="text-right"
+              class="focusOutline-sm flex-1 rounded-sm text-right"
               on:click={() => (summaryExpanded = !summaryExpanded)}
             >
               <span class="inline-block {summaryExpanded ? 'rotate-90' : '-rotate-90'}"

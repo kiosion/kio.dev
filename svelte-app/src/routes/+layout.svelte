@@ -7,14 +7,11 @@
   import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
 
-  import { browser } from '$app/environment';
-  import { invalidateAll } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
-  import { createExponentialBackoffStrategy } from '$lib/try-fetch';
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
@@ -30,11 +27,7 @@
     pageContainer: HTMLDivElement,
     unsubscribers = [] as Unsubscriber[],
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    invalidationStrategy = createExponentialBackoffStrategy({
-      maxRetries: 5,
-      baseDelay: 1000,
-      onAttempt: invalidateAll
-    }),
+    toggleNav: (vis: boolean) => void,
     appLoaded = false;
 
   const { theme, reduce_motion } = Settings,
@@ -95,7 +88,6 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && !data.author && invalidationStrategy();
 </script>
 
 <svelte:body
@@ -132,8 +124,12 @@
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Nav loaded={appLoaded && !$loading} />
-  <ScrollContainer bind:element={scrollContainer}>
+  <Nav loaded={appLoaded && !$loading} bind:toggle={toggleNav} />
+  <ScrollContainer
+    bind:element={scrollContainer}
+    on:scrollDown={() => toggleNav(false)}
+    on:scrollUp={() => toggleNav(true)}
+  >
     <div class="relative mt-16 max-h-full w-full">
       <PageTransition pathname={data.pathname}>
         <slot />

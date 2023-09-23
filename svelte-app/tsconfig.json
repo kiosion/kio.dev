@@ -31,7 +31,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "types": ["cypress", "vitest/globals", "node"],
+    "types": ["node"],
     "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [

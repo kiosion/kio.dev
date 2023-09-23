@@ -1,5 +1,4 @@
 import { browser } from '$app/environment';
-import Logger from '$lib/logger';
 
 /*
  * Since Netlify has a timeout of 10s for any SSR function, we need to wrap
@@ -23,43 +22,4 @@ export default <T>(promise: Promise<T>, ms = 6000): Promise<T> => {
   });
 
   return Promise.race([timeout, promise]);
-};
-
-export const createExponentialBackoffStrategy = ({
-  maxRetries = 5,
-  baseDelay,
-  onAttempt
-}: {
-  maxRetries?: number;
-  baseDelay: number;
-  onAttempt?: () => Promise<void>;
-}) => {
-  let attemptCount = 0,
-    timeoutId: ReturnType<typeof setTimeout> | undefined,
-    isPending = false;
-
-  const performAttempt = async () => {
-    if (attemptCount > maxRetries || timeoutId !== undefined || isPending) {
-      return;
-    }
-
-    ++attemptCount;
-    isPending = true;
-
-    try {
-      await onAttempt?.();
-      isPending = false;
-    } catch (e) {
-      Logger.error('Failed to call onAttempt', e);
-    }
-
-    if (!isPending) {
-      timeoutId = setTimeout(() => {
-        timeoutId = undefined;
-        performAttempt();
-      }, baseDelay * Math.pow(2, attemptCount));
-    }
-  };
-
-  return performAttempt;
 };

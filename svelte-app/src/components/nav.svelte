@@ -15,15 +15,34 @@
 
   export let loaded = false;
 
-  let hovered = false;
+  export const toggle = (vis: boolean) => {
+    hideNav = !vis;
+  };
+
+  let hovered = false,
+    hideNav = false;
 </script>
 
-<div class="fixed left-6 right-6 top-4 z-10 flex items-center justify-center">
+<div
+  class="fixed left-6 right-6 top-4 z-10 flex items-center justify-center"
+  on:click={() => {
+    if (hideNav) {
+      hideNav = false;
+    }
+  }}
+  on:keydown={() => {
+    if (hideNav) {
+      hideNav = false;
+    }
+  }}
+  role="none"
+>
   <Hoverable setPointer={false} bind:hovered>
     <nav
-      class="flex w-full max-w-6xl flex-col items-center justify-center rounded-lg border px-6 py-5 backdrop-blur-lg transition-[background-color,border-color] md:py-2 {hovered
+      class="flex w-full max-w-6xl flex-col items-center justify-center rounded-lg border px-6 py-4 backdrop-blur-lg transition-[background-color,border-color,transform] md:py-2 lg:translate-y-0 {hovered
         ? 'border-dark/60 bg-light/60 dark:border-light/60 dark:bg-dark/70'
         : 'border-dark/40 bg-light/40 dark:border-light/40 dark:bg-dark/50'}"
+      class:-translate-y-24={hideNav}
       aria-label="Main navigation"
       role="group"
       data-test-id="navBar"

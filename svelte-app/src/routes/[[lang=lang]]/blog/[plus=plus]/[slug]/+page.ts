@@ -13,12 +13,11 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
     throw redirect(301, params.lang === 'fr' ? '/fr/blog/' : '/blog/');
   }
 
-  await parent();
-
-  const allTags = await find(fetch, 'tag', {
-    type: 'post',
-    limit: 0
-  });
+  const _parentData = await parent(),
+    allTags = await find(fetch, 'tag', {
+      type: 'post',
+      limit: 0
+    });
 
   if (
     !allTags?.some(

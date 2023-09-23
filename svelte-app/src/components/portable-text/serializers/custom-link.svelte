@@ -9,10 +9,9 @@
 
   let hovered: boolean;
 
-  $: ({ value } = portableText);
-  $: ({ plainTextContent } = portableText);
+  $: ({ value, plainTextContent } = portableText);
   $: href = value.href as string;
-  $: newtab = !!value.newtab as boolean;
+  $: newtab = !!value.newtab;
 </script>
 
 <Hoverable bind:hovered>

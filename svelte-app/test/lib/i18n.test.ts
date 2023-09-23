@@ -1,7 +1,9 @@
-import { describe, expect, it, beforeEach, afterEach } from 'vitest';
-import { t, linkTo, check, isLocalized, currentLang } from '$i18n';
-import { get, readable } from 'svelte/store';
+import { get } from 'svelte/store';
+
+import { currentLang, linkTo, t } from '$i18n';
 import Logger from '$lib/logger';
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 // TODO: Find a way to mock $app/stores per-test instead of this bs :(
 // See https://github.com/vitest-dev/vitest/issues/2536

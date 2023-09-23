@@ -1,14 +1,16 @@
-import { findOne } from '$lib/store';
+import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent, fetch, params }) => {
-  const parentData = await parent(),
-    about =
-      parentData.author ??
-      (await findOne(fetch, 'about', {
-        lang: params.lang ?? 'en'
-      }));
+export const load: PageLoad = async ({ parent }) => {
+  const parentData = await parent();
 
-  return { about };
+  if (!parentData.about) {
+    throw error(500, {
+      message: 'Sorry, something went wrong. Please try again.',
+      stack: new Error('Failed to load required data').stack
+    });
+  }
+
+  return { about: parentData.about };
 };
