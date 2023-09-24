@@ -9,18 +9,14 @@
   import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
-  const handleClick = (event: Event, lang: string) => {
+  const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
     if ($page?.url?.pathname?.startsWith(`/${lang}`)) {
       return;
     }
 
     goto(
-      $linkTo(
-        `${$page.url.pathname}${$page.url.hash}`,
-        $page.url.searchParams,
-        APP_LANGS[1]
-      ),
+      $linkTo(`${$page.url.pathname}${$page.url.hash}`, $page.url.searchParams, lang),
       {
         invalidateAll: true,
         replaceState: true
@@ -33,17 +29,19 @@
 
 <Hoverable>
   <Tooltip
-    text={$t($currentLang === 'en' ? 'Switch to french' : 'Switch to english')}
+    text={$t($currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english')}
     delay={150}
     fixed
   >
     <button
       class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
         ''}"
-      aria-label={$t($currentLang === 'en' ? 'Switch to french' : 'Switch to english')}
+      aria-label={$t(
+        $currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english'
+      )}
       tabindex="0"
       on:click={(e) => {
-        handleClick(e, $currentLang === 'en' ? 'fr' : 'en');
+        handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
     >
       <Icon icon="script" />
