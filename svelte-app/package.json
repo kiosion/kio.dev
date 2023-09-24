@@ -60,7 +60,7 @@
     "svelte-body": "^1.4.0",
     "svelte-breakpoints": "0.2.0",
     "svelte-check": "^3.5.2",
-    "svelte-eslint-parser": "^0.33.0",
+    "svelte-eslint-parser": "^0.32.2",
     "svelte-highlight": "^7.3.0",
     "svelte-maybe-transition": "^0.1.2",
     "svelte-preprocess": "^5.0.4",
@@ -70,7 +70,7 @@
     "vite": "^4.4.9",
     "vite-plugin-inspect": "^0.7.38",
     "vite-plugin-test-selectors": "0.0.2",
-    "vitest": "^0.34.5"
+    "vitest": "^0.32.0"
   },
   "type": "module",
   "dependencies": {
