@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -109,11 +109,11 @@ devDependencies:
     specifier: ^2.8.7
     version: 2.8.7
   prettier-plugin-svelte:
-    specifier: ^2.9.0
-    version: 2.9.0(prettier@2.8.7)(svelte@4.2.1)
+    specifier: ^2.10.1
+    version: 2.10.1(prettier@2.8.7)(svelte@4.2.1)
   prettier-plugin-tailwindcss:
     specifier: ^0.2.2
-    version: 0.2.2(prettier-plugin-svelte@2.9.0)(prettier@2.8.7)
+    version: 0.2.2(prettier-plugin-svelte@2.10.1)(prettier@2.8.7)
   rimraf:
     specifier: ^4.4.1
     version: 4.4.1
@@ -5256,6 +5256,20 @@ packages:
       - supports-color
     dev: true
 
+  /extract-zip@2.0.1:
+    resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
+    engines: {node: '>= 10.17.0'}
+    hasBin: true
+    dependencies:
+      debug: 4.3.4(supports-color@9.3.1)
+      get-stream: 5.2.0
+      yauzl: 2.10.0
+    optionalDependencies:
+      '@types/yauzl': 2.10.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /extract-zip@2.0.1(supports-color@8.1.1):
     resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
     engines: {node: '>= 10.17.0'}
@@ -7918,7 +7932,7 @@ packages:
       execa: 5.1.1
       express: 4.18.2
       express-logging: 1.1.1
-      extract-zip: 2.0.1(supports-color@8.1.1)
+      extract-zip: 2.0.1
       fastest-levenshtein: 1.0.16
       fastify: 4.17.0
       find-up: 6.3.0
@@ -8938,17 +8952,17 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier-plugin-svelte@2.9.0(prettier@2.8.7)(svelte@4.2.1):
-    resolution: {integrity: sha512-3doBi5NO4IVgaNPtwewvrgPpqAcvNv0NwJNflr76PIGgi9nf1oguQV1Hpdm9TI2ALIQVn/9iIwLpBO5UcD2Jiw==}
+  /prettier-plugin-svelte@2.10.1(prettier@2.8.7)(svelte@4.2.1):
+    resolution: {integrity: sha512-Wlq7Z5v2ueCubWo0TZzKc9XHcm7TDxqcuzRuGd0gcENfzfT4JZ9yDlCbEgxWgiPmLHkBjfOtpAWkcT28MCDpUQ==}
     peerDependencies:
       prettier: ^1.16.4 || ^2.0.0
-      svelte: ^3.2.0
+      svelte: ^3.2.0 || ^4.0.0-next.0
     dependencies:
       prettier: 2.8.7
       svelte: 4.2.1
     dev: true
 
-  /prettier-plugin-tailwindcss@0.2.2(prettier-plugin-svelte@2.9.0)(prettier@2.8.7):
+  /prettier-plugin-tailwindcss@0.2.2(prettier-plugin-svelte@2.10.1)(prettier@2.8.7):
     resolution: {integrity: sha512-5RjUbWRe305pUpc48MosoIp6uxZvZxrM6GyOgsbGLTce+ehePKNm7ziW2dLG2air9aXbGuXlHVSQQw4Lbosq3w==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
@@ -8998,7 +9012,7 @@ packages:
         optional: true
     dependencies:
       prettier: 2.8.7
-      prettier-plugin-svelte: 2.9.0(prettier@2.8.7)(svelte@4.2.1)
+      prettier-plugin-svelte: 2.10.1(prettier@2.8.7)(svelte@4.2.1)
     dev: true
 
   /prettier@2.8.7:

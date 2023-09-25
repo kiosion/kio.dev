@@ -52,7 +52,7 @@
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.8.7",
-    "prettier-plugin-svelte": "^2.9.0",
+    "prettier-plugin-svelte": "^2.10.1",
     "prettier-plugin-tailwindcss": "^0.2.2",
     "rimraf": "^4.4.1",
     "sass": "^1.58.3",
