@@ -11,6 +11,12 @@ defmodule Hexerei.Utils do
     end
   end
 
+  def update_meta(map, meta, duration) do
+    map
+    |> Map.put("meta", meta)
+    |> Map.update("ms", duration, &(&1 + (duration - &1)))
+  end
+
   def validate_query_params(params, expected) do
     Enum.reduce(expected, %{}, fn {key, default}, acc ->
       if Map.has_key?(params, key) do

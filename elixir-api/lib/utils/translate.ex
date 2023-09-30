@@ -56,6 +56,22 @@ defmodule Hexerei.Translate do
     }
   end
 
+  def handle_translate(type, doc, lang_param) do
+    case lang_param do
+      "en" -> doc
+      "fr" -> Translate.translate(type, doc, "fr", "en")
+      _ -> {:error, "Invalid language"}
+    end
+    |> case do
+      {:error, message} ->
+        Logger.error("Error translating #{type}: #{inspect(message)}")
+        doc
+
+      res ->
+        res
+    end
+  end
+
   def translate(type, sanity_response, target_lang, source_lang \\ "en") do
     Logger.info("Handling translation for #{type} to '#{target_lang}'")
 

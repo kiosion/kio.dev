@@ -113,26 +113,33 @@ defmodule Router.Api.V1.Projects do
       |> handle_sanity_fetch(query_limited, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
-        case params["lang"] do
-          "en" -> result
-          "fr" -> Translate.translate(:projects, result, "fr", "en")
-          _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-        end
-        |> case do
-          {:error, message} ->
-            Logger.error("Error fetching projects: #{inspect(message)}")
-            result
+        {translated_result, meta} =
+          case result["result"] do
+            nil ->
+              {
+                result,
+                %{
+                  "total" => 0,
+                  "count" => 0,
+                  "sort" => params["s"],
+                  "order" => params["o"]
+                }
+              }
 
-          translated_result ->
-            translated_result
-        end
-        |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"],
-          "count" => parsed_counts["result"]["count"],
-          "sort" => params["s"],
-          "order" => params["o"]
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+            _ ->
+              {
+                Translate.handle_translate(:projects, result, params["lang"]),
+                %{
+                  "total" => parsed_counts["result"]["total"],
+                  "count" => parsed_counts["result"]["count"],
+                  "sort" => params["s"],
+                  "order" => params["o"]
+                }
+              }
+          end
+
+        translated_result
+        |> update_meta(meta, duration)
         |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
       end)
     else

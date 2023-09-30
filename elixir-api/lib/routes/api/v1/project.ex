@@ -71,35 +71,29 @@ defmodule Router.Api.V1.Project do
 
       conn
       |> handle_sanity_fetch(query, fn conn, result, duration ->
-        count =
+        {translated_result, meta, code} =
           case result["result"] do
-            nil -> 0
-            _ -> 1
+            nil ->
+              {result,
+               %{
+                 "total" => 0,
+                 "count" => 0,
+                 "id" => nil
+               }, 404}
+
+            _ ->
+              {
+                Translate.handle_translate(:project, result, params["lang"]),
+                %{
+                  "total" => 1,
+                  "count" => 1,
+                  "id" => params["id"]
+                },
+                200
+              }
           end
 
-        translated_result =
-          case params["lang"] do
-            "en" -> result
-            "fr" -> Translate.translate(:project, result, "fr", "en")
-            _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-          end
-          |> case do
-            {:error, message} ->
-              Logger.error("Error translating post: #{inspect(message)}")
-              result
-
-            translated_result ->
-              translated_result
-          end
-
-        code =
-          if count == 0 do
-            404
-          else
-            200
-          end
-
-        case count do
+        case meta["count"] do
           0 ->
             translated_result
 
@@ -110,17 +104,7 @@ defmodule Router.Api.V1.Project do
               PT.build_summary(translated_result["result"]["body"])
             )
         end
-        |> Map.put("meta", %{
-          "total" => count,
-          "count" => count,
-          "id" =>
-            if result["result"] != nil do
-              params["id"]
-            else
-              nil
-            end
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
+        |> update_meta(meta, duration)
         |> (fn data -> conn |> json_res(code, %{code: code, data: data}) end).()
       end)
     else
