@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
@@ -37,111 +36,96 @@ type QueryResponse<T> =
     }
   | undefined;
 
-const EXP_TIME = 1000 * 60 * 30;
+const EXP_TIME = 1000 * 60 * 30; // 30 minutes
 
-const documentCache = new Proxy(
-  {} as Record<
-    string,
-    | {
-        exp: number;
-        data:
-          | DocumentRegistry[keyof DocumentRegistry][]
-          | DocumentRegistry[keyof DocumentRegistry];
-      }
-    | undefined
-  >,
+const documentCache: Record<
+  string,
   {
-    get: (target, prop) => {
-      switch (prop) {
-        case 'get':
-          return (key: string) => {
-            if (!(key in target) || target[key] === undefined) {
-              return undefined;
-            }
-
-            if (target[key]!.exp <= Date.now()) {
-              target[key] = undefined;
-              return undefined;
-            }
-
-            return target[key]!.data;
-          };
-        case 'set':
-          return <T extends DocumentRegistry[keyof DocumentRegistry]>(
-            key: string,
-            value: T
-          ) =>
-            (target[key] = {
-              exp: Date.now() + EXP_TIME,
-              data: value
-            });
-        default:
-          return undefined;
-      }
-    }
+    exp: number;
+    data:
+      | DocumentRegistry[keyof DocumentRegistry]
+      | DocumentRegistry[keyof DocumentRegistry][];
   }
-) as unknown as {
-  get: (
-    key: string
-  ) =>
+> = {};
+
+const cacheGet = (key: string) => {
+  const item = documentCache[key];
+  if (!item || isExpired(item.exp)) {
+    delete documentCache[key];
+    return undefined;
+  }
+  return item.data;
+};
+
+const cacheSet = (
+  key: string,
+  value:
     | DocumentRegistry[keyof DocumentRegistry]
     | DocumentRegistry[keyof DocumentRegistry][]
-    | undefined;
-  set: (
-    key: string,
-    value:
-      | DocumentRegistry[keyof DocumentRegistry]
-      | DocumentRegistry[keyof DocumentRegistry][]
-  ) => boolean;
+) => {
+  documentCache[key] = {
+    exp: Date.now() + EXP_TIME,
+    data: value
+  };
 };
+
+const isExpired = (timestamp: number): boolean => timestamp <= Date.now();
 
 const constructUrl = (
   model: keyof DocumentRegistry,
   params: PossibleParams,
   many = false
 ) => {
-  const url = new URL(`http://fake${API_URL}get/${model}${many ? '/many' : ''}`);
-  Object.entries(params).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      return value.length ? url.searchParams.append(key, value.join(',')) : undefined;
+  const basePath = `${API_URL}get/${model}${many ? '/many' : ''}`,
+    queryParams = [];
+
+  for (const [key, value] of Object.entries(params)) {
+    if (Array.isArray(value) && value.length) {
+      queryParams.push(`${key}=${value.join(',')}`);
+    } else if (value !== null && value !== undefined && value.toString() !== '') {
+      queryParams.push(`${key}=${value}`);
     }
-    return typeof value === 'boolean'
-      ? url.searchParams.set(key, value.toString())
-      : value.toString() !== '' && url.searchParams.set(key, value.toString());
-  });
-  return url.toString().replace('http://fake', '');
+  }
+
+  return `${basePath}${queryParams.length ? `?${queryParams.join('&')}` : ''}`;
+};
+
+const fetchData = async <T>(
+  fetch: RouteFetch,
+  url: string,
+  model: keyof DocumentRegistry
+): Promise<T | undefined> => {
+  try {
+    const response = await tryFetch(fetch(url));
+    const fetchResponse = (await response.json()) as QueryResponse<T>;
+    if (!fetchResponse?.meta || fetchResponse?.error) {
+      Logger.error(`Failed to query ${model}`, fetchResponse?.error);
+      return undefined;
+    }
+    return fetchResponse?.data;
+  } catch (e) {
+    Logger.error(`Failed to query ${model}`, e);
+    return undefined;
+  }
 };
 
 const find = async <T extends keyof DocumentRegistry>(
   fetch: RouteFetch,
   model: T,
   params: PossibleParams = {}
-) => {
+): Promise<DocumentRegistry[T][] | undefined> => {
   const cacheKey = JSON.stringify({ model, params, many: true });
-  if (documentCache.get(cacheKey)) {
-    return documentCache.get(cacheKey) as DocumentRegistry[T][];
+  const cachedData = cacheGet(cacheKey);
+  if (cachedData) {
+    return cachedData as DocumentRegistry[T][];
   }
 
   const url = constructUrl(model, params, true);
-  let response: DocumentRegistry[T][] | undefined;
-
-  try {
-    const fetchResponse = (await tryFetch(fetch(url)).then(
-      async (r) => await r.json()
-    )) as QueryResponse<DocumentRegistry[T][]>;
-    if (!fetchResponse?.meta || fetchResponse?.error) {
-      Logger.error(`Failed to query ${model}`, fetchResponse?.error);
-      return undefined;
-    }
-    response = fetchResponse?.data;
-  } catch (e) {
-    Logger.error(`Failed to query ${model}`, e);
-    return undefined;
-  }
-
+  const response = await fetchData<DocumentRegistry[T][]>(fetch, url, model);
   if (response) {
-    documentCache.set(cacheKey, response);
+    cacheSet(cacheKey, response);
   }
+
   return response;
 };
 
@@ -149,32 +133,21 @@ const findOne = async <T extends keyof DocumentRegistry>(
   fetch: RouteFetch,
   model: T,
   params: PossibleParams = {}
-) => {
+): Promise<DocumentRegistry[T] | undefined> => {
   const cacheKey = JSON.stringify({ model, params, many: false });
-  if (!(params.preview === 'true') && documentCache.get(cacheKey)) {
-    return documentCache.get(cacheKey) as DocumentRegistry[T];
+  if (params.preview !== 'true') {
+    const cachedData = cacheGet(cacheKey);
+    if (cachedData) {
+      return cachedData as DocumentRegistry[T];
+    }
   }
 
   const url = constructUrl(model, params);
-  let response: DocumentRegistry[T] | undefined;
-
-  try {
-    const fetchResponse = (await tryFetch(fetch(url)).then(
-      async (r) => await r.json()
-    )) as QueryResponse<DocumentRegistry[T]>;
-    if (!fetchResponse?.meta || fetchResponse?.error) {
-      Logger.error(`Failed to query ${model}`, fetchResponse?.error);
-      return undefined;
-    }
-    response = fetchResponse?.data;
-  } catch (e) {
-    Logger.error(`Failed to query ${model}`, e);
-    return undefined;
+  const response = await fetchData<DocumentRegistry[T]>(fetch, url, model);
+  if (params.preview !== 'true' && response) {
+    cacheSet(cacheKey, response);
   }
 
-  if (!(params.preview === 'true') && response) {
-    documentCache.set(cacheKey, response);
-  }
   return response;
 };
 

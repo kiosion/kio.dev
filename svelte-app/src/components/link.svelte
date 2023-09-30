@@ -1,0 +1,42 @@
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
+  import { linkTo } from '$i18n';
+
+  import Hoverable from '$components/hoverable.svelte';
+
+  let hovered: boolean;
+
+  const dispatch = createEventDispatcher(),
+    type = $$props.href ? 'a' : 'button';
+
+  $: link = $$props.href
+    ? $$props.href.startsWith('/')
+      ? $linkTo($$props.href)
+      : $$props.href
+    : undefined;
+</script>
+
+<Hoverable bind:hovered>
+  <svelte:element
+    this={type}
+    href={link}
+    target={$$props.newtab ? '_blank' : undefined}
+    rel={$$props.newtab ? 'noopener noreferrer' : undefined}
+    class="focusOutline-sm rounded-sm from-accent-light text-dark/90 underline decoration-accent-light underline-offset-[2px] dark:text-light dark:decoration-accent-dark {hovered
+      ? 'decoration-[3px]'
+      : 'decoration-2'}"
+    tabindex="0"
+    on:click={() => dispatch('click')}
+    on:keydown={(e) => {
+      if (e.key === 'Enter') {
+        dispatch('click');
+      }
+    }}
+    role={type === 'a' ? 'link' : 'button'}
+    aria-label={$$props['aria-label']}
+    {...$$restProps}
+  >
+    <slot />
+  </svelte:element>
+</Hoverable>

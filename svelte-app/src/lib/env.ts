@@ -1,4 +1,8 @@
-export const ENV: string = import.meta.env.MODE || import.meta.env.CONTEXT;
+export const ENV = (import.meta.env.MODE || import.meta.env.CONTEXT) as
+  | 'backed'
+  | 'testing'
+  | 'development'
+  | 'production';
 
 export const BASE_URL = '/';
 export const API_URL = `${BASE_URL}api/`;

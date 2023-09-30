@@ -9,8 +9,9 @@
 
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
-  import { check as checkTranslations, currentLang, isLocalized } from '$i18n';
+  import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
+  import { ENV } from '$lib/env';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import Settings, { loading } from '$stores/settings';
 
@@ -66,7 +67,7 @@
   ].forEach(([k, v]) => setContext(k, v));
 
   onMount(() => {
-    checkTranslations();
+    ENV !== 'production' && checkTranslations();
 
     setTimeout(() => {
       loading.set(false);
@@ -112,11 +113,11 @@
 <span
   class="focusOutline-sm absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-dark dark:text-light"
   role="button"
-  aria-label="Skip to content"
+  aria-label={$t('Skip to content')}
   tabindex="0"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   out:fly={{ duration: 100, y: 40 }}
-  on:keydown={skipToContent}>Skip to content</span
+  on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
 <div

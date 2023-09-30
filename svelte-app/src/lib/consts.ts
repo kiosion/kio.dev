@@ -4,7 +4,7 @@ export const DARK_THEME = 'dark';
 export const APP_LANGS = ['en', 'fr'] as const;
 export const DEFAULT_APP_LANG = 'en';
 
-export const VALID_DOC_TYPES = ['post', 'project', 'tag', 'about', 'config'] as const;
+export const VALID_DOC_TYPES = ['post', 'project', 'about', 'config'] as const;
 
 export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
 
@@ -24,25 +24,13 @@ export const APP_ROUTES = [
   {
     name: 'Blog',
     path: '/blog',
-    children: [
-      { name: 'Post', path: '/blog/:slug' },
-      { name: 'All Posts', path: '/blog/:int' },
-      { name: 'Tag', path: '/blog/+/:tag' }
-    ],
+    children: [{ name: 'Post', path: '/blog/:slug' }],
     hidden: false
   },
   {
     name: 'Work',
     path: '/work',
-    children: [
-      { name: 'Project', path: '/work/:slug' },
-      { name: 'All Projects', path: '/work/:int' },
-      {
-        name: 'Tags',
-        path: '/work/+',
-        children: [{ name: 'Tag', path: '/work/+/:tag' }]
-      }
-    ],
+    children: [{ name: 'Project', path: '/work/:slug' }],
     hidden: false
   },
   {
@@ -58,21 +46,7 @@ export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   return rest;
 }) as Omit<AppRoute, 'children'>[];
 
-export const ROUTE_ORDER = [
-  'index',
-  'about',
-  'blog',
-  'blog/*',
-  'blog/*/*',
-  'blog/+/*',
-  'art',
-  'art/*',
-  'work',
-  'work/*',
-  'work/*/*',
-  'work/+/*',
-  'etc'
-];
+export const ROUTE_ORDER = ['index', 'blog', 'blog/*', 'work', 'work/*', 'etc'];
 
 export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
   (route) => ({

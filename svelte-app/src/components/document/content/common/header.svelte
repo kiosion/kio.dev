@@ -1,12 +1,16 @@
 <script lang="ts">
+  import { cubicInOut } from 'svelte/easing';
+  import { slide } from 'svelte/transition';
+
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
   import { currentLang, t } from '$i18n';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
-  import SummaryItems from '$components/document/content/common/summary/items.svelte';
+  import Summary from '$components/document/content/common/summary.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
 
@@ -60,7 +64,15 @@
     </svelte:component>
   </div>
   {#if headings?.length && summaryExpanded}
-    <SummaryItems {headings} />
+    <div
+      class="relative my-6 border-t border-dark/50 px-4 pt-4 dark:border-light/50"
+      transition:slide={{
+        duration: BASE_ANIMATION_DURATION + headings.length * 10,
+        easing: cubicInOut
+      }}
+    >
+      <Summary {headings} />
+    </div>
   {/if}
   <Divider />
 </div>

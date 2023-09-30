@@ -17,28 +17,26 @@
 
   export let data: ProjectDocument | PostDocument,
     model = data._type,
-    headings: DocumentHeadings[] | never[],
+    headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined;
-
-  const allTags =
-    (((tags: NonNullable<typeof data>['tags'] | undefined) => {
-      if (!tags) {
-        return undefined;
-      }
-      return tags.reduce((acc, tag) => {
-        tag.title && acc.push(tag.title.toLowerCase());
-        return acc;
-      }, [] as string[]);
-    })(data?.tags)?.join(', ') as string) + ', ' || '';
 
   onMount(() => {
     scrollTo($page?.url);
   });
 
+  $: allTags =
+    (data?.tags || [])
+      .reduce(
+        (acc, tag) => (tag.title && acc.push(tag.title.toLowerCase()), acc),
+        [] as string[]
+      )
+      ?.join(', ') + ', ' || '';
   $: $page?.url && scrollTo($page.url);
   $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
-    ? data.desc
+    ? data.desc.length > 160
+      ? `${data.desc.slice(0, 160 - 3)}...`
+      : data.desc
     : $t(`A ${model === 'post' ? 'post' : 'project'} on kio.dev`);
 </script>
 
@@ -52,7 +50,7 @@
   <meta
     name="keywords"
     content="{allTags}blog, {model === 'post'
-      ? 'post, blog post'
+      ? 'blog post'
       : 'project'}, kio.dev, kio, kiosion"
   />
   <meta name="author" content="Kio" />
@@ -68,8 +66,6 @@
   <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content={pageTitle} />
   <meta property="twitter:description" content={pageDescription} />
-
-  <slot name="meta" />
 </svelte:head>
 
 <ContentWrapper>

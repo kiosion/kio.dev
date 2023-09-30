@@ -3,7 +3,7 @@ import { security } from '$lib/fixtures/well-known';
 
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url }): Promise<Response> => {
+export const GET = (async ({ url }) => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {
@@ -35,4 +35,4 @@ export const GET: RequestHandler = async ({ url }): Promise<Response> => {
         }
       );
   }
-};
+}) satisfies RequestHandler;

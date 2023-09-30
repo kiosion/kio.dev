@@ -2,12 +2,9 @@ import { VALID_DOC_TYPES } from '$lib/consts';
 import { fetchRemote } from '$lib/data.server';
 import { REMOTE_API_URL } from '$lib/env';
 
-import type { RequestEvent, RequestHandler } from './$types';
+import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({
-  url,
-  params
-}: RequestEvent): Promise<Response> => {
+export const GET = (async ({ url, params }) => {
   const docType = params.type as (typeof VALID_DOC_TYPES)[number],
     many = !!params.many ?? false;
 
@@ -26,20 +23,7 @@ export const GET: RequestHandler = async ({
   }
 
   if (
-    docType === 'tag' &&
-    !['post', 'project'].includes(url.searchParams.get('type') || '')
-  ) {
-    return endpointResponse(
-      {
-        status: 400,
-        error: 'Endpoint error: Missing or invalid query parameter: type'
-      },
-      400
-    );
-  }
-
-  if (
-    ['post', 'project'].includes(docType) &&
+    (docType === 'post' || docType === 'project') &&
     !many &&
     !(url.searchParams.get('id') || url.searchParams.get('idb'))
   ) {
@@ -54,9 +38,8 @@ export const GET: RequestHandler = async ({
 
   url.searchParams.delete('many');
 
-  const endpoint = getEndpoint(docType, many, url.searchParams);
-
-  const remoteRes = await fetchRemote({ endpoint });
+  const endpoint = getEndpoint(docType, many, url.searchParams),
+    remoteRes = await fetchRemote(endpoint);
 
   if (remoteRes.error) {
     return endpointResponse(
@@ -69,7 +52,7 @@ export const GET: RequestHandler = async ({
   }
 
   return endpointResponse(remoteRes);
-};
+}) satisfies RequestHandler;
 
 const getEndpoint = (
   type: (typeof VALID_DOC_TYPES)[number],
@@ -87,8 +70,6 @@ const getEndpoint = (
           }?lang=${params.get('lang') || 'en'}${
             params.get('preview') === 'true' ? '&preview=true' : ''
           }`;
-    case 'tag':
-      return `${REMOTE_API_URL}/query/tags?${params}`;
     case 'config':
       return `${REMOTE_API_URL}/config`;
     case 'about':

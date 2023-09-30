@@ -9,7 +9,7 @@ import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent, fetch, params }) => {
+export const load = (async ({ parent, fetch, params }) => {
   const parentData = await parent(),
     lang = params.lang || DEFAULT_APP_LANG,
     projects = await find(fetch, 'project', {
@@ -26,4 +26,4 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
   }
 
   return { about: parentData.about, projects };
-};
+}) satisfies PageLoad;

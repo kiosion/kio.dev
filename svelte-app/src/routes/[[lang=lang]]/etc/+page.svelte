@@ -8,7 +8,7 @@
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
-  import LinkNonPt from '$components/link-non-pt.svelte';
+  import Link from '$components/link.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   export let data;
@@ -45,8 +45,8 @@
     <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
       <p>
         {$t("Want to send a secure message my way? Here's my main PGP key:")}
-        <LinkNonPt href="/pgp.txt" target="_blank"
-          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</LinkNonPt
+        <Link href="/pgp.txt" newtab
+          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link
         >
       </p>
     </HeadedBlock>

@@ -6,7 +6,7 @@ import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import type { PostDocument, ProjectDocument } from '$types';
 
-export const load: PageLoad = async ({ parent, fetch, params }) => {
+export const load = (async ({ parent, fetch, params }) => {
   const parentData = await parent(),
     about = parentData.about,
     lang = params.lang || DEFAULT_APP_LANG,
@@ -28,4 +28,4 @@ export const load: PageLoad = async ({ parent, fetch, params }) => {
   ];
 
   return { posts, projects: [project], about };
-};
+}) satisfies PageLoad;

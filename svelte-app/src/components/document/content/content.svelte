@@ -14,12 +14,11 @@
   export let data: PostDocument | ProjectDocument,
     model = data._type,
     headings: DocumentHeadings[] | undefined,
-    routeFetch: RouteFetch | undefined = undefined,
-    container: HTMLDivElement | undefined = undefined;
+    routeFetch: RouteFetch | undefined = undefined;
 </script>
 
 <Header {data} {headings} />
-<div class="mt-4 font-sans text-base" bind:this={container}>
+<div class="mt-4 font-sans text-base">
   {#if data.body}
     <PortableText text={data.body} {routeFetch} />
   {:else}

@@ -1,40 +1,19 @@
 <script lang="ts">
-  import Heading from '$components/document/content/common/summary_old/heading.svelte';
-  import Items from '$components/document/content/common/summary_old/items.svelte';
-
   import type { DocumentHeadings } from '$types';
 
-  export let headings: DocumentHeadings[],
-    expanded = false;
-
-  $: headingsExist = headings.length > 0;
+  export let headings: DocumentHeadings[];
 </script>
 
-<div class:expanded>
-  <Heading {headingsExist} on:toggle={() => (expanded = !expanded)} />
-  {#if expanded}
-    <Items {headings} {headingsExist} on:toggle={() => (expanded = !expanded)} />
-  {/if}
+<div class={$$props.class}>
+  {#each headings as heading}
+    <a
+      href={`#${heading.key}`}
+      class="focusOutline-sm block w-full select-none overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-2 text-base font-medium hover:text-accent-light dark:hover:text-accent-dark"
+    >
+      &bull;&nbsp;&nbsp;{heading.text}
+    </a>
+    {#if heading.children?.length}
+      <svelte:self headings={heading.children} class="ml-5" />
+    {/if}
+  {/each}
 </div>
-
-<style lang="scss">
-  div {
-    @apply rounded-sm border border-dark/40 bg-transparent transition-[background-color,border-color];
-
-    &:hover,
-    &.expanded {
-      @apply border-dark/60 bg-dark/[0.025];
-    }
-  }
-
-  :global(.dark) {
-    div {
-      @apply border-light/40;
-
-      &:hover,
-      &.expanded {
-        @apply border-light/60 bg-light/5;
-      }
-    }
-  }
-</style>

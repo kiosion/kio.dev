@@ -2,7 +2,7 @@ import Robots from '$lib/fixtures/robots';
 
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url, fetch }): Promise<Response> => {
+export const GET = (async ({ url, fetch }) => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {
@@ -41,4 +41,4 @@ export const GET: RequestHandler = async ({ url, fetch }): Promise<Response> => 
         }
       );
   }
-};
+}) satisfies RequestHandler;

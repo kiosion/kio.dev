@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent }) => {
+export const load = (async ({ parent }) => {
   const parentData = await parent();
 
   if (!parentData.about) {
@@ -13,4 +13,4 @@ export const load: PageLoad = async ({ parent }) => {
   }
 
   return { about: parentData.about };
-};
+}) satisfies PageLoad;

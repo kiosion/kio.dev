@@ -1,4 +1,3 @@
-import { ENV } from '$lib/env';
 import { REMOTE_API_TOKEN } from '$lib/env.server';
 import Logger from '$lib/logger';
 
@@ -77,27 +76,16 @@ const normalize = (data: ResponseOrError) => {
     (normalized.meta as ResData['meta'] & { [key: string]: unknown })[key] = resData[key];
   }
 
-  !['development', 'backed', 'test'].includes(ENV) &&
-    normalized.meta?.query &&
-    (normalized.meta.query = undefined);
-
   return normalized;
 };
 
-const fetchRemote = async ({
-  endpoint,
-  options
-}: {
-  endpoint: string | URL;
-  options?: RequestInit;
-}): Promise<Normalized> => {
+const fetchRemote = async (endpoint: string | URL): Promise<Normalized> => {
   try {
     const response = await fetch(endpoint, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${REMOTE_API_TOKEN}`
-      },
-      ...options
+      }
     });
 
     const jsonResponse = (await response.json()) as ResponseOrError;

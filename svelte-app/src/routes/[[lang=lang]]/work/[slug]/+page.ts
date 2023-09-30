@@ -5,9 +5,8 @@ import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent, fetch, params, url }) => {
-  const _parentData = await parent(),
-    lang = params.lang || DEFAULT_APP_LANG,
+export const load = (async ({ fetch, params, url }) => {
+  const lang = params.lang || DEFAULT_APP_LANG,
     preview = url.searchParams.get('preview') === 'true' || false,
     project = await findOne(fetch, 'project', { id: params.slug, lang, preview }).catch(
       (e: Error) => {
@@ -24,5 +23,5 @@ export const load: PageLoad = async ({ parent, fetch, params, url }) => {
     });
   }
 
-  return { project };
-};
+  return { project, routeFetch: fetch };
+}) satisfies PageLoad;

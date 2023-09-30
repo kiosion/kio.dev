@@ -8,7 +8,7 @@ import type { LayoutLoad } from './$types';
 
 export const trailingSlash = 'ignore';
 
-export const ssr = !(ENV === 'testing');
+export const ssr = ENV !== 'testing';
 
 export const load = (async ({ params, url, fetch }) => {
   const lang = params.lang || DEFAULT_APP_LANG,
