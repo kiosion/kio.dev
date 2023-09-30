@@ -20,6 +20,8 @@
 
 <svelte:head>
   <title>{pageTitle}</title>
+  <meta itemprop="name" content={pageTitle} />
+  <meta itemprop="description" content={description} />
   <meta name="description" content={description} />
   <meta name="keywords" content="About, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />

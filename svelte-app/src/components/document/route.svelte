@@ -44,6 +44,10 @@
 
 <svelte:head>
   <title>{pageTitle}</title>
+
+  <meta itemprop="name" content={pageTitle} />
+  <meta itemprop="description" content={pageDescription} />
+
   <meta name="description" content={pageDescription} />
   <meta
     name="keywords"
@@ -52,6 +56,7 @@
       : 'project'}, kio.dev, kio, kiosion"
   />
   <meta name="author" content="Kio" />
+
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page.url.href} />
   <meta property="og:title" content={pageTitle} />
@@ -59,9 +64,11 @@
     property="og:description"
     content={data?.desc ? data.desc : $t('A post on kio.dev')}
   />
+
   <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content={pageTitle} />
   <meta property="twitter:description" content={pageDescription} />
+
   <slot name="meta" />
 </svelte:head>
 

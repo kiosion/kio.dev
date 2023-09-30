@@ -20,8 +20,10 @@
 
 <svelte:head>
   <title>{pageTitle}</title>
+  <meta itemprop="name" content={pageTitle} />
+  <meta itemprop="description" content={description} />
   <meta name="description" content={description} />
-  <meta name="keywords" content="work, projects, kio.dev, kio, kiosion" />
+  <meta name="keywords" content="work, experience, projects, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page?.url?.href} />
