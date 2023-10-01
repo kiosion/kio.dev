@@ -6,7 +6,6 @@ defmodule Router.Cdn do
   use Plug.Router
   use Plug.ErrorHandler
   use Hexerei.Response
-  use Hexerei.CDNCache
 
   plug(:match)
   plug(:fetch_query_params)
@@ -47,35 +46,24 @@ defmodule Router.Cdn do
     url_parts = url |> parse_url()
 
     with true <- is_binary(url_parts.filetype),
-         {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string),
-         cache_result <- CDNCache.get(url) do
-      case cache_result do
-        {:ok, value} ->
-          conn
-          |> put_resp_content_type("image/#{url_parts.filetype}")
-          |> send_resp(200, value)
+         {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string) do
+      with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+             Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).get(url) do
+        conn
+        |> put_resp_content_type("image/#{url_parts.filetype}")
+        |> send_resp(200, body)
+      else
+        {:ok, %HTTPoison.Response{status_code: 404}} ->
+          error_res(conn, 404, "Image not found")
 
-        _ ->
-          with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
-                 Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).get(url) do
-            CDNCache.put(url, body)
+        {:ok, %HTTPoison.Response{status_code: 400}} ->
+          error_res(conn, 400, "Bad request")
 
-            conn
-            |> put_resp_content_type("image/#{url_parts.filetype}")
-            |> send_resp(200, body)
-          else
-            {:ok, %HTTPoison.Response{status_code: 404}} ->
-              error_res(conn, 404, "Image not found")
+        {:ok, %HTTPoison.Response{}} ->
+          error_res(conn, 500, "Something went wrong")
 
-            {:ok, %HTTPoison.Response{status_code: 400}} ->
-              error_res(conn, 400, "Bad request")
-
-            {:ok, %HTTPoison.Response{}} ->
-              error_res(conn, 500, "Something went wrong")
-
-            {:error, %HTTPoison.Error{reason: reason}} ->
-              error_res(conn, 500, "Something went wrong: #{reason}")
-          end
+        {:error, %HTTPoison.Error{reason: reason}} ->
+          error_res(conn, 500, "Something went wrong: #{reason}")
       end
     else
       {:error, reason} -> conn |> error_res(500, reason)

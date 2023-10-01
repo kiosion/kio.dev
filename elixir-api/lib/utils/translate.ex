@@ -3,6 +3,7 @@ defmodule Hexerei.Translate do
   Util to handle all translation methods
   """
 
+  use Hexerei.Cache.TranslateCache
   use Hexerei.Utils
 
   require Logger
@@ -59,7 +60,7 @@ defmodule Hexerei.Translate do
   def handle_translate(type, doc, lang_param) do
     case lang_param do
       "en" -> doc
-      "fr" -> Translate.translate(type, doc, "fr", "en")
+      "fr" -> translate(type, doc, "fr", "en")
       _ -> {:error, "Invalid language"}
     end
     |> case do
@@ -319,10 +320,30 @@ defmodule Hexerei.Translate do
   end
 
   defp translate_field(text, target_lang, source_lang) do
-    if text == "" || text == nil do
+    if text == "" or text == nil do
       {:ok, text}
     else
-      construct_body(text, target_lang, source_lang) |> send_request
+      with cache_res <-
+             TranslateCache.get(text <> "_" <> target_lang <> "_" <> source_lang),
+           true <- cache_res != nil do
+        {:ok, cache_res}
+      else
+        _ ->
+          res = construct_body(text, target_lang, source_lang) |> send_request
+
+          case res do
+            {:ok, translation} ->
+              TranslateCache.put(
+                text <> "_" <> target_lang <> "_" <> source_lang,
+                translation
+              )
+
+              res
+
+            _ ->
+              res
+          end
+      end
     end
   end
 

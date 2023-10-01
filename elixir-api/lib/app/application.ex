@@ -27,10 +27,10 @@ defmodule Hexerei.Application do
         ]
       },
       {
-        Hexerei.CDNCache,
+        Hexerei.Cache.TranslateCache,
         [
           options: [
-            max_size: 100
+            max_size: 200
           ]
         ]
       },
