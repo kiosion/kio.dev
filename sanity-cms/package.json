@@ -31,7 +31,7 @@
     "@sanity/eslint-config-studio": "^3.0.0",
     "@types/react": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "6.4.1",
-    "@typescript-eslint/parser": "6.3.0",
+    "@typescript-eslint/parser": "6.7.3",
     "dotenv": "^16.3.1",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
