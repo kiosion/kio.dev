@@ -1,4 +1,4 @@
-import { DEFAULT_APP_LANG } from '$lib/consts';
+import { DEFAULT_APP_LANG, HOMEPAGE_POSTS_NUM } from '$lib/consts';
 import { find, findOne } from '$lib/store';
 
 import { error } from '@sveltejs/kit';
@@ -11,7 +11,7 @@ export const load = (async ({ parent, fetch, params }) => {
     about = parentData.about,
     lang = params.lang || DEFAULT_APP_LANG,
     promiseArray = [
-      find(fetch, 'post', { limit: 6, lang }),
+      find(fetch, 'post', { limit: HOMEPAGE_POSTS_NUM, lang }),
       findOne(fetch, 'project', { id: 'kio.dev', lang })
     ];
 

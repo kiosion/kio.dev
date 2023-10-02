@@ -30,9 +30,10 @@
     goto($linkTo(link.url)).catch(() => undefined);
   };
 
-  $: splitPath = $page?.url.pathname.split('/') || [];
+  $: splitPath = $page?.url?.pathname?.split('/') || [];
   $: (isActive = (() => {
-    let urlIncludesLink = $page?.url.pathname === link.url;
+    let urlIncludesLink =
+      ($isLocalized ? $page?.url?.pathname?.slice(3) : $page?.url?.pathname) === link.url;
 
     if (navigatingIsActive) {
       urlIncludesLink ||= $navigating?.to?.url.pathname === link.url;

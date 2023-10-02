@@ -58,15 +58,14 @@ export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
 export const BASE_TRANSITION_DURATION = 200 as const;
 export const BASE_ANIMATION_DURATION = 300 as const;
 
-export const PAGINATION_POSTS_PER_PAGE = 12;
-export const PAGINATION_PROJECTS_PER_PAGE = 12;
+export const HOMEPAGE_POSTS_NUM = 4 as const;
+export const HOMEPAGE_PROJECTS_NUM = 1 as const;
 
-// Disable pagination for now
 export const RECENT_POSTS_COUNT = 99;
 export const RECENT_PROJECTS_COUNT = 99;
 
 export const DEFAULT_POST_QUERY_PARAMS = {
-  limit: PAGINATION_POSTS_PER_PAGE,
+  limit: 99,
   skip: 0,
   sort: 'date',
   order: 'desc',
@@ -74,21 +73,13 @@ export const DEFAULT_POST_QUERY_PARAMS = {
   tags: []
 };
 
-export const DEFAULT_PROJECT_QUERY_PARAMS = {
-  ...DEFAULT_POST_QUERY_PARAMS,
-  limit: PAGINATION_PROJECTS_PER_PAGE
-};
+export const DEFAULT_PROJECT_QUERY_PARAMS = DEFAULT_POST_QUERY_PARAMS;
 
 export const DEFAULT_DESKTOP_WIDTH = 768;
 export const DEFAULT_MOBILE_WIDTH = DEFAULT_DESKTOP_WIDTH - 1;
 
 export const DEFAULT_DESKTOP_BREAKPOINT = `(min-width: ${DEFAULT_DESKTOP_WIDTH}px)`;
 export const DEFAULT_MOBILE_BREAKPOINT = `(max-width: ${DEFAULT_MOBILE_WIDTH}px)`;
-
-export const DEFAULT_BREAKPOINTS = {
-  sm: DEFAULT_MOBILE_BREAKPOINT,
-  lg: DEFAULT_DESKTOP_BREAKPOINT
-};
 
 export const LANGUAGE_COLOURS = new Proxy(
   new Map([
@@ -157,21 +148,3 @@ export const LANGUAGE_COLOURS = new Proxy(
     }
   }
 );
-
-export const LOADING_PHRASES = [
-  'Spinning violently around the y-axis',
-  'Assembling from source',
-  'Hunting for bugs',
-  'Dusting the cobwebs',
-  'Looking for missing semicolons',
-  ':3',
-  'Calculating the airspeed velocity of an unladen swallow',
-  'Brewing some coffee',
-  'Browsing StackOverflow',
-  'Warming up your CPU',
-  'Rotating the earth',
-  'Decompiling binaries',
-  'RTFM-ing',
-  'Parsing XML',
-  'Grokking the hypersphere'
-];

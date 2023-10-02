@@ -1,8 +1,4 @@
-import {
-  DEFAULT_APP_LANG,
-  DEFAULT_PROJECT_QUERY_PARAMS,
-  RECENT_PROJECTS_COUNT
-} from '$lib/consts';
+import { DEFAULT_APP_LANG, DEFAULT_PROJECT_QUERY_PARAMS } from '$lib/consts';
 import { find } from '$lib/store';
 
 import { error } from '@sveltejs/kit';
@@ -14,7 +10,6 @@ export const load = (async ({ parent, fetch, params }) => {
     lang = params.lang || DEFAULT_APP_LANG,
     projects = await find(fetch, 'project', {
       ...DEFAULT_PROJECT_QUERY_PARAMS,
-      limit: RECENT_PROJECTS_COUNT,
       lang
     });
 
