@@ -1,7 +1,8 @@
-import { get } from 'svelte/store';
+import { derived, get } from 'svelte/store';
 
-import { isLocalized } from '$i18n';
-import { ROUTE_ORDER } from '$lib/consts';
+import { page } from '$app/stores';
+import { currentLang, isLocalized, t } from '$i18n';
+import { APP_ROUTES, BASE_PAGE_TITLE, ROUTE_ORDER } from '$lib/consts';
 
 let prevPath: string;
 
@@ -11,6 +12,17 @@ ROUTE_ORDER.forEach((route, index) => {
     ROUTE_ORDER.forEach((subRoute, i) => {
       !(i <= index) && forward.push(`${route}-${subRoute}`);
     });
+});
+
+export const pageTitle = derived([currentLang, page], (_v) => {
+  const basePathname = get(page)?.url?.pathname ?? '/',
+    pathname = `/${
+      (get(isLocalized) ? basePathname.slice(3) : basePathname.slice(1)).split('/')[0]
+    }`;
+
+  const route = APP_ROUTES.find((r) => r.path === pathname)?.name;
+
+  return route?.length ? `${BASE_PAGE_TITLE} | ${get(t)(route)}` : BASE_PAGE_TITLE;
 });
 
 export const onNav = (path: string): 'forward' | 'backward' => {

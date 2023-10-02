@@ -4,6 +4,7 @@
   import { page } from '$app/stores';
   import scrollTo from '$helpers/scrollTo';
   import { t } from '$i18n';
+  import { BASE_PAGE_TITLE } from '$lib/consts';
 
   import Content from '$components/document/content/content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -32,7 +33,7 @@
       )
       ?.join(', ') + ', ' || '';
   $: $page?.url && scrollTo($page.url);
-  $: pageTitle = `kio.dev${data?.title ? ` | ${data.title}` : ''}`;
+  $: pageTitle = `${BASE_PAGE_TITLE}${data?.title ? ` | ${data.title}` : ''}`;
   $: pageDescription = data?.desc
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`

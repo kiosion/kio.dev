@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { sortDocumentsByYear } from '$lib/helpers/date';
-  import { t } from '$lib/helpers/i18n';
+  import { sortDocumentsByYear } from '$helpers/date';
+  import { t } from '$helpers/i18n';
+  import { pageTitle } from '$helpers/navigation';
 
   import EmptyContent from '$components/empty-content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -12,20 +13,19 @@
   const sortedPosts = data.posts?.length ? sortDocumentsByYear(data.posts) : [];
 
   $: ({ posts } = data);
-  $: pageTitle = `kio.dev | ${$t('Blog')}`;
   $: description = $t('Thoughts about tech, design, and development');
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
-  <meta itemprop="name" content={pageTitle} />
+  <title>{$pageTitle}</title>
+  <meta itemprop="name" content={$pageTitle} />
   <meta itemprop="description" content={description} />
   <meta name="description" content={description} />
   <meta name="keywords" content="blog, posts, blog posts, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page?.url?.href} />
-  <meta property="og:title" content={pageTitle} />
+  <meta property="og:title" content={$pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:title" content="kio.dev | blog" />

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { pageTitle } from '$helpers/navigation';
   import { t } from '$i18n';
   import { sortDocumentsByYear } from '$lib/helpers/date';
 
@@ -12,7 +13,6 @@
 
   const sortedProjects = data.projects?.length ? sortDocumentsByYear(data.projects) : [];
 
-  $: pageTitle = `kio.dev | ${$t('My work')}`;
   $: description = $t(
     'A collection of my work, open-source contributions, and personal projects'
   );
@@ -20,18 +20,18 @@
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
-  <meta itemprop="name" content={pageTitle} />
+  <title>{$pageTitle}</title>
+  <meta itemprop="name" content={$pageTitle} />
   <meta itemprop="description" content={description} />
   <meta name="description" content={description} />
   <meta name="keywords" content="work, experience, projects, kio.dev, kio, kiosion" />
   <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page?.url?.href} />
-  <meta property="og:title" content={pageTitle} />
+  <meta property="og:title" content={$pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="twitter:url" content={$page?.url?.href} />
-  <meta property="twitter:title" content={pageTitle} />
+  <meta property="twitter:title" content={$pageTitle} />
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
