@@ -34,7 +34,7 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'Meta',
+    name: 'Etc',
     path: '/etc',
     hidden: false
   }

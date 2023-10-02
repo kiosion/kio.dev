@@ -2,7 +2,8 @@
   import '../app.scss';
 
   import { onDestroy, onMount, setContext } from 'svelte';
-  import { fade, fly } from 'svelte/transition';
+  import { circInOut } from 'svelte/easing';
+  import { fade, fly, slide } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
@@ -10,9 +11,10 @@
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
-  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
+  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
   import { ENV } from '$lib/env';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
+  import { navOpen } from '$stores/navigation';
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
@@ -131,6 +133,16 @@
     on:scrollDown={() => toggleNav(false)}
     on:scrollUp={() => toggleNav(true)}
   >
+    <!-- Janky but works for now lmao -->
+    {#if $navOpen}
+      <div
+        class="block h-52 w-full"
+        transition:slide={{
+          duration: BASE_ANIMATION_DURATION,
+          easing: circInOut
+        }}
+      />
+    {/if}
     <div class="relative mt-16 max-h-full w-full">
       <PageTransition pathname={data.pathname}>
         <slot />

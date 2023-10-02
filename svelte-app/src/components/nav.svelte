@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
   import { circInOut } from 'svelte/easing';
   import { slide } from 'svelte/transition';
 
   import { linkTo } from '$i18n';
   import { BASE_ANIMATION_DURATION, NAV_LINKS } from '$lib/consts';
+  import { isDesktop } from '$lib/helpers/responsive';
   import { navOpen } from '$stores/navigation';
 
   import LanguageControls from '$components/controls/language-toggle.svelte';
@@ -13,6 +15,8 @@
   import Spinner from '$components/loading/spinner.svelte';
   import NavLink from '$components/nav/nav-link.svelte';
 
+  import type { Unsubscriber } from 'svelte/store';
+
   export let loaded = false;
 
   export const toggle = (vis: boolean) => {
@@ -20,7 +24,16 @@
   };
 
   let hovered = false,
-    hideNav = false;
+    hideNav = false,
+    unsubscribe: Unsubscriber;
+
+  onMount(() => {
+    unsubscribe = isDesktop.subscribe((state) => {
+      state && navOpen.set(false);
+    });
+  });
+
+  onDestroy(() => unsubscribe && unsubscribe());
 </script>
 
 <div
@@ -55,7 +68,7 @@
               ? 'bg-accent-light dark:bg-accent-dark'
               : 'bg-accent-light/60 dark:bg-accent-dark/60'}"
           />
-          <span class="relative h-fit w-fit">
+          <span class="relative mt-0.5 h-fit w-fit">
             <a
               class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
               class:opacity-0={!loaded}
@@ -89,7 +102,7 @@
       </div>
       {#if $navOpen}
         <div
-          class="my-2 flex w-full flex-col items-start justify-start gap-y-2 text-2xl"
+          class="mt-3 flex w-full flex-col items-start justify-start text-2xl"
           transition:slide|local={{
             duration: BASE_ANIMATION_DURATION,
             easing: circInOut

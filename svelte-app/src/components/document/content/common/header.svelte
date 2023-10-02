@@ -38,7 +38,7 @@
         </h1>
       </svelte:fragment>
       <svelte:fragment slot="meta">
-        <div class="flex flex-row items-center justify-between gap-4">
+        <div class="flex flex-row flex-wrap items-center justify-between gap-4">
           <div class="flex flex-row flex-wrap items-center justify-start gap-y-2">
             <p class="cursor-default font-mono text-base">
               {date ? date : $t('Unknown date')}
@@ -50,7 +50,7 @@
           </div>
           {#if headings?.length}
             <ArrowButton
-              class="focusOutline-sm flex-1 rounded-sm text-right"
+              class="focusOutline-sm flex-1 whitespace-nowrap rounded-sm text-right"
               on:click={() => (summaryExpanded = !summaryExpanded)}
             >
               <span class="inline-block {summaryExpanded ? 'rotate-90' : '-rotate-90'}"

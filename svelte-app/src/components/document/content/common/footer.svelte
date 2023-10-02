@@ -13,8 +13,8 @@
 <div class="mt-4">
   <Divider />
   <ArrowButton
-    class="w-full text-right"
-    href={$linkTo(model === 'post' ? '/blog' : '/work')}
+    class="w-full text-left"
+    href={model === 'post' ? $linkTo('/blog') : $linkTo('/projects')}
     preload
   >
     &larr; {$t('Read more')}

@@ -2,7 +2,6 @@
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-nocheck Need to fix typings for hlAuto and hlHighlight
   import { onDestroy, onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
 
   import {
     type Highlight,
@@ -121,7 +120,7 @@
 <div
   class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 duration-75 dark:border-light/40 {hovered
     ? 'border-dark/60 dark:border-light/60'
-    : ''}"
+    : ''} transition-none"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
@@ -146,11 +145,8 @@
     <Tooltip text={$t('Copy to clipboard')} position="left" delay={200} fixed>
       {#key copied}
         <button
-          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 opacity-0 transition-opacity duration-75 hover:text-dark dark:text-light/60 dark:hover:text-light"
-          class:opacity-100={hovered || filename}
+          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark dark:text-light/60 dark:hover:text-light"
           on:click={() => copy()}
-          in:fade={{ duration: 100, delay: 100 }}
-          out:fade={{ delay: 100, duration: 100 }}
         >
           <Icon icon={copied ? 'Check' : 'Copy'} />
         </button>

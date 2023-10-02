@@ -23,7 +23,7 @@
     href={link}
     target={$$props.newtab ? '_blank' : undefined}
     rel={$$props.newtab ? 'noopener noreferrer' : undefined}
-    class="focusOutline-sm rounded-sm from-accent-light text-dark/90 underline decoration-accent-light underline-offset-[2px] dark:text-light dark:decoration-accent-dark {hovered
+    class="focusOutline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
       ? 'decoration-[3px]'
       : 'decoration-2'}"
     tabindex="0"
