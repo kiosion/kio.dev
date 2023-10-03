@@ -29,11 +29,11 @@ export const handle = (async ({ event, resolve }) => {
   };
 
   const lang = event.request.url.match(
-      new RegExp(`^.*(?:(?:.[a-z]{3})|(?:[a-z]+:[0-9]{4}))/(${APP_LANGS.join('|')})/?`)
+      new RegExp(`^(?:https?://)?[^/]+/(${APP_LANGS.join('|')})/?`)
     ),
     settings = event.cookies.get(LOCAL_SETTINGS_KEY);
 
-  if (lang) {
+  if (lang?.[1] && APP_LANGS.includes(lang[1])) {
     transforms.push((html) =>
       html.replace(/<html lang="en">/, `<html lang="${lang[1]}">`)
     );

@@ -8,6 +8,7 @@
   import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
 
+  import { browser } from '$app/environment';
   import { navigating, page } from '$app/stores';
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
@@ -91,6 +92,7 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
+  $: browser && (document.documentElement.lang = $currentLang);
 </script>
 
 <svelte:body
