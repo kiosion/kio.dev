@@ -1,4 +1,4 @@
-import { get, readable, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 
 import { page } from '$app/stores';
 import EN from '$langs/en.json';
@@ -50,8 +50,12 @@ const getKey = <T extends keyof typeof EN>(lang: string, key: T): string | undef
   }
 };
 
-const _translate = (key: string, params?: Record<string, unknown>): string => {
-  const lang = get(currentLang) || DEFAULT_APP_LANG;
+const _translate = (
+  currentLang: string | undefined,
+  key: string,
+  params?: Record<string, unknown>
+): string => {
+  const lang = currentLang || DEFAULT_APP_LANG;
 
   // For any provided params, replace the corresponding placeholders if any
   // e.g. "Hello {name}" with { name: "World" } becomes "Hello World"
@@ -65,25 +69,19 @@ const _translate = (key: string, params?: Record<string, unknown>): string => {
     );
   };
 
-  const string = getKey(lang || DEFAULT_APP_LANG, key as keyof typeof EN);
+  const string = getKey(lang, key as keyof typeof EN);
 
   if (string) {
     return replaceParams(string);
   } else {
-    notFound(key, lang || DEFAULT_APP_LANG);
+    notFound(key, lang);
     return replaceParams(key);
   }
 };
 
-// eslint-disable-next-line func-call-spacing
-const translate = readable<(key: string, params?: Record<string, unknown>) => string>(
-  _translate,
-  (set) => {
-    const unsubscribe = currentLang.subscribe(() => {
-      set(_translate);
-    });
-    return unsubscribe;
-  }
+const translate = derived(
+  currentLang,
+  (val) => (key: string, params?: Record<string, unknown>) => _translate(val, key, params)
 );
 
 const addSearchParams = (path: string, params?: URLSearchParams): string => {
@@ -92,7 +90,8 @@ const addSearchParams = (path: string, params?: URLSearchParams): string => {
   return search ? `${path}${path.includes('?') ? '&' : '?'}${search}` : path;
 };
 
-const _linkTo: LinkTo = (
+const _linkTo = (
+  currentLang: string | undefined,
   path: string,
   paramsOrLang?: URLSearchParams | string,
   lang?: string
@@ -109,7 +108,7 @@ const _linkTo: LinkTo = (
     params = paramsOrLang;
   }
 
-  lang = lang || get(currentLang);
+  lang ||= currentLang || DEFAULT_APP_LANG;
 
   if (
     !lang ||
@@ -135,8 +134,11 @@ interface LinkTo {
   (pathname: string, params: URLSearchParams, lang?: string): string;
 }
 
-const linkTo = readable<LinkTo>(_linkTo, (set) =>
-  currentLang.subscribe(() => set(_linkTo))
+const linkTo = derived(
+  currentLang,
+  (val) =>
+    ((path: string, paramsOrLang?: URLSearchParams | string, lang?: string) =>
+      _linkTo(val, path, paramsOrLang, lang)) as LinkTo
 );
 
 export { check, currentLang, isLocalized, linkTo, translate as t };

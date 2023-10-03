@@ -1,8 +1,8 @@
 export const LIGHT_THEME = 'light';
 export const DARK_THEME = 'dark';
 
-export const APP_LANGS = ['en', 'fr'] as const;
-export const DEFAULT_APP_LANG = 'en';
+export const APP_LANGS = ['en', 'fr'];
+export const DEFAULT_APP_LANG = APP_LANGS[0];
 
 export const VALID_DOC_TYPES = ['post', 'project', 'about', 'config'] as const;
 

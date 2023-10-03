@@ -1,69 +1,60 @@
-import { derived, get } from 'svelte/store';
+import { derived } from 'svelte/store';
 
 import { page } from '$app/stores';
-import { currentLang, isLocalized, t } from '$i18n';
-import { APP_ROUTES, BASE_PAGE_TITLE, ROUTE_ORDER } from '$lib/consts';
+import { isLocalized, t } from '$i18n';
+import { APP_LANGS, APP_ROUTES, BASE_PAGE_TITLE, ROUTE_ORDER } from '$lib/consts';
+
+const langRegex = new RegExp(`^/(${APP_LANGS.join('|')})`),
+  firstSegRegex = /^\/([^/]+)/,
+  subsequentSegRegex = /\//g;
+
+const normalizePath = (path: string) => {
+  if (path.match(langRegex)) {
+    path = path.slice(3);
+  }
+
+  if (!path || path === '/') {
+    return 'index';
+  }
+
+  const firstSegmentMatch = path.match(firstSegRegex);
+
+  if (!firstSegmentMatch) {
+    return '';
+  }
+
+  const subsequentSegmentsCount = (path.match(subsequentSegRegex) || []).length - 1;
+
+  return firstSegmentMatch[1] + '/*'.repeat(subsequentSegmentsCount);
+};
+
+const forward = new Set<string>();
+
+for (let i = 0; i < ROUTE_ORDER.length - 1; ++i) {
+  for (let j = i + 1; j < ROUTE_ORDER.length; ++j) {
+    forward.add(`${ROUTE_ORDER[i]}-${ROUTE_ORDER[j]}`);
+  }
+}
 
 let prevPath: string;
 
-const forward: string[] = [];
-ROUTE_ORDER.forEach((route, index) => {
-  index !== ROUTE_ORDER.length - 1 &&
-    ROUTE_ORDER.forEach((subRoute, i) => {
-      !(i <= index) && forward.push(`${route}-${subRoute}`);
-    });
-});
+export const onNav = (path: string) => {
+  const newPath = normalizePath(path),
+    oldPath = prevPath ? prevPath : newPath;
 
-export const pageTitle = derived([currentLang, page], (_v) => {
-  const basePathname = get(page)?.url?.pathname ?? '/',
-    pathname = `/${
-      (get(isLocalized) ? basePathname.slice(3) : basePathname.slice(1)).split('/')[0]
-    }`;
+  prevPath = newPath;
 
-  const route = APP_ROUTES.find((r) => r.path === pathname)?.name;
-
-  return route?.length ? `${BASE_PAGE_TITLE} | ${get(t)(route)}` : BASE_PAGE_TITLE;
-});
-
-export const onNav = (path: string): 'forward' | 'backward' => {
-  if (get(isLocalized) === true && path) {
-    path = `/${path.slice(3)}`;
-  }
-
-  path = path.replace(/^\/{2,}/, '/').replace(/.+\/$/, '');
-
-  if (!path) {
-    return 'forward';
-  }
-
-  const prev = prevPath ?? path;
-  prevPath = path;
-
-  const toRoute = path.startsWith('/')
-    ? path
-        .slice(1)
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/')
-    : path
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/');
-  const fromRoute = prev.startsWith('/')
-    ? prev
-        .slice(1)
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/')
-    : prev
-        .split('/')
-        .map((part, i) => (i === 0 ? part : '*'))
-        .join('/');
-
-  const dirs = [
-    fromRoute === '' ? 'index' : fromRoute,
-    toRoute === '' ? 'index' : toRoute
-  ].join('-');
-
-  return forward.includes(dirs) ? 'forward' : 'backward';
+  return forward.has(`${oldPath}-${newPath}`) ? 'forward' : 'backward';
 };
+
+export const pageTitle = derived([isLocalized, t, page], (vals) => {
+  const basePathname = vals[2]?.url?.pathname ?? '/',
+    pathname = `/${
+      (vals[0] ? basePathname.slice(4) : basePathname.slice(1)).split('/')[0]
+    }`,
+    route = APP_ROUTES.find((r) => r.path === pathname);
+
+  return route?.name?.length
+    ? `${BASE_PAGE_TITLE} | ${vals[1](route.name)}`
+    : BASE_PAGE_TITLE;
+});

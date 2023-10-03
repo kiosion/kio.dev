@@ -11,8 +11,8 @@
 
   const { reduce_motion } = Settings;
 
-  const dist = 28,
-    duration = BASE_ANIMATION_DURATION / 1.25;
+  const dist = 26,
+    duration = BASE_ANIMATION_DURATION / 1.5;
 
   let navDir: 'forward' | 'backward' = 'forward';
 

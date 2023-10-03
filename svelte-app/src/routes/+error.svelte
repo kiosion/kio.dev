@@ -71,7 +71,7 @@
       {#if showStack}
         <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
           <pre
-            class="mt-4 whitespace-pre-wrap rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">
+            class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">
               {stack}
             </pre>
         </div>
