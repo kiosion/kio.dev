@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { sortDocumentsByYear } from '$helpers/date';
   import { t } from '$helpers/i18n';
   import { pageTitle } from '$helpers/navigation';
@@ -19,15 +18,12 @@
   <title>{$pageTitle}</title>
   <meta itemprop="name" content={$pageTitle} />
   <meta itemprop="description" content={description} />
+  <meta name="robots" content="index, follow" />
   <meta name="description" content={description} />
-  <meta name="keywords" content="blog, posts, blog posts, kio.dev, kio, kiosion" />
-  <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={$page?.url?.href} />
   <meta property="og:title" content={$pageTitle} />
   <meta property="og:description" content={description} />
-  <meta property="twitter:url" content={$page?.url?.href} />
-  <meta property="twitter:title" content="kio.dev | blog" />
+  <meta property="twitter:title" content={$pageTitle} />
   <meta property="twitter:description" content={description} />
 </svelte:head>
 

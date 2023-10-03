@@ -42,6 +42,7 @@
 
 <svelte:head>
   <title>kio.dev | {status}</title>
+  <meta name="robots" content="none" />
 </svelte:head>
 
 <div class="mt-12">

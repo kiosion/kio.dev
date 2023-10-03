@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { pageTitle } from '$helpers/navigation';
   import { t } from '$i18n';
 
@@ -11,21 +10,18 @@
 
   export let data;
 
-  $: description = $t('A peek into my current adventures in tech and beyond');
+  $: description = $t('How to get in touch, and some meta info about this site');
 </script>
 
 <svelte:head>
   <title>{$pageTitle}</title>
   <meta itemprop="name" content={$pageTitle} />
   <meta itemprop="description" content={description} />
+  <meta name="robots" content="index, follow" />
   <meta name="description" content={description} />
-  <meta name="keywords" content="About, kio.dev, kio, kiosion" />
-  <meta name="author" content="Kio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={$page.url.href} />
   <meta property="og:title" content={$pageTitle} />
   <meta property="og:description" content={description} />
-  <meta property="twitter:url" content={$page.url.href} />
   <meta property="twitter:title" content={$pageTitle} />
   <meta property="twitter:description" content={description} />
 </svelte:head>

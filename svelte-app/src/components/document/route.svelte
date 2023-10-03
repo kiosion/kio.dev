@@ -25,15 +25,8 @@
     scrollTo($page?.url);
   });
 
-  $: allTags =
-    (data?.tags || [])
-      .reduce(
-        (acc, tag) => (tag.title && acc.push(tag.title.toLowerCase()), acc),
-        [] as string[]
-      )
-      ?.join(', ') + ', ' || '';
   $: $page?.url && scrollTo($page.url);
-  $: pageTitle = `${BASE_PAGE_TITLE}${data?.title ? ` | ${data.title}` : ''}`;
+  $: pageTitle = `${BASE_PAGE_TITLE} ~ ${data.title}`;
   $: pageDescription = data?.desc
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`
@@ -43,30 +36,25 @@
 
 <svelte:head>
   <title>{pageTitle}</title>
-
   <meta itemprop="name" content={pageTitle} />
   <meta itemprop="description" content={pageDescription} />
-
+  <meta name="robots" content="index, nofollow" />
   <meta name="description" content={pageDescription} />
-  <meta
-    name="keywords"
-    content="{allTags}blog, {model === 'post'
-      ? 'blog post'
-      : 'project'}, kio.dev, kio, kiosion"
-  />
-  <meta name="author" content="Kio" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={$page.url.href} />
+  <meta property="og:type" content="article" />
   <meta property="og:title" content={pageTitle} />
-  <meta
-    property="og:description"
-    content={data?.desc ? data.desc : $t('A post on kio.dev')}
-  />
-
-  <meta property="twitter:url" content={$page.url.href} />
-  <meta property="twitter:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content={data.title} />
   <meta property="twitter:description" content={pageDescription} />
+  <meta property="article:author" content="Kio" />
+  <meta
+    property="article:published_time"
+    content={new Date(data.date || '0')?.toISOString()}
+  />
+  <meta
+    property="article:modified_time"
+    content={new Date(data.date || '0')?.toISOString()}
+  />
 </svelte:head>
 
 <ContentWrapper>

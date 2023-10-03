@@ -55,6 +55,6 @@ export const pageTitle = derived([isLocalized, t, page], (vals) => {
     route = APP_ROUTES.find((r) => r.path === pathname);
 
   return route?.name?.length
-    ? `${BASE_PAGE_TITLE} | ${vals[1](route.name)}`
+    ? `${BASE_PAGE_TITLE} ~ ${vals[1](route.name)}`
     : BASE_PAGE_TITLE;
 });

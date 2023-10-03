@@ -13,7 +13,7 @@
   import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
-  import { ENV } from '$lib/env';
+  import { ENV, SELF_BASE_URL } from '$lib/env';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import { navOpen } from '$stores/navigation';
   import Settings, { loading } from '$stores/settings';
@@ -94,6 +94,18 @@
   );
   $: browser && (document.documentElement.lang = $currentLang);
 </script>
+
+<svelte:head>
+  <meta name="author" content="Kio" />
+  <meta name="theme-color" content={$theme === 'dark' ? '#16160e' : '#e5e4e6'} />
+  <meta property="og:locale" content={$currentLang === 'fr' ? 'fr_CA' : 'en_CA'} />
+  <meta property="og:site_name" content="kio.dev" />
+  <meta property="og:url" content={$page?.url?.href} />
+  <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+  <meta property="twitter:url" content={$page?.url?.href} />
+  <meta property="twitter:site" content="@0xKI0" />
+  <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+</svelte:head>
 
 <svelte:body
   use:classList={`${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`}
