@@ -118,24 +118,15 @@
 </svelte:head>
 
 <div
-  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 duration-75 dark:border-light/40 {hovered
-    ? 'border-dark/60 dark:border-light/60'
-    : ''} transition-none"
+  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 transition-none focus-within:border-dark/60 hover:border-dark/60 focus-visible:border-dark/60 dark:border-light/40 focus-within:dark:border-light/60 hover:dark:border-light/60 focus-visible:dark:border-light/60"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
   bind:this={container}
-  on:mouseenter={() => (hovered = true)}
-  on:mouseleave={() => (hovered = false)}
-  on:focusin={() => (hovered = true)}
-  on:focusout={() => (hovered = false)}
-  on:blur={() => (hovered = false)}
 >
   {#if filename}
     <div
-      class="border-b border-dark/40 bg-dark/5 py-[13px] pl-5 font-mono text-base duration-75 dark:border-light/40 dark:bg-dark/40 {hovered
-        ? 'border-dark/60 dark:border-light/60'
-        : ''}"
+      class="border-b border-dark/30 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color] dark:border-light/30 dark:bg-dark/40"
       id="{id}-filename"
     >
       {filename}

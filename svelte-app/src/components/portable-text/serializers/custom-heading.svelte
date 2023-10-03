@@ -34,7 +34,7 @@
 
 <style lang="scss">
   a {
-    @apply relative block w-fit rounded-sm font-extrabold;
+    @apply relative block w-full rounded-sm font-extrabold;
 
     &.h1 {
       @apply mb-6 mt-14;
