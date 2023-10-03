@@ -6,12 +6,13 @@
   viewBox="0 0 24 24"
 >
   <circle
-    class="opacity-25"
+    class="!opacity-25"
     cx="12"
     cy="12"
     r="10"
     stroke="currentColor"
     stroke-width="4"
+    style="opacity: 0;"
   />
   <path
     class="opacity-75"

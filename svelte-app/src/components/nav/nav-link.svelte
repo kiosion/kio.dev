@@ -5,7 +5,6 @@
   import { navigating, page } from '$app/stores';
   import { isLocalized, linkTo, t } from '$i18n';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { navOpen } from '$stores/navigation';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -24,14 +23,11 @@
     if ($page?.url.pathname.slice($isLocalized ? 3 : 0) === link.url) {
       return;
     }
-    if (mobile) {
-      navOpen.set(false);
-    }
     goto($linkTo(link.url)).catch(() => undefined);
   };
 
   $: splitPath = $page?.url?.pathname?.split('/') || [];
-  $: (isActive = (() => {
+  $: isActive = (() => {
     let urlIncludesLink =
       ($isLocalized ? $page?.url?.pathname?.slice(3) : $page?.url?.pathname) === link.url;
 
@@ -43,8 +39,7 @@
       urlIncludesLink ||
       (splitPath?.length > 1 && splitPath.indexOf(link.url.slice(1)) > 0)
     );
-  })()),
-    navOpen;
+  })();
 </script>
 
 <Hoverable bind:hovered={isHovered}>

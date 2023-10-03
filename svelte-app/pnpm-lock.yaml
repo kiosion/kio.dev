@@ -141,9 +141,6 @@ devDependencies:
   svelte-maybe-transition:
     specifier: ^0.1.2
     version: 0.1.2(svelte@4.2.1)
-  svelte-preprocess:
-    specifier: ^5.0.4
-    version: 5.0.4(postcss-load-config@4.0.1)(postcss@8.4.14)(sass@1.58.3)(svelte@4.2.1)(typescript@5.2.2)
   tailwindcss:
     specifier: ^3.3.3
     version: 3.3.3

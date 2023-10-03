@@ -1,17 +1,10 @@
-import preprocess from 'svelte-preprocess';
-
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
-  preprocess: [
-    vitePreprocess(),
-    preprocess({
-      postcss: true
-    })
-  ],
+  preprocess: [vitePreprocess({ script: true, style: true })],
   kit: {
     alias: {
       $components: 'src/components',

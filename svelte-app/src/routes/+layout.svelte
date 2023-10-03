@@ -3,14 +3,13 @@
 
   import { onDestroy, onMount, setContext } from 'svelte';
   import { circInOut } from 'svelte/easing';
-  import { fade, fly, slide } from 'svelte/transition';
+  import { fly, slide } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
 
   import { browser } from '$app/environment';
   import { navigating, page } from '$app/stores';
-  import { isDesktop } from '$helpers/responsive';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
@@ -21,7 +20,6 @@
   import ContextMenu from '$components/context-menu.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
-  import BarLoader from '$components/loading/bar.svelte';
   import Nav from '$components/nav.svelte';
 
   import type { Navigation } from '@sveltejs/kit';
@@ -111,16 +109,6 @@
   use:classList={`${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`}
   on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
 />
-
-{#if !$isDesktop && $loading}
-  <span
-    class="fixed left-0 top-0 z-[50] h-[3px] w-[100vw]"
-    in:fade={{ duration: 50 }}
-    out:fade={{ duration: 50, delay: 500 }}
-  >
-    <BarLoader width="100vw" height="3px" />
-  </span>
-{/if}
 
 {#if $menuState.open}
   <ContextMenu />

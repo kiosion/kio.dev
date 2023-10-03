@@ -12,8 +12,6 @@
     external = document._type === 'project' ? document.external : false,
     small = false;
 
-  // const readingTime = getReadingTime(getTotalWords((document.body ?? []) as PTBlock[]));
-
   let hovered = false;
 
   const link =
@@ -29,7 +27,7 @@
     <a
       href={$linkTo(link)}
       target={external ? '_blank' : undefined}
-      class="flex w-full flex-row items-start justify-start gap-2"
+      class="focusOutline flex w-full flex-row items-start justify-start gap-2 rounded-sm"
       tabindex="0"
       data-sveltekit-preload-code
       data-sveltekit-preload-data
@@ -51,7 +49,7 @@
     <a
       href={$linkTo(link)}
       target={external ? '_blank' : undefined}
-      class="flex w-full flex-col items-start justify-start gap-2"
+      class="focusOutline flex w-full flex-col items-start justify-start gap-2 rounded-md"
       tabindex="0"
       data-sveltekit-preload-code
       data-sveltekit-preload-data

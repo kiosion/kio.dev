@@ -38,30 +38,14 @@ export default defineConfig(({ command, mode }) => {
       rollupOptions: {
         output: {
           inlineDynamicImports: false,
-          // TOOD: Fix manual chunking
           manualChunks: (id: string) => {
             // check for svelte-highlight / highlight.js and portabletext,
             // chunk into their own dirs
             switch (true) {
-              case id.includes('svelte-highlight/styles'):
-                return 'svelte-highlight/styles';
-              case id.includes('highlight.js/lib/core'):
-                return 'highlight.js/core';
-              case id.includes('@portabletext'):
-                return 'portabletext';
-            }
-            // check for hljs langs, chunk into dirs based on first letter
-            // to reduce size of chunks
-            const matchHlLang = id.match(
-                /highlight\.js(?:\/lib){0,1}\/languages\/([a-zA-Z])+/
-              ),
-              matchSHlLang = id.match(
-                /svelte-highlight(?:\/lib){0,1}\/languages\/([a-zA-Z])+/
-              );
-            if (matchHlLang) {
-              return `highlight.js/languages/${matchHlLang[1]}`;
-            } else if (matchSHlLang) {
-              return `svelte-highlight/languages/${matchSHlLang[1]}`;
+              case id.includes('svelte-highlight'):
+                return 'svelte-highlight';
+              case id.includes('highlight.js'):
+                return 'hljs';
             }
           }
         }

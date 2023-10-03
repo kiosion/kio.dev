@@ -15,7 +15,7 @@
 <svelte:element
   this={self}
   href={$$props.href || undefined}
-  class="inline-block font-code text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ||
+  class="focusOutline inline-block rounded-sm font-code text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ||
     ''}"
   aria-label={$$props['aria-label'] || undefined}
   role="button"
