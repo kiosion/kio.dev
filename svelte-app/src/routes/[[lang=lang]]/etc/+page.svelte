@@ -6,7 +6,6 @@
   import { t } from '$i18n';
 
   import Divider from '$components/divider.svelte';
-  import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import Link from '$components/link.svelte';
@@ -35,30 +34,25 @@
 </svelte:head>
 
 <ContentWrapper>
-  {#if data.about}
-    <HeadedBlock icon="Message" heading={$t('Say hello')}>
-      <PortableText text={data.about.contact} />
-    </HeadedBlock>
+  <HeadedBlock icon="Message" heading={$t('Say hello')}>
+    <PortableText text={data.about.contact} />
+  </HeadedBlock>
 
-    <Divider />
+  <Divider />
 
-    <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
-      <p>
-        {$t("Want to send a secure message my way? Here's my main PGP key:")}
-        <Link href="/pgp.txt" newtab
-          >D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link
-        >
-      </p>
-    </HeadedBlock>
+  <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
+    <p class="my-4">
+      {$t("Want to send a secure message my way? Here's my main PGP key:")}
+      <Link href="/pgp.txt" newtab>D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link
+      >
+    </p>
+  </HeadedBlock>
 
-    <Divider />
+  <Divider />
 
-    <HeadedBlock icon="InfoBox" heading={$t('Meta')}>
-      <PortableText text={data.about.body} />
-    </HeadedBlock>
-  {:else}
-    <EmptyContent />
-  {/if}
+  <HeadedBlock icon="InfoBox" heading={$t('Meta')}>
+    <PortableText text={data.about.body} />
+  </HeadedBlock>
 </ContentWrapper>
 
 <style lang="scss">
