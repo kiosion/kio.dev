@@ -37,7 +37,7 @@
 </script>
 
 <div
-  class="fixed left-6 right-6 top-4 z-10 flex items-center justify-center"
+  class="fixed left-4 right-4 top-4 z-10 flex items-center justify-center md:left-6 md:right-6"
   on:click={() => {
     if (hideNav) {
       hideNav = false;

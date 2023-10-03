@@ -39,7 +39,7 @@
   <Divider />
 
   <HeadedBlock icon="list" heading={$t('Recent posts')} class="flex-[1]">
-    {#if data.posts?.length}
+    {#if data.posts.length}
       <div
         class="flex w-full flex-col gap-y-5 pt-4"
         role="group"
@@ -65,7 +65,7 @@
   </HeadedBlock>
 
   <HeadedBlock icon="list" heading={$t('Recent projects')} class="flex-[1]">
-    {#if data.projects?.length}
+    {#if data.projects.length}
       <div class="flex flex-col gap-y-5 pt-4" role="group" aria-label={$t('Projects')}>
         {#each data.projects as project}
           <ListItem document={project} small />

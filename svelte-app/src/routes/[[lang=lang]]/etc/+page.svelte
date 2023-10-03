@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import { invalidate } from '$app/navigation';
   import { page } from '$app/stores';
   import { pageTitle } from '$helpers/navigation';
   import { t } from '$i18n';
@@ -14,7 +12,6 @@
   export let data;
 
   $: description = $t('A peek into my current adventures in tech and beyond');
-  $: browser && !data.about && invalidate($page.url.pathname);
 </script>
 
 <svelte:head>

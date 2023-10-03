@@ -37,7 +37,7 @@
       break;
   }
 
-  $: stack = ($page.error as Error & { stack?: string })?.stack?.trimStart();
+  $: stack = $page.error?.stack?.trimStart();
 </script>
 
 <svelte:head>
@@ -49,8 +49,10 @@
     <h3 class="mb-5 font-code text-3xl font-bold">
       {status}: {$t(title)}
     </h3>
-    <p class="inline-block text-base">
+    <p class="my-4 text-base">
       {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
+    </p>
+    <p class="my-4 text-base">
       {$t('Click here to')}
       <Link
         aria-label={$t('Go back')}

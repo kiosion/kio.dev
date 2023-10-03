@@ -1,16 +1,9 @@
-import { error } from '@sveltejs/kit';
+import { handleLoadError } from '$lib/data';
 
 import type { PageLoad } from './$types';
 
 export const load = (async ({ parent }) => {
-  const parentData = await parent();
+  const about = handleLoadError(await parent().then((data) => data.about));
 
-  if (!parentData.about) {
-    throw error(500, {
-      message: 'Sorry, something went wrong. Please try again.',
-      stack: new Error('Failed to load required data').stack
-    });
-  }
-
-  return { about: parentData.about };
+  return { about };
 }) satisfies PageLoad;

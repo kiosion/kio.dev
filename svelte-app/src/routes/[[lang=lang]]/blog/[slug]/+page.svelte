@@ -6,6 +6,6 @@
 
 <DocumentRoute
   data={data.post}
-  headings={data.post?.headings}
+  headings={data.post.headings}
   routeFetch={data.routeFetch}
 />

@@ -143,7 +143,7 @@
         }}
       />
     {/if}
-    <div class="relative mt-16 max-h-full w-full">
+    <div class="relative mt-12 max-h-full w-full md:mt-14">
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>

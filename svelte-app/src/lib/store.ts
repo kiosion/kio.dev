@@ -15,7 +15,7 @@ type PossibleParams = {
   [key: string]: string | number | boolean | string[] | number[] | boolean[];
 };
 
-interface DocumentRegistry {
+export interface DocumentRegistry {
   about: AuthorDocument;
   config: SiteConfig;
   post: PostDocument;
@@ -94,18 +94,21 @@ const fetchData = async <T>(
   fetch: RouteFetch,
   url: string,
   model: keyof DocumentRegistry
-): Promise<T | undefined> => {
+): Promise<T | Error> => {
   try {
     const response = await tryFetch(fetch(url));
     const fetchResponse = (await response.json()) as QueryResponse<T>;
-    if (!fetchResponse?.meta || fetchResponse?.error) {
+    if (!(fetchResponse?.meta && fetchResponse?.data) || fetchResponse?.error) {
       Logger.error(`Failed to query ${model}`, fetchResponse?.error);
-      return undefined;
+      return new Error(`Failed to query ${model} data`, {
+        cause:
+          fetchResponse?.error || (!fetchResponse?.data && new Error('No data present'))
+      });
     }
-    return fetchResponse?.data;
+    return fetchResponse.data;
   } catch (e) {
     Logger.error(`Failed to query ${model}`, e);
-    return undefined;
+    return new Error(`Failed to query ${model} data`, { cause: e });
   }
 };
 
@@ -113,7 +116,7 @@ const find = async <T extends keyof DocumentRegistry>(
   fetch: RouteFetch,
   model: T,
   params: PossibleParams = {}
-): Promise<DocumentRegistry[T][] | undefined> => {
+): Promise<DocumentRegistry[T][] | Error> => {
   const cacheKey = JSON.stringify({ model, params, many: true });
   const cachedData = cacheGet(cacheKey);
   if (cachedData) {
@@ -122,7 +125,7 @@ const find = async <T extends keyof DocumentRegistry>(
 
   const url = constructUrl(model, params, true);
   const response = await fetchData<DocumentRegistry[T][]>(fetch, url, model);
-  if (response) {
+  if (response && !(response instanceof Error)) {
     cacheSet(cacheKey, response);
   }
 
@@ -133,7 +136,7 @@ const findOne = async <T extends keyof DocumentRegistry>(
   fetch: RouteFetch,
   model: T,
   params: PossibleParams = {}
-): Promise<DocumentRegistry[T] | undefined> => {
+): Promise<DocumentRegistry[T] | Error> => {
   const cacheKey = JSON.stringify({ model, params, many: false });
   if (params.preview !== 'true') {
     const cachedData = cacheGet(cacheKey);
@@ -144,7 +147,7 @@ const findOne = async <T extends keyof DocumentRegistry>(
 
   const url = constructUrl(model, params);
   const response = await fetchData<DocumentRegistry[T]>(fetch, url, model);
-  if (params.preview !== 'true' && response) {
+  if (params.preview !== 'true' && response && !(response instanceof Error)) {
     cacheSet(cacheKey, response);
   }
 

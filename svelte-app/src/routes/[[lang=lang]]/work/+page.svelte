@@ -11,7 +11,7 @@
 
   export let data;
 
-  const sortedProjects = data.projects?.length ? sortDocumentsByYear(data.projects) : [];
+  const sortedProjects = data.projects.length ? sortDocumentsByYear(data.projects) : [];
 
   $: description = $t(
     'A collection of my work, open-source contributions, and personal projects'
@@ -37,7 +37,7 @@
 
 <ContentWrapper wide>
   <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t("Where I've worked")}</h1>
-  {#if about?.timeline?.length}
+  {#if about.timeline?.length}
     <NewTimeline data={about.timeline} />
   {:else}
     <div class="w-full">
@@ -46,7 +46,7 @@
   {/if}
 
   <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Projects & Talks')}</h1>
-  {#if projects?.length}
+  {#if projects.length}
     <div class="flex flex-col gap-14">
       {#each sortedProjects as yearObj}
         <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">

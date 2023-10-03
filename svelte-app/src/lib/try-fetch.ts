@@ -5,7 +5,7 @@ import { browser } from '$app/environment';
  * all SSR'd fetches in our own timeout block to abort and have the browser
  * handle fetching instead
  */
-export default <T>(promise: Promise<T>, ms = 6000): Promise<T> => {
+export default <T>(promise: Promise<T>, ms = 8000): Promise<T> => {
   if (browser) {
     return promise;
   }

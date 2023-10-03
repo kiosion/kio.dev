@@ -10,9 +10,8 @@
 
   export let data;
 
-  const sortedPosts = data.posts?.length ? sortDocumentsByYear(data.posts) : [];
+  const sortedPosts = data.posts.length ? sortDocumentsByYear(data.posts) : [];
 
-  $: ({ posts } = data);
   $: description = $t('Thoughts about tech, design, and development');
 </script>
 
@@ -34,7 +33,7 @@
 
 <ContentWrapper wide>
   <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Recent posts')}</h1>
-  {#if posts?.length}
+  {#if data.posts.length}
     <div class="mt-12 flex flex-col gap-14">
       {#each sortedPosts as yearObj}
         <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
