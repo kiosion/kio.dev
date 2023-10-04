@@ -5,6 +5,7 @@ import ArrowBarUp from 'pixelarticons/svg/arrow-bar-up.svg';
 import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
 import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
 import Cast from 'pixelarticons/svg/cast.svg';
+import ChevronDown from 'pixelarticons/svg/chevron-down.svg';
 import CloseBox from 'pixelarticons/svg/close-box.svg';
 import Code from 'pixelarticons/svg/code.svg';
 import Copy from 'pixelarticons/svg/copy.svg';
@@ -27,6 +28,7 @@ const icons = {
   'arrow-left': ArrowLeft,
   'arrow-right': ArrowRight,
   cast: Cast,
+  'chevron-down': ChevronDown,
   'close-box': CloseBox,
   code: Code,
   copy: Copy,

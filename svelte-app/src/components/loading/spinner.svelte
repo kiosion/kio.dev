@@ -1,18 +1,18 @@
 <svg
-  class="-ml-1 mt-0.5 h-5 w-5 animate-spin text-accent-light dark:text-accent-dark {$$props.class ||
+  class="-ml-1 mt-0.5 h-5 w-5 animate-spin text-accent-light !opacity-100 dark:text-accent-dark {$$props.class ||
     ''}"
+  style="opacity:0"
   xmlns="http://www.w3.org/2000/svg"
   fill="none"
   viewBox="0 0 24 24"
 >
   <circle
-    class="!opacity-25"
+    class="opacity-25"
     cx="12"
     cy="12"
     r="10"
     stroke="currentColor"
     stroke-width="4"
-    style="opacity: 0;"
   />
   <path
     class="opacity-75"
