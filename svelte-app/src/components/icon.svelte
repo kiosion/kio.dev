@@ -8,17 +8,18 @@
     width = 20,
     height = width,
     style = '';
+
+  const svg = icons.get(icon);
 </script>
 
 <div class="w-[{width}px] {inline ? 'inline' : ''} {$$props.class || ''}">
-  {#await icons.get(icon) then svg}
-    <svelte:component
-      this={svg}
-      {width}
-      {height}
-      class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline ? 'inline' : ''}"
-      aria-label={icon + $t(' icon')}
-      {style}
-    />
-  {/await}
+  <svelte:component
+    this={svg}
+    {width}
+    {height}
+    class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline ? 'inline' : ''}"
+    aria-label={icon + $t(' icon')}
+    {style}
+    {$$restProps}
+  />
 </div>

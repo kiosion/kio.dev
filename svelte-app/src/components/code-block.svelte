@@ -1,119 +1,83 @@
 <script lang="ts">
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-nocheck Need to fix typings for hlAuto and hlHighlight
   import { onDestroy, onMount } from 'svelte';
-
-  import {
-    type Highlight,
-    type HighlightAuto,
-    type LanguageType,
-    LineNumbers
-  } from 'svelte-highlight';
 
   import { browser } from '$app/environment';
   import { t } from '$i18n';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Settings from '$stores/settings';
 
-  import Hoverable from '$components/hoverable.svelte';
+  import {
+    getLangType,
+    Highlight as _Highlight,
+    HighlightSvelte as _HighlightSvelte,
+    LineNumbers as _LineNumbers
+  } from '$components/code-block/imports';
+  import Icon from '$components/icon.svelte';
   import Spinner from '$components/loading/spinner.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
-  import Icon from './icon.svelte';
-  import Tooltip from './tooltip.svelte';
+  import type { Unsubscriber } from 'svelte/store';
+  import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
   export let content: string,
     filename: string | undefined,
     showLineNumbers = true,
-    lang: string | undefined = undefined;
+    lang: string | undefined;
 
-  let hovered = false;
-  let copied = false;
-
-  let hlHighlight: Highlight,
-    hlAuto: HighlightAuto,
-    hlLang: Promise<LanguageType>,
-    hlStyles: string | undefined,
-    container: HTMLElement,
+  let LanguageType: Promise<_LanguageType<string>>,
+    HighlightSvelte: Promise<_HighlightSvelte | undefined>,
+    LineNumbers: Promise<_LineNumbers | undefined>,
+    Highlight: Promise<_Highlight>,
+    HighlightStyles: string | undefined,
     codeContainer: HTMLElement,
     innerHeight: number,
-    hideLoader = false;
+    hideLoader = false,
+    copied: ReturnType<typeof setTimeout> | undefined;
 
   const id = Math.random().toString(36).substring(2),
     copy = () => {
       content && navigator.clipboard.writeText(content);
 
-      if (!copied && hovered) {
-        copied = true;
-        setTimeout(() => {
-          copied = false;
-        }, 1200);
+      if (copied === undefined) {
+        copied = setTimeout(() => {
+          copied = undefined;
+        }, (BASE_ANIMATION_DURATION / 2) * 10);
       }
     },
     { theme } = Settings,
-    unsubscribe = theme.subscribe(
-      async (res) =>
-        (hlStyles =
-          res === 'light'
-            ? (await import('svelte-highlight/styles/github')).default
-            : (await import('svelte-highlight/styles/github-dark')).default)
+    unsubscribers: Unsubscriber[] = [];
+
+  onMount(() => {
+    lang = lang?.toLowerCase();
+
+    unsubscribers.push(
+      theme.subscribe(
+        async (res) =>
+          (HighlightStyles =
+            res === 'light'
+              ? (await import('svelte-highlight/styles/github')).default
+              : (await import('svelte-highlight/styles/github-dark')).default)
+      ),
+      _LineNumbers(showLineNumbers).subscribe((res) => (LineNumbers = res)),
+      _HighlightSvelte(lang === 'svelte').subscribe((res) => (HighlightSvelte = res)),
+      _Highlight().subscribe((res) => (Highlight = res))
     );
 
-  onMount(async () => {
-    !lang
-      ? (hlAuto = await import('svelte-highlight')).HighlightAuto
-      : (hlHighlight = (await import('svelte-highlight'))
-          .Highlight as unknown as Highlight);
-
-    hlLang = (async () => {
-      lang = lang?.toLowerCase();
-      if (!lang) {
-        return (await import('svelte-highlight/languages/markdown')).markdown;
-      }
-
-      let imp: LanguageType | undefined;
-      try {
-        // First, handle some cases where the name isn't the import name
-        switch (lang) {
-          case 'c#': {
-            imp = (await import('svelte-highlight/languages/csharp')).csharp;
-            break;
-          }
-          case 'c++': {
-            imp = (await import('svelte-highlight/languages/cpp')).cpp;
-            break;
-          }
-          case 'html': {
-            imp = (await import('svelte-highlight/languages/xml')).xml;
-            break;
-          }
-          case 'sh':
-          case 'shell': {
-            imp = (await import('svelte-highlight/languages/bash')).bash;
-            break;
-          }
-          default: {
-            imp = (
-              await import(`../../node_modules/svelte-highlight/languages/${lang}.js`)
-            )[lang];
-            break;
-          }
-        }
-      } catch (e) {
-        imp = (await import('svelte-highlight/languages/markdown')).markdown;
-      }
-      return imp as LanguageType;
-    })();
+    LanguageType = getLangType(lang);
   });
 
-  onDestroy(() => unsubscribe());
+  onDestroy(() => {
+    unsubscribers.forEach((unsub) => unsub());
+  });
 
   $: browser && codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
   $: browser && (hideLoader = innerHeight > 52);
 </script>
 
 <svelte:head>
-  {#if hlStyles}
+  {#if HighlightStyles}
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html hlStyles}
+    {@html HighlightStyles}
   {/if}
 </svelte:head>
 
@@ -122,7 +86,6 @@
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
-  bind:this={container}
 >
   {#if filename}
     <div
@@ -132,18 +95,17 @@
       {filename}
     </div>
   {/if}
-  <Hoverable>
-    <Tooltip text={$t('Copy to clipboard')} position="left" delay={200} fixed>
+  <Tooltip text={$t('Copy to clipboard')} position="left" delay={200} fixed>
+    <button
+      class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      on:click={() => copy()}
+      on:keydown={(e) => e.key === 'Enter' && copy()}
+    >
       {#key copied}
-        <button
-          class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark dark:text-light/60 dark:hover:text-light"
-          on:click={() => copy()}
-        >
-          <Icon icon={copied ? 'Check' : 'Copy'} />
-        </button>
+        <Icon icon={copied !== undefined ? 'Check' : 'Copy'} />
       {/key}
-    </Tooltip>
-  </Hoverable>
+    </button>
+  </Tooltip>
   <div
     class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height]"
     bind:this={codeContainer}
@@ -160,28 +122,28 @@
         <Spinner />
       </div>
       {#if !hideLoader}
-        <span class="mt-11 block" />
+        <span class="pointer-events-none mt-11 block" />
       {/if}
-      {#if !lang}
-        <svelte:component this={hlAuto} code={content} />
-      {:else}
-        {#await hlLang then resolvedLang}
+      <!-- eslint-disable-next-line prettier/prettier -->
+      {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+        <svelte:component
+          this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
+          code={content}
+          language={resolvedLang}
+          let:highlighted
+        >
           {#if showLineNumbers === true}
             <svelte:component
-              this={hlHighlight}
-              code={content}
-              language={resolvedLang}
-              let:highlighted
-            >
-              <LineNumbers {highlighted} hideBorder wrapLines />
-            </svelte:component>
-          {:else}
-            <svelte:component this={hlHighlight} code={content} language={resolvedLang} />
+              this={resolvedLineNumbers}
+              {highlighted}
+              hideBorder
+              wrapLines
+            />
           {/if}
-        {:catch error}
-          <div>Error loading: {error.message}</div>
-        {/await}
-      {/if}
+        </svelte:component>
+      {:catch error}
+        <div>Error loading: {error.message}</div>
+      {/await}
     </div>
   </div>
 </div>

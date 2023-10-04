@@ -1,38 +1,44 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
 
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;
 
-  let hovered: false;
-
   $: ({ value, indexInParent } = portableText);
   $: ({ style } = value);
 </script>
 
-<Hoverable bind:hovered>
-  <a
-    class="focusOutline-sm {style}"
-    class:first={indexInParent === 0}
-    id={`heading-${value._key}`}
-    href={`#${value._key}`}
+<a
+  class="focusOutline-sm {style}"
+  class:first={indexInParent === 0}
+  id={`heading-${value._key}`}
+  href={`#${value._key}`}
+>
+  <Icon
+    icon="link"
+    class="link-icon absolute -left-8 top-1/2 -translate-y-1/2"
+    aria-hidden="true"
+  />
+  <svelte:element
+    this={style}
+    class="inline font-display font-bold text-black dark:text-white"
   >
-    {#if hovered}
-      <Icon icon="link" class="absolute -left-8 top-1/2 -translate-y-1/2" />
-    {/if}
-
-    <svelte:element
-      this={style}
-      class="inline font-display font-bold text-black dark:text-white"
-    >
-      <slot />
-    </svelte:element>
-  </a>
-</Hoverable>
+    <slot />
+  </svelte:element>
+</a>
 
 <style lang="scss">
+  :global(.link-icon) {
+    @apply hidden;
+
+    :hover &,
+    :focus-visible &,
+    :focus-within & {
+      @apply block;
+    }
+  }
+
   a {
     @apply relative block w-full rounded-sm font-extrabold;
 

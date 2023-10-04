@@ -6,6 +6,8 @@
   "singleQuote": true,
   "trailingComma": "none",
   "printWidth": 90,
+  "svelteBracketNewLine": true,
+  "bracketSpacing": true,
   "plugins": [
     "./node_modules/prettier-plugin-svelte",
     "./node_modules/prettier-plugin-tailwindcss"

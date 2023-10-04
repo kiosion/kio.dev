@@ -5,6 +5,7 @@ import ArrowBarUp from 'pixelarticons/svg/arrow-bar-up.svg';
 import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
 import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
 import Cast from 'pixelarticons/svg/cast.svg';
+import Check from 'pixelarticons/svg/check.svg';
 import ChevronDown from 'pixelarticons/svg/chevron-down.svg';
 import CloseBox from 'pixelarticons/svg/close-box.svg';
 import Code from 'pixelarticons/svg/code.svg';
@@ -21,6 +22,7 @@ import Script from 'pixelarticons/svg/script.svg';
 import Sun from 'pixelarticons/svg/sun.svg';
 
 import type { PixelIcon } from '$types';
+import type { ComponentType } from 'svelte';
 
 const icons = {
   alert: Alert,
@@ -28,6 +30,7 @@ const icons = {
   'arrow-left': ArrowLeft,
   'arrow-right': ArrowRight,
   cast: Cast,
+  check: Check,
   'chevron-down': ChevronDown,
   'close-box': CloseBox,
   code: Code,
@@ -42,23 +45,21 @@ const icons = {
   save: Save,
   script: Script,
   sun: Sun
-};
+} as unknown as Record<string, ComponentType<PixelIcon>>;
 
-type IconName = keyof typeof icons;
-
-const transformName = (name: string): IconName => {
+const transformName = (name: string) => {
   return name
     .replace(/([a-z])([A-Z])|([A-Z])([A-Z](?=[a-z]))|([a-zA-Z])(\d)/g, '$1$3$5-$2$4$6')
-    .toLowerCase() as IconName;
+    .toLowerCase();
 };
 
 const getIcon = (iconName: string) => {
-  const name = transformName(iconName);
-  if (!icons[name]) {
+  let name = transformName(iconName);
+  if (!(name in icons)) {
     Logger.error(`Icon ${name} not found`);
-    return icons.alert as PixelIcon;
+    name = 'alert';
   }
-  return icons[name] as PixelIcon;
+  return icons[name];
 };
 
 export default { get: getIcon };

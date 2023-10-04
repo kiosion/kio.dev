@@ -6,6 +6,7 @@
   import Logger from '$lib/logger';
 
   import Icon from '$components/icon.svelte';
+  import Link from '$components/link.svelte';
 
   import { PortableText } from '@portabletext/svelte';
 
@@ -138,20 +139,15 @@
           <ol class="ml-6 list-decimal leading-8">
             {#each footnotes as note}
               <li class="list-item">
-                <span class="flex flex-row flex-wrap items-center">
-                  <!-- Allow recursion with PT styles in footnotes -->
+                <span class="flex flex-row flex-wrap items-center break-all">
                   <svelte:self text={note.note} plaintext />
-                  <a
+                  <Link
                     class="mb-0.5 ml-2 inline"
-                    id={`note-${note._key}`}
-                    href={`#src-${note._key}`}
+                    id={`src-${note._key}`}
+                    href={`#note-${note._key}`}
                     aria-label={$t('Go to footnote source')}
-                    on:click={(e) => customScrollTo(e, `src-${note._key}`)}
-                    on:keydown={(e) => {
-                      if (e.code === 'Space' || e.code === 'Enter') {
-                        customScrollTo(e, `src-${note._key}`);
-                      }
-                    }}><Icon icon="arrow-bar-up" width={18} inline /></a
+                    on:click={(e) => customScrollTo(e, `note-${note._key}`)}
+                    ><Icon icon="arrow-bar-up" width={18} inline /></Link
                   >
                 </span>
               </li>
