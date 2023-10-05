@@ -29,7 +29,6 @@
     pageContainer: HTMLDivElement,
     unsubscribers = [] as Unsubscriber[],
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    toggleNav: (vis: boolean) => void,
     appLoaded = false;
 
   const { theme, reduce_motion } = Settings,
@@ -115,7 +114,6 @@
 {/if}
 
 <span
-  class="focusOutline-sm absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-dark dark:text-light"
   role="button"
   aria-label={$t('Skip to content')}
   tabindex="0"
@@ -125,30 +123,73 @@
 >
 
 <div
-  class="main relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark dark:text-light lg:flex-row lg:text-lg"
+  class="main"
   in:fly={{ delay: 100, duration: 100, y: -40 }}
   bind:this={pageContainer}
 >
-  <Nav loaded={appLoaded && !$loading} bind:toggle={toggleNav} />
-  <ScrollContainer
-    bind:element={scrollContainer}
-    on:scrollDown={() => toggleNav(false)}
-    on:scrollUp={() => toggleNav(true)}
-  >
+  <Nav loaded={appLoaded && !$loading} />
+  <ScrollContainer bind:element={scrollContainer}>
     <!-- Janky but works for now lmao -->
     {#if $navOpen}
-      <div
-        class="block h-52 w-full"
+      <span
+        class="shim"
         transition:slide={{
           duration: BASE_ANIMATION_DURATION,
           easing: circInOut
         }}
       />
     {/if}
-    <div class="relative mt-12 max-h-full w-full md:mt-14">
+    <div>
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
     </div>
   </ScrollContainer>
 </div>
+
+<style lang="scss">
+  @import '@styles/mixins';
+  @import '@styles/variables';
+
+  .shim {
+    @apply block h-52 w-full;
+  }
+
+  span {
+    @apply absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
+
+    @include focus-state(sm);
+
+    &:focus-visible {
+      @apply mt-4;
+    }
+  }
+
+  .main {
+    @apply relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark;
+
+    @include media(lg) {
+      @apply flex-row text-lg;
+    }
+
+    div {
+      @apply relative mt-12 max-h-full w-full;
+
+      @include media(md) {
+        @apply mt-14;
+      }
+    }
+  }
+
+  :global(.dark) {
+    span {
+      @apply bg-dark text-light;
+
+      @include focus-state(sm, dark);
+    }
+
+    .main {
+      @apply text-light;
+    }
+  }
+</style>

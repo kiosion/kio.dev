@@ -12,6 +12,10 @@
     "noImplicitThis": true,
     "noEmit": true,
     "paths": {
+      "@colours": ["src/styles/colours"],
+      "@breakpoints": ["src/styles/breakpoints"],
+      "@utils": ["src/styles/utils"],
+      "@vars": ["src/styles/vars"],
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$components/*": ["src/components/*"],

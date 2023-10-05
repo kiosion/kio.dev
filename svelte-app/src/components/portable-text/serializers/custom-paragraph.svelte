@@ -1,1 +1,7 @@
-<p class="my-4 leading-[1.5]"><slot /></p>
+<p><slot /></p>
+
+<style lang="scss">
+  p {
+    @apply my-4 leading-[1.5];
+  }
+</style>

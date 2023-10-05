@@ -4,12 +4,36 @@
   export let wide = false;
 </script>
 
-<div
-  aria-label={$t('Page content')}
-  id="content-wrapper"
-  class="mx-auto mb-8 w-full max-w-none px-2 pb-12 transition-[transform] {wide
-    ? 'lg:max-w-[48rem] xl:max-w-[56rem] 2xl:max-w-[64rem]'
-    : 'lg:max-w-[40rem] xl:max-w-[48rem] 2xl:max-w-[52rem]'}"
->
+<div aria-label={$t('Page content')} id="content-wrapper" class:wide>
   <slot />
 </div>
+
+<style lang="scss">
+  @import '@styles/mixins';
+
+  div {
+    @apply mx-auto mb-8 w-full max-w-none px-2 pb-12 transition-[transform];
+
+    @include media(lg) {
+      max-width: 40rem;
+    }
+    @include media(xl) {
+      max-width: 48rem;
+    }
+    @include media(2xl) {
+      max-width: 52rem;
+    }
+
+    &.wide {
+      @include media(lg) {
+        max-width: 48rem;
+      }
+      @include media(xl) {
+        max-width: 56rem;
+      }
+      @include media(2xl) {
+        max-width: 64rem;
+      }
+    }
+  }
+</style>

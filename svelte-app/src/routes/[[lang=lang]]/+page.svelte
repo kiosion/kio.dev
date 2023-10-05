@@ -34,51 +34,65 @@
 
   <Divider />
 
-  <HeadedBlock icon="list" heading={$t('Recent posts')} class="flex-[1]">
+  <HeadedBlock icon="list" heading={$t('Recent posts')}>
     {#if data.posts.length}
-      <div
-        class="flex w-full flex-col gap-y-5 pt-4"
-        role="group"
-        aria-label={$t('Posts')}
-      >
+      <div class="item-list" role="group" aria-label={$t('Posts')}>
         {#each data.posts as post}
           <ListItem document={post} small />
         {/each}
-        <div class="flex w-full flex-row items-start justify-start gap-2">
-          <span class="block w-[72px] flex-shrink-0" />
+        <div class="list-end">
+          <span />
           <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
             {$t('See more')} &rarr;
           </ArrowButton>
         </div>
       </div>
     {:else}
-      <div class="flex flex-col gap-y-5 pt-4">
-        <p class="p-4 font-code">
+      <div class="item-list">
+        <p>
           {$t('No content')}
         </p>
       </div>
     {/if}
   </HeadedBlock>
 
-  <HeadedBlock icon="list" heading={$t('Recent projects')} class="flex-[1]">
+  <HeadedBlock icon="list" heading={$t('Recent projects')}>
     {#if data.projects.length}
-      <div class="flex flex-col gap-y-5 pt-4" role="group" aria-label={$t('Projects')}>
+      <div class="item-list" role="group" aria-label={$t('Projects')}>
         {#each data.projects as project}
           <ListItem document={project} small />
         {/each}
-        <div class="flex w-full flex-row items-start justify-start gap-2">
-          <span class="block w-[72px] flex-shrink-0" />
+        <div class="list-end">
+          <span />
           <ArrowButton class="w-full" href={$linkTo('/work')} preload>
             {$t('See more')} &rarr;
           </ArrowButton>
         </div>
       </div>
     {:else}
-      <div class="flex flex-col gap-y-5 pt-4">
-        <p class="p-4 font-code">
+      <div class="item-list">
+        <p>
           {$t('No content')}
         </p>
       </div>
     {/if}
   </HeadedBlock>
 </ContentWrapper>
+
+<style lang="scss">
+  .item-list {
+    @apply flex flex-col gap-y-5 pt-4;
+
+    > p {
+      @apply p-4 font-code;
+    }
+  }
+
+  .list-end {
+    @apply flex w-full flex-row items-start justify-start gap-2;
+
+    > span {
+      @apply block w-[72px] flex-shrink-0;
+    }
+  }
+</style>

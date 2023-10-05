@@ -1,9 +1,9 @@
 <script lang="ts">
   import { circInOut } from 'svelte/easing';
-
-  import { maybe } from 'svelte-maybe-transition';
+  import { slide } from 'svelte/transition';
 
   import { currentLang, t } from '$i18n';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Settings from '$stores/settings';
 
   import BulletPoint from '$components/bullet-point.svelte';
@@ -97,16 +97,12 @@
           {#if selected === i && item.body}
             <div
               class="mx-10 pb-2 font-sans text-base"
-              in:maybe={{
-                fn: $reduce_motion ? 'fade' : 'slide',
-                enable: true,
-                duration: 200,
+              in:slide={{
+                duration: BASE_ANIMATION_DURATION,
                 easing: circInOut
               }}
-              out:maybe={{
-                fn: $reduce_motion ? 'fade' : 'slide',
-                enable: true,
-                duration: 150,
+              out:slide={{
+                duration: BASE_ANIMATION_DURATION / 2,
                 easing: circInOut
               }}
             >

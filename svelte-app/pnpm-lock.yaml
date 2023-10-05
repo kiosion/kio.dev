@@ -88,8 +88,8 @@ devDependencies:
     specifier: ^2.16.0
     version: 2.16.0(eslint@8.32.0)(svelte@4.2.1)
   eslint-plugin-unused-imports:
-    specifier: ^2.0.0
-    version: 2.0.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.32.0)
+    specifier: ^3.0.0
+    version: 3.0.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.32.0)
   highlight.js:
     specifier: ^11.8.0
     version: 11.8.0
@@ -138,9 +138,6 @@ devDependencies:
   svelte-highlight:
     specifier: ^7.3.0
     version: 7.3.0
-  svelte-maybe-transition:
-    specifier: ^0.1.2
-    version: 0.1.2(svelte@4.2.1)
   tailwindcss:
     specifier: ^3.3.3
     version: 3.3.3
@@ -156,6 +153,9 @@ devDependencies:
   vite-plugin-inspect:
     specifier: ^0.7.38
     version: 0.7.38(vite@4.4.9)
+  vite-plugin-restart:
+    specifier: ^0.3.1
+    version: 0.3.1(vite@4.4.9)
   vite-plugin-test-selectors:
     specifier: 0.0.2
     version: 0.0.2(vite@4.4.9)
@@ -4881,11 +4881,11 @@ packages:
       - ts-node
     dev: true
 
-  /eslint-plugin-unused-imports@2.0.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.32.0):
-    resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
+  /eslint-plugin-unused-imports@3.0.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.32.0):
+    resolution: {integrity: sha512-sduiswLJfZHeeBJ+MQaG+xYzSWdRXoSw61DpU13mzWumCkR0ufD0HmO4kdNokjrkluMHpj/7PJeN35pgbhW3kw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
-      '@typescript-eslint/eslint-plugin': ^5.0.0
+      '@typescript-eslint/eslint-plugin': ^6.0.0
       eslint: ^8.0.0
     peerDependenciesMeta:
       '@typescript-eslint/eslint-plugin':
@@ -10315,14 +10315,6 @@ packages:
       svelte: 4.2.1
     dev: true
 
-  /svelte-maybe-transition@0.1.2(svelte@4.2.1):
-    resolution: {integrity: sha512-njmTPrd/+iBwc2i5jS5RyyN+fW7SMKmtCqtWT1y0cDx3eGOLerWe+6fcZ/B9KujVHdBrmBqaH0X1o4Tz1Pidfw==}
-    peerDependencies:
-      svelte: ^3.0.0
-    dependencies:
-      svelte: 4.2.1
-    dev: true
-
   /svelte-preprocess@5.0.4(postcss-load-config@4.0.1)(postcss@8.4.14)(sass@1.58.3)(svelte@4.2.1)(typescript@5.2.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
@@ -11154,6 +11146,15 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: true
+
+  /vite-plugin-restart@0.3.1(vite@4.4.9):
+    resolution: {integrity: sha512-LVe74MLUwaOzXVUgRGiphYbAYNgdGF6mP5vxj5BKcKkdmzvuuw79qcNgn9kHKKaIlCCjmOUiY3qlJ8jBSBUCoA==}
+    peerDependencies:
+      vite: ^2.9.0 || ^3.0.0 || ^4.0.0
+    dependencies:
+      micromatch: 4.0.5
+      vite: 4.4.9(@types/node@20.2.1)(sass@1.58.3)
     dev: true
 
   /vite-plugin-test-selectors@0.0.2(vite@4.4.9):

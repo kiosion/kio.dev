@@ -1,7 +1,10 @@
+/* eslint-disable quote-props, prettier/prettier */
 import svg from '@poppanator/sveltekit-svg';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
+import ViteRestart from 'vite-plugin-restart';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 
 export default defineConfig(({ command, mode }) => {
@@ -14,10 +17,21 @@ export default defineConfig(({ command, mode }) => {
       svg(),
       sveltekit(),
       StripTestSelectors({
-        dev: isProduction
+        dev: !isTesting
       }),
-      (isDev || isTesting) && Inspect()
+      (isDev || isTesting) && Inspect(),
+      ViteRestart({
+        restart: ['src/**/*.scss']
+      })
     ],
+    resolve: {
+      alias: [
+        {
+          find: /^@styles\/(.*)$/,
+          replacement: resolve(__dirname, 'src/styles/_$1.scss')
+        }
+      ]
+    },
     optimizeDeps: {
       include: [
         'twemoji',
@@ -37,27 +51,12 @@ export default defineConfig(({ command, mode }) => {
     build: {
       rollupOptions: {
         output: {
-          inlineDynamicImports: false,
-          manualChunks: (id: string) => {
-            // check for svelte-highlight / highlight.js and portabletext,
-            // chunk into their own dirs
-            switch (true) {
-              case id.includes('svelte-highlight/styles'):
-                return 'svelte-highlight/styles';
-              case id.includes('svelte-highlight'):
-                return 'svelte-highlight';
-              case id.includes('highlight.js/styles'):
-                return 'highlight.js/styles';
-              case id.includes('highlight.js/lib/core'):
-                return 'highlight.js/lib/core';
-              case id.includes('highlight.js'):
-                return 'hljs';
-              case id.includes('portable-text/serializers'):
-                return 'pt-serializers';
-              case id.includes('components/code-block'):
-                return 'pt-code-block';
-            }
-          }
+          compact: true,
+          generatedCode: {
+            constBindings: true,
+            objectShorthand: true
+          },
+          inlineDynamicImports: false
         }
       }
     },

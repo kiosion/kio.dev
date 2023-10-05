@@ -2,14 +2,18 @@
   export let heading: string;
 </script>
 
-<section class={$$props.class || ''}>
-  <h1 class="mb-2 mt-8 font-code text-3xl font-black">{heading}</h1>
+<section class={$$props.class || undefined}>
+  <h1>{heading}</h1>
   <div>
     <slot />
   </div>
 </section>
 
 <style lang="scss">
+  h1 {
+    @apply mb-2 mt-8 font-code text-3xl font-black;
+  }
+
   section {
     div {
       @apply mx-1 font-sans text-base text-dark/90;

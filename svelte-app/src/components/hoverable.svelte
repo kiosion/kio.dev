@@ -18,7 +18,7 @@
 </script>
 
 <span
-  class={$$props.class || undefined}
+  class={$$props.class}
   class:cursor-pointer={setPointer}
   data-test-id="hover-target"
   on:mouseover={() => handleHoverIn()}
