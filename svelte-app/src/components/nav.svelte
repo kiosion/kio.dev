@@ -32,16 +32,8 @@
   onDestroy(() => unsubscribe && unsubscribe());
 </script>
 
-<div
-  class="fixed left-4 right-4 top-4 z-10 flex items-center justify-center md:left-6 md:right-6"
-  role="none"
->
-  <nav
-    class="flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border px-6 py-4 backdrop-blur-lg transition-[border,background-color] md:py-2 xl:max-w-6xl"
-    aria-label="Main navigation"
-    role="group"
-    data-test-id="navBar"
-  >
+<div role="none">
+  <nav aria-label="Main navigation" role="group">
     <div class="flex w-full flex-row items-center justify-between">
       <div class="flex flex-row items-center justify-start gap-5">
         <MenuToggle class="block md:hidden" />
@@ -97,13 +89,35 @@
 </div>
 
 <style lang="scss">
+  @import '../styles/breakpoints';
+
+  div[role='none'] {
+    @apply fixed left-4 right-4 top-4 z-10 flex items-center justify-center;
+  }
+
   nav {
-    @apply border-dark/40 bg-light/40;
+    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-4 backdrop-blur-lg transition-[border,background-color];
 
     &:hover,
     &:focus-visible,
     &:focus-within {
       @apply border-dark/60 bg-light/60;
+    }
+  }
+
+  @media (min-width: $md) {
+    div[role='none'] {
+      @apply left-6 right-6;
+    }
+
+    nav {
+      @apply py-2;
+    }
+  }
+
+  @media (min-width: $xl) {
+    nav {
+      @apply max-w-6xl;
     }
   }
 

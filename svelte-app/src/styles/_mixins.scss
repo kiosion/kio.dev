@@ -1,0 +1,33 @@
+@import 'variables';
+
+/**
+  * Focus state mixin
+  * @param {string} $size - 'sm' or 'lg'
+  */
+@mixin focus-state($size: 'lg', $theme: 'light') {
+  @apply outline-offset-4 outline-2;
+
+  &:focus-visible {
+    @apply outline;
+  }
+
+  @if $size == 'sm' {
+    @apply outline-offset-2;
+  }
+
+  @if $theme == 'dark' {
+    @apply outline-accent-dark;
+  } @else {
+    @apply outline-accent-light;
+  }
+}
+
+@mixin media($key) {
+  @if not map-has-key($breakpoints, $key) {
+    @error "Breakpoint #{$key} does not exist in $breakpoints";
+  }
+
+  @media (min-width: map-get($breakpoints, $key)) {
+    @content;
+  }
+}

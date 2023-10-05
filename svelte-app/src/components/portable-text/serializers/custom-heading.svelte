@@ -10,27 +10,22 @@
 </script>
 
 <a
-  class="focusOutline-sm {style}"
+  class={style}
   class:first={indexInParent === 0}
   id={`heading-${value._key}`}
   href={`#${value._key}`}
 >
-  <Icon
-    icon="link"
-    class="link-icon absolute -left-8 top-1/2 -translate-y-1/2"
-    aria-hidden="true"
-  />
-  <svelte:element
-    this={style}
-    class="inline font-display font-bold text-black dark:text-white"
-  >
+  <Icon icon="link" class="link-icon" aria-hidden="true" />
+  <svelte:element this={style}>
     <slot />
   </svelte:element>
 </a>
 
 <style lang="scss">
+  @import '@styles/mixins';
+
   :global(.link-icon) {
-    @apply hidden;
+    @apply absolute -left-8 top-1/2 hidden -translate-y-1/2;
 
     :hover &,
     :focus-visible &,
@@ -41,6 +36,17 @@
 
   a {
     @apply relative block w-full rounded-sm font-extrabold;
+
+    @include focus-state(sm);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply inline font-display font-bold text-black;
+    }
 
     &.h1 {
       @apply mb-6 mt-14;
@@ -89,6 +95,21 @@
     }
     h6 {
       @apply text-lg;
+    }
+  }
+
+  :global(.dark) {
+    a {
+      @include focus-state(sm, dark);
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        @apply text-white;
+      }
     }
   }
 </style>

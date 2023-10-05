@@ -1,10 +1,32 @@
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
-  preprocess: [vitePreprocess({ script: true, style: true })],
+  compilerOptions: {
+    cssHash: ({ hash, css }) => `sc-${hash(css)}`,
+    discloseVersion: false
+  },
+  preprocess: [
+    vitePreprocess({
+      script: true,
+      style: {
+        resolve: {
+          alias: [
+            {
+              find: /^@styles\/(.*)$/,
+              replacement: path.resolve(__dirname, 'src/styles/_$1.scss')
+            }
+          ]
+        }
+      }
+    })
+  ],
   kit: {
     alias: {
       $components: 'src/components',

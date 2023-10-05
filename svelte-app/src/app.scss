@@ -1,13 +1,15 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700');
 
-@import 'styles/aliases';
+@import 'styles/breakpoints';
 @import 'styles/animations';
 @import 'styles/colors';
 @import 'styles/fonts';
+@import 'styles/utils';
 
 @import 'styles/components/code-block';
 
@@ -116,5 +118,21 @@ body {
     ul {
       @apply list-disc my-3;
     }
+  }
+}
+
+.focusOutline {
+  @apply outline-offset-4;
+
+  &,
+  &-sm {
+    @apply focus-visible:outline outline-accent-light outline-2;
+
+    .dark & {
+      @apply outline-accent-dark;
+    }
+  }
+  &-sm {
+    @apply outline-offset-2;
   }
 }
