@@ -1,32 +1,45 @@
 import { get, writable } from 'svelte/store';
 
 import { browser } from '$app/environment';
-import { LOCAL_SETTINGS_KEY } from '$lib/consts';
+import { APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
 import Logger from '$lib/logger';
 
-type Setting = boolean | string;
+import type { Writable } from 'svelte/store';
 
 const prefersDark = '(prefers-color-scheme: dark)';
 const prefersLight = '(prefers-color-scheme: light)';
 
+type Settings = {
+  theme: (typeof APP_THEMES)[number];
+  reduce_motion: boolean;
+};
+
 const defaultSettings = {
-  theme: writable<Setting>('dark'),
-  reduce_motion: writable<Setting>(false)
+  theme: writable<(typeof APP_THEMES)[number]>('dark'),
+  reduce_motion: writable<boolean>(false)
+} satisfies {
+  [key in keyof Settings]: Writable<Settings[key]>;
 };
 
 if (browser) {
   const storedSettings = localStorage.getItem(LOCAL_SETTINGS_KEY);
   if (storedSettings) {
-    const parsedSettings: [string, Setting][] = JSON.parse(atob(storedSettings));
+    const parsedSettings = JSON.parse(atob(storedSettings));
 
-    parsedSettings.forEach(([key, savedSetting]) => {
-      if (!(key in defaultSettings)) {
-        Logger.warn(`Setting '${key}' does not exist`);
-        return;
+    parsedSettings.forEach(
+      ([key, savedSetting]: [
+        key: keyof Settings | string,
+        savedSetting: Settings[keyof Settings]
+      ]) => {
+        if (!(key in defaultSettings)) {
+          Logger.warn(`Setting '${key}' does not exist`);
+          return;
+        }
+
+        // @ts-expect-error Idk how to type this shit properly
+        defaultSettings[key].set(savedSetting as never);
       }
-
-      defaultSettings[key as keyof typeof defaultSettings].set(savedSetting);
-    });
+    );
   }
 }
 
@@ -35,6 +48,7 @@ for (const key in defaultSettings) {
     if (browser) {
       const settings = Object.entries(defaultSettings).map(([key, setting]) => [
         key,
+        // @ts-expect-error Idk how to type this shit properly
         get(setting)
       ]);
       localStorage.setItem(LOCAL_SETTINGS_KEY, btoa(JSON.stringify(settings)));

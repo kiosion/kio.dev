@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Divider from '$components/divider.svelte';
   import Footer from '$components/document/content/common/footer.svelte';
   import Header from '$components/document/content/common/header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
@@ -18,11 +19,19 @@
 </script>
 
 <Header {data} {headings} />
-<div class="mt-4 font-sans text-base">
+<Divider />
+<div>
   {#if data.body}
     <PortableText text={data.body} {routeFetch} />
   {:else}
     <EmptyContent />
   {/if}
 </div>
+<Divider />
 <Footer {model} {data} />
+
+<style lang="scss">
+  div {
+    @apply font-sans text-base;
+  }
+</style>

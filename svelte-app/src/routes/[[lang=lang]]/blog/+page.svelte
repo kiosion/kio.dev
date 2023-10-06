@@ -28,12 +28,16 @@
 </svelte:head>
 
 <ContentWrapper wide>
-  <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Recent posts')}</h1>
+  <h1 class="mb-8 mt-10 font-code text-3xl font-black transition-[color]">
+    {$t('Recent posts')}
+  </h1>
   {#if data.posts.length}
     <div class="mt-12 flex flex-col gap-14">
       {#each sortedPosts as yearObj}
         <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
-          <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
+          <h1 class="min-w-[6rem] font-code text-4xl font-black transition-[color]">
+            {yearObj.year}
+          </h1>
           {#if yearObj.items.length}
             <div
               class="ml-1 mt-2 flex w-full flex-col items-start justify-start gap-4 md:ml-0"

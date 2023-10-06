@@ -1,5 +1,6 @@
 export const LIGHT_THEME = 'light';
 export const DARK_THEME = 'dark';
+export const APP_THEMES = [LIGHT_THEME, DARK_THEME];
 
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = APP_LANGS[0];
@@ -77,10 +78,12 @@ export const DEFAULT_POST_QUERY_PARAMS = {
 
 export const DEFAULT_PROJECT_QUERY_PARAMS = DEFAULT_POST_QUERY_PARAMS;
 
-export const DEFAULT_DESKTOP_WIDTH = 768;
-export const DEFAULT_MOBILE_WIDTH = DEFAULT_DESKTOP_WIDTH - 1;
+export const DEFAULT_DESKTOP_WIDTH = 1024;
+export const DEFAULT_TABLET_WIDTH = 768;
+export const DEFAULT_MOBILE_WIDTH = DEFAULT_TABLET_WIDTH - 1;
 
 export const DEFAULT_DESKTOP_BREAKPOINT = `(min-width: ${DEFAULT_DESKTOP_WIDTH}px)`;
+export const DEFAULT_TABLET_BREAKPOINT = `(min-width: ${DEFAULT_TABLET_WIDTH}px)`;
 export const DEFAULT_MOBILE_BREAKPOINT = `(max-width: ${DEFAULT_MOBILE_WIDTH}px)`;
 
 export const LANGUAGE_COLOURS = new Proxy(

@@ -82,17 +82,20 @@ export const sortDocumentsByYear = <T extends { date?: string; _createdAt: strin
   documents: T[]
 ) => {
   const _years =
-    documents.reduce((acc, doc) => {
-      const year = new Date(doc.date || doc._createdAt).getFullYear();
+    documents.reduce(
+      (acc, doc) => {
+        const year = new Date(doc.date || doc._createdAt).getFullYear();
 
-      if (!acc[year]) {
-        acc[year] = [doc];
-      } else {
-        acc[year].push(doc);
-      }
+        if (!acc[year]) {
+          acc[year] = [doc];
+        } else {
+          acc[year].push(doc);
+        }
 
-      return acc;
-    }, {} as Record<string, NonNullable<T[]>>) || {};
+        return acc;
+      },
+      {} as Record<string, NonNullable<T[]>>
+    ) || {};
 
   return Object.keys(_years)
     .sort((a, b) => parseInt(b, 10) - parseInt(a, 10))

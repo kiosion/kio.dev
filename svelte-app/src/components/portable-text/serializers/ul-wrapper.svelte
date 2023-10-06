@@ -2,6 +2,6 @@
 
 <style lang="scss">
   ul {
-    @apply my-6 ml-6 list-disc;
+    @apply my-6 ml-6 list-disc transition-[color];
   }
 </style>

@@ -14,10 +14,13 @@
     "prettier",
     "eslint:recommended",
     "plugin:svelte/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
   ],
   "plugins": [
     "prettier",
+    "import",
     "@typescript-eslint",
     "simple-import-sort",
     "unused-imports"
@@ -27,7 +30,6 @@
     "@typescript-eslint/no-namespace": ["off"],
     "@typescript-eslint/restrict-template-expressions": ["off"],
     "@typescript-eslint/no-unused-vars": ["off"],
-    "@typescript-eslint/no-duplicate-imports": ["error"],
     "@typescript-eslint/ban-ts-comment": ["error", {
       "ts-expect-error": "allow-with-description"
     }],
@@ -43,10 +45,15 @@
     "dot-notation": ["error"],
     "eqeqeq": ["error"],
     "func-call-spacing": ["error", "never"],
+    "import/no-duplicates": ["error"],
+    "import/no-unresolved": ["off"],
+    "import/default": ["off"],
+    "import/no-named-as-default": ["off"],
+    "import/no-named-as-default-member": ["off"],
     "key-spacing": ["error"],
     "keyword-spacing": ["error"],
     "linebreak-style": ["error"],
-    "no-confusing-arrow": ["error"],
+    "no-confusing-arrow": ["off"],
     "no-duplicate-imports": ["off"],
     "no-trailing-spaces": ["error"],
     "no-var": ["error"],
@@ -63,12 +70,7 @@
     "no-unused-vars": ["off"],
     "object-shorthand": ["error"],
     "one-var-declaration-per-line": ["error"],
-    "prettier/prettier": ["error", {
-      "bracketSpacing": true,
-      "svelteBracketNewLine": true
-    }, {
-      "usePrettierrc": true
-    }],
+    "prettier/prettier": ["error"],
     "arrow-body-style": ["off"],
     "prefer-arrow-callback": ["off"],
     "quotes": ["error", "single", { "avoidEscape": true }],

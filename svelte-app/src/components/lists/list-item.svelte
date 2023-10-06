@@ -33,13 +33,13 @@
       data-sveltekit-preload-data
     >
       <p
-        class="mt-0.5 block w-[72px] flex-shrink-0 font-mono text-sm"
+        class="mt-0.5 block w-[72px] flex-shrink-0 font-mono text-sm transition-colors"
         aria-label={$t('Date posted')}
       >
         {formatDate(document.date || document._createdAt, 'med', $currentLang)}
       </p>
       <p
-        class="block text-base text-black decoration-accent-light decoration-2 underline-offset-2 dark:text-white dark:decoration-accent-dark"
+        class="block text-base text-black decoration-accent-light decoration-2 underline-offset-2 transition-colors dark:text-white dark:decoration-accent-dark"
         class:underline={hovered}
       >
         {document.title}
@@ -55,10 +55,10 @@
       data-sveltekit-preload-data
     >
       <div class="flex flex-row gap-4">
-        <p class="mt-0.5 block w-14 flex-shrink-0 font-code text-base">
+        <p class="mt-0.5 block w-14 flex-shrink-0 font-code text-base transition-colors">
           {formatDate(document.date || document._createdAt, 'dayMonth', $currentLang)}
         </p>
-        <div class="flex flex-row items-center justify-start gap-2">
+        <div class="flex flex-row items-center justify-start gap-2 transition-colors">
           <h1
             class="min-w-fit font-display text-lg font-medium decoration-accent-light decoration-[3px] underline-offset-4 dark:decoration-accent-dark"
             class:underline={hovered}

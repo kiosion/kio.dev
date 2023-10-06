@@ -1,5 +1,6 @@
 import { SvelteComponent } from 'svelte';
-import { derived, readable, writable } from 'svelte/store';
+
+import Logger from '$lib/logger';
 
 import type { ComponentType } from 'svelte';
 import type {
@@ -39,41 +40,33 @@ export type LineNumbers = ComponentType<_LineNumbers>;
 export type HighlightSvelte = ComponentType<_HighlightSvelte>;
 export type Highlight = ComponentType<_Highlight>;
 
-const stores = {
-  LineNumbers: writable<Promise<LineNumbers> | undefined>(undefined),
-  HighlightSvelte: writable<Promise<HighlightSvelte> | undefined>(undefined),
-  Highlight: writable<Promise<Highlight> | undefined>(undefined)
-} as const;
+const components = {
+  LineNumbers: undefined,
+  HighlightSvelte: undefined,
+  Highlight: undefined
+} as {
+  LineNumbers: Promise<LineNumbers | Error | undefined> | undefined;
+  HighlightSvelte: Promise<HighlightSvelte | Error | undefined> | undefined;
+  Highlight: Promise<Highlight | Error | undefined> | undefined;
+};
 
-const genericDerivedAsyncImport = <K extends keyof typeof stores>(
-    name: K,
-    target: (typeof stores)[K]
-  ) =>
-    derived(target, (value: Parameters<(typeof target)['set']>[0]) => {
-      if (value === undefined) {
-        const promise = import(
-          `../../../node_modules/svelte-highlight/${name}.svelte`
-        ).then((module) => module.default) as unknown as NonNullable<typeof value>;
-        // @ts-expect-error - TS infers target['set'] here as an Intersection of Writable ReturnTypes rather than Unions
-        target.set(promise);
-        return promise;
-      }
-      return value;
-    }),
-  empty = () =>
-    readable<Promise<undefined>>(new Promise((resolve) => resolve(undefined)));
+export type ResolvedComponentType<K extends keyof typeof components> = Exclude<
+  NonNullable<Awaited<NonNullable<(typeof components)[K]>>>,
+  Error
+>;
 
-const lineNumbers = (useLineNumbers: boolean) => {
-    return useLineNumbers
-      ? genericDerivedAsyncImport('LineNumbers', stores.LineNumbers)
-      : empty();
-  },
-  highlightSvelte = (useHlSvelte: boolean) => {
-    return useHlSvelte
-      ? genericDerivedAsyncImport('HighlightSvelte', stores.HighlightSvelte)
-      : empty();
-  },
-  highlight = () => genericDerivedAsyncImport('Highlight', stores.Highlight);
+export const genericAsyncImport = <K extends keyof typeof components>(name: K) =>
+  components[name]
+    ? components[name]!
+    : ((components[name] = import(`../../../node_modules/svelte-highlight/${name}.svelte`)
+        .then((module) => {
+          return module?.default || new Error(`No default export for ${name}`);
+        })
+        .catch((e) => {
+          Logger.error(`Error loading ${name} code-block component`, e);
+          return e instanceof Error ? e : new Error(e);
+        }) as unknown as (typeof components)[K]),
+      components[name]!);
 
 const getLangType = (lang?: string): Promise<LanguageType<string>> => {
   try {
@@ -101,9 +94,4 @@ const getLangType = (lang?: string): Promise<LanguageType<string>> => {
   }
 };
 
-export {
-  getLangType,
-  highlight as Highlight,
-  highlightSvelte as HighlightSvelte,
-  lineNumbers as LineNumbers
-};
+export { getLangType };

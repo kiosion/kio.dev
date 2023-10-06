@@ -2,7 +2,7 @@
   import { linkTo, t } from '$i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
+  import Icon from '$components/icon.svelte';
 
   import type { PostDocument, ProjectDocument } from '$types';
 
@@ -10,13 +10,15 @@
     model: 'post' | 'project' = data._type;
 </script>
 
-<div class="mt-4">
-  <Divider />
+<div>
   <ArrowButton
     class="w-full text-left"
     href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
     preload
   >
-    &larr; {$t('Read more')}
+    <span class="flex items-center justify-start gap-2">
+      <Icon icon="ArrowLeft" class="mb-0.5" inline />
+      <p>{$t('Read more')}</p>
+    </span>
   </ArrowButton>
 </div>

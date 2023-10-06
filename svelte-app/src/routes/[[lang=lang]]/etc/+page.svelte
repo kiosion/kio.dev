@@ -34,7 +34,7 @@
   <Divider />
 
   <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
-    <p class="my-4">
+    <p>
       {$t("Want to send a secure message my way? Here's my main PGP key:")}
       <Link href="/pgp.txt" newtab>D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link
       >
@@ -50,6 +50,6 @@
 
 <style lang="scss">
   p {
-    @apply my-4;
+    @apply my-4 transition-[color];
   }
 </style>

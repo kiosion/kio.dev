@@ -15,6 +15,8 @@
   }
 
   section {
+    @apply transition-colors;
+
     div {
       @apply mx-1 font-sans text-base text-dark/90;
     }
