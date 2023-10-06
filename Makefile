@@ -78,9 +78,13 @@ cypress:
 
 lint: SHELL:=/bin/bash
 lint: install-web install-sanity
-lint:
 	@cd ./svelte-app && pnpm lint
 	@cd ./sanity-cms && pnpm lint
+
+format: SHELL:=/bin/bash
+format: install-web install-sanity install-api lint
+	@cd ./svelte-app && pnpm format:json
+	@cd ./elixir-api && mix format
 
 # Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash

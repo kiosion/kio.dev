@@ -6,16 +6,12 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Settings from '$stores/settings';
 
-  import {
-    getLangType,
-    Highlight as _Highlight,
-    HighlightSvelte as _HighlightSvelte,
-    LineNumbers as _LineNumbers
-  } from '$components/code-block/imports';
+  import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Icon from '$components/icon.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
+  import type { ResolvedComponentType } from '$components/code-block/imports';
   import type { Unsubscriber } from 'svelte/store';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
@@ -25,23 +21,27 @@
     lang: string | undefined;
 
   let LanguageType: Promise<_LanguageType<string>>,
-    HighlightSvelte: Promise<_HighlightSvelte | undefined>,
-    LineNumbers: Promise<_LineNumbers | undefined>,
-    Highlight: Promise<_Highlight>,
+    HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
+    LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
+    Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
     HighlightStyles: string | undefined,
     codeContainer: HTMLElement,
     innerHeight: number,
     hideLoader = false,
-    copied: ReturnType<typeof setTimeout> | undefined;
+    copied: ReturnType<typeof setTimeout> | undefined,
+    loadError: Error | null = null;
 
   const id = Math.random().toString(36).substring(2),
     copy = () => {
       content && navigator.clipboard.writeText(content);
 
       if (copied === undefined) {
-        copied = setTimeout(() => {
-          copied = undefined;
-        }, (BASE_ANIMATION_DURATION / 2) * 10);
+        copied = setTimeout(
+          () => {
+            copied = undefined;
+          },
+          (BASE_ANIMATION_DURATION / 2) * 10
+        );
       }
     },
     { theme } = Settings,
@@ -50,6 +50,21 @@
   onMount(() => {
     lang = lang?.toLowerCase();
 
+    LineNumbers = showLineNumbers
+      ? genericAsyncImport('LineNumbers').then((res) =>
+          res instanceof Error ? ((loadError = res), undefined) : res
+        )
+      : Promise.resolve(undefined);
+    HighlightSvelte =
+      lang === 'svelte'
+        ? genericAsyncImport('HighlightSvelte').then((res) =>
+            res instanceof Error ? ((loadError = res), undefined) : res
+          )
+        : Promise.resolve(undefined);
+    Highlight = genericAsyncImport('Highlight').then((res) =>
+      res instanceof Error ? ((loadError = res), undefined) : res
+    );
+
     unsubscribers.push(
       theme.subscribe(
         async (res) =>
@@ -57,10 +72,7 @@
             res === 'light'
               ? (await import('svelte-highlight/styles/github')).default
               : (await import('svelte-highlight/styles/github-dark')).default)
-      ),
-      _LineNumbers(showLineNumbers).subscribe((res) => (LineNumbers = res)),
-      _HighlightSvelte(lang === 'svelte').subscribe((res) => (HighlightSvelte = res)),
-      _Highlight().subscribe((res) => (Highlight = res))
+      )
     );
 
     LanguageType = getLangType(lang);
@@ -70,8 +82,11 @@
     unsubscribers.forEach((unsub) => unsub());
   });
 
-  $: browser && codeContainer && (codeContainer.style.height = `${innerHeight ?? 0}px`);
-  $: browser && (hideLoader = innerHeight > 52);
+  const updateHeight = (height?: number) =>
+    codeContainer && height && (codeContainer.style.height = `${height}px`);
+
+  $: updateHeight(innerHeight),
+    browser && (hideLoader = loadError !== null || innerHeight > 52);
 </script>
 
 <svelte:head>
@@ -82,20 +97,20 @@
 </svelte:head>
 
 <div
-  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 transition-none focus-within:border-dark/60 hover:border-dark/60 focus-visible:border-dark/60 dark:border-light/40 focus-within:dark:border-light/60 hover:dark:border-light/60 focus-visible:dark:border-light/60"
+  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 transition-colors focus-within:border-dark/60 hover:border-dark/60 focus-visible:border-dark/60 dark:border-light/40 focus-within:dark:border-light/60 hover:dark:border-light/60 focus-visible:dark:border-light/60"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
   {#if filename}
     <div
-      class="border-b border-dark/30 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color] dark:border-light/30 dark:bg-dark/40"
+      class="border-b border-dark/30 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/30 dark:bg-dark/40"
       id="{id}-filename"
     >
       {filename}
     </div>
   {/if}
-  <Tooltip text={$t('Copy to clipboard')} position="left" delay={200} fixed>
+  <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]} fixed>
     <button
       class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
       on:click={() => copy()}
@@ -107,7 +122,7 @@
     </button>
   </Tooltip>
   <div
-    class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height]"
+    class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     bind:this={codeContainer}
   >
     <div
@@ -124,26 +139,30 @@
       {#if !hideLoader}
         <span class="pointer-events-none mt-11 block" />
       {/if}
-      <!-- eslint-disable-next-line prettier/prettier -->
-      {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
-        <svelte:component
-          this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
-          code={content}
-          language={resolvedLang}
-          let:highlighted
-        >
-          {#if showLineNumbers === true}
-            <svelte:component
-              this={resolvedLineNumbers}
-              {highlighted}
-              hideBorder
-              wrapLines
-            />
-          {/if}
-        </svelte:component>
-      {:catch error}
-        <div>Error loading: {error.message}</div>
-      {/await}
+      {#if !loadError}
+        <!-- eslint-disable-next-line prettier/prettier -->
+        {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+          <svelte:component
+            this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
+            code={content}
+            language={resolvedLang}
+            let:highlighted
+          >
+            {#if showLineNumbers === true}
+              <svelte:component
+                this={resolvedLineNumbers}
+                {highlighted}
+                hideBorder
+                wrapLines
+              />
+            {/if}
+          </svelte:component>
+        {:catch error}
+          <div class="p-3 font-code text-sm">Error loading: {error.message}</div>
+        {/await}
+      {:else}
+        <div class="p-3 font-code text-sm">Error loading: {loadError.message}</div>
+      {/if}
     </div>
   </div>
 </div>

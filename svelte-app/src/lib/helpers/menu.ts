@@ -43,7 +43,14 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
       ...get(state),
       open: false
     });
+  } else if (get(state).open) {
+    return state.set({
+      ...get(state),
+      open: false
+    });
   }
+
+  e.preventDefault();
 
   let target = e.target as HTMLElement;
   target = target?.closest('code') || target;
@@ -58,9 +65,9 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
           return [
             {
               icon: 'MailArrowRight',
-              text: `${get(t)('Mail')} ${
-                (target as HTMLAnchorElement).href.split(':')?.[1]
-              }`,
+              text: `${get(t)('Mail')} ${(target as HTMLAnchorElement).href.split(
+                ':'
+              )?.[1]}`,
               action: () => window.open((target as HTMLAnchorElement).href, '_self')
             },
             {},
@@ -157,12 +164,6 @@ const setState = (e?: MouseEvent, pageContainer?: HTMLElement) => {
             icon: 'Reload',
             text: get(t)('Reload'),
             action: () => location.reload()
-          },
-          {},
-          {
-            icon: 'Cast',
-            text: get(t)('Cast'),
-            action: () => window.open('https://youtu.be/dQw4w9WgXcQ', '_blank')
           },
           {},
           {

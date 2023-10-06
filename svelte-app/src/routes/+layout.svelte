@@ -3,6 +3,7 @@
 
   import { onDestroy, onMount, setContext } from 'svelte';
   import { circInOut } from 'svelte/easing';
+  import { get } from 'svelte/store';
   import { fly, slide } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
@@ -67,11 +68,32 @@
   ].forEach(([k, v]) => setContext(k, v));
 
   onMount(() => {
+    if (!browser) {
+      return;
+    }
+
+    const currentTheme = get(theme);
+
+    if (currentTheme === 'dark' && document.body.classList.contains('light')) {
+      document.body.classList.remove('dark');
+      theme.set('light');
+    } else if (currentTheme === 'light' && document.body.classList.contains('dark')) {
+      document.body.classList.remove('light');
+      theme.set('dark');
+    }
+
+    unsubscribers.push(
+      currentLang.subscribe((lang) => {
+        document.documentElement.lang = lang;
+      })
+    );
+
     ENV !== 'production' && checkTranslations();
 
     setTimeout(() => {
       loading.set(false);
     }, 1000);
+
     appLoaded = true;
   });
 
@@ -105,8 +127,8 @@
 </svelte:head>
 
 <svelte:body
-  use:classList={`${$theme} ${$navigating ? 'is-loading' : 'is-loaded'}`}
-  on:contextmenu|preventDefault={(e) => setMenuState(e, pageContainer)}
+  use:classList={[$theme, $navigating ? 'is-loading' : 'is-loaded']}
+  on:contextmenu={(e) => setMenuState(e, pageContainer)}
 />
 
 {#if $menuState.open}
@@ -129,17 +151,17 @@
 >
   <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
-    <!-- Janky but works for now lmao -->
-    {#if $navOpen}
-      <span
-        class="shim"
-        transition:slide={{
-          duration: BASE_ANIMATION_DURATION,
-          easing: circInOut
-        }}
-      />
-    {/if}
     <div>
+      <!-- Janky but works for now lmao -->
+      {#if $navOpen}
+        <span
+          class="shim"
+          transition:slide={{
+            duration: BASE_ANIMATION_DURATION,
+            easing: circInOut
+          }}
+        />
+      {/if}
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
@@ -155,7 +177,7 @@
     @apply block h-52 w-full;
   }
 
-  span {
+  span:not(.shim) {
     @apply absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
 
     @include focus-state(sm);
@@ -166,23 +188,19 @@
   }
 
   .main {
-    @apply relative flex h-full w-full flex-col overflow-x-hidden rounded-xl text-dark;
+    @apply relative h-full w-full overflow-x-hidden rounded-xl text-dark;
 
     @include media(lg) {
-      @apply flex-row text-lg;
+      @apply text-lg;
     }
 
     div {
-      @apply relative mt-12 max-h-full w-full;
-
-      @include media(md) {
-        @apply mt-14;
-      }
+      @apply relative mt-14 w-full;
     }
   }
 
   :global(.dark) {
-    span {
+    span:not(.shim) {
       @apply bg-dark text-light;
 
       @include focus-state(sm, dark);

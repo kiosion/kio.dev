@@ -6,7 +6,7 @@
   import { afterNavigate } from '$app/navigation';
   import { linkTo } from '$i18n';
   import { BASE_ANIMATION_DURATION, NAV_LINKS } from '$lib/consts';
-  import { isDesktop } from '$lib/helpers/responsive';
+  import { isTablet } from '$lib/helpers/responsive';
   import { navOpen } from '$stores/navigation';
 
   import LanguageControls from '$components/controls/language-toggle.svelte';
@@ -22,7 +22,7 @@
   let unsubscribe: Unsubscriber;
 
   onMount(() => {
-    unsubscribe = isDesktop.subscribe((state) => {
+    unsubscribe = isTablet.subscribe((state) => {
       state && navOpen.set(false);
     });
   });
@@ -35,13 +35,13 @@
 <div role="none">
   <nav aria-label="Main navigation" role="group">
     <div class="flex w-full flex-row items-center justify-between">
-      <div class="flex flex-row items-center justify-start gap-5">
+      <div class="flex flex-row items-center justify-start gap-4 md:gap-5">
         <MenuToggle class="block md:hidden" />
         <span
-          class="pointer-events-none block select-none font-code text-3xl text-accent-light/60 dark:text-accent-dark/60 md:hidden"
+          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/60 transition-[color] dark:text-accent-dark/60 md:hidden"
           aria-hidden="true">~</span
         >
-        <span class="relative mt-0.5 h-fit w-fit">
+        <span class="relative mt-0.5 h-fit w-fit lg:mt-0">
           <a
             class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
             class:opacity-0={!loaded}
@@ -51,14 +51,14 @@
             kio.dev
           </a>
           <span
-            class="pointer-events-none absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 transition-opacity"
+            class="pointer-events-none absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 transition-[color,opacity]"
             class:opacity-0={loaded}
           >
             <Spinner class="pointer-events-none" />
           </span>
         </span>
         <span
-          class="pointer-events-none hidden select-none font-code text-3xl text-accent-light/70 dark:text-accent-dark/70 md:block"
+          class="pointer-events-none mb-0.5 hidden select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:block"
           aria-hidden="true">~</span
         >
         <div class="hidden flex-row items-center justify-start gap-5 md:flex">
@@ -89,35 +89,30 @@
 </div>
 
 <style lang="scss">
-  @import '../styles/breakpoints';
+  @import '@styles/mixins';
 
   div[role='none'] {
     @apply fixed left-4 right-4 top-4 z-10 flex items-center justify-center;
+
+    @include media(md) {
+      @apply left-6 right-6;
+    }
   }
 
   nav {
-    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-4 backdrop-blur-lg transition-[border,background-color];
+    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-2.5 backdrop-blur-lg transition-[border,background-color];
+
+    @include media(md) {
+      @apply py-2;
+    }
+    @include media(xl) {
+      @apply max-w-6xl;
+    }
 
     &:hover,
     &:focus-visible,
     &:focus-within {
       @apply border-dark/60 bg-light/60;
-    }
-  }
-
-  @media (min-width: $md) {
-    div[role='none'] {
-      @apply left-6 right-6;
-    }
-
-    nav {
-      @apply py-2;
-    }
-  }
-
-  @media (min-width: $xl) {
-    nav {
-      @apply max-w-6xl;
     }
   }
 

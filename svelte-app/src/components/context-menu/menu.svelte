@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, setContext } from 'svelte';
-  import { scale } from 'svelte/transition';
+  import { circIn, circOut } from 'svelte/easing';
+  import { blur } from 'svelte/transition';
 
   import { setState } from '$lib/helpers/menu';
 
@@ -55,8 +56,8 @@
 
 <div
   style="top: {y}px; left: {x}px"
-  in:scale={{ duration: 100, start: 0.98 }}
-  out:scale={{ duration: 100, delay: 10, start: 0.98 }}
+  in:blur={{ duration: 200, easing: circOut }}
+  out:blur={{ duration: 200, easing: circIn }}
   bind:this={menuElement}
 >
   <slot />
@@ -64,12 +65,12 @@
 
 <style lang="scss">
   div {
-    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg border border-dark/40 bg-light/60 py-2 text-dark backdrop-blur-md;
+    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg border border-dark/40 bg-light/50 py-2 text-dark backdrop-blur-md;
   }
 
   :global(.dark) {
     div {
-      @apply border-light/40 bg-dark/60 text-light;
+      @apply border-light/40 bg-dark/50 text-light;
     }
   }
 </style>

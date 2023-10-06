@@ -45,7 +45,7 @@
     h4,
     h5,
     h6 {
-      @apply inline font-display font-bold text-black;
+      @apply inline font-display font-bold text-black transition-[color];
     }
 
     &.h1 {

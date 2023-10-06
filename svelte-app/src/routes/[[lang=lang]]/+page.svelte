@@ -5,6 +5,7 @@
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import Icon from '$components/icon.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
@@ -43,7 +44,10 @@
         <div class="list-end">
           <span />
           <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
-            {$t('See more')} &rarr;
+            <span class="flex items-center justify-start gap-2">
+              <p>{$t('See more')}</p>
+              <Icon icon="ArrowRight" width={18} inline />
+            </span>
           </ArrowButton>
         </div>
       </div>
@@ -65,7 +69,10 @@
         <div class="list-end">
           <span />
           <ArrowButton class="w-full" href={$linkTo('/work')} preload>
-            {$t('See more')} &rarr;
+            <span class="flex items-center justify-start gap-2">
+              <p>{$t('See more')}</p>
+              <Icon icon="ArrowRight" width={18} inline />
+            </span>
           </ArrowButton>
         </div>
       </div>

@@ -32,7 +32,9 @@
 </svelte:head>
 
 <ContentWrapper wide>
-  <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t("Where I've worked")}</h1>
+  <h1 class="mb-8 mt-10 font-code text-3xl font-black transition-[color]">
+    {$t("Where I've worked")}
+  </h1>
   {#if about.timeline?.length}
     <NewTimeline data={about.timeline} />
   {:else}
@@ -41,12 +43,16 @@
     </div>
   {/if}
 
-  <h1 class="mb-8 mt-10 font-code text-3xl font-black">{$t('Projects & Talks')}</h1>
+  <h1 class="mb-8 mt-10 font-code text-3xl font-black transition-[color]">
+    {$t('Projects & Talks')}
+  </h1>
   {#if projects.length}
     <div class="flex flex-col gap-14">
       {#each sortedProjects as yearObj}
         <div class="flex flex-col items-start justify-start gap-y-2 md:flex-row">
-          <h1 class="min-w-[6rem] font-code text-4xl font-black">{yearObj.year}</h1>
+          <h1 class="min-w-[6rem] font-code text-4xl font-black transition-[color]">
+            {yearObj.year}
+          </h1>
           {#if yearObj.items.length}
             <div class="ml-1 mt-2 flex flex-col items-start justify-start gap-4 md:ml-0">
               {#each yearObj.items as item}

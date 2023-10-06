@@ -67,7 +67,6 @@
         class="absolute block rounded-md {isHovered
           ? 'bg-accent-light/60 dark:bg-accent-dark/60'
           : 'bg-accent-light dark:bg-accent-dark'} bottom-2 left-0 right-0 h-[2px] transition-[background-color]"
-        transition:fade={{ duration: BASE_ANIMATION_DURATION / 3 }}
       />
     {/if}
     {#if mobile && (isActive || isHovered)}

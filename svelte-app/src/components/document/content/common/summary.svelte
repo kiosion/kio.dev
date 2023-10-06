@@ -8,7 +8,7 @@
   {#each headings as heading}
     <a
       href={`#${heading.key}`}
-      class="focusOutline-sm block w-full select-none overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-2 text-base font-medium hover:text-accent-light dark:hover:text-accent-dark"
+      class="focusOutline-sm block w-full select-none overflow-hidden text-ellipsis whitespace-nowrap rounded-sm py-2 text-base font-medium text-dark hover:text-accent-light dark:text-light dark:hover:text-accent-dark"
     >
       &bull;&nbsp;&nbsp;{heading.text}
     </a>

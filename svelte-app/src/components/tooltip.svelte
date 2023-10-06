@@ -5,7 +5,6 @@
 
   import tippy, { followCursor } from 'tippy.js';
 
-  // eslint-disable-next-line no-duplicate-imports
   import type { Instance, Placement } from 'tippy.js';
 
   export let text = '',
@@ -13,7 +12,7 @@
     transitionDuration = 200,
     delay = 1400,
     disable = false,
-    offset = [0, 8] as [number, number],
+    offset = [0, 12] as [number, number],
     fixed = false;
 
   let container: HTMLDivElement, instance: Instance;

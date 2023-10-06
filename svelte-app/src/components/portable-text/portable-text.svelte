@@ -132,7 +132,7 @@
         }}
       />
       {#if footnotes?.length}
-        <div class="footnotes mt-8">
+        <div class="footnotes mt-8 transition-[color]">
           <h3 class="mb-6 block font-display text-2xl font-bold">
             {$t('Footnotes')}
           </h3>

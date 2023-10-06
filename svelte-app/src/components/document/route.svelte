@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
   import { page } from '$app/stores';
   import scrollTo from '$helpers/scrollTo';
   import { t } from '$i18n';
   import { BASE_PAGE_TITLE } from '$lib/consts';
+  import { summaryContents } from '$lib/summary';
 
   import Content from '$components/document/content/content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -22,7 +23,12 @@
     routeFetch: RouteFetch | undefined = undefined;
 
   onMount(() => {
+    headings?.length && summaryContents.set(headings);
     scrollTo($page?.url);
+  });
+
+  onDestroy(() => {
+    summaryContents.set(undefined);
   });
 
   $: $page?.url && scrollTo($page.url);
