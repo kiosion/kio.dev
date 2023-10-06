@@ -6,6 +6,7 @@ import type { DocumentHeadings } from '$types';
 
 const summaryVisible = writable(false),
   summaryContents = writable<DocumentHeadings[] | undefined>(undefined),
+  summaryOffset = writable(0),
   shouldShowSummary = derived(
     [isDesktop, summaryVisible, summaryContents],
     ([isDesktop, summaryVisible, summaryContents]) => {
@@ -13,4 +14,4 @@ const summaryVisible = writable(false),
     }
   );
 
-export { shouldShowSummary, summaryContents, summaryVisible };
+export { shouldShowSummary, summaryContents, summaryOffset, summaryVisible };

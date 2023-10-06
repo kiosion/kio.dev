@@ -3,28 +3,29 @@
   import { fade } from 'svelte/transition';
 
   import { t } from '$i18n';
-  import { summaryContents } from '$lib/summary';
+  import { summaryContents, summaryOffset } from '$lib/summary';
 
   import Summary from '$components/document/content/common/summary.svelte';
 
   export let element: HTMLDivElement;
 
-  $: console.log('scrolled down?', element?.offsetTop);
+  $: headings = $summaryContents?.length ? $summaryContents : [];
 </script>
 
 <div
   in:fade={{ duration: 300, delay: 50, easing: circOut }}
   out:fade={{ duration: 200, easing: circIn }}
   bind:this={element}
+  style="margin-top: {$summaryOffset + 27}px;"
 >
   <h1>{$t('Table of Contents')}</h1>
   <span />
-  <Summary headings={$summaryContents?.length ? $summaryContents : []} />
+  <Summary {headings} />
 </div>
 
 <style lang="scss">
   div {
-    @apply sticky left-0 top-0 mt-20 h-fit w-72 overflow-clip pl-8 pt-20;
+    @apply sticky left-0 top-0 h-fit w-72 overflow-clip pl-8 pt-20;
   }
 
   h1 {
@@ -42,7 +43,7 @@
 
   :global(.dark) {
     span {
-      @apply bg-dark/40;
+      @apply bg-light/40;
     }
   }
 </style>

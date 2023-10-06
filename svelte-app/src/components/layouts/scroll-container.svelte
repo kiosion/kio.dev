@@ -4,7 +4,7 @@
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
   import { isDesktop } from '$lib/helpers/responsive';
-  import { shouldShowSummary, summaryContents, summaryVisible } from '$lib/summary';
+  import { shouldShowSummary, summaryVisible } from '$lib/summary';
 
   import Sidebar from '$components/document/content/common/sidebar.svelte';
 
@@ -30,7 +30,6 @@
 
   beforeNavigate(() => {
     summaryVisible.set(false);
-    summaryContents.set(undefined);
   });
 
   afterNavigate(() => {

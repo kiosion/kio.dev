@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
@@ -118,14 +119,16 @@ const find = async <T extends keyof DocumentRegistry>(
   params: PossibleParams = {}
 ): Promise<DocumentRegistry[T][] | Error> => {
   const cacheKey = JSON.stringify({ model, params, many: true });
-  const cachedData = cacheGet(cacheKey);
-  if (cachedData) {
-    return cachedData as DocumentRegistry[T][];
+  if (browser && params.preview !== 'true') {
+    const cachedData = cacheGet(cacheKey);
+    if (cachedData) {
+      return cachedData as DocumentRegistry[T][];
+    }
   }
 
   const url = constructUrl(model, params, true);
   const response = await fetchData<DocumentRegistry[T][]>(fetch, url, model);
-  if (response && !(response instanceof Error)) {
+  if (browser && params.preview !== 'true' && response && !(response instanceof Error)) {
     cacheSet(cacheKey, response);
   }
 
@@ -138,7 +141,7 @@ const findOne = async <T extends keyof DocumentRegistry>(
   params: PossibleParams = {}
 ): Promise<DocumentRegistry[T] | Error> => {
   const cacheKey = JSON.stringify({ model, params, many: false });
-  if (params.preview !== 'true') {
+  if (browser && params.preview !== 'true') {
     const cachedData = cacheGet(cacheKey);
     if (cachedData) {
       return cachedData as DocumentRegistry[T];
@@ -147,7 +150,7 @@ const findOne = async <T extends keyof DocumentRegistry>(
 
   const url = constructUrl(model, params);
   const response = await fetchData<DocumentRegistry[T]>(fetch, url, model);
-  if (params.preview !== 'true' && response && !(response instanceof Error)) {
+  if (browser && params.preview !== 'true' && response && !(response instanceof Error)) {
     cacheSet(cacheKey, response);
   }
 

@@ -3,7 +3,7 @@
   import { getTotalWords } from '$helpers/pt';
   import { isDesktop } from '$helpers/responsive';
   import { currentLang, t } from '$i18n';
-  import { summaryContents, summaryVisible } from '$lib/summary';
+  import { summaryContents, summaryOffset, summaryVisible } from '$lib/summary';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
@@ -17,9 +17,12 @@
     model = data._type,
     headings: DocumentHeadings[] | undefined;
 
+  let titleRect: DOMRectReadOnly | undefined;
+
   const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
 
   $: date = formatDate(data.date, 'full', $currentLang);
+  $: titleRect?.height && summaryOffset.set(titleRect.height);
 </script>
 
 <div data-test-id="{model}-header">
@@ -28,6 +31,7 @@
       <svelte:fragment slot="title">
         <h1
           class="mb-4 mt-8 h-fit w-fit font-display text-4xl font-bold text-black transition-[color] dark:text-white lg:mt-10 lg:text-6xl lg:font-black"
+          bind:contentRect={titleRect}
         >
           {data.title}
         </h1>
@@ -48,10 +52,11 @@
           {#if $isDesktop && headings?.length}
             <ArrowButton
               class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
-              on:click={() =>
+              on:click={() => {
                 $isDesktop &&
-                $summaryContents?.length &&
-                summaryVisible.set(!$summaryVisible)}
+                  $summaryContents?.length &&
+                  summaryVisible.set(!$summaryVisible);
+              }}
             >
               <span class="flex items-center justify-end gap-2">
                 {#key $summaryVisible}
