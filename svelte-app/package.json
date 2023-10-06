@@ -50,7 +50,7 @@
     "jsdom": "^22.1.0",
     "netlify-cli": "^15.10.0",
     "pixelarticons": "^1.7.0",
-    "postcss": "^8.4.14",
+    "postcss": "^8.4.31",
     "postcss-load-config": "^4.0.1",
     "prettier": "^3.0.3",
     "prettier-plugin-svelte": "^3.0.3",
