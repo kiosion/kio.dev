@@ -10,6 +10,7 @@
   import { useMediaQuery } from 'svelte-breakpoints';
 
   import { browser } from '$app/environment';
+  import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
@@ -23,7 +24,6 @@
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import Nav from '$components/nav.svelte';
 
-  import type { Navigation } from '@sveltejs/kit';
   import type { Unsubscriber } from 'svelte/store';
 
   let scrollContainer: HTMLDivElement,
@@ -33,14 +33,6 @@
     appLoaded = false;
 
   const { theme, reduce_motion } = Settings,
-    setLoading = (navigating: Navigation | null) => {
-      clearTimeout(setLoadingTimer);
-      if (navigating && navigating.from !== navigating.to) {
-        setLoadingTimer = setTimeout(() => loading.set(true), 500);
-      } else {
-        loading.set(false);
-      }
-    },
     skipToContent = (e: KeyboardEvent) => {
       if (e.code === 'Enter') {
         e.preventDefault();
@@ -55,8 +47,21 @@
       }
     };
 
+  beforeNavigate(() => {
+    setLoadingTimer && clearTimeout(setLoadingTimer);
+    if (get(navigating)?.from !== get(navigating)?.to) {
+      setLoadingTimer = setTimeout(() => loading.set(true), 500);
+    }
+  });
+
+  afterNavigate(() => {
+    if (setLoadingTimer) {
+      clearTimeout(setLoadingTimer);
+    }
+    loading.set(false);
+  });
+
   unsubscribers.push(
-    navigating.subscribe(setLoading),
     useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
       reduce_motion?.set(value);
     })

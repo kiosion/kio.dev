@@ -1,9 +1,51 @@
 <script lang="ts">
+  import { getContext, onMount } from 'svelte';
+  import { get } from 'svelte/store';
+
+  import { afterNavigate } from '$app/navigation';
+  import Logger from '$lib/logger';
+  import { visibleHeadings } from '$lib/summary';
+
   import Icon from '$components/icon.svelte';
 
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;
+
+  let observer: IntersectionObserver, element: HTMLAnchorElement;
+
+  const scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)();
+
+  onMount(() => {
+    observer = new IntersectionObserver(
+      (entries) => {
+        const key = value._key;
+        if (!key?.length) {
+          Logger.warn("Heading is missing '_key' property");
+          return;
+        }
+        visibleHeadings.update((state) => {
+          if (entries[0]?.isIntersecting) {
+            return state.add(key);
+          } else {
+            state.delete(key);
+            return state;
+          }
+        });
+        get(visibleHeadings);
+      },
+      {
+        rootMargin: '-250px 0px 0px 0px',
+        root: scrollContainer,
+        threshold: [1]
+      }
+    );
+    observer.observe(element);
+  });
+
+  afterNavigate(() => {
+    observer?.disconnect();
+  });
 
   $: ({ value, indexInParent } = portableText);
   $: ({ style } = value);
@@ -14,6 +56,7 @@
   class:first={indexInParent === 0}
   id={`heading-${value._key}`}
   href={`#${value._key}`}
+  bind:this={element}
 >
   <Icon icon="link" class="link-icon" aria-hidden="true" />
   <svelte:element this={style}>

@@ -4,7 +4,7 @@
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
   import { isDesktop } from '$lib/helpers/responsive';
-  import { shouldShowSummary, summaryVisible } from '$lib/summary';
+  import { shouldShowSummary, summaryVisible, visibleHeadings } from '$lib/summary';
 
   import Sidebar from '$components/document/content/common/sidebar.svelte';
 
@@ -36,6 +36,8 @@
     if (timeout) {
       clearTimeout(timeout);
     }
+
+    visibleHeadings.set(new Set());
 
     timeout = setTimeout(() => {
       element.scrollTo({

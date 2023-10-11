@@ -4,7 +4,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
-import ViteRestart from 'vite-plugin-restart';
+// import ViteRestart from 'vite-plugin-restart';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 
 export default defineConfig(({ command, mode }) => {
@@ -19,10 +19,10 @@ export default defineConfig(({ command, mode }) => {
       StripTestSelectors({
         dev: !isTesting
       }),
-      (isDev || isTesting) && Inspect(),
-      ViteRestart({
-        restart: ['src/**/*.scss']
-      })
+      (isDev || isTesting) && Inspect()
+      // ViteRestart({
+      //   restart: ['src/**/*.scss']
+      // })
     ],
     resolve: {
       alias: [
