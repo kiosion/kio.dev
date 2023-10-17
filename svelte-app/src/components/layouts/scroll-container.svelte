@@ -30,14 +30,13 @@
 
   beforeNavigate(() => {
     summaryVisible.set(false);
+    visibleHeadings.set(new Set());
   });
 
   afterNavigate(() => {
     if (timeout) {
       clearTimeout(timeout);
     }
-
-    visibleHeadings.set(new Set());
 
     timeout = setTimeout(() => {
       element.scrollTo({

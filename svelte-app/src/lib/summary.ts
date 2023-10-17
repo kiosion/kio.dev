@@ -3,7 +3,7 @@ import { derived, writable } from 'svelte/store';
 import { page } from '$app/stores';
 import { isDesktop } from '$lib/helpers/responsive';
 
-import type { Page } from '@sveltejs/kit';
+// import type { Page } from '@sveltejs/kit';
 import type { DocumentHeadings } from '$types';
 
 const recursiveFlattenHeadings = (headings: DocumentHeadings[]): DocumentHeadings[] => {
@@ -16,45 +16,45 @@ const recursiveFlattenHeadings = (headings: DocumentHeadings[]): DocumentHeading
 
 let previousFirstVisibleHeading: string | undefined;
 
-const findFirstVisibleHeading = ([visibleHeadings, summaryContents, page]: [
-  Set<string>,
-  DocumentHeadings[] | undefined,
-  Page<Record<string, string>>
-]) => {
-  if (!summaryContents?.length || !visibleHeadings?.size) {
-    return previousFirstVisibleHeading;
-  }
-
-  const flatSummaryContents = recursiveFlattenHeadings(summaryContents),
-    pageHash = page.url.hash,
-    pageHashHeading = flatSummaryContents.find((heading) => {
-      return heading.key === pageHash.slice(1);
-    });
-
-  let firstVisibleHeading = flatSummaryContents.find((heading) => {
-    return visibleHeadings.has(heading.key);
-  });
-
-  if (pageHashHeading && visibleHeadings.has(pageHashHeading?.key)) {
-    const pageHashHeadingIndex = flatSummaryContents.indexOf(pageHashHeading),
-      firstVisibleHeadingIndex = firstVisibleHeading
-        ? flatSummaryContents.indexOf(firstVisibleHeading)
-        : -1;
-    if (pageHashHeadingIndex > firstVisibleHeadingIndex) {
-      firstVisibleHeading = pageHashHeading;
-    }
-  }
-
-  firstVisibleHeading?.key && (previousFirstVisibleHeading = firstVisibleHeading.key);
-  return firstVisibleHeading?.key ?? previousFirstVisibleHeading;
-};
-
 const summaryVisible = writable(false),
   summaryContents = writable<DocumentHeadings[] | undefined>(undefined),
+  headingElements = writable<Set<HTMLElement>>(new Set()),
   visibleHeadings = writable<Set<string>>(new Set()),
   firstVisibleHeading = derived(
     [visibleHeadings, summaryContents, page],
-    findFirstVisibleHeading
+    ([_visibleHeadings, _summaryContents, _page]) => {
+      // console.log({
+      //   _visibleHeadings,
+      //   _summaryContents,
+      //   _page
+      // });
+      if (!_summaryContents?.length || !_visibleHeadings?.size) {
+        return previousFirstVisibleHeading;
+      }
+
+      const flatSummaryContents = recursiveFlattenHeadings(_summaryContents),
+        pageHash = _page.url.hash,
+        pageHashHeading = flatSummaryContents.find((heading) => {
+          return heading.key === pageHash.slice(1);
+        });
+
+      let firstVisibleHeading = flatSummaryContents.find((heading) => {
+        return _visibleHeadings.has(heading.key);
+      });
+
+      if (pageHashHeading && _visibleHeadings.has(pageHashHeading?.key)) {
+        const pageHashHeadingIndex = flatSummaryContents.indexOf(pageHashHeading),
+          firstVisibleHeadingIndex = firstVisibleHeading
+            ? flatSummaryContents.indexOf(firstVisibleHeading)
+            : -1;
+        if (pageHashHeadingIndex > firstVisibleHeadingIndex) {
+          firstVisibleHeading = pageHashHeading;
+        }
+      }
+
+      firstVisibleHeading?.key && (previousFirstVisibleHeading = firstVisibleHeading.key);
+      return firstVisibleHeading?.key ?? previousFirstVisibleHeading;
+    }
   ),
   summaryOffset = writable(0),
   shouldShowSummary = derived(
@@ -66,6 +66,7 @@ const summaryVisible = writable(false),
 
 export {
   firstVisibleHeading,
+  headingElements,
   shouldShowSummary,
   summaryContents,
   summaryOffset,

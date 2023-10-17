@@ -29,10 +29,7 @@
   <div class="flex flex-col">
     <svelte:component this={model === 'post' ? PostHeader : ProjectHeader}>
       <svelte:fragment slot="title">
-        <h1
-          class="mb-4 mt-8 h-fit w-fit font-display text-4xl font-bold text-black transition-[color] dark:text-white lg:mt-10 lg:text-6xl lg:font-black"
-          bind:contentRect={titleRect}
-        >
+        <h1 bind:contentRect={titleRect}>
           {data.title}
         </h1>
       </svelte:fragment>
@@ -75,3 +72,24 @@
     </svelte:component>
   </div>
 </div>
+
+<style lang="scss">
+  @import '@styles/mixins';
+
+  h1 {
+    @apply mb-4 mt-8 h-fit max-w-full font-display text-4xl font-bold text-black transition-[color];
+
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    @include media(lg) {
+      @apply mt-10 text-6xl font-black;
+    }
+  }
+
+  :global(.dark) {
+    h1 {
+      @apply text-white;
+    }
+  }
+</style>

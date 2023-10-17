@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte';
-  import { get } from 'svelte/store';
+  import { getContext, onDestroy, onMount } from 'svelte';
 
-  import { afterNavigate } from '$app/navigation';
   import Logger from '$lib/logger';
-  import { visibleHeadings } from '$lib/summary';
+  import { headingElements, visibleHeadings } from '$lib/summary';
 
   import Icon from '$components/icon.svelte';
 
@@ -17,22 +15,27 @@
   const scrollContainer = (getContext('getScrollContainer') as () => HTMLDivElement)();
 
   onMount(() => {
+    headingElements.update((state) => {
+      state.add(element);
+      return state;
+    });
+
     observer = new IntersectionObserver(
       (entries) => {
-        const key = value._key;
-        if (!key?.length) {
+        if (!value._key?.length) {
           Logger.warn("Heading is missing '_key' property");
           return;
         }
+
         visibleHeadings.update((state) => {
           if (entries[0]?.isIntersecting) {
-            return state.add(key);
+            state.add(value._key!);
+            return state;
           } else {
-            state.delete(key);
+            state.delete(value._key!);
             return state;
           }
         });
-        get(visibleHeadings);
       },
       {
         rootMargin: '-250px 0px 0px 0px',
@@ -43,8 +46,12 @@
     observer.observe(element);
   });
 
-  afterNavigate(() => {
+  onDestroy(() => {
     observer?.disconnect();
+    headingElements.update((state) => {
+      state.delete(element);
+      return state;
+    });
   });
 
   $: ({ value, indexInParent } = portableText);

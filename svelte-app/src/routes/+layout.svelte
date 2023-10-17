@@ -183,7 +183,7 @@
   }
 
   span:not(.shim) {
-    @apply absolute left-1/2 top-0 z-50 -mt-10 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
+    @apply absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
 
     @include focus-state(sm);
 
@@ -200,7 +200,9 @@
     }
 
     div {
-      @apply relative mt-14 w-full;
+      @apply relative mt-14;
+
+      width: calc(100% - 2rem);
     }
   }
 
