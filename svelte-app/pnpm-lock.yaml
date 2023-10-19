@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -45,8 +45,8 @@ devDependencies:
     specifier: ^6.8.0
     version: 6.8.0(eslint@8.51.0)(typescript@5.2.2)
   '@vitest/ui':
-    specifier: ^0.32.2
-    version: 0.32.2(vitest@0.32.0)
+    specifier: ^0.34.6
+    version: 0.34.6(vitest@0.32.0)
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
@@ -154,7 +154,7 @@ devDependencies:
     version: 0.0.2(vite@4.4.11)
   vitest:
     specifier: ^0.32.0
-    version: 0.32.0(@vitest/ui@0.32.2)(jsdom@22.1.0)(sass@1.69.0)
+    version: 0.32.0(@vitest/ui@0.34.6)(jsdom@22.1.0)(sass@1.69.0)
 
 packages:
 
@@ -723,6 +723,13 @@ packages:
       strip-ansi-cjs: /strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
+    dev: true
+
+  /@jest/schemas@29.6.3:
+    resolution: {integrity: sha512-mo5j5X+jIZmJQveBKeS/clAueipV7KgiX1vMgCxam1RNYiqE1w62n0/tJJnHtjW8ZHcQco5gY85jA3mi0L+nSA==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@sinclair/typebox': 0.27.8
     dev: true
 
   /@jest/types@27.5.1:
@@ -2125,6 +2132,10 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
+  /@sinclair/typebox@0.27.8:
+    resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+    dev: true
+
   /@sindresorhus/is@5.3.0:
     resolution: {integrity: sha512-CX6t4SYQ37lzxicAqsBtxA3OseeoVrh9cSJ5PFYam0GksYlupRfy1A+Q4aYD3zvcfECLc0zO2u+ZnR2UYKvCrw==}
     engines: {node: '>=14.16'}
@@ -2689,19 +2700,19 @@ packages:
       tinyspy: 2.1.1
     dev: true
 
-  /@vitest/ui@0.32.2(vitest@0.32.0):
-    resolution: {integrity: sha512-N5JKftnB8qzKFtpQC5OcUGxYTLo6wiB/95Lgyk6MF52t74Y7BJOWbf6EFYhXqt9J0MSbhOR2kapq+WKKUGDW0g==}
+  /@vitest/ui@0.34.6(vitest@0.32.0):
+    resolution: {integrity: sha512-/fxnCwGC0Txmr3tF3BwAbo3v6U2SkBTGR9UB8zo0Ztlx0BTOXHucE0gDHY7SjwEktCOHatiGmli9kZD6gYSoWQ==}
     peerDependencies:
       vitest: '>=0.30.1 <1'
     dependencies:
-      '@vitest/utils': 0.32.2
-      fast-glob: 3.2.12
-      fflate: 0.7.4
+      '@vitest/utils': 0.34.6
+      fast-glob: 3.3.1
+      fflate: 0.8.1
       flatted: 3.2.7
-      pathe: 1.1.0
+      pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 0.32.0(@vitest/ui@0.32.2)(jsdom@22.1.0)(sass@1.69.0)
+      vitest: 0.32.0(@vitest/ui@0.34.6)(jsdom@22.1.0)(sass@1.69.0)
     dev: true
 
   /@vitest/utils@0.32.0:
@@ -2712,12 +2723,12 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@vitest/utils@0.32.2:
-    resolution: {integrity: sha512-lnJ0T5i03j0IJaeW73hxe2AuVnZ/y1BhhCOuIcl9LIzXnbpXJT9Lrt6brwKHXLOiA7MZ6N5hSJjt0xE1dGNCzQ==}
+  /@vitest/utils@0.34.6:
+    resolution: {integrity: sha512-IG5aDD8S6zlvloDsnzHw0Ut5xczlF+kv2BOTo+iXfPr54Yhi5qbVOgGB1hZaVq4iJ4C/MZ2J0y15IlsV/ZcI0A==}
     dependencies:
       diff-sequences: 29.4.3
       loupe: 2.3.6
-      pretty-format: 27.5.1
+      pretty-format: 29.7.0
     dev: true
 
   /@xhmikosr/archive-type@6.0.1:
@@ -5530,6 +5541,20 @@ packages:
       - supports-color
     dev: true
 
+  /extract-zip@2.0.1:
+    resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
+    engines: {node: '>= 10.17.0'}
+    hasBin: true
+    dependencies:
+      debug: 4.3.4(supports-color@9.3.1)
+      get-stream: 5.2.0
+      yauzl: 2.10.0
+    optionalDependencies:
+      '@types/yauzl': 2.10.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /extract-zip@2.0.1(supports-color@8.1.1):
     resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
     engines: {node: '>= 10.17.0'}
@@ -5709,8 +5734,8 @@ packages:
       is-plain-obj: 4.1.0
     dev: true
 
-  /fflate@0.7.4:
-    resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}
+  /fflate@0.8.1:
+    resolution: {integrity: sha512-/exOvEuc+/iaUm105QIiOt4LpBdMTWsXxqR0HDF35vx3fmaKzw7354gTilCh5rkzEt8WYyG//ku3h3nRmd7CHQ==}
     dev: true
 
   /figures@1.7.0:
@@ -8249,7 +8274,7 @@ packages:
       execa: 5.1.1
       express: 4.18.2
       express-logging: 1.1.1
-      extract-zip: 2.0.1(supports-color@8.1.1)
+      extract-zip: 2.0.1
       fastest-levenshtein: 1.0.16
       fastify: 4.17.0
       find-up: 6.3.0
@@ -8990,10 +9015,6 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /pathe@1.1.0:
-    resolution: {integrity: sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==}
-    dev: true
-
   /pathe@1.1.1:
     resolution: {integrity: sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==}
     dev: true
@@ -9340,6 +9361,15 @@ packages:
       react-is: 17.0.2
     dev: true
 
+  /pretty-format@29.7.0:
+    resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@jest/schemas': 29.6.3
+      ansi-styles: 5.2.0
+      react-is: 18.2.0
+    dev: true
+
   /pretty-ms@8.0.0:
     resolution: {integrity: sha512-ASJqOugUF1bbzI35STMBUpZqdfYKlJugy6JBziGi2EE+AL5JPJGSzvpeVXojxrr0ViUYoToUjb5kjSEGf7Y83Q==}
     engines: {node: '>=14.16'}
@@ -9535,6 +9565,10 @@ packages:
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+    dev: true
+
+  /react-is@18.2.0:
+    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
 
   /read-cache@1.0.0:
@@ -11652,7 +11686,7 @@ packages:
       vite: 4.4.11(@types/node@20.2.1)(sass@1.69.0)
     dev: true
 
-  /vitest@0.32.0(@vitest/ui@0.32.2)(jsdom@22.1.0)(sass@1.69.0):
+  /vitest@0.32.0(@vitest/ui@0.34.6)(jsdom@22.1.0)(sass@1.69.0):
     resolution: {integrity: sha512-SW83o629gCqnV3BqBnTxhB10DAwzwEx3z+rqYZESehUB+eWsJxwcBQx7CKy0otuGMJTYh7qCVuUX23HkftGl/Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -11690,7 +11724,7 @@ packages:
       '@vitest/runner': 0.32.0
       '@vitest/snapshot': 0.32.0
       '@vitest/spy': 0.32.0
-      '@vitest/ui': 0.32.2(vitest@0.32.0)
+      '@vitest/ui': 0.34.6(vitest@0.32.0)
       '@vitest/utils': 0.32.0
       acorn: 8.10.0
       acorn-walk: 8.2.0
