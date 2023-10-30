@@ -87,7 +87,7 @@
       @apply text-dark;
     }
     &.mobile {
-      @apply ml-14 w-full;
+      @apply ml-6 w-full;
     }
   }
 

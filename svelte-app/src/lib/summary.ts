@@ -3,7 +3,6 @@ import { derived, writable } from 'svelte/store';
 import { page } from '$app/stores';
 import { isDesktop } from '$lib/helpers/responsive';
 
-// import type { Page } from '@sveltejs/kit';
 import type { DocumentHeadings } from '$types';
 
 const recursiveFlattenHeadings = (headings: DocumentHeadings[]): DocumentHeadings[] => {
@@ -23,11 +22,6 @@ const summaryVisible = writable(false),
   firstVisibleHeading = derived(
     [visibleHeadings, summaryContents, page],
     ([_visibleHeadings, _summaryContents, _page]) => {
-      // console.log({
-      //   _visibleHeadings,
-      //   _summaryContents,
-      //   _page
-      // });
       if (!_summaryContents?.length || !_visibleHeadings?.size) {
         return previousFirstVisibleHeading;
       }
@@ -38,9 +32,9 @@ const summaryVisible = writable(false),
           return heading.key === pageHash.slice(1);
         });
 
-      let firstVisibleHeading = flatSummaryContents.find((heading) => {
-        return _visibleHeadings.has(heading.key);
-      });
+      let firstVisibleHeading = flatSummaryContents.find((heading) =>
+        _visibleHeadings.has(heading.key)
+      );
 
       if (pageHashHeading && _visibleHeadings.has(pageHashHeading?.key)) {
         const pageHashHeadingIndex = flatSummaryContents.indexOf(pageHashHeading),

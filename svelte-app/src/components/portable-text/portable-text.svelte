@@ -42,14 +42,14 @@
 
   let ptContainer: HTMLElement;
 
-  const customScrollTo = (event: Event, id: string) => {
-    event.preventDefault();
-    const element = document.querySelector(`#${id}`);
-    if (element) {
-      window.history.pushState(null, '', `#${id}`);
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
+  // const customScrollTo = (event: Event, id: string) => {
+  //   event.preventDefault();
+  //   const element = document.querySelector(`#${id}`);
+  //   if (element) {
+  //     window.history.pushState(null, '', `#${id}`);
+  //     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  //   }
+  // };
 
   onMount(() => {
     parseEmoji(ptContainer);
@@ -143,10 +143,9 @@
                   <svelte:self text={note.note} plaintext />
                   <Link
                     class="mb-0.5 ml-2 inline"
-                    id={`src-${note._key}`}
-                    href={`#note-${note._key}`}
+                    id={`note-${note._key}`}
+                    href={`#src-${note._key}`}
                     aria-label={$t('Go to footnote source')}
-                    on:click={(e) => customScrollTo(e, `note-${note._key}`)}
                     ><Icon icon="arrow-bar-up" width={18} inline /></Link
                   >
                 </span>

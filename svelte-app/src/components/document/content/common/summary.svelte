@@ -39,10 +39,10 @@
   }
 
   .indicator {
-    @apply absolute bottom-1.5 left-0 top-1.5 hidden w-full bg-accent-light/40;
+    @apply absolute bottom-1.5 left-0 top-1.5 w-full bg-accent-light/20 opacity-0 transition-opacity;
 
     .active & {
-      @apply block;
+      @apply opacity-100;
     }
   }
 
@@ -54,6 +54,14 @@
       &:focus-visible {
         @apply text-accent-dark;
       }
+    }
+
+    .bar {
+      @apply bg-accent-dark/80;
+    }
+
+    .indicator {
+      @apply bg-accent-dark/20;
     }
   }
 </style>

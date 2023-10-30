@@ -17,7 +17,7 @@
     this={svg}
     {width}
     {height}
-    class="{hovered ? 'text-gray-600 dark:text-gray-300' : ''} {inline ? 'inline' : ''}"
+    class="{hovered ? 'text-dark-600 dark:text-light-300' : ''} {inline ? 'inline' : ''}"
     aria-label={icon + $t(' icon')}
     {style}
     {$$restProps}

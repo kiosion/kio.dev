@@ -25,7 +25,7 @@
 
 <style lang="scss">
   div {
-    @apply sticky left-0 top-0 h-fit w-72 overflow-clip pl-8 pt-20;
+    @apply sticky left-0 top-0 h-fit w-72 overflow-clip pl-8 pt-[6.4rem];
   }
 
   h1 {

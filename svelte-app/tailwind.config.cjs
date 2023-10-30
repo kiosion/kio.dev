@@ -7,14 +7,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#000b00',
-        white: '#f3f3f2',
-        dark: '#16160e',
-        light: '#e5e4e6',
-        gray: '#2b2b2b',
+        black: '#171C22',
+        white: '#F5F5F5',
+        dark: '#182542',
+        light: '#EFEFEF',
         accent: {
-          light: '#6c848d',
-          dark: '#b7dbcc'
+          light: '#2343CE',
+          dark: '#E7FE7D'
         }
       },
       fontFamily: {

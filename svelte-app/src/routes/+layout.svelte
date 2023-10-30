@@ -200,9 +200,17 @@
     }
 
     div {
-      @apply relative mt-14;
+      @apply relative mt-20;
 
       width: calc(100% - 2rem);
+
+      // @include media(md) {
+      //   @apply mt-20;
+      // }
+
+      // @include media(lg) {
+      //   @apply mt-14;
+      // }
     }
   }
 

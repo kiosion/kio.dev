@@ -35,7 +35,7 @@
 <span>
   <slot />&nbsp;<sup
     ><a
-      class="decoration-gray-400 dark:decoration-gray-500 underline decoration-dotted underline-offset-4"
+      class="decoration-dark-400 dark:decoration-light-500 underline decoration-dotted underline-offset-4"
       href={`#note-${portableText.value._key}`}
       id="src-{portableText.value._key}"
       aria-label="Go to footnote"

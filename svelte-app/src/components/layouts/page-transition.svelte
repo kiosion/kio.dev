@@ -13,7 +13,7 @@
   const { reduce_motion } = Settings;
 
   const dist = 26,
-    duration = BASE_ANIMATION_DURATION,
+    duration = BASE_ANIMATION_DURATION * 0.75,
     transitionIn = derived(reduce_motion, (value) => {
       return value
         ? (node: Element) => blur(node, { duration, delay: duration, opacity: 0.2 })

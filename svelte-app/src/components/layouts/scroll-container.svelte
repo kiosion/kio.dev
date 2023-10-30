@@ -64,16 +64,20 @@
   @import '@styles/mixins';
 
   div {
-    @apply relative grid h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 transition-[padding,grid-template-columns] duration-200;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 transition-[padding,grid-template-columns] duration-200;
 
     @include media(xl) {
       @apply duration-300;
     }
 
-    grid-template-columns: 1fr minmax(0, 0fr);
+    @include media(lg) {
+      @apply grid;
 
-    &.split {
-      grid-template-columns: 1fr minmax(0, 0.5fr);
+      grid-template-columns: 1fr minmax(0, 0fr);
+
+      &.split {
+        grid-template-columns: 1fr minmax(0, 0.5fr);
+      }
     }
   }
 </style>

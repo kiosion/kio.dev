@@ -2,7 +2,7 @@
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
   import { isDesktop } from '$helpers/responsive';
-  import { currentLang, t } from '$i18n';
+  import { currentLang, linkTo, t } from '$i18n';
   import { summaryContents, summaryOffset, summaryVisible } from '$lib/summary';
 
   import BulletPoint from '$components/bullet-point.svelte';
@@ -55,7 +55,7 @@
                   summaryVisible.set(!$summaryVisible);
               }}
             >
-              <span class="flex items-center justify-end gap-2">
+              <span class="flex items-center justify-end gap-2 text-base">
                 {#key $summaryVisible}
                   <Icon
                     icon={$summaryVisible ? 'ArrowRight' : 'ArrowLeft'}
@@ -64,6 +64,17 @@
                   />
                 {/key}
                 <p>{$t($summaryVisible ? 'Hide Sidebar' : 'Show Sidebar')}</p>
+              </span>
+            </ArrowButton>
+          {:else}
+            <ArrowButton
+              class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
+              href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
+              preload
+            >
+              <span class="flex items-center justify-end gap-2 text-base">
+                <Icon icon="ArrowLeft" class="mb-0.5" inline />
+                <p>{$t('Read more')}</p>
               </span>
             </ArrowButton>
           {/if}

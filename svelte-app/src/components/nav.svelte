@@ -37,10 +37,10 @@
     <div class="flex w-full flex-row items-center justify-between">
       <div class="flex flex-row items-center justify-start gap-4 md:gap-5">
         <MenuToggle class="block md:hidden" />
-        <span
+        <!-- <span
           class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/60 transition-[color] dark:text-accent-dark/60 md:hidden"
           aria-hidden="true">~</span
-        >
+        > -->
         <span class="relative mt-0.5 h-fit w-fit lg:mt-0">
           <a
             class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
@@ -58,7 +58,7 @@
           </span>
         </span>
         <span
-          class="pointer-events-none mb-0.5 hidden select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:block"
+          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70"
           aria-hidden="true">~</span
         >
         <div class="hidden flex-row items-center justify-start gap-5 md:flex">
@@ -118,12 +118,12 @@
 
   :global(.dark) {
     nav {
-      @apply border-light/40 bg-dark/50;
+      @apply border-light/40 bg-black/50;
 
       &:hover,
       &:focus-visible,
       &:focus-within {
-        @apply border-light/60 bg-dark/70;
+        @apply border-light/60 bg-black/70;
       }
     }
   }

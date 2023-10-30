@@ -16,22 +16,30 @@
     ProjectDocument,
     RouteFetch
   } from '$types';
+  import type { Unsubscriber } from 'svelte/store';
 
   export let data: ProjectDocument | PostDocument,
     model = data._type,
     headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined;
 
+  let pageUnsubscriber: Unsubscriber;
+
   onMount(() => {
     headings?.length && summaryContents.set(headings);
     scrollTo($page?.url);
+
+    pageUnsubscriber = page.subscribe((state) => {
+      state?.url && scrollTo(state.url);
+    });
   });
 
   onDestroy(() => {
     summaryContents.set(undefined);
+    pageUnsubscriber?.();
   });
 
-  $: $page?.url && scrollTo($page.url);
+  // $: $page?.url && scrollTo($page.url);
   $: pageTitle = `${BASE_PAGE_TITLE} ~ ${data.title}`;
   $: pageDescription = data?.desc
     ? data.desc.length > 160

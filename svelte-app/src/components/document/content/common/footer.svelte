@@ -16,7 +16,7 @@
     href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
     preload
   >
-    <span class="flex items-center justify-start gap-2">
+    <span class="flex items-center justify-start gap-2 text-base">
       <Icon icon="ArrowLeft" class="mb-0.5" inline />
       <p>{$t('Read more')}</p>
     </span>
