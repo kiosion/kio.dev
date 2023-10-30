@@ -38,7 +38,7 @@
       <div class="flex flex-row items-center justify-start gap-4 md:gap-5">
         <MenuToggle class="block md:hidden" />
         <!-- <span
-          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/60 transition-[color] dark:text-accent-dark/60 md:hidden"
+          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:hidden"
           aria-hidden="true">~</span
         > -->
         <span class="relative mt-0.5 h-fit w-fit lg:mt-0">
@@ -58,7 +58,7 @@
           </span>
         </span>
         <span
-          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70"
+          class="pointer-events-none mb-0.5 hidden select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:block"
           aria-hidden="true">~</span
         >
         <div class="hidden flex-row items-center justify-start gap-5 md:flex">
@@ -100,7 +100,7 @@
   }
 
   nav {
-    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-2.5 backdrop-blur-lg transition-[border,background-color];
+    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
 
     @include media(md) {
       @apply py-2;

@@ -35,7 +35,6 @@
 <span>
   <slot />&nbsp;<sup
     ><a
-      class="decoration-dark-400 dark:decoration-light-500 underline decoration-dotted underline-offset-4"
       href={`#note-${portableText.value._key}`}
       id="src-{portableText.value._key}"
       aria-label="Go to footnote"
@@ -48,3 +47,21 @@
     ></sup
   >
 </span>
+
+<style lang="scss">
+  span {
+    &,
+    sup > a {
+      @apply underline decoration-dark/80 decoration-dotted underline-offset-4;
+    }
+  }
+
+  :global(.dark) {
+    span {
+      &,
+      sup > a {
+        @apply decoration-light/80;
+      }
+    }
+  }
+</style>

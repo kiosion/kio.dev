@@ -56,10 +56,10 @@
       'backdrop-blur-sm',
       'bg-light/50',
       'text-dark',
-      'dark:bg-dark/50',
+      'dark:bg-black/50',
       'dark:text-light',
       'border',
-      'border-dark/40',
+      'border-black/40',
       'dark:border-light/40',
       'font-code',
       'text-sm'

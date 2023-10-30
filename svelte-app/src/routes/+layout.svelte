@@ -156,17 +156,17 @@
 >
   <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
+    <!-- Janky but works for now lmao -->
+    {#if $navOpen}
+      <span
+        class="shim"
+        transition:slide={{
+          duration: BASE_ANIMATION_DURATION,
+          easing: circInOut
+        }}
+      />
+    {/if}
     <div>
-      <!-- Janky but works for now lmao -->
-      {#if $navOpen}
-        <span
-          class="shim"
-          transition:slide={{
-            duration: BASE_ANIMATION_DURATION,
-            easing: circInOut
-          }}
-        />
-      {/if}
       <PageTransition pathname={data.pathname}>
         <slot />
       </PageTransition>
@@ -200,17 +200,17 @@
     }
 
     div {
-      @apply relative mt-20;
+      @apply relative mt-16;
 
       width: calc(100% - 2rem);
 
-      // @include media(md) {
-      //   @apply mt-20;
-      // }
+      @include media(md) {
+        @apply mt-20;
+      }
 
-      // @include media(lg) {
-      //   @apply mt-14;
-      // }
+      @include media(lg) {
+        @apply mt-16;
+      }
     }
   }
 

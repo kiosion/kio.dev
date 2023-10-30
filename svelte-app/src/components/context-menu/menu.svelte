@@ -65,12 +65,12 @@
 
 <style lang="scss">
   div {
-    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg border border-dark/40 bg-light/50 py-2 text-dark backdrop-blur-md;
+    @apply fixed z-20 grid min-w-[14rem] overflow-hidden rounded-lg border border-black/40 bg-light/50 py-2 text-dark backdrop-blur-md;
   }
 
   :global(.dark) {
     div {
-      @apply border-light/40 bg-dark/50 text-light;
+      @apply border-light/40 bg-black/50 text-light;
     }
   }
 </style>
