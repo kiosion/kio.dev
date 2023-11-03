@@ -106,13 +106,13 @@ defmodule Hexerei.Cache.Base do
 
         # to be able to safely iterate thru an ETS table
         # (to handle additions/removals), we need to fix the table
-        :ets.safe_fixtable(:t, true)
+        :ets.safe_fixtable(get_table_name(), true)
 
         # iterate thru the table
-        purge(:ets.first(:t), now)
+        purge(:ets.first(get_table_name()), now)
       after
         # release the table when we're done
-        :ets.safe_fixtable(:t, false)
+        :ets.safe_fixtable(get_table_name(), false)
       end
 
       # we've deleted 100 keys, that's enough
@@ -122,12 +122,12 @@ defmodule Hexerei.Cache.Base do
       defp purge(:"$end_of_table", _), do: :ok
 
       defp purge(key, now) do
-        with [{_, _, expires_at}] <- :ets.lookup(:t, key),
+        with [{_, _, expires_at}] <- :ets.lookup(get_table_name(), key),
              true <- expires_at < now do
-          :ets.delete(:t, key)
+          :ets.delete(get_table_name(), key)
         end
 
-        purge(:ets.next(:t, key), now)
+        purge(:ets.next(get_table_name(), key), now)
       end
 
       defoverridable start_link: 1, get_table_name: 0, get: 1, put: 3
