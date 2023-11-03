@@ -31,7 +31,7 @@
   }
 
   h2 {
-    @apply text-lg font-bold text-white;
+    @apply text-lg font-bold text-dark transition-colors;
   }
 
   div {
@@ -42,11 +42,17 @@
     }
 
     p {
-      @apply font-mono text-base;
+      @apply font-mono text-base transition-colors;
     }
   }
 
   .body {
     @apply -mt-1 pl-8 text-base;
+  }
+
+  :global(.dark) {
+    h2 {
+      @apply text-white;
+    }
   }
 </style>

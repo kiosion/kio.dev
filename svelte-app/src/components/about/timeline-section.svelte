@@ -54,7 +54,7 @@
 
 <style lang="scss">
   h1 {
-    @apply mb-3 font-code text-2xl font-bold text-white;
+    @apply mb-3 font-code text-2xl font-bold text-dark transition-colors;
   }
 
   section {
@@ -62,6 +62,12 @@
 
     div {
       @apply flex flex-col;
+    }
+  }
+
+  :global(.dark) {
+    h1 {
+      @apply text-white;
     }
   }
 </style>
