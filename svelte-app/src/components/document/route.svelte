@@ -5,7 +5,6 @@
   import scrollTo from '$helpers/scrollTo';
   import { t } from '$i18n';
   import { BASE_PAGE_TITLE } from '$lib/consts';
-  import { summaryContents } from '$lib/summary';
 
   import Content from '$components/document/content/content.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
@@ -26,7 +25,6 @@
   let pageUnsubscriber: Unsubscriber;
 
   onMount(() => {
-    headings?.length && summaryContents.set(headings);
     scrollTo($page?.url);
 
     pageUnsubscriber = page.subscribe((state) => {
@@ -35,12 +33,11 @@
   });
 
   onDestroy(() => {
-    summaryContents.set(undefined);
     pageUnsubscriber?.();
   });
 
-  // $: $page?.url && scrollTo($page.url);
-  $: pageTitle = `${BASE_PAGE_TITLE} ~ ${data.title}`;
+  $: $page?.url && scrollTo($page.url);
+  $: pageTitle = `${data.title} | ${BASE_PAGE_TITLE}`;
   $: pageDescription = data?.desc
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`

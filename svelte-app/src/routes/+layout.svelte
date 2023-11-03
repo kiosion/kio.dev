@@ -2,9 +2,8 @@
   import '../app.scss';
 
   import { onDestroy, onMount, setContext } from 'svelte';
-  import { circInOut } from 'svelte/easing';
   import { get } from 'svelte/store';
-  import { fly, slide } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
   import { useMediaQuery } from 'svelte-breakpoints';
@@ -13,10 +12,9 @@
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
-  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
+  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
-  import { navOpen } from '$stores/navigation';
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
@@ -34,7 +32,7 @@
 
   const { theme, reduce_motion } = Settings,
     skipToContent = (e: KeyboardEvent) => {
-      if (e.code === 'Enter') {
+      if (e.code === 'Enter' || e.code === 'Space') {
         e.preventDefault();
         const content = document.getElementById('content-wrapper'),
           focusable = content?.querySelectorAll(
@@ -156,21 +154,9 @@
 >
   <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
-    <!-- Janky but works for now lmao -->
-    {#if $navOpen}
-      <span
-        class="shim"
-        transition:slide={{
-          duration: BASE_ANIMATION_DURATION,
-          easing: circInOut
-        }}
-      />
-    {/if}
-    <div>
-      <PageTransition pathname={data.pathname}>
-        <slot />
-      </PageTransition>
-    </div>
+    <PageTransition pathname={data.pathname}>
+      <slot />
+    </PageTransition>
   </ScrollContainer>
 </div>
 
@@ -178,11 +164,7 @@
   @import '@styles/mixins';
   @import '@styles/variables';
 
-  .shim {
-    @apply block h-52 w-full;
-  }
-
-  span:not(.shim) {
+  span {
     @apply absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
 
     @include focus-state(sm);
@@ -198,25 +180,11 @@
     @include media(lg) {
       @apply text-lg;
     }
-
-    div {
-      @apply relative mt-16;
-
-      width: calc(100% - 2rem);
-
-      @include media(md) {
-        @apply mt-20;
-      }
-
-      @include media(lg) {
-        @apply mt-16;
-      }
-    }
   }
 
   :global(.dark) {
-    span:not(.shim) {
-      @apply bg-dark text-light;
+    span {
+      @apply bg-black text-light;
 
       @include focus-state(sm, dark);
     }

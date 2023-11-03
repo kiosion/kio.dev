@@ -4,16 +4,17 @@ import Alert from 'pixelarticons/svg/alert.svg';
 import ArrowBarUp from 'pixelarticons/svg/arrow-bar-up.svg';
 import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
 import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
+import ArrowUp from 'pixelarticons/svg/arrow-up.svg';
+import BackBurger from 'pixelarticons/svg/backburger.svg';
 import Cast from 'pixelarticons/svg/cast.svg';
 import Check from 'pixelarticons/svg/check.svg';
 import ChevronDown from 'pixelarticons/svg/chevron-down.svg';
-import CloseBox from 'pixelarticons/svg/close-box.svg';
 import Code from 'pixelarticons/svg/code.svg';
 import Copy from 'pixelarticons/svg/copy.svg';
 import Downasaur from 'pixelarticons/svg/downasaur.svg';
+import ForwardBurger from 'pixelarticons/svg/forwardburger.svg';
 import Link from 'pixelarticons/svg/link.svg';
 import MailArrowRight from 'pixelarticons/svg/mail-arrow-right.svg';
-import Menu from 'pixelarticons/svg/menu.svg';
 import MoonStars from 'pixelarticons/svg/moon-stars.svg';
 import Open from 'pixelarticons/svg/open.svg';
 import Reload from 'pixelarticons/svg/reload.svg';
@@ -29,16 +30,17 @@ const icons = {
   'arrow-bar-up': ArrowBarUp,
   'arrow-left': ArrowLeft,
   'arrow-right': ArrowRight,
+  'arrow-up': ArrowUp,
+  'back-burger': BackBurger,
   cast: Cast,
   check: Check,
   'chevron-down': ChevronDown,
-  'close-box': CloseBox,
   code: Code,
   copy: Copy,
   downasaur: Downasaur,
+  'forward-burger': ForwardBurger,
   link: Link,
   'mail-arrow-right': MailArrowRight,
-  menu: Menu,
   'moon-stars': MoonStars,
   open: Open,
   reload: Reload,

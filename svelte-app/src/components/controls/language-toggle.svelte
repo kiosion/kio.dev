@@ -34,7 +34,7 @@
     fixed
   >
     <button
-      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
+      class="focusOutline -m-1.5 flex h-[32px] w-[32px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
         ''}"
       aria-label={$t(
         $currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english'

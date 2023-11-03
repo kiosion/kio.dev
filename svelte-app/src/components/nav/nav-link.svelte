@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition';
-
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { isLocalized, linkTo, t } from '$i18n';
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -56,24 +53,17 @@
     data-sveltekit-preload-code
     on:click={handleAction}
     on:keydown={(e) => {
-      if (e.code === 'Enter' || e.code === 'Space') {
+      if (e.code === 'Enter') {
         handleAction(e);
       }
     }}
   >
     <span>{$t(link.name)}</span>
-    {#if !mobile && (isActive || isHovered)}
+    {#if isActive || isHovered}
       <span
         class="absolute block rounded-md {isHovered
           ? 'bg-accent-light/60 dark:bg-accent-dark/60'
-          : 'bg-accent-light dark:bg-accent-dark'} bottom-2 left-0 right-0 h-[2px] transition-[background-color]"
-      />
-    {/if}
-    {#if mobile && (isActive || isHovered)}
-      <span
-        class="indicator"
-        class:hovered={isHovered}
-        transition:fade={{ duration: BASE_ANIMATION_DURATION / 3 }}
+          : 'bg-accent-light dark:bg-accent-dark'} -bottom-1 left-0 right-0 h-[2px] transition-[background-color] md:bottom-2"
       />
     {/if}
   </a>
@@ -87,21 +77,7 @@
       @apply text-dark;
     }
     &.mobile {
-      @apply ml-7 w-full;
-    }
-  }
-
-  .indicator {
-    @apply absolute rounded-full bg-accent-light transition-colors duration-150;
-    width: 6px;
-    height: 6px;
-    // Account for font leading :/
-    top: calc(50% + 1px);
-    left: -14px;
-    transform: translate(-50%, -50%);
-
-    &.hovered {
-      @apply bg-accent-light/60;
+      @apply my-[1px] w-fit p-0;
     }
   }
 
@@ -111,14 +87,6 @@
 
       &.active {
         @apply text-light;
-      }
-    }
-
-    .indicator {
-      @apply bg-accent-dark;
-
-      &.hovered {
-        @apply bg-accent-dark/60;
       }
     }
   }

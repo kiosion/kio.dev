@@ -1,10 +1,4 @@
-<script lang="ts">
-  import { shouldShowSummary } from '$lib/summary';
-
-  export let wide = false;
-</script>
-
-<div id="content-wrapper" class:wide class:split={$shouldShowSummary}>
+<div id="content-wrapper">
   <slot />
 </div>
 
@@ -17,35 +11,17 @@
     --max-width: unset;
 
     @include media(lg) {
-      --max-width: 40rem;
+      --max-width: 46rem;
     }
     @include media(xl) {
-      @apply duration-300;
-      --max-width: 48rem;
-    }
-    @include media(2xl) {
       --max-width: 52rem;
     }
-
-    &.wide {
-      @include media(lg) {
-        --max-width: 48rem;
-      }
-      @include media(xl) {
-        --max-width: 56rem;
-      }
-      @include media(2xl) {
-        --max-width: 64rem;
-      }
+    @include media(2xl) {
+      --max-width: 56rem;
     }
 
     max-width: var(--max-width);
     margin-left: calc((100% - var(--max-width)) / 2);
     margin-right: calc((100% - var(--max-width)) / 2);
-
-    &.split {
-      margin-right: 0rem;
-      margin-left: calc(100% - var(--max-width));
-    }
   }
 </style>

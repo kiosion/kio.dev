@@ -1,5 +1,6 @@
 <script lang="ts">
   import { linkTo, t } from '$i18n';
+  import { isMobile } from '$lib/helpers/responsive';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Icon from '$components/icon.svelte';
@@ -17,7 +18,9 @@
     preload
   >
     <span class="flex items-center justify-start gap-2 text-base">
-      <Icon icon="ArrowLeft" class="mb-0.5" inline />
+      {#key $isMobile}
+        <Icon icon={$isMobile ? 'ArrowUp' : 'ArrowLeft'} class="mb-0.5" inline />
+      {/key}
       <p>{$t('Read more')}</p>
     </span>
   </ArrowButton>

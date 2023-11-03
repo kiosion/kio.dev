@@ -1,12 +1,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { circInOut } from 'svelte/easing';
-  import { slide } from 'svelte/transition';
 
   import { afterNavigate } from '$app/navigation';
   import { linkTo } from '$i18n';
-  import { BASE_ANIMATION_DURATION, NAV_LINKS } from '$lib/consts';
-  import { isTablet } from '$lib/helpers/responsive';
+  import { NAV_LINKS } from '$lib/consts';
+  import { isMobile, isTablet } from '$lib/helpers/responsive';
   import { navOpen } from '$stores/navigation';
 
   import LanguageControls from '$components/controls/language-toggle.svelte';
@@ -34,14 +32,16 @@
 
 <div role="none">
   <nav aria-label="Main navigation" role="group">
-    <div class="flex w-full flex-row items-center justify-between">
-      <div class="flex flex-row items-center justify-start gap-4 md:gap-5">
-        <MenuToggle class="block md:hidden" />
-        <!-- <span
-          class="pointer-events-none mb-0.5 block select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:hidden"
-          aria-hidden="true">~</span
-        > -->
-        <span class="relative mt-0.5 h-fit w-fit lg:mt-0">
+    <MenuToggle class="inline-block md:hidden" />
+    {#if $isMobile && $navOpen}
+      <div class="flex w-full items-center justify-around">
+        {#each NAV_LINKS as link}
+          <NavLink {link} mobile />
+        {/each}
+      </div>
+    {:else}
+      <div class="flex flex-row items-center justify-start gap-4">
+        <span class="relative mt-0.5 h-fit w-fit">
           <a
             class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
             class:opacity-0={!loaded}
@@ -58,10 +58,10 @@
           </span>
         </span>
         <span
-          class="pointer-events-none mb-0.5 hidden select-none font-code text-3xl text-accent-light/70 transition-[color] dark:text-accent-dark/70 md:block"
-          aria-hidden="true">~</span
+          class="pointer-events-none mb-0.5 hidden select-none font-code text-2xl text-accent-light/80 transition-[color] dark:text-accent-dark/80 md:block"
+          aria-hidden="true">|</span
         >
-        <div class="hidden flex-row items-center justify-start gap-5 md:flex">
+        <div class="hidden flex-row items-center justify-start gap-6 md:flex" role="menu">
           {#each NAV_LINKS as link}
             <NavLink {link} />
           {/each}
@@ -70,19 +70,6 @@
       <div class="flex flex-row items-center justify-end gap-4">
         <ThemeToggle />
         <LanguageControls />
-      </div>
-    </div>
-    {#if $navOpen}
-      <div
-        class="mt-3 flex w-full flex-col items-start justify-start text-2xl"
-        transition:slide|local={{
-          duration: BASE_ANIMATION_DURATION,
-          easing: circInOut
-        }}
-      >
-        {#each NAV_LINKS as link}
-          <NavLink {link} mobile />
-        {/each}
       </div>
     {/if}
   </nav>
@@ -95,15 +82,15 @@
     @apply fixed left-4 right-4 top-4 z-10 flex items-center justify-center;
 
     @include media(md) {
-      @apply left-6 right-6;
+      @apply left-6 right-6 top-6;
     }
   }
 
   nav {
-    @apply flex w-full max-w-5xl flex-col items-center justify-center rounded-lg border border-dark/40 bg-light/40 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
+    @apply flex w-full max-w-5xl flex-row items-center justify-between gap-5 rounded-md border border-dark/40 bg-light/40 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
 
     @include media(md) {
-      @apply py-2;
+      @apply flex py-2;
     }
     @include media(xl) {
       @apply max-w-6xl;

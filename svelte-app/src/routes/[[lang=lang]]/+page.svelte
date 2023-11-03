@@ -29,13 +29,13 @@
 </svelte:head>
 
 <ContentWrapper>
-  <HeadedBlock icon="User" heading={$t('About me')}>
+  <HeadedBlock heading={$t('About me')}>
     <PortableText text={data.about.bio} />
   </HeadedBlock>
 
   <Divider />
 
-  <HeadedBlock icon="list" heading={$t('Recent posts')}>
+  <HeadedBlock heading={$t('Recent posts')}>
     {#if data.posts.length}
       <div class="item-list" role="group" aria-label={$t('Posts')}>
         {#each data.posts as post}
@@ -60,7 +60,7 @@
     {/if}
   </HeadedBlock>
 
-  <HeadedBlock icon="list" heading={$t('Recent projects')}>
+  <HeadedBlock heading={$t('Recent projects')}>
     {#if data.projects.length}
       <div class="item-list" role="group" aria-label={$t('Projects')}>
         {#each data.projects as project}

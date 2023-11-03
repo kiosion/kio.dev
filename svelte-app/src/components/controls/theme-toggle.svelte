@@ -15,7 +15,7 @@
 <Hoverable>
   <Tooltip text={$t(tooltipText)} delay={150} fixed>
     <button
-      class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark"
+      class="focusOutline -m-1.5 flex h-[32px] w-[32px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark"
       aria-label={$t(tooltipText)}
       data-test-id="theme-toggle"
       data-test-state={$theme}

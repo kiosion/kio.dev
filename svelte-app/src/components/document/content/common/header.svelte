@@ -1,9 +1,8 @@
 <script lang="ts">
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
-  import { isDesktop } from '$helpers/responsive';
   import { currentLang, linkTo, t } from '$i18n';
-  import { summaryContents, summaryOffset, summaryVisible } from '$lib/summary';
+  import { isMobile } from '$lib/helpers/responsive';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
@@ -11,27 +10,21 @@
   import ProjectHeader from '$components/document/content/project/header.svelte';
   import Icon from '$components/icon.svelte';
 
-  import type { DocumentHeadings, PostDocument, ProjectDocument, PTBlock } from '$types';
+  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
 
   export let data: PostDocument | ProjectDocument,
-    model = data._type,
-    headings: DocumentHeadings[] | undefined;
-
-  let titleRect: DOMRectReadOnly | undefined;
+    model = data._type;
 
   const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
 
   $: date = formatDate(data.date, 'full', $currentLang);
-  $: titleRect?.height && summaryOffset.set(titleRect.height);
 </script>
 
 <div data-test-id="{model}-header">
   <div class="flex flex-col">
     <svelte:component this={model === 'post' ? PostHeader : ProjectHeader}>
       <svelte:fragment slot="title">
-        <h1 bind:contentRect={titleRect}>
-          {data.title}
-        </h1>
+        <h1>{data.title}</h1>
       </svelte:fragment>
       <svelte:fragment slot="meta">
         <div class="flex flex-row flex-wrap items-center justify-between gap-4">
@@ -46,38 +39,18 @@
               {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
             </p>
           </div>
-          {#if $isDesktop && headings?.length}
-            <ArrowButton
-              class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
-              on:click={() => {
-                $isDesktop &&
-                  $summaryContents?.length &&
-                  summaryVisible.set(!$summaryVisible);
-              }}
-            >
-              <span class="flex items-center justify-end gap-2 text-base">
-                {#key $summaryVisible}
-                  <Icon
-                    icon={$summaryVisible ? 'ArrowRight' : 'ArrowLeft'}
-                    class="mb-0.5"
-                    inline
-                  />
-                {/key}
-                <p>{$t($summaryVisible ? 'Hide Sidebar' : 'Show Sidebar')}</p>
-              </span>
-            </ArrowButton>
-          {:else}
-            <ArrowButton
-              class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
-              href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
-              preload
-            >
-              <span class="flex items-center justify-end gap-2 text-base">
-                <Icon icon="ArrowLeft" class="mb-0.5" inline />
-                <p>{$t('Read more')}</p>
-              </span>
-            </ArrowButton>
-          {/if}
+          <ArrowButton
+            class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
+            href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
+            preload
+          >
+            <span class="flex items-center justify-end gap-2 text-base">
+              {#key $isMobile}
+                <Icon icon={$isMobile ? 'ArrowUp' : 'ArrowLeft'} class="mb-0.5" inline />
+              {/key}
+              <p>{$t('Read more')}</p>
+            </span>
+          </ArrowButton>
         </div>
       </svelte:fragment>
     </svelte:component>
@@ -88,13 +61,13 @@
   @import '@styles/mixins';
 
   h1 {
-    @apply mb-4 mt-8 h-fit max-w-full font-display text-4xl font-bold text-black transition-[color];
+    @apply mb-4 mt-10 h-fit max-w-full font-display text-4xl font-bold text-black transition-[color];
 
     overflow-wrap: break-word;
     word-break: break-word;
 
     @include media(lg) {
-      @apply mt-10 text-6xl font-black;
+      @apply mt-12 text-6xl font-black;
     }
   }
 

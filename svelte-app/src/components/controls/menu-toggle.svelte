@@ -8,16 +8,16 @@
 
 <Hoverable>
   <button
-    class="focusOutline h-[20px] w-[20px] rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
+    class="focusOutline -m-1.5 flex h-[32px] w-[32px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
       ''}"
     aria-label="Toggle navigation"
     data-test-id="nav-toggle"
     on:click={() => navOpen.set(!$navOpen)}
   >
     {#if $navOpen}
-      <Icon icon="CloseBox" />
+      <Icon icon="BackBurger" height={24} width={24} />
     {:else}
-      <Icon icon="Menu" />
+      <Icon icon="ForwardBurger" height={24} width={24} />
     {/if}
   </button>
 </Hoverable>

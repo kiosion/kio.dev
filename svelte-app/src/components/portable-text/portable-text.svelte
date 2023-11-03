@@ -6,7 +6,7 @@
   import Logger from '$lib/logger';
 
   import Icon from '$components/icon.svelte';
-  import Link from '$components/link.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
   import { PortableText } from '@portabletext/svelte';
 
@@ -42,18 +42,18 @@
 
   let ptContainer: HTMLElement;
 
-  // const customScrollTo = (event: Event, id: string) => {
-  //   event.preventDefault();
-  //   const element = document.querySelector(`#${id}`);
-  //   if (element) {
-  //     window.history.pushState(null, '', `#${id}`);
-  //     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  //   }
-  // };
-
   onMount(() => {
     parseEmoji(ptContainer);
   });
+
+  const customScrollTo = (event: Event, id: string) => {
+    event.preventDefault();
+    const element = document.querySelector(`#${id}`);
+    if (element) {
+      window.history.pushState(null, '', `#${id}`);
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   $: footnotes = ((text: (PortableTextBlock | ArbitraryTypedObject)[]) => {
     if (!text || typeof text === 'string') {
@@ -78,7 +78,7 @@
   })(text);
 </script>
 
-<div bind:this={ptContainer}>
+<div bind:this={ptContainer} class={$$props.class ?? ''}>
   {#if text}
     {#if plainText}
       <PortableText
@@ -141,13 +141,20 @@
               <li class="list-item">
                 <span class="flex flex-row flex-wrap items-center break-all">
                   <svelte:self text={note.note} plaintext />
-                  <Link
-                    class="mb-0.5 ml-2 inline"
-                    id={`note-${note._key}`}
-                    href={`#src-${note._key}`}
-                    aria-label={$t('Go to footnote source')}
-                    ><Icon icon="arrow-bar-up" width={18} inline /></Link
-                  >
+                  <Tooltip text={$t('Go to footnote source')} delay={200}>
+                    <a
+                      class="ml-2"
+                      href={`#src-${note._key}`}
+                      id="note-{note._key}"
+                      aria-label="Go to footnote source"
+                      on:click={(e) => customScrollTo(e, `src-${note._key}`)}
+                      on:keydown={(e) => {
+                        if (e.code === 'Space' || e.code === 'Enter') {
+                          customScrollTo(e, `src-${note._key}`);
+                        }
+                      }}><Icon icon="arrow-bar-up" width={18} inline /></a
+                    >
+                  </Tooltip>
                 </span>
               </li>
             {/each}

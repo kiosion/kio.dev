@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { t } from '$lib/helpers/i18n';
+
+  import Tooltip from '$components/tooltip.svelte';
+
   import type { MarkComponentProps } from '@portabletext/svelte';
   import type {
     PortableTextBlock,
@@ -33,19 +37,22 @@
 </script>
 
 <span>
-  <slot />&nbsp;<sup
-    ><a
-      href={`#note-${portableText.value._key}`}
-      id="src-{portableText.value._key}"
-      aria-label="Go to footnote"
-      on:click={(e) => customScrollTo(e, `note-${portableText.value._key}`)}
-      on:keydown={(e) => {
-        if (e.code === 'Space' || e.code === 'Enter') {
-          customScrollTo(e, `note-${portableText.value._key}`);
-        }
-      }}>{number}</a
-    ></sup
-  >
+  <slot />&nbsp;
+  <Tooltip text={$t('Go to footnote')} delay={200}>
+    <sup
+      ><a
+        href={`#note-${portableText.value._key}`}
+        id="src-{portableText.value._key}"
+        aria-label={$t('Go to footnote')}
+        on:click={(e) => customScrollTo(e, `note-${portableText.value._key}`)}
+        on:keydown={(e) => {
+          if (e.code === 'Space' || e.code === 'Enter') {
+            customScrollTo(e, `note-${portableText.value._key}`);
+          }
+        }}>{number}</a
+      ></sup
+    >
+  </Tooltip>
 </span>
 
 <style lang="scss">

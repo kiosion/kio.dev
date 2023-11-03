@@ -1,0 +1,52 @@
+<script lang="ts">
+  import BulletPoint from '$components/bullet-point.svelte';
+  // import Icon from '$components/icon.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
+
+  import type { AuthorTimelineItem } from '$types';
+
+  export let title: string | undefined, body: AuthorTimelineItem['body'], date: string;
+</script>
+
+<div class="item">
+  <div>
+    <!-- <Icon icon="ArrowRight" class="mr-4" /> -->
+    <BulletPoint />
+    <span>
+      <h2>{title}</h2>
+      <p>{date}</p>
+    </span>
+  </div>
+
+  {#if body}
+    <div class="body">
+      <PortableText text={body} />
+    </div>
+  {/if}
+</div>
+
+<style lang="scss">
+  .item {
+    @apply flex flex-col items-start justify-start;
+  }
+
+  h2 {
+    @apply text-lg font-bold text-white;
+  }
+
+  div {
+    @apply flex w-full flex-row items-center justify-start gap-x-2;
+
+    span {
+      @apply flex w-full flex-row items-center justify-between text-base;
+    }
+
+    p {
+      @apply font-mono text-base;
+    }
+  }
+
+  .body {
+    @apply -mt-1 pl-8 text-base;
+  }
+</style>
