@@ -69,11 +69,16 @@
     {#each values as image, i}
       <button
         class="focusOutline-sm"
-        style="
-          aspect-ratio: {image.crop.width} / {image.crop.height};
-          width: {image.carouselDimensions.width}px;
-          height: {image.carouselDimensions.height}px;
-        "
+        style={values.length > 1
+          ? `
+            aspect-ratio: {image.crop.width} / {image.crop.height};
+            width: ${image.carouselDimensions.width}px;
+            height: ${image.carouselDimensions.height}px;
+            max-height: 402px;
+          `
+          : `
+            width: 100%;
+          `}
         on:click={() => {
           currentIndex = i;
           showImageModal = true;
@@ -86,12 +91,19 @@
         }}
       >
         {#if showImageModal && currentIndex === i}
-          <img src={image.srcUrl} draggable="false" alt="image-{i}" class="opacity-0" />
+          <img
+            src={image.srcUrl}
+            draggable="false"
+            alt="image-{i}"
+            class="opacity-0"
+            style={values.length > 1 ? 'max-height: 402px;' : ''}
+          />
         {:else}
           <img
             src={image.srcUrl}
             draggable="false"
             alt="image-{i}"
+            style={values.length > 1 ? 'max-height: 402px;' : ''}
             bind:this={imageElements[i]}
             in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
             out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
@@ -157,10 +169,10 @@
 
 <style lang="scss">
   button {
-    @apply relative max-h-[402px];
+    @apply relative;
 
     img {
-      @apply max-h-[402px] min-w-full max-w-full flex-shrink-0;
+      @apply min-w-full max-w-full flex-shrink-0;
     }
   }
 
