@@ -1,6 +1,6 @@
-import { DEFAULT_APP_LANG, HOMEPAGE_POSTS_NUM } from '$lib/consts';
+import { DEFAULT_APP_LANG, HOMEPAGE_POSTS_NUM, HOMEPAGE_PROJECTS_NUM } from '$lib/consts';
 import { handleLoadError } from '$lib/data';
-import { find, findOne } from '$lib/store';
+import { find } from '$lib/store';
 
 import type { PageLoad } from './$types';
 import type { AuthorDocument, PostDocument, ProjectDocument } from '$types';
@@ -10,14 +10,14 @@ export const load = (async ({ parent, fetch, params }) => {
     promises = [
       parent().then((data) => data.about),
       find(fetch, 'post', { limit: HOMEPAGE_POSTS_NUM, lang }),
-      findOne(fetch, 'project', { id: 'kio.dev', lang })
+      find(fetch, 'project', { limit: HOMEPAGE_PROJECTS_NUM, lang })
     ];
 
-  const [about, posts, project] = handleLoadError(await Promise.all(promises)) as [
+  const [about, posts, projects] = handleLoadError(await Promise.all(promises)) as [
     AuthorDocument,
     PostDocument[],
-    ProjectDocument
+    ProjectDocument[]
   ];
 
-  return { posts, projects: [project], about };
+  return { posts, projects, about };
 }) satisfies PageLoad;

@@ -62,7 +62,7 @@ export const BASE_TRANSITION_DURATION = 200 as const;
 export const BASE_ANIMATION_DURATION = 300 as const;
 
 export const HOMEPAGE_POSTS_NUM = 4 as const;
-export const HOMEPAGE_PROJECTS_NUM = 1 as const;
+export const HOMEPAGE_PROJECTS_NUM = 4 as const;
 
 export const RECENT_POSTS_COUNT = 99;
 export const RECENT_PROJECTS_COUNT = 99;
