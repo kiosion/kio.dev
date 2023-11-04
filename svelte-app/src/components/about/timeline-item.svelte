@@ -1,6 +1,5 @@
 <script lang="ts">
   import BulletPoint from '$components/bullet-point.svelte';
-  // import Icon from '$components/icon.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   import type { AuthorTimelineItem } from '$types';
@@ -10,7 +9,6 @@
 
 <div class="item">
   <div>
-    <!-- <Icon icon="ArrowRight" class="mr-4" /> -->
     <BulletPoint />
     <span>
       <h2>{title}</h2>

@@ -46,7 +46,7 @@
 
   <Divider class="!-mt-2" />
 
-  <HeadedBlock heading={$t('Projects & Talks')}>
+  <HeadedBlock heading={$t('Projects')}>
     {#if projects.length}
       <div class="mt-8 flex flex-col gap-10">
         {#each sortedProjects as yearObj}
