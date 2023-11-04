@@ -70,20 +70,20 @@ export const structure = (
             .title('Projects')
             .items([
               S.listItem()
-                .title('Writeups')
+                .title('Published')
                 .icon(BsFillFileTextFill)
                 .child(
                   S.documentTypeList('project')
-                    .title('Writeups')
-                    .filter('_type == "project" && !external')
+                    .title('Published')
+                    .filter('_type == "project" && !(_id in path("drafts.**"))')
                 ),
               S.listItem()
-                .title('External')
-                .icon(BiLinkExternal)
+                .title('Drafts')
+                .icon(BsFillFileEarmarkTextFill)
                 .child(
                   S.documentTypeList('project')
-                    .title('External')
-                    .filter('_type == "project" && external == true')
+                    .title('Drafts')
+                    .filter('_type == "project" && _id in path("drafts.**")')
                 ),
               S.divider(),
               S.listItem()

@@ -8,47 +8,39 @@ export default {
   fields: [
     ...BaseDocument.filter((field) => field.name !== 'author'),
     {
-      name: 'external',
-      title: 'External',
-      type: 'boolean',
-      description: 'Is this project hosted on an external site?',
-      initialValue: false,
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'externalUrl',
-      title: 'External URL',
-      type: 'url',
-      description: 'Link to external project'
-    },
-    {
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: { type: 'author' }
     },
     {
-      name: 'externalAuthor',
-      title: 'External Author',
-      type: 'string',
-      description: 'Name of external author, if applicable'
-    },
-    {
-      name: 'image',
-      title: 'Project Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
+      name: 'images',
+      title: 'Project Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        }
+      ],
+      validation: (Rule: Rule) => Rule.max(4)
     },
     {
       name: 'language',
       title: 'Language',
       type: 'string',
-      description: 'Primary programming language used in project'
+      description: 'Primary language used in project'
     },
     {
-      name: 'externalLinks',
+      name: 'github',
+      title: 'Github Link',
+      type: 'url',
+      description: 'Github repository link'
+    },
+    {
+      name: 'links',
       title: 'External Links',
       type: 'array',
       of: [

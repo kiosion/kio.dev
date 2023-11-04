@@ -50,6 +50,7 @@ defmodule Router.Cdn do
       with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
              Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).get(url) do
         conn
+        |> put_resp_header("Access-Control-Allow-Origin", "*")
         |> put_resp_content_type("image/#{url_parts.filetype}")
         |> send_resp(200, body)
       else

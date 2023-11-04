@@ -1,11 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher, setContext } from 'svelte';
   import { circIn, circOut } from 'svelte/easing';
-  import { blur } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
 
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { setState } from '$lib/helpers/menu';
 
-  import { key } from './menu';
+  import { key } from '$components/context-menu/menu';
 
   export let x: number;
   export let y: number;
@@ -56,8 +57,14 @@
 
 <div
   style="top: {y}px; left: {x}px"
-  in:blur={{ duration: 200, easing: circOut }}
-  out:blur={{ duration: 200, easing: circIn }}
+  in:fade={{
+    duration: BASE_ANIMATION_DURATION * 0.5,
+    easing: circOut
+  }}
+  out:fade={{
+    duration: BASE_ANIMATION_DURATION * 0.5,
+    easing: circIn
+  }}
   bind:this={menuElement}
 >
   <slot />

@@ -6,9 +6,12 @@
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
+  import Divider from '$components/divider.svelte';
   import PostHeader from '$components/document/content/post/header.svelte';
   import ProjectHeader from '$components/document/content/project/header.svelte';
   import Icon from '$components/icon.svelte';
+  import Link from '$components/link.svelte';
+  import ImageCarousel from '$components/portable-text/image-carousel.svelte';
 
   import type { PostDocument, ProjectDocument, PTBlock } from '$types';
 
@@ -34,10 +37,19 @@
             <p class="cursor-default font-mono text-base">
               {date ? date : $t('Unknown date')}
             </p>
-            <BulletPoint />
-            <p class="cursor-default font-mono text-base">
-              {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
-            </p>
+            {#if data._type === 'post'}
+              <BulletPoint />
+              <p class="cursor-default font-mono text-base">
+                {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
+              </p>
+            {:else if data.github}
+              <BulletPoint />
+              <span class="font-mono text-base">
+                <Link href={data.github}>
+                  {'github/' + data.github.split('github.com/')?.[1]}
+                </Link>
+              </span>
+            {/if}
           </div>
           <ArrowButton
             class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
@@ -53,6 +65,25 @@
           </ArrowButton>
         </div>
       </svelte:fragment>
+      {#if data._type === 'project' && data.images?.length}
+        <Divider />
+        <ImageCarousel images={data.images} />
+      {/if}
+      {#if data._type === 'project' && data.tags?.length}
+        <Divider />
+        <div class="flex flex-row items-center justify-start gap-4">
+          <Icon icon="Label" class="ml-1" />
+          <div class="flex flex-row flex-wrap items-center justify-start gap-2">
+            {#each data.tags as tag}
+              <span
+                class="cursor-default rounded-sm border border-dark/60 px-1.5 py-0.5 font-mono text-sm transition-colors dark:border-light/60"
+              >
+                {tag.title}
+              </span>
+            {/each}
+          </div>
+        </div>
+      {/if}
     </svelte:component>
   </div>
 </div>

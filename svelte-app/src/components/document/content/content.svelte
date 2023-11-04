@@ -5,20 +5,14 @@
   import EmptyContent from '$components/empty-content.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type {
-    DocumentHeadings,
-    PostDocument,
-    ProjectDocument,
-    RouteFetch
-  } from '$types';
+  import type { PostDocument, ProjectDocument, RouteFetch } from '$types';
 
   export let data: PostDocument | ProjectDocument,
     model = data._type,
-    headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined;
 </script>
 
-<Header {data} {headings} />
+<Header {data} />
 <Divider />
 <div>
   {#if data.body}

@@ -11,15 +11,13 @@ export interface ProjectDocument extends Document {
     slug: SanityAsset & { current: string };
   };
   headings: DocumentHeadings[];
-  external: boolean;
-  externalAuthor?: string;
-  externalUrl?: string;
   desc?: string;
-  image?: SanityImageObject;
+  images?: SanityImageObject[];
   tags?: DocumentTags[];
   title: string;
   language?: string;
-  externalLinks?: {
+  github?: string;
+  links?: {
     _key: string;
     title: string;
     url: string;

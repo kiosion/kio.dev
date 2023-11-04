@@ -69,5 +69,5 @@
 </svelte:head>
 
 <ContentWrapper>
-  <Content {data} {headings} {routeFetch} />
+  <Content {data} />
 </ContentWrapper>

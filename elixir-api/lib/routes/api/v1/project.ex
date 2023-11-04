@@ -49,12 +49,10 @@ defmodule Router.Api.V1.Project do
           "body",
           "desc",
           "date",
-          "external",
-          "externalAuthor",
-          "externalLinks",
-          "externalUrl",
-          "image",
+          "images",
+          "links",
           "language",
+          "github",
           %{
             "tags[]" => [
               "_id",

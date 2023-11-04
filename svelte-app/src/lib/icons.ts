@@ -12,7 +12,9 @@ import ChevronDown from 'pixelarticons/svg/chevron-down.svg';
 import Code from 'pixelarticons/svg/code.svg';
 import Copy from 'pixelarticons/svg/copy.svg';
 import Downasaur from 'pixelarticons/svg/downasaur.svg';
+import ExternalLink from 'pixelarticons/svg/external-link.svg';
 import ForwardBurger from 'pixelarticons/svg/forwardburger.svg';
+import Label from 'pixelarticons/svg/label.svg';
 import Link from 'pixelarticons/svg/link.svg';
 import MailArrowRight from 'pixelarticons/svg/mail-arrow-right.svg';
 import MoonStars from 'pixelarticons/svg/moon-stars.svg';
@@ -25,7 +27,7 @@ import Sun from 'pixelarticons/svg/sun.svg';
 import type { PixelIcon } from '$types';
 import type { ComponentType } from 'svelte';
 
-const icons = {
+export const icons = {
   alert: Alert,
   'arrow-bar-up': ArrowBarUp,
   'arrow-left': ArrowLeft,
@@ -38,7 +40,9 @@ const icons = {
   code: Code,
   copy: Copy,
   downasaur: Downasaur,
+  'external-link': ExternalLink,
   'forward-burger': ForwardBurger,
+  label: Label,
   link: Link,
   'mail-arrow-right': MailArrowRight,
   'moon-stars': MoonStars,
@@ -47,7 +51,7 @@ const icons = {
   save: Save,
   script: Script,
   sun: Sun
-} as unknown as Record<string, ComponentType<PixelIcon>>;
+};
 
 const transformName = (name: string) => {
   return name
@@ -61,7 +65,7 @@ const getIcon = (iconName: string) => {
     Logger.error(`Icon ${name} not found`);
     name = 'alert';
   }
-  return icons[name];
+  return (icons as unknown as Record<string, ComponentType<PixelIcon>>)[name];
 };
 
 export default { get: getIcon };

@@ -2,7 +2,10 @@
   import { t } from '$i18n';
   import icons from '$lib/icons';
 
-  export let icon: string,
+  import type { icons as iconsType } from '$lib/icons';
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  export let icon: keyof typeof iconsType | (string & {}),
     hovered = false,
     inline = false,
     width = 20,
