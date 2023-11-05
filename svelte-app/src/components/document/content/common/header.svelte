@@ -13,9 +13,10 @@
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
 
-  import type { PostDocument, ProjectDocument, PTBlock } from '$types';
+  import type { PostDocument, ProjectDocument, ProjectImage, PTBlock } from '$types';
 
   export let data: PostDocument | ProjectDocument,
+    images: ProjectImage[] | undefined,
     model = data._type;
 
   const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
@@ -65,9 +66,9 @@
           </ArrowButton>
         </div>
       </svelte:fragment>
-      {#if data._type === 'project' && data.images?.length}
+      {#if data._type === 'project' && images?.length}
         <Divider />
-        <ImageCarousel images={data.images} />
+        <ImageCarousel {images} />
       {/if}
       {#if data._type === 'project' && data.tags?.length}
         <Divider />

@@ -7,5 +7,6 @@
 <DocumentRoute
   data={data.project}
   headings={data.project.headings}
+  images={data.images}
   routeFetch={data.routeFetch}
 />

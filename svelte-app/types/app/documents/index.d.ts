@@ -24,6 +24,19 @@ export interface DocumentHeadings {
   children?: DocumentHeadings[];
 }
 
+export type ProjectImage = {
+  crop: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+    width: number;
+    height: number;
+  };
+  placeholder?: string;
+  asset: Promise<string | undefined>;
+};
+
 export type { AuthorDocument, AuthorTimelineItem } from '$types/documents/author';
 export type { PostDocument } from '$types/documents/post';
 export type { ProjectDocument } from '$types/documents/project';

@@ -13,12 +13,14 @@
     DocumentHeadings,
     PostDocument,
     ProjectDocument,
+    ProjectImage,
     RouteFetch
   } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
   export let data: ProjectDocument | PostDocument,
     model = data._type,
+    images: ProjectImage[] | undefined,
     headings: DocumentHeadings[] | undefined,
     routeFetch: RouteFetch | undefined = undefined;
 
@@ -69,5 +71,5 @@
 </svelte:head>
 
 <ContentWrapper>
-  <Content {data} />
+  <Content {data} {images} />
 </ContentWrapper>

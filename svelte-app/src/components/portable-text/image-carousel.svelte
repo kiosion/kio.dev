@@ -1,14 +1,14 @@
 <script lang="ts">
+  import { writable } from 'svelte/store';
   import { crossfade, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { getCrop, urlFor } from '$lib/helpers/image';
 
   import ScrollButton from '$components/portable-text/image-carousel/scroll-button.svelte';
 
-  import type { SanityImageObject } from '$types';
+  import type { ProjectImage } from '$types';
 
-  export let images: SanityImageObject[];
+  export let images: ProjectImage[];
 
   let imageElements: HTMLImageElement[] = [],
     showImageModal = false,
@@ -45,31 +45,31 @@
       }
     });
 
-  $: values = images.map((image) => {
-    const crop = getCrop(image),
-      baseUrl = urlFor(image.asset._ref),
-      carouselDimensions = {
-        width: carouselMaxHeight * (crop.width / crop.height),
-        height: carouselMaxHeight
-      };
+  const values = writable(
+    images.map((image, i) => {
+      image.asset.then((res) =>
+        values.update((val) => {
+          res && (val[i].asset = res);
+          return val;
+        })
+      );
 
-    return {
-      crop,
-      carouselDimensions,
-      srcUrl: baseUrl
-        .height(600)
-        .rect(crop.left, crop.top, crop.width, crop.height)
-        .fit('crop')
-        .auto('format')
-        .url()
-    };
-  });
+      return {
+        crop: image.crop,
+        asset: image.placeholder,
+        carouselDimensions: {
+          width: carouselMaxHeight * (image.crop.width / image.crop.height),
+          height: carouselMaxHeight
+        }
+      };
+    })
+  );
 </script>
 
-<div class="relative w-full overflow-y-hidden overflow-x-scroll">
-  <div class="flex min-w-fit flex-row gap-4">
-    {#if values.length > 1}
-      {#each values as image, i}
+<div class="carousel">
+  <div class="scroller">
+    {#if $values.length > 1}
+      {#each $values as image, i}
         <button
           class="focusOutline-sm"
           style="
@@ -91,14 +91,14 @@
         >
           {#if showImageModal && currentIndex === i}
             <img
-              src={image.srcUrl}
+              src={image.asset}
               draggable="false"
               alt={i.toString()}
-              class="opacity-0"
+              style="opacity: 0;"
             />
           {:else}
             <img
-              src={image.srcUrl}
+              src={image.asset}
               draggable="false"
               alt={i.toString()}
               bind:this={imageElements[i]}
@@ -127,11 +127,11 @@
             this is just a style issue since the max-height isn't constrained
           -->
           {#await new Promise((r) => setTimeout(r, BASE_ANIMATION_DURATION)) then _}
-            <img src={values[0].srcUrl} draggable="false" alt="0" class="opacity-0" />
+            <img src={$values[0].asset} draggable="false" alt="0" style="opacity: 0;" />
           {/await}
         {:else}
           <img
-            src={values[0].srcUrl}
+            src={$values[0].asset}
             draggable="false"
             alt="0"
             bind:this={imageElements[0]}
@@ -182,9 +182,9 @@
   >
     <div>
       <img
-        src={values[currentIndex].srcUrl}
+        src={$values[currentIndex].asset}
         draggable="false"
-        alt="image-{currentIndex}"
+        alt={currentIndex.toString()}
         in:receive={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
         out:send={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
       />
@@ -192,12 +192,32 @@
   </dialog>
 {/if}
 
-<div class="flex w-full flex-row items-center justify-between">
+<div class="buttons">
   <ScrollButton dir="left" onClick={scrollLeft} disabled={imageElements.length === 1} />
   <ScrollButton dir="right" onClick={scrollRight} disabled={imageElements.length === 1} />
 </div>
 
 <style lang="scss">
+  .carousel {
+    @apply w-full overflow-y-hidden overflow-x-scroll;
+
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+      background: transparent;
+    }
+  }
+
+  .scroller {
+    @apply flex min-w-fit flex-row gap-4;
+  }
+
+  .buttons {
+    @apply flex w-full flex-row items-center justify-between;
+  }
+
   button {
     @apply relative;
 
