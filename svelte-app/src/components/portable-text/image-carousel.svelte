@@ -15,7 +15,10 @@
     dialog: HTMLDialogElement,
     currentIndex = 0;
 
-  const scrollIntoView = () =>
+  const imageBorderWidth = 1,
+    maxImageHeight = 400,
+    carouselMaxHeight = maxImageHeight + imageBorderWidth * 2,
+    scrollIntoView = () =>
       imageElements[currentIndex]?.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
@@ -45,7 +48,6 @@
   $: values = images.map((image) => {
     const crop = getCrop(image),
       baseUrl = urlFor(image.asset._ref),
-      carouselMaxHeight = 402,
       carouselDimensions = {
         width: carouselMaxHeight * (crop.width / crop.height),
         height: carouselMaxHeight
@@ -70,12 +72,12 @@
       {#each values as image, i}
         <button
           class="focusOutline-sm"
-          style={`
+          style="
             aspect-ratio: {image.crop.width} / {image.crop.height};
-            width: ${image.carouselDimensions.width}px;
-            height: ${image.carouselDimensions.height}px;
-            max-height: 402px;
-          `}
+            width: {image.carouselDimensions.width}px;
+            height: {image.carouselDimensions.height}px;
+            max-height: {carouselMaxHeight}px;
+          "
           on:click={() => {
             currentIndex = i;
             showImageModal = true;
@@ -93,14 +95,12 @@
               draggable="false"
               alt={i.toString()}
               class="opacity-0"
-              style="max-height: 402px;"
             />
           {:else}
             <img
               src={image.srcUrl}
               draggable="false"
               alt={i.toString()}
-              style="max-height: 402px;"
               bind:this={imageElements[i]}
               in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
               out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
