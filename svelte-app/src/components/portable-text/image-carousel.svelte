@@ -66,51 +66,81 @@
 
 <div class="relative w-full overflow-y-hidden overflow-x-scroll">
   <div class="flex min-w-fit flex-row gap-4">
-    {#each values as image, i}
-      <button
-        class="focusOutline-sm"
-        style={values.length > 1
-          ? `
+    {#if values.length > 1}
+      {#each values as image, i}
+        <button
+          class="focusOutline-sm"
+          style={`
             aspect-ratio: {image.crop.width} / {image.crop.height};
             width: ${image.carouselDimensions.width}px;
             height: ${image.carouselDimensions.height}px;
             max-height: 402px;
-          `
-          : `
-            width: 100%;
           `}
+          on:click={() => {
+            currentIndex = i;
+            showImageModal = true;
+          }}
+          on:keydown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              currentIndex = i;
+              showImageModal = true;
+            }
+          }}
+        >
+          {#if showImageModal && currentIndex === i}
+            <img
+              src={image.srcUrl}
+              draggable="false"
+              alt={i.toString()}
+              class="opacity-0"
+              style="max-height: 402px;"
+            />
+          {:else}
+            <img
+              src={image.srcUrl}
+              draggable="false"
+              alt={i.toString()}
+              style="max-height: 402px;"
+              bind:this={imageElements[i]}
+              in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
+              out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
+            />
+          {/if}
+        </button>
+      {/each}
+    {:else}
+      <button
+        class="focusOutline-sm"
+        style="width: 100%;"
         on:click={() => {
-          currentIndex = i;
           showImageModal = true;
         }}
         on:keydown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
-            currentIndex = i;
             showImageModal = true;
           }
         }}
       >
-        {#if showImageModal && currentIndex === i}
-          <img
-            src={image.srcUrl}
-            draggable="false"
-            alt="image-{i}"
-            class="opacity-0"
-            style={values.length > 1 ? 'max-height: 402px;' : ''}
-          />
+        {#if showImageModal}
+          <!--
+            Wow this is jank and sucks and needs to be rewritten properly,
+            this is just a style issue since the max-height isn't constrained
+          -->
+          {#await new Promise((r) => setTimeout(r, BASE_ANIMATION_DURATION)) then _}
+            <img src={values[0].srcUrl} draggable="false" alt="0" class="opacity-0" />
+          {/await}
         {:else}
           <img
-            src={image.srcUrl}
+            src={values[0].srcUrl}
             draggable="false"
-            alt="image-{i}"
-            style={values.length > 1 ? 'max-height: 402px;' : ''}
-            bind:this={imageElements[i]}
-            in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
-            out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
+            alt="0"
+            bind:this={imageElements[0]}
+            in:receive={{ key: 0, duration: BASE_ANIMATION_DURATION }}
+            out:send={{ key: 0, duration: BASE_ANIMATION_DURATION }}
           />
         {/if}
       </button>
-    {/each}
+    {/if}
   </div>
 </div>
 

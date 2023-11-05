@@ -40,7 +40,7 @@
         {/each}
       </div>
     {:else}
-      <div class="flex flex-row items-center justify-start gap-4">
+      <div class="flex flex-row items-center justify-start gap-5">
         <span class="relative mt-0.5 h-fit w-fit">
           <a
             class="focusOutline no-select h-12 w-fit rounded-sm py-3 font-code text-xl font-black leading-none transition-[color,opacity]"
@@ -61,7 +61,7 @@
           class="pointer-events-none mb-0.5 hidden select-none font-code text-2xl text-accent-light/80 transition-[color] dark:text-accent-dark/80 md:block"
           aria-hidden="true">|</span
         >
-        <div class="hidden flex-row items-center justify-start gap-6 md:flex" role="menu">
+        <div class="hidden flex-row items-center justify-start gap-5 md:flex" role="menu">
           {#each NAV_LINKS as link}
             <NavLink {link} />
           {/each}
