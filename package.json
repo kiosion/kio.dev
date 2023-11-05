@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^14.0.1"
+    "lint-staged": "^15.0.2"
   },
   "scripts": {
     "prepare": "test -f ./.husky/pre-commit || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
