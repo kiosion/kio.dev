@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^7.22.9
     version: 7.22.9
   '@babel/eslint-parser':
-    specifier: ^7.22.9
-    version: 7.22.9(@babel/core@7.22.9)(eslint@8.47.0)
+    specifier: ^7.22.15
+    version: 7.22.15(@babel/core@7.22.9)(eslint@8.47.0)
   '@babel/preset-env':
     specifier: ^7.22.9
     version: 7.22.9(@babel/core@7.22.9)
@@ -130,11 +130,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/eslint-parser@7.22.9(@babel/core@7.22.9)(eslint@8.47.0):
-    resolution: {integrity: sha512-xdMkt39/nviO/4vpVdrEYPwXCsYIXSSAr6mC7WQsNIlGnuxKyKE7GZjalcnbSWiC4OXGNNN3UQPeHfjSC6sTDA==}
+  /@babel/eslint-parser@7.22.15(@babel/core@7.22.9)(eslint@8.47.0):
+    resolution: {integrity: sha512-yc8OOBIQk1EcRrpizuARSQS0TWAcOMpEJ1aafhNznaeYkeL+OhqnDObGFylB8ka8VFF/sZc+S4RzHyO+3LjQxg==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
-      '@babel/core': '>=7.11.0'
+      '@babel/core': ^7.11.0
       eslint: ^7.5.0 || ^8.0.0
     dependencies:
       '@babel/core': 7.22.9
@@ -3695,7 +3695,7 @@ packages:
     resolution: {integrity: sha512-Z+dHfpvHnhtJBNLULPOFfCZcc5V3BXu28gicPSJGguhqjTjSW8uc/Oerf9ooLdHn0pupcP4owUTlrvpbGyzVrg==}
     dependencies:
       '@babel/core': 7.22.9
-      '@babel/eslint-parser': 7.22.9(@babel/core@7.22.9)(eslint@8.47.0)
+      '@babel/eslint-parser': 7.22.15(@babel/core@7.22.9)(eslint@8.47.0)
       '@babel/preset-env': 7.22.9(@babel/core@7.22.9)
       '@babel/preset-react': 7.22.5(@babel/core@7.22.9)
       '@rushstack/eslint-patch': 1.3.2
