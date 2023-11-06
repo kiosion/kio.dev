@@ -163,6 +163,7 @@ defmodule TestFixtures do
             "current" => "some-post"
           },
           "date" => "2022-08-26",
+          "views" => 99,
           "numberOfCharacters" => 55,
           "_id" => "b0a22943-b747-42df-84cd-573503332428",
           "_rev" => "DFeMJDW0bXSE9MGpOVLqKO",
@@ -211,6 +212,69 @@ defmodule TestFixtures do
         }
       ],
       :ms => 1
+    }
+  end
+
+  def stub_post() do
+    %{
+      "query" =>
+        "*[!(_id in path('drafts.**')) && _type == 'post' && slug.current == 'some-post'][0]",
+      "result" => %{
+        "estimatedWordCount" => 11,
+        "_type" => "post",
+        "tags" => nil,
+        "slug" => %{
+          "_type" => "slug",
+          "current" => "some-post"
+        },
+        "date" => "2022-08-26",
+        "numberOfCharacters" => 55,
+        "_id" => "b0a22943-b747-42df-84cd-573503332428",
+        "_rev" => "DFeMJDW0bXSE9MGpOVLqKO",
+        "title" => "Some post",
+        "views" => 99,
+        "objectID" => "b0a22943-b747-42df-84cd-573503332428",
+        "publishedAt" => nil,
+        "author" => %{
+          "image" => %{
+            "hotspot" => %{
+              "y" => 0.5757667596072251,
+              "height" => 0.13625894047763232,
+              "_type" => "sanity.imageHotspot",
+              "width" => 0.0582191780821919,
+              "x" => 0.31164383561643844
+            },
+            "_type" => "image",
+            "asset" => %{
+              "_ref" => "image-7b9e5cf017754bff4e8627a8e55dcd8cfb9c587c-4096x1854-jpg",
+              "_type" => "reference"
+            },
+            "crop" => %{}
+          },
+          "_id" => "me",
+          "_type" => "author",
+          "name" => "Kio",
+          "slug" => nil
+        },
+        "body" => [
+          %{
+            "markDefs" => [],
+            "children" => [
+              %{
+                "text" => "This post now has actual body content! Revolutionary...",
+                "_key" => "f231f8e8847b",
+                "_type" => "span",
+                "marks" => []
+              }
+            ],
+            "_type" => "block",
+            "style" => "normal",
+            "_key" => "cda99f79ba00"
+          }
+        ],
+        "desc" => "Something interesting",
+        "estimatedReadingTime" => 0
+      }
     }
   end
 

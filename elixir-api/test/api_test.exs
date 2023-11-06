@@ -139,6 +139,51 @@ defmodule ApiTest do
     assert body["detail"] == "Invalid or missing parameters"
   end
 
+  test "Getting /{post,project}/:id should increment views" do
+    Hexerei.HTTP.MockClient
+    |> Mox.expect(
+      :get,
+      1,
+      fn _url, _headers ->
+        {:ok,
+         %HTTPoison.Response{
+           body: Poison.encode!(TestFixtures.stub_post()),
+           status_code: 200
+         }}
+      end
+    )
+    |> Mox.expect(
+      :post,
+      1,
+      fn url, body, _params ->
+        assert String.contains?(url, "mutate")
+        assert String.contains?(body, "inc")
+
+        {:ok,
+         %HTTPoison.Response{
+           body: Poison.encode!(%{}),
+           status_code: 200
+         }}
+      end
+    )
+
+    conn =
+      conn(:get, "/api/v1/query/post/abc")
+      |> put_req_header("authorization", @authorization)
+      |> Hexerei.Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 200
+
+    # Wait for the async task to finish
+    assert_receive {:increment_view_count_done, :ok}, 5000
+
+    body = Poison.decode!(conn.resp_body)
+
+    assert body != []
+    assert body["data"] != nil
+  end
+
   test "Get about" do
     mock_response = %HTTPoison.Response{
       body: Poison.encode!(TestFixtures.stub_about()),

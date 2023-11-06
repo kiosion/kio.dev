@@ -19,9 +19,8 @@ defmodule Hexerei.SanityClient.Utils do
     with true <- String.contains?(query, "path('drafts.**')"),
          result <- QueryCache.get("#{query}"),
          true <- result != nil do
-      with {:arity, 3} <- :erlang.fun_info(cb, :arity) do
-        cb.(conn, Poison.decode!(result), init_duration || 0)
-      else
+      case :erlang.fun_info(cb, :arity) do
+        {:arity, 3} -> cb.(conn, Poison.decode!(result), init_duration || 0)
         _ -> cb.(conn, Poison.decode!(result))
       end
     else
@@ -51,6 +50,22 @@ defmodule Hexerei.SanityClient.Utils do
         end
     end
   end
+
+  def try_increment_view_count(query, caller \\ self()),
+    do:
+      Task.start(fn ->
+        result =
+          case Sanity.patch(query, %{"inc" => %{"views" => 1}}) do
+            {:ok, _response} ->
+              :ok
+
+            {:error, error} ->
+              Logger.error("Failed to increment view count: #{inspect(error)}")
+              :error
+          end
+
+        send(caller, {:increment_view_count_done, result})
+      end)
 
   def limit_query(query, params) do
     case params["limit"] > 0 do

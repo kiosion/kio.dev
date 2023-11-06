@@ -33,6 +33,12 @@ export default [
     initialValue: () => new Date()
   },
   {
+    name: 'views',
+    title: 'Views',
+    type: 'number',
+    initialValue: () => 0
+  },
+  {
     name: 'author',
     title: 'Author',
     type: 'reference',

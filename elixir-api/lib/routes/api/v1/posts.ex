@@ -65,6 +65,7 @@ defmodule Router.Api.V1.Posts do
           "_type",
           "title",
           "publishedAt",
+          "views",
           %{
             "'author'" => [
               ["'_id'", ["author", "_id", :follow]],

@@ -75,6 +75,7 @@ defmodule Router.Api.V1.Projects do
           "body",
           "desc",
           "date",
+          "views",
           "images",
           "links",
           "language",

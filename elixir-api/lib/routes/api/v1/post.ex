@@ -42,6 +42,7 @@ defmodule Router.Api.V1.Post do
           "_rev",
           "_type",
           "title",
+          "views",
           "publishedAt",
           %{
             "'author'" => [
@@ -84,6 +85,8 @@ defmodule Router.Api.V1.Post do
                }, 404}
 
             _ ->
+              try_increment_view_count(query)
+
               {Translate.handle_translate(:post, result, params["lang"]),
                %{
                  "total" => 1,

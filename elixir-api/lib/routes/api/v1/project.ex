@@ -46,6 +46,7 @@ defmodule Router.Api.V1.Project do
               ["'image'", ["author", "image", :follow]]
             ]
           },
+          "views",
           "body",
           "desc",
           "date",
@@ -80,6 +81,8 @@ defmodule Router.Api.V1.Project do
                }, 404}
 
             _ ->
+              try_increment_view_count(query)
+
               {
                 Translate.handle_translate(:project, result, params["lang"]),
                 %{

@@ -20,11 +20,22 @@ defmodule Hexerei.SanityClient do
     else
       _ ->
         Logger.error("Sanity Client: Failed to load expected environment variables for base_url")
+        nil
+    end
+  end
 
-        Logger.error(
-          "Sanity Client: Failed to load: #{if(project_id == nil, do: "project_id", else: "")} #{if(api_version == nil, do: "api_version", else: "")} #{if(dataset == nil, do: "dataset", else: "")}"
-        )
+  defp get_patch_url do
+    project_id = Hexerei.Env.get!(:sanity_project_id)
+    api_version = Hexerei.Env.get!(:sanity_api_version)
+    dataset = Hexerei.Env.get!(:sanity_dataset)
 
+    with {:ok, _} <- is_valid_string?(project_id),
+         {:ok, _} <- is_valid_string?(api_version),
+         {:ok, _} <- is_valid_string?(dataset) do
+      "https://#{project_id}.api.sanity.io/v#{api_version}/data/mutate/#{dataset}"
+    else
+      _ ->
+        Logger.error("Sanity Client: Failed to load expected environment variables for patch_url")
         nil
     end
   end
@@ -92,6 +103,49 @@ defmodule Hexerei.SanityClient do
     else
       {:error, _} -> {:error, %{code: 400, message: "Query must be a string and not empty"}}
     end
+  end
+
+  @doc """
+  Send a transactional mutation to the sanity API.
+
+  ## Examples
+      iex> Hexerei.SanityClient.patch(
+          "*[_type == 'post' && _id == 'abc']",
+          %{ "set" => %{ "name" => "John Doe" } }
+        )
+      {:ok, data} | {:error, %{code, message}}
+  """
+  def patch(query, changeset) when is_binary(query) and is_map(changeset) do
+    url = get_patch_url()
+
+    transactions = %{
+      "mutations" => [
+        %{"patch" => Map.merge(%{"query" => query}, changeset)}
+      ]
+    }
+
+    payload = Poison.encode!(transactions)
+
+    Logger.info("Sanity Client: Sending mutation to #{url}: #{inspect(payload)}")
+
+    case Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).post(
+           url,
+           payload,
+           get_headers()
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, body}
+
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
+        {:error, %{code: status_code, message: "Sanity error: #{body}"}}
+
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, %{code: 500, message: "Sanity error: #{reason}"}}
+    end
+  end
+
+  def patch(_query, _changeset) do
+    {:error, %{code: 400, message: "Query must be binary and changeset must be a valid map"}}
   end
 
   @doc """
