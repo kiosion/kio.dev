@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { derived } from 'svelte/store';
+
   import { formatDate, getReadingTime } from '$helpers/date';
   import { getTotalWords } from '$helpers/pt';
   import { currentLang, linkTo, t } from '$i18n';
@@ -19,7 +21,23 @@
     images: ProjectImage[] | undefined,
     model = data._type;
 
-  const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
+  const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[])),
+    parsedViews = derived(currentLang, (currentLang) => {
+      if (!data.views || data.views < 1) {
+        return 0;
+      }
+
+      try {
+        const parser = new Intl.NumberFormat(currentLang, {
+          notation: 'compact',
+          compactDisplay: 'short'
+        });
+
+        return parser.format(data.views);
+      } catch {
+        return data.views;
+      }
+    });
 
   $: date = formatDate(data.date, 'full', $currentLang);
 </script>
@@ -43,6 +61,12 @@
               <p class="cursor-default font-mono text-base">
                 {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
               </p>
+              {#if data.views}
+                <BulletPoint />
+                <p class="cursor-default font-mono text-base">
+                  {$t('{views} views', { views: $parsedViews })}
+                </p>
+              {/if}
             {:else if data.github}
               <BulletPoint />
               <span class="font-mono text-base">
@@ -53,7 +77,7 @@
             {/if}
           </div>
           <ArrowButton
-            class="focusOutline-sm -mb-1 flex-1 whitespace-nowrap rounded-sm text-right"
+            class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap rounded-sm text-right sm:block"
             href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
             preload
           >

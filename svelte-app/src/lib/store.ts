@@ -37,7 +37,7 @@ type QueryResponse<T> =
     }
   | undefined;
 
-const EXP_TIME = 1000 * 60 * 30; // 30 minutes
+const EXP_TIME = 1000 * 60 * 15; // 15 minutes
 
 const documentCache: Record<
   string,

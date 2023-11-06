@@ -6,6 +6,7 @@ export interface Document extends SanityAsset {
   };
   body: PTBlock[];
   date: string;
+  views?: number;
 }
 
 export interface DocumentTags extends SanityAsset {

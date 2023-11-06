@@ -117,5 +117,6 @@
   "to": "à",
   "what I'm up to right now": "ce que je fais a présent",
   "{duration} ago": "il y a {duration}",
-  "{length} min read": "{length} minute de lecture"
+  "{length} min read": "{length} minute de lecture",
+  "{views} views": "{views} vues"
 }
