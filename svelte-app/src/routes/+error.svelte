@@ -51,16 +51,15 @@
   {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
 </p>
 <p class="my-4 text-base">
-  {$t('Click here to')}
   <Link
-    aria-label={$t('Go back')}
     on:click={() => {
       window.history.back();
     }}
     on:keydown={() => {
       window.history.back();
-    }}>{$t('go back')}</Link
-  >.
+    }}>{$t('Click here to')}</Link
+  >
+  {$t('go back')}.
 </p>
 {#if stack}
   <Divider />

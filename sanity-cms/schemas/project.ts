@@ -28,12 +28,6 @@ export default {
       validation: (Rule: Rule) => Rule.max(4)
     },
     {
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      description: 'Primary language used in project'
-    },
-    {
       name: 'github',
       title: 'Github Link',
       type: 'url',

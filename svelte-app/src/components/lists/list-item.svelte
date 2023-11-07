@@ -1,6 +1,7 @@
 <script lang="ts">
   import { currentLang, linkTo, t } from '$i18n';
   import { formatDate } from '$lib/helpers/date';
+  import { parseViews } from '$lib/views';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
@@ -8,8 +9,6 @@
   import type { PostDocument, ProjectDocument } from '$types';
 
   export let document: PostDocument | ProjectDocument,
-    type = document._type,
-    external = document._type === 'project' ? document.external : false,
     small = false;
 
   let hovered = false;
@@ -17,60 +16,48 @@
   const link =
     document._type === 'post'
       ? `/blog/${document.slug.current}`
-      : external
-      ? document.externalUrl ?? `/work/${document.slug.current}`
       : `/work/${document.slug.current}`;
 </script>
 
 <Hoverable bind:hovered>
-  {#if small}
-    <a
-      href={$linkTo(link)}
-      target={external ? '_blank' : undefined}
-      class="focusOutline flex w-full flex-row items-start justify-start gap-2 rounded-sm"
-      tabindex="0"
-      data-sveltekit-preload-code
-      data-sveltekit-preload-data
+  <a
+    href={$linkTo(link)}
+    class="focusOutline w-full rounded-md"
+    tabindex="0"
+    data-sveltekit-preload-code
+    data-sveltekit-preload-data
+  >
+    <div
+      class="mt-0.5 flex flex-row items-center justify-start font-mono text-sm text-dark/80 transition-colors dark:text-light/80 {small
+        ? 'mb-1.5'
+        : 'mb-2'}"
+      class:gap-3={document.tags?.length}
+      class:gap-0.5={!document.tags?.length}
     >
-      <p
-        class="mt-0.5 block w-[72px] flex-shrink-0 font-mono text-sm transition-colors"
-        aria-label={$t('Date posted')}
-      >
-        {formatDate(document.date || document._createdAt, 'med', $currentLang)}
+      <p aria-label={$t('Date posted')}>
+        {formatDate(document.date || document._createdAt, 'dayMonth', $currentLang)}
       </p>
-      <p
-        class="block text-base text-black decoration-accent-light decoration-2 underline-offset-2 transition-colors dark:text-white dark:decoration-accent-dark"
-        class:underline={hovered}
-      >
-        {document.title}
-      </p>
-    </a>
-  {:else}
-    <a
-      href={$linkTo(link)}
-      target={external ? '_blank' : undefined}
-      class="focusOutline flex w-full flex-col items-start justify-start gap-2 rounded-md"
-      tabindex="0"
-      data-sveltekit-preload-code
-      data-sveltekit-preload-data
+      {#if document.tags?.length}
+        <span
+          class="rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
+          >{document.tags[0].title.toLowerCase()}</span
+        >
+      {:else}
+        <BulletPoint />
+      {/if}
+      <p>{$t('{views} views', { views: $parseViews(document.views) })}</p>
+    </div>
+
+    <h1
+      class="min-w-fit font-display font-medium decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark {small
+        ? 'text-lg decoration-2 underline-offset-2'
+        : 'text-xl decoration-[3px] underline-offset-4'}"
+      class:underline={hovered}
     >
-      <div class="flex flex-row gap-4">
-        <p class="mt-0.5 block w-14 flex-shrink-0 font-code text-base transition-colors">
-          {formatDate(document.date || document._createdAt, 'dayMonth', $currentLang)}
-        </p>
-        <div class="flex flex-row items-center justify-start gap-2 transition-colors">
-          <h1
-            class="min-w-fit font-display text-lg font-medium decoration-accent-light decoration-[3px] underline-offset-4 dark:decoration-accent-dark"
-            class:underline={hovered}
-          >
-            {document.title}
-          </h1>
-          {#if type === 'project' && document.desc}
-            <BulletPoint class="flex-shrink-0" />
-            <p class="line-clamp-1 text-base">{document.desc}</p>
-          {/if}
-        </div>
-      </div>
-    </a>
-  {/if}
+      {document.title}
+    </h1>
+    {#if document.desc?.length && !small}
+      <p class="mt-2 line-clamp-1 text-base">{document.desc}</p>
+    {/if}
+  </a>
 </Hoverable>

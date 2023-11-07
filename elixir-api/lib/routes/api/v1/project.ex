@@ -52,7 +52,6 @@ defmodule Router.Api.V1.Project do
           "date",
           "images",
           "links",
-          "language",
           "github",
           %{
             "tags[]" => [

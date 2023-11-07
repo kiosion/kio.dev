@@ -19,21 +19,8 @@ describe('E2E | Blog', () => {
     cy.visit('/blog');
 
     cy.get('div.main', { timeout: 4000 }).should('exist');
-    cy.get('div.main').should('contain', 'Recent posts');
+    cy.get('div.main').should('contain', 'Recent thoughts');
   });
-
-  // TODO: This should be a separate test
-  // it('should display loading indicator until ready', () => {
-  //   setupContext({ delay: 2000 }).as('getPosts');
-
-  //   cy.visit('/blog');
-
-  //   cy.get('[data-test-id="loader-full"]', { timeout: 6000 }).should('be.visible');
-
-  //   cy.wait('@getPosts');
-
-  //   cy.get('[data-test-id="loader-full"]', { timeout: 6000 }).should('not.exist');
-  // });
 
   // TODO: Re-write after proper stubbing of api.
 });

@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { t } from '$i18n';
   import { APP_VERSION } from '$lib/env';
 
   import Divider from '$components/divider.svelte';
-
-  import Icon from './icon.svelte';
+  import Icon from '$components/icon.svelte';
 
   import type { SiteConfig } from '$types';
 
@@ -38,6 +38,7 @@
           target="_blank"
           rel="noopener noreferrer"
           href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
+          aria-label={$t('View latest commit on GitHub')}
         >
           <Icon icon="GitCommit" inline />
           {APP_VERSION.slice(0, 6)}
@@ -63,12 +64,14 @@
   }
 
   a {
-    @apply text-dark/80;
+    @apply rounded-sm text-dark/80;
 
     &:hover,
     &:focus-visible {
       @apply text-accent-light;
     }
+
+    @include focus-state(sm);
   }
 
   .version {
@@ -89,6 +92,8 @@
       &:focus-visible {
         @apply text-accent-dark;
       }
+
+      @include focus-state(sm, dark);
     }
   }
 </style>

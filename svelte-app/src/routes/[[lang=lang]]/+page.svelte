@@ -33,70 +33,32 @@
 
 <Divider />
 
-<HeadedBlock heading={$t('Recent posts')}>
+<HeadedBlock heading={$t('Recent thoughts')}>
   {#if data.posts.length}
-    <div class="item-list" role="group" aria-label={$t('Posts')}>
+    <div role="group" aria-label={$t('Posts')}>
       {#each data.posts as post}
         <ListItem document={post} small />
       {/each}
-      <div class="list-end">
-        <span />
-        <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
-          <span class="flex items-center justify-start gap-2">
-            <p>{$t('See more')}</p>
-            <Icon icon="ArrowRight" width={18} inline />
-          </span>
-        </ArrowButton>
-      </div>
     </div>
+    <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
+      <span class="flex items-center justify-start gap-2">
+        <p>{$t('See more')}</p>
+        <Icon icon="ArrowRight" width={18} inline />
+      </span>
+    </ArrowButton>
   {:else}
-    <div class="item-list">
-      <p>
-        {$t('No content')}
-      </p>
-    </div>
-  {/if}
-</HeadedBlock>
-
-<HeadedBlock heading={$t('Recent projects')}>
-  {#if data.projects.length}
-    <div class="item-list" role="group" aria-label={$t('Projects')}>
-      {#each data.projects as project}
-        <ListItem document={project} small />
-      {/each}
-      <div class="list-end">
-        <span />
-        <ArrowButton class="w-full" href={$linkTo('/work')} preload>
-          <span class="flex items-center justify-start gap-2">
-            <p>{$t('See more')}</p>
-            <Icon icon="ArrowRight" width={18} inline />
-          </span>
-        </ArrowButton>
-      </div>
-    </div>
-  {:else}
-    <div class="item-list">
-      <p>
-        {$t('No content')}
-      </p>
+    <div>
+      <p>{$t('No content')}</p>
     </div>
   {/if}
 </HeadedBlock>
 
 <style lang="scss">
-  .item-list {
-    @apply flex flex-col gap-y-5 pt-4;
+  div {
+    @apply mb-6 mt-5 flex flex-col gap-y-5;
 
     > p {
       @apply p-4 font-code;
-    }
-  }
-
-  .list-end {
-    @apply flex w-full flex-row items-start justify-start gap-2;
-
-    > span {
-      @apply block w-[72px] flex-shrink-0;
     }
   }
 </style>

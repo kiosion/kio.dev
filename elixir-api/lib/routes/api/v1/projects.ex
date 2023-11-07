@@ -78,7 +78,6 @@ defmodule Router.Api.V1.Projects do
           "views",
           "images",
           "links",
-          "language",
           "github",
           %{
             "tags[]" => [

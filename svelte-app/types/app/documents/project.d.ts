@@ -15,7 +15,6 @@ export interface ProjectDocument extends Document {
   images?: SanityImageObject[];
   tags?: DocumentTags[];
   title: string;
-  language?: string;
   github?: string;
   links?: {
     _key: string;

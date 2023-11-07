@@ -192,10 +192,12 @@
   </dialog>
 {/if}
 
-<div class="buttons">
-  <ScrollButton dir="left" onClick={scrollLeft} disabled={imageElements.length === 1} />
-  <ScrollButton dir="right" onClick={scrollRight} disabled={imageElements.length === 1} />
-</div>
+{#if imageElements.length > 1}
+  <div class="buttons">
+    <ScrollButton dir="left" onClick={scrollLeft} />
+    <ScrollButton dir="right" onClick={scrollRight} />
+  </div>
+{/if}
 
 <style lang="scss">
   .carousel {

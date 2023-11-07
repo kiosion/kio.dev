@@ -40,7 +40,7 @@
     }
 
     p {
-      @apply font-mono text-base transition-colors;
+      @apply text-right font-mono text-base text-dark/80 transition-colors;
     }
   }
 
@@ -51,6 +51,12 @@
   :global(.dark) {
     h2 {
       @apply text-white;
+    }
+
+    div {
+      p {
+        @apply text-light/80;
+      }
     }
   }
 </style>
