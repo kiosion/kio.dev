@@ -7,7 +7,6 @@
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import Link from '$components/link.svelte';
 
   let message = 'Sorry, something went wrong. Please try again later',
@@ -45,40 +44,36 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<div class="mt-12">
-  <ContentWrapper>
-    <h3 class="mb-5 font-code text-3xl font-bold">
-      {status}: {$t(title)}
-    </h3>
-    <p class="my-4 text-base">
-      {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
-    </p>
-    <p class="my-4 text-base">
-      {$t('Click here to')}
-      <Link
-        aria-label={$t('Go back')}
-        on:click={() => {
-          window.history.back();
-        }}
-        on:keydown={() => {
-          window.history.back();
-        }}>{$t('go back')}</Link
-      >.
-    </p>
-    {#if stack}
-      <Divider />
-      <ArrowButton class="w-full text-left" on:click={() => (showStack = !showStack)}>
-        {showStack ? $t('Hide stack trace') : $t('Show stack trace')}
-        <span class="inline-block {showStack ? 'rotate-90' : '-rotate-90'}">&larr;</span>
-      </ArrowButton>
-      {#if showStack}
-        <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
-          <pre
-            class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">
-              {stack}
-            </pre>
-        </div>
-      {/if}
-    {/if}
-  </ContentWrapper>
-</div>
+<h3 class="mb-5 mt-12 font-code text-3xl font-bold">
+  {status}: {$t(title)}
+</h3>
+<p class="my-4 text-base">
+  {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
+</p>
+<p class="my-4 text-base">
+  {$t('Click here to')}
+  <Link
+    aria-label={$t('Go back')}
+    on:click={() => {
+      window.history.back();
+    }}
+    on:keydown={() => {
+      window.history.back();
+    }}>{$t('go back')}</Link
+  >.
+</p>
+{#if stack}
+  <Divider />
+  <ArrowButton class="w-full text-left" on:click={() => (showStack = !showStack)}>
+    {showStack ? $t('Hide stack trace') : $t('Show stack trace')}
+    <span class="inline-block {showStack ? 'rotate-90' : '-rotate-90'}">&larr;</span>
+  </ArrowButton>
+  {#if showStack}
+    <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
+      <pre
+        class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">
+          {stack}
+        </pre>
+    </div>
+  {/if}
+{/if}

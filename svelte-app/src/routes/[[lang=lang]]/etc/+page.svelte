@@ -4,7 +4,6 @@
 
   import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import Link from '$components/link.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
@@ -26,27 +25,24 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<ContentWrapper>
-  <HeadedBlock icon="Message" heading={$t('Say hello')}>
-    <PortableText text={data.about.contact} />
-  </HeadedBlock>
+<HeadedBlock icon="Message" heading={$t('Say hello')}>
+  <PortableText text={data.about.contact} />
+</HeadedBlock>
 
-  <Divider />
+<Divider />
 
-  <HeadedBlock icon="LockOpen" heading={$t('PGP')}>
-    <p>
-      {$t("Want to send a secure message my way? Here's my main PGP key:")}
-      <Link href="/pgp.txt" newtab>D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link
-      >
-    </p>
-  </HeadedBlock>
+<HeadedBlock icon="LockOpen" heading={$t('PGP')}>
+  <p>
+    {$t("Want to send a secure message my way? Here's my main PGP key:")}
+    <Link href="/pgp.txt" newtab>D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link>
+  </p>
+</HeadedBlock>
 
-  <Divider />
+<Divider />
 
-  <HeadedBlock icon="InfoBox" heading={$t('Meta')}>
-    <PortableText text={data.about.body} />
-  </HeadedBlock>
-</ContentWrapper>
+<HeadedBlock icon="InfoBox" heading={$t('Meta')}>
+  <PortableText text={data.about.body} />
+</HeadedBlock>
 
 <style lang="scss">
   p {

@@ -14,6 +14,7 @@ import Copy from 'pixelarticons/svg/copy.svg';
 import Downasaur from 'pixelarticons/svg/downasaur.svg';
 import ExternalLink from 'pixelarticons/svg/external-link.svg';
 import ForwardBurger from 'pixelarticons/svg/forwardburger.svg';
+import GitCommit from 'pixelarticons/svg/git-commit.svg';
 import Label from 'pixelarticons/svg/label.svg';
 import Link from 'pixelarticons/svg/link.svg';
 import MailArrowRight from 'pixelarticons/svg/mail-arrow-right.svg';
@@ -42,6 +43,7 @@ export const icons = {
   downasaur: Downasaur,
   'external-link': ExternalLink,
   'forward-burger': ForwardBurger,
+  'git-commit': GitCommit,
   label: Label,
   link: Link,
   'mail-arrow-right': MailArrowRight,

@@ -7,22 +7,13 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
 
   import Content from '$components/document/content/content.svelte';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
 
-  import type {
-    DocumentHeadings,
-    PostDocument,
-    ProjectDocument,
-    ProjectImage,
-    RouteFetch
-  } from '$types';
+  import type { PostDocument, ProjectDocument, ProjectImage } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
   export let data: ProjectDocument | PostDocument,
     model = data._type,
-    images: ProjectImage[] | undefined,
-    headings: DocumentHeadings[] | undefined,
-    routeFetch: RouteFetch | undefined = undefined;
+    images: ProjectImage[] | undefined;
 
   let pageUnsubscriber: Unsubscriber;
 
@@ -70,6 +61,4 @@
   />
 </svelte:head>
 
-<ContentWrapper>
-  <Content {data} {images} />
-</ContentWrapper>
+<Content {data} {images} />

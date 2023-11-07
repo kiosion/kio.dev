@@ -9,15 +9,16 @@
   import { useMediaQuery } from 'svelte-breakpoints';
 
   import { browser } from '$app/environment';
-  import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { navigating, page } from '$app/stores';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
-  import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
+  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import Settings, { loading } from '$stores/settings';
 
   import ContextMenu from '$components/context-menu.svelte';
+  import Footer from '$components/footer.svelte';
+  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import Nav from '$components/nav.svelte';
@@ -45,20 +46,6 @@
       }
     };
 
-  beforeNavigate(() => {
-    setLoadingTimer && clearTimeout(setLoadingTimer);
-    if (get(navigating)?.from !== get(navigating)?.to) {
-      setLoadingTimer = setTimeout(() => loading.set(true), 500);
-    }
-  });
-
-  afterNavigate(() => {
-    if (setLoadingTimer) {
-      clearTimeout(setLoadingTimer);
-    }
-    loading.set(false);
-  });
-
   unsubscribers.push(
     useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
       reduce_motion?.set(value);
@@ -74,6 +61,20 @@
     if (!browser) {
       return;
     }
+
+    unsubscribers.push(
+      navigating.subscribe((navigation) => {
+        if (!navigation) {
+          if (setLoadingTimer) {
+            clearTimeout(setLoadingTimer);
+          }
+          loading.set(false);
+        } else if (navigation.from !== navigation.to) {
+          setLoadingTimer && clearTimeout(setLoadingTimer);
+          setLoadingTimer = setTimeout(() => loading.set(true), 500);
+        }
+      })
+    );
 
     const currentTheme = get(theme);
 
@@ -100,9 +101,7 @@
     appLoaded = true;
   });
 
-  onDestroy(() => {
-    unsubscribers.forEach((u) => u());
-  });
+  onDestroy(() => unsubscribers.forEach((u) => u()));
 
   export let data;
 
@@ -142,8 +141,8 @@
   role="button"
   aria-label={$t('Skip to content')}
   tabindex="0"
-  in:fly={{ delay: 100, duration: 100, y: -40 }}
-  out:fly={{ duration: 100, y: 40 }}
+  in:fly={{ delay: 100, duration: BASE_ANIMATION_DURATION / 3, y: -40 }}
+  out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
@@ -155,7 +154,10 @@
   <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer bind:element={scrollContainer}>
     <PageTransition pathname={data.pathname}>
-      <slot />
+      <ContentWrapper>
+        <slot />
+        <Footer config={data.config} />
+      </ContentWrapper>
     </PageTransition>
   </ScrollContainer>
 </div>

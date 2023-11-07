@@ -29,3 +29,5 @@ export const SELF_BASE_URL = (() => {
       return 'https://kio.dev';
   }
 })();
+
+export const APP_VERSION = import.meta.env.VITE_APP_VERSION as string | undefined;
