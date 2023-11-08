@@ -23,7 +23,7 @@ run: # Run docker container for 'production' dataset build
 test: SHELL:=/bin/bash
 test: install
 test:
-	@. .env && MIX_ENV=test mix test
+	@. .env && MIX_ENV=test mix test --cover
 
 cleanup: SHELL:=/bin/bash
 cleanup:

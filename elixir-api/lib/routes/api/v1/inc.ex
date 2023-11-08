@@ -1,5 +1,5 @@
 defmodule Router.Api.V1.Inc do
-  use Router.Api.Base
+  use Router.Api.Base, parse: true
 
   options "/" do
     conn
@@ -13,7 +13,7 @@ defmodule Router.Api.V1.Inc do
   @spec handle_inc(Plug.Conn.t(), binary(), map()) :: Plug.Conn.t()
   def handle_inc(conn, id, body) when is_map(body) do
     if body["target"] == "views" do
-      query = "*[_id = '#{id}'][0]"
+      query = "*[_id == '#{id}'][0]"
       {:ok, _pid} = try_increment_view_count(query)
 
       receive do
@@ -43,11 +43,10 @@ defmodule Router.Api.V1.Inc do
   post "/:id" do
     if is_binary(conn.params["id"]) do
       try do
-        {:ok, body, conn} = read_body(conn)
-
-        conn |> handle_inc(conn.params["id"], body |> Poison.decode!())
+        handle_inc(conn, conn.params["id"], conn.body_params)
       rescue
-        _ ->
+        e ->
+          IO.puts("caught error: #{inspect(e)}")
           conn |> error_res(400, "Bad Request", "Invalid body content")
       end
     else

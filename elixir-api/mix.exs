@@ -9,7 +9,16 @@ defmodule Hexerei.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       escript: escript(),
-      releases: releases()
+      releases: releases(),
+      test_coverage: [
+        summary: [
+          threshold: 50
+        ],
+        ignore_modules: [
+          Router.Api.Base,
+          Hexerei.HTTP.DefaultClient
+        ]
+      ]
     ]
   end
 

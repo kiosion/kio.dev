@@ -6,6 +6,7 @@ defmodule Router.Api.Base do
   defmacro __using__(opts \\ []) do
     auth = Keyword.get(opts, :auth, false)
     qp = Keyword.get(opts, :query_params, true)
+    parse = Keyword.get(opts, :parse, false)
 
     quote do
       use Plug.Router
@@ -29,6 +30,10 @@ defmodule Router.Api.Base do
 
       if unquote(qp) do
         plug(:fetch_query_params)
+      end
+
+      if unquote(parse) do
+        plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
       end
 
       plug(:dispatch)
