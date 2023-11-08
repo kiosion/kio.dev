@@ -1,14 +1,13 @@
 defmodule TestFixtures do
   def stub_about() do
     %{
-      :query => "*[!(_id in path('drafts.**')) && _id == 'me'][0]",
-      :result => %{
+      "query" => "*[!(_id in path('drafts.**')) && _id == 'me'][0]",
+      "result" => %{
         "_createdAt" => "2022-12-01T20:22:21Z",
         "_id" => "me",
         "_rev" => "YzGOS5evnRAqo4PtxClxpz",
         "_type" => "author",
         "_updatedAt" => "2023-05-09T20:00:02Z",
-        "at" => "kiosion",
         "bio" => [
           %{
             "_key" => "74cc5ec7b46b",
@@ -81,14 +80,14 @@ defmodule TestFixtures do
         },
         "name" => "Kio"
       },
-      :ms => 1
+      "ms" => 1
     }
   end
 
   def stub_config() do
     %{
-      :query => "*[!(_id in path('drafts.**')) && _type == 'siteSettings'][0]",
-      :result => %{
+      "query" => "*[!(_id in path('drafts.**')) && _type == 'siteSettings'][0]",
+      "result" => %{
         "_type" => "siteSettings",
         "pgpKey" => "asdf",
         "me" => %{
@@ -133,27 +132,27 @@ defmodule TestFixtures do
         ],
         "_createdAt" => "2022-08-27T00:49:57Z"
       },
-      :ms => 1
+      "ms" => 1
     }
   end
 
   def stub_posts_count() do
     %{
-      :query =>
+      "query" =>
         "{ 'total': count(*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, 'author':{'_id':author->_id, '_type':author->_type, 'name':author->name, 'slug':author->slug, 'image':author->image}, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)}), 'count': count(*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, 'author':{'_id':author->_id, '_type':author->_type, 'name':author->name, 'slug':author->slug, 'image':author->image}, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10])}",
-      :result => %{
+      "result" => %{
         "total" => 1,
         "count" => 1
       },
-      :ms => 1
+      "ms" => 1
     }
   end
 
   def stub_posts() do
     %{
-      :query =>
+      "query" =>
         "*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, 'author':{'_id':author->_id, '_type':author->_type, 'name':author->name, 'slug':author->slug, 'image':author->image}, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10]",
-      :result => [
+      "result" => [
         %{
           "estimatedWordCount" => 11,
           "_type" => "post",
@@ -211,7 +210,7 @@ defmodule TestFixtures do
           "estimatedReadingTime" => 0
         }
       ],
-      :ms => 1
+      "ms" => 1
     }
   end
 
@@ -270,6 +269,96 @@ defmodule TestFixtures do
             "_type" => "block",
             "style" => "normal",
             "_key" => "cda99f79ba00"
+          }
+        ],
+        "desc" => "Something interesting",
+        "estimatedReadingTime" => 0
+      }
+    }
+  end
+
+  def stub_project() do
+    %{
+      "query" =>
+        "*[!(_id in path('drafts.**')) && _type == 'project' && slug.current == 'some-project'][0]",
+      "result" => %{
+        "estimatedWordCount" => 11,
+        "_type" => "project",
+        "tags" => [
+          %{
+            "_id" => "1234",
+            "_type" => "tag",
+            "title" => "elixir",
+            "slug" => %{
+              "_type" => "slug",
+              "current" => "elixir"
+            }
+          }
+        ],
+        "slug" => %{
+          "_type" => "slug",
+          "current" => "some-project"
+        },
+        "date" => "2022-08-26",
+        "numberOfCharacters" => 55,
+        "_id" => "b0a22943-b747-42df-84cd-642861114995",
+        "_rev" => "DFeMJDW0bXSE9MGpOVLqKO",
+        "title" => "Some project",
+        "views" => 23,
+        "objectID" => "b0a22943-b747-42df-84cd-642861114995",
+        "publishedAt" => nil,
+        "author" => %{
+          "image" => %{
+            "hotspot" => %{
+              "y" => 0.5757667596072251,
+              "height" => 0.13625894047763232,
+              "_type" => "sanity.imageHotspot",
+              "width" => 0.0582191780821919,
+              "x" => 0.31164383561643844
+            },
+            "_type" => "image",
+            "asset" => %{
+              "_ref" => "image-7b9e5cf017754bff4e8627a8e55dcd8cfb9c587c-4096x1854-jpg",
+              "_type" => "reference"
+            },
+            "crop" => %{}
+          },
+          "_id" => "me",
+          "_type" => "author",
+          "name" => "Kio",
+          "slug" => nil
+        },
+        "body" => [
+          %{
+            "markDefs" => [],
+            "children" => [
+              %{
+                "text" => "This project now has actual body content! Revolutionary...",
+                "_key" => "f231f8e8847b",
+                "_type" => "span",
+                "marks" => []
+              }
+            ],
+            "_type" => "block",
+            "style" => "normal",
+            "_key" => "cda99f79ba00"
+          }
+        ],
+        "images" => [
+          %{
+            "hotspot" => %{
+              "y" => 0.5757667596072251,
+              "height" => 0.13625894047763232,
+              "_type" => "sanity.imageHotspot",
+              "width" => 0.0582191780821919,
+              "x" => 0.31164383561643844
+            },
+            "_type" => "image",
+            "asset" => %{
+              "_ref" => "image-7b9e5cf017754bff4e8627a8e55dcd8cfb9c587c-4096x1854-jpg",
+              "_type" => "reference"
+            },
+            "crop" => %{}
           }
         ],
         "desc" => "Something interesting",

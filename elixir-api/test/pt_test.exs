@@ -1,9 +1,7 @@
 defmodule PtTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias Hexerei.PT
-
-  Code.require_file("fixtures.exs", __DIR__)
 
   test "Constructs heading tree given mixed content" do
     result = PT.build_summary(TestFixtures.mixed_headings())

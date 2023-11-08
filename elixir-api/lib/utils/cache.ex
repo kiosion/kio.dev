@@ -130,6 +130,17 @@ defmodule Hexerei.Cache.Base do
         purge(:ets.next(get_table_name(), key), now)
       end
 
+      def clear_table do
+        preserved_keys = [:__max_size]
+        all_keys = :ets.tab2list(get_table_name())
+
+        for {key, _value, _expires_at} <- all_keys do
+          unless key in preserved_keys do
+            :ets.delete(get_table_name(), key)
+          end
+        end
+      end
+
       defoverridable start_link: 1, get_table_name: 0, get: 1, put: 3
     end
   end

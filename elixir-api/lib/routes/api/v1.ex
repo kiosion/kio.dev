@@ -22,6 +22,7 @@ defmodule Router.Api.V1 do
   end
 
   forward("/config", to: Router.Api.V1.Config)
+  forward("/inc", to: Router.Api.V1.Inc)
 
   match _ do
     conn
