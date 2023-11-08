@@ -103,7 +103,7 @@
   @import '@styles/mixins';
 
   h1 {
-    @apply mb-4 mt-10 h-fit max-w-full font-display text-4xl font-bold text-black transition-[color];
+    @apply mb-4 mt-10 h-fit max-w-full text-4xl font-bold text-black transition-[color];
 
     overflow-wrap: break-word;
     word-break: break-word;

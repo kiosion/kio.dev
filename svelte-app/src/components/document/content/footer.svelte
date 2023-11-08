@@ -15,7 +15,7 @@
 
 {#if data._type === 'project' && data.github}
   <div>
-    <h1 class="my-4 font-display text-2xl font-bold">{$t('Links')}</h1>
+    <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
     <span class="flex items-center justify-start gap-2 text-base">
       <Icon icon="GitCommit" class="mb-0.5" inline />
       <Link href={data.github}>

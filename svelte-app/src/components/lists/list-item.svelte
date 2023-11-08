@@ -48,7 +48,7 @@
     </div>
 
     <h1
-      class="min-w-fit font-display font-medium decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark {small
+      class="min-w-fit font-medium decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark {small
         ? 'text-lg decoration-2 underline-offset-2'
         : 'text-xl decoration-[3px] underline-offset-4'}"
       class:underline={hovered}
