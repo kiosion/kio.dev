@@ -40,7 +40,7 @@
     }
 
     p {
-      @apply text-right font-mono text-base text-dark/80 transition-colors;
+      @apply text-right font-mono text-sm text-dark/80 transition-colors;
     }
   }
 

@@ -76,7 +76,6 @@
             aspect-ratio: {image.crop.width} / {image.crop.height};
             width: {image.carouselDimensions.width}px;
             height: {image.carouselDimensions.height}px;
-            max-height: {carouselMaxHeight}px;
           "
           on:click={() => {
             currentIndex = i;
@@ -224,12 +223,12 @@
     @apply relative;
 
     img {
-      @apply min-w-full max-w-full flex-shrink-0;
+      @apply h-full w-full flex-shrink-0;
     }
   }
 
   img {
-    @apply select-none rounded-sm border border-dark/40;
+    @apply select-none rounded-sm border border-dark/20;
   }
 
   dialog {
@@ -242,7 +241,7 @@
 
   :global(.dark) {
     img {
-      @apply border-light/40;
+      @apply border-light/20;
     }
   }
 </style>

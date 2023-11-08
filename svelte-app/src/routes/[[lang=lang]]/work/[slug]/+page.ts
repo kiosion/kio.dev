@@ -49,7 +49,7 @@ export const load = (async ({ fetch, params, url }) => {
           const crop = getCrop(imageAsset),
             baseUrl = urlFor(imageAsset.asset._ref),
             placeholder = baseUrl
-              .height(100)
+              .height(80)
               .rect(crop.left, crop.top, crop.width, crop.height)
               .fit('crop')
               .auto('format')

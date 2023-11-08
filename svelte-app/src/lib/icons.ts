@@ -1,6 +1,7 @@
 import Logger from '$lib/logger';
 
 import Alert from 'pixelarticons/svg/alert.svg';
+import ArrowBarUp from 'pixelarticons/svg/arrow-bar-up.svg';
 import ArrowLeft from 'pixelarticons/svg/arrow-left.svg';
 import ArrowRight from 'pixelarticons/svg/arrow-right.svg';
 import ArrowUp from 'pixelarticons/svg/arrow-up.svg';
@@ -21,6 +22,7 @@ import type { ComponentType } from 'svelte';
 
 export const icons = {
   alert: Alert,
+  'arrow-bar-up': ArrowBarUp,
   'arrow-left': ArrowLeft,
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,

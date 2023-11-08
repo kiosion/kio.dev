@@ -87,7 +87,7 @@
   }
 
   nav {
-    @apply flex w-full max-w-5xl flex-row items-center justify-between gap-5 rounded-md border border-dark/40 bg-light/40 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
+    @apply flex w-full max-w-5xl flex-row items-center justify-between gap-5 rounded-md border border-dark/20 bg-light/50 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
 
     @include media(md) {
       @apply flex py-2;
@@ -99,18 +99,18 @@
     &:hover,
     &:focus-visible,
     &:focus-within {
-      @apply border-dark/60 bg-light/60;
+      @apply bg-light/60;
     }
   }
 
   :global(.dark) {
     nav {
-      @apply border-light/40 bg-black/50;
+      @apply border-light/20 bg-black/50;
 
       &:hover,
       &:focus-visible,
       &:focus-within {
-        @apply border-light/60 bg-black/70;
+        @apply bg-black/60;
       }
     }
   }

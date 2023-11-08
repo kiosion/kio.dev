@@ -55,7 +55,7 @@
     >
       <span class="flex items-center justify-end gap-2 text-base">
         {#key $isMobile}
-          <Icon icon={$isMobile ? 'ArrowUp' : 'ArrowLeft'} class="mb-0.5" inline />
+          <Icon icon="ArrowLeft" class="mb-0.5" inline />
         {/key}
         <p>{$t('Read more')}</p>
       </span>

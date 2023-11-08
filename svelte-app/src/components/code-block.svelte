@@ -97,14 +97,14 @@
 </svelte:head>
 
 <div
-  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/40 transition-colors focus-within:border-dark/60 hover:border-dark/60 focus-visible:border-dark/60 dark:border-light/40 focus-within:dark:border-light/60 hover:dark:border-light/60 focus-visible:dark:border-light/60"
+  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/20 transition-colors dark:border-light/20"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
   {#if filename}
     <div
-      class="border-b border-dark/30 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/30 dark:bg-dark/40"
+      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20"
       id="{id}-filename"
     >
       {filename}
@@ -126,7 +126,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm p-1 transition-all dark:bg-dark/10"
+      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all"
       id="hljs-container"
       bind:clientHeight={innerHeight}
     >

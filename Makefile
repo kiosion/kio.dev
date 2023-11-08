@@ -3,20 +3,20 @@
 install: SHELL:=/bin/bash
 install:
 	@echo "Installing monorepo deps..."
-	@pnpm install
+	@pnpm install --frozen-lockfile
 
 install-web: SHELL:=/bin/bash
 install-web: install
 install-web:
 	@echo "Installing sveltekit deps..."
-	@cd ./svelte-app && pnpm install
+	@cd ./svelte-app && pnpm install --frozen-lockfile
 
 # install sanity deps
 install-sanity: SHELL:=/bin/bash
 install-sanity: install
 install-sanity:
 	@echo "Installing sanity deps..."
-	@cd ./sanity-cms && pnpm install
+	@cd ./sanity-cms && pnpm install --frozen-lockfile
 
 install-api: SHELL:=/bin/bash
 install-api: install

@@ -8,10 +8,11 @@
 
   import Content from '$components/document/content/content.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage } from '$types';
+  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
   import type { Unsubscriber } from 'svelte/store';
 
   export let data: ProjectDocument | PostDocument,
+    routeFetch: RouteFetch | undefined = undefined,
     model = data._type,
     images: ProjectImage[] | undefined = undefined;
 
@@ -61,4 +62,4 @@
   />
 </svelte:head>
 
-<Content {data} {images} />
+<Content {data} {images} {routeFetch} />
