@@ -101,7 +101,8 @@ const incViews = (fetch: RouteFetch, doc: DocumentRegistry[keyof DocumentRegistr
       method: 'POST',
       body: JSON.stringify({
         id: doc._id,
-        action: 'inc'
+        action: 'inc',
+        field: 'views'
       })
     });
   } catch (e) {

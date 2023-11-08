@@ -20,13 +20,13 @@ export const POST = (async ({ request }) => {
           body: JSON.stringify({ target: 'views' })
         })
           .then((res) => res.json())
-          .catch((e) => ({ error: e }));
+          .catch((e) => ({ message: e }));
 
-      if (remoteRes.message || remoteRes.error) {
+      if (remoteRes.code !== 200 || remoteRes.message) {
         return endpointResponse(
           {
             status: remoteRes.code ?? 500,
-            error: remoteRes.message ?? remoteRes.error,
+            error: remoteRes.message ?? 'Unknown error',
             detail: remoteRes.detail
           },
           remoteRes.code ?? 500
@@ -34,7 +34,8 @@ export const POST = (async ({ request }) => {
       }
 
       return endpointResponse({
-        status: 200
+        status: 200,
+        data: { id: remoteRes.data.id, views: remoteRes.data.views }
       });
     }
     default: {

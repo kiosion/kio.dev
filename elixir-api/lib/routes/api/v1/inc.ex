@@ -10,9 +10,12 @@ defmodule Router.Api.V1.Inc do
     |> send_resp(200, "")
   end
 
-  @spec handle_inc(Plug.Conn.t(), binary(), map()) :: Plug.Conn.t()
-  def handle_inc(conn, id, body) when is_map(body) do
-    if body["target"] == "views" do
+  @spec handle_inc(Plug.Conn.t(), binary(), binary()) :: Plug.Conn.t()
+  def handle_inc(conn, id, target) when is_binary(target) do
+    Logger.info("Incrementing view count for #{id}")
+    Logger.info("Incrementing for target: #{target}")
+
+    if target == "views" do
       query = "*[_id == '#{id}'][0]"
       {:ok, _pid} = try_increment_view_count(query)
 
@@ -21,7 +24,7 @@ defmodule Router.Api.V1.Inc do
           case result do
             :ok ->
               conn
-              |> json_res(200, %{code: 200, message: "OK", data: %{id: id, target: "views"}})
+              |> json_res(200, %{code: 200, data: %{id: id, target: "views"}})
 
             :error ->
               conn
@@ -37,16 +40,26 @@ defmodule Router.Api.V1.Inc do
     end
   end
 
-  def handle_inc(conn, _id, _body),
+  def handle_inc(conn, _id, _target),
     do: conn |> error_res(400, "Bad Request", "Invalid body content")
 
   post "/:id" do
     if is_binary(conn.params["id"]) do
       try do
-        handle_inc(conn, conn.params["id"], conn.body_params)
+        {:ok, body, _conn} = read_body(conn)
+
+        # No fucking clue why this isn't working with *just* `read_body/1`
+        # Do not have the energy so this shall do for now.
+        decoded_body =
+          case Poison.decode(body) do
+            {:ok, decoded_body} when is_map(decoded_body) -> decoded_body
+            _ -> conn.body_params
+          end
+
+        handle_inc(conn, conn.params["id"], decoded_body["target"])
       rescue
         e ->
-          IO.puts("caught error: #{inspect(e)}")
+          Logger.error("Failed to increment view count: #{inspect(e)}")
           conn |> error_res(400, "Bad Request", "Invalid body content")
       end
     else
