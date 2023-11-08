@@ -5,6 +5,8 @@
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
 
+  import Tooltip from './tooltip.svelte';
+
   import type { SiteConfig } from '$types';
 
   export let config: SiteConfig;
@@ -34,15 +36,17 @@
     {/if}
     {#if APP_VERSION?.length}
       <div class="version">
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
-          aria-label={$t('View latest commit on GitHub')}
-        >
-          <Icon icon="GitCommit" inline />
-          {APP_VERSION.slice(0, 6)}
-        </a>
+        <Tooltip text={$t('View latest commit on GitHub')} position="top" delay={400}>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
+            aria-label={$t('View latest commit on GitHub')}
+          >
+            <Icon icon="GitCommit" inline />
+            {APP_VERSION.slice(0, 6)}
+          </a>
+        </Tooltip>
       </div>
     {/if}
   </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.scss';
 
-  import { onDestroy, onMount, setContext } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { fly } from 'svelte/transition';
 
@@ -13,10 +13,8 @@
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
-  import { setState as setMenuState, state as menuState } from '$lib/helpers/menu';
   import Settings, { loading } from '$stores/settings';
 
-  import ContextMenu from '$components/context-menu.svelte';
   import Footer from '$components/footer.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
@@ -25,9 +23,7 @@
 
   import type { Unsubscriber } from 'svelte/store';
 
-  let scrollContainer: HTMLDivElement,
-    pageContainer: HTMLDivElement,
-    unsubscribers = [] as Unsubscriber[],
+  let unsubscribers = [] as Unsubscriber[],
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
     appLoaded = false;
 
@@ -51,11 +47,6 @@
       reduce_motion?.set(value);
     })
   );
-
-  [
-    ['getScrollContainer', () => scrollContainer],
-    ['getPageContainer', () => pageContainer]
-  ].forEach(([k, v]) => setContext(k, v));
 
   onMount(() => {
     if (!browser) {
@@ -128,14 +119,7 @@
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 </svelte:head>
 
-<svelte:body
-  use:classList={[$theme, $navigating ? 'is-loading' : 'is-loaded']}
-  on:contextmenu={(e) => setMenuState(e, pageContainer)}
-/>
-
-{#if $menuState.open}
-  <ContextMenu />
-{/if}
+<svelte:body use:classList={[$theme, $navigating ? 'is-loading' : 'is-loaded']} />
 
 <span
   role="button"
@@ -146,13 +130,9 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div
-  class="main"
-  in:fly={{ delay: 100, duration: 100, y: -40 }}
-  bind:this={pageContainer}
->
+<div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
   <Nav loaded={appLoaded && !$loading} />
-  <ScrollContainer bind:element={scrollContainer}>
+  <ScrollContainer>
     <PageTransition pathname={data.pathname}>
       <ContentWrapper>
         <slot />

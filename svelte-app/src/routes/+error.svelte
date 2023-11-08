@@ -9,7 +9,7 @@
   import Divider from '$components/divider.svelte';
   import Link from '$components/link.svelte';
 
-  let message = 'Sorry, something went wrong. Please try again later',
+  let message = 'Sorry, something went wrong. Please try again.',
     title = 'Unknown Error',
     showStack = false,
     status = $page.status;

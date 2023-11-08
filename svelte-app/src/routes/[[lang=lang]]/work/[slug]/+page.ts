@@ -1,5 +1,5 @@
 import { DEFAULT_APP_LANG } from '$lib/consts';
-import { handleLoadError } from '$lib/data';
+import { fetchRepoStats, handleLoadError } from '$lib/data';
 import { getCrop, urlFor } from '$lib/helpers/image';
 import Logger from '$lib/logger';
 import { findOne } from '$lib/store';
@@ -75,6 +75,11 @@ export const load = (async ({ fetch, params, url }) => {
       (entry) => entry !== undefined
     ) as ProjectImage[];
   }
+
+  const { stars, watchers } = await fetchRepoStats(fetch, project.github);
+
+  project.githubStars = stars;
+  project.githubWatchers = watchers;
 
   return { project, images, routeFetch: fetch };
 }) satisfies PageLoad;

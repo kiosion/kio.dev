@@ -16,6 +16,8 @@ export interface ProjectDocument extends Document {
   tags?: DocumentTags[];
   title: string;
   github?: string;
+  githubStars?: number;
+  githubWatchers?: number;
   links?: {
     _key: string;
     title: string;

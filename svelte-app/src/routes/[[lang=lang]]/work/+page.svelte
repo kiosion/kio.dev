@@ -1,22 +1,18 @@
 <script lang="ts">
   import { pageTitle } from '$helpers/navigation';
   import { t } from '$i18n';
-  import { sortDocumentsByYear } from '$lib/helpers/date';
 
   import Timeline from '$components/about/timeline.svelte';
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import ListItem from '$components/lists/list-item.svelte';
+  import YearList from '$components/lists/year-list.svelte';
 
   export let data;
-
-  const sortedProjects = data.projects.length ? sortDocumentsByYear(data.projects) : [];
 
   $: description = $t(
     'A collection of my work, open-source contributions, and personal projects'
   );
-  $: ({ about, projects } = data);
 </script>
 
 <svelte:head>
@@ -33,8 +29,8 @@
 </svelte:head>
 
 <HeadedBlock heading={$t("Where I've worked")}>
-  {#if about.timeline?.length}
-    <Timeline data={about.timeline} />
+  {#if data.about.timeline?.length}
+    <Timeline data={data.about.timeline} />
   {:else}
     <div class="w-full">
       <EmptyContent />
@@ -45,28 +41,9 @@
 <Divider class="!-mt-2" />
 
 <HeadedBlock heading={$t('Projects')}>
-  {#if projects.length}
-    <div class="mt-8 flex flex-col gap-10">
-      {#each sortedProjects as yearObj}
-        <div class="flex flex-col items-start justify-start gap-3 md:flex-row">
-          <h1 class="min-w-[5rem] font-code text-3xl font-black transition-[color]">
-            {yearObj.year}
-          </h1>
-          {#if yearObj.items.length}
-            <div class="ml-1 mt-1 flex flex-col items-start justify-start gap-6 md:ml-0">
-              {#each yearObj.items as item}
-                <ListItem document={item} />
-              {/each}
-            </div>
-          {:else}
-            <p class="p-4 font-code">{$t('No content')}</p>
-          {/if}
-        </div>
-      {/each}
-    </div>
+  {#if data.projects.length}
+    <YearList documents={data.projects} />
   {:else}
-    <div class="w-full">
-      <EmptyContent />
-    </div>
+    <EmptyContent />
   {/if}
 </HeadedBlock>

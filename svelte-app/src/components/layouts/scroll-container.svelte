@@ -4,9 +4,7 @@
   import { afterNavigate } from '$app/navigation';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  export let element: HTMLDivElement;
-
-  let timeout: ReturnType<typeof setTimeout> | undefined;
+  let element: HTMLDivElement, timeout: ReturnType<typeof setTimeout> | undefined;
 
   onDestroy(() => {
     if (timeout) {

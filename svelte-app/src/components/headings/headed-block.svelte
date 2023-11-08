@@ -2,11 +2,9 @@
   export let heading: string;
 </script>
 
-<section class={$$props.class || undefined}>
+<section>
   <h1>{heading}</h1>
-  <div>
-    <slot />
-  </div>
+  <div><slot /></div>
 </section>
 
 <style lang="scss">

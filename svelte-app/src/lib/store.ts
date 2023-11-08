@@ -91,6 +91,24 @@ const constructUrl = (
   return `${basePath}${queryParams.length ? `?${queryParams.join('&')}` : ''}`;
 };
 
+const incViews = (fetch: RouteFetch, doc: DocumentRegistry[keyof DocumentRegistry]) => {
+  if (doc._type !== 'post' && doc._type !== 'project') {
+    return;
+  }
+
+  try {
+    fetch(`${API_URL}mutate`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: doc._id,
+        action: 'inc'
+      })
+    });
+  } catch (e) {
+    Logger.error('', e);
+  }
+};
+
 const fetchData = async <T>(
   fetch: RouteFetch,
   url: string,
@@ -140,15 +158,17 @@ const findOne = async <T extends keyof DocumentRegistry>(
   model: T,
   params: PossibleParams = {}
 ): Promise<DocumentRegistry[T] | Error> => {
-  const cacheKey = JSON.stringify({ model, params, many: false });
+  const cacheKey = JSON.stringify({ model, params, many: false }),
+    url = constructUrl(model, params);
+
   if (browser && params.preview !== 'true') {
     const cachedData = cacheGet(cacheKey);
     if (cachedData) {
+      incViews(fetch, cachedData as DocumentRegistry[T]);
       return cachedData as DocumentRegistry[T];
     }
   }
 
-  const url = constructUrl(model, params);
   const response = await fetchData<DocumentRegistry[T]>(fetch, url, model);
   if (browser && params.preview !== 'true' && response && !(response instanceof Error)) {
     cacheSet(cacheKey, response);

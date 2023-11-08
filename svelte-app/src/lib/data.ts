@@ -1,3 +1,5 @@
+import Logger from '$lib/logger';
+
 import { error } from '@sveltejs/kit';
 
 const GENERIC_ERROR_NO_DATA = 'Failed to load required data.',
@@ -42,4 +44,24 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
   }
 
   return data as Clean<T>;
+};
+
+export const fetchRepoStats = async (fetch: typeof window.fetch, githubUrl?: string) => {
+  try {
+    const repo = githubUrl?.split('github.com/')?.[1];
+
+    if (!repo?.length) {
+      return { stars: 0, watchers: 0 };
+    }
+
+    const res = await fetch(`https://api.github.com/repos/${repo}`),
+      json = await res.json(),
+      stars = (json?.stargazers_count as number | undefined) ?? 0,
+      watchers = (json?.subscribers_count as number | undefined) ?? 0;
+
+    return { stars, watchers };
+  } catch (e) {
+    Logger.error('Failed to fetch stars for project', e);
+    return { stars: 0, watchers: 0 };
+  }
 };

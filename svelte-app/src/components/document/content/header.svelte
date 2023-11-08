@@ -15,7 +15,7 @@
   import type { PostDocument, ProjectDocument, ProjectImage, PTBlock } from '$types';
 
   export let data: PostDocument | ProjectDocument,
-    images: ProjectImage[] | undefined,
+    images: ProjectImage[] | undefined = undefined,
     model = data._type;
 
   const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
@@ -39,8 +39,14 @@
       </p>
       <BulletPoint />
       <p class="cursor-default font-mono text-base">
-        {$t('{views} views', { views: $parseViews(data.views) })}
+        {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
       </p>
+      {#if data._type === 'project' && data.githubStars !== undefined && data.githubStars > 0}
+        <BulletPoint />
+        <p class="cursor-default font-mono text-base">
+          {$t('{stars} stars', { stars: $parseViews(data.githubStars) })}
+        </p>
+      {/if}
     </div>
     <ArrowButton
       class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap rounded-sm text-right sm:block"
@@ -57,9 +63,14 @@
   </div>
   {#if data._type === 'project' && (data.tags?.length || data.github)}
     <Divider />
-    <div class="flex flex-row flex-wrap items-center justify-start gap-0.5 text-base">
+    <div
+      class="flex flex-row flex-wrap items-center justify-start gap-0.5 gap-y-3 text-base"
+    >
       {#if data._type === 'project' && data.tags?.length}
-        <div class="flex flex-row flex-wrap items-center justify-start gap-2">
+        <div
+          class="flex flex-row flex-wrap items-center justify-start gap-2"
+          aria-label={$t('Tags')}
+        >
           {#each data.tags as tag}
             <span
               class="cursor-default rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-base transition-colors dark:bg-light/10"
@@ -75,7 +86,7 @@
       {#if data._type === 'project' && data.github}
         <span class="font-mono">
           <Link href={data.github}>
-            {'github/' + data.github.split('github.com/')?.[1]}
+            {'github.com/' + data.github.split('github.com/')?.[1]}
           </Link>
         </span>
       {/if}

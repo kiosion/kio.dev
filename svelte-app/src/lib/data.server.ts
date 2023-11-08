@@ -5,16 +5,19 @@ export type ResponseOrError =
   | {
       code: null | undefined;
       message: never;
+      detail: never;
       data: never;
     }
   | {
       code: number;
       message: string;
+      detail: string;
       data: never;
     }
   | {
       code: number;
       message: never;
+      detail: never;
       data: ResData;
     };
 
@@ -34,15 +37,26 @@ type Normalized =
   | {
       code: number;
       error: string;
+      detail?: string;
       data?: undefined;
       meta?: undefined;
     }
   | {
       code?: undefined;
       error?: undefined;
+      detail?: undefined;
       data: ResData['result'];
       meta: ResData['meta'] & { [key: string]: unknown };
     };
+
+export const endpointResponse = (content: Record<string, unknown>, status = 200) => {
+  return new Response(JSON.stringify(content), {
+    headers: {
+      'content-type': 'application/json; charset=utf-8'
+    },
+    status
+  });
+};
 
 /**
  * Util to serialize recieved API data to common types
@@ -95,7 +109,8 @@ const fetchRemote = async (endpoint: string | URL): Promise<Normalized> => {
 
       return {
         code: response.status,
-        error: jsonResponse?.message || `Failed to fetch from ${endpoint}`
+        error: jsonResponse?.message || `Failed to fetch from ${endpoint}`,
+        detail: jsonResponse?.detail || undefined
       };
     }
 

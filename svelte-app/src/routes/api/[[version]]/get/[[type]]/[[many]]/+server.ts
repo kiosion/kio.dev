@@ -1,5 +1,5 @@
 import { VALID_DOC_TYPES } from '$lib/consts';
-import { fetchRemote } from '$lib/data.server';
+import { endpointResponse, fetchRemote } from '$lib/data.server';
 import { REMOTE_API_URL } from '$lib/env';
 
 import type { RequestHandler } from './$types';
@@ -9,16 +9,12 @@ export const GET = (async ({ url, params }) => {
     many = !!params.many ?? false;
 
   if (!VALID_DOC_TYPES.includes(docType)) {
-    return new Response(
-      JSON.stringify({
+    return endpointResponse(
+      {
         status: 400,
         error: 'Endpoint error: Missing or invalid parameter: type'
-      }),
-      {
-        headers: {
-          'content-type': 'application/json; charset=utf-8'
-        }
-      }
+      },
+      400
     );
   }
 
@@ -45,7 +41,8 @@ export const GET = (async ({ url, params }) => {
     return endpointResponse(
       {
         status: remoteRes.code,
-        error: remoteRes.error
+        error: remoteRes.error,
+        detail: remoteRes.detail
       },
       remoteRes.code
     );
@@ -75,13 +72,4 @@ const getEndpoint = (
     case 'about':
       return `${REMOTE_API_URL}/query/about?lang=${params.get('lang') || 'en'}`;
   }
-};
-
-const endpointResponse = (content: Record<string, unknown>, status = 200) => {
-  return new Response(JSON.stringify(content), {
-    headers: {
-      'content-type': 'application/json; charset=utf-8'
-    },
-    status
-  });
 };

@@ -13,7 +13,7 @@
 
   export let data: ProjectDocument | PostDocument,
     model = data._type,
-    images: ProjectImage[] | undefined;
+    images: ProjectImage[] | undefined = undefined;
 
   let pageUnsubscriber: Unsubscriber;
 

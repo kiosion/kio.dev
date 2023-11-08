@@ -3,7 +3,6 @@
   import { formatDate } from '$lib/helpers/date';
   import { parseViews } from '$lib/views';
 
-  import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
   import type { PostDocument, ProjectDocument } from '$types';
@@ -28,24 +27,24 @@
     data-sveltekit-preload-data
   >
     <div
-      class="mt-0.5 flex flex-row items-center justify-start font-mono text-sm text-dark/80 transition-colors dark:text-light/80 {small
+      class="mt-0.5 flex flex-row items-center justify-start gap-3 font-mono text-sm text-dark/80 transition-colors dark:text-light/80 {small
         ? 'mb-1.5'
         : 'mb-2'}"
-      class:gap-3={document.tags?.length}
-      class:gap-0.5={!document.tags?.length}
     >
       <p aria-label={$t('Date posted')}>
-        {formatDate(document.date || document._createdAt, 'dayMonth', $currentLang)}
+        {formatDate(
+          document.date || document._createdAt,
+          small ? 'med' : 'short',
+          $currentLang
+        )}
       </p>
       {#if document.tags?.length}
         <span
           class="rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
           >{document.tags[0].title.toLowerCase()}</span
         >
-      {:else}
-        <BulletPoint />
       {/if}
-      <p>{$t('{views} views', { views: $parseViews(document.views) })}</p>
+      <p>{$t('{views} views', { views: $parseViews((document.views ?? 0) + 1) })}</p>
     </div>
 
     <h1
