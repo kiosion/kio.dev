@@ -39,7 +39,7 @@
   onMount(() => {
     srcPromise = routeFetch(
       baseUrl
-        .width(800)
+        .width(Math.max(imageCrop.width, 1000))
         .rect(imageCrop.left, imageCrop.top, imageCrop.width, imageCrop.height)
         .fit('crop')
         .auto('format')
