@@ -4,8 +4,4 @@
   export let data;
 </script>
 
-<DocumentRoute
-  data={data.post}
-  headings={data.post.headings}
-  routeFetch={data.routeFetch}
-/>
+<DocumentRoute data={data.post} routeFetch={data.routeFetch} />
