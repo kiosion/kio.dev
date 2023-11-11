@@ -34,10 +34,10 @@
   @import '@styles/mixins';
 
   div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 pt-16 transition-[padding-top] duration-300;
+    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 pt-14 transition-[padding-top] duration-300;
 
     @include media(md) {
-      @apply pt-24;
+      @apply pt-20;
     }
   }
 </style>

@@ -59,7 +59,7 @@
         </span>
         <span
           class="pointer-events-none mb-0.5 hidden select-none font-code text-2xl text-accent-light/80 transition-[color] dark:text-accent-dark/80 md:block"
-          aria-hidden="true">|</span
+          aria-hidden="true">/</span
         >
         <div class="hidden flex-row items-center justify-start gap-5 md:flex" role="menu">
           {#each NAV_LINKS as link}
@@ -79,22 +79,7 @@
   @import '@styles/mixins';
 
   div[role='none'] {
-    @apply fixed left-4 right-4 top-4 z-10 flex items-center justify-center;
-
-    @include media(md) {
-      @apply left-6 right-6 top-6;
-    }
-  }
-
-  nav {
-    @apply flex w-full max-w-5xl flex-row items-center justify-between gap-5 rounded-md border border-dark/20 bg-light/50 px-6 py-3 backdrop-blur-lg transition-[border,background-color];
-
-    @include media(md) {
-      @apply flex py-2;
-    }
-    @include media(xl) {
-      @apply max-w-6xl;
-    }
+    @apply fixed left-0 right-0 top-0 z-10 flex items-center justify-center border-b border-dark/20 bg-light/50 backdrop-blur-lg transition-[border,background-color];
 
     &:hover,
     &:focus-visible,
@@ -103,8 +88,25 @@
     }
   }
 
+  nav {
+    @apply flex w-full flex-row items-center justify-between gap-5 px-6 py-3;
+
+    @include media(md) {
+      @apply flex py-2;
+    }
+    @include media(lg) {
+      @apply max-w-4xl;
+    }
+    @include media(xl) {
+      @apply max-w-5xl;
+    }
+    @include media(2xl) {
+      @apply max-w-6xl;
+    }
+  }
+
   :global(.dark) {
-    nav {
+    div[role='none'] {
       @apply border-light/20 bg-black/50;
 
       &:hover,
