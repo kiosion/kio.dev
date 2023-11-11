@@ -8,24 +8,27 @@ export const formatDate = (
   lang: string = get(currentLang) || 'en'
 ) => {
   const date = new Date(dateStr);
-  date.setHours(0 - date.getTimezoneOffset() / 60);
+
   switch (format) {
     case 'full':
       return new Intl.DateTimeFormat(lang, {
         month: 'long',
         day: 'numeric',
-        year: 'numeric'
+        year: 'numeric',
+        timeZone: 'UTC'
       }).format(date);
     case 'short':
       return new Intl.DateTimeFormat(lang, {
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
+        timeZone: 'UTC'
       }).format(date);
     case 'med':
       return new Intl.DateTimeFormat(lang, {
         month: 'short',
         day: 'numeric',
-        year: 'numeric'
+        year: 'numeric',
+        timeZone: 'UTC'
       }).format(date);
   }
 };
