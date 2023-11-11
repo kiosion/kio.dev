@@ -8,6 +8,7 @@ export const formatDate = (
   lang: string = get(currentLang) || 'en'
 ) => {
   const date = new Date(dateStr);
+  date.setHours(0 - date.getTimezoneOffset() / 60);
   switch (format) {
     case 'full':
       return new Intl.DateTimeFormat(lang, {
