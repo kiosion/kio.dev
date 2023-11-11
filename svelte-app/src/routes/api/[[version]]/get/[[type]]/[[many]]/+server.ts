@@ -21,7 +21,7 @@ export const GET = (async ({ url, params }) => {
   if (
     (docType === 'post' || docType === 'project') &&
     !many &&
-    !(url.searchParams.get('id') || url.searchParams.get('idb'))
+    !url.searchParams.get('id')
   ) {
     return endpointResponse(
       {
@@ -61,12 +61,9 @@ const getEndpoint = (
     case 'project':
       return many
         ? `${REMOTE_API_URL}/query/${type}s?${params}`
-        : `${REMOTE_API_URL}/query/${type}/${
-            params.get('id') ||
-            Buffer.from((params.get('idb') as string) || '', 'base64').toString('utf-8')
-          }?lang=${params.get('lang') || 'en'}${
-            params.get('preview') === 'true' ? '&preview=true' : ''
-          }`;
+        : `${REMOTE_API_URL}/query/${type}/${params.get('id')}?lang=${
+            params.get('lang') || 'en'
+          }${params.get('preview') === 'true' ? '&preview=true' : ''}`;
     case 'config':
       return `${REMOTE_API_URL}/config`;
     case 'about':

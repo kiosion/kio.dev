@@ -60,7 +60,6 @@ defmodule Router.Api.V1.Projects do
         query
         |> Query.project([
           "_id",
-          ["'objectID'", "_id"],
           "_type",
           "_rev",
           %{
@@ -88,7 +87,10 @@ defmodule Router.Api.V1.Projects do
             :join => "->"
           },
           "slug",
-          "title"
+          "title",
+          ["'numberOfCharacters'", "length(pt::text(body))"],
+          ["'estimatedWordCount'", "round(length(pt::text(body)) / 5)"],
+          ["'estimatedReadingTime'", "round(length(pt::text(body)) / 5 / 120)"]
         ])
 
       query_limited =

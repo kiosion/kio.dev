@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { formatDate, getReadingTime } from '$helpers/date';
-  import { getTotalWords } from '$helpers/pt';
+  import { formatDate } from '$helpers/date';
   import { currentLang, linkTo, t } from '$i18n';
   import { isMobile } from '$lib/helpers/responsive';
   import { parseViews } from '$lib/views';
@@ -12,15 +11,11 @@
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, PTBlock } from '$types';
+  import type { PostDocument, ProjectDocument, ProjectImage } from '$types';
 
   export let data: PostDocument | ProjectDocument,
     images: ProjectImage[] | undefined = undefined,
     model = data._type;
-
-  const readingTime = getReadingTime(getTotalWords((data?.body ?? []) as PTBlock[]));
-
-  $: date = formatDate(data.date, 'full', $currentLang);
 </script>
 
 <div data-test-id="{model}-header">
@@ -31,11 +26,11 @@
       class="flex flex-row flex-wrap items-center justify-start gap-y-2 transition-[color]"
     >
       <p class="cursor-default font-mono text-base">
-        {date ? date : $t('Unknown date')}
+        {formatDate(data.date, 'full', $currentLang) ?? $t('Unknown date')}
       </p>
       <BulletPoint />
       <p class="cursor-default font-mono text-base">
-        {$t('{length} min read', { length: Math.floor(readingTime / 60) })}
+        {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
       </p>
       <BulletPoint />
       <p class="cursor-default font-mono text-base">

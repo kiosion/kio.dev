@@ -13,7 +13,7 @@ import type {
 } from '$types';
 
 type PossibleParams = {
-  [key: string]: string | number | boolean | string[] | number[] | boolean[];
+  [key: string]: string | number | boolean | string[] | number[] | boolean[] | undefined;
 };
 
 export interface DocumentRegistry {

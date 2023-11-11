@@ -30,15 +30,15 @@ const urlToBase64Asset = async (url: string, fetch: typeof window.fetch) => {
 
 export const load = (async ({ fetch, params, url }) => {
   const preview = url.searchParams.get('preview') === 'true' || false,
-    project = handleLoadError(
-      await findOne(fetch, 'project', {
-        id: params.slug,
-        lang: params.lang || DEFAULT_APP_LANG,
-        preview
-      })
-    );
+    opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
+      string,
+      string | boolean
+    >;
 
-  const imagePromises: Promise<ProjectImage | undefined>[] = [];
+  preview && (opts.preview = true);
+
+  const project = handleLoadError(await findOne(fetch, 'project', opts)),
+    imagePromises: Promise<ProjectImage | undefined>[] = [];
 
   let images: ProjectImage[] = [];
 

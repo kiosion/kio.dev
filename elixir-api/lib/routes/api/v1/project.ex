@@ -34,7 +34,6 @@ defmodule Router.Api.V1.Project do
         ])
         |> Query.project([
           "_id",
-          ["'objectID'", "_id"],
           "_type",
           "_rev",
           %{
@@ -62,7 +61,10 @@ defmodule Router.Api.V1.Project do
             :join => "->"
           },
           "slug",
-          "title"
+          "title",
+          ["'numberOfCharacters'", "length(pt::text(body))"],
+          ["'estimatedWordCount'", "round(length(pt::text(body)) / 5)"],
+          ["'estimatedReadingTime'", "round(length(pt::text(body)) / 5 / 120)"]
         ])
         |> Query.qualify("[0]")
         |> Query.build()

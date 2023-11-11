@@ -33,34 +33,28 @@ export const formatDate = (
   }
 };
 
-export const getReadingTime = (words: number): number =>
-  Math.ceil(words ?? 0 / (100 / 60));
-
 export const sortDocumentsByYear = <T extends { date?: string; _createdAt: string }>(
   documents: T[]
 ) => {
-  const _years =
+  const grouped =
     documents.reduce(
       (acc, doc) => {
         const year = new Date(doc.date || doc._createdAt).getFullYear();
 
-        if (!acc[year]) {
-          acc[year] = [doc];
-        } else {
-          acc[year].push(doc);
-        }
+        !acc[year] && (acc[year] = []);
+        acc[year].push(doc);
 
         return acc;
       },
       {} as Record<string, NonNullable<T[]>>
     ) || {};
 
-  return Object.keys(_years)
+  return Object.keys(grouped)
     .sort((a, b) => parseInt(b, 10) - parseInt(a, 10))
-    .map((year) => {
+    .map((group) => {
       return {
-        year: parseInt(year, 10),
-        items: _years[year].sort((a, b) => {
+        year: parseInt(group, 10),
+        items: grouped[group].sort((a, b) => {
           const aDate = new Date(a.date || a._createdAt);
           const bDate = new Date(b.date || b._createdAt);
           return bDate.getTime() - aDate.getTime();

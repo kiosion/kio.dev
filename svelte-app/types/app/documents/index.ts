@@ -1,4 +1,4 @@
-import type { SanityAsset } from '$types/sanity';
+import type { PTBlock, SanityAsset } from '$types/sanity';
 
 export interface Document extends SanityAsset {
   slug: Pick<SanityAsset, '_id'> & {
@@ -7,6 +7,9 @@ export interface Document extends SanityAsset {
   body: PTBlock[];
   date: string;
   views?: number;
+  numberOfCharacters: number;
+  estimatedWordCount: number;
+  estimatedReadingTime: number;
 }
 
 export interface DocumentTags extends SanityAsset {

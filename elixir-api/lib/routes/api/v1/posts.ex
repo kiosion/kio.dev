@@ -60,11 +60,9 @@ defmodule Router.Api.V1.Posts do
         query
         |> Query.project([
           "_id",
-          ["'objectID'", "_id"],
           "_rev",
           "_type",
           "title",
-          "publishedAt",
           "views",
           %{
             "'author'" => [

@@ -38,12 +38,10 @@ defmodule Router.Api.V1.Post do
         ])
         |> Query.project([
           "_id",
-          ["'objectID'", "_id"],
           "_rev",
           "_type",
           "title",
           "views",
-          "publishedAt",
           %{
             "'author'" => [
               ["'_id'", ["author", "_id", :follow]],
