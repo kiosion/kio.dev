@@ -2,7 +2,9 @@ import { REMOTE_CDN_URL } from '$lib/env';
 
 import imageUrlBuilder from '@sanity/image-url';
 
+import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
 import type {
+  FitMode,
   SanityClientLike,
   SanityImageObject,
   SanityImageSource
@@ -53,4 +55,52 @@ export const getCrop = (image: SanityImageObject | undefined) => {
   crop.height = Math.floor(dimensions[1] - (crop.top + crop.bottom));
 
   return crop;
+};
+
+type baseBuildImageUrlOptions = {
+  crop?: ImageCrop;
+  width?: number;
+  height?: number;
+  blur?: number;
+  fit?: FitMode;
+};
+
+type buildImageUrlOptions = baseBuildImageUrlOptions &
+  (
+    | {
+        baseUrl: ImageUrlBuilder;
+        ref?: never;
+      }
+    | {
+        baseUrl?: never;
+        ref: string;
+      }
+  );
+
+export const buildImageUrl = (
+  { baseUrl, ref, crop, width, height, blur, fit }: buildImageUrlOptions = {
+    baseUrl: undefined
+  } as buildImageUrlOptions
+) => {
+  if (!baseUrl) {
+    baseUrl = urlFor(ref);
+  }
+  if (crop) {
+    baseUrl = baseUrl.rect(crop.left, crop.top, crop.width, crop.height).fit('crop');
+  }
+  if (width) {
+    baseUrl = baseUrl.width(width);
+  }
+  if (height) {
+    baseUrl = baseUrl.height(height);
+  }
+  if (blur && blur > 0) {
+    baseUrl = baseUrl.blur(blur);
+  }
+  if (fit) {
+    baseUrl = baseUrl.fit(fit);
+  } else if (crop) {
+    baseUrl = baseUrl.fit('crop');
+  }
+  return baseUrl.auto('format').url();
 };

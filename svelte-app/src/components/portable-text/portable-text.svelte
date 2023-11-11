@@ -21,6 +21,7 @@
   import Divider from './serializers/divider.svelte';
   import Image from './serializers/image.svelte';
   import ListItem from './serializers/list-item.svelte';
+  import NullMark from './serializers/null-mark.svelte';
   import OlWrapper from './serializers/ol-wrapper.svelte';
   import UlWrapper from './serializers/ul-wrapper.svelte';
 
@@ -87,7 +88,8 @@
           marks: {
             link: CustomLink,
             code: CustomCode,
-            highlight: CustomHighlight
+            highlight: CustomHighlight,
+            notranslate: NullMark
           }
         }}
       />
@@ -104,7 +106,8 @@
             link: CustomLink,
             code: CustomCode,
             highlight: CustomHighlight,
-            footnote: Footnote
+            footnote: Footnote,
+            notranslate: NullMark
           },
           block: {
             h1: CustomHeading,

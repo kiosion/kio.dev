@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { getCrop, urlFor } from '$lib/helpers/image';
+  import { buildImageUrl, getCrop } from '$lib/helpers/image';
 
   import Spinner from '$components/loading/spinner.svelte';
 
@@ -19,31 +19,19 @@
     { _key } = value,
     { _ref } = value.asset,
     routeFetch = portableText.global.context.routeFetch as RouteFetch,
-    imageCrop = getCrop(value),
-    baseUrl = urlFor(_ref),
-    placeholder = baseUrl
-      .width(30)
-      .rect(imageCrop.left, imageCrop.top, imageCrop.width, imageCrop.height)
-      .fit('crop')
-      .auto('format')
-      .blur(40)
-      .url(),
+    crop = getCrop(value),
+    placeholder = buildImageUrl({ ref: _ref, crop, width: 30, blur: 40 }),
     style = `
-      max-width: ${imageCrop.width}px;
-      max-height: ${imageCrop.height}px;
-      aspect-ratio: ${imageCrop.width} / ${imageCrop.height};
-    `;
+      max-width: ${crop.width}px;
+      max-height: ${crop.height}px;
+      aspect-ratio: ${crop.width} / ${crop.height};
+    `.trim();
 
   let srcPromise: Promise<string> = new Promise((_res) => {});
 
   onMount(() => {
     srcPromise = routeFetch(
-      baseUrl
-        .width(Math.max(imageCrop.width, 1000))
-        .rect(imageCrop.left, imageCrop.top, imageCrop.width, imageCrop.height)
-        .fit('crop')
-        .auto('format')
-        .url()
+      buildImageUrl({ ref: _ref, crop, width: Math.min(crop.width, 1000) })
     ).then((res) => {
       const mimeType =
         res.headers.get('content-type') ||

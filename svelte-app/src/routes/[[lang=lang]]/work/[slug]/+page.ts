@@ -1,6 +1,6 @@
 import { DEFAULT_APP_LANG } from '$lib/consts';
 import { fetchRepoStats, handleLoadError } from '$lib/data';
-import { getCrop, urlFor } from '$lib/helpers/image';
+import { buildImageUrl, getCrop } from '$lib/helpers/image';
 import Logger from '$lib/logger';
 import { findOne } from '$lib/store';
 
@@ -47,20 +47,17 @@ export const load = (async ({ fetch, params, url }) => {
       imagePromises.push(
         (async () => {
           const crop = getCrop(imageAsset),
-            baseUrl = urlFor(imageAsset.asset._ref),
-            placeholder = baseUrl
-              .height(80)
-              .rect(crop.left, crop.top, crop.width, crop.height)
-              .fit('crop')
-              .auto('format')
-              .blur(40)
-              .url(),
-            url = urlFor(imageAsset.asset._ref)
-              .height(800)
-              .rect(crop.left, crop.top, crop.width, crop.height)
-              .fit('crop')
-              .auto('format')
-              .url();
+            placeholder = buildImageUrl({
+              ref: imageAsset.asset._ref,
+              crop,
+              height: 80,
+              blur: 40
+            }),
+            url = buildImageUrl({
+              ref: imageAsset.asset._ref,
+              crop,
+              height: 800
+            });
 
           return {
             crop,
