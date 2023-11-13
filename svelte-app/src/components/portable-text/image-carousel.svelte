@@ -1,9 +1,10 @@
 <script lang="ts">
   import { writable } from 'svelte/store';
-  import { crossfade, fade } from 'svelte/transition';
+  import { crossfade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
 
+  import ImageModal from '$components/images/image-modal.svelte';
   import ScrollButton from '$components/portable-text/image-carousel/scroll-button.svelte';
 
   import type { ProjectImage } from '$types';
@@ -68,128 +69,56 @@
 
 <div class="carousel">
   <div class="scroller">
-    {#if $values.length > 1}
-      {#each $values as image, i}
-        <button
-          class="focusOutline-sm"
-          style="
-            aspect-ratio: {image.crop.width} / {image.crop.height};
-            width: {image.carouselDimensions.width}px;
-            height: {image.carouselDimensions.height}px;
-          "
-          on:click={() => {
-            currentIndex = i;
-            showImageModal = true;
-          }}
-          on:keydown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              currentIndex = i;
-              showImageModal = true;
-            }
-          }}
-        >
-          {#if showImageModal && currentIndex === i}
-            <img
-              src={image.asset}
-              draggable="false"
-              alt={i.toString()}
-              style="opacity: 0;"
-            />
-          {:else}
-            <img
-              src={image.asset}
-              draggable="false"
-              alt={i.toString()}
-              bind:this={imageElements[i]}
-              in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
-              out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
-            />
-          {/if}
-        </button>
-      {/each}
-    {:else}
+    {#each $values as image, i}
       <button
         class="focusOutline-sm"
-        style="width: 100%;"
+        style="
+          aspect-ratio: {image.crop.width} / {image.crop.height};
+          width: {image.carouselDimensions.width}px;
+          height: {image.carouselDimensions.height}px;
+        "
         on:click={() => {
+          currentIndex = i;
           showImageModal = true;
         }}
         on:keydown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
+            currentIndex = i;
             showImageModal = true;
           }
         }}
       >
-        {#if showImageModal}
-          <!--
-            Wow this is jank and sucks and needs to be rewritten properly,
-            this is just a style issue since the max-height isn't constrained
-          -->
-          {#await new Promise((r) => setTimeout(r, BASE_ANIMATION_DURATION)) then _}
-            <img src={$values[0].asset} draggable="false" alt="0" style="opacity: 0;" />
-          {/await}
+        {#if showImageModal && currentIndex === i}
+          <img
+            src={image.asset}
+            draggable="false"
+            alt={i.toString()}
+            style="opacity: 0;"
+          />
         {:else}
           <img
-            src={$values[0].asset}
+            src={image.asset}
             draggable="false"
-            alt="0"
-            bind:this={imageElements[0]}
-            in:receive={{ key: 0, duration: BASE_ANIMATION_DURATION }}
-            out:send={{ key: 0, duration: BASE_ANIMATION_DURATION }}
+            alt={i.toString()}
+            bind:this={imageElements[i]}
+            in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
+            out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
           />
         {/if}
       </button>
-    {/if}
+    {/each}
   </div>
 </div>
 
-<svelte:window
-  on:keydown={(e) => {
-    if (showImageModal) {
-      switch (e.key) {
-        case 'ArrowLeft':
-          scrollLeft();
-          break;
-        case 'ArrowRight':
-          scrollRight();
-          break;
-        case 'Escape':
-        case 'Enter':
-          showImageModal = false;
-          break;
-        case 'Tab':
-          e.preventDefault();
-          dialog.focus();
-          break;
-      }
-    }
-  }}
-/>
-
-{#if showImageModal}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <dialog
-    bind:this={dialog}
-    on:click={() => (showImageModal = false)}
-    on:keydown={(e) => {
-      if (e.key === 'Escape') {
-        showImageModal = false;
-      }
-    }}
-    in:fade={{ duration: BASE_ANIMATION_DURATION }}
-    out:fade={{ duration: BASE_ANIMATION_DURATION }}
-  >
-    <div>
-      <img
-        src={$values[currentIndex].asset}
-        draggable="false"
-        alt={currentIndex.toString()}
-        in:receive={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
-        out:send={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
-      />
-    </div>
-  </dialog>
-{/if}
+<ImageModal bind:dialog bind:show={showImageModal}>
+  <img
+    src={$values[currentIndex].asset}
+    draggable="false"
+    alt={currentIndex.toString()}
+    in:receive={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
+    out:send={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
+  />
+</ImageModal>
 
 {#if imageElements.length > 1}
   <div class="buttons">
@@ -212,7 +141,7 @@
   }
 
   .scroller {
-    @apply flex min-w-fit flex-row gap-4;
+    @apply flex w-full min-w-fit flex-row gap-4;
   }
 
   .buttons {
@@ -220,7 +149,7 @@
   }
 
   button {
-    @apply relative;
+    @apply relative block max-h-fit w-full rounded-sm;
 
     img {
       @apply h-full w-full flex-shrink-0;
@@ -229,14 +158,6 @@
 
   img {
     @apply select-none rounded-sm border border-dark/20;
-  }
-
-  dialog {
-    @apply fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80;
-
-    div {
-      @apply relative flex h-full max-h-full w-full max-w-full flex-col items-center justify-center p-8;
-    }
   }
 
   :global(.dark) {

@@ -13,7 +13,7 @@
     routeFetch: RouteFetch | undefined = undefined;
 </script>
 
-<Header {data} {images} />
+<Header {data} {images} {routeFetch} />
 <Divider />
 <div>
   {#if data.body}

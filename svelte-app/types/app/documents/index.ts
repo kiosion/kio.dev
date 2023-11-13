@@ -1,4 +1,9 @@
-import type { PTBlock, SanityAsset } from '$types/sanity';
+import type {
+  PTBlock,
+  SanityAsset,
+  SanityImageCrop,
+  SanityImageObject
+} from '$types/sanity';
 
 export interface Document extends SanityAsset {
   slug: Pick<SanityAsset, '_id'> & {
@@ -29,16 +34,13 @@ export interface DocumentHeadings {
 }
 
 export type ProjectImage = {
-  crop: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
+  crop: SanityImageCrop & {
     width: number;
     height: number;
   };
   placeholder?: string;
-  asset: Promise<string | undefined>;
+  asset: Promise<string>;
+  sanityAsset: SanityImageObject;
 };
 
 export type { AuthorDocument, AuthorTimelineItem } from '$types/documents/author';

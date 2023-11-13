@@ -8,12 +8,14 @@
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
+  import Image from '$components/images/image.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage } from '$types';
+  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
 
   export let data: PostDocument | ProjectDocument,
+    routeFetch: RouteFetch,
     images: ProjectImage[] | undefined = undefined,
     model = data._type;
 </script>
@@ -90,7 +92,17 @@
 
   {#if data._type === 'project' && images?.length}
     <Divider />
-    <ImageCarousel {images} />
+    {#if images.length > 1}
+      <ImageCarousel {images} />
+    {:else}
+      <Image
+        image={images[0].sanityAsset}
+        placeholder={images[0].placeholder}
+        crop={images[0].crop}
+        srcPromise={images[0].asset}
+        {routeFetch}
+      />
+    {/if}
   {/if}
 </div>
 

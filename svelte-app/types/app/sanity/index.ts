@@ -16,9 +16,10 @@ export interface SanityReference {
   _ref: string;
   _type: string;
 }
-export interface SanityImageObject extends Pick<SanityAsset, '_id', '_type'> {
+export interface SanityImageObject extends Pick<SanityAsset, '_type'> {
+  _key?: string;
   asset: SanityReference;
-  crop?: SanityImageCrop;
+  crop: SanityImageCrop;
   hotspot?: SanityImageHotspot;
 }
 export interface SanityImageCrop {

@@ -12,7 +12,7 @@ const urlToBase64Asset = async (url: string, fetch: typeof window.fetch) => {
 
   if (!response.ok) {
     Logger.error(`Failed to fetch image ${url}`);
-    return undefined;
+    return '';
   }
 
   const arrayBuffer = await response.arrayBuffer(),
@@ -62,7 +62,8 @@ export const load = (async ({ fetch, params, url }) => {
           return {
             crop,
             placeholder: await urlToBase64Asset(placeholder, fetch),
-            asset: urlToBase64Asset(url, fetch)
+            asset: urlToBase64Asset(url, fetch),
+            sanityAsset: imageAsset
           } satisfies ProjectImage;
         })()
       );
