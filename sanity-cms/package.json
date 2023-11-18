@@ -28,7 +28,7 @@
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.23.3",
-    "@sanity/eslint-config-studio": "^3.0.1",
+    "@sanity/eslint-config-studio": "^3.0.0",
     "@types/react": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "6.9.0",
     "@typescript-eslint/parser": "6.9.1",
