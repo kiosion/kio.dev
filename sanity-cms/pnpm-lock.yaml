@@ -47,8 +47,8 @@ devDependencies:
     specifier: ^7.23.3
     version: 7.23.3(@babel/core@7.23.3)
   '@sanity/eslint-config-studio':
-    specifier: ^3.0.0
-    version: 3.0.0(eslint@8.47.0)(typescript@5.0.4)
+    specifier: ^3.0.1
+    version: 3.0.1(eslint@8.47.0)(typescript@5.0.4)
   '@types/react':
     specifier: ^18.2.21
     version: 18.2.21
@@ -3932,8 +3932,8 @@ packages:
       '@sanity/diff-match-patch': 3.1.1
     dev: false
 
-  /@sanity/eslint-config-studio@3.0.0(eslint@8.47.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-Z+dHfpvHnhtJBNLULPOFfCZcc5V3BXu28gicPSJGguhqjTjSW8uc/Oerf9ooLdHn0pupcP4owUTlrvpbGyzVrg==}
+  /@sanity/eslint-config-studio@3.0.1(eslint@8.47.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-N7IFd/VZuL0UyJ2T5t5WWWf9DrhgY6lt0bnnScwwyX4ijA7WMFtxR5rgL2EDGdhI2eYyxOeleeBaK9QEXgiA1A==}
     dependencies:
       '@babel/core': 7.23.3
       '@babel/eslint-parser': 7.22.15(@babel/core@7.23.3)(eslint@8.47.0)
