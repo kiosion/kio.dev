@@ -25,7 +25,6 @@
     placeholderSrc =
       placeholder || buildImageUrl({ ref: _ref, crop, width: 30, blur: 40 }),
     style = `max-width: ${imgDimensions.width}px; max-height: ${imgDimensions.height}px; aspect-ratio: ${imgDimensions.width} / ${imgDimensions.height};`,
-    placeholderStyle = `${style} position: absolute; top: 0; left: 0; opacity: 50%;`,
     [send, receive] = crossfade({
       duration: (d: number) => Math.sqrt(d * 200),
       fallback(node, params) {
@@ -87,10 +86,11 @@
     >
       {#if showImageModal}
         <img
+          class="placeholder"
           src={placeholderSrc}
           alt={_key}
           draggable="false"
-          style={placeholderStyle}
+          {style}
           out:fade={{ duration: BASE_ANIMATION_DURATION }}
         />
       {:else}
@@ -113,14 +113,13 @@
     alt={_key}
     draggable="false"
     aria-hidden="true"
-    style={placeholderStyle}
+    {style}
   />
 </div>
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
     src={fullSrc}
-    draggable="false"
     alt={_key}
     {style}
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
@@ -131,27 +130,39 @@
 <style lang="scss">
   @import '@styles/mixins';
 
+  .placeholder,
+  .backdrop {
+    position: absolute;
+    top: 0;
+  }
+
+  .placeholder {
+    left: 0;
+    opacity: 50%;
+  }
+
   div:not(.loading) {
     @apply relative w-full;
 
     .backdrop {
-      @apply transition-opacity;
+      @apply -translate-x-1/2 transition-opacity;
 
       z-index: -1;
       filter: blur(20px);
-      opacity: 0.2 !important;
+      opacity: 0.2;
+      left: 50%;
     }
 
     &:hover,
     &:focus-visible {
       .backdrop {
-        opacity: 0.3 !important;
+        opacity: 30%;
       }
     }
   }
 
   button {
-    @apply relative block max-h-fit w-full rounded-sm;
+    @apply relative mx-auto block max-h-fit w-full rounded-sm;
 
     @include focus-state(sm);
   }
