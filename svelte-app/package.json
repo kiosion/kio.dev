@@ -30,7 +30,7 @@
     "@sveltejs/kit": "^1.27.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@testing-library/cypress": "^10.0.1",
-    "@testing-library/svelte": "^4.0.3",
+    "@testing-library/svelte": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.11.0",
     "autoprefixer": "^10.4.16",

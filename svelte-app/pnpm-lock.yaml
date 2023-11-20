@@ -33,8 +33,8 @@ devDependencies:
     specifier: ^10.0.1
     version: 10.0.1(cypress@13.5.1)
   '@testing-library/svelte':
-    specifier: ^4.0.3
-    version: 4.0.3(svelte@4.2.5)
+    specifier: ^4.0.5
+    version: 4.0.5(svelte@4.2.5)
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.10.0
     version: 6.10.0(@typescript-eslint/parser@6.11.0)(eslint@8.53.0)(typescript@5.2.2)
@@ -2223,8 +2223,8 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/svelte@4.0.3(svelte@4.2.5):
-    resolution: {integrity: sha512-GldAnyGEOn5gMwME+hLVQrnfuKZFB+it5YOMnRBHX+nqeHMsSa18HeqkdvGqtqLpvn81xV7R7EYFb500ngUfXA==}
+  /@testing-library/svelte@4.0.5(svelte@4.2.5):
+    resolution: {integrity: sha512-P7X3mpYv/My4hBZfxVxTFV5KcA+EoWfRCguWP7WQdYj6HMdg/L+LiwG4ocvLe+hupedrC7dwcy85JlxKplJp2g==}
     engines: {node: '>= 10'}
     peerDependencies:
       svelte: ^3 || ^4
