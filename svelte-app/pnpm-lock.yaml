@@ -31,7 +31,7 @@ devDependencies:
     version: 0.4.2(tailwindcss@3.3.5)
   '@testing-library/cypress':
     specifier: ^10.0.1
-    version: 10.0.1(cypress@13.5.1)
+    version: 10.0.1(cypress@13.6.0)
   '@testing-library/svelte':
     specifier: ^4.0.3
     version: 4.0.3(svelte@4.2.5)
@@ -45,8 +45,8 @@ devDependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
   cypress:
-    specifier: ^13.5.1
-    version: 13.5.1
+    specifier: ^13.6.0
+    version: 13.6.0
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -2198,7 +2198,7 @@ packages:
       tailwindcss: 3.3.5
     dev: true
 
-  /@testing-library/cypress@10.0.1(cypress@13.5.1):
+  /@testing-library/cypress@10.0.1(cypress@13.6.0):
     resolution: {integrity: sha512-e8uswjTZIBhaIXjzEcrQQ8nHRWHgZH7XBxKuIWxZ/T7FxfWhCR48nFhUX5nfPizjVOKSThEfOSv67jquc1ASkw==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -2206,7 +2206,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.5
       '@testing-library/dom': 9.3.3
-      cypress: 13.5.1
+      cypress: 13.6.0
     dev: true
 
   /@testing-library/dom@9.3.3:
@@ -4214,8 +4214,8 @@ packages:
     resolution: {integrity: sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==}
     dev: true
 
-  /cypress@13.5.1:
-    resolution: {integrity: sha512-yqLViT0D/lPI8Kkm7ciF/x/DCK/H/DnogdGyiTnQgX4OVR2aM30PtK+kvklTOD1u3TuItiD9wUQAF8EYWtyZug==}
+  /cypress@13.6.0:
+    resolution: {integrity: sha512-quIsnFmtj4dBUEJYU4OH0H12bABJpSujvWexC24Ju1gTlKMJbeT6tTO0vh7WNfiBPPjoIXLN+OUqVtiKFs6SGw==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
