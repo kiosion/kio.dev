@@ -8,7 +8,6 @@ import {
   BsFillFileTextFill,
   BsFillFileEarmarkTextFill
 } from 'react-icons/bs';
-import { BiLinkExternal } from 'react-icons/bi';
 import type { StructureBuilder, StructureResolverContext } from 'sanity/desk';
 
 export const structure = (
