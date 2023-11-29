@@ -79,7 +79,7 @@
   @import '@styles/mixins';
 
   div[role='none'] {
-    @apply fixed left-0 right-0 top-0 z-10 flex items-center justify-center border-b border-dark/20 bg-light/50 backdrop-blur-lg transition-[border,background-color];
+    @apply fixed left-0 right-0 top-0 z-10 flex items-center justify-center border-b-2 border-dark/20 bg-light/50 backdrop-blur-lg transition-[border,background-color];
 
     &:hover,
     &:focus-visible,

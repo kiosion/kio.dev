@@ -4,8 +4,7 @@
 
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
-
-  import Tooltip from './tooltip.svelte';
+  import Tooltip from '$components/tooltip.svelte';
 
   import type { SiteConfig } from '$types';
 
@@ -25,9 +24,11 @@
     {#if socials?.length}
       <div class="socials">
         {#each socials as social, i}
-          <a target={social.target} rel={social.rel} href={social.url}>
-            {social.name}
-          </a>
+          <Tooltip text={social.url} delay={750} position="top" fixed>
+            <a target={social.target} rel={social.rel} href={social.url}>
+              {social.name}
+            </a>
+          </Tooltip>
           {#if i < socials.length - 1}
             <span aria-hidden="true">/</span>
           {/if}
@@ -36,7 +37,7 @@
     {/if}
     {#if APP_VERSION?.length}
       <div class="version">
-        <Tooltip text={$t('View latest commit on GitHub')} position="top" delay={400}>
+        <Tooltip text={$t('View latest commit on GitHub')} position="top" delay={750}>
           <a
             target="_blank"
             rel="noopener noreferrer"

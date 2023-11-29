@@ -38,7 +38,7 @@
   {/if}
 </HeadedBlock>
 
-<Divider class="!-mt-2" />
+<Divider />
 
 <HeadedBlock heading={$t('Projects')}>
   {#if data.projects.length}

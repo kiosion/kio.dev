@@ -1,4 +1,4 @@
-<span class={$$props.class || ''} />
+<span />
 
 <style lang="scss">
   span {

@@ -6,7 +6,7 @@ import type { RequestHandler } from './$types';
 
 export const GET = (async ({ url, params }) => {
   const docType = params.type as (typeof VALID_DOC_TYPES)[number],
-    many = !!params.many ?? false;
+    many = !!params.many;
 
   if (!VALID_DOC_TYPES.includes(docType)) {
     return endpointResponse(

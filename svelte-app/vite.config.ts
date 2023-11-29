@@ -6,9 +6,8 @@ import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 
-export default defineConfig(({ command, mode }) => {
-  const isProduction = ['production', 'staging', 'build'].some((m) => m === mode),
-    isTesting = mode === 'testing',
+export default defineConfig(({ mode }) => {
+  const isTesting = mode === 'testing',
     isDev = ['development', 'backed'].some((m) => m === mode);
 
   return {

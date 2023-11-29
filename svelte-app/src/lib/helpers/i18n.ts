@@ -53,7 +53,7 @@ const getKey = <T extends keyof typeof EN>(lang: string, key: T): string | undef
 const _translate = (
   currentLang: string | undefined,
   key: string,
-  params?: Record<string, unknown>
+  params?: Record<PropertyKey, string>
 ): string => {
   const lang = currentLang || DEFAULT_APP_LANG;
 
@@ -81,7 +81,8 @@ const _translate = (
 
 const translate = derived(
   currentLang,
-  (val) => (key: string, params?: Record<string, unknown>) => _translate(val, key, params)
+  (val: string) => (key: string, params?: Record<PropertyKey, string>) =>
+    _translate(val, key, params)
 );
 
 const addSearchParams = (path: string, params?: URLSearchParams): string => {
