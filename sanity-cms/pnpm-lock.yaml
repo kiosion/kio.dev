@@ -15,8 +15,8 @@ dependencies:
     specifier: 3.20.2
     version: 3.20.2(@babel/runtime@7.21.5)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.2)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
   ace-builds:
-    specifier: 1.31.2
-    version: 1.31.2
+    specifier: 1.32.0
+    version: 1.32.0
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -4724,8 +4724,8 @@ packages:
       negotiator: 0.6.3
     dev: true
 
-  /ace-builds@1.31.2:
-    resolution: {integrity: sha512-IeZI9ytPA6mB+goPxPkUPW4vXBoLuaBl5czu2tjtKrMi7mdRgyIUA/8e5JlrI1mqKoMeWHoUujzMTWkyutTdBw==}
+  /ace-builds@1.32.0:
+    resolution: {integrity: sha512-5EFblRIaqjwumglq1o7hF9/rA9WZBqwn6eyfYB6ZiQbf036gF5CW3HqFk+7pRx3+1A4KsNMZUnN2NEfYrJTfDA==}
     dev: false
 
   /acorn-globals@7.0.1:
