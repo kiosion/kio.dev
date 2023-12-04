@@ -64,7 +64,7 @@
     "twemoji": "14.0.2",
     "typescript": "5.3.2",
     "vite": "5.0.4",
-    "vite-plugin-inspect": "0.8.0",
+    "vite-plugin-inspect": "0.8.1",
     "vite-plugin-test-selectors": "0.0.2",
     "vitest": "0.32.0"
   },
