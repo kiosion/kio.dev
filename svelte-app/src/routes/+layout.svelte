@@ -16,16 +16,15 @@
   import Settings, { loading } from '$stores/settings';
 
   import Footer from '$components/footer.svelte';
+  import Header from '$components/header.svelte';
   import ContentWrapper from '$components/layouts/content-wrapper.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
-  import Nav from '$components/nav.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[],
-    setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    appLoaded = false;
+    setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
 
   const { theme, reduce_motion } = Settings,
     skipToContent = (e: KeyboardEvent) => {
@@ -88,8 +87,6 @@
     setTimeout(() => {
       loading.set(false);
     }, 1000);
-
-    appLoaded = true;
   });
 
   onDestroy(() => unsubscribers.forEach((u) => u()));
@@ -119,7 +116,7 @@
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 </svelte:head>
 
-<svelte:body use:classList={[$theme, $navigating ? 'is-loading' : 'is-loaded']} />
+<svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <span
   role="button"
@@ -131,10 +128,10 @@
 >
 
 <div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
-  <Nav loaded={appLoaded && !$loading} />
   <ScrollContainer>
     <PageTransition pathname={data.pathname}>
       <ContentWrapper>
+        <Header />
         <slot />
         <Footer config={data.config} />
       </ContentWrapper>

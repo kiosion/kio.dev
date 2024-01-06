@@ -9,7 +9,7 @@
 
 <style lang="scss">
   h1 {
-    @apply mb-2 mt-8 font-code text-3xl font-black;
+    @apply mb-2 mt-8 font-code text-2xl font-black;
   }
 
   section {

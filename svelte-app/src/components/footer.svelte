@@ -37,7 +37,12 @@
     {/if}
     {#if APP_VERSION?.length}
       <div class="version">
-        <Tooltip text={$t('View latest commit on GitHub')} position="top" delay={750}>
+        <Tooltip
+          text={$t('View latest commit on GitHub')}
+          position="top"
+          delay={750}
+          fixed
+        >
           <a
             target="_blank"
             rel="noopener noreferrer"

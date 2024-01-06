@@ -9,7 +9,6 @@
       name: string;
       url: string;
     },
-    mobile = false,
     navigatingIsActive = false;
 
   let isHovered = false,
@@ -41,8 +40,7 @@
 
 <Hoverable bind:hovered={isHovered}>
   <a
-    class="focusOutline-sm no-select relative"
-    class:mobile
+    class="focusOutline-sm no-select"
     class:active={isActive || isHovered}
     aria-current={isActive ? 'page' : undefined}
     aria-label={$t(link.name)}
@@ -58,26 +56,25 @@
       }
     }}
   >
-    <span>{$t(link.name)}</span>
-    {#if isActive || isHovered}
+    {$t(link.name).toLowerCase()}
+    <!-- {#if isActive || isHovered}
       <span
         class="absolute block rounded-md {isHovered
           ? 'bg-accent-light/60 dark:bg-accent-dark/60'
           : 'bg-accent-light dark:bg-accent-dark'} -bottom-1 left-0 right-0 h-[2px] transition-[background-color] md:bottom-2"
       />
-    {/if}
+    {/if} -->
   </a>
 </Hoverable>
 
 <style lang="scss">
   a {
-    @apply w-full whitespace-nowrap rounded-[0.1rem] py-3 font-mono text-base text-dark/80 transition-[color];
+    @apply rounded-sm text-sm text-dark/80 transition-[color];
 
+    &:hover,
+    &:focus-visible,
     &.active {
-      @apply text-dark;
-    }
-    &.mobile {
-      @apply my-[1px] w-fit p-0;
+      @apply text-accent-light;
     }
   }
 
@@ -85,8 +82,10 @@
     a {
       @apply text-light/80;
 
+      &:hover,
+      &:focus-visible,
       &.active {
-        @apply text-light;
+        @apply text-accent-dark;
       }
     }
   }

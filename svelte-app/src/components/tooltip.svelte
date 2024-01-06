@@ -15,7 +15,7 @@
     offset = [0, 12] as [number, number],
     fixed = false;
 
-  let container: HTMLDivElement, instance: Instance;
+  let container: HTMLSpanElement, instance: Instance;
 
   onMount(() => {
     const target = container?.firstChild as HTMLElement;
@@ -73,9 +73,9 @@
   }
 </script>
 
-<div class="contents h-fit w-fit" data-test-id="tooltip-container" bind:this={container}>
+<span class="contents h-fit w-fit" data-test-id="tooltip-container" bind:this={container}>
   <slot />
-</div>
+</span>
 
 <style lang="scss">
   :global(.tippy-box[data-animation='fade'][data-state='hidden']) {

@@ -15,13 +15,13 @@ describe('E2E | features | tooltips', () => {
     cy.wait(1000);
     cy.get('[data-test-id="tooltip-container"]').should('exist');
     cy.get('[data-tippy-root]').should('be.visible');
-    cy.get('[data-tippy-root]').should('contain', 'Use light theme');
+    cy.get('[data-tippy-root]').should('contain', 'Use light mode');
   });
 
   it('should show tooltips on focus', () => {
     cy.get('[data-test-id="theme-toggle"]').filter(':visible').focus();
     cy.wait(1000);
     cy.get('[data-tippy-root]').should('be.visible');
-    cy.get('[data-tippy-root]').should('contain', 'Use light theme');
+    cy.get('[data-tippy-root]').should('contain', 'Use light mode');
   });
 });

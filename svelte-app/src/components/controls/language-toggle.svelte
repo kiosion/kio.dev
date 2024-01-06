@@ -34,17 +34,18 @@
     fixed
   >
     <button
-      class="focusOutline -m-1.5 flex h-[32px] w-[32px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
+      class="focusOutline -m-1.5 flex h-[24px] w-[24px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
         ''}"
       aria-label={$t(
         $currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english'
       )}
       tabindex="0"
+      data-test-id="language-toggle"
       on:click={(e) => {
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
     >
-      <Icon icon="script" />
+      <Icon icon="script" width={18} />
     </button>
   </Tooltip>
 </Hoverable>
