@@ -1,4 +1,4 @@
-<div id="content-wrapper">
+<div id={$$props.id ?? undefined}>
   <slot />
 </div>
 
@@ -6,7 +6,7 @@
   @import '@styles/mixins';
 
   div {
-    @apply w-full px-2 pb-12 transition-[max-width,margin] duration-200;
+    @apply w-full transition-[max-width,margin] duration-200;
 
     --max-width: unset;
 

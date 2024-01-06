@@ -17,7 +17,8 @@
 
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
-  import ContentWrapper from '$components/layouts/content-wrapper.svelte';
+  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
+  import PageContent from '$components/layouts/page-content.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
 
@@ -129,12 +130,16 @@
 
 <div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
   <ScrollContainer>
+    <ConstrainWidth>
+      <Header />
+    </ConstrainWidth>
     <PageTransition pathname={data.pathname}>
-      <ContentWrapper>
-        <Header />
-        <slot />
-        <Footer config={data.config} />
-      </ContentWrapper>
+      <ConstrainWidth id="content-wrapper">
+        <PageContent>
+          <slot />
+          <Footer config={data.config} />
+        </PageContent>
+      </ConstrainWidth>
     </PageTransition>
   </ScrollContainer>
 </div>
