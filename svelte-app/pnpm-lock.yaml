@@ -9,8 +9,8 @@ devDependencies:
     specifier: 4.1.3
     version: 4.1.3(svelte@4.2.8)(svgo@3.0.2)(vite@5.0.10)
   '@portabletext/svelte':
-    specifier: 2.1.4
-    version: 2.1.4(svelte@4.2.8)
+    specifier: 2.1.5
+    version: 2.1.5(svelte@4.2.8)
   '@portabletext/types':
     specifier: 2.0.8
     version: 2.0.8
@@ -2101,8 +2101,8 @@ packages:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
     dev: true
 
-  /@portabletext/svelte@2.1.4(svelte@4.2.8):
-    resolution: {integrity: sha512-zf8fxuJe9xM4NJZcs8+8koxG2DPwi0BZV5w9iq6I+6UUP65PoENRORlX+ITy9sEkPSeJqmJFn7kj5e2DNT7Rjg==}
+  /@portabletext/svelte@2.1.5(svelte@4.2.8):
+    resolution: {integrity: sha512-NDHIT6TRPnWCGnr0VjwsmYtuhZRVkD41aexajtElwsVLSoYUf/mxXd6PVxjg1e12DfubQo4aQv6lpRthIVbIIA==}
     peerDependencies:
       svelte: '>=3.47.0 <5.0.0'
     dependencies:
