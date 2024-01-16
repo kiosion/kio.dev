@@ -28,9 +28,6 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<!-- <HeadedBlock heading={$t('About me')}>
-  <PortableText text={data.about.bio} />
-</HeadedBlock> -->
 {#if data.config?.about}
   {#each data.config.about as aboutSection}
     <HeadedBlock heading={aboutSection.title}>

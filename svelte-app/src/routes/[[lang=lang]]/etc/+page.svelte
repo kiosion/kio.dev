@@ -38,28 +38,3 @@
   <EmptyContent />
   <Divider />
 {/if}
-
-<!-- <HeadedBlock heading={$t('Say hello')}>
-  <PortableText text={data.about.contact} />
-</HeadedBlock>
-
-<Divider />
-
-<HeadedBlock heading={$t('PGP')}>
-  <p>
-    {$t("Want to send a secure message my way? Here's my main PGP key:")}
-    <Link href="/pgp.txt" newtab>D1FD DE24 BB72 BFEF E045 ECE0 8A2C 67E2 2184 F162</Link>
-  </p>
-</HeadedBlock>
-
-<Divider />
-
-<HeadedBlock heading={$t('Meta')}>
-  <PortableText text={data.about.body} />
-</HeadedBlock> -->
-
-<!-- <style lang="scss">
-  p {
-    @apply my-4 transition-[color];
-  }
-</style> -->
