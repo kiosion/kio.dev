@@ -1,11 +1,11 @@
 <script lang="ts">
   import TimelineSection from '$components/about/timeline-section.svelte';
 
-  import type { AuthorTimelineItem } from '$types';
+  import type { WorkTimelineItem } from '$types';
 
-  export let data: AuthorTimelineItem[];
+  export let data: WorkTimelineItem[];
 
-  let sections: Record<string, AuthorTimelineItem[]> = {};
+  let sections: Record<string, WorkTimelineItem[]> = {};
 
   $: {
     sections = {};

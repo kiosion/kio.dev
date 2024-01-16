@@ -43,6 +43,5 @@ export type ProjectImage = {
   sanityAsset: SanityImageObject;
 };
 
-export type { AuthorDocument, AuthorTimelineItem } from '$types/documents/author';
 export type { PostDocument } from '$types/documents/post';
 export type { ProjectDocument } from '$types/documents/project';

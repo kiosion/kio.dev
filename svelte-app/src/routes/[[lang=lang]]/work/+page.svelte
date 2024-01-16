@@ -29,8 +29,8 @@
 </svelte:head>
 
 <HeadedBlock heading={$t("Where I've worked")}>
-  {#if data.about.timeline?.length}
-    <Timeline data={data.about.timeline} />
+  {#if data.config?.timeline?.length}
+    <Timeline data={data.config.timeline} />
   {:else}
     <div class="w-full">
       <EmptyContent />

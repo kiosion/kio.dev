@@ -4,7 +4,6 @@ import Logger from '$lib/logger';
 import tryFetch from '$lib/try-fetch';
 
 import type {
-  AuthorDocument,
   DocumentTags,
   PostDocument,
   ProjectDocument,
@@ -17,7 +16,6 @@ type PossibleParams = {
 };
 
 export interface DocumentRegistry {
-  about: AuthorDocument;
   config: SiteConfig;
   post: PostDocument;
   project: ProjectDocument;

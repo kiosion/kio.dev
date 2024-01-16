@@ -1,4 +1,25 @@
+import Body, { BodyBlocks } from './objects/body';
+
 import type { Rule } from 'sanity';
+
+const Section = {
+  title: 'Section',
+  type: 'object',
+  fields: [
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      of: BodyBlocks
+    }
+  ]
+};
 
 export default {
   name: 'siteSettings',
@@ -6,32 +27,92 @@ export default {
   type: 'document',
   groups: [
     {
-      name: 'pages',
-      title: 'Pages'
-    },
-    {
-      name: 'links',
-      title: 'Links'
-    },
-    {
-      name: 'pinned',
-      title: 'Pinned'
+      name: 'sections',
+      title: 'Sections'
     }
   ],
   fields: [
     {
-      name: 'me',
-      title: 'Me',
-      type: 'reference',
-      to: {
-        type: 'author'
-      }
+      name: 'about',
+      type: 'array',
+      title: 'About Sections',
+      group: 'sections',
+      of: [Section]
+    },
+    {
+      name: 'meta',
+      type: 'array',
+      title: 'Meta Sections',
+      group: 'sections',
+      of: [Section]
+    },
+    {
+      name: 'timeline',
+      title: 'Work Timeline',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule: Rule) => Rule.required()
+            },
+            {
+              name: 'subtitle',
+              title: 'Subtitle',
+              type: 'string'
+            },
+            {
+              name: 'range',
+              title: 'Date range',
+              type: 'object',
+              fields: [
+                {
+                  name: 'start',
+                  title: 'Start',
+                  type: 'date',
+                  options: {
+                    dateFormat: 'MMMM Do, YYYY'
+                  },
+                  validation: (Rule: Rule) => Rule.required()
+                },
+                {
+                  name: 'end',
+                  title: 'End',
+                  type: 'date',
+                  options: {
+                    dateFormat: 'MMMM Do, YYYY'
+                  },
+                  validation: (Rule: Rule) =>
+                    Rule.min(Rule.valueOfField('start')).error(
+                      'End date must be after start date'
+                    )
+                }
+              ]
+            },
+            {
+              name: 'skills',
+              title: 'Skills',
+              type: 'array',
+              of: [
+                {
+                  type: 'reference',
+                  to: [{ type: 'tag' }]
+                }
+              ]
+            },
+            Body
+          ]
+        }
+      ]
     },
     {
       name: 'socialLinks',
       type: 'array',
       title: 'Social Links',
-      group: 'links',
       of: [
         {
           title: 'Social',
@@ -81,28 +162,6 @@ export default {
                   }
                 }
               ]
-            },
-            {
-              name: 'icon',
-              title: 'Icon',
-              type: 'string',
-              validation: (Rule: Rule) => Rule.required()
-            },
-            {
-              name: 'iconSize',
-              title: 'Icon Size',
-              type: 'number',
-              initialValue: 20,
-              validation: (Rule: Rule) => Rule.min(10).max(30).required(),
-              description: 'Size adjustment in pixels'
-            },
-            {
-              name: 'iconRotation',
-              title: 'Icon Rotation',
-              type: 'number',
-              initialValue: 0,
-              description: 'Rotation in degrees',
-              validation: (Rule: Rule) => Rule.min(0).max(360).required()
             }
           ]
         }
@@ -111,26 +170,7 @@ export default {
     {
       name: 'pgpKey',
       type: 'text',
-      title: 'PGP Key',
-      group: 'pages'
-    },
-    {
-      name: 'pinnedPost',
-      type: 'reference',
-      title: 'Pinned Post',
-      group: 'pinned',
-      to: {
-        type: 'post'
-      }
-    },
-    {
-      name: 'pinnedProject',
-      type: 'reference',
-      title: 'Pinned Project',
-      group: 'pinned',
-      to: {
-        type: 'project'
-      }
+      title: 'PGP Key'
     }
   ]
 };

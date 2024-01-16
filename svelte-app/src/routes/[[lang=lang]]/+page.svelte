@@ -4,6 +4,7 @@
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import Icon from '$components/icon.svelte';
   import ListItem from '$components/lists/list-item.svelte';
@@ -27,11 +28,21 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('About me')}>
+<!-- <HeadedBlock heading={$t('About me')}>
   <PortableText text={data.about.bio} />
-</HeadedBlock>
+</HeadedBlock> -->
+{#if data.config?.about}
+  {#each data.config.about as aboutSection}
+    <HeadedBlock heading={aboutSection.title}>
+      <PortableText text={aboutSection.content} />
+    </HeadedBlock>
 
-<Divider />
+    <Divider />
+  {/each}
+{:else}
+  <EmptyContent />
+  <Divider />
+{/if}
 
 <HeadedBlock heading={$t('Recent thoughts')}>
   {#if data.posts.length}

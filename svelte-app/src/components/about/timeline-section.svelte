@@ -5,9 +5,9 @@
 
   import TimelineItem from './timeline-item.svelte';
 
-  import type { AuthorTimelineItem } from '$types';
+  import type { WorkTimelineItem } from '$types';
 
-  export let section: AuthorTimelineItem[];
+  export let section: WorkTimelineItem[];
 
   const title = section[0].title;
 

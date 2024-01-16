@@ -12,17 +12,46 @@ defmodule Router.Api.V1.Config do
   end
 
   get "/" do
-    conn
-    |> handle_sanity_fetch(
-      Query.new()
-      |> Query.filter([%{"_type" => "'siteSettings'"}])
-      |> Query.qualify("[0]")
-      |> Query.build!(),
-      fn conn, result ->
-        result
-        |> Map.delete("ms")
-        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
-      end
-    )
+    with params <-
+           validate_query_params(
+             fetch_query_params(conn).query_params,
+             %{
+               "lang" => "en"
+             }
+           ) do
+      conn
+      |> handle_sanity_fetch(
+        Query.new()
+        |> Query.filter([
+          %{"_type" => "'siteSettings'"}
+        ])
+        |> Query.qualify("[0]")
+        |> Query.build!(),
+        fn conn, result ->
+          transformed_result =
+            case params["lang"] do
+              "en" -> result
+              "fr" -> Translate.translate(:config, result, "fr", "en")
+              _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
+            end
+
+          case transformed_result do
+            {:error, message} ->
+              Logger.error("Error fetching config: #{inspect(message)}")
+              result
+
+            _ ->
+              transformed_result
+          end
+          |> Map.delete("ms")
+          |> Map.delete("query")
+          |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+        end
+      )
+    else
+      _ ->
+        conn
+        |> error_res(400, "Invalid request", "Unknown error collecting params")
+    end
   end
 end

@@ -2,9 +2,9 @@
   import BulletPoint from '$components/bullet-point.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { AuthorTimelineItem } from '$types';
+  import type { WorkTimelineItem } from '$types';
 
-  export let title: string | undefined, body: AuthorTimelineItem['body'], date: string;
+  export let title: string | undefined, body: WorkTimelineItem['body'], date: string;
 </script>
 
 <div class="item">

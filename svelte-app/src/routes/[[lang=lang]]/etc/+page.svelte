@@ -3,8 +3,8 @@
   import { t } from '$i18n';
 
   import Divider from '$components/divider.svelte';
+  import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import Link from '$components/link.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   export let data;
@@ -25,7 +25,21 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('Say hello')}>
+{#if data.config?.meta}
+  {#each data.config.meta as metaSection, idx}
+    <HeadedBlock heading={metaSection.title}>
+      <PortableText text={metaSection.content} />
+    </HeadedBlock>
+    {#if idx < data.config.meta.length - 1}
+      <Divider />
+    {/if}
+  {/each}
+{:else}
+  <EmptyContent />
+  <Divider />
+{/if}
+
+<!-- <HeadedBlock heading={$t('Say hello')}>
   <PortableText text={data.about.contact} />
 </HeadedBlock>
 
@@ -42,10 +56,10 @@
 
 <HeadedBlock heading={$t('Meta')}>
   <PortableText text={data.about.body} />
-</HeadedBlock>
+</HeadedBlock> -->
 
-<style lang="scss">
+<!-- <style lang="scss">
   p {
     @apply my-4 transition-[color];
   }
-</style>
+</style> -->

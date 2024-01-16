@@ -5,7 +5,7 @@ export const APP_THEMES = [LIGHT_THEME, DARK_THEME];
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = APP_LANGS[0];
 
-export const VALID_DOC_TYPES = ['post', 'project', 'about', 'config'] as const;
+export const VALID_DOC_TYPES = ['post', 'project', 'config'] as const;
 
 export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
 

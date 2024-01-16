@@ -3,21 +3,21 @@ import { handleLoadError } from '$lib/data';
 import { find } from '$lib/store';
 
 import type { PageLoad } from './$types';
-import type { AuthorDocument, ProjectDocument } from '$types';
+import type { ProjectDocument, SiteConfig } from '$types';
 
 export const load = (async ({ parent, fetch, params }) => {
-  const aboutPromise = parent().then((data) => data.about),
+  const configPromise = parent().then((data) => data.config),
     promises = [
-      aboutPromise,
+      configPromise,
       find(fetch, 'project', {
         ...DEFAULT_PROJECT_QUERY_PARAMS,
         lang: params.lang || DEFAULT_APP_LANG
       })
     ],
-    [about, projects] = handleLoadError(await Promise.all(promises)) as [
-      AuthorDocument,
+    [config, projects] = handleLoadError(await Promise.all(promises)) as [
+      SiteConfig,
       ProjectDocument[]
     ];
 
-  return { about, projects };
+  return { config, projects };
 }) satisfies PageLoad;

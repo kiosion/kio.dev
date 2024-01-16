@@ -85,10 +85,16 @@ defmodule Hexerei.Translate do
           :project -> translate_project(sanity_response, target_lang, source_lang)
           :projects -> translate_projects(sanity_response, target_lang, source_lang)
           :about -> translate_about(sanity_response, target_lang, source_lang)
+          :config -> translate_config(sanity_response, target_lang, source_lang)
           _ -> {:error, "Invalid type"}
         end
       rescue
-        _ -> sanity_response
+        e ->
+          Logger.error("Error translating #{type}: #{inspect(e)}")
+          sanity_response
+
+        _ ->
+          sanity_response
       end
     else
       _ ->
@@ -122,6 +128,65 @@ defmodule Hexerei.Translate do
         Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
         sanity_response
     end
+  end
+
+  defp translate_config(sanity_response, target_lang, source_lang) do
+    with document <- sanity_response["result"],
+         true <- document != nil do
+      content_arrays = ["about", "meta"]
+
+      translated_content_arrays =
+        Enum.map(content_arrays, fn name ->
+          translate_content_list(Map.get(document, name), target_lang, source_lang)
+        end)
+
+      translated_blocks =
+        Enum.reduce(content_arrays, %{}, fn key, acc ->
+          idx = content_arrays |> Enum.find_index(fn k -> k == key end)
+          Map.put(acc, key, Enum.at(translated_content_arrays, idx))
+        end)
+
+      %{
+        "result" => document |> Map.merge(translated_blocks |> Enum.into(%{}))
+      }
+    else
+      _ ->
+        Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
+        sanity_response
+    end
+  end
+
+  defp translate_content_list(content_list, target_lang, source_lang) do
+    Enum.map(content_list, fn content ->
+      field_names = ["title"]
+      block_names = ["content"]
+
+      fields = Enum.map(field_names, &Map.get(content, &1))
+      blocks = Map.take(content, block_names)
+
+      translated_title =
+        case translate_pt_fields(fields, target_lang, source_lang) do
+          {:ok, translated_fields} ->
+            IO.puts("got translated fields: #{inspect(translated_fields)}")
+            translated_fields |> List.first()
+
+          {:error, reason} ->
+            Logger.error("Error translating: #{reason}")
+            content["title"]
+        end
+
+      translated_content =
+        case translate_pt_blocks(blocks, target_lang, source_lang) do
+          {:ok, translated_blocks} ->
+            translated_blocks["content"]
+
+          {:error, reason} ->
+            Logger.error("Error translating: #{reason}")
+            content["content"]
+        end
+
+      %{"title" => translated_title, "content" => translated_content}
+    end)
   end
 
   defp translate_post(sanity_response, target_lang, source_lang, ignore_blocks \\ false) do
