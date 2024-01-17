@@ -4,6 +4,7 @@
 
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
+  import BaseLink from '$components/nav/base-link.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
   import type { SiteConfig } from '$types';
@@ -18,16 +19,20 @@
   }));
 </script>
 
+<Divider />
+
 {#if socials?.length || APP_VERSION?.length}
-  <Divider />
-  <div>
+  <footer>
     {#if socials?.length}
       <div class="socials">
         {#each socials as social, i}
           <Tooltip text={social.url} delay={750} position="top" fixed>
-            <a target={social.target} rel={social.rel} href={social.url}>
-              {social.name}
-            </a>
+            <BaseLink
+              text={social.name}
+              href={social.url}
+              target={social.target}
+              rel={social.rel}
+            />
           </Tooltip>
           {#if i < socials.length - 1}
             <span aria-hidden="true">/</span>
@@ -36,14 +41,14 @@
       </div>
     {/if}
     {#if APP_VERSION?.length}
-      <div class="version">
+      <div>
         <Tooltip
           text={$t('View latest commit on GitHub')}
           position="top"
           delay={750}
           fixed
         >
-          <a
+          <BaseLink
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
@@ -51,59 +56,31 @@
           >
             <Icon icon="GitCommit" inline />
             {APP_VERSION.slice(0, 6)}
-          </a>
+          </BaseLink>
         </Tooltip>
       </div>
     {/if}
-  </div>
+  </footer>
 {/if}
 
 <style lang="scss">
   @import '@styles/mixins';
 
-  div {
+  footer {
     @apply flex flex-row items-center justify-between font-mono text-sm;
+  }
+
+  div {
+    @apply flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90;
   }
 
   span {
     @apply cursor-default select-none;
   }
 
-  .socials {
-    @apply flex flex-1 flex-row items-center justify-start gap-2 text-dark/90;
-  }
-
-  a {
-    @apply rounded-sm text-dark/80;
-
-    &:hover,
-    &:focus-visible {
-      @apply text-accent-light;
-    }
-
-    @include focus-state(sm);
-  }
-
-  .version {
-    a {
-      @apply flex flex-1 flex-row items-center justify-end gap-2;
-    }
-  }
-
   :global(.dark) {
-    .socials {
+    div {
       @apply text-light/90;
-    }
-
-    a {
-      @apply text-light/80;
-
-      &:hover,
-      &:focus-visible {
-        @apply text-accent-dark;
-      }
-
-      @include focus-state(sm, dark);
     }
   }
 </style>

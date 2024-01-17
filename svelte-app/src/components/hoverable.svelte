@@ -29,7 +29,7 @@
   on:blur={() => (hovered = false)}
   role="none"
 >
-  <slot />
+  <slot {hovered} />
 </span>
 
 <style lang="scss">

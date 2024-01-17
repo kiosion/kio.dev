@@ -10,15 +10,13 @@
   export let document: PostDocument | ProjectDocument,
     small = false;
 
-  let hovered = false;
-
   const link =
     document._type === 'post'
       ? `/blog/${document.slug.current}`
       : `/work/${document.slug.current}`;
 </script>
 
-<Hoverable bind:hovered>
+<Hoverable let:hovered>
   <a
     href={$linkTo(link)}
     class="focusOutline w-full rounded-md"

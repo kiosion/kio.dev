@@ -6,8 +6,6 @@
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
-  let hovered: boolean;
-
   const dispatch = createEventDispatcher(),
     type = $$props.href ? 'a' : 'button';
 
@@ -18,7 +16,7 @@
     : undefined;
 </script>
 
-<Hoverable bind:hovered>
+<Hoverable let:hovered>
   <Tooltip text={link?.length > 50 ? `${link.slice(0, 50)}...` : link} delay={750} fixed>
     <svelte:element
       this={type}
@@ -30,7 +28,7 @@
         : 'decoration-2'} transition-[text-decoration-color]"
       tabindex="0"
       on:click={() => dispatch('click')}
-      on:keydown={(e) => {
+      on:keyup={(e) => {
         if (e.key === 'Enter') {
           dispatch('click');
         }

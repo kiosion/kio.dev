@@ -18,7 +18,12 @@
   let container: HTMLSpanElement, instance: Instance;
 
   onMount(() => {
-    const target = container?.firstChild as HTMLElement;
+    let target = container?.firstChild as HTMLElement | null;
+
+    if (target && window?.getComputedStyle(target).display === 'contents') {
+      target = target?.firstChild as HTMLElement | null;
+    }
+
     if (target) {
       if (!disable) {
         instance = tippy(target, {
@@ -39,11 +44,7 @@
     }
   });
 
-  onDestroy(() => {
-    if (instance) {
-      instance.destroy();
-    }
-  });
+  onDestroy(() => instance?.destroy?.());
 
   const createContent = (content: string) => {
     const div = document.createElement('div');
