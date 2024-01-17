@@ -13,8 +13,7 @@ defmodule Router.Api.V1 do
     "/project" => Router.Api.V1.Project,
     "/projects" => Router.Api.V1.Projects,
     "/tag" => Router.Api.V1.Tag,
-    "/tags" => Router.Api.V1.Tags,
-    "/about" => Router.Api.V1.About
+    "/tags" => Router.Api.V1.Tags
   }
 
   for {path, handler} <- @routes do

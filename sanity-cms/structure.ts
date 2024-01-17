@@ -1,5 +1,4 @@
 import {
-  BsPersonFill,
   BsFillFileRichtextFill,
   BsFillFileImageFill,
   BsFillTagsFill,
@@ -18,18 +17,14 @@ export const structure = (
     .title('Content')
     .items([
       S.listItem()
-        .title('Global Settings')
+        .title('Settings')
         .icon(BsGearFill)
         .child(
           S.document()
             .schemaType('siteSettings')
             .documentId('siteSettings')
-            .title('Global Settings')
+            .title('Settings')
         ),
-      S.listItem()
-        .title('Me')
-        .icon(BsPersonFill)
-        .child(S.document().title('Me').schemaType('author').documentId('me')),
       S.divider(),
       S.listItem()
         .title('Posts')

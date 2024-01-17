@@ -1,4 +1,4 @@
-import BaseDocument from './base-document';
+import BaseDocument from '$schema/base-document';
 import type { PreviewConfig, Rule, PreviewValue } from 'sanity';
 
 export default {
@@ -6,13 +6,7 @@ export default {
   title: 'Projects',
   type: 'document',
   fields: [
-    ...BaseDocument.filter((field) => field.name !== 'author'),
-    {
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: { type: 'author' }
-    },
+    ...BaseDocument,
     {
       name: 'images',
       title: 'Project Images',

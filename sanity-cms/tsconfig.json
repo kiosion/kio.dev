@@ -19,7 +19,7 @@
       "$schema/*": ["./schemas/*"],
       "$fields/*": ["./schemas/fields/*"],
       "$objects/*": ["./schemas/objects/*"],
-      "$renderers/*": ["./renderers/*"],
+      "$renderers/*": ["./schemas/renderers/*"],
       "$components/*": ["./components/*"],
       "$/*": ["./*"]
     },

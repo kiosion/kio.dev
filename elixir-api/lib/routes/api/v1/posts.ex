@@ -65,15 +65,6 @@ defmodule Router.Api.V1.Posts do
           "title",
           "views",
           %{
-            "'author'" => [
-              ["'_id'", ["author", "_id", :follow]],
-              ["'_type'", ["author", "_type", :follow]],
-              ["'name'", ["author", "name", :follow]],
-              ["'slug'", ["author", "slug", :follow]],
-              ["'image'", ["author", "image", :follow]]
-            ]
-          },
-          %{
             "tags[]" => [
               "_id",
               "title",

@@ -1,4 +1,4 @@
-import BaseDocument from './base-document';
+import BaseDocument from '$schema/base-document';
 import type { PreviewConfig, PreviewValue } from 'sanity';
 
 export default {

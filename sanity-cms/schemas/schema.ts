@@ -1,18 +1,9 @@
-import divider from './objects/divider';
-import header from './objects/header';
+import divider from '$objects/divider';
+import header from '$objects/header';
 
-import author from './author';
-import post from './post';
-import project from './project';
-import tag from './tag';
-import siteSettings from './settings';
+import post from '$schema/post';
+import project from '$schema/project';
+import tag from '$schema/tag';
+import siteSettings from '$schema/settings';
 
-export const schemaTypes = [
-  author,
-  divider,
-  header,
-  post,
-  project,
-  tag,
-  siteSettings
-];
+export const schemaTypes = [divider, header, post, project, tag, siteSettings];

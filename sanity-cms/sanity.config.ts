@@ -55,8 +55,6 @@ export default defineConfig({
           return `${baseUrl}/blog/${slug.current}`;
         case 'project':
           return `${baseUrl}/work/${slug.current}`;
-        case 'author':
-          return `${baseUrl}/`;
       }
       return prev;
     }

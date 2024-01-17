@@ -1,6 +1,6 @@
-import Body, { BodyBlocks } from './objects/body';
+import Body, { BodyBlocks } from '$objects/body';
 
-import type { Rule } from 'sanity';
+import type { PreviewConfig, PreviewValue, Rule } from 'sanity';
 
 const Section = {
   title: 'Section',
@@ -93,19 +93,21 @@ export default {
                 }
               ]
             },
-            {
-              name: 'skills',
-              title: 'Skills',
-              type: 'array',
-              of: [
-                {
-                  type: 'reference',
-                  to: [{ type: 'tag' }]
-                }
-              ]
-            },
             Body
-          ]
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'subtitle',
+              start: 'range.start',
+              end: 'range.end'
+            },
+            prepare: ({ title, subtitle, start, end }) =>
+              ({
+                title,
+                subtitle: `${start ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date(start)) : ''}${start ? ' to ' : ''}${end ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date(end)) : 'now'}${subtitle ? ' - ' : ''}${subtitle ? subtitle : ''}`
+              }) as PreviewValue
+          } satisfies PreviewConfig
         }
       ]
     },
@@ -163,7 +165,18 @@ export default {
                 }
               ]
             }
-          ]
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'url'
+            },
+            prepare: ({ title, subtitle }) =>
+              ({
+                title,
+                subtitle
+              }) as PreviewValue
+          } satisfies PreviewConfig
         }
       ]
     },

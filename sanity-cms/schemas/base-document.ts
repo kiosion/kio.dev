@@ -1,4 +1,4 @@
-import Body from './objects/body';
+import Body from '$objects/body';
 import type { Rule } from 'sanity';
 
 export default [
@@ -37,12 +37,6 @@ export default [
     title: 'Views',
     type: 'number',
     initialValue: () => 0
-  },
-  {
-    name: 'author',
-    title: 'Author',
-    type: 'reference',
-    to: { type: 'author' }
   },
   Body,
   {
