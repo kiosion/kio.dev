@@ -27,8 +27,8 @@ jobs:
       - name: Setup Elixir
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: 1.14.0
-          otp-version: 25
+          elixir-version: 1.16.0
+          otp-version: 26
           rebar3-version: 3.16
       - name: Check formatting
         run: (cd ./elixir-api && mix format --check-formatted)
