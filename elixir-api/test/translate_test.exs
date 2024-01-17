@@ -50,7 +50,7 @@ defmodule TranslateTest do
   end
 
   test "handle_translate accepts valid doctypes and returns translated content" do
-    stub_about = TestFixtures.stub_about()
+    stub_config = TestFixtures.stub_config()
     stub_post = TestFixtures.stub_post()
     stub_posts = TestFixtures.stub_posts()
     stub_invalid = %{"someKey" => "someValue"}
@@ -82,7 +82,7 @@ defmodule TranslateTest do
       end
     )
 
-    translated_about = Translate.handle_translate(:about, stub_about, "fr")
+    translated_config = Translate.handle_translate(:config, stub_config, "fr")
     translated_post = Translate.handle_translate(:post, stub_post, "fr")
     translated_posts = Translate.handle_translate(:posts, stub_posts, "fr")
 
@@ -95,9 +95,11 @@ defmodule TranslateTest do
 
     assert String.contains?(log_output, "Error translating invalid: \"Invalid type\"")
 
-    assert is_map(translated_about)
+    assert is_map(translated_config)
 
-    assert translated_about["result"]["body"]
+    assert translated_config["result"]["about"]
+           |> List.first()
+           |> Map.get("content")
            |> List.first()
            |> Map.get("children")
            |> List.first()

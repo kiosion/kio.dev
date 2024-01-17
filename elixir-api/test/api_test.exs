@@ -89,36 +89,6 @@ defmodule ApiTest do
     assert body["data"] != nil
   end
 
-  test "GET '/query/about' data" do
-    mock_response = %HTTPoison.Response{
-      body: Poison.encode!(TestFixtures.stub_about()),
-      status_code: 200
-    }
-
-    Hexerei.HTTP.MockClient
-    |> Mox.expect(
-      :get,
-      1,
-      fn _url, _headers ->
-        {:ok, mock_response}
-      end
-    )
-
-    conn =
-      conn(:get, "/api/v1/query/about")
-      |> put_req_header("authorization", @authorization)
-      |> Hexerei.Router.call(@opts)
-
-    assert conn.state == :sent
-    assert conn.status == 200
-
-    body = Poison.decode!(conn.resp_body)
-
-    assert body != []
-
-    assert body["data"] != nil
-  end
-
   test "GET '/query/posts' with default params" do
     mock_response = %HTTPoison.Response{
       body: Poison.encode!(TestFixtures.stub_posts()),
