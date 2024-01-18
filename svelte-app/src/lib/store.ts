@@ -26,10 +26,10 @@ type QueryResponse<T> =
   | {
       meta: unknown;
       data?: T;
-      error: never;
+      errors: string[];
     }
   | {
-      error: Error;
+      errors: string[];
       meta: never;
       data: never;
     }
@@ -116,17 +116,21 @@ const fetchData = async <T>(
   try {
     const response = await tryFetch(fetch(url));
     const fetchResponse = (await response.json()) as QueryResponse<T>;
-    if (!(fetchResponse?.meta && fetchResponse?.data) || fetchResponse?.error) {
-      Logger.error(`Failed to query ${model}`, fetchResponse?.error);
-      return new Error(`Failed to query ${model} data`, {
+    if (fetchResponse?.errors?.length) {
+      Logger.error(`Errors occured fetching ${model}`, fetchResponse?.errors);
+    }
+
+    if (!(fetchResponse?.meta && fetchResponse?.data)) {
+      return new Error(`Failed to fetch ${model} data`, {
         cause:
-          fetchResponse?.error || (!fetchResponse?.data && new Error('No data present'))
+          fetchResponse?.errors || (!fetchResponse?.data && new Error('No data present'))
       });
     }
+
     return fetchResponse.data;
   } catch (e) {
-    Logger.error(`Failed to query ${model}`, e);
-    return new Error(`Failed to query ${model} data`, { cause: e });
+    Logger.error(`Failed to fetch ${model}`, e);
+    return new Error(`Failed to fetch ${model} data`, { cause: e });
   }
 };
 

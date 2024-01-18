@@ -5,19 +5,19 @@ export type ResponseOrError =
   | {
       code: null | undefined;
       message: never;
-      detail: never;
+      errors: string[];
       data: never;
     }
   | {
       code: number;
       message: string;
-      detail: string;
+      errors: string[];
       data: never;
     }
   | {
       code: number;
       message: never;
-      detail: never;
+      errors: string[];
       data: ResData;
     };
 
@@ -36,15 +36,13 @@ interface ResData extends Record<string, unknown> {
 type Normalized =
   | {
       code: number;
-      error: string;
-      detail?: string;
+      errors: string[];
       data?: undefined;
       meta?: undefined;
     }
   | {
       code?: undefined;
-      error?: undefined;
-      detail?: undefined;
+      errors: string[];
       data: ResData['result'];
       meta: ResData['meta'] & { [key: string]: unknown };
     };
@@ -68,9 +66,10 @@ const normalize = (data: ResponseOrError) => {
 
   const normalized = {} as Normalized;
 
+  normalized.errors = data.errors || [];
+
   if (data.message) {
     normalized.code = data.code;
-    normalized.error = data.message;
     return normalized;
   }
 
@@ -105,12 +104,13 @@ const fetchRemote = async (endpoint: string | URL): Promise<Normalized> => {
     const jsonResponse = (await response.json()) as ResponseOrError;
 
     if (response.status !== 200 || !jsonResponse?.data?.result) {
-      Logger.error(`Failed to fetch from ${endpoint}: ${response.status}`);
+      Logger.error(`Failed to fetch from ${endpoint} - ${response.status}`);
 
       return {
         code: response.status,
-        error: jsonResponse?.message || `Failed to fetch from ${endpoint}`,
-        detail: jsonResponse?.detail || undefined
+        errors: jsonResponse?.errors || [
+          `Failed to fetch from ${endpoint} - ${response.status}`
+        ]
       };
     }
 
@@ -118,12 +118,12 @@ const fetchRemote = async (endpoint: string | URL): Promise<Normalized> => {
 
     return normalizedResponse;
   } catch (err: unknown) {
-    Logger.error(`Failed to fetch from ${endpoint}: Unknown error occured`, {
+    Logger.error(`Failed to fetch from ${endpoint} - Unknown error occured`, {
       err
     });
     return {
       code: 500,
-      error: `Unknown or unhandled error occured: ${err}`
+      errors: [`Unknown or unhandled error occured - ${err}`]
     };
   }
 };

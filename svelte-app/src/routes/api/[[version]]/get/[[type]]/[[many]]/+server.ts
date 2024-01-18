@@ -12,7 +12,7 @@ export const GET = (async ({ url, params }) => {
     return endpointResponse(
       {
         status: 400,
-        error: 'Endpoint error: Missing or invalid parameter: type'
+        errors: ['Endpoint error: Missing or invalid parameter: type']
       },
       400
     );
@@ -26,7 +26,7 @@ export const GET = (async ({ url, params }) => {
     return endpointResponse(
       {
         status: 400,
-        error: 'Endpoint error: Missing or invalid query parameter: id'
+        errors: ['Endpoint error: Missing or invalid query parameter: id']
       },
       400
     );
@@ -37,12 +37,11 @@ export const GET = (async ({ url, params }) => {
   const endpoint = getEndpoint(docType, many, url.searchParams),
     remoteRes = await fetchRemote(endpoint);
 
-  if (remoteRes.error) {
+  if (remoteRes.errors?.length && !remoteRes.data) {
     return endpointResponse(
       {
         status: remoteRes.code,
-        error: remoteRes.error,
-        detail: remoteRes.detail
+        errors: remoteRes.errors
       },
       remoteRes.code
     );
