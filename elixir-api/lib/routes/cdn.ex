@@ -64,16 +64,20 @@ defmodule Router.Cdn do
           error_res(conn, 500, "Something went wrong")
 
         {:error, %HTTPoison.Error{reason: reason}} ->
-          error_res(conn, 500, "Something went wrong: #{reason}")
+          error_res(conn, 500, "Something went wrong", [reason])
       end
     else
-      {:error, reason} -> conn |> error_res(500, reason)
-      _ -> conn |> error_res(400, "Invalid request", "No filetype specified or invalid URL")
+      {:error, reason} ->
+        conn |> error_res(500, reason)
+
+      _ ->
+        conn
+        |> error_res(400, "Invalid request", [%{message: "No filetype specified or invalid URL"}])
     end
   end
 
   match _ do
-    conn |> error_res(404, %{code: 404, message: "Not found"})
+    conn |> error_res(404, "Not found")
   end
 
   @impl Plug.ErrorHandler

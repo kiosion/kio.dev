@@ -25,7 +25,9 @@ defmodule Router.Api.V1 do
 
   match _ do
     conn
-    |> error_res(404, "Not found", "The requested resource could not be found or does not exist")
+    |> error_res(404, "Not found", [
+      %{message: "The requested resource could not be found or does not exist"}
+    ])
     |> halt()
   end
 end

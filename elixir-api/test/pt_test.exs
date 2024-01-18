@@ -4,7 +4,7 @@ defmodule PtTest do
   alias Hexerei.PT
 
   test "Constructs heading tree given mixed content" do
-    result = PT.build_summary(TestFixtures.mixed_headings())
+    {:ok, result} = PT.build_summary(TestFixtures.mixed_headings())
 
     assert [
              %{
@@ -28,7 +28,7 @@ defmodule PtTest do
   end
 
   test "Constructs heading tree with proper nesting" do
-    result = PT.build_summary(TestFixtures.headings())
+    {:ok, result} = PT.build_summary(TestFixtures.headings())
 
     assert [
              %{

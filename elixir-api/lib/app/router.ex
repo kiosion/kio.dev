@@ -124,7 +124,11 @@ defmodule Hexerei.Router do
     |> error_res(
       404,
       "Not Found",
-      "Resource not found or method not allowed: #{conn.method} #{conn.request_path}"
+      [
+        %{
+          message: "Resource not found or method not allowed: #{conn.method} #{conn.request_path}"
+        }
+      ]
     )
   end
 

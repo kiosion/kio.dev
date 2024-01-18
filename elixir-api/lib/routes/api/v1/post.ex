@@ -67,7 +67,8 @@ defmodule Router.Api.V1.Post do
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
-      _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
+      _ ->
+        conn |> error_res(400, "Invalid request", [%{message: "Invalid or missing parameters"}])
     end
   end
 end

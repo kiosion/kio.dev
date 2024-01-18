@@ -38,7 +38,7 @@ defmodule Router.Api.V1.Config do
     else
       _ ->
         conn
-        |> error_res(400, "Invalid request", "Unknown error collecting params")
+        |> error_res(400, "Invalid request", [%{message: "Unknown error collecting params"}])
     end
   end
 end

@@ -74,17 +74,17 @@ defmodule Hexerei.Utils do
             type == :post or type == :project ->
               SanityUtils.try_increment_view_count(query)
 
-              errors =
-                receive do
-                  {:increment_view_count_done, result} ->
-                    case result do
-                      {:ok} ->
-                        []
+              errors = []
+              # receive do
+              #   {:increment_view_count_done, result} ->
+              #     case result do
+              #       :ok ->
+              #         []
 
-                      {:error, error} ->
-                        [error]
-                    end
-                end
+              #       {:error, error} ->
+              #         [error]
+              #     end
+              # end
 
               {
                 %{

@@ -35,15 +35,17 @@ defmodule TranslateTest do
       end
     )
 
-    translated_post = Translate.handle_translate(:post, stub_post, "en")
+    {:ok, translated_post} = Translate.handle_translate(:post, stub_post, "en")
 
     assert translated_post == stub_post
 
     log_output =
       capture_log(fn ->
-        invalid_translated_post = Translate.handle_translate(:post, stub_post, "invalid")
+        {:error, invalid_translated_post, errors} =
+          Translate.handle_translate(:post, stub_post, "invalid")
 
         assert invalid_translated_post == stub_post
+        assert not Enum.empty?(errors)
       end)
 
     assert String.contains?(log_output, "Invalid language")
@@ -82,18 +84,21 @@ defmodule TranslateTest do
       end
     )
 
-    translated_config = Translate.handle_translate(:config, stub_config, "fr")
-    translated_post = Translate.handle_translate(:post, stub_post, "fr")
-    translated_posts = Translate.handle_translate(:posts, stub_posts, "fr")
+    {:ok, translated_config} = Translate.handle_translate(:config, stub_config, "fr")
+    {:ok, translated_post} = Translate.handle_translate(:post, stub_post, "fr")
+    {:ok, translated_posts} = Translate.handle_translate(:posts, stub_posts, "fr")
 
     log_output =
       capture_log(fn ->
-        translated_invalid = Translate.handle_translate(:invalid, stub_invalid, "fr")
+        {:error, translated_invalid, errors} =
+          Translate.handle_translate(:invalid, stub_invalid, "fr")
 
         assert translated_invalid == stub_invalid
+        assert not Enum.empty?(errors)
       end)
 
-    assert String.contains?(log_output, "Error translating invalid: \"Invalid type\"")
+    assert String.contains?(log_output, "Error translating invalid")
+    assert String.contains?(log_output, "Invalid type")
 
     assert is_map(translated_config)
 

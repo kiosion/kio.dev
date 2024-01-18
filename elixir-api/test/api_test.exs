@@ -154,7 +154,7 @@ defmodule ApiTest do
 
     assert body["data"] == nil
     assert body["message"] == "Invalid request"
-    assert body["detail"] == "Invalid or missing parameters"
+    assert body["errors"] |> List.first() == %{"message" => "Invalid or missing parameters"}
   end
 
   test "POST '/inc' endpoint should increment views" do
@@ -231,7 +231,7 @@ defmodule ApiTest do
     assert conn.state == :sent
     assert conn.status == 200
 
-    assert_receive {:increment_view_count_done, :ok}, 5000
+    assert_receive {:increment_view_count_done, {:ok}}, 5000
 
     body = Poison.decode!(conn.resp_body)
 
@@ -278,7 +278,7 @@ defmodule ApiTest do
     assert conn.state == :sent
     assert conn.status == 200
 
-    assert_receive {:increment_view_count_done, :ok}, 5000
+    assert_receive {:increment_view_count_done, {:ok}}, 5000
 
     body = Poison.decode!(conn.resp_body)
 

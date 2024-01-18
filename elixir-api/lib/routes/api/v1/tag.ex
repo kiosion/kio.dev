@@ -84,7 +84,7 @@ defmodule Router.Api.V1.Tag do
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
-      _ -> conn |> error_res(400, "Invalid request", "Missing ID or invalid type")
+      _ -> conn |> error_res(400, "Invalid request", [%{message: "Missing ID or invalid type"}])
     end
   end
 end

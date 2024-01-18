@@ -22,26 +22,28 @@ defmodule Router.Api.V1.Inc do
       receive do
         {:increment_view_count_done, result} ->
           case result do
-            :ok ->
+            {:ok} ->
               conn
               |> json_res(200, %{code: 200, data: %{id: id, target: "views"}})
 
-            :error ->
+            {:error, error} ->
               conn
-              |> error_res(500, "Internal Server Error", "Failed to increment view count")
+              |> error_res(500, "Internal Server Error", [error])
           end
       after
         5000 ->
           conn
-          |> error_res(504, "Gateway Timeout", "Timeout waiting for view count increment")
+          |> error_res(504, "Gateway Timeout", [
+            %{message: "Timeout waiting for view count increment"}
+          ])
       end
     else
-      conn |> error_res(400, "Bad Request", "Invalid target")
+      conn |> error_res(400, "Bad Request", [%{message: "Invalid target"}])
     end
   end
 
   def handle_inc(conn, _id, _target),
-    do: conn |> error_res(400, "Bad Request", "Invalid body content")
+    do: conn |> error_res(400, "Bad Request", [%{message: "Invalid body content"}])
 
   post "/:id" do
     if is_binary(conn.params["id"]) do
@@ -60,10 +62,10 @@ defmodule Router.Api.V1.Inc do
       rescue
         e ->
           Logger.error("Failed to increment view count: #{inspect(e)}")
-          conn |> error_res(400, "Bad Request", "Invalid body content")
+          conn |> error_res(400, "Bad Request", [%{message: "Invalid body content"}, e])
       end
     else
-      conn |> error_res(400, "Bad Request", "Invalid ID")
+      conn |> error_res(400, "Bad Request", [%{message: "Invalid ID"}])
     end
   end
 end
