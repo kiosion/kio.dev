@@ -14,8 +14,8 @@ defmodule Router.Api.V1.Tag do
   get "/:id" do
     with true <- is_binary(id),
          true <- String.trim(id) != "",
-         params <-
-           fetch_query_params(conn).query_params |> validate_query_params(%{"type" => nil}),
+         {:ok, params} <-
+           validate_query_params(conn, %{"type" => nil}),
          true <- params["type"] in ["post", "project"] do
       query =
         Query.new()
@@ -84,7 +84,14 @@ defmodule Router.Api.V1.Tag do
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
-      _ -> conn |> error_res(400, "Invalid request", [%{message: "Missing ID or invalid type"}])
+      false ->
+        conn |> error_res(400, "Invalid request", [%{message: "Missing ID or invalid type"}])
+
+      {:error, reason} ->
+        conn
+        |> error_res(400, "Invalid request", [
+          %{message: "Invalid or malformed params", detail: reason}
+        ])
     end
   end
 end

@@ -12,18 +12,12 @@ defmodule Router.Api.V1.Project do
   end
 
   get "/:id" do
-    with params <-
-           validate_query_params(
-             Map.merge(
-               fetch_query_params(conn).query_params,
-               %{"id" => conn.params["id"]}
-             ),
-             %{
-               "id" => nil,
-               "lang" => "en",
-               "preview" => false
-             }
-           ) do
+    with {:ok, params} <-
+           validate_query_params(conn, %{"id" => conn.params["id"]}, %{
+             "id" => nil,
+             "lang" => "en",
+             "preview" => false
+           }) do
       query =
         Query.new(%{:include_drafts => params["preview"]})
         |> Query.filter([
@@ -66,8 +60,11 @@ defmodule Router.Api.V1.Project do
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
-      false ->
-        conn |> error_res(400, "Invalid request", [%{message: "Invalid or missing parameters"}])
+      {:error, reason} ->
+        conn
+        |> error_res(400, "Invalid request", [
+          %{message: "Invalid or malformed params", detail: reason}
+        ])
     end
   end
 end

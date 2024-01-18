@@ -1,6 +1,7 @@
 defmodule Hexerei.PT do
   require Logger
 
+  @spec build_summary(list(map())) :: {:ok, list()} | {:error, list(), list(map())}
   def build_summary(blocks) do
     try do
       {
@@ -103,7 +104,6 @@ defmodule Hexerei.PT do
 
   # Since parent may be nested, we need to traverse the whole tree
   defp find_parent([], _parent_key), do: nil
-
   defp find_parent(_tree, nil), do: nil
 
   defp find_parent(tree, parent_key) do

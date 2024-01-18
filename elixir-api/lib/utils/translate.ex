@@ -57,6 +57,11 @@ defmodule Hexerei.Translate do
     }
   end
 
+  @spec handle_translate(
+          type :: :post | :posts | :project | :projects | :about | :config,
+          doc :: map(),
+          lang_param :: String.t()
+        ) :: {:ok, map()} | {:error, map(), list(map())}
   def handle_translate(type, doc, lang_param) do
     case lang_param do
       "en" -> {:ok, doc}
@@ -73,6 +78,17 @@ defmodule Hexerei.Translate do
     end
   end
 
+  @spec translate(
+          type :: :post | :posts | :project | :projects | :about | :config,
+          sanity_response :: map(),
+          target_lang :: String.t(),
+          source_lang :: String.t()
+        ) :: {:ok, map()} | {:error, map(), list(map())}
+  @spec translate(
+          type :: :post | :posts | :project | :projects | :about | :config,
+          sanity_response :: map(),
+          target_lang :: String.t()
+        ) :: {:ok, map()} | {:error, map(), list(map())}
   def translate(type, sanity_response, target_lang, source_lang \\ "en") do
     Logger.info("Handling translation for #{type} to '#{target_lang}'")
 

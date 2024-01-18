@@ -12,9 +12,8 @@ defmodule Router.Api.V1.Tags do
   end
 
   get "/" do
-    with params <-
-           fetch_query_params(conn).query_params
-           |> validate_query_params(%{
+    with {:ok, params} <-
+           validate_query_params(conn, %{
              "type" => nil,
              "limit" => 10,
              "skip" => 0,
@@ -34,29 +33,26 @@ defmodule Router.Api.V1.Tags do
           "title",
           "slug"
         ])
-
-      query =
-        case params["type"] do
-          nil ->
-            query
-
-          _ ->
-            query
-            |> Query.project([
-              [
-                "'referencedBy'",
-                Query.new()
-                |> Query.filter([
-                  %{"_type" => "'#{params["type"]}'"},
-                  %{"references" => "^._id", :nest => true}
-                ])
-                |> Query.project([
-                  "_id"
-                ])
-                |> Query.build!()
-              ]
-            ])
-        end
+        |> (fn q ->
+              if params["type"] == nil,
+                do: q,
+                else:
+                  q
+                  |> Query.project([
+                    [
+                      "'referencedBy'",
+                      Query.new()
+                      |> Query.filter([
+                        %{"_type" => "'#{params["type"]}'"},
+                        %{"references" => "^._id", :nest => true}
+                      ])
+                      |> Query.project([
+                        "_id"
+                      ])
+                      |> Query.build!()
+                    ]
+                  ])
+            end).()
 
       query_limited =
         query
@@ -88,7 +84,16 @@ defmodule Router.Api.V1.Tags do
       end)
     else
       false ->
-        conn |> error_res(400, "Invalid request", [%{message: "Invalid or missing parameters"}])
+        conn
+        |> error_res(400, "Invalid request", [
+          %{message: "Limit and skip must be positive integers"}
+        ])
+
+      {:error, reason} ->
+        conn
+        |> error_res(400, "Invalid request", [
+          %{message: "Invalid or malformed params", detail: reason}
+        ])
     end
   end
 end

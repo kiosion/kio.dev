@@ -2,6 +2,8 @@ import Logger from '$lib/logger';
 
 import { error } from '@sveltejs/kit';
 
+import type { NumericRange } from '@sveltejs/kit';
+
 const GENERIC_ERROR_NO_DATA = 'Failed to load required data.',
   GENERIC_ERROR_SOMETHING_WENT_WRONG = 'Sorry, something went wrong. Please try again.';
 
@@ -24,8 +26,9 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
   }
 
   if (data instanceof Error) {
-    throw error((data as Error & { code?: number })?.code ?? 500, {
+    throw error((data as Error & { code?: NumericRange<400, 599> })?.code ?? 500, {
       message: data?.message || GENERIC_ERROR_SOMETHING_WENT_WRONG,
+      cause: data?.cause,
       stack: data?.stack || createGenericError(GENERIC_ERROR_SOMETHING_WENT_WRONG).stack
     });
   }
@@ -34,12 +37,16 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
     const erroredData = data.filter((item) => item instanceof Error) as Error[];
 
     if (erroredData.length) {
-      throw error((erroredData[0] as Error & { code?: number })?.code ?? 500, {
-        message: erroredData[0]?.message || GENERIC_ERROR_SOMETHING_WENT_WRONG,
-        stack:
-          erroredData[0]?.stack ||
-          createGenericError(GENERIC_ERROR_SOMETHING_WENT_WRONG).stack
-      });
+      throw error(
+        (erroredData[0] as Error & { code?: NumericRange<400, 599> })?.code ?? 500,
+        {
+          message: erroredData[0]?.message || GENERIC_ERROR_SOMETHING_WENT_WRONG,
+          cause: erroredData[0]?.cause,
+          stack:
+            erroredData[0]?.stack ||
+            createGenericError(GENERIC_ERROR_SOMETHING_WENT_WRONG).stack
+        }
+      );
     }
   }
 

@@ -12,13 +12,7 @@ defmodule Router.Api.V1.Config do
   end
 
   get "/" do
-    with params <-
-           validate_query_params(
-             fetch_query_params(conn).query_params,
-             %{
-               "lang" => "en"
-             }
-           ) do
+    with {:ok, params} <- validate_query_params(conn, %{"lang" => "en"}) do
       query =
         Query.new()
         |> Query.filter([%{"_type" => "'siteSettings'"}])
@@ -36,9 +30,11 @@ defmodule Router.Api.V1.Config do
         end
       )
     else
-      _ ->
+      {:error, reason} ->
         conn
-        |> error_res(400, "Invalid request", [%{message: "Unknown error collecting params"}])
+        |> error_res(400, "Invalid request", [
+          %{message: "Invalid or malformed params", detail: reason}
+        ])
     end
   end
 end

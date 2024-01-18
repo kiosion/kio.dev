@@ -37,6 +37,29 @@
   }
 
   $: stack = $page.error?.stack?.trimStart();
+  $: causes = $page.error?.cause
+    ?.map((cause) => {
+      if (typeof cause === 'string') {
+        return cause;
+      }
+      if (cause.message && cause.detail) {
+        if (typeof cause.detail === 'object' && cause.detail.message) {
+          return `${cause.message}: ${cause.detail.message}`;
+        }
+        return `${cause.message}: ${cause.detail}`;
+      }
+      if (cause.message) {
+        return cause.message;
+      }
+      if (cause.detail) {
+        if (typeof cause.detail === 'object' && cause.detail.message) {
+          return cause.detail.message;
+        }
+        return cause.detail;
+      }
+      return undefined;
+    })
+    ?.filter(Boolean) || [stack || 'Unknown error'];
 </script>
 
 <svelte:head>
@@ -57,9 +80,8 @@
     }}
     on:keydown={() => {
       window.history.back();
-    }}>{$t('Click here to')}</Link
-  >
-  {$t('go back')}.
+    }}>{$t('Click here to go back')}</Link
+  >.
 </p>
 {#if stack}
   <Divider />
@@ -70,9 +92,9 @@
   {#if showStack}
     <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
       <pre
-        class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">
-          {stack}
-        </pre>
+        class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause}{cause}
+        {/each}
+</pre>
     </div>
   {/if}
 {/if}

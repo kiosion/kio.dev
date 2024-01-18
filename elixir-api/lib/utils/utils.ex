@@ -36,6 +36,12 @@ defmodule Hexerei.Utils do
           params :: map(),
           additional_meta :: map() | nil
         ) :: {{map(), list()}, map(), integer()}
+  @spec transform_result_document(
+          query :: String.t(),
+          result :: map(),
+          type :: :post | :posts | :project | :projects | :config | :tag | :tags,
+          params :: map()
+        ) :: {{map(), list()}, map(), integer()}
   def transform_result_document(query, result, type, params, additional_meta \\ nil) do
     case result["result"] do
       nil ->
@@ -74,17 +80,20 @@ defmodule Hexerei.Utils do
             type == :post or type == :project ->
               SanityUtils.try_increment_view_count(query)
 
-              errors = []
-              # receive do
-              #   {:increment_view_count_done, result} ->
-              #     case result do
-              #       :ok ->
-              #         []
+              errors =
+                receive do
+                  {:increment_view_count_done, result} ->
+                    case result do
+                      {:ok} ->
+                        []
 
-              #       {:error, error} ->
-              #         [error]
-              #     end
-              # end
+                      {:error, error} ->
+                        [error]
+                    end
+                after
+                  2500 ->
+                    [%{message: "View increment timed out"}]
+                end
 
               {
                 %{
@@ -181,7 +190,31 @@ defmodule Hexerei.Utils do
     |> (fn data -> conn |> json_res(code, %{code: code, data: data, errors: res_errors}) end).()
   end
 
-  def validate_query_params(params, expected) do
+  @spec validate_query_params(Plug.Conn.t(), map()) :: {:ok, map()} | {:error, String.t()}
+  @spec validate_query_params(Plug.Conn.t(), map(), map()) :: {:ok, map()} | {:error, String.t()}
+  def validate_query_params(conn, additional_params, expected) do
+    try do
+      params = Map.merge(Plug.Conn.fetch_query_params(conn).query_params, additional_params)
+
+      {:ok, validate_params(params, expected)}
+    rescue
+      e ->
+        {:error, e}
+    end
+  end
+
+  def validate_query_params(conn, expected) do
+    try do
+      params = Plug.Conn.fetch_query_params(conn).query_params
+
+      {:ok, validate_params(params, expected)}
+    rescue
+      e ->
+        {:error, e}
+    end
+  end
+
+  defp validate_params(params, expected) do
     Enum.reduce(expected, %{}, fn {key, default}, acc ->
       if Map.has_key?(params, key) do
         if is_boolean(default) and is_binary(params[key]) do
@@ -195,35 +228,53 @@ defmodule Hexerei.Utils do
     end)
   end
 
-  def params_to_integer(params, keys \\ [:limit, :skip]) do
+  @spec params_to_integer({:ok, map()}) :: {:ok, map()}
+  @spec params_to_integer({:ok, map()}, list()) :: {:ok, map()}
+  @spec params_to_integer({:error, String.t()}) :: {:error, String.t()}
+  @spec params_to_integer({:error, String.t()}, list()) :: {:error, String.t()}
+  def params_to_integer(params, keys \\ [:limit, :skip])
+
+  def params_to_integer({:ok, params}, keys) do
     keys = Enum.map(keys, &to_string/1)
 
-    Enum.reduce(params, %{}, fn {key, value}, acc ->
-      if key in keys do
-        if value != nil and not is_integer(value) do
-          Map.put(acc, key, String.to_integer(value))
-        else
-          Map.put(acc, key, value)
-        end
-      else
-        Map.put(acc, key, value)
-      end
-    end)
+    {:ok,
+     Enum.reduce(params, %{}, fn {key, value}, acc ->
+       if key in keys do
+         if value != nil and not is_integer(value) do
+           Map.put(acc, key, String.to_integer(value))
+         else
+           Map.put(acc, key, value)
+         end
+       else
+         Map.put(acc, key, value)
+       end
+     end)}
   end
 
-  def empty_to_nil(params, keys \\ [:date]) do
+  def params_to_integer({:error, reason}, _keys), do: {:error, reason}
+
+  @spec empty_to_nil({:ok, map()}) :: {:ok, map()}
+  @spec empty_to_nil({:ok, map()}, list()) :: {:ok, map()}
+  @spec empty_to_nil({:error, String.t()}) :: {:error, String.t()}
+  @spec empty_to_nil({:error, String.t()}, list()) :: {:error, String.t()}
+  def empty_to_nil(params, keys \\ [:date])
+
+  def empty_to_nil({:ok, params}, keys) do
     keys = Enum.map(keys, &to_string/1)
 
-    Enum.reduce(params, %{}, fn {key, value}, acc ->
-      if key in keys do
-        if value == "" do
-          Map.put(acc, key, nil)
-        else
-          Map.put(acc, key, value)
-        end
-      else
-        Map.put(acc, key, value)
-      end
-    end)
+    {:ok,
+     Enum.reduce(params, %{}, fn {key, value}, acc ->
+       if key in keys do
+         if value == "" do
+           Map.put(acc, key, nil)
+         else
+           Map.put(acc, key, value)
+         end
+       else
+         Map.put(acc, key, value)
+       end
+     end)}
   end
+
+  def empty_to_nil({:error, reason}, _keys), do: {:error, reason}
 end

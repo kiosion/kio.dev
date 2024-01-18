@@ -13,6 +13,18 @@ defmodule Hexerei.SanityClient.Utils do
     end
   end
 
+  @spec handle_sanity_fetch(
+          conn :: Plug.Conn.t(),
+          query :: String.t(),
+          cb :: (Plug.Conn.t(), map() -> Plug.Conn.t()),
+          init_duration :: integer() | nil
+        ) :: Plug.Conn.t()
+  @spec handle_sanity_fetch(
+          conn :: Plug.Conn.t(),
+          query :: String.t(),
+          cb :: (Plug.Conn.t(), map(), integer() -> Plug.Conn.t()),
+          init_duration :: integer() | nil
+        ) :: Plug.Conn.t()
   def handle_sanity_fetch(conn, query, cb, init_duration \\ nil) do
     start = System.system_time(:millisecond)
 
@@ -51,6 +63,10 @@ defmodule Hexerei.SanityClient.Utils do
     end
   end
 
+  @spec try_increment_view_count(
+          query :: String.t(),
+          caller :: pid()
+        ) :: {:ok, pid()}
   def try_increment_view_count(query, caller \\ self()),
     do:
       Task.start(fn ->
@@ -65,19 +81,23 @@ defmodule Hexerei.SanityClient.Utils do
           end
 
         send(caller, {:increment_view_count_done, result})
+        # TODO: This should REALLY be refactored but I don't have energy right now.
+        # This hack is to ensure the message is in the mailbox during testing since it's consumed upon `receive`.
+        send(caller, {:increment_view_count_done, result})
       end)
 
+  @spec limit_query(String.t(), map()) :: String.t()
   def limit_query(query, params) do
-    case params["limit"] > 0 do
-      true ->
-        query <>
-          " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
-
-      false ->
-        query <> " | order(#{params["s"]} #{params["o"]})"
+    if params["limit"] > 0 do
+      query <>
+        " | order(#{params["s"]} #{params["o"]}) [#{params["skip"]}...#{params["skip"] + params["limit"]}]"
+    else
+      query <> " | order(#{params["s"]} #{params["o"]})"
     end
   end
 
+  @spec document_counts_query(String.t()) :: String.t()
+  @spec document_counts_query(String.t(), String.t()) :: String.t()
   def document_counts_query(query), do: "{ 'total': count(#{query}) }"
 
   def document_counts_query(query, limited_query),

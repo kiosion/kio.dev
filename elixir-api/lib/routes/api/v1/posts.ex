@@ -12,9 +12,8 @@ defmodule Router.Api.V1.Posts do
   end
 
   get "/" do
-    with params <-
-           fetch_query_params(conn).query_params
-           |> validate_query_params(%{
+    with {:ok, params} <-
+           validate_query_params(conn, %{
              "limit" => 10,
              "skip" => 0,
              "s" => "date",
@@ -28,36 +27,18 @@ defmodule Router.Api.V1.Posts do
          true <- params["limit"] >= 0 and params["skip"] >= 0 do
       query =
         Query.new()
-        |> Query.filter(%{
-          "_type" => "'post'"
-        })
-
-      query =
-        case params["date"] do
-          nil ->
-            query
-
-          _ ->
-            query
-            |> Query.filter(%{
-              "date" => "'#{params["date"]}'"
-            })
-        end
-
-      query =
-        case params["tags"] do
-          nil ->
-            query
-
-          _ ->
-            query
-            |> Query.filter(%{
-              "tags[]->slug.current" => ["match", "'#{params["tags"]}'"]
-            })
-        end
-
-      query =
-        query
+        |> Query.filter(%{"_type" => "'post'"})
+        |> (fn q ->
+              if params["date"] == nil,
+                do: q,
+                else: q |> Query.filter(%{"date" => ["<=", "'#{params["date"]}'"]})
+            end).()
+        |> (fn q ->
+              if params["tags"] == nil,
+                do: q,
+                else:
+                  q |> Query.filter(%{"tags[]->slug.current" => ["match", "'#{params["tags"]}'"]})
+            end).()
         |> Query.project([
           "_id",
           "_rev",
@@ -110,8 +91,20 @@ defmodule Router.Api.V1.Posts do
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
-      _ ->
-        conn |> error_res(400, "Invalid request", [%{message: "Invalid or missing parameters"}])
+      false ->
+        conn
+        |> error_res(400, "Invalid request", [
+          %{
+            message: "Invalid or malformed params",
+            detail: "Limit and skip must be positive integers"
+          }
+        ])
+
+      {:error, reason} ->
+        conn
+        |> error_res(400, "Invalid request", [
+          %{message: "Invalid or malformed params", detail: reason}
+        ])
     end
   end
 end

@@ -154,7 +154,11 @@ defmodule ApiTest do
 
     assert body["data"] == nil
     assert body["message"] == "Invalid request"
-    assert body["errors"] |> List.first() == %{"message" => "Invalid or missing parameters"}
+
+    assert body["errors"] |> List.first() == %{
+             "message" => "Invalid or malformed params",
+             "detail" => "Limit and skip must be positive integers"
+           }
   end
 
   test "POST '/inc' endpoint should increment views" do

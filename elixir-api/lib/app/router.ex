@@ -17,7 +17,7 @@ defmodule Hexerei.Router do
     {result, upt}
   end
 
-  @spec uptime_string(integer) :: tuple
+  @spec uptime_string(integer) :: map()
   defp uptime_string(upt) do
     days_in_ms = 86_400_000
     hours_in_ms = 3_600_000
