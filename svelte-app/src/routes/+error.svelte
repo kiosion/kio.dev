@@ -7,6 +7,8 @@
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
+  import HeadedBlock from '$components/headings/headed-block.svelte';
+  import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
 
   let message = 'Sorry, something went wrong. Please try again.',
@@ -67,27 +69,30 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<h3 class="mb-5 mt-12 font-code text-3xl font-bold">
-  {status}: {$t(title)}
-</h3>
-<p class="my-4 text-base">
-  {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
-</p>
-<p class="my-4 text-base">
-  <Link
-    on:click={() => {
-      window.history.back();
-    }}
-    on:keydown={() => {
-      window.history.back();
-    }}>{$t('Click here to go back')}</Link
-  >.
-</p>
-{#if stack}
+<HeadedBlock heading={`${status}: ${$t(title)}`}>
+  <p>
+    {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
+  </p>
+  <p>
+    {$t('Please')}
+    <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
+      on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
+    >.
+  </p>
+</HeadedBlock>
+
+{#if causes?.length}
   <Divider />
   <ArrowButton class="w-full text-left" on:click={() => (showStack = !showStack)}>
-    {showStack ? $t('Hide stack trace') : $t('Show stack trace')}
-    <span class="inline-block {showStack ? 'rotate-90' : '-rotate-90'}">&larr;</span>
+    <span class="flex items-center justify-start gap-2">
+      <p>{$t('See more')}</p>
+      <Icon
+        icon="ArrowUp"
+        width={18}
+        inline
+        class={showStack ? 'rotate-0' : 'rotate-180'}
+      />
+    </span>
   </ArrowButton>
   {#if showStack}
     <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
@@ -98,3 +103,13 @@
     </div>
   {/if}
 {/if}
+
+<style lang="scss">
+  p {
+    @apply my-4 text-base;
+
+    span & {
+      @apply my-0;
+    }
+  }
+</style>

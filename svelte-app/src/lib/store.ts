@@ -117,11 +117,11 @@ const fetchData = async <T>(
     const response = await tryFetch(fetch(url));
     const fetchResponse = (await response.json()) as QueryResponse<T>;
     if (fetchResponse?.errors?.length) {
-      Logger.error(`Errors occured fetching ${model}`, fetchResponse?.errors);
+      Logger.error(`Errors occured fetching ${model}.`, fetchResponse?.errors);
     }
 
     if (!(fetchResponse?.meta && fetchResponse?.data)) {
-      return new Error(`Failed to fetch ${model} data`, {
+      return new Error(`Failed to fetch ${model} data.`, {
         cause:
           fetchResponse?.errors || (!fetchResponse?.data && new Error('No data present'))
       });
@@ -129,8 +129,8 @@ const fetchData = async <T>(
 
     return fetchResponse.data;
   } catch (e) {
-    Logger.error(`Failed to fetch ${model}`, e);
-    return new Error(`Failed to fetch ${model} data`, { cause: e });
+    Logger.error(`Failed to fetch ${model}.`, e);
+    return new Error(`Failed to fetch ${model} data.`, { cause: e });
   }
 };
 

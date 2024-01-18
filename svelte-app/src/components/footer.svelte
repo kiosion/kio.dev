@@ -24,14 +24,15 @@
 {#if socials?.length || APP_VERSION?.length}
   <footer>
     {#if socials?.length}
-      <div class="socials">
+      <div>
         {#each socials as social, i}
-          <Tooltip text={social.url} delay={750} position="top" fixed>
+          <Tooltip text={social.url} delay={500} position="top" fixed>
             <BaseLink
               text={social.name}
               href={social.url}
               target={social.target}
               rel={social.rel}
+              noTranslate
             />
           </Tooltip>
           {#if i < socials.length - 1}
@@ -45,7 +46,7 @@
         <Tooltip
           text={$t('View latest commit on GitHub')}
           position="top"
-          delay={750}
+          delay={150}
           fixed
         >
           <BaseLink

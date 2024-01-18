@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { linkTo } from '$i18n';
+  import { linkTo, t } from '$i18n';
 
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltip.svelte';
@@ -17,7 +17,11 @@
 </script>
 
 <Hoverable let:hovered>
-  <Tooltip text={link?.length > 50 ? `${link.slice(0, 50)}...` : link} delay={750} fixed>
+  <Tooltip
+    text={link?.length > 50 ? `${link.slice(0, 50)}...` : link ?? $t('Visit')}
+    delay={500}
+    fixed
+  >
     <svelte:element
       this={type}
       href={link}
@@ -28,11 +32,7 @@
         : 'decoration-2'} transition-[text-decoration-color]"
       tabindex="0"
       on:click={() => dispatch('click')}
-      on:keyup={(e) => {
-        if (e.key === 'Enter') {
-          dispatch('click');
-        }
-      }}
+      on:keyup={(e) => e.key === 'Enter' && dispatch('click')}
       role={type === 'a' ? 'link' : 'button'}
       aria-label={$$props['aria-label']}
       {...$$restProps}
