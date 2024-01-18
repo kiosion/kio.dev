@@ -21,9 +21,9 @@ Welcome to the monorepo for my blog, portfolio, Nowpage, and CV! You can see the
 ## 📦 Dependencies
 To build the project, you'll need:
 
-* Node ~16.13
+* Node ~18.17.1
 * PNPM ~8.0
-* Elixir ~1.14 (with OTP 25, Rebar3, & Hex)
+* Elixir ~1.16 (with OTP 26, Rebar3, & Hex)
 * Docker & docker-compose
 
 ## 📃 License

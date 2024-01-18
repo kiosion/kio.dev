@@ -3,17 +3,20 @@ defmodule Hexerei.PT do
 
   def build_summary(blocks) do
     try do
-      blocks
-      |> Enum.filter(fn b ->
-        b["style"] != nil and b["style"] in ["h1", "h2", "h3", "h4", "h5", "h6"]
-      end)
-      |> Enum.map(&build_heading/1)
-      |> Enum.reduce({[], nil}, fn heading, {tree, prev} -> make_tree(tree, heading, prev) end)
-      |> elem(0)
+      {
+        :ok,
+        blocks
+        |> Enum.filter(fn b ->
+          b["style"] != nil and b["style"] in ["h1", "h2", "h3", "h4", "h5", "h6"]
+        end)
+        |> Enum.map(&build_heading/1)
+        |> Enum.reduce({[], nil}, fn heading, {tree, prev} -> make_tree(tree, heading, prev) end)
+        |> elem(0)
+      }
     rescue
       e ->
         Logger.error("Error building summary: #{inspect(e)}")
-        []
+        {:error, [], [%{message: "Error building summary", detail: e}]}
     end
   end
 

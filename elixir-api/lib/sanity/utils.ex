@@ -57,11 +57,11 @@ defmodule Hexerei.SanityClient.Utils do
         result =
           case Sanity.patch(query, %{"inc" => %{"views" => 1}}) do
             {:ok, _response} ->
-              :ok
+              {:ok}
 
             {:error, error} ->
               Logger.error("Failed to increment view count: #{inspect(error)}")
-              :error
+              {:error, %{message: "Failed to increment view count", detail: error}}
           end
 
         send(caller, {:increment_view_count_done, result})

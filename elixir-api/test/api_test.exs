@@ -363,7 +363,7 @@ defmodule ApiTest do
     assert conn.state == :sent
     assert conn.status == 200
 
-    assert_receive {:increment_view_count_done, :ok}, 5000
+    assert_receive {:increment_view_count_done, {:ok}}, 5000
 
     body = Poison.decode!(conn.resp_body)
 

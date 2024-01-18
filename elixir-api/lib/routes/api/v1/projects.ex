@@ -104,34 +104,13 @@ defmodule Router.Api.V1.Projects do
       |> handle_sanity_fetch(query_limited, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
-        {translated_result, meta} =
-          case result["result"] do
-            nil ->
-              {
-                result,
-                %{
-                  "total" => 0,
-                  "count" => 0,
-                  "sort" => params["s"],
-                  "order" => params["o"]
-                }
-              }
+        {transformed_result, meta, code} =
+          transform_result_document(query, result, :projects, params, %{
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"]
+          })
 
-            _ ->
-              {
-                Translate.handle_translate(:projects, result, params["lang"]),
-                %{
-                  "total" => parsed_counts["result"]["total"],
-                  "count" => parsed_counts["result"]["count"],
-                  "sort" => params["s"],
-                  "order" => params["o"]
-                }
-              }
-          end
-
-        translated_result
-        |> update_meta(meta, duration)
-        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+        update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")

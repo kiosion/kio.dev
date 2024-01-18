@@ -19,33 +19,20 @@ defmodule Router.Api.V1.Config do
                "lang" => "en"
              }
            ) do
+      query =
+        Query.new()
+        |> Query.filter([%{"_type" => "'siteSettings'"}])
+        |> Query.qualify("[0]")
+        |> Query.build!()
+
       conn
       |> handle_sanity_fetch(
-        Query.new()
-        |> Query.filter([
-          %{"_type" => "'siteSettings'"}
-        ])
-        |> Query.qualify("[0]")
-        |> Query.build!(),
-        fn conn, result ->
-          transformed_result =
-            case params["lang"] do
-              "en" -> result
-              "fr" -> Translate.translate(:config, result, "fr", "en")
-              _ -> conn |> error_res(400, "Invalid request", "Invalid language") |> halt()
-            end
+        query,
+        fn conn, result, duration ->
+          {transformed_result, meta, code} =
+            transform_result_document(query, result, :config, params)
 
-          case transformed_result do
-            {:error, message} ->
-              Logger.error("Error fetching config: #{inspect(message)}")
-              result
-
-            _ ->
-              transformed_result
-          end
-          |> Map.delete("ms")
-          |> Map.delete("query")
-          |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+          update_meta_and_send_response(conn, code, transformed_result, meta, duration)
         end
       )
     else

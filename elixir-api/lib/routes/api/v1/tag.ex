@@ -73,15 +73,15 @@ defmodule Router.Api.V1.Tag do
       |> handle_sanity_fetch(query, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
-        result
-        |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"] || 0,
-          "count" => parsed_counts["result"]["total"] || 0,
-          "id" => id,
-          "type" => params["type"]
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+        {transformed_result, meta, code} =
+          transform_result_document(query, result, :tag, params, %{
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"],
+            "id" => id,
+            "type" => params["type"]
+          })
+
+        update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
       _ -> conn |> error_res(400, "Invalid request", "Missing ID or invalid type")

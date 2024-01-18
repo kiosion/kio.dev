@@ -78,15 +78,13 @@ defmodule Router.Api.V1.Tags do
       |> handle_sanity_fetch(query_limited, fn conn, result, duration ->
         parsed_counts = Task.await(counts)
 
-        result
-        |> Map.put("meta", %{
-          "total" => parsed_counts["result"]["total"],
-          "count" => parsed_counts["result"]["count"],
-          "sort" => params["s"],
-          "order" => params["o"]
-        })
-        |> Map.update("ms", duration, &(&1 + (duration - &1)))
-        |> (fn data -> conn |> json_res(200, %{code: 200, data: data}) end).()
+        {transformed_result, meta, code} =
+          transform_result_document(query, result, :tag, params, %{
+            "total" => parsed_counts["result"]["total"],
+            "count" => parsed_counts["result"]["count"]
+          })
+
+        update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")

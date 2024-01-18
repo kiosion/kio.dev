@@ -1,8 +1,6 @@
 defmodule Router.Api.V1.Project do
   use Router.Api.Base
 
-  alias Hexerei.PT
-
   options "/:id" do
     conn
     |> put_resp_header("access-control-allow-origin", "*")
@@ -62,43 +60,10 @@ defmodule Router.Api.V1.Project do
 
       conn
       |> handle_sanity_fetch(query, fn conn, result, duration ->
-        {translated_result, meta, code} =
-          case result["result"] do
-            nil ->
-              {result,
-               %{
-                 "total" => 0,
-                 "count" => 0,
-                 "id" => nil
-               }, 404}
+        {transformed_result, meta, code} =
+          transform_result_document(query, result, :project, params)
 
-            _ ->
-              try_increment_view_count(query)
-
-              {
-                Translate.handle_translate(:project, result, params["lang"]),
-                %{
-                  "total" => 1,
-                  "count" => 1,
-                  "id" => params["id"]
-                },
-                200
-              }
-          end
-
-        case meta["count"] do
-          0 ->
-            translated_result
-
-          _ ->
-            Kernel.put_in(
-              translated_result,
-              ["result", "headings"],
-              PT.build_summary(translated_result["result"]["body"])
-            )
-        end
-        |> update_meta(meta, duration)
-        |> (fn data -> conn |> json_res(code, %{code: code, data: data}) end).()
+        update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
       false -> conn |> error_res(400, "Invalid request", "Invalid or missing parameters")
