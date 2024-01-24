@@ -27,7 +27,7 @@
     "@sanity/image-url": "1.0.2",
     "@sveltejs/adapter-netlify": "3.0.2",
     "@sveltejs/adapter-node": "3.0.1",
-    "@sveltejs/kit": "2.3.3",
+    "@sveltejs/kit": "2.4.3",
     "@sveltejs/vite-plugin-svelte": "3.0.1",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@testing-library/cypress": "10.0.1",
