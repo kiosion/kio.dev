@@ -27,7 +27,7 @@ jobs:
           version: 8.6.0
           run_install: false
       - name: Use node_modules cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
@@ -58,7 +58,7 @@ jobs:
           version: 8.6.0
           run_install: false
       - name: Use node_modules cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: nm-cache
         with:
           path: 'svelte-app/node_modules'
