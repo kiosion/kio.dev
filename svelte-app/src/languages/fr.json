@@ -57,6 +57,10 @@
   "present": "présent",
   "refresh the page": "rafraîchir la page",
   "{length} min read": "{length} minute de lecture",
+  "{month} month": "{month} mois",
+  "{month} months": "{month} mois",
   "{stars} stars": "{stars} étoiles",
-  "{views} views": "{views} vues"
+  "{views} views": "{views} vues",
+  "{year} year": "{year} an",
+  "{year} years": "{year} ans"
 }

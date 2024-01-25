@@ -1,73 +1,64 @@
 <script lang="ts">
-  import { derived } from 'svelte/store';
+  import { displayMonthDuration, displayRange } from '$lib/date';
 
-  import { currentLang, t } from '$i18n';
-
-  import TimelineItem from './timeline-item.svelte';
+  import TimelineItem from '$components/about/timeline-item.svelte';
 
   import type { WorkTimelineItem } from '$types';
 
   export let section: WorkTimelineItem[];
 
-  const title = section[0].title;
-
-  const dateDisplay = derived([currentLang, t], ([currentLang, t]) => {
-    return (start: string, end: string | undefined) => {
-      try {
-        const startDate = new Date(start),
-          endDate = end ? new Date(end) : undefined;
-
-        if (!endDate) {
-          return `${new Intl.DateTimeFormat(currentLang, {
-            month: 'short',
-            year: 'numeric'
-          }).format(startDate)} - ${t('present')}`;
-        }
-
-        return `${new Intl.DateTimeFormat(currentLang, {
-          month: 'short',
-          year: 'numeric'
-        }).format(startDate)} - ${new Intl.DateTimeFormat(currentLang, {
-          month: 'short',
-          year: 'numeric'
-        }).format(endDate)}`;
-      } catch (_) {
-        return t('Invalid date');
-      }
+  const title = section[0].title,
+    totalRange = {
+      start: section[section.length - 1].range.start,
+      end: section[0].range.end
     };
-  });
 </script>
 
 <section>
-  <h1>{title}</h1>
-
   <div>
-    {#each section as item}
-      <TimelineItem
-        title={item.subtitle}
-        body={item.body}
-        date={$dateDisplay(item.range.start, item.range.end)}
-      />
-    {/each}
+    <h2>{title}</h2>
+    <p>
+      {$displayRange(totalRange.start, totalRange.end)} &bull; {$displayMonthDuration(
+        totalRange.start,
+        totalRange.end
+      )}
+    </p>
   </div>
+
+  {#each section as item, i}
+    <TimelineItem
+      title={item.subtitle}
+      body={item.body}
+      range={item.range}
+      last={i === section.length - 1}
+    />
+  {/each}
 </section>
 
 <style lang="scss">
-  h1 {
-    @apply mb-3 font-code text-2xl font-bold text-dark transition-colors;
+  h2 {
+    @apply pb-1 text-xl font-bold text-dark transition-colors;
+  }
+
+  p {
+    @apply font-mono text-sm text-dark/80 transition-colors;
+  }
+
+  div {
+    @apply pb-4;
   }
 
   section {
     @apply my-6;
-
-    div {
-      @apply flex flex-col;
-    }
   }
 
   :global(.dark) {
-    h1 {
+    h2 {
       @apply text-white;
+    }
+
+    p {
+      @apply text-light/80;
     }
   }
 </style>
