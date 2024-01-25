@@ -120,8 +120,8 @@ devDependencies:
     specifier: 0.33.1
     version: 0.33.1(svelte@4.2.9)
   svelte-highlight:
-    specifier: 7.4.6
-    version: 7.4.6
+    specifier: 7.4.8
+    version: 7.4.8
   tailwindcss:
     specifier: 3.4.1
     version: 3.4.1
@@ -10721,8 +10721,8 @@ packages:
       svelte: 4.2.9
     dev: true
 
-  /svelte-highlight@7.4.6:
-    resolution: {integrity: sha512-kgGC8I9Rc4JoCPAzdDM3YPWzOlZXqhEYz4Ncqjxq8JraI14oivuEzFNPEz63J848k02V5kA7IC2IkDNj98Z44w==}
+  /svelte-highlight@7.4.8:
+    resolution: {integrity: sha512-KjXI+RwpBiDvwgZX9M0T6JpmAPhLjC4Gcks5qIDrFd7iO/pEBFR3B6qeMUTFIhxipHEPp/rC4/0enAvCQtHp+A==}
     dependencies:
       highlight.js: 11.9.0
     dev: true
