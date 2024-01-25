@@ -30,7 +30,7 @@ jobs:
           elixir-version: 1.16.0
           otp-version: 26
           rebar3-version: 3.16
-      - name: Check formatting
+      - name: Check Formatting
         run: (cd ./elixir-api && mix format --check-formatted)
       - name: Restore dependencies cache
         uses: actions/cache@v3
@@ -99,10 +99,13 @@ jobs:
       matrix:
         environment: [ dev, prod ]
     steps:
-      - name: Setup GCloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2.1
+      - name: Authenticate GCloud Service Account
+        uses: google-github-actions/auth@v2.1.0
         with:
-          service_account_key: ${{ secrets.GCP_CR_PRIVATE_KEY }}
+          credentials_json: ${{ secrets.GCP_CR_PRIVATE_KEY }}
+      - name: Setup GCloud SDK
+        uses: google-github-actions/setup-gcloud@v2.1.0
+        with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       - name: Deploy ${{ matrix.environment }} to Cloud Run
         run: |
