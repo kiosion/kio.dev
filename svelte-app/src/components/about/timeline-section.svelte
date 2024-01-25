@@ -7,20 +7,17 @@
 
   export let section: WorkTimelineItem[];
 
-  const title = section[0].title,
-    totalRange = {
-      start: section[section.length - 1].range.start,
-      end: section[0].range.end
-    };
+  const title = section[0].title;
 </script>
 
 <section>
   <div>
     <h2>{title}</h2>
     <p>
-      {$displayRange(totalRange.start, totalRange.end)} &bull; {$displayMonthDuration(
-        totalRange.start,
-        totalRange.end
+      {$displayRange(section[section.length - 1].range.start, section[0].range.end)} &bull;
+      {$displayMonthDuration(
+        section[section.length - 1].range.start,
+        section[0].range.end
       )}
     </p>
   </div>

@@ -39,20 +39,21 @@ export const displayMonthDuration = derived<
     }
 
     const start = new Date(startDate),
-      end = endDate ? new Date(endDate) : new Date();
+      end = endDate ? new Date(endDate) : new Date(),
+      diffMs = end.getTime() - start.getTime(),
+      diffDays = Math.floor(diffMs / 86400000),
+      diffMonths = Math.floor(diffDays / 30);
 
-    let years = end.getFullYear() - start.getFullYear();
-    let months = end.getMonth() - start.getMonth();
-
-    // Adjust for cases where the end month is earlier in the year than the start month
-    if (months < 0) {
-      years--;
-      months += 12; // Add the months that have passed in the current year
+    if (diffMonths === 0 || diffMonths === 1) {
+      return t('{month} month', { month: 1 });
     }
 
-    // Consolidate total duration into years and months
-    years += Math.floor(months / 12);
-    months %= 12;
+    if (diffMonths < 12) {
+      return t('{month} months', { month: diffMonths });
+    }
+
+    const years = Math.floor(diffMonths / 12),
+      months = diffMonths % 12;
 
     let yearString = '',
       monthString = '';
@@ -61,7 +62,7 @@ export const displayMonthDuration = derived<
       if (years === 1) {
         yearString = t('{year} year', { year: years });
       } else {
-        yearString = t('{year} years', { year: years });
+        yearString = t('{years} years', { years });
       }
     }
 
@@ -69,13 +70,8 @@ export const displayMonthDuration = derived<
       if (months === 1) {
         monthString = t('{month} month', { month: months });
       } else {
-        monthString = t('{month} months', { month: months });
+        monthString = t('{months} months', { months });
       }
-    }
-
-    // Handle the case where the difference is less than one month
-    if (years > 0 && months > 0) {
-      monthString = t('{month} month', { month: 1 });
     }
 
     return `${yearString}${yearString && monthString ? ' ' : ''}${monthString}`;
