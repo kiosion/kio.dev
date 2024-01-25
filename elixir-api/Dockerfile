@@ -1,4 +1,4 @@
-FROM elixir:1.14-slim AS build
+FROM elixir:1.16.0-slim AS build
 
 ARG ENV=prod
 ENV ENV=$ENV
@@ -27,7 +27,7 @@ RUN echo "export SANITY_TOKEN=$SANITY_TOKEN" > .env &&\
         --gcloud_key $GCLOUD_KEY \
         --env $ENV
 
-FROM elixir:1.14-slim AS app
+FROM elixir:1.16-slim AS app
 
 ARG ENV
 
