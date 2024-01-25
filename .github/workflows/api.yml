@@ -78,8 +78,9 @@ jobs:
             echo "::set-output name=token::${{ secrets.API_TOKEN }}"
           fi
       - name: Build and Push ${{ matrix.environment }} image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5.1.0
         with:
+          provenance: false
           context: ./elixir-api
           push: true
           tags: |
@@ -103,10 +104,19 @@ jobs:
         uses: google-github-actions/auth@v2.1.0
         with:
           credentials_json: ${{ secrets.GCP_CR_PRIVATE_KEY }}
-      - name: Setup GCloud SDK
-        uses: google-github-actions/setup-gcloud@v2.1.0
+      - name: Deploy ${{ matrix.environment }} to Cloud Run
+        uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-      - name: Deploy ${{ matrix.environment }} to Cloud Run
-        run: |
-          gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest --region us-central1 --platform managed
+          service: hexerei-${{ matrix.environment }}
+          image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest
+          region: us-central1
+          flags: '--platform managed --allow-unauthenticated'
+
+      # - name: Setup GCloud SDK
+      #   uses: google-github-actions/setup-gcloud@v2.1.0
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+      # - name: Deploy ${{ matrix.environment }} to Cloud Run
+      #   run: |
+      #     gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest --region us-central1 --platform managed
