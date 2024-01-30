@@ -40,7 +40,7 @@ export default {
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
         ? NetlifyAdapter({
-            edge: false,
+            edge: true,
             split: false
           })
         : NodeAdapter({ out: './dist' }),
