@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vitest:
-    name: Vitest
+  unit:
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,7 +22,6 @@ jobs:
           node-version: 18.17.0
       - uses: pnpm/action-setup@v2
         name: Install pnpm
-        id: pnpm-install
         with:
           version: 8.6.0
           run_install: false
@@ -35,25 +34,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Install dependencies
-        env:
-          CYPRESS_INSTALL_BINARY: 0
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: make install-web
       - name: Run tests
         run: make vitest
 
-  cypress:
-    name: Cypress
+  integration:
+    name: Integration tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18.17.0
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8.6.0
           run_install: false
@@ -66,14 +63,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Install dependencies
-        env:
-          CYPRESS_INSTALL_BINARY: 0
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: make install-web
-      - name: Build test app
-        env:
-          SVELTE_ADAPTER_ENV: 'node'
-          VITE_DEV_API_TOKEN: ${{ secrets.DEV_API_TOKEN }}
-        run: make test-web
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./svelte-app/package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Use Playwright cache
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: (cd ./svelte-app && pnpm exec playwright install --with-deps && pnpm exec playwright install-deps)
       - name: Run tests
-        run: make cypress
+        run: make playwright
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7

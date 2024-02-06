@@ -62,6 +62,7 @@
       return undefined;
     })
     ?.filter(Boolean) || [stack || 'Unknown error'];
+  $: heading = `${status}: ${$t(title)}`;
 </script>
 
 <svelte:head>
@@ -69,7 +70,7 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<HeadedBlock heading={`${status}: ${$t(title)}`}>
+<HeadedBlock {heading} testId="error-page">
   <p>
     {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
   </p>
