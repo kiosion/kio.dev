@@ -25,6 +25,7 @@
       "$i18n": ["src/lib/helpers/i18n"],
       "$routes/*": ["src/routes/*"],
       "$assets/*": ["src/static/*"],
+      "$tests/*": ["tests/*"],
       "$types": ["types/app/index.d.ts"],
       "$types/*": ["types/app/*"],
       "*": ["types/*"]
@@ -40,6 +41,7 @@
   "include": [
     "src/**/*",
     "test/**/*",
+    "tests/**/*",
     "types/**/*",
     "cypress/**/*",
     "*.js",

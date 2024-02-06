@@ -1,8 +1,9 @@
 <script lang="ts">
-  export let heading: string;
+  export let heading: string,
+    testId: string | undefined = undefined;
 </script>
 
-<section>
+<section data-test-id={testId}>
   <h1>{heading}</h1>
   <div><slot /></div>
 </section>

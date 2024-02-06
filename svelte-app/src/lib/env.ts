@@ -11,7 +11,7 @@ export const REMOTE_API_VERSION = 'v1';
 export const REMOTE_API_BASE_URL =
   ENV === 'production'
     ? 'https://prod1.kio.sh'
-    : ['backed', 'testing'].includes(ENV)
+    : ENV === 'backed'
       ? 'https://dev.kio.sh'
       : 'http://127.0.0.1:4444';
 export const REMOTE_API_URL = `${REMOTE_API_BASE_URL}/api/${REMOTE_API_VERSION}`;

@@ -49,32 +49,15 @@ prod: SHELL:=/bin/bash
 prod:
 	@cd ./svelte-app && SVELTE_ADAPTER_ENV=netlify pnpm build
 
-# Deploy sanity
-sanity-deploy: SHELL:=/bin/bash
-sanity-deploy: sanity-upgrade
-sanity-deploy:
-	@cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod
-
-# Push to netlify
-netlify-deploy: SHELL:=/bin/bash
-netlify-deploy:
-	@cd ./svelte-app && pnpm netlify deploy --dir=./build --prod
-
-# Build svelte app for testing
-test-web: SHELL:=/bin/bash
-test-web:
-	@cd ./svelte-app && SVELTE_ADAPTER_ENV=node pnpm build:test
-
 # vitest
 vitest: SHELL:=/bin/bash
 vitest:
-	@cd ./svelte-app && pnpm test:vitest
+	@cd ./svelte-app && pnpm run test:vitest
 
-# cypress tests
-cypress: SHELL:=/bin/bash
-cypress:
-	@cd ./svelte-app && pnpm cypress install
-	@(cd ./svelte-app; exec node ./dist) & (cd ./svelte-app; exec pnpm run test:cypress)
+# playwright
+playwright: SHELL:=/bin/bash
+playwright:
+	@cd ./svelte-app && pnpm run test:playwright
 
 lint: SHELL:=/bin/bash
 lint: install-web install-sanity
