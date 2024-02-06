@@ -35,7 +35,8 @@ export default {
       $stores: 'src/stores',
       $langs: 'src/languages',
       $i18n: 'src/lib/helpers/i18n',
-      $routes: 'src/routes'
+      $routes: 'src/routes',
+      $tests: 'tests'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
