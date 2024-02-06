@@ -7,7 +7,8 @@ const config: PlaywrightTestConfig = {
   },
   testDir: 'tests',
   testMatch: /(.+\.)?(test|spec)\.[jt]s/,
-  testIgnore: /.*\/unit\/.*/
+  testIgnore: /.*\/unit\/.*/,
+  reporter: 'dot'
 };
 
 export default config;

@@ -65,5 +65,24 @@ jobs:
       - name: Install dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: make install-web
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./svelte-app/package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Use Playwright cache
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: (cd ./svelte-app && pnpm exec playwright install --with-deps && pnpm exec playwright install-deps)
       - name: Run tests
         run: make playwright
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7
