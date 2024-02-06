@@ -29,7 +29,7 @@
     "@babel/preset-env": "7.23.8",
     "@babel/preset-react": "7.23.3",
     "@sanity/eslint-config-studio": "3.0.1",
-    "@types/react": "18.2.48",
+    "@types/react": "18.2.53",
     "@typescript-eslint/eslint-plugin": "6.20.0",
     "@typescript-eslint/parser": "6.20.0",
     "dotenv": "16.4.1",
