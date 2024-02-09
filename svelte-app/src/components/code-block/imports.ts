@@ -1,44 +1,48 @@
-import { SvelteComponent } from 'svelte';
+// import { SvelteComponent } from 'svelte';
 
 import Logger from '$lib/logger';
 
 import type { ComponentType } from 'svelte';
-import type {
-  HighlightEvents,
-  HighlightProps,
-  HighlightSlots
-} from 'svelte-highlight/Highlight.svelte';
-import type {
-  HighlightSvelteEvents,
-  HighlightSvelteProps,
-  HighlightSvelteSlots
-} from 'svelte-highlight/HighlightSvelte.svelte';
+// import type {
+//   HighlightEvents,
+//   HighlightProps,
+//   HighlightSlots
+// } from 'svelte-highlight/Highlight.svelte';
+// import type {
+//   HighlightSvelteEvents,
+//   HighlightSvelteProps,
+//   HighlightSvelteSlots
+// } from 'svelte-highlight/HighlightSvelte.svelte';
 import type { LanguageType } from 'svelte-highlight/languages';
-import type {
-  LineNumbersEvents,
-  LineNumbersProps,
-  LineNumbersSlots
-} from 'svelte-highlight/LineNumbers.svelte';
+// import type {
+//   LineNumbersEvents,
+//   LineNumbersProps,
+//   LineNumbersSlots
+// } from 'svelte-highlight/LineNumbers.svelte';
 
-class _LineNumbers extends SvelteComponent<
-  LineNumbersProps,
-  LineNumbersEvents,
-  LineNumbersSlots
-> {}
-class _HighlightSvelte extends SvelteComponent<
-  HighlightSvelteProps,
-  HighlightSvelteEvents,
-  HighlightSvelteSlots
-> {}
-class _Highlight extends SvelteComponent<
-  HighlightProps,
-  HighlightEvents,
-  HighlightSlots
-> {}
+// class _LineNumbers extends SvelteComponent<
+//   LineNumbersProps,
+//   LineNumbersEvents,
+//   LineNumbersSlots
+// > {}
+// class _HighlightSvelte extends SvelteComponent<
+//   HighlightSvelteProps,
+//   HighlightSvelteEvents,
+//   HighlightSvelteSlots
+// > {}
+// class _Highlight extends SvelteComponent<
+//   HighlightProps,
+//   HighlightEvents,
+//   HighlightSlots
+// > {}
 
-export type LineNumbers = ComponentType<_LineNumbers>;
-export type HighlightSvelte = ComponentType<_HighlightSvelte>;
-export type Highlight = ComponentType<_Highlight>;
+// TODO: Types broken with Svelte@v5 beta.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type LineNumbers = ComponentType<any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type HighlightSvelte = ComponentType<any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Highlight = ComponentType<any>;
 
 const components = {
   LineNumbers: undefined,
