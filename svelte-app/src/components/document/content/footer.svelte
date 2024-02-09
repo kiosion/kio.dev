@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { linkTo, t } from '$i18n';
-  import { isMobile } from '$lib/helpers/responsive';
+  import { linkTo, t } from '$lib/i18n';
+  import { isMobile } from '$lib/responsive';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';

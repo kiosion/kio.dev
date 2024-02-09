@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 
-import { currentLang, linkTo, t } from '$i18n';
+import { currentLang, linkTo, t } from '$lib/i18n';
 import Logger from '$lib/logger';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';

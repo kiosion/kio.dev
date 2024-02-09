@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { parseEmoji } from '$helpers/emoji';
-  import { t } from '$i18n';
+  import { t } from '$lib/i18n';
   import Logger from '$lib/logger';
+  import { parseEmoji } from '$lib/utils';
 
   import Icon from '$components/icon.svelte';
   import Footnote from '$components/portable-text/footnote.svelte';

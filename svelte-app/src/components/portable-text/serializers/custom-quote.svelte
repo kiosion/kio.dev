@@ -1,3 +1,11 @@
+<script lang="ts">
+  import type { BlockComponentProps } from '@portabletext/svelte';
+
+  export let portableText: BlockComponentProps;
+
+  $: ({ value: _value } = portableText);
+</script>
+
 <div
   class="flex w-full flex-1 items-stretch justify-start transition-[background-color,color]"
 >

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { pageTitle } from '$helpers/navigation';
-  import { linkTo, t } from '$i18n';
+  import { linkTo, t } from '$lib/i18n.js';
+  import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';

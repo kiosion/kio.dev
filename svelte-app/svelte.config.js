@@ -30,13 +30,16 @@ export default {
   ],
   kit: {
     alias: {
+      '@breakpoints': 'src/styles/breakpoints',
+      '@colours': 'src/styles/colours',
+      '@utils': 'src/styles/utils',
+      '@vars': 'src/styles/vars',
+      $assets: 'src/static',
       $components: 'src/components',
-      $helpers: 'src/lib/helpers',
-      $stores: 'src/stores',
       $langs: 'src/languages',
-      $i18n: 'src/lib/helpers/i18n',
       $routes: 'src/routes',
-      $tests: 'tests'
+      $tests: 'tests',
+      $types: 'types/app'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'

@@ -2,8 +2,8 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
-  import { t } from '$i18n';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
   import Settings from '$lib/settings';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';

@@ -1,3 +1,11 @@
+<script lang="ts">
+  import type { MarkComponentProps } from '@portabletext/svelte';
+
+  export let portableText: MarkComponentProps;
+
+  $: ({ value: _value } = portableText);
+</script>
+
 <span class="relative p-0.5">
   <span class="relative z-[1] text-light transition-colors dark:text-dark">
     <slot />

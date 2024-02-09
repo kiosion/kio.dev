@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { pageTitle } from '$helpers/navigation';
-  import { t } from '$i18n';
+  import { t } from '$lib/i18n.js';
+  import { pageTitle } from '$lib/navigation';
 
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';

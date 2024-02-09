@@ -3,7 +3,7 @@
   import { crossfade, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { buildImageUrl, getCrop } from '$lib/helpers/image';
+  import { buildImageUrl, getCrop } from '$lib/sanity';
 
   import ImageModal from '$components/images/image-modal.svelte';
   import Spinner from '$components/loading/spinner.svelte';

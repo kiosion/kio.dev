@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { formatDate } from '$helpers/date';
-  import { currentLang, linkTo, t } from '$i18n';
-  import { isMobile } from '$lib/helpers/responsive';
-  import { parseViews } from '$lib/views';
+  import { formatDate } from '$lib/date';
+  import { linkTo, t } from '$lib/i18n';
+  import { isMobile } from '$lib/responsive';
+  import { parseViews } from '$lib/utils';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
@@ -28,7 +28,7 @@
       class="flex flex-row flex-wrap items-center justify-start gap-y-2 transition-[color]"
     >
       <p class="cursor-default font-mono text-base">
-        {formatDate(data.date, 'full', $currentLang) ?? $t('Unknown date')}
+        {$formatDate(data.date, 'full') ?? $t('Unknown date')}
       </p>
       <BulletPoint />
       <p class="cursor-default font-mono text-base">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$i18n';
+  import { t } from '$lib/i18n';
   import BaseIconWrapper from '$lib/icons/base-icon-wrapper.svelte';
   import {
     Alert,

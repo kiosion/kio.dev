@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
+import { tryFetch } from '$lib/data';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
-import tryFetch from '$lib/try-fetch';
 
 import type {
   DocumentTags,

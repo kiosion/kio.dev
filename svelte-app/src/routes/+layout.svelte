@@ -10,7 +10,6 @@
 
   import { browser } from '$app/environment';
   import { navigating, page } from '$app/stores';
-  import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
   import {
     APP_LANGS,
     APP_THEMES,
@@ -18,6 +17,7 @@
     DEFAULT_APP_LANG
   } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
+  import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
   import Settings, { loading } from '$lib/settings';
 
   import Footer from '$components/footer.svelte';

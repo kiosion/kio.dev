@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { t } from '$i18n';
   import { APP_VERSION } from '$lib/env';
+  import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';

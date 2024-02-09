@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { t } from '$i18n';
   import { APP_THEMES } from '$lib/consts';
+  import { t } from '$lib/i18n';
   import Settings from '$lib/settings';
 
   import Hoverable from '$components/hoverable.svelte';

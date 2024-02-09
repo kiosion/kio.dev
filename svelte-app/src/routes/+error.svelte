@@ -2,8 +2,8 @@
   import { slide } from 'svelte/transition';
 
   import { page } from '$app/stores';
-  import { t } from '$i18n';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';

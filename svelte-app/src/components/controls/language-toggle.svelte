@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { currentLang, linkTo, t } from '$i18n';
   import { APP_LANGS } from '$lib/consts';
+  import { currentLang, linkTo, t } from '$lib/i18n';
 
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
