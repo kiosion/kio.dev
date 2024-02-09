@@ -1,7 +1,7 @@
-import { STUB_CONFIG, STUB_POST } from '$tests/fixtures';
-import { stubResponse } from '$tests/utils';
-
 import { expect, test } from '@playwright/test';
+
+import { STUB_CONFIG, STUB_POST } from '../fixtures';
+import { stubResponse } from '../utils';
 
 const API_CONFIG_ROUTE = /.*\/api\/get\/config.*/,
   API_POST_ROUTE = /.*\/api\/get\/post.*/,
