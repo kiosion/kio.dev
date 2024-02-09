@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sortDocumentsByYear } from '$helpers/date';
+  import { sortDocumentsByYear } from '$lib/date';
 
   import ListItem from '$components/lists/list-item.svelte';
 

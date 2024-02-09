@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { linkTo } from '$i18n';
   import { NAV_LINKS } from '$lib/consts';
+  import { linkTo } from '$lib/i18n';
 
   import LanguageControls from '$components/controls/language-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';

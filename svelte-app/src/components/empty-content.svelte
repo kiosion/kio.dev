@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { t } from '$i18n';
+  import { t } from '$lib/i18n';
 
   import Icon from '$components/icon.svelte';
 </script>
 
 <div data-test-id="error-text">
-  <Icon icon="Downasaur" />
+  <Icon name="Downasaur" />
   <p>{$t('Hm, it seems empty around here...')}</p>
 </div>
 

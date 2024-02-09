@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { linkTo, t } from '$i18n';
-  import { isMobile } from '$lib/helpers/responsive';
+  import { linkTo, t } from '$lib/i18n';
+  import { isMobile } from '$lib/responsive';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
@@ -17,7 +17,7 @@
   <div>
     <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
     <span class="flex items-center justify-start gap-2 text-base">
-      <Icon icon="GitCommit" class="mb-0.5" inline />
+      <Icon name="GitCommit" inline />
       <Link href={data.github}>
         {'github.com/' + data.github.split('github.com/')?.[1]}
       </Link>
@@ -27,13 +27,14 @@
 {/if}
 <div>
   <ArrowButton
-    class="w-full text-left"
     href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
+    align="left"
+    fullWidth
     preload
   >
     <span class="flex items-center justify-start gap-2 text-base">
       {#key $isMobile}
-        <Icon icon={$isMobile ? 'ArrowUp' : 'ArrowLeft'} class="mb-0.5" inline />
+        <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline />
       {/key}
       <p>{$t('Read more')}</p>
     </span>

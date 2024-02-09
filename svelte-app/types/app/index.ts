@@ -1,7 +1,27 @@
-import type { SvelteComponent } from 'svelte';
+import type { NumericRange } from '@sveltejs/kit';
 
-// Misc
-export type PixelIcon = SvelteComponent;
+// Add some custom props to global Errors
+declare global {
+  interface ErrorOptions {
+    // @ts-expect-error - Overriding base type
+    cause?: (string | { message?: string; detail?: string | { message?: string } })[];
+    stack?: string;
+    code?: NumericRange<400, 599>;
+  }
+
+  interface ErrorConstructor {
+    new (message?: string, options?: ErrorOptions): Error;
+    (message?: string, options?: ErrorOptions): Error;
+  }
+
+  interface Error {
+    message: string;
+    // @ts-expect-error - Overriding base type
+    cause?: (string | { message?: string; detail?: string | { message?: string } })[];
+    stack?: string;
+    code?: NumericRange<400, 599>;
+  }
+}
 
 export interface MenuStateOpt {
   disabled?: boolean;

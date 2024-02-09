@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { currentLang, linkTo, t } from '$i18n';
-  import { formatDate } from '$lib/helpers/date';
-  import { parseViews } from '$lib/views';
+  import { formatDate } from '$lib/date';
+  import { linkTo, t } from '$lib/i18n';
+  import { parseViews } from '$lib/utils';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -30,11 +30,7 @@
         : 'mb-2'}"
     >
       <p aria-label={$t('Date posted')}>
-        {formatDate(
-          document.date || document._createdAt,
-          small ? 'med' : 'short',
-          $currentLang
-        )}
+        {$formatDate(document.date || document._createdAt, small ? 'med' : 'short')}
       </p>
       {#if document.tags?.length}
         <span

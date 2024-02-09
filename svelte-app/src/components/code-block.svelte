@@ -2,9 +2,9 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
-  import { t } from '$i18n';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import Settings from '$stores/settings';
+  import { t } from '$lib/i18n';
+  import Settings from '$lib/settings';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Icon from '$components/icon.svelte';
@@ -117,7 +117,7 @@
       on:keydown={(e) => e.key === 'Enter' && copy()}
     >
       {#key copied}
-        <Icon icon={copied !== undefined ? 'Check' : 'Copy'} />
+        <Icon name={copied !== undefined ? 'Check' : 'Copy'} />
       {/key}
     </button>
   </Tooltip>

@@ -2,9 +2,9 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { page } from '$app/stores';
-  import scrollTo from '$helpers/scrollTo';
-  import { t } from '$i18n';
   import { BASE_PAGE_TITLE } from '$lib/consts';
+  import { t } from '$lib/i18n';
+  import { scrollTo } from '$lib/navigation';
 
   import Content from '$components/document/content/content.svelte';
 

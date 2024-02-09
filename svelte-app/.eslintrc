@@ -68,6 +68,12 @@
     "no-setter-return": ["error"],
     "no-script-url": ["error"],
     "no-unused-vars": ["off"],
+    "no-restricted-imports": ["error", {
+      "patterns": [{
+        "group": ["./*", "../*", "!./$types"],
+        "message": "Only use relative imports from './$types'."
+      }]
+    }],
     "object-shorthand": ["error"],
     "one-var-declaration-per-line": ["error"],
     "prettier/prettier": ["error"],
@@ -129,7 +135,8 @@
         "*.spec.ts"
       ],
       "rules": {
-        "@typescript-eslint/no-empty-function": ["off"]
+        "@typescript-eslint/no-empty-function": ["off"],
+        "no-restricted-imports": ["off"]
       }
     }
   ],

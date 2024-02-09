@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { t } from '$i18n';
   import { APP_VERSION } from '$lib/env';
+  import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
@@ -55,7 +55,7 @@
             href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
             aria-label={$t('View latest commit on GitHub')}
           >
-            <Icon icon="GitCommit" inline />
+            <Icon name="GitCommit" inline />
             {APP_VERSION.slice(0, 6)}
           </BaseLink>
         </Tooltip>

@@ -1,8 +1,10 @@
 import { derived } from 'svelte/store';
 
 import { page } from '$app/stores';
-import { isLocalized, t } from '$i18n';
 import { APP_ROUTES, BASE_PAGE_TITLE } from '$lib/consts';
+import { isLocalized, t } from '$lib/i18n';
+
+import type { Page as PageStore } from '@sveltejs/kit';
 
 export const pageTitle = derived([isLocalized, t, page], (vals) => {
   const basePathname = vals[2]?.url?.pathname ?? '/',
@@ -15,3 +17,24 @@ export const pageTitle = derived([isLocalized, t, page], (vals) => {
     ? `${vals[1](route.name)} | ${BASE_PAGE_TITLE}`
     : BASE_PAGE_TITLE;
 });
+
+export const scrollTo = (
+  url: PageStore['url'],
+  scrollParams: ScrollIntoViewOptions = {}
+) => {
+  const { hash } = url || { hash: '' };
+
+  if (!hash.length) {
+    return;
+  }
+
+  const target =
+    document.getElementById(hash.slice(1)) ||
+    document.getElementById(`heading-${hash.slice(1)}`);
+
+  target?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+    ...scrollParams
+  });
+};

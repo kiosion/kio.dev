@@ -1,9 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { currentLang, linkTo, t } from '$i18n';
   import { APP_LANGS } from '$lib/consts';
-  import { navOpen } from '$stores/navigation';
+  import { currentLang, linkTo, t } from '$lib/i18n';
 
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
@@ -22,22 +21,18 @@
         replaceState: true
       }
     ).catch(() => undefined);
-
-    navOpen.set(false);
   };
 </script>
 
 <Hoverable>
   <Tooltip
-    text={$t($currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english')}
+    text={$t($currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English')}
     delay={150}
     fixed
   >
     <button
-      class="focusOutline -m-1.5 flex h-[24px] w-[24px] items-center justify-center rounded-sm hover:text-accent-light dark:hover:text-accent-dark {$$props.class ||
-        ''}"
       aria-label={$t(
-        $currentLang === APP_LANGS[0] ? 'Switch to french' : 'Switch to english'
+        $currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English'
       )}
       tabindex="0"
       data-test-id="language-toggle"
@@ -45,7 +40,36 @@
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
     >
-      <Icon icon="script" width={18} />
+      <Icon name="script" size={18} />
     </button>
   </Tooltip>
 </Hoverable>
+
+<style lang="scss">
+  @import '@styles/mixins';
+
+  button {
+    @apply -m-1.5 flex items-center justify-center rounded-sm;
+
+    height: 24px;
+    width: 24px;
+
+    @include focus-state(lg);
+
+    &:hover,
+    &:focus-visible {
+      @apply text-accent-light;
+    }
+  }
+
+  :global(.dark) {
+    button {
+      @include focus-state(lg, dark);
+
+      &:hover,
+      &:focus-visible {
+        @apply text-accent-dark;
+      }
+    }
+  }
+</style>

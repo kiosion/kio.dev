@@ -19,7 +19,8 @@ export const load = (async ({ params, url, fetch }) => {
     Logger.error('Failed to load layout data:', e);
     throw error(500, {
       message: 'Sorry, something went wrong during load.',
-      stack: e.stack
+      cause: e?.cause,
+      stack: e?.stack
     });
   })) as SiteConfig;
 

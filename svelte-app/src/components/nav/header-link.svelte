@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
-  import { isLocalized, linkTo, t } from '$i18n';
+  import { isLocalized, linkTo, t } from '$lib/i18n';
 
   import BaseLink from '$components/nav/base-link.svelte';
 

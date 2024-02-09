@@ -10,6 +10,7 @@
   "Blog": "Blog",
   "Click here to": "Cliquez ici pour",
   "Code block": "Bloc de code",
+  "Copy to clipboard": "Copier dans le presse-papiers",
   "Date posted": "Date de publication",
   "English": "Anglais",
   "Error": "Erreur",
@@ -40,8 +41,8 @@
   "Show stack trace": "Afficher la trace de la pile",
   "Skip to content": "Passer au contenu",
   "Sorry, something went wrong. Please try again.": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
-  "Switch to english": "Passer à l'anglais",
-  "Switch to french": "Passer au français",
+  "Switch to English": "Passer à l'Anglais",
+  "Switch to French": "Passer au Français",
   "Tags": "Tags",
   "Thoughts": "Pensées",
   "Thoughts about tech, design, and development": "Pensées sur la technologie, le design et le développement",
@@ -57,10 +58,10 @@
   "present": "présent",
   "refresh the page": "rafraîchir la page",
   "{length} min read": "{length} minute de lecture",
+  "{months} months": "{months} mois",
   "{month} month": "{month} mois",
-  "{month} months": "{month} mois",
   "{stars} stars": "{stars} étoiles",
   "{views} views": "{views} vues",
-  "{year} year": "{year} an",
-  "{year} years": "{year} ans"
+  "{years} years": "{years} ans",
+  "{year} year": "{year} an"
 }

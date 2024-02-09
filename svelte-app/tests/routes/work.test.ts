@@ -1,12 +1,12 @@
-import { STUB_CONFIG, STUB_PROJECT } from '$tests/fixtures';
+import { expect, test } from '@playwright/test';
+
+import { STUB_CONFIG, STUB_PROJECT } from '../fixtures';
 import {
   API_CONFIG_ROUTE,
   API_PROJECT_MANY_ROUTE,
   API_PROJECT_ROUTE,
   stubResponse
-} from '$tests/utils';
-
-import { expect, test } from '@playwright/test';
+} from '../utils';
 
 test.beforeEach(async ({ context }) => {
   await context.route(API_CONFIG_ROUTE, (route) =>

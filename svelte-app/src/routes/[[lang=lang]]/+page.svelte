@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { pageTitle } from '$helpers/navigation';
-  import { linkTo, t } from '$i18n';
+  import { linkTo, t } from '$lib/i18n.js';
+  import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
@@ -48,10 +48,10 @@
         <ListItem document={post} small />
       {/each}
     </div>
-    <ArrowButton class="w-full" href={$linkTo('/blog')} preload>
+    <ArrowButton href={$linkTo('/blog')} fullWidth preload>
       <span class="flex items-center justify-start gap-2">
         <p>{$t('See more')}</p>
-        <Icon icon="ArrowRight" width={18} inline />
+        <Icon name="ArrowRight" size={18} inline />
       </span>
     </ArrowButton>
   {:else}

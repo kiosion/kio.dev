@@ -1,0 +1,16 @@
+export { default as Alert } from '$lib/icons/alert.svelte';
+export { default as ArrowBarUp } from '$lib/icons/arrow-bar-up.svelte';
+export { default as ArrowLeft } from '$lib/icons/arrow-left.svelte';
+export { default as ArrowRight } from '$lib/icons/arrow-right.svelte';
+export { default as ArrowUp } from '$lib/icons/arrow-up.svelte';
+export { default as BackBurger } from '$lib/icons/backburger.svelte';
+export { default as Check } from '$lib/icons/check.svelte';
+export { default as Copy } from '$lib/icons/copy.svelte';
+export { default as Downasaur } from '$lib/icons/downasaur.svelte';
+export { default as ForwardBurger } from '$lib/icons/forwardburger.svelte';
+export { default as GitCommit } from '$lib/icons/git-commit.svelte';
+export { default as Link } from '$lib/icons/link.svelte';
+export { default as MailArrowRight } from '$lib/icons/mail-arrow-right.svelte';
+export { default as MoonStars } from '$lib/icons/moon-stars.svelte';
+export { default as Script } from '$lib/icons/script.svelte';
+export { default as Sun } from '$lib/icons/sun.svelte';

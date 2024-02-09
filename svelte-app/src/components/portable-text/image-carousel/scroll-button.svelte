@@ -16,12 +16,7 @@
   {disabled}
   class={dir === 'right' ? 'justify-end' : 'justify-start'}
 >
-  <Icon
-    icon={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'}
-    width={22}
-    height={22}
-    class="w-fit"
-  />
+  <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22} />
 </button>
 
 <style lang="scss">
