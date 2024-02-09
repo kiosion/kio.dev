@@ -46,13 +46,15 @@
       {/if}
     </div>
     <ArrowButton
-      class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap rounded-sm text-right sm:block"
+      class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
       href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
+      align="right"
+      fullWidth
       preload
     >
       <span class="flex items-center justify-end gap-2 text-base">
         {#key $isMobile}
-          <Icon icon="ArrowLeft" class="mb-0.5" inline />
+          <Icon name="ArrowLeft" inline />
         {/key}
         <p>{$t('Read more')}</p>
       </span>

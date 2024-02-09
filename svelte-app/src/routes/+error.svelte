@@ -84,14 +84,14 @@
 
 {#if causes?.length}
   <Divider />
-  <ArrowButton class="w-full text-left" on:click={() => (showStack = !showStack)}>
+  <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
     <span class="flex items-center justify-start gap-2">
       <p>{$t('See more')}</p>
       <Icon
-        icon="ArrowUp"
-        width={18}
+        name="ArrowUp"
+        size={18}
         inline
-        class={showStack ? 'rotate-0' : 'rotate-180'}
+        style="transform: {showStack ? 'rotate(0)' : 'rotate(180)'};"
       />
     </span>
   </ArrowButton>

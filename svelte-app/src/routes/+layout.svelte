@@ -1,4 +1,5 @@
 <script lang="ts">
+  // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
 
   import { onDestroy, onMount } from 'svelte';
@@ -6,14 +7,18 @@
   import { fly } from 'svelte/transition';
 
   import { classList } from 'svelte-body';
-  import { useMediaQuery } from 'svelte-breakpoints';
 
   import { browser } from '$app/environment';
   import { navigating, page } from '$app/stores';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$i18n';
-  import { APP_LANGS, BASE_ANIMATION_DURATION, DEFAULT_APP_LANG } from '$lib/consts';
+  import {
+    APP_LANGS,
+    APP_THEMES,
+    BASE_ANIMATION_DURATION,
+    DEFAULT_APP_LANG
+  } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
-  import Settings, { loading } from '$stores/settings';
+  import Settings, { loading } from '$lib/settings';
 
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
@@ -27,7 +32,7 @@
   let unsubscribers = [] as Unsubscriber[],
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
 
-  const { theme, reduce_motion } = Settings,
+  const { theme } = Settings,
     skipToContent = (e: KeyboardEvent) => {
       if (e.code === 'Enter' || e.code === 'Space') {
         e.preventDefault();
@@ -41,12 +46,6 @@
         elem?.scrollTo({ behavior: 'smooth', block: 'center' });
       }
     };
-
-  unsubscribers.push(
-    useMediaQuery('(prefers-reduced-motion: reduce)').subscribe((value) => {
-      reduce_motion?.set(value);
-    })
-  );
 
   onMount(() => {
     if (!browser) {
@@ -85,9 +84,7 @@
 
     ENV !== 'production' && checkTranslations();
 
-    setTimeout(() => {
-      loading.set(false);
-    }, 1000);
+    setTimeout(() => loading.set(false), 1000);
   });
 
   onDestroy(() => unsubscribers.forEach((u) => u()));
@@ -102,13 +99,15 @@
       ? $page?.params?.lang
       : DEFAULT_APP_LANG
   );
-  $: browser && (document.documentElement.lang = $currentLang);
 </script>
 
 <svelte:head>
   <meta name="author" content="Kio" />
-  <meta name="theme-color" content={$theme === 'dark' ? '#16160e' : '#e5e4e6'} />
-  <meta property="og:locale" content={$currentLang === 'fr' ? 'fr_CA' : 'en_CA'} />
+  <meta name="theme-color" content={$theme === APP_THEMES.DARK ? '#16160e' : '#e5e4e6'} />
+  <meta
+    property="og:locale"
+    content={$currentLang === APP_LANGS[1] ? 'fr_CA' : 'en_CA'}
+  />
   <meta property="og:site_name" content="kio.dev" />
   <meta property="og:url" content={$page?.url?.href} />
   <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />

@@ -1,11 +1,7 @@
+import { ERRORS } from '$lib/consts';
 import Logger from '$lib/logger';
 
 import { error } from '@sveltejs/kit';
-
-import type { NumericRange } from '@sveltejs/kit';
-
-const GENERIC_ERROR_NO_DATA = 'Failed to load required data.',
-  GENERIC_ERROR_SOMETHING_WENT_WRONG = 'Sorry, something went wrong. Please try again.';
 
 const createGenericError = (message: string) => new Error(message);
 
@@ -20,16 +16,16 @@ type CleanArray<T extends any[]> = {
 export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
   if (!data) {
     throw error(500, {
-      message: GENERIC_ERROR_NO_DATA,
-      stack: createGenericError(GENERIC_ERROR_NO_DATA).stack
+      message: ERRORS.GENERIC_NO_DATA,
+      stack: createGenericError(ERRORS.GENERIC_NO_DATA).stack
     });
   }
 
   if (data instanceof Error) {
-    throw error((data as Error & { code?: NumericRange<400, 599> })?.code ?? 500, {
-      message: data?.message || GENERIC_ERROR_SOMETHING_WENT_WRONG,
+    throw error((data as Error)?.code ?? 500, {
+      message: data?.message || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
       cause: data?.cause,
-      stack: data?.stack || createGenericError(GENERIC_ERROR_SOMETHING_WENT_WRONG).stack
+      stack: data?.stack || createGenericError(ERRORS.GENERIC_SOMETHING_WENT_WRONG).stack
     });
   }
 
@@ -37,16 +33,13 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
     const erroredData = data.filter((item) => item instanceof Error) as Error[];
 
     if (erroredData.length) {
-      throw error(
-        (erroredData[0] as Error & { code?: NumericRange<400, 599> })?.code ?? 500,
-        {
-          message: erroredData[0]?.message || GENERIC_ERROR_SOMETHING_WENT_WRONG,
-          cause: erroredData[0]?.cause,
-          stack:
-            erroredData[0]?.stack ||
-            createGenericError(GENERIC_ERROR_SOMETHING_WENT_WRONG).stack
-        }
-      );
+      throw error((erroredData[0] as Error)?.code ?? 500, {
+        message: erroredData[0]?.message || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
+        cause: erroredData[0]?.cause,
+        stack:
+          erroredData[0]?.stack ||
+          createGenericError(ERRORS.GENERIC_SOMETHING_WENT_WRONG).stack
+      });
     }
   }
 

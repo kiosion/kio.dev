@@ -6,24 +6,23 @@
   import Logger from '$lib/logger';
 
   import Icon from '$components/icon.svelte';
+  import Footnote from '$components/portable-text/footnote.svelte';
+  import CodeBlock from '$components/portable-text/serializers/code-block.svelte';
+  import CustomCode from '$components/portable-text/serializers/custom-code.svelte';
+  import CustomHeading from '$components/portable-text/serializers/custom-heading.svelte';
+  import CustomHighlight from '$components/portable-text/serializers/custom-highlight.svelte';
+  import CustomLink from '$components/portable-text/serializers/custom-link.svelte';
+  import CustomParagraph from '$components/portable-text/serializers/custom-paragraph.svelte';
+  import CustomQuote from '$components/portable-text/serializers/custom-quote.svelte';
+  import Divider from '$components/portable-text/serializers/divider.svelte';
+  import Image from '$components/portable-text/serializers/image.svelte';
+  import ListItem from '$components/portable-text/serializers/list-item.svelte';
+  import NullMark from '$components/portable-text/serializers/null-mark.svelte';
+  import OlWrapper from '$components/portable-text/serializers/ol-wrapper.svelte';
+  import UlWrapper from '$components/portable-text/serializers/ul-wrapper.svelte';
   import Tooltip from '$components/tooltip.svelte';
 
   import { PortableText } from '@portabletext/svelte';
-
-  import Footnote from './footnote.svelte';
-  import CodeBlock from './serializers/code-block.svelte';
-  import CustomCode from './serializers/custom-code.svelte';
-  import CustomHeading from './serializers/custom-heading.svelte';
-  import CustomHighlight from './serializers/custom-highlight.svelte';
-  import CustomLink from './serializers/custom-link.svelte';
-  import CustomParagraph from './serializers/custom-paragraph.svelte';
-  import CustomQuote from './serializers/custom-quote.svelte';
-  import Divider from './serializers/divider.svelte';
-  import Image from './serializers/image.svelte';
-  import ListItem from './serializers/list-item.svelte';
-  import NullMark from './serializers/null-mark.svelte';
-  import OlWrapper from './serializers/ol-wrapper.svelte';
-  import UlWrapper from './serializers/ul-wrapper.svelte';
 
   import type {
     ArbitraryTypedObject,
@@ -155,7 +154,7 @@
                         if (e.code === 'Space' || e.code === 'Enter') {
                           customScrollTo(e, `src-${note._key}`);
                         }
-                      }}><Icon icon="arrow-bar-up" width={18} inline /></a
+                      }}><Icon name="arrow-bar-up" size={18} inline /></a
                     >
                   </Tooltip>
                 </span>

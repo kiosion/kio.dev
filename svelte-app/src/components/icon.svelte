@@ -1,28 +1,82 @@
 <script lang="ts">
   import { t } from '$i18n';
-  import icons from '$lib/icons';
+  import BaseIconWrapper from '$lib/icons/base-icon-wrapper.svelte';
+  import {
+    Alert,
+    ArrowBarUp,
+    ArrowLeft,
+    ArrowRight,
+    ArrowUp,
+    BackBurger,
+    Check,
+    Copy,
+    Downasaur,
+    ForwardBurger,
+    GitCommit,
+    Link,
+    MailArrowRight,
+    MoonStars,
+    Script,
+    Sun
+  } from '$lib/icons/index';
+  import Logger from '$lib/logger';
 
-  import type { icons as iconsType } from '$lib/icons';
+  const icons = {
+    alert: Alert,
+    'arrow-bar-up': ArrowBarUp,
+    'arrow-left': ArrowLeft,
+    'arrow-right': ArrowRight,
+    'arrow-up': ArrowUp,
+    'back-burger': BackBurger,
+    check: Check,
+    copy: Copy,
+    downasaur: Downasaur,
+    'forward-burger': ForwardBurger,
+    'git-commit': GitCommit,
+    link: Link,
+    'mail-arrow-right': MailArrowRight,
+    'moon-stars': MoonStars,
+    script: Script,
+    sun: Sun
+  } as const;
+
+  type IconName = keyof typeof icons;
+
+  const transformName = (name: string) =>
+    name
+      ?.replace(/([a-z])([A-Z])|([A-Z])([A-Z](?=[a-z]))|([a-zA-Z])(\d)/g, '$1$3$5-$2$4$6')
+      ?.toLowerCase();
+
+  const getIcon = (iconName: string) => {
+    let name = transformName(iconName ?? '');
+    if (!(name in icons)) {
+      Logger.error(`Icon ${name} not found`);
+      name = 'alert';
+    }
+    return icons[name as IconName];
+  };
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  export let icon: keyof typeof iconsType | (string & {}),
-    hovered = false,
+  export let name: IconName | (string & {}),
     inline = false,
-    width = 20,
-    height = width,
+    size = 20,
     style = '';
 
-  const svg = icons.get(icon);
+  const InnerIconComponent = getIcon(name);
 </script>
 
-<div class="w-[{width}px] {inline ? 'inline' : ''} {$$props.class || ''}">
-  <svelte:component
-    this={svg}
-    {width}
-    {height}
-    class="{hovered ? 'text-dark-600 dark:text-light-300' : ''} {inline ? 'inline' : ''}"
-    aria-label={icon + $t(' icon')}
+<div
+  class={$$props.class || ''}
+  class:inline
+  style={`width: ${size}px; height: ${size}px;`}
+>
+  <BaseIconWrapper
     {style}
-    {$$restProps}
-  />
+    width={size}
+    height={size}
+    aria-label={name + $t(' icon')}
+    {...$$restProps}
+  >
+    <InnerIconComponent />
+  </BaseIconWrapper>
 </div>

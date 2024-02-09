@@ -1,6 +1,13 @@
-export const LIGHT_THEME = 'light';
-export const DARK_THEME = 'dark';
-export const APP_THEMES = [LIGHT_THEME, DARK_THEME];
+export const APP_THEMES = {
+  DARK: 'dark',
+  LIGHT: 'light'
+} as const;
+
+export const MEDIA_QUERIES = {
+  DARK_THEME: '(prefers-color-scheme: dark)',
+  LIGHT_THEME: '(prefers-color-scheme: light)',
+  REDUCE_MOTION: '(prefers-reduced-motion: reduce)'
+} as const;
 
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = APP_LANGS[0];
@@ -57,6 +64,11 @@ export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
     url: route.path
   })
 );
+
+export const ERRORS = {
+  GENERIC_NO_DATA: 'Failed to load required data.',
+  GENERIC_SOMETHING_WENT_WRONG: 'Sorry, something went wrong. Please try again.'
+} as const;
 
 export const BASE_TRANSITION_DURATION = 200 as const;
 export const BASE_ANIMATION_DURATION = 300 as const;

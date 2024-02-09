@@ -15,7 +15,7 @@
   id={`heading-${value._key}`}
   href={`#${value._key}`}
 >
-  <Icon icon="link" class="link-icon" aria-hidden="true" />
+  <Icon name="link" class="link-icon" aria-hidden="true" />
   <svelte:element this={style}>
     <slot />
   </svelte:element>
@@ -25,7 +25,7 @@
   @import '@styles/mixins';
 
   :global(.link-icon) {
-    @apply absolute -left-8 top-1/2 hidden -translate-y-1/2;
+    @apply absolute -left-5 top-1/2 hidden -translate-y-1/2;
 
     :hover &,
     :focus-visible &,

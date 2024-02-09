@@ -1,4 +1,4 @@
-import { APP_LANGS, LOCAL_SETTINGS_KEY } from '$lib/consts';
+import { APP_LANGS, APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
 
 import type { Handle, HandleServerError, ResolveOptions } from '@sveltejs/kit';
 
@@ -39,7 +39,7 @@ export const handle = (async ({ event, resolve }) => {
     );
   }
 
-  let theme = '';
+  let theme: (typeof APP_THEMES)[keyof typeof APP_THEMES] = APP_THEMES.DARK;
 
   if (settings) {
     try {
@@ -60,8 +60,8 @@ export const handle = (async ({ event, resolve }) => {
   }
 
   // Fall back to dark theme
-  if (!theme || !['light', 'dark'].includes(theme)) {
-    theme = 'dark';
+  if (!theme || !Object.values(APP_THEMES).includes(theme)) {
+    theme = APP_THEMES.DARK;
   }
 
   transforms.push((html) => replaceTheme(html, theme));

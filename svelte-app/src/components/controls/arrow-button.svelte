@@ -1,6 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  export let fullWidth = false,
+    align: 'left' | 'right' = 'left';
+
   const dispatch = createEventDispatcher(),
     self = $$props.href ? 'a' : 'button',
     handleClick = (e: MouseEvent | KeyboardEvent) => {
@@ -15,8 +18,10 @@
 <svelte:element
   this={self}
   href={$$props.href || undefined}
-  class="focusOutline inline-block rounded-sm font-code text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ||
-    ''}"
+  class:fullWidth
+  class:alignRight={align === 'right'}
+  class:alignLeft={align === 'left'}
+  class="arrowButton {$$props.class || ''}"
   aria-label={$$props['aria-label'] || undefined}
   role="button"
   tabindex="0"
@@ -27,3 +32,43 @@
 >
   <slot />
 </svelte:element>
+
+<style lang="scss">
+  @import '@styles/mixins';
+
+  .arrowButton {
+    @apply inline-block rounded-sm font-code text-accent-light;
+
+    @include focus-state(lg);
+
+    &:hover,
+    &:focus-visible {
+      @apply text-light;
+    }
+
+    &.fullWidth {
+      @apply w-full;
+    }
+
+    &.alignRight {
+      @apply text-right;
+    }
+
+    &.alignLeft {
+      @apply text-left;
+    }
+  }
+
+  :global(.dark) {
+    .arrowButton {
+      @apply text-accent-dark;
+
+      @include focus-state(lg, dark);
+
+      &:hover,
+      &:focus-visible {
+        @apply text-light;
+      }
+    }
+  }
+</style>

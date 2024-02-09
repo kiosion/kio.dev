@@ -5,7 +5,7 @@
 </script>
 
 <div data-test-id="error-text">
-  <Icon icon="Downasaur" />
+  <Icon name="Downasaur" />
   <p>{$t('Hm, it seems empty around here...')}</p>
 </div>
 
