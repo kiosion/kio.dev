@@ -1,5 +1,4 @@
 /* eslint-disable quote-props, prettier/prettier */
-import svg from '@poppanator/sveltekit-svg';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
@@ -12,7 +11,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      svg(),
       sveltekit(),
       StripTestSelectors({
         dev: !isTesting
