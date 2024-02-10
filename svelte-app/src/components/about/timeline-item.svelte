@@ -1,6 +1,7 @@
 <script lang="ts">
   import { displayMonthDuration, displayRange } from '$lib/date';
 
+  import Icon from '$components/icon.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   import type { WorkTimelineItem } from '$types';
@@ -8,11 +9,16 @@
   export let title: WorkTimelineItem['subtitle'],
     body: WorkTimelineItem['body'],
     range: WorkTimelineItem['range'],
+    first = false,
     last = false;
 </script>
 
 <div class:last class="item">
-  <span class="bullet" />
+  <Icon
+    name={last ? 'ArrowRight' : 'CornerUpRight'}
+    class="timeline-item-icon"
+    style={`transform: translate(-${last ? '3' : '1'}px, 2px);`}
+  />
   <div class="content">
     <h3>{title}</h3>
     <p>
@@ -30,10 +36,18 @@
 </div>
 
 <style lang="scss">
-  $bulletTopGap: 12px;
+  $arrowTopGap: 10px;
   $lineTopGap: 16px;
-  $bulletWidth: 6px;
+  $arrowWidth: 6px;
   $lineWidth: 2px;
+
+  :global(.timeline-item-icon) {
+    @apply text-dark/40 transition-colors;
+
+    :global(.dark) & {
+      @apply text-white/30;
+    }
+  }
 
   .item {
     @apply relative flex flex-row items-start justify-start gap-x-6 pb-5 pl-3;
@@ -41,14 +55,6 @@
     &.last {
       @apply pb-0;
     }
-  }
-
-  .bullet {
-    @apply block flex-shrink-0 rounded-full bg-dark/40;
-
-    margin-top: $bulletTopGap;
-    width: $bulletWidth;
-    height: $bulletWidth;
   }
 
   h3 {
@@ -63,14 +69,14 @@
     }
 
     &:before {
-      @apply absolute bg-dark/20;
+      @apply absolute bg-dark/20 transition-colors;
 
-      $bulletSpaceFromTop: $bulletTopGap + $bulletWidth;
+      $arrowSpaceFromTop: $arrowTopGap + $arrowWidth;
 
       content: '';
-      top: #{$bulletSpaceFromTop + $lineTopGap};
-      left: #{$bulletWidth * 2 + $lineWidth};
-      height: calc(100% - #{($bulletSpaceFromTop + $lineTopGap) + calc($lineTopGap / 2)});
+      top: #{$arrowSpaceFromTop + $lineTopGap};
+      left: #{$arrowWidth * 2 + $lineWidth};
+      height: calc(100% - #{($arrowSpaceFromTop + $lineTopGap) + calc($lineTopGap / 2)});
       width: $lineWidth;
     }
 
@@ -86,10 +92,6 @@
   :global(.dark) {
     h3 {
       @apply text-white;
-    }
-
-    .bullet {
-      @apply bg-white/40;
     }
 
     .content {

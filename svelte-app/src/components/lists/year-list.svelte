@@ -13,7 +13,7 @@
 <div class="year-list-wrapper">
   {#each sortedDocuments as object}
     <section>
-      <h1>{object.year}</h1>
+      <h2>{object.year}</h2>
       <div>
         {#each object.items as item}
           <ListItem document={item} />
@@ -33,8 +33,8 @@
   section {
     @apply flex flex-col items-start justify-start gap-3;
 
-    h1 {
-      @apply min-w-[5rem] font-code text-3xl font-black transition-colors;
+    h2 {
+      @apply min-w-[5rem] text-2xl font-bold transition-colors;
     }
 
     div {

@@ -6,6 +6,8 @@ export { default as ArrowUp } from '$lib/icons/arrow-up.svelte';
 export { default as BackBurger } from '$lib/icons/backburger.svelte';
 export { default as Check } from '$lib/icons/check.svelte';
 export { default as Copy } from '$lib/icons/copy.svelte';
+export { default as CornerDownRight } from '$lib/icons/corner-down-right.svelte';
+export { default as CornerUpRight } from '$lib/icons/corner-up-right.svelte';
 export { default as Downasaur } from '$lib/icons/downasaur.svelte';
 export { default as ForwardBurger } from '$lib/icons/forwardburger.svelte';
 export { default as GitCommit } from '$lib/icons/git-commit.svelte';

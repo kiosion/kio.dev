@@ -27,7 +27,8 @@
       title={item.subtitle}
       body={item.body}
       range={item.range}
-      last={i === section.length - 1}
+      first={section.length > 1 && i === 0}
+      last={section.length > 1 && i === section.length - 1}
     />
   {/each}
 </section>
