@@ -45,7 +45,7 @@ jobs:
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: make install-web
       - name: Run lint check
-        run: make lint
+        run: (cd ./svelte-app && pnpm lint)
   tests:
     name: Tests
     uses: ./.github/workflows/test.yml
