@@ -143,64 +143,40 @@ defmodule TestFixtures do
     }
   end
 
-  def stub_posts_count() do
+  def stub_posts_count(opts \\ []) do
     %{
       "query" =>
         "{ 'total': count(*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)}), 'count': count(*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, 'author':{'_id':author->_id, '_type':author->_type, 'name':author->name, 'slug':author->slug, 'image':author->image}, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10])}",
       "result" => %{
-        "total" => 1,
-        "count" => 1
+        "total" => opts[:total] || 1,
+        "count" => opts[:count] || 1
       },
       "ms" => 1
     }
   end
 
-  def stub_posts() do
+  def stub_projects_count(opts \\ []) do
     %{
       "query" =>
-        "*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10]",
-      "result" => [
-        %{
-          "estimatedWordCount" => 11,
-          "_type" => "post",
-          "tags" => nil,
-          "slug" => %{
-            "_type" => "slug",
-            "current" => "some-post"
-          },
-          "date" => "2022-08-26",
-          "views" => 99,
-          "numberOfCharacters" => 55,
-          "_id" => "b0a22943-b747-42df-84cd-573503332428",
-          "_rev" => "DFeMJDW0bXSE9MGpOVLqKO",
-          "title" => "Some post",
-          "objectID" => "b0a22943-b747-42df-84cd-573503332428",
-          "publishedAt" => nil,
-          "body" => [
-            %{
-              "markDefs" => [],
-              "children" => [
-                %{
-                  "text" => "This post now has actual body content! Revolutionary...",
-                  "_key" => "f231f8e8847b",
-                  "_type" => "span",
-                  "marks" => []
-                }
-              ],
-              "_type" => "block",
-              "style" => "normal",
-              "_key" => "cda99f79ba00"
-            }
-          ],
-          "desc" => "Something interesting",
-          "estimatedReadingTime" => 0
-        }
-      ],
+        "{ 'total': count(*[!(_id in path('drafts.**')) && _type == 'project']{_id, 'objectID':_id, _rev, _type, title, publishedAt, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)}), 'count': count(*[!(_id in path('drafts.**')) && _type == 'project']{_id, 'objectID':_id, _rev, _type, title, publishedAt, 'author':{'_id':author->_id, '_type':author->_type, 'name':author->name, 'slug':author->slug, 'image':author->image}, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10])}",
+      "result" => %{
+        "total" => opts[:total] || 1,
+        "count" => opts[:count] || 1
+      },
       "ms" => 1
     }
   end
 
-  def stub_post() do
+  def stub_posts(fakeSlugs \\ ["some-post"]) do
+    %{
+      "query" =>
+        "*[!(_id in path('drafts.**')) && _type == 'post']{_id, 'objectID':_id, _rev, _type, title, publishedAt, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10]",
+      "result" => fakeSlugs |> Enum.map(&stub_post/1) |> Enum.map(& &1["result"]),
+      "ms" => 1
+    }
+  end
+
+  def stub_post(fakeSlug \\ "some-post") do
     %{
       "query" =>
         "*[!(_id in path('drafts.**')) && _type == 'post' && slug.current == 'some-post'][0]",
@@ -210,7 +186,7 @@ defmodule TestFixtures do
         "tags" => nil,
         "slug" => %{
           "_type" => "slug",
-          "current" => "some-post"
+          "current" => "#{fakeSlug}"
         },
         "date" => "2022-08-26",
         "numberOfCharacters" => 55,
@@ -242,7 +218,7 @@ defmodule TestFixtures do
     }
   end
 
-  def stub_project() do
+  def stub_project(fakeSlug \\ "some-project") do
     %{
       "query" =>
         "*[!(_id in path('drafts.**')) && _type == 'project' && slug.current == 'some-project'][0]",
@@ -256,7 +232,7 @@ defmodule TestFixtures do
             "title" => "elixir",
             "slug" => %{
               "_type" => "slug",
-              "current" => "elixir"
+              "current" => "#{fakeSlug}"
             }
           }
         ],
@@ -308,6 +284,15 @@ defmodule TestFixtures do
         "desc" => "Something interesting",
         "estimatedReadingTime" => 0
       }
+    }
+  end
+
+  def stub_projects(fakeSlugs \\ ["some-project"]) do
+    %{
+      "query" =>
+        "*[!(_id in path('drafts.**')) && _type == 'project']{_id, 'objectID':_id, _rev, _type, title, publishedAt, tags[]->{_id, title, slug}, slug, body, desc, date, 'numberOfCharacters':length(pt::text(body)), 'estimatedWordCount':round(length(pt::text(body)) / 5), 'estimatedReadingTime':round(length(pt::text(body)) / 5 / 120)} | order(date desc) [0...10]",
+      "result" => fakeSlugs |> Enum.map(&stub_project/1) |> Enum.map(& &1["result"]),
+      "ms" => 1
     }
   end
 
