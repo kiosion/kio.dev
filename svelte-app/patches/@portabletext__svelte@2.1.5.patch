@@ -1,0 +1,129 @@
+diff --git a/dist/PortableText.svelte b/dist/PortableText.svelte
+index 0859389183d8d84889b90255ba3d59d35c9f8b8f..d51cae17ceb7591c25c2d20bc5d3d3d12b3bd3f4 100644
+--- a/dist/PortableText.svelte
++++ b/dist/PortableText.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>import { LIST_NEST_MODE_HTML, nestLists } from '@portabletext/toolkit';
+ import assertBlockKey from './assertBlockKey';
+ import defaultComponents from './defaultComponents/defaultComponents';
+diff --git a/dist/RenderNode.svelte b/dist/RenderNode.svelte
+index be3d27cd7851cbb2e03f2cc4ac4fcb62f80554c9..7f81621f5435f3a16a05a14936f194c857f1302b 100644
+--- a/dist/RenderNode.svelte
++++ b/dist/RenderNode.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>import { buildMarksTree, isPortableTextBlock, isPortableTextListItemBlock, isPortableTextToolkitList, isPortableTextToolkitSpan, isPortableTextToolkitTextNode } from '@portabletext/toolkit';
+ import RenderBlock from './renderers/RenderBlock.svelte';
+ import RenderCustomBlock from './renderers/RenderCustomBlock.svelte';
+diff --git a/dist/defaultComponents/DefaultBlock.svelte b/dist/defaultComponents/DefaultBlock.svelte
+index 01678078f28c318edd36aba57febce04188490c7..c62bbf9cd3e1816a23e0fb788342c3672807da5b 100644
+--- a/dist/defaultComponents/DefaultBlock.svelte
++++ b/dist/defaultComponents/DefaultBlock.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let portableText;
+ $: ({ value } = portableText);
+ $: style = value.style || 'normal';
+diff --git a/dist/defaultComponents/DefaultHardBreak.svelte b/dist/defaultComponents/DefaultHardBreak.svelte
+index 3fc714a368c292398b76ea54d37a56710c7cb0da..0814afafe57df3a71f8a84556f6cb8aeb5635159 100644
+--- a/dist/defaultComponents/DefaultHardBreak.svelte
++++ b/dist/defaultComponents/DefaultHardBreak.svelte
+@@ -1 +1,2 @@
++<svelte:options preserveWhitespace={true} />
+ <br />
+diff --git a/dist/defaultComponents/DefaultLink.svelte b/dist/defaultComponents/DefaultLink.svelte
+index 3b7c3b7e1ee66954aeb2a7708d9b4b55ff189c8b..226e1f6f1ca74ca58df6103c7b3886c79478c33a 100644
+--- a/dist/defaultComponents/DefaultLink.svelte
++++ b/dist/defaultComponents/DefaultLink.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let portableText;
+ $: ({ value } = portableText);
+ $: href = (value === null || value === void 0 ? void 0 : value.href) || (value === null || value === void 0 ? void 0 : value.url) || (value === null || value === void 0 ? void 0 : value.link) || (value === null || value === void 0 ? void 0 : value.value);
+diff --git a/dist/defaultComponents/DefaultList.svelte b/dist/defaultComponents/DefaultList.svelte
+index 57bda4cf56ad301ec057380c1f990bfee5164d50..8483e3a206a264de2a4abb9fe79143130f824cdf 100644
+--- a/dist/defaultComponents/DefaultList.svelte
++++ b/dist/defaultComponents/DefaultList.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let portableText;
+ $: ({ value } = portableText);
+ $: ({ listItem } = value);
+diff --git a/dist/defaultComponents/DefaultListItem.svelte b/dist/defaultComponents/DefaultListItem.svelte
+index b80337d642fd06e02c5cff25fa54b844f2032de9..38d6bcd6d81d615ecbc508fa04e4bf1218e68b1c 100644
+--- a/dist/defaultComponents/DefaultListItem.svelte
++++ b/dist/defaultComponents/DefaultListItem.svelte
+@@ -1 +1,2 @@
++<svelte:options preserveWhitespace={true} />
+ <li><slot /></li>
+diff --git a/dist/defaultComponents/DefaultMark.svelte b/dist/defaultComponents/DefaultMark.svelte
+index f84ba69cfe80f6b8448645368591599eae05d32f..4e7204b6e24c940350561f027b55799abcd95978 100644
+--- a/dist/defaultComponents/DefaultMark.svelte
++++ b/dist/defaultComponents/DefaultMark.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let portableText;
+ $: ({ markType } = portableText);
+ </script>
+diff --git a/dist/defaultComponents/UnknownType.svelte b/dist/defaultComponents/UnknownType.svelte
+index 4fa864ce7aa9d8b620269649779b40fda753c36f..22634eb158cb10c3b74d2d1c29fa6dac0d54dc6d 100644
+--- a/dist/defaultComponents/UnknownType.svelte
++++ b/dist/defaultComponents/UnknownType.svelte
+@@ -1 +1,2 @@
++<svelte:options preserveWhitespace={true} />
+ <slot />
+diff --git a/dist/renderers/RenderBlock.svelte b/dist/renderers/RenderBlock.svelte
+index 9a49ca1766f60af123b1d82846b38a9a7f9277c5..9f16ce8ee78788fc45f8b082cb8dcbf2f0a11e73 100644
+--- a/dist/renderers/RenderBlock.svelte
++++ b/dist/renderers/RenderBlock.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let global;
+ $: ({ components } = global);
+ export let node;
+diff --git a/dist/renderers/RenderCustomBlock.svelte b/dist/renderers/RenderCustomBlock.svelte
+index 20649596ab42642de5effbb65d65de240994b977..fe76a81397f368b8df0df337fa2fd1267d9b758a 100644
+--- a/dist/renderers/RenderCustomBlock.svelte
++++ b/dist/renderers/RenderCustomBlock.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let global;
+ $: ({ components } = global);
+ export let node;
+diff --git a/dist/renderers/RenderList.svelte b/dist/renderers/RenderList.svelte
+index 641aa1a99a2acef50c3963e434b4cdc0c81491aa..3a6666ab72fd9ec4dfec57ea8391f02efcf5ab94 100644
+--- a/dist/renderers/RenderList.svelte
++++ b/dist/renderers/RenderList.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let global;
+ $: ({ components } = global);
+ export let indexInParent;
+diff --git a/dist/renderers/RenderListItem.svelte b/dist/renderers/RenderListItem.svelte
+index a2e4cca80f2d2b219857b6781b5b67846f98905d..5dbf3078f94e7eda491f5d9e49abb19c977e0579 100644
+--- a/dist/renderers/RenderListItem.svelte
++++ b/dist/renderers/RenderListItem.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let global;
+ $: ({ components } = global);
+ export let indexInParent;
+diff --git a/dist/renderers/RenderSpan.svelte b/dist/renderers/RenderSpan.svelte
+index 6267b7c43f13002e9a95d72a8168dbb08212f72e..4e121602a751ead6159b999f877c99fd84c8a549 100644
+--- a/dist/renderers/RenderSpan.svelte
++++ b/dist/renderers/RenderSpan.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>import { spanToPlainText } from '@portabletext/toolkit';
+ export let global;
+ $: ({ components } = global);
+diff --git a/dist/renderers/RenderText.svelte b/dist/renderers/RenderText.svelte
+index ed6c21a9422ab18166be2cf00cd825971e8358ff..c85e4c0d80a493864c331ecf19c6ae520da47d09 100644
+--- a/dist/renderers/RenderText.svelte
++++ b/dist/renderers/RenderText.svelte
+@@ -1,3 +1,4 @@
++<svelte:options preserveWhitespace={true} />
+ <script>export let global;
+ $: ({ components } = global);
+ export let node;

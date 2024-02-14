@@ -1,9 +1,15 @@
+<svelte:options runes={true} />
 <script lang="ts">
   import type { BlockComponentProps } from '@portabletext/svelte';
 
-  export let portableText: BlockComponentProps;
+  // export let portableText: BlockComponentProps;
+  const { portableText } = $props<{
+    portableText: BlockComponentProps;
+  }>();
 
-  $: ({ value: _value } = portableText);
+  const { value: _value } = $derived(portableText);
+
+  // $: ({ value: _value } = portableText);
 </script>
 
 <p><slot /></p>

@@ -25,7 +25,7 @@
 </svelte:head>
 
 <HeadedBlock heading={$t('Recent thoughts')}>
-  {#if data.posts.length}
+  {#if data.posts?.length}
     <YearList documents={data.posts} />
   {:else}
     <EmptyContent />

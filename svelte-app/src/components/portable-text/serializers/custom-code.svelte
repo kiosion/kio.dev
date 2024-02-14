@@ -1,10 +1,16 @@
+<svelte:options runes={true} />
 <script lang="ts">
   import type { MarkComponentProps } from '@portabletext/svelte';
 
-  export let portableText: MarkComponentProps;
+  // export let portableText: MarkComponentProps;
+  const { portableText } = $props<{
+    portableText: MarkComponentProps;
+  }>();
 
-  $: ({ markType } = portableText);
-  $: ({ plainTextContent } = portableText);
+  const { markType, plainTextContent } = $derived(portableText);
+
+  // $: ({ markType } = portableText);
+  // $: ({ plainTextContent } = portableText);
 </script>
 
 {#if markType === 'code'}

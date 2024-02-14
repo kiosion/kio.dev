@@ -1,12 +1,19 @@
+<svelte:options runes={true} />
 <script lang="ts">
   import Icon from '$components/icon.svelte';
 
   import type { BlockComponentProps } from '@portabletext/svelte';
 
-  export let portableText: BlockComponentProps;
+  // export let portableText: BlockComponentProps;
+  const { portableText } = $props<{
+    portableText: BlockComponentProps;
+  }>();
 
-  $: ({ value, indexInParent } = portableText);
-  $: ({ style } = value);
+  const { value, indexInParent } = $derived(portableText);
+  const { style } = $derived(value);
+
+  // $: ({ value, indexInParent } = portableText);
+  // $: ({ style } = value);
 </script>
 
 <a

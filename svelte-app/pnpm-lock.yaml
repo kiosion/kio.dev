@@ -7,13 +7,21 @@ settings:
 overrides:
   svelte: 5.0.0-next.51
 
+patchedDependencies:
+  '@portabletext/svelte@2.1.5':
+    hash: d55qls7dpjc43722a7i42rbfcq
+    path: patches/@portabletext__svelte@2.1.5.patch
+  svelte-highlight@7.6.0:
+    hash: laj6iln5v7g2a6rps4ze5fqq4e
+    path: patches/svelte-highlight@7.6.0.patch
+
 devDependencies:
   '@playwright/test':
     specifier: 1.41.2
     version: 1.41.2
   '@portabletext/svelte':
     specifier: 2.1.5
-    version: 2.1.5(svelte@5.0.0-next.51)
+    version: 2.1.5(patch_hash=d55qls7dpjc43722a7i42rbfcq)(svelte@5.0.0-next.51)
   '@portabletext/types':
     specifier: 2.0.8
     version: 2.0.8
@@ -112,7 +120,7 @@ devDependencies:
     version: 0.33.1(svelte@5.0.0-next.51)
   svelte-highlight:
     specifier: 7.6.0
-    version: 7.6.0
+    version: 7.6.0(patch_hash=laj6iln5v7g2a6rps4ze5fqq4e)
   tailwindcss:
     specifier: 3.4.1
     version: 3.4.1
@@ -1444,7 +1452,7 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@portabletext/svelte@2.1.5(svelte@5.0.0-next.51):
+  /@portabletext/svelte@2.1.5(patch_hash=d55qls7dpjc43722a7i42rbfcq)(svelte@5.0.0-next.51):
     resolution: {integrity: sha512-NDHIT6TRPnWCGnr0VjwsmYtuhZRVkD41aexajtElwsVLSoYUf/mxXd6PVxjg1e12DfubQo4aQv6lpRthIVbIIA==}
     peerDependencies:
       svelte: 5.0.0-next.51
@@ -1452,6 +1460,7 @@ packages:
       '@portabletext/toolkit': 2.0.10
       svelte: 5.0.0-next.51
     dev: true
+    patched: true
 
   /@portabletext/toolkit@2.0.10:
     resolution: {integrity: sha512-d+F9JvpnMEx7kd6saZ9OWA4U1Iwuokh6TOht7iqkfWU+0ivh9yM4v+b0Kpu+iiPcElicoabhtXol+yTvWJ1jDw==}
@@ -9555,11 +9564,12 @@ packages:
       svelte: 5.0.0-next.51
     dev: true
 
-  /svelte-highlight@7.6.0:
+  /svelte-highlight@7.6.0(patch_hash=laj6iln5v7g2a6rps4ze5fqq4e):
     resolution: {integrity: sha512-J9X1d07iMIKZMAqNAhlkjLX/FS+7R2lPrqVul7i+EleVZIOYvBhtx7ES62bc661a70nKNOS05yr9JAvyQPPOIA==}
     dependencies:
       highlight.js: 11.9.0
     dev: true
+    patched: true
 
   /svelte-hmr@0.15.3(svelte@5.0.0-next.51):
     resolution: {integrity: sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==}

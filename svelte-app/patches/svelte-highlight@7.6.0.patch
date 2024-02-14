@@ -1,0 +1,273 @@
+diff --git a/Highlight.svelte b/Highlight.svelte
+index 7d5d56885fd5abbe6df7ba9bbdd5577acef3fdc9..13ec3ea4f1a5c73e5bbf600595e9a54438bc4ccd 100644
+--- a/Highlight.svelte
++++ b/Highlight.svelte
+@@ -1,37 +1,46 @@
++<svelte:options runes={true} />
+ <script>
+-  // @ts-check
+ 
+   /** @type {import("./languages").LanguageType<string>} */
+-  export let language;
++  // export let language;
+ 
+   /** @type {any} */
+-  export let code;
++  // export let code;
+ 
+   /** @type {boolean} */
+-  export let langtag = false;
++  // export let langtag = false;
+ 
+   import hljs from "highlight.js/lib/core";
+-  import { createEventDispatcher, afterUpdate } from "svelte";
++  import { createEventDispatcher } from "svelte";
+   import LangTag from "./LangTag.svelte";
+ 
++  const { language, code, langtag = false, ...restProps } = $props();
++
+   const dispatch = createEventDispatcher();
+ 
+   /** @type {string} */
+-  let highlighted = "";
++  let highlighted = $state("");
+ 
+-  afterUpdate(() => {
+-    if (highlighted) dispatch("highlight", { highlighted });
+-  });
++  // afterUpdate(() => {
++  //   if (highlighted) dispatch("highlight", { highlighted });
++  // });
+ 
+-  $: {
++  $effect(() => {
+     hljs.registerLanguage(language.name, language.register);
+     highlighted = hljs.highlight(code, { language: language.name }).value;
+-  }
++
++    if (highlighted) dispatch("highlight", { highlighted });
++  })
++
++  // $: {
++  //   hljs.registerLanguage(language.name, language.register);
++  //   highlighted = hljs.highlight(code, { language: language.name }).value;
++  // }
+ </script>
+ 
+ <slot {highlighted}>
+   <LangTag
+-    {...$$restProps}
++    {...restProps}
+     languageName={language.name}
+     {langtag}
+     {highlighted}
+diff --git a/HighlightAuto.svelte b/HighlightAuto.svelte
+index 42bd082738b5d7cf4a3833909f153f59dd26a494..d4f4144ef7e780b0bf4a465d873338e08f0f525c 100644
+--- a/HighlightAuto.svelte
++++ b/HighlightAuto.svelte
+@@ -1,15 +1,17 @@
++<svelte:options runes={true} />
+ <script>
+-  // @ts-check
+   import LangTag from "./LangTag.svelte";
+ 
+   /** @type {any} */
+-  export let code;
++  // export let code;
+ 
+   /** @type {boolean} */
+-  export let langtag = false;
++  // export let langtag = false;
+ 
+   import hljs from "highlight.js";
+-  import { createEventDispatcher, afterUpdate } from "svelte";
++  import { createEventDispatcher } from "svelte";
++
++  const { code, langtag = false, ...restProps } = $props();
+ 
+   /**
+    * @typedef {{ highlighted: string; language: string; }} HighlightEventDetail
+@@ -18,21 +20,30 @@
+   const dispatch = createEventDispatcher();
+ 
+   /** @type {string} */
+-  let highlighted = "";
++  let highlighted = $state("");
+ 
+   /** @type {string} */
+-  let language = "";
++  let language = $state("");
+ 
+-  afterUpdate(() => {
+-    if (highlighted) dispatch("highlight", { highlighted, language });
+-  });
++  // afterUpdate(() => {
++  //   if (highlighted) dispatch("highlight", { highlighted, language });
++  // });
++
++  // $: ({ value: highlighted, language = "" } = hljs.highlightAuto(code));
+ 
+-  $: ({ value: highlighted, language = "" } = hljs.highlightAuto(code));
++  $effect(() => {
++    const { value: _highlighted, language: _language = "" } = hljs.HighlightAuto(code);
++
++    highlighted = _highlighted;
++    language = _language;
++
++    if (highlighted) dispatch("highlight", { highlighted, language });
++  })
+ </script>
+ 
+ <slot {highlighted}>
+   <LangTag
+-    {...$$restProps}
++    {...restProps}
+     languageName={language}
+     {langtag}
+     {highlighted}
+diff --git a/HighlightSvelte.svelte b/HighlightSvelte.svelte
+index 7463882114d3a4c2e54c1cd2c0f9cfb21a3a6069..48d32991ee38faab9bc31200caff1bac80196a14 100644
+--- a/HighlightSvelte.svelte
++++ b/HighlightSvelte.svelte
+@@ -1,18 +1,20 @@
++<svelte:options runes={true} />
+ <script>
+-  // @ts-check
+   import LangTag from "./LangTag.svelte";
+ 
+   /** @type {any} */
+-  export let code;
++  // export let code;
+ 
+   /** @type {boolean} */
+-  export let langtag = false;
++  // export let langtag = false;
+ 
+   import hljs from "highlight.js/lib/core";
+   import xml from "highlight.js/lib/languages/xml";
+   import javascript from "highlight.js/lib/languages/javascript";
+   import css from "highlight.js/lib/languages/css";
+-  import { createEventDispatcher, afterUpdate } from "svelte";
++  import { createEventDispatcher } from "svelte";
++
++  const { code, langtag = false, ...restProps } = $props();
+ 
+   const dispatch = createEventDispatcher();
+ 
+@@ -20,16 +22,22 @@
+   hljs.registerLanguage("javascript", javascript);
+   hljs.registerLanguage("css", css);
+ 
+-  afterUpdate(() => {
++  // afterUpdate(() => {
++  //   if (highlighted) dispatch("highlight", { highlighted });
++  // });
++  let highlighted = $state("");
++
++  // $: highlighted = hljs.highlightAuto(code).value;
++  $effect(() => {
++    highlighted = hljs.highlightAuto(code)?.value;
++
+     if (highlighted) dispatch("highlight", { highlighted });
+   });
+-
+-  $: highlighted = hljs.highlightAuto(code).value;
+ </script>
+ 
+ <slot {highlighted}>
+   <LangTag
+-    {...$$restProps}
++    {...restProps}
+     languageName="svelte"
+     {langtag}
+     {highlighted}
+diff --git a/LangTag.svelte b/LangTag.svelte
+index 2e181ab3789626df89a4bb3b4d30223c345e3683..0e72eccc183388a617fa391e2effe7c8642ba165 100644
+--- a/LangTag.svelte
++++ b/LangTag.svelte
+@@ -1,20 +1,20 @@
++<svelte:options runes={true} />
+ <script>
+-  // @ts-check
+-
+   /** @type {any} */
+-  export let code;
++  // export let code;
+ 
+   /** @type {string} */
+-  export let highlighted;
++  // export let highlighted;
+ 
+   /** @type {string} */
+-  export let languageName = "plaintext";
++  // export let languageName = "plaintext";
+ 
+   /** @type {boolean} */
+-  export let langtag = false;
++  // export let langtag = false;
++  const { code, highlighted, languageName = "plaintext", langtag = false, ...restProps } = $props();
+ </script>
+ 
+-<pre class:langtag data-language={languageName} {...$$restProps}><code
++<pre class:langtag data-language={languageName} {...restProps}><code
+     class:hljs={true}
+     >{#if highlighted}{@html highlighted}{:else}{code}{/if}</code
+   ></pre>
+diff --git a/LineNumbers.svelte b/LineNumbers.svelte
+index 704976d98f45c0a472355927aed541adc0934806..a43ce7f24b77edb95611d7c71f973b91a9d39b21 100644
+--- a/LineNumbers.svelte
++++ b/LineNumbers.svelte
+@@ -1,32 +1,41 @@
++<svelte:options runes={true} />
+ <script>
+-  // @ts-check
+-
+   /** @type {string} */
+-  export let highlighted;
++  // export let highlighted;
+ 
+   /** @type {boolean} */
+-  export let hideBorder = false;
++  // export let hideBorder = false;
+ 
+   /** @type {boolean} */
+-  export let wrapLines = false;
++  // export let wrapLines = false;
+ 
+   /** @type {number} */
+-  export let startingLineNumber = 1;
++  // export let startingLineNumber = 1;
+ 
+   /** @type {number[]} */
+-  export let highlightedLines = [];
++  // export let highlightedLines = [];
++  const { highlighted, hideBorder = false, wrapLines = false, startingLineNumber = 1, highlightedLines = [], ...restProps } = $props();
+ 
+   const DIGIT_WIDTH = 12;
+   const MIN_DIGITS = 2;
+   const HIGHLIGHTED_BACKGROUND = "rgba(254, 241, 96, 0.2)";
+ 
+-  $: lines = highlighted.split("\n");
+-  $: len_digits = lines.length.toString().length;
+-  $: len = len_digits - MIN_DIGITS < 1 ? MIN_DIGITS : len_digits;
+-  $: width = len * DIGIT_WIDTH;
++  let lines = $state(highlighted?.split("\n") ?? []);
++  const len_digits = $derived(lines.length.toString().length);
++  const len = $derived(len_digits - MIN_DIGITS < 1 ? MIN_DIGITS : len_digits);
++  const width = $derived(len * DIGIT_WIDTH);
++
++  $effect(() => {
++    lines = (highlighted ?? "").split("\n");
++  });
++
++  // $: lines = highlighted.split("\n");
++  // $: len_digits = lines.length.toString().length;
++  // $: len = len_digits - MIN_DIGITS < 1 ? MIN_DIGITS : len_digits;
++  // $: width = len * DIGIT_WIDTH;
+ </script>
+ 
+-<div style:overflow-x="auto" {...$$restProps}>
++<div style:overflow-x="auto" {...restProps}>
+   <table>
+     <tbody class:hljs={true}>
+       {#each lines as line, i}
