@@ -5,7 +5,7 @@
   import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
   import BaseLink from '$components/nav/base-link.svelte';
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { SiteConfig } from '$types';
 
@@ -26,7 +26,7 @@
     {#if socials?.length}
       <div>
         {#each socials as social, i}
-          <Tooltip text={social.url} delay={500} position="top" fixed>
+          <Tooltip text={social.url} delay={500} position="top">
             <BaseLink
               text={social.name}
               href={social.url}
@@ -43,12 +43,7 @@
     {/if}
     {#if APP_VERSION?.length}
       <div>
-        <Tooltip
-          text={$t('View latest commit on GitHub')}
-          position="top"
-          delay={150}
-          fixed
-        >
+        <Tooltip text={$t('View latest commit on GitHub')} position="top">
           <BaseLink
             target="_blank"
             rel="noopener noreferrer"

@@ -5,7 +5,7 @@
 
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const { theme } = Settings;
 
@@ -13,7 +13,7 @@
 </script>
 
 <Hoverable>
-  <Tooltip text={$t(tooltipText)} delay={150} fixed>
+  <Tooltip text={$t(tooltipText)}>
     <button
       aria-label={$t(tooltipText)}
       data-test-id="theme-toggle"

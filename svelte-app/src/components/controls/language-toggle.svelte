@@ -6,7 +6,7 @@
 
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
@@ -27,8 +27,6 @@
 <Hoverable>
   <Tooltip
     text={$t($currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English')}
-    delay={150}
-    fixed
   >
     <button
       aria-label={$t(

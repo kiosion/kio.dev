@@ -26,6 +26,7 @@
   import PageContent from '$components/layouts/page-content.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
+  import TooltipManager from '$components/tooltips/manager.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
@@ -142,6 +143,8 @@
     </PageTransition>
   </ScrollContainer>
 </div>
+
+<TooltipManager />
 
 <style lang="scss">
   @import '@styles/mixins';

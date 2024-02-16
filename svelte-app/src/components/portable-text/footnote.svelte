@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/i18n';
 
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { MarkComponentProps } from '@portabletext/svelte';
   import type {
@@ -38,7 +38,7 @@
 
 <span>
   <slot />&nbsp;
-  <Tooltip text={$t('Go to footnote')} delay={200}>
+  <Tooltip text={$t('Go to footnote')}>
     <sup
       ><a
         href={`#note-${portableText.value._key}`}
