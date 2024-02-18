@@ -20,7 +20,7 @@
   import NullMark from '$components/portable-text/serializers/null-mark.svelte';
   import OlWrapper from '$components/portable-text/serializers/ol-wrapper.svelte';
   import UlWrapper from '$components/portable-text/serializers/ul-wrapper.svelte';
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import { PortableText } from '@portabletext/svelte';
 
@@ -143,7 +143,7 @@
               <li class="list-item">
                 <span class="flex flex-row flex-wrap items-center break-all">
                   <svelte:self text={note.note} plaintext />
-                  <Tooltip text={$t('Go to footnote source')} delay={200}>
+                  <Tooltip text={$t('Go to footnote source')}>
                     <a
                       class="ml-2"
                       href={`#src-${note._key}`}

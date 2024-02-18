@@ -4,7 +4,7 @@
   import { linkTo, t } from '$lib/i18n';
 
   import Hoverable from '$components/hoverable.svelte';
-  import Tooltip from '$components/tooltip.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const dispatch = createEventDispatcher(),
     type = $$props.href ? 'a' : 'button';
@@ -19,8 +19,7 @@
 <Hoverable let:hovered>
   <Tooltip
     text={link?.length > 50 ? `${link.slice(0, 50)}...` : link ?? $t('Visit')}
-    delay={500}
-    fixed
+    delay={300}
   >
     <svelte:element
       this={type}

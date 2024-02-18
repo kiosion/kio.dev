@@ -4,7 +4,9 @@
   import { afterNavigate } from '$app/navigation';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  let element: HTMLDivElement, timeout: ReturnType<typeof setTimeout> | undefined;
+  export let element: HTMLDivElement | undefined = undefined;
+
+  let timeout: ReturnType<typeof setTimeout> | undefined;
 
   onDestroy(() => {
     if (timeout) {
@@ -18,7 +20,7 @@
     }
 
     timeout = setTimeout(() => {
-      element.scrollTo({
+      element?.scrollTo({
         top: 0,
         behavior: 'instant'
       });
@@ -27,7 +29,7 @@
 </script>
 
 <div tabindex="-1" role="none" data-test-id="scroll-container" bind:this={element}>
-  <slot />
+  <slot {element} />
 </div>
 
 <style lang="scss">

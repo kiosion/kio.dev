@@ -26,6 +26,7 @@
   import PageContent from '$components/layouts/page-content.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
+  import TooltipManager from '$components/tooltips/manager.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
@@ -128,10 +129,11 @@
 >
 
 <div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
-  <ScrollContainer>
+  <ScrollContainer let:element>
     <ConstrainWidth>
       <Header />
     </ConstrainWidth>
+
     <PageTransition pathname={data.pathname}>
       <ConstrainWidth id="content-wrapper">
         <PageContent>
@@ -140,6 +142,8 @@
         </PageContent>
       </ConstrainWidth>
     </PageTransition>
+
+    <TooltipManager container={element} />
   </ScrollContainer>
 </div>
 
