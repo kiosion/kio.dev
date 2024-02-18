@@ -129,10 +129,11 @@
 >
 
 <div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
-  <ScrollContainer>
+  <ScrollContainer let:element>
     <ConstrainWidth>
       <Header />
     </ConstrainWidth>
+
     <PageTransition pathname={data.pathname}>
       <ConstrainWidth id="content-wrapper">
         <PageContent>
@@ -141,10 +142,10 @@
         </PageContent>
       </ConstrainWidth>
     </PageTransition>
+
+    <TooltipManager container={element} />
   </ScrollContainer>
 </div>
-
-<TooltipManager />
 
 <style lang="scss">
   @import '@styles/mixins';

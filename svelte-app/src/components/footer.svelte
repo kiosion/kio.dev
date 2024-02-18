@@ -26,7 +26,7 @@
     {#if socials?.length}
       <div>
         {#each socials as social, i}
-          <Tooltip text={social.url} delay={500} position="top">
+          <Tooltip text={social.url} delay={300} position="top">
             <BaseLink
               text={social.name}
               href={social.url}

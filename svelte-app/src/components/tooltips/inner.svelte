@@ -13,7 +13,8 @@
     placement: Tooltip['placement'],
     followCursor: Tooltip['followCursor'],
     offset: Tooltip['offset'],
-    target: Tooltip['target'];
+    target: Tooltip['target'],
+    container: HTMLDivElement | undefined = undefined;
 
   onMount(() => {
     if (followCursor && target) {
@@ -41,6 +42,10 @@
 
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
+    const pageScroll = {
+      x: container?.scrollLeft ?? window.scrollX,
+      y: container?.scrollTop ?? window.scrollY
+    };
     const { innerWidth, innerHeight } = window;
 
     if (followCursor && e) {
@@ -52,63 +57,63 @@
       return;
     }
 
-    let x = 0,
-      y = 0;
+    let x = pageScroll.x,
+      y = pageScroll.y;
 
     switch (placement) {
       case 'top':
-        x = targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
-        y = targetRect.top - targetRect.height - tooltipRect.height;
+        x += targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
+        y += targetRect.top - targetRect.height - tooltipRect.height;
         break;
       case 'bottom':
-        x = targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
-        y = targetRect.top + targetRect.height;
+        x += targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
+        y += targetRect.top + targetRect.height;
         break;
       case 'left':
-        x = targetRect.left;
-        y = targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
+        x += targetRect.left;
+        y += targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
         break;
       case 'right':
-        x = targetRect.left + targetRect.width;
-        y = targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
+        x += targetRect.left + targetRect.width;
+        y += targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
         break;
       case 'top-start':
-        x = targetRect.left;
-        y = targetRect.top;
+        x += targetRect.left;
+        y += targetRect.top;
         break;
       case 'top-end':
-        x = targetRect.left + targetRect.width;
-        y = targetRect.top;
+        x += targetRect.left + targetRect.width;
+        y += targetRect.top;
         break;
       case 'bottom-start':
-        x = targetRect.left;
-        y = targetRect.top + targetRect.height;
+        x += targetRect.left;
+        y += targetRect.top + targetRect.height;
         break;
       case 'bottom-end':
-        x = targetRect.left + targetRect.width;
-        y = targetRect.top + targetRect.height;
+        x += targetRect.left + targetRect.width;
+        y += targetRect.top + targetRect.height;
         break;
       case 'left-start':
-        x = targetRect.left;
-        y = targetRect.top;
+        x += targetRect.left;
+        y += targetRect.top;
         break;
       case 'left-end':
-        x = targetRect.left;
-        y = targetRect.top + targetRect.height;
+        x += targetRect.left;
+        y += targetRect.top + targetRect.height;
         break;
       case 'right-start':
-        x = targetRect.left + targetRect.width;
-        y = targetRect.top;
+        x += targetRect.left + targetRect.width;
+        y += targetRect.top;
         break;
       case 'right-end':
-        x = targetRect.left + targetRect.width;
-        y = targetRect.top + targetRect.height;
+        x += targetRect.left + targetRect.width;
+        y += targetRect.top + targetRect.height;
         break;
     }
 
     position = {
-      x: Math.max(0, Math.min(innerWidth, x + offset[0])),
-      y: Math.max(0, Math.min(innerHeight, y + offset[1]))
+      x: Math.max(0, Math.min(innerWidth + pageScroll.x, x + offset[0])),
+      y: Math.max(0, Math.min(innerHeight + pageScroll.y, y + offset[1]))
     };
   };
 
@@ -124,7 +129,7 @@
 
 <style lang="scss">
   div {
-    @apply pointer-events-none fixed z-50;
+    @apply pointer-events-none absolute z-50;
   }
 
   span {

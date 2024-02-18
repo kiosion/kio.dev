@@ -19,7 +19,7 @@
 <Hoverable let:hovered>
   <Tooltip
     text={link?.length > 50 ? `${link.slice(0, 50)}...` : link ?? $t('Visit')}
-    delay={500}
+    delay={300}
   >
     <svelte:element
       this={type}
