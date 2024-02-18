@@ -1,18 +1,8 @@
 import { writable } from 'svelte/store';
 
-type Placement =
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left-start'
-  | 'left-end'
-  | 'right-start'
-  | 'right-end';
+type BasicPlacement = 'top' | 'bottom' | 'left' | 'right';
+
+type Placement = BasicPlacement | `${BasicPlacement}-start` | `${BasicPlacement}-end`;
 
 export type Tooltip = {
   id: number;
