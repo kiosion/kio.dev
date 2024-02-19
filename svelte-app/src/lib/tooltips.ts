@@ -24,6 +24,19 @@ const createTooltip = (data: Tooltip) => {
   return data.id;
 };
 
+const updateTooltip = (
+  id: number,
+  data: Partial<Exclude<Tooltip, 'id' | 'target' | 'duration'>>
+) => {
+  tooltips.update((t) => {
+    const tooltip = t.get(id);
+    if (tooltip) {
+      t.set(id, { ...tooltip, ...data });
+    }
+    return t;
+  });
+};
+
 const destroyTooltip = (id: number) => {
   tooltips.update((t) => {
     t.delete(id);
@@ -31,4 +44,4 @@ const destroyTooltip = (id: number) => {
   });
 };
 
-export { createTooltip, destroyTooltip, tooltips };
+export { createTooltip, destroyTooltip, tooltips, updateTooltip };

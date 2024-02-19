@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
+  import { browser } from '$app/environment';
   import Logger from '$lib/logger';
-  import { createTooltip, destroyTooltip } from '$lib/tooltips';
+  import { createTooltip, destroyTooltip, updateTooltip } from '$lib/tooltips';
 
   import type { Tooltip } from '$lib/tooltips';
 
@@ -67,7 +68,6 @@
     target.addEventListener('focusin', showTooltip);
     target.addEventListener('focusout', hideTooltip);
     target.addEventListener('blur', hideTooltip);
-    target.addEventListener('click', hideTooltip);
   });
 
   onDestroy(() => {
@@ -82,8 +82,9 @@
     target.removeEventListener('focusin', showTooltip);
     target.removeEventListener('focusout', hideTooltip);
     target.removeEventListener('blur', hideTooltip);
-    target.removeEventListener('click', hideTooltip);
   });
+
+  $: tooltipId && text?.trim() && browser && updateTooltip(tooltipId, { content: text });
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">
