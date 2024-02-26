@@ -48,7 +48,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-svelte": "3.2.1",
     "prettier-plugin-tailwindcss": "0.5.11",
-    "sass": "1.70.0",
+    "sass": "1.71.1",
     "svelte": "4.2.11",
     "svelte-body": "1.4.0",
     "svelte-breakpoints": "0.3.0",
