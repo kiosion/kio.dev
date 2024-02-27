@@ -60,7 +60,7 @@ export const handle = (async ({ event, resolve }) => {
   }
 
   // Fall back to dark theme
-  if (!theme || !Object.values(APP_THEMES).includes(theme)) {
+  if (!theme || !(Object.values(APP_THEMES) as string[]).includes(theme)) {
     theme = APP_THEMES.DARK;
   }
 

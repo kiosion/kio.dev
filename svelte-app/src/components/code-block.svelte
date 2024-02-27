@@ -13,14 +13,16 @@
 
   import type { ResolvedComponentType } from '$components/code-block/imports';
   import type { Unsubscriber } from 'svelte/store';
-  import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
   export let content: string,
     filename: string | undefined,
     showLineNumbers = true,
     lang: string | undefined;
 
-  let LanguageType: Promise<_LanguageType<string>>,
+  let LanguageType: Promise<{
+      name: string;
+      register: (hljsApi: any) => any;
+    }>,
     HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
     LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
     Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
@@ -52,14 +54,14 @@
 
     LineNumbers = showLineNumbers
       ? genericAsyncImport('LineNumbers').then((res) =>
-          res instanceof Error ? ((loadError = res), undefined) : res
+            res instanceof Error ? ((loadError = res), undefined) : res
         )
       : Promise.resolve(undefined);
     HighlightSvelte =
       lang === 'svelte'
         ? genericAsyncImport('HighlightSvelte').then((res) =>
             res instanceof Error ? ((loadError = res), undefined) : res
-          )
+        )
         : Promise.resolve(undefined);
     Highlight = genericAsyncImport('Highlight').then((res) =>
       res instanceof Error ? ((loadError = res), undefined) : res
@@ -148,14 +150,14 @@
             language={resolvedLang}
             let:highlighted
           >
-            {#if showLineNumbers === true}
+            <!-- {#if showLineNumbers === true && typeof resolvedLineNumbers === 'function'}
               <svelte:component
                 this={resolvedLineNumbers}
                 {highlighted}
                 hideBorder
                 wrapLines
               />
-            {/if}
+            {/if} -->
           </svelte:component>
         {:catch error}
           <div class="p-3 font-code text-sm">Error loading: {error.message}</div>
