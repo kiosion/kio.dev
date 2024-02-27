@@ -80,7 +80,7 @@ export const displayMonthDuration = derived<
     }
 
     if (diffMonths < 12) {
-      return t('{month} months', { month: diffMonths });
+      return t('{months} months', { months: diffMonths });
     }
 
     const years = Math.floor(diffMonths / 12),

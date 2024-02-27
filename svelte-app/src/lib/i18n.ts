@@ -50,10 +50,16 @@ const getKey = <T extends keyof typeof EN>(lang: string, key: T): string | undef
   }
 };
 
-const _translate = (
+type ExtractTVars<S> = S extends `${infer _Prefix}{${infer Var}}${infer Rest}`
+  ? Var | ExtractTVars<Rest>
+  : never;
+
+const _translate = <K extends string>(
   currentLang: string | undefined,
-  key: string,
-  params?: Record<PropertyKey, string | number>
+  key: K,
+  params?: ExtractTVars<K> extends never
+    ? never
+    : Record<ExtractTVars<K>, string | number>
 ): string => {
   const lang = currentLang || DEFAULT_APP_LANG;
 
@@ -79,10 +85,24 @@ const _translate = (
   }
 };
 
-const translate = derived(
+const translate = derived<
+  typeof currentLang,
+  <K extends string>(
+    key: K,
+    params?: ExtractTVars<K> extends never
+      ? never
+      : Record<ExtractTVars<K>, string | number>
+  ) => string
+>(
   currentLang,
-  (val: string) => (key: string, params?: Record<PropertyKey, string | number>) =>
-    _translate(val, key, params)
+  (val: string) =>
+    <K extends string>(
+      key: K,
+      params?: ExtractTVars<K> extends never
+        ? never
+        : Record<ExtractTVars<K>, string | number>
+    ) =>
+      _translate(val, key, params)
 );
 
 const addSearchParams = (path: string, params?: URLSearchParams): string => {

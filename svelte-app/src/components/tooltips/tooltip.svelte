@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import { browser } from '$app/environment';
   import Logger from '$lib/logger';
+  import { isMobile } from '$lib/responsive';
   import { createTooltip, destroyTooltip, updateTooltip } from '$lib/tooltips';
 
   import type { Tooltip } from '$lib/tooltips';
@@ -20,7 +22,7 @@
     target: HTMLElement | null;
 
   const showTooltip = () => {
-    if (!target || !text?.trim()) {
+    if (!target || !text?.trim() || get(isMobile)) {
       return;
     }
 
