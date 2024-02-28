@@ -46,6 +46,10 @@
     h5,
     h6 {
       @apply inline font-bold text-black transition-[color];
+
+      @include dark {
+        @apply text-light;
+      }
     }
 
     &.h1 {
@@ -95,21 +99,6 @@
     }
     h6 {
       @apply text-lg;
-    }
-  }
-
-  :global(.dark) {
-    a {
-      @include focus-state(sm, dark);
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        @apply text-white;
-      }
     }
   }
 </style>

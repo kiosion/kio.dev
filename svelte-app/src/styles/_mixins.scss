@@ -4,8 +4,8 @@
   * Focus state mixin
   * @param {string} $size - 'sm' or 'lg'
   */
-@mixin focus-state($size: 'lg', $theme: 'light') {
-  @apply outline-offset-4 outline-2;
+@mixin focus-state($size: 'lg') {
+  @apply outline-offset-4 outline-2 outline-accent-light;
 
   &:focus-visible {
     @apply outline;
@@ -15,10 +15,8 @@
     @apply outline-offset-2;
   }
 
-  @if $theme == 'dark' {
+  :global(.dark) & {
     @apply outline-accent-dark;
-  } @else {
-    @apply outline-accent-light;
   }
 }
 
@@ -28,6 +26,33 @@
   }
 
   @media (min-width: map-get($breakpoints, $key)) {
+    @content;
+  }
+}
+
+@mixin focused($selectors...) {
+  &:hover,
+  &:focus-visible {
+    @content;
+  }
+
+  @if length($selectors) > 0 {
+    @each $selector in $selectors {
+      @if str-index($selector, ".") == 1 {
+        &#{"" + $selector} {
+          @content;
+        }
+      } @else {
+        &:#{$selector} {
+          @content;
+        }
+      }
+    }
+  }
+}
+
+@mixin dark {
+  :global(.dark) & {
     @content;
   }
 }

@@ -31,7 +31,7 @@
   @import '@styles/mixins';
 
   header {
-    @apply flex flex-row items-center justify-between font-mono;
+    @apply flex flex-row flex-wrap items-center justify-between gap-y-3 font-mono;
   }
 
   nav {
@@ -40,10 +40,18 @@
     div {
       @apply justify-start gap-2 pr-0;
     }
+
+    :global(.dark) & {
+      @apply text-light/90;
+    }
   }
 
   div {
     @apply flex flex-row items-center justify-end gap-5 pr-1.5 pt-0.5 text-dark/80;
+
+    :global(.dark) & {
+      @apply text-light/80;
+    }
   }
 
   a {
@@ -54,19 +62,5 @@
 
   span {
     @apply cursor-default select-none;
-  }
-
-  :global(.dark) {
-    nav {
-      @apply text-light/90;
-    }
-
-    div {
-      @apply text-light/80;
-    }
-
-    a {
-      @include focus-state(sm, dark);
-    }
   }
 </style>

@@ -25,32 +25,22 @@
   button {
     @apply mt-4 flex flex-grow items-center rounded-md text-accent-light;
 
-    &:hover,
-    &:focus-visible {
+    @include focused {
       @apply text-dark;
+
+      @include dark {
+        @apply text-light;
+      }
     }
 
     &:disabled {
       @apply cursor-not-allowed text-dark/60;
+
+      @include dark {
+        @apply text-light/60;
+      }
     }
 
     @include focus-state(sm);
-  }
-
-  :global(.dark) {
-    button {
-      @apply text-accent-dark;
-
-      &:hover,
-      &:focus-visible {
-        @apply text-light;
-      }
-
-      &:disabled {
-        @apply cursor-not-allowed text-light/60;
-      }
-
-      @include focus-state(sm, dark);
-    }
   }
 </style>

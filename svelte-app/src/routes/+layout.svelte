@@ -9,7 +9,8 @@
   import { classList } from 'svelte-body';
 
   import { browser } from '$app/environment';
-  import { navigating, page } from '$app/stores';
+  import { afterNavigate, beforeNavigate } from '$app/navigation';
+  import { page } from '$app/stores';
   import {
     APP_LANGS,
     APP_THEMES,
@@ -48,24 +49,23 @@
       }
     };
 
+  beforeNavigate((event) => {
+    clearTimeout(setLoadingTimer);
+
+    if (event.from !== event.to) {
+      setLoadingTimer = setTimeout(() => loading.set(true), 100);
+    }
+  });
+
+  afterNavigate(() => {
+    clearTimeout(setLoadingTimer);
+    loading.set(false);
+  });
+
   onMount(() => {
     if (!browser) {
       return;
     }
-
-    unsubscribers.push(
-      navigating.subscribe((navigation) => {
-        if (!navigation) {
-          if (setLoadingTimer) {
-            clearTimeout(setLoadingTimer);
-          }
-          loading.set(false);
-        } else if (navigation.from !== navigation.to) {
-          setLoadingTimer && clearTimeout(setLoadingTimer);
-          setLoadingTimer = setTimeout(() => loading.set(true), 500);
-        }
-      })
-    );
 
     const currentTheme = get(theme);
 
@@ -159,6 +159,10 @@
     &:focus-visible {
       @apply mt-4;
     }
+
+    @include dark {
+      @apply bg-black text-light;
+    }
   }
 
   .main {
@@ -167,16 +171,8 @@
     @include media(lg) {
       @apply text-lg;
     }
-  }
 
-  :global(.dark) {
-    span {
-      @apply bg-black text-light;
-
-      @include focus-state(sm, dark);
-    }
-
-    .main {
+    @include dark {
       @apply text-light;
     }
   }

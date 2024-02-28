@@ -47,26 +47,18 @@
       @apply flex flex-row items-center justify-start gap-x-1.5;
     }
 
-    &:hover,
-    &:focus-visible,
-    &.active {
+    @include focused('.active') {
       @apply text-accent-light;
+
+      @include dark {
+        @apply text-accent-dark;
+      }
     }
 
     @include focus-state(sm);
-  }
 
-  :global(.dark) {
-    a {
+    @include dark {
       @apply text-light/80;
-
-      &:hover,
-      &:focus-visible,
-      &.active {
-        @apply text-accent-dark;
-      }
-
-      @include focus-state(sm, dark);
     }
   }
 </style>

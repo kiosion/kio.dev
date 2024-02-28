@@ -39,11 +39,14 @@
   .arrowButton {
     @apply inline-block rounded-sm font-code text-accent-light;
 
-    @include focus-state(lg);
+    @include focus-state;
 
-    &:hover,
-    &:focus-visible {
-      @apply text-light;
+    @include focused {
+      @apply text-dark;
+
+      @include dark {
+        @apply text-light;
+      }
     }
 
     &.fullWidth {
@@ -57,18 +60,9 @@
     &.alignLeft {
       @apply text-left;
     }
-  }
 
-  :global(.dark) {
-    .arrowButton {
+    @include dark {
       @apply text-accent-dark;
-
-      @include focus-state(lg, dark);
-
-      &:hover,
-      &:focus-visible {
-        @apply text-light;
-      }
     }
   }
 </style>

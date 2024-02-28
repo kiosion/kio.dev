@@ -38,20 +38,12 @@
     height: 24px;
     width: 24px;
 
-    @include focus-state(lg);
+    @include focus-state;
 
-    &:hover,
-    &:focus-visible {
+    @include focused {
       @apply text-accent-light;
-    }
-  }
 
-  :global(.dark) {
-    button {
-      @include focus-state(lg, dark);
-
-      &:hover,
-      &:focus-visible {
+      @include dark {
         @apply text-accent-dark;
       }
     }

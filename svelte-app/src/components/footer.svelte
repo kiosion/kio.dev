@@ -68,15 +68,13 @@
 
   div {
     @apply flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90;
+
+    @include dark {
+      @apply text-light/90;
+    }
   }
 
   span {
     @apply cursor-default select-none;
-  }
-
-  :global(.dark) {
-    div {
-      @apply text-light/90;
-    }
   }
 </style>

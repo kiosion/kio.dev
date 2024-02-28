@@ -153,8 +153,7 @@
       left: 50%;
     }
 
-    &:hover,
-    &:focus-visible {
+    @include focused {
       .backdrop {
         opacity: 30%;
       }
@@ -174,11 +173,5 @@
   .error,
   .loading {
     @apply absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base;
-  }
-
-  :global(.dark) {
-    button {
-      @include focus-state(sm, dark);
-    }
   }
 </style>
