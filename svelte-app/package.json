@@ -9,6 +9,7 @@
     "dev:backed": "vite dev --mode backed --host",
     "package": "svelte-kit package",
     "preview": "vite preview",
+    "prepare": "panda codegen",
     "test": "test:vitest; test:playwright",
     "test:vitest": "MODE=testing vitest --run",
     "test:playwright": "playwright test",
@@ -20,6 +21,7 @@
     "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\""
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.33.0",
     "@playwright/test": "1.41.2",
     "@portabletext/svelte": "2.1.5",
     "@portabletext/types": "2.0.8",

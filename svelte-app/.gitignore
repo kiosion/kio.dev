@@ -15,3 +15,7 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+## Panda
+styled-system
+styled-system-studio

@@ -57,6 +57,11 @@ export default defineConfig(({ mode }) => {
     ssr: {
       noExternal: ['@portabletext/toolkit']
     },
+    server: {
+      fs: {
+        allow: ['styled-system']
+      }
+    },
     appType: 'custom'
   };
 });

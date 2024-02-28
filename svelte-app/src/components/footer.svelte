@@ -7,6 +7,8 @@
   import BaseLink from '$components/nav/base-link.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
+  import { css } from 'styled-system/css';
+
   import type { SiteConfig } from '$types';
 
   export let config: SiteConfig;
@@ -22,7 +24,16 @@
 <Divider />
 
 {#if socials?.length || APP_VERSION?.length}
-  <footer>
+  <footer
+    class={css({
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      fontFamily: 'mono',
+      fontSize: 'sm'
+    })}
+  >
     {#if socials?.length}
       <div>
         {#each socials as social, i}
@@ -62,9 +73,9 @@
 <style lang="scss">
   @import '@styles/mixins';
 
-  footer {
-    @apply flex flex-row items-center justify-between font-mono text-sm;
-  }
+  // footer {
+  //   @apply flex flex-row items-center justify-between font-mono text-sm;
+  // }
 
   div {
     @apply flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90;
