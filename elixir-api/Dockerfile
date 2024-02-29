@@ -1,7 +1,6 @@
 FROM elixir:1.16.1-otp-26-alpine AS build
 
-RUN apk upgrade --no-cache
-RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
+RUN apk upgrade --no-cache && apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 ARG ENV=prod
 ENV ENV=$ENV
@@ -32,6 +31,8 @@ RUN echo "export SANITY_TOKEN=$SANITY_TOKEN" > .env &&\
 
 FROM elixir:1.16.1-otp-26-alpine AS app
 
+RUN apk upgrade && apk add --update bash openssl libgcc libstdc++ ncurses-libs
+
 ARG ENV
 
 RUN mkdir /app
@@ -40,11 +41,11 @@ WORKDIR /app
 COPY --from=build /app/_build .
 COPY --from=build /app/.env .env
 
-RUN echo "#!/bin/bash" > ./entrypoint.sh &&\
-    echo ". .env && /app/${ENV}/rel/hexerei/bin/hexerei start" >> ./entrypoint.sh &&\
-    chmod +x ./entrypoint.sh &&\
+RUN echo "#!/bin/sh" > /app/entrypoint.sh &&\
+    echo ". .env && /app/${ENV}/rel/hexerei/bin/hexerei start" >> /app/entrypoint.sh &&\
+    chmod +x /app/entrypoint.sh &&\
     chown -R nobody: /app
 
 USER nobody
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
