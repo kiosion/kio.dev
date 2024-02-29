@@ -37,17 +37,7 @@ export const GET = (async ({ url, params }) => {
   const endpoint = getEndpoint(docType, many, url.searchParams),
     remoteRes = await fetchRemote(endpoint);
 
-  if (remoteRes.errors?.length && !remoteRes.data) {
-    return endpointResponse(
-      {
-        status: remoteRes.code,
-        errors: remoteRes.errors
-      },
-      remoteRes.code
-    );
-  }
-
-  return endpointResponse(remoteRes);
+  return endpointResponse(remoteRes, remoteRes.code);
 }) satisfies RequestHandler;
 
 const getEndpoint = (

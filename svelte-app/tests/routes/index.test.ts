@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
 
 import { STUB_CONFIG, STUB_POST } from '../fixtures';
-import { stubResponse } from '../utils';
-
-const API_CONFIG_ROUTE = /.*\/api\/get\/config.*/,
-  API_POST_ROUTE = /.*\/api\/get\/post.*/,
-  API_POST_MANY_ROUTE = /.*\/api\/get\/post\/many.*/;
+import {
+  API_CONFIG_ROUTE,
+  API_POST_MANY_ROUTE,
+  API_POST_ROUTE,
+  stubResponse
+} from '../utils';
 
 test('should render index route with data', async ({ context, page }) => {
   await context.route(API_CONFIG_ROUTE, (route) =>

@@ -45,7 +45,7 @@ defmodule Hexerei.Utils do
   def transform_result_document(query, result, type, params, additional_meta \\ nil) do
     case result["result"] do
       nil ->
-        {meta, code} =
+        {meta, code, errs} =
           cond do
             type == :post or type == :project ->
               {
@@ -54,7 +54,8 @@ defmodule Hexerei.Utils do
                   "count" => 0,
                   "id" => nil
                 },
-                404
+                404,
+                [%{message: "No result found"}]
               }
 
             type == :posts or type == :posts or type == :tags ->
@@ -63,16 +64,19 @@ defmodule Hexerei.Utils do
                  "count" => 0,
                  "sort" => params["s"],
                  "order" => params["o"]
-               }, 200}
+               }, 200, []}
 
             true ->
               {%{
                  "total" => 0,
                  "count" => 0
-               }, 404}
+               }, 404,
+               [
+                 %{message: "No result found"}
+               ]}
           end
 
-        {result, meta, code, []}
+        {{result, errs}, meta, code}
 
       _ ->
         {meta, code, meta_errors} =

@@ -38,30 +38,45 @@
       break;
   }
 
+  const parseCausesToFlatList = (
+    maybeNestedCause:
+      | NonNullable<NonNullable<(typeof $page)['error']>['cause']>
+      | NonNullable<NonNullable<(typeof $page)['error']>['cause']>[number]
+      | undefined,
+    d: number
+  ): string[] => {
+    if (!maybeNestedCause) {
+      return d > 0 ? [] : [stack || 'Unknown error'];
+    }
+
+    if (Array.isArray(maybeNestedCause)) {
+      return maybeNestedCause
+        .map((cause) => parseCausesToFlatList(cause, d + 1))
+        .flat()
+        .filter(Boolean);
+    }
+
+    if (typeof maybeNestedCause === 'object') {
+      if ('cause' in maybeNestedCause) {
+        return parseCausesToFlatList(
+          (maybeNestedCause as Record<string, string>).cause,
+          d + 1
+        );
+      }
+      if ('message' in maybeNestedCause) {
+        if ('detail' in maybeNestedCause && typeof maybeNestedCause.detail === 'object') {
+          return [`${maybeNestedCause.message}: ${maybeNestedCause.detail.message}`];
+        }
+
+        return [`${maybeNestedCause.message}`];
+      }
+    }
+
+    return [maybeNestedCause?.toString?.()];
+  };
+
   $: stack = $page.error?.stack?.trimStart();
-  $: causes = $page.error?.cause
-    ?.map((cause) => {
-      if (typeof cause === 'string') {
-        return cause;
-      }
-      if (cause.message && cause.detail) {
-        if (typeof cause.detail === 'object' && cause.detail.message) {
-          return `${cause.message}: ${cause.detail.message}`;
-        }
-        return `${cause.message}: ${cause.detail}`;
-      }
-      if (cause.message) {
-        return cause.message;
-      }
-      if (cause.detail) {
-        if (typeof cause.detail === 'object' && cause.detail.message) {
-          return cause.detail.message;
-        }
-        return cause.detail;
-      }
-      return undefined;
-    })
-    ?.filter(Boolean) || [stack || 'Unknown error'];
+  $: causes = parseCausesToFlatList($page.error?.cause, 0);
   $: heading = `${status}: ${$t(title)}`;
 </script>
 
@@ -70,40 +85,41 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<HeadedBlock {heading} testId="error-page">
-  <p>
-    {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
-  </p>
-  <p>
-    {$t('Please')}
-    <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
-      on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
-    >.
-  </p>
-</HeadedBlock>
+<div data-test-id="error-page">
+  <HeadedBlock {heading}>
+    <p>
+      {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
+    </p>
+    <p>
+      {$t('Please')}
+      <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
+        on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
+      >.
+    </p>
+  </HeadedBlock>
 
-{#if causes?.length}
-  <Divider />
-  <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
-    <span class="flex items-center justify-start gap-2">
-      <p>{$t('See more')}</p>
-      <Icon
-        name="ArrowUp"
-        size={18}
-        inline
-        style="transform: {showStack ? 'rotate(0)' : 'rotate(180)'};"
-      />
-    </span>
-  </ArrowButton>
-  {#if showStack}
-    <div transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
-      <pre
-        class="mt-4 whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause}{cause}
-        {/each}
-</pre>
-    </div>
+  {#if causes?.length}
+    <Divider />
+    <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
+      <span class="flex items-center justify-start gap-2">
+        <p>{$t('See more')}</p>
+        <Icon
+          name="ArrowUp"
+          size={18}
+          inline
+          style="transform: {showStack ? 'rotate(0deg)' : 'rotate(180deg)'};"
+        />
+      </span>
+    </ArrowButton>
+    {#if showStack}
+      <div class="pt-4" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
+        <pre
+          class="whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+              />{/if}{/each}</pre>
+      </div>
+    {/if}
   {/if}
-{/if}
+</div>
 
 <style lang="scss">
   p {

@@ -11,6 +11,9 @@ devDependencies:
   '@portabletext/svelte':
     specifier: 2.1.5
     version: 2.1.5(svelte@4.2.11)
+  '@portabletext/toolkit':
+    specifier: 2.0.10
+    version: 2.0.10
   '@portabletext/types':
     specifier: 2.0.8
     version: 2.0.8

@@ -3,6 +3,7 @@ import { tryFetch } from '$lib/data';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
 
+import type { NumericRange } from '@sveltejs/kit';
 import type {
   DocumentTags,
   PostDocument,
@@ -115,16 +116,33 @@ const fetchData = async <T>(
 ): Promise<T | Error> => {
   try {
     const response = await tryFetch(fetch(url));
-    const fetchResponse = (await response.json()) as QueryResponse<T>;
+    const fetchResponse = (await response.json().catch((e) => {
+      return {
+        errors: [e.message || 'Failed to parse response.']
+      };
+    })) as QueryResponse<T>;
+
     if (fetchResponse?.errors?.length) {
       Logger.error(`Errors occured fetching ${model}.`, fetchResponse?.errors);
     }
 
-    if (!(fetchResponse?.meta && fetchResponse?.data)) {
-      return new Error(`Failed to fetch ${model} data.`, {
-        cause:
-          fetchResponse?.errors || (!fetchResponse?.data && new Error('No data present'))
-      });
+    if (
+      !(fetchResponse?.meta && fetchResponse?.data) ||
+      (typeof fetchResponse?.data === 'object' &&
+        Object.keys(fetchResponse.data).length === 0) ||
+      (Array.isArray(fetchResponse?.data) &&
+        !fetchResponse?.meta &&
+        fetchResponse?.data.length === 0) ||
+      ((fetchResponse?.meta as Record<string, unknown> | undefined)?.total !== 0 &&
+        !fetchResponse?.data)
+    ) {
+      const err = new Error(`Failed to fetch ${model} data.`);
+
+      err.code = (response.status || 500) as NumericRange<400, 599>;
+      err.cause =
+        fetchResponse?.errors || (!fetchResponse?.data && new Error('No data present'));
+
+      return err;
     }
 
     return fetchResponse.data;

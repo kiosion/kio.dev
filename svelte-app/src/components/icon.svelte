@@ -59,8 +59,7 @@
   // eslint-disable-next-line @typescript-eslint/ban-types
   export let name: IconName | (string & {}),
     inline = false,
-    size = 20,
-    style = '';
+    size = 20;
 
   const InnerIconComponent = getIcon(name);
 </script>
@@ -71,7 +70,6 @@
   style={`width: ${size}px; height: ${size}px;`}
 >
   <BaseIconWrapper
-    {style}
     width={size}
     height={size}
     aria-label={name + $t(' icon')}
