@@ -1,4 +1,7 @@
-FROM elixir:1.16.0-slim AS build
+FROM elixir:1.16.1-otp-26-alpine AS build
+
+RUN apk upgrade --no-cache
+RUN apk add --update bash openssl libgcc libstdc++ ncurses-libs
 
 ARG ENV=prod
 ENV ENV=$ENV
@@ -27,7 +30,7 @@ RUN echo "export SANITY_TOKEN=$SANITY_TOKEN" > .env &&\
         --gcloud_key $GCLOUD_KEY \
         --env $ENV
 
-FROM elixir:1.16-slim AS app
+FROM elixir:1.16.1-otp-26-alpine AS app
 
 ARG ENV
 
