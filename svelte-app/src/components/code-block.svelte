@@ -128,11 +128,13 @@
     <div
       class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all"
       id="hljs-container"
+      aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
       <div
         class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
         class:opacity-0={hideLoader}
+        aria-hidden="true"
       >
         <Spinner />
       </div>
@@ -164,5 +166,6 @@
         <div class="p-3 font-code text-sm">Error loading: {loadError.message}</div>
       {/if}
     </div>
+    <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
 </div>

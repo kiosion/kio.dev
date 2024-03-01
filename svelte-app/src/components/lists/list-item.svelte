@@ -19,38 +19,63 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focusOutline w-full rounded-md"
+    class:small
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
   >
-    <div
-      class="mt-0.5 flex flex-row items-center justify-start gap-3 font-mono text-sm text-dark/80 transition-colors dark:text-light/80 {small
-        ? 'mb-1.5'
-        : 'mb-2'}"
-    >
+    <div>
       <p aria-label={$t('Date posted')}>
-        {$formatDate(document.date || document._createdAt, small ? 'med' : 'short')}
+        {$formatDate(document.date || document._createdAt, 'med')}
       </p>
       {#if document.tags?.length}
-        <span
-          class="rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
-          >{document.tags[0].title.toLowerCase()}</span
-        >
+        <span>{document.tags[0].title.toLowerCase()}</span>
       {/if}
       <p>{$t('{views} views', { views: $parseViews((document.views ?? 0) + 1) })}</p>
     </div>
 
-    <h1
-      class="min-w-fit font-medium decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark {small
-        ? 'text-lg decoration-2 underline-offset-2'
-        : 'text-xl decoration-[3px] underline-offset-4'}"
-      class:underline={hovered}
-    >
-      {document.title}
-    </h1>
-    {#if document.desc?.length && !small}
-      <p class="mt-2 line-clamp-1 text-base">{document.desc}</p>
-    {/if}
+    <h1 class:underline={hovered}>{document.title}</h1>
   </a>
 </Hoverable>
+
+<style lang="scss">
+  @import '@styles/mixins';
+
+  a {
+    @apply w-full rounded-md;
+
+    @include focus-state;
+  }
+
+  div {
+    @apply flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors;
+
+    @include dark {
+      @apply text-light/80;
+    }
+
+    .small & {
+      @apply pb-1.5;
+    }
+
+    span {
+      @apply rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors;
+
+      @include dark {
+        @apply bg-light/10;
+      }
+    }
+  }
+
+  h1 {
+    @apply min-w-fit text-xl font-bold decoration-accent-light decoration-[3px] underline-offset-4 transition-colors;
+
+    @include dark {
+      @apply decoration-accent-dark;
+    }
+
+    .small & {
+      @apply text-lg decoration-2 underline-offset-2;
+    }
+  }
+</style>

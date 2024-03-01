@@ -9,9 +9,9 @@
 </script>
 
 <header>
-  <nav aria-label="Main navigation" role="group">
+  <nav aria-label="Main navigation">
     <a href={$linkTo('/')} aria-label="Home">kio.dev</a>
-    <div role="menu">
+    <div>
       {#each NAV_LINKS as link, i}
         <NavLink {link} />
         {#if i < NAV_LINKS.length - 1}

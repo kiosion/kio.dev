@@ -9,6 +9,8 @@
 </section>
 
 <style lang="scss">
+  @import '@styles/mixins';
+
   h1 {
     @apply mb-2 mt-8 font-code text-2xl font-black;
   }
@@ -18,12 +20,8 @@
 
     div {
       @apply mx-1 font-sans text-base text-dark/90;
-    }
-  }
 
-  :global(.dark) {
-    section {
-      div {
+      @include dark {
         @apply text-light/90;
       }
     }

@@ -7,6 +7,9 @@
 
   import type { Tooltip } from '$lib/tooltips';
 
+  const PADDING_PX = 8,
+    MAX_LENGTH = 72;
+
   export let id: Tooltip['id'],
     content: Tooltip['content'],
     duration: Tooltip['duration'],
@@ -111,6 +114,20 @@
         break;
     }
 
+    // if x-pos will result in tooltip being off-screen, adjust it
+    if (x + tooltipRect.width > innerWidth + pageScroll.x - PADDING_PX) {
+      x = innerWidth + pageScroll.x - tooltipRect.width - PADDING_PX;
+    } else if (x < PADDING_PX) {
+      x = PADDING_PX;
+    }
+
+    // same for height
+    if (y + tooltipRect.height > innerHeight + pageScroll.y - PADDING_PX) {
+      y = innerHeight + pageScroll.y - tooltipRect.height - PADDING_PX;
+    } else if (y < PADDING_PX) {
+      y = PADDING_PX;
+    }
+
     position = {
       x: Math.max(0, Math.min(innerWidth + pageScroll.x, x + offset[0])),
       y: Math.max(0, Math.min(innerHeight + pageScroll.y, y + offset[1]))
@@ -123,19 +140,23 @@
 
 <div {style} class="tooltip" id={`tooltip-${id}`} bind:this={tooltipElement}>
   <span class="tooltip-content" transition:fade={{ duration, easing: cubicInOut }}>
-    {content}
+    {content.trim().length >= MAX_LENGTH
+      ? `${content.trim().slice(0, MAX_LENGTH - 3)}...`
+      : content.trim()}
   </span>
 </div>
 
 <style lang="scss">
+  @import '@styles/mixins';
+
   div {
     @apply pointer-events-none absolute z-50;
   }
 
   span {
-    @apply block max-w-56 rounded-sm bg-black px-2 py-1 font-code text-sm text-light;
+    @apply block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light;
 
-    :global(.dark) & {
+    @include dark {
       @apply bg-light text-dark;
     }
   }

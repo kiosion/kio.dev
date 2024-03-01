@@ -24,7 +24,7 @@
 {#if socials?.length || APP_VERSION?.length}
   <footer>
     {#if socials?.length}
-      <div>
+      <div role="group" aria-label={$t('Social links')}>
         {#each socials as social, i}
           <Tooltip text={social.url} delay={300} position="top">
             <BaseLink
@@ -42,13 +42,12 @@
       </div>
     {/if}
     {#if APP_VERSION?.length}
-      <div>
+      <div aria-label={$t('View latest commit on GitHub')}>
         <Tooltip text={$t('View latest commit on GitHub')} position="top">
           <BaseLink
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
-            aria-label={$t('View latest commit on GitHub')}
           >
             <Icon name="GitCommit" inline />
             {APP_VERSION.slice(0, 6)}

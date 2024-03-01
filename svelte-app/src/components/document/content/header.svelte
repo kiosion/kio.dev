@@ -26,6 +26,10 @@
   <div class="flex flex-row flex-wrap items-center justify-between gap-4">
     <div
       class="flex flex-row flex-wrap items-center justify-start gap-y-2 transition-[color]"
+      aria-label={$t('{document} details', {
+        document: model === 'post' ? 'Post' : 'Project'
+      })}
+      role="group"
     >
       <p class="cursor-default font-mono text-base">
         {$formatDate(data.date, 'full') ?? $t('Unknown date')}
@@ -72,7 +76,7 @@
         >
           {#each data.tags as tag}
             <span
-              class="cursor-default rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-base transition-colors dark:bg-light/10"
+              class="cursor-default rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
             >
               {tag.title.toLowerCase()}
             </span>

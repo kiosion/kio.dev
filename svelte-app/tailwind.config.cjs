@@ -10,9 +10,9 @@ module.exports = {
         black: '#171c22',
         white: '#f5f5f5',
         dark: '#242b33',
-        light: '#efefef',
+        light: '#f2f2f2',
         accent: {
-          light: '#3b75f5',
+          light: '#1e65e1',
           dark: '#affa71'
         }
       },

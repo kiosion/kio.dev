@@ -4,7 +4,7 @@
 
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import YearList from '$components/lists/year-list.svelte';
+  import DocumentList from '$components/lists/document-list.svelte';
 
   export let data;
 
@@ -26,7 +26,7 @@
 
 <HeadedBlock heading={$t('Recent thoughts')}>
   {#if data.posts.length}
-    <YearList documents={data.posts} />
+    <DocumentList documents={data.posts} />
   {:else}
     <EmptyContent />
   {/if}

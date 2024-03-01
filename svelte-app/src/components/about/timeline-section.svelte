@@ -34,7 +34,7 @@
 
 <style lang="scss">
   h2 {
-    @apply pb-1 text-xl font-bold text-dark transition-colors;
+    @apply pb-1 text-lg font-bold text-dark transition-colors;
   }
 
   p {
