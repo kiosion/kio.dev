@@ -28,14 +28,12 @@
   });
 </script>
 
-<div tabindex="-1" role="none" data-test-id="scroll-container" bind:this={element}>
+<div
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8"
+  tabindex="-1"
+  role="none"
+  data-test-id="scroll-container"
+  bind:this={element}
+>
   <slot {element} />
 </div>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  div {
-    @apply relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8;
-  }
-</style>

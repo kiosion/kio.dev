@@ -138,26 +138,18 @@
   $: style = `left: ${position.x}px; top: ${position.y}px;`;
 </script>
 
-<div {style} class="tooltip" id={`tooltip-${id}`} bind:this={tooltipElement}>
-  <span class="tooltip-content" transition:fade={{ duration, easing: cubicInOut }}>
+<div
+  {style}
+  class="pointer-events-none absolute z-50"
+  id={`tooltip-${id}`}
+  bind:this={tooltipElement}
+>
+  <span
+    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light dark:bg-light dark:text-dark"
+    transition:fade={{ duration, easing: cubicInOut }}
+  >
     {content.trim().length >= MAX_LENGTH
       ? `${content.trim().slice(0, MAX_LENGTH - 3)}...`
       : content.trim()}
   </span>
 </div>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  div {
-    @apply pointer-events-none absolute z-50;
-  }
-
-  span {
-    @apply block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light;
-
-    @include dark {
-      @apply bg-light text-dark;
-    }
-  }
-</style>

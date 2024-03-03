@@ -71,7 +71,7 @@
   <div class="scroller">
     {#each $values as image, i}
       <button
-        class="focusOutline-sm"
+        class="focus-outline-sm"
         style="
           aspect-ratio: {image.crop.width} / {image.crop.height};
           width: {image.carouselDimensions.width}px;

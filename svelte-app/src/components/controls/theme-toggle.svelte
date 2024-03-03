@@ -8,14 +8,13 @@
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const { theme } = Settings;
-
-  $: tooltipText = $theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode';
 </script>
 
 <Hoverable>
-  <Tooltip text={$t(tooltipText)}>
+  <Tooltip text={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}>
     <button
-      aria-label={$t(tooltipText)}
+      class="focus-outline -m-1.5 flex h-6 w-6 items-center justify-center rounded-sm hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
+      aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
       data-test-id="theme-toggle"
       data-test-state={$theme}
       tabindex="0"
@@ -29,23 +28,3 @@
     </button>
   </Tooltip>
 </Hoverable>
-
-<style lang="scss">
-  @import '@styles/mixins';
-  button {
-    @apply -m-1.5 flex items-center justify-center rounded-sm;
-
-    height: 24px;
-    width: 24px;
-
-    @include focus-state;
-
-    @include focused {
-      @apply text-accent-light;
-
-      @include dark {
-        @apply text-accent-dark;
-      }
-    }
-  }
-</style>

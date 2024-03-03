@@ -32,8 +32,13 @@
   $: $confetti?.every?.((c) => c.done) && confetti.set([]);
 </script>
 
-<span>
-  <a href={$linkTo('/')} aria-label={$t('Home')} on:click={handleClick}>kio.dev</a>
+<span class="relative h-fit w-fit">
+  <a
+    class="focus-outline-sm w-fit select-none rounded-sm font-code text-lg font-extrabold transition-[color]"
+    href={$linkTo('/')}
+    aria-label={$t('Home')}
+    on:click={handleClick}>kio.dev</a
+  >
 
   {#each $confetti as { id }}
     <Confetti
@@ -45,17 +50,3 @@
     />
   {/each}
 </span>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  span {
-    @apply relative h-fit w-fit;
-  }
-
-  a {
-    @apply w-fit select-none rounded-sm font-code text-lg font-extrabold transition-[color];
-
-    @include focus-state(sm);
-  }
-</style>

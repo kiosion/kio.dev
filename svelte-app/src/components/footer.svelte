@@ -22,9 +22,13 @@
 <Divider />
 
 {#if socials?.length || APP_VERSION?.length}
-  <footer>
+  <footer class="flex flex-row items-center justify-between font-mono text-sm">
     {#if socials?.length}
-      <div role="group" aria-label={$t('Social links')}>
+      <div
+        class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
+        role="group"
+        aria-label={$t('Social links')}
+      >
         {#each socials as social, i}
           <Tooltip text={social.url} delay={300} position="top">
             <BaseLink
@@ -36,13 +40,16 @@
             />
           </Tooltip>
           {#if i < socials.length - 1}
-            <span aria-hidden="true">/</span>
+            <span class="cursor-default select-none" aria-hidden="true">/</span>
           {/if}
         {/each}
       </div>
     {/if}
     {#if APP_VERSION?.length}
-      <div aria-label={$t('View latest commit on GitHub')}>
+      <div
+        class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
+        aria-label={$t('View latest commit on GitHub')}
+      >
         <Tooltip text={$t('View latest commit on GitHub')} position="top">
           <BaseLink
             target="_blank"
@@ -57,23 +64,3 @@
     {/if}
   </footer>
 {/if}
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  footer {
-    @apply flex flex-row items-center justify-between font-mono text-sm;
-  }
-
-  div {
-    @apply flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90;
-
-    @include dark {
-      @apply text-light/90;
-    }
-  }
-
-  span {
-    @apply cursor-default select-none;
-  }
-</style>

@@ -6,10 +6,4 @@
   $: ({ value: _value } = portableText);
 </script>
 
-<p><slot /></p>
-
-<style lang="scss">
-  p {
-    @apply my-4 leading-[1.6] transition-[color];
-  }
-</style>
+<p class="my-4 leading-[1.6] transition-[color]"><slot /></p>

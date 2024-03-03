@@ -1,24 +1,4 @@
-@import 'variables';
-
-/**
-  * Focus state mixin
-  * @param {string} $size - 'sm' or 'lg'
-  */
-@mixin focus-state($size: 'lg') {
-  @apply outline-offset-4 outline-2 outline-accent-light;
-
-  &:focus-visible {
-    @apply outline;
-  }
-
-  @if $size == 'sm' {
-    @apply outline-offset-2;
-  }
-
-  :global(.dark) & {
-    @apply outline-accent-dark;
-  }
-}
+@import 'breakpoints';
 
 @mixin media($key) {
   @if not map-has-key($breakpoints, $key) {

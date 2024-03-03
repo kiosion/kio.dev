@@ -21,7 +21,11 @@
 </script>
 
 <div data-test-id="{model}-header">
-  <h1>{data.title}</h1>
+  <h1
+    class="mb-4 mt-10 h-fit max-w-full text-4xl font-bold text-black transition-[color] dark:text-white lg:mt-12 lg:text-6xl lg:font-black"
+  >
+    {data.title}
+  </h1>
 
   <div class="flex flex-row flex-wrap items-center justify-between gap-4">
     <div
@@ -50,7 +54,7 @@
       {/if}
     </div>
     <ArrowButton
-      class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
+      class="focus-outline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
@@ -113,22 +117,8 @@
 </div>
 
 <style lang="scss">
-  @import '@styles/mixins';
-
   h1 {
-    @apply mb-4 mt-10 h-fit max-w-full text-4xl font-bold text-black transition-[color];
-
     overflow-wrap: break-word;
     word-break: break-word;
-
-    @include media(lg) {
-      @apply mt-12 text-6xl font-black;
-    }
-  }
-
-  :global(.dark) {
-    h1 {
-      @apply text-white;
-    }
   }
 </style>

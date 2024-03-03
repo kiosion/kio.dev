@@ -12,10 +12,18 @@
     id = Math.random().toString(36).substring(7);
 </script>
 
-<section role="group" aria-labelledby="{id}-heading">
-  <div>
-    <h2 id="{id}-heading">{title}</h2>
-    <p aria-label={$t('Duration')}>
+<section class="my-6" role="group" aria-labelledby="{id}-heading">
+  <div class="pb-4">
+    <h2
+      class="pb-1 text-lg font-bold text-dark transition-colors dark:text-white"
+      id="{id}-heading"
+    >
+      {title}
+    </h2>
+    <p
+      class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      aria-label={$t('Duration')}
+    >
       {$displayRange(section[section.length - 1].range.start, section[0].range.end)} &bull;
       {$displayMonthDuration(
         section[section.length - 1].range.start,
@@ -33,31 +41,3 @@
     />
   {/each}
 </section>
-
-<style lang="scss">
-  h2 {
-    @apply pb-1 text-lg font-bold text-dark transition-colors;
-  }
-
-  p {
-    @apply font-mono text-sm text-dark/80 transition-colors;
-  }
-
-  div {
-    @apply pb-4;
-  }
-
-  section {
-    @apply my-6;
-  }
-
-  :global(.dark) {
-    h2 {
-      @apply text-white;
-    }
-
-    p {
-      @apply text-light/80;
-    }
-  }
-</style>

@@ -25,7 +25,7 @@
       this={type}
       target={$$props.newtab ? '_blank' : undefined}
       rel={$$props.newtab ? 'noopener noreferrer' : undefined}
-      class="focusOutline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
+      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
         ? 'decoration-[3px]'
         : 'decoration-2'} transition-[text-decoration-color]"
       tabindex="0"
