@@ -53,6 +53,10 @@
     @include focus-state;
   }
 
+  p {
+    @apply line-clamp-1;
+  }
+
   div {
     @apply flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors;
 
