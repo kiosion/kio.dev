@@ -8,7 +8,7 @@
 
   export let data;
 
-  $: description = $t('Thoughts about tech, design, and development');
+  $: description = $t('pages.thoughts.description');
 </script>
 
 <svelte:head>
@@ -24,9 +24,9 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('Recent thoughts')}>
+<HeadedBlock heading={$t('pages.thoughts.title')} let:id>
   {#if data.posts.length}
-    <DocumentList documents={data.posts} />
+    <DocumentList documents={data.posts} aria-labelledby="{id}-heading" />
   {:else}
     <EmptyContent />
   {/if}

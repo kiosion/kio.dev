@@ -32,9 +32,9 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'Blog',
-    path: '/blog',
-    children: [{ name: 'Post', path: '/blog/:slug' }],
+    name: 'Thoughts',
+    path: '/thoughts',
+    children: [{ name: 'Post', path: '/thoughts/:slug' }],
     hidden: false
   },
   {
@@ -42,6 +42,11 @@ export const APP_ROUTES = [
     path: '/work',
     children: [{ name: 'Project', path: '/work/:slug' }],
     hidden: false
+  },
+  {
+    name: 'Experiments',
+    path: '/experiments',
+    hidden: true
   },
   {
     name: 'Etc',

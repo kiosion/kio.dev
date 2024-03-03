@@ -18,23 +18,23 @@
 
 <Hoverable let:hovered>
   <Tooltip
-    text={link?.length > 50 ? `${link.slice(0, 50)}...` : link ?? $t('Visit')}
+    text={link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit')}
     delay={300}
   >
     <svelte:element
       this={type}
-      href={link}
       target={$$props.newtab ? '_blank' : undefined}
       rel={$$props.newtab ? 'noopener noreferrer' : undefined}
       class="focusOutline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
         ? 'decoration-[3px]'
         : 'decoration-2'} transition-[text-decoration-color]"
       tabindex="0"
+      aria-label={$$props['aria-label']}
+      {...$$restProps}
+      href={link}
       on:click={() => dispatch('click')}
       on:keyup={(e) => e.key === 'Enter' && dispatch('click')}
       role={type === 'a' ? 'link' : 'button'}
-      aria-label={$$props['aria-label']}
-      {...$$restProps}
     >
       <slot />
     </svelte:element>

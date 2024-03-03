@@ -51,7 +51,7 @@
     </div>
     <ArrowButton
       class="focusOutline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
-      href={model === 'post' ? $linkTo('/blog') : $linkTo('/work')}
+      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
       preload

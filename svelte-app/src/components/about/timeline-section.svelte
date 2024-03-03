@@ -1,5 +1,6 @@
 <script lang="ts">
   import { displayMonthDuration, displayRange } from '$lib/date';
+  import { t } from '$lib/i18n';
 
   import TimelineItem from '$components/about/timeline-item.svelte';
 
@@ -7,13 +8,14 @@
 
   export let section: WorkTimelineItem[];
 
-  const title = section[0].title;
+  const title = section[0].title,
+    id = Math.random().toString(36).substring(7);
 </script>
 
-<section>
+<section role="group" aria-labelledby="{id}-heading">
   <div>
-    <h2>{title}</h2>
-    <p>
+    <h2 id="{id}-heading">{title}</h2>
+    <p aria-label={$t('Duration')}>
       {$displayRange(section[section.length - 1].range.start, section[0].range.end)} &bull;
       {$displayMonthDuration(
         section[section.length - 1].range.start,

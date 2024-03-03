@@ -32,7 +32,7 @@
     {#if $$slots.default}
       <slot {hovered} />
     {:else}
-      {noTranslate ? text : $t(text).toLowerCase()}
+      {noTranslate ? text.toLowerCase() : $t(text).toLowerCase()}
     {/if}
   </a>
 </Hoverable>

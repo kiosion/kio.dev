@@ -9,7 +9,7 @@
 
   export let data;
 
-  $: description = $t('How to get in touch, and some meta info about this site');
+  $: description = $t('pages.etc.description');
 </script>
 
 <svelte:head>

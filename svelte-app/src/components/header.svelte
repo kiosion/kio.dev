@@ -1,16 +1,16 @@
 <script lang="ts">
   import { NAV_LINKS } from '$lib/consts';
-  import { linkTo } from '$lib/i18n';
 
   import LanguageControls from '$components/controls/language-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import Divider from '$components/divider.svelte';
   import NavLink from '$components/nav/header-link.svelte';
+  import HeaderLogo from '$components/nav/header-logo.svelte';
 </script>
 
 <header>
   <nav aria-label="Main navigation">
-    <a href={$linkTo('/')} aria-label="Home">kio.dev</a>
+    <HeaderLogo />
     <div>
       {#each NAV_LINKS as link, i}
         <NavLink {link} />
@@ -41,7 +41,7 @@
       @apply justify-start gap-2 pr-0;
     }
 
-    :global(.dark) & {
+    @include dark {
       @apply text-light/90;
     }
   }
@@ -49,15 +49,9 @@
   div {
     @apply flex flex-row items-center justify-end gap-5 pr-1.5 pt-0.5 text-dark/80;
 
-    :global(.dark) & {
+    @include dark {
       @apply text-light/80;
     }
-  }
-
-  a {
-    @apply w-fit select-none rounded-sm font-code text-lg font-extrabold transition-[color];
-
-    @include focus-state(sm);
   }
 
   span {

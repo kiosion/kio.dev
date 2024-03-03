@@ -38,7 +38,7 @@ test('should load single post with body data', async ({ context, page }) => {
     )
   );
 
-  await page.goto('/blog/post-1');
+  await page.goto('/thoughts/post-1');
 
   await page.waitForSelector('body.is-loaded');
 

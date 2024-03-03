@@ -1,11 +1,13 @@
 <script lang="ts">
   export let heading: string,
     testId: string | undefined = undefined;
+
+  export const id = Math.random().toString(36).substring(2);
 </script>
 
-<section data-test-id={testId}>
-  <h1>{heading}</h1>
-  <div><slot /></div>
+<section {id} data-test-id={testId}>
+  <h1 id="{id}-heading">{heading}</h1>
+  <div><slot {id} /></div>
 </section>
 
 <style lang="scss">

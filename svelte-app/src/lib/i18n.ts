@@ -6,6 +6,8 @@ import FR from '$langs/fr.json';
 import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
 import Logger from '$lib/logger';
 
+import type { LocaleKey } from '$generated';
+
 const isLocalized = writable(false);
 const currentLang = writable(DEFAULT_APP_LANG);
 
@@ -20,8 +22,8 @@ const notFound = (key: string, lang: string, abbr = 0) => {
 
 // Check if both languages have the same keys
 const check = () => {
-  const enKeys = Object.keys(EN as Record<string, string>),
-    frKeys = Object.keys(FR as Record<string, string>);
+  const enKeys = Object.keys(EN),
+    frKeys = Object.keys(FR);
 
   const enKeysNotInFr = enKeys.filter((key) => !frKeys.includes(key)),
     frKeysNotInEn = frKeys.filter((key) => !enKeys.includes(key));
@@ -39,14 +41,43 @@ const check = () => {
   }
 };
 
-const getKey = <T extends keyof typeof EN>(lang: string, key: T): string | undefined => {
+const getLocaleObject = (lang: (typeof APP_LANGS)[number]) => {
   switch (lang) {
     case 'en':
-      return EN[key];
+      return EN;
     case 'fr':
-      return FR[key];
+      return FR;
     default:
       return undefined;
+  }
+};
+
+const getKey = (
+  localeObject: typeof EN | typeof FR | undefined,
+  key: LocaleKey
+): string | undefined => {
+  if (!localeObject) {
+    return undefined;
+  }
+
+  const keys = key.split('.');
+
+  let currentObject: Record<string, unknown> = localeObject;
+
+  for (const keyPart of keys) {
+    if (currentObject?.[keyPart] === undefined) {
+      return undefined;
+    }
+
+    switch (typeof currentObject?.[keyPart]) {
+      case 'string':
+        return currentObject[keyPart] as string;
+      case 'object':
+        currentObject = currentObject[keyPart] as Record<string, unknown>;
+        break;
+      default:
+        return undefined;
+    }
   }
 };
 
@@ -54,7 +85,7 @@ type ExtractTVars<S> = S extends `${infer _Prefix}{${infer Var}}${infer Rest}`
   ? Var | ExtractTVars<Rest>
   : never;
 
-const _translate = <K extends string>(
+const _translate = <K extends LocaleKey>(
   currentLang: string | undefined,
   key: K,
   params?: ExtractTVars<K> extends never
@@ -75,7 +106,8 @@ const _translate = <K extends string>(
     );
   };
 
-  const string = getKey(lang, key as keyof typeof EN);
+  const locale = getLocaleObject(lang),
+    string = getKey(locale, key);
 
   if (string) {
     return replaceParams(string);
@@ -87,7 +119,7 @@ const _translate = <K extends string>(
 
 const translate = derived<
   typeof currentLang,
-  <K extends string>(
+  <K extends LocaleKey>(
     key: K,
     params?: ExtractTVars<K> extends never
       ? never
@@ -96,7 +128,7 @@ const translate = derived<
 >(
   currentLang,
   (val: string) =>
-    <K extends string>(
+    <K extends LocaleKey>(
       key: K,
       params?: ExtractTVars<K> extends never
         ? never

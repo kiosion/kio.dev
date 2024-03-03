@@ -39,7 +39,8 @@ export default {
       $langs: 'src/languages',
       $routes: 'src/routes',
       $tests: 'tests',
-      $types: 'types/app'
+      $types: 'types/app',
+      $generated: 'types/generated'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'

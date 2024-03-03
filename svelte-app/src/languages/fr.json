@@ -1,8 +1,6 @@
 {
   " icon": " icône",
-  "A bit about me and what I do": "Un peu à propos de moi et de ce que je fais",
   "A blog post on kio.dev": "Un article de blog sur kio.dev",
-  "A collection of my work, open-source contributions, and personal projects": "Une collection de mon travail, de mes contributions open-source et de mes projets personnels",
   "A project on kio.dev": "Un projet sur kio.dev",
   "About": "À propos",
   "About me": "À propos de moi",
@@ -10,11 +8,14 @@
   "Blog": "Blog",
   "Click here to": "Cliquez ici pour",
   "Code block": "Bloc de code",
+  "Code content": "Contenu du code",
   "Copy to clipboard": "Copier dans le presse-papiers",
   "Date posted": "Date de publication",
+  "Duration": "Durée",
   "English": "Anglais",
   "Error": "Erreur",
   "Etc": "Etc",
+  "Experiments": "Expériences",
   "Footnotes": "Notes de bas de page",
   "French": "Français",
   "Go to footnote": "Aller à la note de bas de page",
@@ -22,9 +23,11 @@
   "Hide stack trace": "Masquer la trace de la pile",
   "Home": "Accueil",
   "Internal Error": "Erreur interne",
+  "Invalid date": "Date invalide",
   "Links": "Liens",
   "Meta": "Plus",
   "More": "Plus",
+  "No content": "Pas de contenu",
   "PGP": "PGP",
   "Page content": "Contenu de la page",
   "Please": "S'il vous plaît",
@@ -33,30 +36,76 @@
   "Project": "Projet",
   "Projects": "Projets",
   "Read more": "Lire la suite",
-  "Recent posts": "Articles récents",
   "Recent projects": "Projets récents",
   "Recent thoughts": "Pensées récentes",
   "Say hello": "Dire bonjour",
   "See more": "Voir plus",
   "Show stack trace": "Afficher la trace de la pile",
   "Skip to content": "Passer au contenu",
+  "Social links": "Liens sociaux",
   "Sorry, something went wrong. Please try again.": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
   "Switch to English": "Passer à l'Anglais",
   "Switch to French": "Passer au Français",
   "Tags": "Tags",
   "Thoughts": "Pensées",
-  "Thoughts about tech, design, and development": "Pensées sur la technologie, le design et le développement",
+  "Unknown date": "Date inconnue",
   "Use dark mode": "Utiliser le mode sombre",
   "Use light mode": "Utiliser le mode clair",
   "View latest commit on GitHub": "Voir le dernier commit sur GitHub",
   "View more": "Voir plus",
-  "Want to send a secure message my way? Here's my main PGP key:": "Voulez-vous envoyer un message sécurisé à ma façon? Voici ma clé PGP principale:",
+  "Visit": "Visiter",
   "Where I've worked": "Où j'ai travaillé",
   "Work": "Travail",
   "a bit about me": "un peu à propos de moi",
+  "errors": {
+    "bad-request": {
+      "message": "Désolé, cette demande n'était pas valide ou était mal formée.",
+      "title": "Mauvaise Demande"
+    },
+    "forbidden": {
+      "message": "Désolé, vous n'êtes pas autorisé à accéder à cette ressource.",
+      "title": "Interdit"
+    },
+    "generic": {
+      "message": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
+      "title": "Erreur Inconnue"
+    },
+    "internal": {
+      "message": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
+      "title": "Erreur Interne"
+    },
+    "not-found": {
+      "message": "Désolé, cette ressource n'existe pas ou n'a pas été trouvée.",
+      "title": "Pas Trouvé"
+    },
+    "unauthorized": {
+      "message": "Désolé, vous n'êtes pas autorisé à accéder à cette ressource.",
+      "title": "Non Autorisé"
+    }
+  },
   "go back": "retourner",
+  "now": "maintenant",
+  "pages": {
+    "about": {
+      "description": "Un peu à propos de moi et de ce que je fais",
+      "title": "À propos de moi"
+    },
+    "etc": {
+      "description": "Comment me contacter, et quelques informations méta à propos de ce site",
+      "title": "Plus"
+    },
+    "thoughts": {
+      "description": "Pensées sur la technologie, le design et le développement",
+      "title": "Pensées"
+    },
+    "work": {
+      "description": "Un aperçu de mon travail, de mes rôles précédents et de mes contributions open-source",
+      "title": "Travail"
+    }
+  },
   "present": "présent",
   "refresh the page": "rafraîchir la page",
+  "{document} details": "Détails de {document}",
   "{length} min read": "{length} minute de lecture",
   "{months} months": "{months} mois",
   "{month} month": "{month} mois",

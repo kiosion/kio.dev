@@ -36,7 +36,7 @@
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`
       : data.desc
-    : $t(`A ${model === 'post' ? 'post' : 'project'} on kio.dev`);
+    : $t(`A ${model === 'post' ? 'blog post' : 'project'} on kio.dev`);
 </script>
 
 <svelte:head>
