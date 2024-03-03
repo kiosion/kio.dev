@@ -94,6 +94,10 @@
       "description": "How to reach me, and some meta information about this site",
       "title": "Meta"
     },
+    "experiments": {
+      "description": "A collection of experiments, prototypes, and other fun things",
+      "title": "Experiments"
+    },
     "thoughts": {
       "description": "Thoughts about tech, design, and development",
       "title": "Thoughts"

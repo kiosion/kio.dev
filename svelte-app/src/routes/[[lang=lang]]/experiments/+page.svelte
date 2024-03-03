@@ -2,10 +2,12 @@
   import { t } from '$lib/i18n.js';
   import { pageTitle } from '$lib/navigation';
 
-  import EmptyContent from '$components/empty-content.svelte';
+  import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
 
-  $: description = $t('Toys, widgets, and other fun experiments');
+  export let data;
+
+  $: description = $t('pages.experiments.description');
 </script>
 
 <svelte:head>
@@ -22,5 +24,5 @@
 </svelte:head>
 
 <HeadedBlock heading={$t('Experiments')}>
-  <EmptyContent />
+  <ToruExperiment initData={data.nowPlayingData} />
 </HeadedBlock>

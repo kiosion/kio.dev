@@ -94,6 +94,10 @@
       "description": "Comment me contacter, et quelques informations méta à propos de ce site",
       "title": "Plus"
     },
+    "experiments": {
+      "description": "Une collection d'expériences, de prototypes et d'autres choses amusantes",
+      "title": "Expériences"
+    },
     "thoughts": {
       "description": "Pensées sur la technologie, le design et le développement",
       "title": "Pensées"

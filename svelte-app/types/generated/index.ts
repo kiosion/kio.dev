@@ -75,6 +75,8 @@ export type LocaleKey =
   | 'pages.about.title'
   | 'pages.etc.description'
   | 'pages.etc.title'
+  | 'pages.experiments.description'
+  | 'pages.experiments.title'
   | 'pages.thoughts.description'
   | 'pages.thoughts.title'
   | 'pages.work.description'
