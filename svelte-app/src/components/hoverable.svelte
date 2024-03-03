@@ -23,10 +23,12 @@
   data-test-id="hover-target"
   on:mouseover={() => handleHoverIn()}
   on:mouseout={() => handleHoverOut()}
-  on:focus={() => (hovered = true)}
-  on:focusin={() => (hovered = true)}
-  on:focusout={() => (hovered = false)}
-  on:blur={() => (hovered = false)}
+  on:focus={() => handleHoverIn()}
+  on:focusin={() => handleHoverIn()}
+  on:mouseenter={() => handleHoverIn()}
+  on:mouseleave={() => handleHoverOut()}
+  on:focusout={() => handleHoverOut()}
+  on:blur={() => handleHoverOut()}
   role="none"
 >
   <slot {hovered} />

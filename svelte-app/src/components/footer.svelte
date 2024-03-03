@@ -24,39 +24,46 @@
 {#if socials?.length || APP_VERSION?.length}
   <footer class="flex flex-row items-center justify-between font-mono text-sm">
     {#if socials?.length}
-      <div
-        class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
-        role="group"
-        aria-label={$t('Social links')}
-      >
-        {#each socials as social, i}
-          <Tooltip text={social.url} delay={300} position="top">
-            <BaseLink
-              text={social.name}
-              href={social.url}
-              target={social.target}
-              rel={social.rel}
-              noTranslate
-            />
-          </Tooltip>
-          {#if i < socials.length - 1}
-            <span class="cursor-default select-none" aria-hidden="true">/</span>
-          {/if}
-        {/each}
+      <div class="flex flex-row items-center justify-start gap-x-3">
+        <Icon name="At" class="text-accent-light/80 dark:text-accent-dark/80" size={20} />
+        <div
+          class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
+          role="group"
+          aria-label={$t('Social links')}
+        >
+          {#each socials as social, i}
+            <Tooltip text={social.url} delay={300} position="top">
+              <BaseLink
+                text={social.name}
+                href={social.url}
+                target={social.target}
+                rel={social.rel}
+                noTranslate
+              />
+            </Tooltip>
+            {#if i < socials.length - 1}
+              <span class="cursor-default select-none" aria-hidden="true">/</span>
+            {/if}
+          {/each}
+        </div>
       </div>
     {/if}
     {#if APP_VERSION?.length}
       <div
-        class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
+        class="flex flex-row items-center justify-start gap-x-3 font-mono text-sm text-dark/90 dark:text-light/90"
         aria-label={$t('View latest commit on GitHub')}
       >
+        <Icon
+          name="GitBranch"
+          class="text-accent-light/80 dark:text-accent-dark/80"
+          size={20}
+        />
         <Tooltip text={$t('View latest commit on GitHub')} position="top">
           <BaseLink
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
           >
-            <Icon name="GitCommit" inline />
             {APP_VERSION.slice(0, 6)}
           </BaseLink>
         </Tooltip>
