@@ -1,0 +1,101 @@
+@layer base {
+  body {
+    @apply h-full w-full overflow-x-hidden;
+  }
+
+  @layer base {
+    body,
+    html {
+      height: 100vh;
+      overflow: hidden;
+      transition: background 150ms ease;
+    }
+
+    body,
+    html,
+    div,
+    span,
+    p,
+    img {
+      box-sizing: border-box;
+    }
+  
+    body {
+      @apply bg-black text-light;
+    
+      &.light {
+        @apply bg-light text-dark;
+      }
+
+      &:not(.is-loaded) {
+        cursor: wait !important;
+
+        & a,
+        & button,
+        & [role='button'] {
+          cursor: not-allowed !important;
+        }
+      }
+
+      &.is-loading {
+        cursor: wait !important;
+
+        & a,
+        & button,
+        & [role='button'] {
+          cursor: not-allowed !important;
+        }
+      }
+    }
+    
+    ::selection {
+      @apply bg-accent-light/80 text-light;
+    }
+
+    .dark {
+      ::selection {
+        @apply bg-accent-dark/80 text-dark;
+      }
+    }
+  }
+}
+
+@layer utilities {
+  .focus-outline {
+    @apply outline-offset-4;
+
+    &,
+    &-sm {
+      @apply focus-visible:outline outline-accent-light outline-2 dark:outline-accent-dark;
+    }
+
+    &-sm {
+      @apply outline-offset-2;
+    }
+  }
+}
+
+@layer components {
+  .pt-ol,
+  .pt-ul {
+    li {
+      @apply mb-2 leading-6;
+    }
+  }
+
+  .pt-ol {
+    li {
+      ol {
+        @apply list-[lower-alpha] my-3;
+      }
+    }
+  }
+
+  .pt-ul {
+    li {
+      ul {
+        @apply list-disc my-3;
+      }
+    }
+  }
+}

@@ -120,6 +120,7 @@
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <span
+  class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-black dark:text-light"
   role="button"
   aria-label={$t('Skip to content')}
   tabindex="0"
@@ -128,7 +129,10 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div class="main" in:fly={{ delay: 100, duration: 100, y: -40 }}>
+<div
+  class="main relative h-full w-full overflow-x-hidden rounded-xl text-dark dark:text-light lg:text-lg"
+  in:fly={{ delay: 100, duration: 100, y: -40 }}
+>
   <ScrollContainer let:element>
     <ConstrainWidth>
       <Header />
@@ -146,34 +150,3 @@
     <TooltipManager container={element} />
   </ScrollContainer>
 </div>
-
-<style lang="scss">
-  @import '@styles/mixins';
-  @import '@styles/variables';
-
-  span {
-    @apply absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color];
-
-    @include focus-state(sm);
-
-    &:focus-visible {
-      @apply mt-4;
-    }
-
-    @include dark {
-      @apply bg-black text-light;
-    }
-  }
-
-  .main {
-    @apply relative h-full w-full overflow-x-hidden rounded-xl text-dark;
-
-    @include media(lg) {
-      @apply text-lg;
-    }
-
-    @include dark {
-      @apply text-light;
-    }
-  }
-</style>

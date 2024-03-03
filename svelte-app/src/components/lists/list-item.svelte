@@ -20,72 +20,43 @@
   <a
     href={$linkTo(link)}
     class:small
+    class="focus-outline w-full rounded-md"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
   >
-    <div>
-      <p aria-label={$t('Date posted')}>
+    <div
+      class="flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      class:pb-1.5={small}
+    >
+      <p class="line-clamp-1" aria-label={$t('Date posted')}>
         {$formatDate(document.date || document._createdAt, 'med')}
       </p>
       {#if document.tags?.length}
-        <span>{document.tags[0].title.toLowerCase()}</span>
+        <span
+          class="rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
+          >{document.tags[0].title.toLowerCase()}</span
+        >
       {/if}
       <p>{$t('{views} views', { views: $parseViews((document.views ?? 0) + 1) })}</p>
     </div>
 
-    <h1 class:underline={hovered} class:pb-1={!small && document.desc?.length}>
+    <h1
+      class="min-w-fit font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
+      class:pb-1={!small && document.desc?.length}
+      class:underline={hovered}
+      class:text-lg={small}
+      class:text-xl={!small}
+      class:decoration-2={small}
+      class:decoration-[3px]={!small}
+      class:underline-offset-2={small}
+      class:underline-offset-4={!small}
+    >
       {document.title}
     </h1>
 
     {#if !small && document.desc?.length}
-      <p>{document.desc}</p>
+      <p class="line-clamp-1">{document.desc}</p>
     {/if}
   </a>
 </Hoverable>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  a {
-    @apply w-full rounded-md;
-
-    @include focus-state;
-  }
-
-  p {
-    @apply line-clamp-1;
-  }
-
-  div {
-    @apply flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors;
-
-    @include dark {
-      @apply text-light/80;
-    }
-
-    .small & {
-      @apply pb-1.5;
-    }
-
-    span {
-      @apply rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors;
-
-      @include dark {
-        @apply bg-light/10;
-      }
-    }
-  }
-
-  h1 {
-    @apply min-w-fit text-xl font-bold decoration-accent-light decoration-[3px] underline-offset-4 transition-colors;
-
-    @include dark {
-      @apply decoration-accent-dark;
-    }
-
-    .small & {
-      @apply text-lg decoration-2 underline-offset-2;
-    }
-  }
-</style>

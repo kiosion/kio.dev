@@ -6,14 +6,8 @@
   export let documents: (ProjectDocument | PostDocument)[];
 </script>
 
-<div role="group" {...$$restProps}>
+<div class="flex w-full flex-col gap-8 pt-5" role="group" {...$$restProps}>
   {#each documents as document}
     <ListItem {document} />
   {/each}
 </div>
-
-<style lang="scss">
-  div {
-    @apply flex w-full flex-col gap-8 pt-5;
-  }
-</style>

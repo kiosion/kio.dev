@@ -1,4 +1,7 @@
-<div id={$$props.id ?? undefined}>
+<div
+  class="w-full transition-[max-width,margin] duration-200"
+  id={$$props.id ?? undefined}
+>
   <slot />
 </div>
 
@@ -6,8 +9,6 @@
   @import '@styles/mixins';
 
   div {
-    @apply w-full transition-[max-width,margin] duration-200;
-
     --max-width: unset;
 
     @include media(lg) {

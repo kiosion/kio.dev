@@ -66,13 +66,23 @@
   });
 </script>
 
-<div>
+<div class="relative w-full">
   {#await srcPromise || new Promise((_res) => {})}
-    <div class="loading"><Spinner /></div>
+    <div
+      class="loading absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base"
+    >
+      <Spinner />
+    </div>
     <!-- svelte-ignore a11y-missing-attribute -->
-    <img src={placeholderSrc} draggable="false" {style} />
+    <img
+      class="mx-auto w-full select-none rounded-sm"
+      src={placeholderSrc}
+      draggable="false"
+      {style}
+    />
   {:then src}
     <button
+      class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
       {style}
       on:click={() => {
         showImageModal = true;
@@ -86,7 +96,7 @@
     >
       {#if showImageModal}
         <img
-          class="placeholder"
+          class="placeholder absolute left-0 top-0 mx-auto w-full select-none rounded-sm opacity-50"
           src={placeholderSrc}
           alt={_key}
           draggable="false"
@@ -96,6 +106,7 @@
       {:else}
         <img
           {src}
+          class="mx-auto w-full select-none rounded-sm"
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
@@ -104,11 +115,15 @@
       {/if}
     </button>
   {:catch e}
-    <p class="error">Error: {e?.message || e}</p>
+    <p
+      class="error absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base"
+    >
+      Error: {e?.message || e}
+    </p>
     <img src={placeholderSrc} alt={_key} draggable="false" {style} />
   {/await}
   <img
-    class="backdrop"
+    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity"
     src={placeholderSrc}
     alt={_key}
     draggable="false"
@@ -119,6 +134,7 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
+    class="mx-auto w-full select-none rounded-sm"
     src={fullSrc}
     alt={_key}
     {style}
@@ -130,48 +146,11 @@
 <style lang="scss">
   @import '@styles/mixins';
 
-  .placeholder,
-  .backdrop {
-    position: absolute;
-    top: 0;
-  }
-
-  .placeholder {
-    left: 0;
-    opacity: 50%;
-  }
-
-  div:not(.loading) {
-    @apply relative w-full;
-
-    .backdrop {
-      @apply -translate-x-1/2 transition-opacity;
-
-      z-index: -1;
-      filter: blur(20px);
-      opacity: 0.2;
-      left: 50%;
-    }
-
+  div {
     @include focused {
       .backdrop {
-        opacity: 30%;
+        @apply opacity-30;
       }
     }
-  }
-
-  button {
-    @apply relative mx-auto block max-h-fit w-full rounded-sm;
-
-    @include focus-state(sm);
-  }
-
-  img {
-    @apply mx-auto w-full select-none rounded-sm;
-  }
-
-  .error,
-  .loading {
-    @apply absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base;
   }
 </style>

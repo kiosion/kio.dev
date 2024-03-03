@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class={colours[index % 5]}
+  class="absolute h-1 w-1 opacity-0 {colours[index % 5]}"
   style="--x-end: {Math.random() * 2 * spreadX - spreadX}px; --y-end: {Math.random() *
     2 *
     spreadY -
@@ -23,8 +23,6 @@
 
 <style lang="scss">
   div {
-    @apply absolute h-1 w-1 opacity-0;
-
     animation: explode 1s ease-out forwards;
   }
 

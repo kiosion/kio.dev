@@ -18,10 +18,11 @@
 <svelte:element
   this={self}
   href={$$props.href || undefined}
-  class:fullWidth
-  class:alignRight={align === 'right'}
-  class:alignLeft={align === 'left'}
-  class="arrowButton {$$props.class || ''}"
+  class:w-full={fullWidth}
+  class:text-right={align === 'right'}
+  class:text-left={align === 'left'}
+  class="focus-outline inline-block rounded-sm font-code text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ??
+    ''}"
   aria-label={$$props['aria-label'] || undefined}
   role="button"
   tabindex="0"
@@ -32,37 +33,3 @@
 >
   <slot />
 </svelte:element>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  .arrowButton {
-    @apply inline-block rounded-sm font-code text-accent-light;
-
-    @include focus-state;
-
-    @include focused {
-      @apply text-dark;
-
-      @include dark {
-        @apply text-light;
-      }
-    }
-
-    &.fullWidth {
-      @apply w-full;
-    }
-
-    &.alignRight {
-      @apply text-right;
-    }
-
-    &.alignLeft {
-      @apply text-left;
-    }
-
-    @include dark {
-      @apply text-accent-dark;
-    }
-  }
-</style>

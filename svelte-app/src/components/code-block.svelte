@@ -112,7 +112,7 @@
   {/if}
   <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]}>
     <button
-      class="focusOutline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
     >
@@ -122,7 +122,7 @@
     </button>
   </Tooltip>
   <div
-    class="focusOutline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
+    class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     bind:this={codeContainer}
   >
     <div

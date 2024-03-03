@@ -15,8 +15,14 @@
 
 <Hoverable let:hovered>
   <a
+    class="focus-outline-sm rounded-sm text-sm text-dark/80 dark:text-light/80"
     class:active={active || hovered}
     class:slotted={$$slots.default !== undefined}
+    class:flex={$$slots.default !== undefined}
+    class:flex-row={$$slots.default !== undefined}
+    class:items-center={$$slots.default !== undefined}
+    class:justify-start={$$slots.default !== undefined}
+    class:gap-x-1.5={$$slots.default !== undefined}
     href={$linkTo(href)}
     tabindex="0"
     role={$$props.role || undefined}
@@ -41,24 +47,12 @@
   @import '@styles/mixins';
 
   a {
-    @apply rounded-sm text-sm text-dark/80;
-
-    &.slotted {
-      @apply flex flex-row items-center justify-start gap-x-1.5;
-    }
-
     @include focused('.active') {
       @apply text-accent-light;
 
       @include dark {
         @apply text-accent-dark;
       }
-    }
-
-    @include focus-state(sm);
-
-    @include dark {
-      @apply text-light/80;
     }
   }
 </style>

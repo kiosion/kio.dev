@@ -7,6 +7,9 @@
 </script>
 
 <button
+  class="focus-outline-sm mt-4 flex flex-grow items-center rounded-md text-accent-light hover:text-dark focus-visible:text-dark disabled:cursor-not-allowed disabled:text-dark/60 dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light dark:disabled:text-light/60"
+  class:justify-end={dir === 'right'}
+  class:justify-start={dir === 'left'}
   on:click={onClick}
   on:keydown={(e) => {
     if (e.key === 'Enter') {
@@ -14,33 +17,6 @@
     }
   }}
   {disabled}
-  class={dir === 'right' ? 'justify-end' : 'justify-start'}
 >
   <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22} />
 </button>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  button {
-    @apply mt-4 flex flex-grow items-center rounded-md text-accent-light;
-
-    @include focused {
-      @apply text-dark;
-
-      @include dark {
-        @apply text-light;
-      }
-    }
-
-    &:disabled {
-      @apply cursor-not-allowed text-dark/60;
-
-      @include dark {
-        @apply text-light/60;
-      }
-    }
-
-    @include focus-state(sm);
-  }
-</style>

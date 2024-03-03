@@ -18,7 +18,7 @@
 </script>
 
 <span
-  class={$$props.class}
+  class="contents {$$props.class ?? ''}"
   class:cursor-pointer={setPointer}
   data-test-id="hover-target"
   on:mouseover={() => handleHoverIn()}
@@ -31,9 +31,3 @@
 >
   <slot {hovered} />
 </span>
-
-<style lang="scss">
-  span {
-    @apply contents;
-  }
-</style>

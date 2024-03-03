@@ -26,6 +26,7 @@
 {#if show}
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <dialog
+    class="fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80"
     bind:this={dialog}
     on:click={() => (show = false)}
     on:keydown={(e) => {
@@ -36,16 +37,10 @@
     in:fade={{ duration: BASE_ANIMATION_DURATION }}
     out:fade={{ duration: BASE_ANIMATION_DURATION }}
   >
-    <div><slot /></div>
+    <div
+      class="relative flex h-full max-h-full w-full max-w-full flex-col items-center justify-center p-8"
+    >
+      <slot />
+    </div>
   </dialog>
 {/if}
-
-<style lang="scss">
-  dialog {
-    @apply fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80;
-
-    div {
-      @apply relative flex h-full max-h-full w-full max-w-full flex-col items-center justify-center p-8;
-    }
-  }
-</style>

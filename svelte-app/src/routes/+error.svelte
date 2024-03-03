@@ -89,10 +89,10 @@
 
 <div data-test-id="error-page">
   <HeadedBlock {heading}>
-    <p>
+    <p class="my-4 text-base">
       {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
     </p>
-    <p>
+    <p class="my-4 text-base">
       {$t('Please')}
       <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
         on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
@@ -104,7 +104,7 @@
     <Divider />
     <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
       <span class="flex items-center justify-start gap-2">
-        <p>{$t('See more')}</p>
+        <p class="text-base">{$t('See more')}</p>
         <Icon
           name="ArrowUp"
           size={18}
@@ -122,13 +122,3 @@
     {/if}
   {/if}
 </div>
-
-<style lang="scss">
-  p {
-    @apply my-4 text-base;
-
-    span & {
-      @apply my-0;
-    }
-  }
-</style>

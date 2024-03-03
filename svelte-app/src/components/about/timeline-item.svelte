@@ -11,18 +11,27 @@
     last = false;
 </script>
 
-<div class:last class="item">
-  <span class="bullet" />
+<div
+  class="relative flex flex-row items-start justify-start gap-x-6 pl-3"
+  class:last
+  class:pb-0={last}
+  class:pb-5={!last}
+>
+  <span
+    class="bullet block flex-shrink-0 rounded-full bg-accent-light/80 dark:bg-accent-dark/80"
+  />
   <div class="content">
-    <h3>{title}</h3>
-    <p>
+    <h3 class="py-1 text-base font-bold text-dark transition-colors dark:text-white">
+      {title}
+    </h3>
+    <p class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80">
       {$displayRange(range.start, range.end)} &bull; {$displayMonthDuration(
         range.start,
         range.end
       )}
     </p>
     {#if body}
-      <div class="body">
+      <div class="-mb-4">
         <PortableText text={body} />
       </div>
     {/if}
@@ -37,32 +46,10 @@
   $lineWidth: 2px;
   $lineGap: 14px;
 
-  .item {
-    @apply relative flex flex-row items-start justify-start gap-x-6 pb-5 pl-3;
-
-    &.last {
-      @apply pb-0;
-    }
-  }
-
   .bullet {
-    @apply block flex-shrink-0 rounded-full bg-accent-light/80;
-
     margin-top: $bulletTopMargin;
     width: $bulletSize;
     height: $bulletSize;
-
-    @include dark {
-      @apply bg-accent-dark/80;
-    }
-  }
-
-  h3 {
-    @apply py-1 text-base font-bold text-dark transition-colors;
-
-    @include dark {
-      @apply text-white;
-    }
   }
 
   .content {
@@ -86,18 +73,6 @@
       @include dark {
         @apply bg-white/20;
       }
-    }
-
-    p {
-      @apply font-mono text-sm text-dark/80 transition-colors;
-
-      @include dark {
-        @apply text-light/80;
-      }
-    }
-
-    .body {
-      @apply -mb-4;
     }
   }
 </style>
