@@ -120,9 +120,8 @@
       class="pointer-events-none absolute -bottom-2 left-0 right-0 top-0 -z-40 transition-opacity"
       aria-hidden="true"
       class:opacity-10={!hovered}
-      class:dark:opacity-15={!hovered}
       class:opacity-20={hovered}
-      class:dark:opacity-30={hovered}
+      class:dark:opacity-15={hovered}
     >
       {#if initData}
         <!-- svelte-ignore a11y-missing-attribute -->

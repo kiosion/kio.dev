@@ -6,9 +6,9 @@
   import Divider from '$components/divider.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  const rows = 26,
-    cols = 60,
-    interval = 75;
+  const rows = 25,
+    cols = 58,
+    interval = 50;
 
   const createGrid = (rows: number, cols: number) => {
     const arr: boolean[][] = new Array(rows);
@@ -30,11 +30,18 @@
     return arr;
   };
 
-  let intervalId: ReturnType<typeof setInterval> | undefined,
-    running = false,
+  let running = false,
     grid = createGrid(rows, cols);
 
+  const toggleCell = (row: number, col: number) => {
+    grid[row][col] = !grid[row][col];
+  };
+
   const nextGeneration = () => {
+    if (!running) {
+      return;
+    }
+
     const newGrid: boolean[][] = createGrid(rows, cols);
 
     for (let row = 0; row < rows; ++row) {
@@ -51,6 +58,8 @@
     }
 
     grid = newGrid;
+
+    setTimeout(() => window.requestAnimationFrame(nextGeneration), interval);
   };
 
   const countNeighbours = (row: number, col: number) => {
@@ -85,15 +94,12 @@
       return;
     }
 
-    intervalId = setInterval(nextGeneration, interval);
     running = true;
+    nextGeneration();
   };
 
   const stopGame = () => {
-    if (running) {
-      clearInterval(intervalId);
-      running = false;
-    }
+    running = false;
   };
 
   onMount(() => {
@@ -115,13 +121,15 @@
   </header>
 
   <figure class="relative w-full overflow-clip rounded-md">
-    <div class="grid w-fit grid-cols-[repeat(60,12px)] gap-0.5">
-      {#each grid as row, _rowIndex}
-        {#each row as cell, _colIndex}
+    <div class="grid w-fit gap-0.5" style="grid-template-columns: repeat({cols}, 12px);">
+      {#each grid as row, rowIndex}
+        {#each row as cell, colIndex}
+          <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
           <div
             class="h-3 w-3 rounded-sm shadow-lg {cell
               ? 'bg-violet-500/60 shadow-violet-500/30 dark:shadow-violet-500/10'
               : 'bg-transparent shadow-transparent'}"
+            on:click={() => !running && toggleCell(rowIndex, colIndex)}
           />
         {/each}
       {/each}
