@@ -12,7 +12,7 @@
 
   export let data;
 
-  $: description = $t('A bit about me and what I do');
+  $: description = $t('pages.about.description');
 </script>
 
 <svelte:head>
@@ -41,14 +41,14 @@
   <Divider />
 {/if}
 
-<HeadedBlock heading={$t('Recent thoughts')}>
+<HeadedBlock heading={$t('Recent thoughts')} let:id>
   {#if data.posts.length}
-    <div role="group" aria-label={$t('Posts')}>
+    <div role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
         <ListItem document={post} small />
       {/each}
     </div>
-    <ArrowButton href={$linkTo('/blog')} fullWidth preload>
+    <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
       <span class="flex items-center justify-start gap-2">
         <p>{$t('See more')}</p>
         <Icon name="ArrowRight" size={18} inline />

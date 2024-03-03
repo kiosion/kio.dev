@@ -1,19 +1,10 @@
-import { DEFAULT_APP_LANG } from '$lib/consts';
-import { handleLoadError } from '$lib/data';
-import { findOne } from '$lib/store';
+import { redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load = (async ({ fetch, params, url }) => {
-  const preview = url.searchParams.get('preview') === 'true' || false,
-    opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
-      string,
-      string | boolean
-    >;
-
-  preview && (opts.preview = true);
-
-  const post = handleLoadError(await findOne(fetch, 'post', opts));
-
-  return { post, routeFetch: fetch };
+export const load = (({ params }) => {
+  throw redirect(
+    301,
+    params.lang === 'fr' ? `/fr/thoughts/${params.slug}` : `/thoughts/${params.slug}`
+  );
 }) satisfies PageLoad;

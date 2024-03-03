@@ -1,16 +1,7 @@
-import { DEFAULT_APP_LANG, DEFAULT_POST_QUERY_PARAMS } from '$lib/consts';
-import { handleLoadError } from '$lib/data';
-import { find } from '$lib/store';
+import { redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
-export const load = (async ({ fetch, params }) => {
-  const posts = handleLoadError(
-    await find(fetch, 'post', {
-      ...DEFAULT_POST_QUERY_PARAMS,
-      lang: params.lang || DEFAULT_APP_LANG
-    })
-  );
-
-  return { posts };
+export const load = (({ params }) => {
+  throw redirect(301, params.lang === 'fr' ? '/fr/thoughts' : '/thoughts');
 }) satisfies PageLoad;

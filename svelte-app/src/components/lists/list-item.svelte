@@ -12,7 +12,7 @@
 
   const link =
     document._type === 'post'
-      ? `/blog/${document.slug.current}`
+      ? `/thoughts/${document.slug.current}`
       : `/work/${document.slug.current}`;
 </script>
 
@@ -34,7 +34,13 @@
       <p>{$t('{views} views', { views: $parseViews((document.views ?? 0) + 1) })}</p>
     </div>
 
-    <h1 class:underline={hovered}>{document.title}</h1>
+    <h1 class:underline={hovered} class:pb-1={!small && document.desc?.length}>
+      {document.title}
+    </h1>
+
+    {#if !small && document.desc?.length}
+      <p>{document.desc}</p>
+    {/if}
   </a>
 </Hoverable>
 

@@ -6,7 +6,7 @@
   export let documents: (ProjectDocument | PostDocument)[];
 </script>
 
-<div>
+<div role="group" {...$$restProps}>
   {#each documents as document}
     <ListItem {document} />
   {/each}
@@ -14,6 +14,6 @@
 
 <style lang="scss">
   div {
-    @apply flex w-full flex-col gap-7 pt-5;
+    @apply flex w-full flex-col gap-8 pt-5;
   }
 </style>

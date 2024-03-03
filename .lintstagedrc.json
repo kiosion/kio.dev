@@ -10,6 +10,7 @@
     "./svelte-app/node_modules/.bin/eslint --fix"
   ],
   "svelte-app/src/languages/*.json": [
-    "deno run --no-npm --allow-read --allow-write ./svelte-app/scripts/sort-json.ts"
+    "bun ./svelte-app/scripts/lint-json.ts",
+    "bun ./svelte-app/scripts/generate-types.ts"
   ]
 }

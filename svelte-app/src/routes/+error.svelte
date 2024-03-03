@@ -11,30 +11,32 @@
   import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
 
-  let message = 'Sorry, something went wrong. Please try again.',
-    title = 'Unknown Error',
+  import type { LocaleKey } from '$generated';
+
+  let message: LocaleKey = 'errors.generic.message',
+    title: LocaleKey = 'errors.generic.title',
     showStack = false,
     status = $page.status;
 
   switch (status) {
     case 400:
-      title = 'Bad Request';
-      message = 'Sorry, that request was invalid or malformed.';
+      title = 'errors.bad-request.title';
+      message = 'errors.bad-request.message';
       break;
     case 401:
-      title = 'Unauthorized';
-      message = "Sorry, you don't have permission to access that resource.";
+      title = 'errors.unauthorized.title';
+      message = 'errors.unauthorized.message';
       break;
     case 404:
-      title = 'Not Found';
-      message = "Sorry, that resource doesn't seem to exist.";
+      title = 'errors.not-found.title';
+      message = 'errors.not-found.message';
       break;
     case 403:
-      title = 'Forbidden';
-      message = "Sorry, you don't have permission to access that resource.";
+      title = 'errors.forbidden.title';
+      message = 'errors.forbidden.message';
       break;
     case 500:
-      title = 'Internal Error';
+      title = 'errors.internal.title';
       break;
   }
 
@@ -88,7 +90,7 @@
 <div data-test-id="error-page">
   <HeadedBlock {heading}>
     <p>
-      {$t($page.error?.message && $page.status !== 404 ? $page.error.message : message)}
+      {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
     </p>
     <p>
       {$t('Please')}

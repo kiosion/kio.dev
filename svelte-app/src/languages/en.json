@@ -1,8 +1,6 @@
 {
   " icon": " icon",
-  "A bit about me and what I do": "A bit about me and what I do",
   "A blog post on kio.dev": "A blog post on kio.dev",
-  "A collection of my work, open-source contributions, and personal projects": "A collection of my work, open-source contributions, and personal projects",
   "A project on kio.dev": "A project on kio.dev",
   "About": "About",
   "About me": "About me",
@@ -10,11 +8,14 @@
   "Blog": "Blog",
   "Click here to": "Click here to",
   "Code block": "Code block",
+  "Code content": "Code content",
   "Copy to clipboard": "Copy to clipboard",
   "Date posted": "Date posted",
+  "Duration": "Duration",
   "English": "English",
   "Error": "Error",
   "Etc": "Etc",
+  "Experiments": "Experiments",
   "Footnotes": "Footnotes",
   "French": "French",
   "Go to footnote": "Go to footnote",
@@ -22,9 +23,11 @@
   "Hide stack trace": "Hide stack trace",
   "Home": "Home",
   "Internal Error": "Internal Error",
+  "Invalid date": "Invalid date",
   "Links": "Links",
   "Meta": "Meta",
   "More": "More",
+  "No content": "No content",
   "PGP": "PGP",
   "Page content": "Page content",
   "Please": "Please",
@@ -33,30 +36,76 @@
   "Project": "Project",
   "Projects": "Projects",
   "Read more": "Read more",
-  "Recent posts": "Recent posts",
   "Recent projects": "Recent projects",
   "Recent thoughts": "Recent thoughts",
   "Say hello": "Say hello",
   "See more": "See more",
   "Show stack trace": "Show stack trace",
   "Skip to content": "Skip to content",
+  "Social links": "Social links",
   "Sorry, something went wrong. Please try again.": "Sorry, something went wrong. Please try again.",
   "Switch to English": "Switch to English",
   "Switch to French": "Switch to French",
   "Tags": "Tags",
   "Thoughts": "Thoughts",
-  "Thoughts about tech, design, and development": "Thoughts about tech, design, and development",
+  "Unknown date": "Unknown date",
   "Use dark mode": "Use dark mode",
   "Use light mode": "Use light mode",
   "View latest commit on GitHub": "View latest commit on GitHub",
   "View more": "View more",
-  "Want to send a secure message my way? Here's my main PGP key:": "Want to send a secure message my way? Here's my main PGP key:",
+  "Visit": "Visit",
   "Where I've worked": "Where I've worked",
   "Work": "Work",
   "a bit about me": "a bit about me",
+  "errors": {
+    "bad-request": {
+      "message": "Sorry, that request was invalid or malformed.",
+      "title": "Bad Request"
+    },
+    "forbidden": {
+      "message": "Sorry, you don't have permission to access that resource.",
+      "title": "Forbidden"
+    },
+    "generic": {
+      "message": "Sorry, something went wrong. Please try again.",
+      "title": "Unknown error"
+    },
+    "internal": {
+      "message": "Sorry, something went wrong. Please try again.",
+      "title": "Internal Error"
+    },
+    "not-found": {
+      "message": "Sorry, that resource doesn't exist or can't be found.",
+      "title": "Not Found"
+    },
+    "unauthorized": {
+      "message": "Sorry, you don't have permission to access that resource.",
+      "title": "Unauthorized"
+    }
+  },
   "go back": "go back",
+  "now": "now",
+  "pages": {
+    "about": {
+      "description": "A bit about me and what I do",
+      "title": "About me"
+    },
+    "etc": {
+      "description": "How to reach me, and some meta information about this site",
+      "title": "Meta"
+    },
+    "thoughts": {
+      "description": "Thoughts about tech, design, and development",
+      "title": "Thoughts"
+    },
+    "work": {
+      "description": "An overview of my work, prior roles, and open-source contributions",
+      "title": "Work"
+    }
+  },
   "present": "present",
   "refresh the page": "refresh the page",
+  "{document} details": "{document} details",
   "{length} min read": "{length} min read",
   "{months} months": "{months} months",
   "{month} month": "{month} month",
