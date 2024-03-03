@@ -3,11 +3,9 @@
 
   import ConfettiPiece from '$components/nav/confetti-piece.svelte';
 
-  export let key: number;
+  const dispatch = createEventDispatcher<{ done: void }>();
 
-  const dispatch = createEventDispatcher<{ done: number }>();
-
-  onMount(() => setTimeout(() => dispatch('done', key), 1500));
+  onMount(() => setTimeout(() => dispatch('done'), 1500));
 </script>
 
 <div

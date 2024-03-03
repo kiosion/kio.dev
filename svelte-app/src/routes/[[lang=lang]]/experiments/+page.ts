@@ -5,7 +5,6 @@ export const load = (async ({ fetch }) => {
   let nowPlayingData: ToruData | undefined = undefined;
 
   try {
-    console.log('fetching toru init data');
     const toruRes = await fetch(
       'https://toru.kio.dev/api/v1/kiosion?res=json&cover_size=large'
     );
