@@ -2,6 +2,8 @@
   import { t } from '$lib/i18n.js';
   import { pageTitle } from '$lib/navigation';
 
+  import Divider from '$components/divider.svelte';
+  import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
 
@@ -25,4 +27,8 @@
 
 <HeadedBlock heading={$t('Experiments')}>
   <ToruExperiment initData={data.nowPlayingData} />
+
+  <Divider class="my-8" />
+
+  <GameOfLifeExperiment />
 </HeadedBlock>
