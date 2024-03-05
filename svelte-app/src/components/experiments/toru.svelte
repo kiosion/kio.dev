@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
+  import { beforeNavigate } from '$app/navigation';
+
   import Divider from '$components/divider.svelte';
   import { initSync, stopSync } from '$components/experiments/toru';
   import Hoverable from '$components/hoverable.svelte';
@@ -13,11 +15,32 @@
 
   onMount(() => initSync((res) => (initData = res)));
 
+  beforeNavigate((navigation) => {
+    if (navigation.to !== navigation.from) {
+      stopSync();
+    }
+  });
+
   onDestroy(() => stopSync());
 </script>
 
-<Hoverable let:hovered>
-  <div class="relative">
+<Hoverable let:hovered setPointer={!!initData?.url}>
+  <div
+    class="relative block"
+    class:focus-outline={initData?.url}
+    tabindex={initData?.url ? 0 : -1}
+    role="button"
+    on:click={() => {
+      if (initData?.url) {
+        window.open(initData.url, '_blank');
+      }
+    }}
+    on:keyup={(e) => {
+      if (e.key === 'Enter' && initData?.url) {
+        window.open(initData.url, '_blank');
+      }
+    }}
+  >
     <article
       class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl px-7 py-6"
     >
@@ -31,7 +54,7 @@
         class="flex select-none flex-row items-center justify-start gap-5 px-1 pb-2"
       >
         {#if initData}
-          <div class="overflop-clip relative flex-shrink-0">
+          <div class="relative flex-shrink-0 overflow-clip">
             <img
               src="data:{initData.cover_art.mime_type};base64,{initData.cover_art.data}"
               alt="Album art for the currently playing track"
@@ -59,8 +82,16 @@
           <div
             class="flex flex-col items-start justify-center gap-1 text-dark/90 transition-[color] dark:text-light/90"
           >
-            <h4 class="text-xl font-black">{initData.title ?? 'Unknown title'}</h4>
-            <p class="text-base">
+            <h4
+              class="line-clamp-2 text-xl font-black decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
+              class:underline={initData.url && hovered}
+            >
+              {initData.title ?? 'Unknown title'}
+            </h4>
+            <p
+              class="line-clamp-2 text-base decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
+              class:underline={initData.artist && hovered}
+            >
               {initData.artist ?? ''}
               {initData.artist && initData.album ? '—' : ''}
               {initData.album ?? ''}

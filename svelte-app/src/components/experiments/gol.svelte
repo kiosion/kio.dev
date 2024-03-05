@@ -6,9 +6,9 @@
   import Divider from '$components/divider.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  const rows = 25,
-    cols = 58,
-    interval = 50;
+  const rows = 26,
+    cols = 59,
+    interval = 75;
 
   const createGrid = (rows: number, cols: number) => {
     const arr: boolean[][] = new Array(rows);
@@ -103,7 +103,7 @@
   };
 
   onMount(() => {
-    startGame();
+    // startGame();
   });
 
   onDestroy(() => {
@@ -112,7 +112,7 @@
 </script>
 
 <article
-  class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
+  class="relative my-6 flex h-fit w-full cursor-pointer flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
 >
   <header class="w-full pb-2">
     <h3 class="pb-2 text-2xl font-bold">Game of life</h3>

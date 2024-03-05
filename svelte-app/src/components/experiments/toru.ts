@@ -10,6 +10,8 @@ export type ToruData = {
   };
   artist: string;
   album: string;
+  streamable?: boolean;
+  url?: string;
 };
 
 let socketInstance: WebSocket | undefined,

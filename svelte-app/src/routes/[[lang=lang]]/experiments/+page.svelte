@@ -4,6 +4,7 @@
 
   import Divider from '$components/divider.svelte';
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
+  import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
 
@@ -31,4 +32,8 @@
   <Divider class="my-8" />
 
   <GameOfLifeExperiment />
+
+  <Divider class="my-8" />
+
+  <MagneticCursorExperiment />
 </HeadedBlock>
