@@ -1,8 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import { browser } from '$app/environment';
-
   import Divider from '$components/divider.svelte';
   import MagButton from '$components/experiments/mag-cursor/button.svelte';
   import MagCursor from '$components/experiments/mag-cursor/cursor.svelte';
@@ -15,14 +11,6 @@
   const register = (element: HTMLElement) => targets.push(element);
 
   const buttons = ['Button One', 'Button Two', 'Button Three'];
-
-  onMount(() => {
-    if (!browser) {
-      return;
-    }
-
-    containerRect = container?.getBoundingClientRect();
-  });
 </script>
 
 <svelte:window on:resize={() => (containerRect = container?.getBoundingClientRect())} />

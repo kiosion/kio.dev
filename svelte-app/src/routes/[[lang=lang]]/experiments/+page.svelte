@@ -27,7 +27,7 @@
 </svelte:head>
 
 <HeadedBlock heading={$t('Experiments')}>
-  <ToruExperiment initData={data.nowPlayingData} />
+  <ToruExperiment initPromise={data.nowPlayingData} />
 
   <Divider class="my-8" />
 

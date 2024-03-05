@@ -18,6 +18,8 @@ export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
 
 export const BASE_PAGE_TITLE = 'kio.dev';
 
+export const TORU_API_URL = 'https://toru.kio.dev/api/v1';
+
 interface AppRoute {
   name: string;
   path: string;

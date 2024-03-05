@@ -11,33 +11,42 @@
 
   import type { ToruData } from '$components/experiments/toru';
 
-  export let initData: ToruData | undefined;
+  export let initPromise: Promise<ToruData | undefined>;
 
-  onMount(() => initSync((res) => (initData = res)));
+  let data: ToruData | undefined;
+
+  const onUpdate = (res: ToruData) => (data = res);
+
+  onMount(() =>
+    initPromise.then((res) => {
+      data = res;
+      initSync(onUpdate);
+    })
+  );
 
   beforeNavigate((navigation) => {
     if (navigation.to !== navigation.from) {
-      stopSync();
+      stopSync(onUpdate);
     }
   });
 
-  onDestroy(() => stopSync());
+  onDestroy(() => stopSync(onUpdate));
 </script>
 
-<Hoverable let:hovered setPointer={!!initData?.url}>
+<Hoverable let:hovered setPointer={!!data?.url}>
   <div
     class="relative block rounded-lg"
-    class:focus-outline={initData?.url}
-    tabindex={initData?.url ? 0 : -1}
+    class:focus-outline={data?.url}
+    tabindex={data?.url ? 0 : -1}
     role="button"
     on:click={() => {
-      if (initData?.url) {
-        window.open(initData.url, '_blank');
+      if (data?.url) {
+        window.open(data.url, '_blank');
       }
     }}
     on:keyup={(e) => {
-      if (e.key === 'Enter' && initData?.url) {
-        window.open(initData.url, '_blank');
+      if (e.key === 'Enter' && data?.url) {
+        window.open(data.url, '_blank');
       }
     }}
   >
@@ -53,14 +62,14 @@
       <figure
         class="flex select-none flex-row items-center justify-start gap-5 px-1 pb-2"
       >
-        {#if initData}
+        {#if data}
           <div class="relative flex-shrink-0 overflow-clip">
             <img
-              src="data:{initData.cover_art.mime_type};base64,{initData.cover_art.data}"
+              src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
               alt="Album art for the currently playing track"
               class="pointer-events-none aspect-square h-28 w-28 rounded-lg"
             />
-            {#if initData.playing}
+            {#if data.playing}
               <div
                 class="absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-dark/30 transition-colors dark:bg-dark/50"
               />
@@ -84,22 +93,22 @@
           >
             <h4
               class="line-clamp-2 text-xl font-black decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
-              class:underline={initData.url && hovered}
+              class:underline={data.url && hovered}
             >
-              {initData.title ?? 'Unknown title'}
+              {data.title ?? 'Unknown title'}
             </h4>
             <p
               class="line-clamp-2 text-base decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
-              class:underline={initData.artist && hovered}
+              class:underline={data.artist && hovered}
             >
-              {initData.artist ?? ''}
-              {initData.artist && initData.album ? '—' : ''}
-              {initData.album ?? ''}
+              {data.artist ?? ''}
+              {data.artist && data.album ? '—' : ''}
+              {data.album ?? ''}
             </p>
           </div>
 
           <img
-            src="data:{initData.cover_art.mime_type};base64,{initData.cover_art.data}"
+            src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
             alt="Artist art for the currently playing track"
             class="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[150%] w-[150%] opacity-30 blur-xl"
           />
@@ -107,9 +116,9 @@
             class="absolute bottom-0 left-0 right-0 top-0 -z-20 h-[150%] w-[150%] bg-light blur-xl transition-colors dark:bg-dark"
           />
         {:else}
-          <div class="flex-shrink-0 p-4">
+          <div class="relative flex-shrink-0 overflow-clip">
             <div
-              class="relative flex h-28 w-28 items-center justify-center rounded-lg bg-dark/10 transition-colors dark:bg-light/10"
+              class="flex h-28 w-28 items-center justify-center rounded-lg bg-dark/10 transition-colors dark:bg-light/10"
             >
               <Spinner class="ml-0" />
             </div>
@@ -154,10 +163,10 @@
       class:opacity-20={hovered}
       class:dark:opacity-15={hovered}
     >
-      {#if initData}
+      {#if data}
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-          src="data:{initData.cover_art.mime_type};base64,{initData.cover_art.data}"
+          src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
           class="h-full w-full blur-lg"
         />
       {:else}

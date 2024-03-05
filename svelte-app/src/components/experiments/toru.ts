@@ -20,27 +20,28 @@ let socketInstance: WebSocket | undefined,
 
 const interval = 36_000;
 
-export const initSync = (onUpdate: (data: ToruData) => void) => {
-  if (!browser || (socketInstance && socketInstance.readyState === WebSocket.OPEN)) {
-    return;
-  }
+const onOpen = () => {
+  Logger.info('[ToruSync] Connected');
+  retries = 0;
+};
 
-  clearInterval(repeat);
+const onClose = () => {
+  Logger.info('[ToruSync] Disconnected');
+  stop();
+};
 
-  socketInstance = new WebSocket('wss://toru.kio.dev/api/v1/ws/kiosion?cover_size=large');
+const onError = (e: Event) => {
+  Logger.error('[ToruSync] Error', e);
+};
 
-  socketInstance.addEventListener('open', () => {
-    Logger.info('[ToruSync] Connected');
-    retries = 0;
-  });
-
-  socketInstance.addEventListener('message', (event: MessageEvent<string | unknown>) => {
-    if (!event.data || event.data === 'pong') {
+const onMessage =
+  (onUpdate: (data: ToruData) => void) => (e: MessageEvent<string | unknown>) => {
+    if (!e.data || e.data === 'pong') {
       return;
     }
 
     try {
-      const res = JSON.parse(event.data as string) as ToruData;
+      const res = JSON.parse(e.data as string) as ToruData;
 
       Logger.info('[ToruSync] Received frame');
 
@@ -50,26 +51,54 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
     } catch (e) {
       Logger.error('[ToruSync] Error parsing', e);
     }
-  });
+  };
 
-  socketInstance.addEventListener('error', (e) => {
-    Logger.error('[ToruSync] Error', e);
-  });
+export const initSync = (onUpdate: (data: ToruData) => void) => {
+  if (!browser || (socketInstance && socketInstance.readyState === WebSocket.OPEN)) {
+    return;
+  }
 
-  socketInstance.addEventListener('close', () => {
-    Logger.info('[ToruSync] Disconnected');
+  clearInterval(repeat);
 
-    stop();
+  socketInstance = new WebSocket('wss://toru.kio.dev/api/v1/ws/kiosion?cover_size=large');
 
-    // TODO: Don't run when the socket is closed intentionally
-    // if (retries < 5) {
-    //   retries++;
-    //   clearTimeout(retry);
-    //   retry = setTimeout(() => {
-    //     initSync(onUpdate);
-    //   }, retries * 1000);
-    // }
-  });
+  // socketInstance.addEventListener('open', () => {
+  //   Logger.info('[ToruSync] Connected');
+  //   retries = 0;
+  // });
+
+  // socketInstance.addEventListener('message', (event: MessageEvent<string | unknown>) => {
+  //   if (!event.data || event.data === 'pong') {
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = JSON.parse(event.data as string) as ToruData;
+
+  //     Logger.info('[ToruSync] Received frame');
+
+  //     if (res.title || res.album || res.artist) {
+  //       onUpdate(res);
+  //     }
+  //   } catch (e) {
+  //     Logger.error('[ToruSync] Error parsing', e);
+  //   }
+  // });
+
+  // socketInstance.addEventListener('error', (e) => {
+  //   Logger.error('[ToruSync] Error', e);
+  // });
+
+  // socketInstance.addEventListener('close', () => {
+  //   Logger.info('[ToruSync] Disconnected');
+
+  //   stop();
+  // });
+
+  socketInstance.addEventListener('open', onOpen);
+  socketInstance.addEventListener('message', onMessage(onUpdate));
+  socketInstance.addEventListener('error', onError);
+  socketInstance.addEventListener('close', onClose);
 
   repeat = setInterval(() => {
     if (socketInstance && socketInstance.readyState === WebSocket.OPEN) {
@@ -78,7 +107,7 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
   }, interval);
 };
 
-export const stopSync = () => {
+export const stopSync = (onUpdate: (data: ToruData) => void) => {
   if (!browser || !socketInstance) {
     return;
   }
@@ -88,6 +117,11 @@ export const stopSync = () => {
   if (socketInstance.readyState !== WebSocket.CLOSED) {
     socketInstance.close();
   }
+
+  socketInstance.removeEventListener('open', onOpen);
+  socketInstance.removeEventListener('message', onMessage(onUpdate));
+  socketInstance.removeEventListener('error', onError);
+  socketInstance.removeEventListener('close', onClose);
 
   socketInstance = undefined;
 };
