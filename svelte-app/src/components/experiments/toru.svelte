@@ -6,6 +6,7 @@
   import Divider from '$components/divider.svelte';
   import { initSync, stopSync } from '$components/experiments/toru';
   import Hoverable from '$components/hoverable.svelte';
+  import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
   import Spinner from '$components/loading/spinner.svelte';
 
@@ -58,6 +59,19 @@
         <p>An Elixir-based API for generating embeds from last.fm listening activity.</p>
         <Divider />
       </header>
+
+      <Link
+        href="https://github.com/kiosion/toru"
+        class="focus-outline absolute right-4 top-4 z-10 rounded-sm p-2"
+        tooltipDelay={150}
+        newtab
+      >
+        <Icon
+          name="ExternalLink"
+          size={21}
+          class="text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
+        />
+      </Link>
 
       <figure
         class="flex select-none flex-row items-center justify-start gap-5 px-1 pb-2"
@@ -135,25 +149,6 @@
           />
         {/if}
       </figure>
-
-      <Link
-        href="https://github.com/kiosion/toru"
-        class="focus-outline absolute right-4 top-4 z-10 rounded-sm p-1"
-        tooltipDelay={150}
-        newtab
-      >
-        <svg
-          class="h-5 w-5 text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M21 11V3h-8v2h4v2h-2v2h-2v2h-2v2H9v2h2v-2h2v-2h2V9h2V7h2v4h2zM11 5H3v16h16v-8h-2v6H5V7h6V5z"
-            fill="currentColor"
-          />
-        </svg>
-      </Link>
     </article>
 
     <div

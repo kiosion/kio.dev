@@ -8,6 +8,7 @@ export { default as BackBurger } from '$lib/icons/backburger.svelte';
 export { default as Check } from '$lib/icons/check.svelte';
 export { default as Copy } from '$lib/icons/copy.svelte';
 export { default as Downasaur } from '$lib/icons/downasaur.svelte';
+export { default as ExternalLink } from '$lib/icons/external-link.svelte';
 export { default as ForwardBurger } from '$lib/icons/forwardburger.svelte';
 export { default as GitBranch } from '$lib/icons/git-branch.svelte';
 export { default as GitCommit } from '$lib/icons/git-commit.svelte';

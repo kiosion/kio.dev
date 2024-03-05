@@ -20,6 +20,8 @@ export const BASE_PAGE_TITLE = 'kio.dev';
 
 export const TORU_API_URL = 'https://toru.kio.dev/api/v1';
 
+export const BASE_GIT_URL = 'https://github.com/kiosion/kio.dev';
+
 interface AppRoute {
   name: string;
   path: string;

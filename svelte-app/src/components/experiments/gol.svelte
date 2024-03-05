@@ -120,25 +120,9 @@
     <Divider />
   </header>
 
-  <figure class="relative w-full overflow-clip rounded-md">
-    <div class="grid w-fit gap-0.5" style="grid-template-columns: repeat({cols}, 12px);">
-      {#each grid as row, rowIndex}
-        {#each row as cell, colIndex}
-          <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
-          <div
-            class="h-3 w-3 rounded-sm shadow-lg {cell
-              ? 'bg-violet-500/60 shadow-violet-500/30 dark:shadow-violet-500/10'
-              : 'bg-transparent shadow-transparent'}"
-            on:click={() => !running && toggleCell(rowIndex, colIndex)}
-          />
-        {/each}
-      {/each}
-    </div>
-  </figure>
-
   <Tooltip text={running ? 'Pause' : 'Resume'}>
     <button
-      class="focus-outline absolute right-4 top-4 rounded-md p-1"
+      class="focus-outline absolute right-4 top-4 rounded-md p-2"
       on:click={running ? stopGame : startGame}
     >
       {#if running}
@@ -162,4 +146,20 @@
       {/if}
     </button>
   </Tooltip>
+
+  <figure class="relative w-full overflow-clip rounded-md">
+    <div class="grid w-fit gap-0.5" style="grid-template-columns: repeat({cols}, 12px);">
+      {#each grid as row, rowIndex}
+        {#each row as cell, colIndex}
+          <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+          <div
+            class="h-3 w-3 rounded-sm shadow-lg {cell
+              ? 'bg-violet-500/60 shadow-violet-500/30 dark:shadow-violet-500/10'
+              : 'bg-transparent shadow-transparent'}"
+            on:click={() => !running && toggleCell(rowIndex, colIndex)}
+          />
+        {/each}
+      {/each}
+    </div>
+  </figure>
 </article>

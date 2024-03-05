@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { BASE_GIT_URL } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
 
@@ -62,7 +63,7 @@
           <BaseLink
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/kiosion/kio.dev/commit/{APP_VERSION}"
+            href="{BASE_GIT_URL}/commit/{APP_VERSION}"
           >
             {APP_VERSION.slice(0, 6)}
           </BaseLink>
