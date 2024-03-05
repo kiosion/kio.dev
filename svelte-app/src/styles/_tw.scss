@@ -27,25 +27,25 @@
         @apply bg-light text-dark;
       }
 
-      &:not(.is-loaded) {
-        cursor: wait !important;
+      // &:not(.is-loaded) {
+      //   cursor: wait !important;
 
-        & a,
-        & button,
-        & [role='button'] {
-          cursor: not-allowed !important;
-        }
-      }
+      //   & a,
+      //   & button,
+      //   & [role='button'] {
+      //     cursor: not-allowed !important;
+      //   }
+      // }
 
-      &.is-loading {
-        cursor: wait !important;
+      // &.is-loading {
+      //   cursor: wait !important;
 
-        & a,
-        & button,
-        & [role='button'] {
-          cursor: not-allowed !important;
-        }
-      }
+      //   & a,
+      //   & button,
+      //   & [role='button'] {
+      //     cursor: not-allowed !important;
+      //   }
+      // }
     }
     
     ::selection {

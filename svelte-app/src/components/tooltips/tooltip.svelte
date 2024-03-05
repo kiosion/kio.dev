@@ -14,6 +14,7 @@
     delay = 150,
     position: Tooltip['placement'] = 'bottom',
     fixed: Tooltip['followCursor'] = true,
+    forceShow = false,
     offset: Tooltip['offset'] = [0, 12];
 
   let tooltipId = Math.floor(Math.random() * 100000),
@@ -40,7 +41,7 @@
           target: target as HTMLElement
         });
       },
-      Math.max(0, delay - 50)
+      Math.max(0, delay)
     );
   };
 
@@ -66,10 +67,10 @@
     }
 
     target.addEventListener('mouseenter', showTooltip);
-    target.addEventListener('mouseleave', hideTooltip);
+    target.addEventListener('mouseleave', () => !forceShow && hideTooltip());
     target.addEventListener('focusin', showTooltip);
-    target.addEventListener('focusout', hideTooltip);
-    target.addEventListener('blur', hideTooltip);
+    target.addEventListener('focusout', () => !forceShow && hideTooltip());
+    target.addEventListener('blur', () => !forceShow && hideTooltip());
   });
 
   onDestroy(() => {
@@ -87,6 +88,7 @@
   });
 
   $: tooltipId && text?.trim() && browser && updateTooltip(tooltipId, { content: text });
+  $: forceShow ? showTooltip() : hideTooltip();
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">

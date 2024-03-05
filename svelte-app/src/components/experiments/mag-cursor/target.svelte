@@ -1,48 +1,40 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
-
-  const dispatch = createEventDispatcher<{
-    mount: { element: HTMLElement | undefined; id: string; snapDistance?: number };
-  }>();
+  import {
+    activeTarget,
+    cursorTargets,
+    DEFAULT_NO_SNAP_DIST,
+    DEFAULT_SNAP_DIST,
+    getFirstPositionedChild
+  } from '$lib/cursor';
 
   export const id = Math.random().toString(36).slice(4);
 
-  export let activeTarget: string | undefined = undefined,
-    snapDistance: number | undefined = undefined;
+  export let snap = true,
+    offset = 0,
+    snapDistance: number = snap ? DEFAULT_SNAP_DIST : DEFAULT_NO_SNAP_DIST;
 
-  let element: HTMLElement;
+  let element: HTMLDivElement;
 
-  const getFirstPositionedChild = (el: HTMLElement): HTMLElement | undefined => {
-    if (!browser) {
-      return undefined;
-    }
+  onMount(() => {
+    cursorTargets.update((targets) => [
+      ...targets,
+      {
+        element: getFirstPositionedChild(element),
+        id,
+        snapDistance,
+        snapFull: snap,
+        sizeOffset: offset
+      }
+    ]);
+  });
 
-    const firstChild = el.firstElementChild as HTMLElement;
+  onDestroy(() => {
+    cursorTargets.update((targets) => targets.filter((t) => t.id !== id));
+  });
 
-    if (!firstChild) {
-      return undefined;
-    }
-
-    const style = window.getComputedStyle(firstChild);
-
-    if (style.display === 'none' || style.display === 'contents') {
-      return getFirstPositionedChild(firstChild);
-    }
-
-    return firstChild;
-  };
-
-  onMount(() =>
-    dispatch('mount', {
-      element: getFirstPositionedChild(element),
-      snapDistance,
-      id
-    })
-  );
-
-  $: active = activeTarget === id;
+  $: active = !!($activeTarget?.id && $activeTarget.id === id);
 </script>
 
 <div class="contents" bind:this={element}>

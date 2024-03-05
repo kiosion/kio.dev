@@ -4,6 +4,7 @@
   import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
+  import Target from '$components/experiments/mag-cursor/target.svelte';
   import Icon from '$components/icon.svelte';
   import BaseLink from '$components/nav/base-link.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -33,15 +34,18 @@
           aria-label={$t('Social links')}
         >
           {#each socials as social, i}
-            <Tooltip text={social.url} delay={300} position="top">
-              <BaseLink
-                text={social.name}
-                href={social.url}
-                target={social.target}
-                rel={social.rel}
-                noTranslate
-              />
-            </Tooltip>
+            <Target offset={12} let:active>
+              <Tooltip text={social.url} delay={300} position="top" forceShow={active}>
+                <BaseLink
+                  {active}
+                  text={social.name}
+                  href={social.url}
+                  target={social.target}
+                  rel={social.rel}
+                  noTranslate
+                />
+              </Tooltip>
+            </Target>
             {#if i < socials.length - 1}
               <span class="cursor-default select-none" aria-hidden="true">/</span>
             {/if}
@@ -59,15 +63,22 @@
           class="text-accent-light/80 dark:text-accent-dark/80"
           size={20}
         />
-        <Tooltip text={$t('View latest commit on GitHub')} position="top">
-          <BaseLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="{BASE_GIT_URL}/commit/{APP_VERSION}"
+        <Target offset={12} let:active>
+          <Tooltip
+            text={$t('View latest commit on GitHub')}
+            position="top"
+            forceShow={active}
           >
-            {APP_VERSION.slice(0, 6)}
-          </BaseLink>
-        </Tooltip>
+            <BaseLink
+              {active}
+              target="_blank"
+              rel="noopener noreferrer"
+              href="{BASE_GIT_URL}/commit/{APP_VERSION}"
+            >
+              {APP_VERSION.slice(0, 6)}
+            </BaseLink>
+          </Tooltip>
+        </Target>
       </div>
     {/if}
   </footer>

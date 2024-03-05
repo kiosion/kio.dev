@@ -9,7 +9,8 @@
       name: string;
       url: string;
     },
-    navigatingIsActive = false;
+    navigatingIsActive = false,
+    active = false;
 
   let isActive = false;
 
@@ -40,7 +41,7 @@
 <BaseLink
   text={$t(link.name)}
   href={link.url}
-  active={isActive}
+  active={isActive || active}
   noTranslate
   on:click={handleAction}
 />

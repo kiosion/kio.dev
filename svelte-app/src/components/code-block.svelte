@@ -7,6 +7,7 @@
   import Settings from '$lib/settings';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
+  import Target from '$components/experiments/mag-cursor/target.svelte';
   import Icon from '$components/icon.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -110,17 +111,24 @@
       {filename}
     </div>
   {/if}
-  <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]}>
-    <button
-      class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
-      on:click={() => copy()}
-      on:keydown={(e) => e.key === 'Enter' && copy()}
+  <Target let:active>
+    <Tooltip
+      text={$t('Copy to clipboard')}
+      delay={200}
+      offset={[0, 2]}
+      forceShow={active}
     >
-      {#key copied}
-        <Icon name={copied !== undefined ? 'Check' : 'Copy'} />
-      {/key}
-    </button>
-  </Tooltip>
+      <button
+        class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+        on:click={() => copy()}
+        on:keydown={(e) => e.key === 'Enter' && copy()}
+      >
+        {#key copied}
+          <Icon name={copied !== undefined ? 'Check' : 'Copy'} />
+        {/key}
+      </button>
+    </Tooltip>
+  </Target>
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     bind:this={codeContainer}

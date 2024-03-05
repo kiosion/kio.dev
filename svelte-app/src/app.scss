@@ -8,3 +8,7 @@
 @import 'styles/tw';
 
 @import 'styles/components/code-block';
+
+* {
+  cursor: none !important;
+}

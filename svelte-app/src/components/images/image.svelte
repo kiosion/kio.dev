@@ -5,6 +5,7 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { buildImageUrl, getCrop } from '$lib/sanity';
 
+  import Target from '$components/experiments/mag-cursor/target.svelte';
   import ImageModal from '$components/images/image-modal.svelte';
   import Spinner from '$components/loading/spinner.svelte';
 
@@ -81,39 +82,41 @@
       {style}
     />
   {:then src}
-    <button
-      class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
-      {style}
-      on:click={() => {
-        showImageModal = true;
-      }}
-      on:keydown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.stopPropagation();
+    <Target snap={false}>
+      <button
+        class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
+        {style}
+        on:click={() => {
           showImageModal = true;
-        }
-      }}
-    >
-      {#if showImageModal}
-        <img
-          class="placeholder absolute left-0 top-0 mx-auto w-full select-none rounded-sm opacity-50"
-          src={placeholderSrc}
-          alt={_key}
-          draggable="false"
-          {style}
-          out:fade={{ duration: BASE_ANIMATION_DURATION }}
-        />
-      {:else}
-        <img
-          {src}
-          class="mx-auto w-full select-none rounded-sm"
-          alt={_key}
-          draggable="false"
-          in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-          out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-        />
-      {/if}
-    </button>
+        }}
+        on:keydown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.stopPropagation();
+            showImageModal = true;
+          }
+        }}
+      >
+        {#if showImageModal}
+          <img
+            class="placeholder absolute left-0 top-0 mx-auto w-full select-none rounded-sm opacity-50"
+            src={placeholderSrc}
+            alt={_key}
+            draggable="false"
+            {style}
+            out:fade={{ duration: BASE_ANIMATION_DURATION }}
+          />
+        {:else}
+          <img
+            {src}
+            class="mx-auto w-full select-none rounded-sm"
+            alt={_key}
+            draggable="false"
+            in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
+            out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
+          />
+        {/if}
+      </button>
+    </Target>
   {:catch e}
     <p
       class="error absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base"

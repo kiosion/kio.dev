@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Target from '$components/experiments/mag-cursor/target.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
   import type { BlockComponentProps } from '@portabletext/svelte';
@@ -9,28 +10,30 @@
   $: ({ style } = value);
 </script>
 
-<Hoverable let:hovered>
-  <a
-    class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
-    class:mt-5={indexInParent === 0}
-    id={`heading-${value._key}`}
-    href={`#${value._key}`}
-  >
-    <span
-      class="pointer-events-none absolute -left-5 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-2xl font-black text-accent-light dark:text-accent-dark lg:block"
-      class:opacity-40={!hovered}
-      class:opacity-100={hovered}
+<Target snap={false} let:active>
+  <Hoverable let:hovered>
+    <a
+      class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
+      class:mt-5={indexInParent === 0}
+      id={`heading-${value._key}`}
+      href={`#${value._key}`}
     >
-      #
-    </span>
-    <svelte:element
-      this={style}
-      class="inline font-bold text-black transition-[color] dark:text-light"
-    >
-      <slot />
-    </svelte:element>
-  </a>
-</Hoverable>
+      <span
+        class="pointer-events-none absolute -left-5 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-2xl font-black text-accent-light dark:text-accent-dark lg:block"
+        class:opacity-40={!hovered && !active}
+        class:opacity-100={hovered || active}
+      >
+        #
+      </span>
+      <svelte:element
+        this={style}
+        class="inline font-bold text-black transition-[color] dark:text-light"
+      >
+        <slot />
+      </svelte:element>
+    </a>
+  </Hoverable>
+</Target>
 
 <style lang="scss">
   .h1 {

@@ -1,18 +1,17 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing';
   import { tweened } from 'svelte/motion';
+  import { get } from 'svelte/store';
+  import { fade } from 'svelte/transition';
 
-  export let targets: {
-      element: HTMLElement | undefined;
-      id: string;
-      snapDistance?: number;
-    }[],
-    containerRect: DOMRect,
-    activeTarget: string | undefined = undefined;
+  import { activeTarget, cursorTargets } from '$lib/cursor';
+  import { loading } from '$lib/settings';
 
-  const size = 28,
+  import type { CursorTarget } from '$lib/cursor';
+
+  const size = 36,
     innerSize = 4,
-    snapDistance = 68;
+    _lastPosition = { clientX: 0, clientY: 0 };
 
   let cursor = { x: 0, y: 0, width: size, height: size, borderRadius: size / 2 },
     innerCursor = {
@@ -34,96 +33,117 @@
       easing: cubicOut
     });
 
-  const updateCursorPosition = (e: { clientX: number; clientY: number }) => {
-    const { clientX: x, clientY: y } = e;
+  const findDistance = ({ x, y }: { x: number; y: number }, rect: DOMRect) => {
+    const hd = x < rect.left ? rect.left - x : x > rect.right ? x - rect.right : 0,
+      vd = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
 
-    if (
-      !containerRect ||
-      x < containerRect.left ||
-      x > containerRect.right ||
-      y < containerRect.top ||
-      y > containerRect.bottom
-    ) {
-      setVis(false);
+    return Math.max(hd, vd);
+  };
 
-      return;
-    }
+  const updateCursorPosition =
+    (targets: CursorTarget[]) => (e?: { clientX: number; clientY: number }) => {
+      const { clientX: x, clientY: y } = e || _lastPosition;
 
-    setVis(true);
+      _lastPosition.clientX = x;
+      _lastPosition.clientY = y;
 
-    let closestDistance = Infinity,
-      closestTarget: number | undefined = undefined;
+      let closestDistance = Infinity,
+        closestTarget: CursorTarget | undefined = undefined;
 
-    for (let i = 0; i < targets.length; ++i) {
-      const target = targets[i],
-        rect = target.element?.getBoundingClientRect();
+      for (let i = 0; i < targets.length; ++i) {
+        const target = targets[i],
+          rect = target.element?.getBoundingClientRect();
+
+        if (!rect) {
+          continue;
+        }
+
+        const distance = findDistance({ x: x + size / 2, y: y - size / 2 }, rect);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestTarget = target;
+        }
+      }
+
+      if (hide) {
+        setVis(true);
+      }
+
+      if (
+        closestTarget === undefined ||
+        $loading ||
+        closestDistance >= closestTarget?.snapDistance
+      ) {
+        activeTarget.set(undefined);
+
+        cursorTween.set({
+          x,
+          y,
+          width: size * (mouseDown ? 0.9 : 1),
+          height: size * (mouseDown ? 0.9 : 1),
+          borderRadius: size * (mouseDown ? 0.9 : 1)
+        });
+
+        innerCursorTween.set({
+          x,
+          y,
+          width: innerSize * (mouseDown ? 3 : 1),
+          height: innerSize * (mouseDown ? 3 : 1),
+          borderRadius: innerSize * (mouseDown ? 3 : 1)
+        });
+
+        return;
+      }
+
+      const rect = closestTarget.element?.getBoundingClientRect();
 
       if (!rect) {
-        continue;
+        return;
       }
 
-      const centerX = rect.left + rect.width / 2,
-        centerY = rect.top + rect.height / 2,
-        distance = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
+      activeTarget.set(closestTarget);
 
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestTarget = i;
+      if (closestTarget.snapFull !== true) {
+        cursorTween.set({
+          x,
+          y,
+          width: size * (mouseDown ? 1.2 : 1.5),
+          height: size * (mouseDown ? 1.2 : 1.5),
+          borderRadius: size * (mouseDown ? 1.2 : 1.5)
+        });
+
+        innerCursorTween.set({
+          x,
+          y,
+          width: innerSize * (mouseDown ? 3 : 2),
+          height: innerSize * (mouseDown ? 3 : 2),
+          borderRadius: innerSize * (mouseDown ? 3 : 2)
+        });
+
+        return;
       }
-    }
-
-    if (
-      closestTarget === undefined ||
-      closestDistance >= (targets[closestTarget]?.snapDistance ?? snapDistance)
-    ) {
-      activeTarget = undefined;
 
       cursorTween.set({
-        x: e.clientX,
-        y: e.clientY,
-        width: size * (mouseDown ? 1.5 : 1),
-        height: size * (mouseDown ? 1.5 : 1),
-        borderRadius: size * (mouseDown ? 1.5 : 1)
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+        width: rect.width + closestTarget.sizeOffset + (mouseDown ? 8 : 0),
+        height: rect.height + closestTarget.sizeOffset * 0.5 + (mouseDown ? 8 : 0),
+        borderRadius: 8 * (mouseDown ? 2 : 1)
       });
 
       innerCursorTween.set({
-        x: e.clientX,
-        y: e.clientY,
-        width: innerSize * (mouseDown ? 2 : 1),
-        height: innerSize * (mouseDown ? 2 : 1),
-        borderRadius: innerSize * (mouseDown ? 2 : 1)
+        x,
+        y,
+        width: innerSize * (mouseDown ? 2 : 3),
+        height: innerSize * (mouseDown ? 2 : 3),
+        borderRadius: innerSize * (mouseDown ? 1 : 3)
       });
-
-      return;
-    }
-
-    const rect = targets[closestTarget]?.element?.getBoundingClientRect();
-
-    if (!rect) {
-      return;
-    }
-
-    activeTarget = targets[closestTarget].id;
-
-    cursorTween.set({
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
-      width: rect.width + (mouseDown ? 8 : 0),
-      height: rect.height + (mouseDown ? 8 : 0),
-      borderRadius: 8 * (mouseDown ? 2 : 1)
-    });
-
-    innerCursorTween.set({
-      x: e.clientX,
-      y: e.clientY,
-      width: innerSize * (mouseDown ? 2 : 4),
-      height: innerSize * (mouseDown ? 2 : 4),
-      borderRadius: innerSize * (mouseDown ? 1 : 2)
-    });
-  };
+    };
 
   const handleClick = (e: MouseEvent) => {
-    const target = targets.find((t) => t.id === activeTarget);
+    const targets = $cursorTargets,
+      target = targets.find((t) => t.id === get(activeTarget)?.id);
 
     mouseDown = e.type === 'mousedown';
 
@@ -131,26 +151,31 @@
       target?.element?.click();
     }
 
-    updateCursorPosition(e);
+    updateCursorPosition(targets)(e);
   };
 
   const setVis = (visible: boolean) => {
     hide = !visible;
-    !visible && (activeTarget = undefined);
+    !visible && activeTarget.set(undefined);
   };
+
+  $: updateCursorPosition($cursorTargets)();
 </script>
 
 <svelte:window
-  on:mousemove={updateCursorPosition}
+  on:mousemove={updateCursorPosition($cursorTargets)}
   on:mousedown={handleClick}
   on:mouseup={handleClick}
+  on:blur={() => setVis(false)}
+  on:focus={() => setVis(true)}
 />
 
 {#if !hide}
   <div
-    class="pointer-events-none fixed left-0 top-0 shadow-lg {activeTarget !== undefined
-      ? 'bg-dark/5 shadow-dark/5 dark:bg-light/5 dark:shadow-light/5'
-      : 'bg-dark/10 shadow-transparent dark:bg-light/10'} transition-colors"
+    class="pointer-events-none fixed left-0 top-0 z-50 shadow-lg {$activeTarget !==
+    undefined
+      ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
+      : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
     style={`
 transform: translate(calc(${$cursorTween.x}px - 50%), calc(${$cursorTween.y}px - 50%));
 width: ${$cursorTween.width}px;
@@ -158,8 +183,40 @@ height: ${$cursorTween.height}px;
 border-radius: ${$cursorTween.borderRadius}px;
 `}
   />
+  {#if $loading}
+    <div
+      class="pointer-events-none fixed left-0 top-0 z-50"
+      style={`transform: translate(calc(${
+        $activeTarget === undefined ? $cursorTween.x : $innerCursorTween.x
+      }px - 50%), calc(${
+        $activeTarget === undefined ? $cursorTween.y : $innerCursorTween.y
+      }px - 50%));`}
+      transition:fade={{ duration: 125 }}
+    >
+      <div
+        class="rounded-full border-2 border-dark/40 !border-t-transparent dark:border-light/40"
+        style={`
+          animation: spin 1s ease infinite;
+          transition: width 125ms ease-out, height 125ms ease-out;
+          width: ${
+            $activeTarget === undefined
+              ? $cursorTween.width
+              : $innerCursorTween.width + 12
+          }px;
+          height: ${
+            $activeTarget === undefined
+              ? $cursorTween.height
+              : $innerCursorTween.height + 12
+          }px;
+        `}
+      />
+    </div>
+  {/if}
   <div
-    class="pointer-events-none fixed left-0 top-0 bg-dark/20 transition-colors dark:bg-light/20"
+    class="pointer-events-none fixed left-0 top-0 z-50 transition-colors {$activeTarget !==
+    undefined
+      ? 'bg-dark/20 dark:bg-light/20'
+      : 'bg-dark/40 dark:bg-light/40'}"
     style={`
 transform: translate(calc(${$innerCursorTween.x}px - 50%), calc(${$innerCursorTween.y}px - 50%));
 width: ${$innerCursorTween.width}px;
@@ -168,3 +225,11 @@ border-radius: ${$innerCursorTween.borderRadius}px;
 `}
   />
 {/if}
+
+<style lang="scss">
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

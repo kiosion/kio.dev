@@ -3,6 +3,7 @@
 
   import { linkTo, t } from '$lib/i18n';
 
+  import Target from '$components/experiments/mag-cursor/target.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
@@ -20,28 +21,32 @@
     : undefined;
 </script>
 
-<Hoverable let:hovered>
-  <Tooltip
-    text={tooltipText ??
-      (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
-    delay={tooltipDelay}
-  >
-    <svelte:element
-      this={type}
-      target={newtab ? '_blank' : undefined}
-      rel={newtab ? 'noopener noreferrer' : undefined}
-      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
-        ? 'decoration-[3px]'
-        : 'decoration-2'} transition-[text-decoration-color]"
-      tabindex="0"
-      aria-label={$$props['aria-label']}
-      {...$$restProps}
-      href={link}
-      on:click={() => dispatch('click')}
-      on:keyup={(e) => e.key === 'Enter' && dispatch('click')}
-      role={type === 'a' ? 'link' : 'button'}
+<Target snapDistance={32} let:active>
+  <Hoverable let:hovered>
+    <Tooltip
+      text={tooltipText ??
+        (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
+      delay={tooltipDelay}
+      forceShow={active}
     >
-      <slot />
-    </svelte:element>
-  </Tooltip>
-</Hoverable>
+      <svelte:element
+        this={type}
+        target={newtab ? '_blank' : undefined}
+        rel={newtab ? 'noopener noreferrer' : undefined}
+        class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered ||
+        active
+          ? 'decoration-[3px]'
+          : 'decoration-2'} transition-[text-decoration-color]"
+        tabindex="0"
+        aria-label={$$props['aria-label']}
+        {...$$restProps}
+        href={link}
+        on:click={() => dispatch('click')}
+        on:keyup={(e) => e.key === 'Enter' && dispatch('click')}
+        role={type === 'a' ? 'link' : 'button'}
+      >
+        <slot />
+      </svelte:element>
+    </Tooltip>
+  </Hoverable>
+</Target>

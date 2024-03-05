@@ -7,10 +7,7 @@
   import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
 
-  let container: HTMLElement,
-    containerRect: DOMRect,
-    targets: { element: HTMLElement | undefined; id: string }[] = [],
-    activeTarget: string | undefined = undefined;
+  let container: HTMLElement, containerRect: DOMRect;
 
   const buttons = ['Button One', 'Button Two', 'Button Three'];
 </script>
@@ -29,12 +26,7 @@
     <Divider />
   </header>
 
-  <MagTarget
-    {activeTarget}
-    snapDistance={46}
-    let:active
-    on:mount={(e) => targets.push({ ...e.detail })}
-  >
+  <MagTarget snapDistance={46} let:active>
     <Link
       href="{BASE_GIT_URL}/blob/main/svelte-app/src/components/experiments/mag-cursor.svelte"
       class="focus-outline absolute right-4 top-4 z-10 cursor-none rounded-sm p-2"
@@ -55,10 +47,7 @@
   <figure class="h-fit w-full overflow-hidden">
     <div class="flex w-full flex-row items-center justify-center pb-8 pt-7">
       {#each buttons as label}
-        <MagTarget
-          let:active
-          {activeTarget}
-          on:mount={(e) => targets.push({ ...e.detail })}
+        <MagTarget let:active
           ><button
             class="focus-outline-sm cursor-none select-none rounded-lg px-3 py-2 font-code text-base transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
               ? 'text-accent-light dark:text-accent-dark'
@@ -69,6 +58,6 @@
       {/each}
     </div>
 
-    <MagCursor {targets} {containerRect} bind:activeTarget />
+    <MagCursor {containerRect} />
   </figure>
 </article>

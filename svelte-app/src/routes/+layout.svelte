@@ -19,8 +19,10 @@
   } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
+  import { isDesktop } from '$lib/responsive';
   import Settings, { loading } from '$lib/settings';
 
+  import MagCursor from '$components/experiments/mag-cursor/cursor.svelte';
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
   import ConstrainWidth from '$components/layouts/constrain-width.svelte';
@@ -117,7 +119,13 @@
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 </svelte:head>
 
-<svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
+<svelte:body
+  use:classList={[
+    $theme,
+    $loading ? 'is-loading' : 'is-loaded',
+    $isDesktop ? '!cursor-none' : ''
+  ]}
+/>
 
 <span
   class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-black dark:text-light"
@@ -146,6 +154,10 @@
         </PageContent>
       </ConstrainWidth>
     </PageTransition>
+
+    {#if $isDesktop}
+      <MagCursor />
+    {/if}
 
     <TooltipManager container={element} />
   </ScrollContainer>
