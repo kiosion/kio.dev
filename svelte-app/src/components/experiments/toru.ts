@@ -52,6 +52,10 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
     }
   });
 
+  socketInstance.addEventListener('error', (e) => {
+    Logger.error('[ToruSync] Error', e);
+  });
+
   socketInstance.addEventListener('close', () => {
     Logger.info('[ToruSync] Disconnected');
 
@@ -84,4 +88,6 @@ export const stopSync = () => {
   if (socketInstance.readyState !== WebSocket.CLOSED) {
     socketInstance.close();
   }
+
+  socketInstance = undefined;
 };

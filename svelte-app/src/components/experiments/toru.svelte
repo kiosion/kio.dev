@@ -26,7 +26,7 @@
 
 <Hoverable let:hovered setPointer={!!initData?.url}>
   <div
-    class="relative block"
+    class="relative block rounded-lg"
     class:focus-outline={initData?.url}
     tabindex={initData?.url ? 0 : -1}
     role="button"

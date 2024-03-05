@@ -7,7 +7,7 @@
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const rows = 26,
-    cols = 59,
+    cols = 58,
     interval = 75;
 
   const createGrid = (rows: number, cols: number) => {
@@ -103,7 +103,7 @@
   };
 
   onMount(() => {
-    // startGame();
+    startGame();
   });
 
   onDestroy(() => {
