@@ -2,9 +2,13 @@
   import { cubicOut } from 'svelte/easing';
   import { tweened } from 'svelte/motion';
 
-  export let targets: HTMLElement[],
+  export let targets: {
+      element: HTMLElement | undefined;
+      id: string;
+      snapDistance?: number;
+    }[],
     containerRect: DOMRect,
-    activeTarget: number | undefined = undefined;
+    activeTarget: string | undefined = undefined;
 
   const size = 28,
     innerSize = 4,
@@ -40,17 +44,19 @@
       y < containerRect.top ||
       y > containerRect.bottom
     ) {
-      hide = true;
+      setVis(false);
+
       return;
     }
 
-    hide = false;
+    setVis(true);
 
     let closestDistance = Infinity,
       closestTarget: number | undefined = undefined;
 
     for (let i = 0; i < targets.length; ++i) {
-      const rect = targets[i]?.getBoundingClientRect();
+      const target = targets[i],
+        rect = target.element?.getBoundingClientRect();
 
       if (!rect) {
         continue;
@@ -66,7 +72,10 @@
       }
     }
 
-    if (closestTarget === undefined || closestDistance >= snapDistance) {
+    if (
+      closestTarget === undefined ||
+      closestDistance >= (targets[closestTarget]?.snapDistance ?? snapDistance)
+    ) {
       activeTarget = undefined;
 
       cursorTween.set({
@@ -88,9 +97,13 @@
       return;
     }
 
-    const rect = targets[closestTarget].getBoundingClientRect();
+    const rect = targets[closestTarget]?.element?.getBoundingClientRect();
 
-    activeTarget = closestTarget;
+    if (!rect) {
+      return;
+    }
+
+    activeTarget = targets[closestTarget].id;
 
     cursorTween.set({
       x: rect.left + rect.width / 2,
@@ -110,8 +123,20 @@
   };
 
   const handleClick = (e: MouseEvent) => {
+    const target = targets.find((t) => t.id === activeTarget);
+
     mouseDown = e.type === 'mousedown';
+
+    if (e.type === 'mouseup') {
+      target?.element?.click();
+    }
+
     updateCursorPosition(e);
+  };
+
+  const setVis = (visible: boolean) => {
+    hide = !visible;
+    !visible && (activeTarget = undefined);
   };
 </script>
 
