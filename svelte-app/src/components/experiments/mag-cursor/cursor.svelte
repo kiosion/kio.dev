@@ -3,49 +3,60 @@
   import { tweened } from 'svelte/motion';
   import { get } from 'svelte/store';
 
-  import { activeTarget, cursorTargets } from '$components/experiments/mag-cursor/utils';
+  import {
+    activeTarget,
+    BASE_CURSOR_INNER_SIZE,
+    BASE_CURSOR_SIZE,
+    BASE_TWEEN_MS,
+    BASE_TWEEN_MS_FAST,
+    cursorTargets,
+    findDistance
+  } from '$components/experiments/mag-cursor/utils';
 
   import type { CursorTarget } from '$components/experiments/mag-cursor/utils';
 
   export let containerRect: DOMRect | undefined = undefined;
 
-  const size = 34,
-    innerSize = 4,
-    _lastPosition = { clientX: 0, clientY: 0 };
+  let mouseDown = false,
+    hidden = true;
 
-  let cursor = { x: 0, y: 0, width: size, height: size, borderRadius: size / 2 },
-    innerCursor = {
-      x: 0,
-      y: 0,
-      width: innerSize,
-      height: innerSize,
-      borderRadius: innerSize / 2
-    },
-    mouseDown = false,
-    hide = true;
+  const _lastPosition = { clientX: 0, clientY: 0 },
+    cursor = tweened(
+      {
+        x: 0,
+        y: 0,
+        width: BASE_CURSOR_SIZE,
+        height: BASE_CURSOR_SIZE,
+        borderRadius: BASE_CURSOR_SIZE / 2
+      },
+      {
+        duration: BASE_TWEEN_MS,
+        easing: cubicOut
+      }
+    ),
+    innerCursor = tweened(
+      {
+        x: 0,
+        y: 0,
+        width: BASE_CURSOR_INNER_SIZE,
+        height: BASE_CURSOR_INNER_SIZE,
+        borderRadius: BASE_CURSOR_INNER_SIZE / 2
+      },
+      {
+        duration: BASE_TWEEN_MS_FAST,
+        easing: cubicOut
+      }
+    );
 
-  const cursorTween = tweened(cursor, {
-      duration: 275,
-      easing: cubicOut
-    }),
-    innerCursorTween = tweened(innerCursor, {
-      duration: 125,
-      easing: cubicOut
-    });
-
-  const findDistance = ({ x, y }: { x: number; y: number }, rect: DOMRect) => {
-    const hd = x < rect.left ? rect.left - x : x > rect.right ? x - rect.right : 0,
-      vd = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
-
-    return Math.max(hd, vd);
-  };
-
-  const updateCursorPosition =
+  const update =
     (targets: CursorTarget[]) => (e?: { clientX: number; clientY: number }) => {
-      const { clientX: x, clientY: y } = e ?? _lastPosition;
+      const x = e?.clientX || _lastPosition.clientX,
+        y = e?.clientY || _lastPosition.clientY;
 
-      _lastPosition.clientX = x;
-      _lastPosition.clientY = y;
+      if (typeof x === 'number' && typeof y === 'number') {
+        _lastPosition.clientX = x;
+        _lastPosition.clientY = y;
+      }
 
       if (
         containerRect &&
@@ -61,9 +72,8 @@
       let closestDistance = Infinity,
         closestTarget: CursorTarget | undefined = undefined;
 
-      for (let i = 0; i < targets.length; ++i) {
-        const target = targets[i],
-          rect = target.element?.getBoundingClientRect();
+      for (const target of targets) {
+        const rect = target.element?.getBoundingClientRect();
 
         if (!rect) {
           continue;
@@ -77,27 +87,27 @@
         }
       }
 
-      if (hide) {
+      if (hidden) {
         setVis(true);
       }
 
-      if (closestTarget === undefined || closestDistance >= closestTarget.snapDist) {
+      if (!closestTarget || closestDistance >= closestTarget.snapDist) {
         get(activeTarget)?.offset?.set([0, 0]);
         activeTarget.set(undefined);
 
-        cursorTween.set({
+        cursor.set({
           x,
           y,
-          width: size * (mouseDown ? 0.9 : 1),
-          height: size * (mouseDown ? 0.9 : 1),
-          borderRadius: size * (mouseDown ? 0.9 : 1)
+          width: BASE_CURSOR_SIZE * (mouseDown ? 0.9 : 1),
+          height: BASE_CURSOR_SIZE * (mouseDown ? 0.9 : 1),
+          borderRadius: (BASE_CURSOR_SIZE * (mouseDown ? 0.9 : 1)) / 2
         });
-        innerCursorTween.set({
+        innerCursor.set({
           x,
           y,
-          width: innerSize * (mouseDown ? 3 : 1),
-          height: innerSize * (mouseDown ? 3 : 1),
-          borderRadius: innerSize * (mouseDown ? 3 : 1)
+          width: BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 1),
+          height: BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 1),
+          borderRadius: (BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 1)) / 2
         });
 
         return;
@@ -106,9 +116,13 @@
       const rect = closestTarget.element?.getBoundingClientRect();
 
       // this fucking sucks but idrc for this proj
-      targets
-        .filter((t) => t.id !== closestTarget?.id)
-        .forEach((t) => t.offset?.set([0, 0]));
+      for (const target of targets) {
+        if (target.id === closestTarget.id) {
+          continue;
+        }
+
+        target.offset?.set([0, 0]);
+      }
 
       if (!rect) {
         return;
@@ -117,42 +131,42 @@
       activeTarget.set(closestTarget);
 
       if (closestTarget.snap !== true) {
-        cursorTween.set({
+        cursor.set({
           x,
           y,
-          width: size * (mouseDown ? 1.2 : 1.5),
-          height: size * (mouseDown ? 1.2 : 1.5),
-          borderRadius: size * (mouseDown ? 1.2 : 1.5)
+          width: BASE_CURSOR_SIZE * (mouseDown ? 1.2 : 1.5),
+          height: BASE_CURSOR_SIZE * (mouseDown ? 1.2 : 1.5),
+          borderRadius: (BASE_CURSOR_SIZE * (mouseDown ? 1.2 : 1.5)) / 2
         });
-        innerCursorTween.set({
+        innerCursor.set({
           x,
           y,
-          width: innerSize * (mouseDown ? 3 : 2),
-          height: innerSize * (mouseDown ? 3 : 2),
-          borderRadius: innerSize * (mouseDown ? 3 : 2)
+          width: BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 2),
+          height: BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 2),
+          borderRadius: (BASE_CURSOR_INNER_SIZE * (mouseDown ? 3 : 2)) / 2
         });
         return;
       }
 
-      cursorTween.set({
-        x: rect.left + rect.width / 2 + (x - (rect.left + rect.width / 2)) * 0.14,
-        y: rect.top + rect.height / 2 + (y - (rect.top + rect.height / 2)) * 0.14,
+      const rectCenter = [rect.left + rect.width / 2, rect.top + rect.height / 2];
+
+      cursor.set({
+        x: rectCenter[0] + (x - rectCenter[0]) * 0.14,
+        y: rectCenter[1] + (y - rectCenter[1]) * 0.14,
         width: rect.width + closestTarget.size + (mouseDown ? 8 : 0),
         height: rect.height + closestTarget.size * 0.5 + (mouseDown ? 8 : 0),
         borderRadius: 8 * (mouseDown ? 2 : 1)
       });
 
-      closestTarget.offset?.set([
-        (x - (rect.left + rect.width / 2)) * 0.075,
-        (y - (rect.top + rect.height / 2)) * 0.075
-      ]);
+      // offset should be exponential - i.e., the further the x,y from the center of the target, the more the offset
+      closestTarget.offset?.set([(x - rectCenter[0]) * 0.08, (y - rectCenter[1]) * 0.08]);
 
-      innerCursorTween.set({
+      innerCursor.set({
         x,
         y,
-        width: innerSize * (mouseDown ? 2 : 3),
-        height: innerSize * (mouseDown ? 2 : 3),
-        borderRadius: innerSize * (mouseDown ? 1 : 3)
+        width: BASE_CURSOR_INNER_SIZE * (mouseDown ? 2 : 4),
+        height: BASE_CURSOR_INNER_SIZE * (mouseDown ? 2 : 4),
+        borderRadius: (BASE_CURSOR_INNER_SIZE * (mouseDown ? 2 : 4)) / 2
       });
     };
 
@@ -166,36 +180,36 @@
       target?.element?.click();
     }
 
-    updateCursorPosition(targets)(e);
+    update(targets)(e);
   };
 
   const setVis = (visible: boolean) => {
-    hide = !visible;
+    hidden = !visible;
     !visible && get(activeTarget)?.offset?.set([0, 0]);
     !visible && activeTarget.set(undefined);
   };
 
-  $: updateCursorPosition($cursorTargets)();
+  $: update($cursorTargets)();
 </script>
 
 <svelte:window
-  on:mousemove={updateCursorPosition}
-  on:mousemove={updateCursorPosition($cursorTargets)}
+  on:mousemove={update($cursorTargets)}
   on:mousedown={handleClick}
   on:mouseup={handleClick}
+  on:scroll={update($cursorTargets)}
 />
 
-{#if !hide}
+{#if !hidden}
   <div
     class="pointer-events-none fixed left-0 top-0 z-10 shadow-lg {$activeTarget !==
     undefined
       ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
       : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
     style={`
-transform: translate(calc(${$cursorTween.x}px - 50%), calc(${$cursorTween.y}px - 50%));
-width: ${$cursorTween.width}px;
-height: ${$cursorTween.height}px;
-border-radius: ${$cursorTween.borderRadius}px;
+transform: translate(calc(${$cursor.x}px - 50%), calc(${$cursor.y}px - 50%));
+width: ${$cursor.width}px;
+height: ${$cursor.height}px;
+border-radius: ${$cursor.borderRadius}px;
 `}
   />
   <div
@@ -204,10 +218,10 @@ border-radius: ${$cursorTween.borderRadius}px;
       ? 'bg-dark/20 dark:bg-light/20'
       : 'bg-dark/40 dark:bg-light/40'}"
     style={`
-transform: translate(calc(${$innerCursorTween.x}px - 50%), calc(${$innerCursorTween.y}px - 50%));
-width: ${$innerCursorTween.width}px;
-height: ${$innerCursorTween.height}px;
-border-radius: ${$innerCursorTween.borderRadius}px;
+transform: translate(calc(${$innerCursor.x}px - 50%), calc(${$innerCursor.y}px - 50%));
+width: ${$innerCursor.width}px;
+height: ${$innerCursor.height}px;
+border-radius: ${$innerCursor.borderRadius}px;
 `}
   />
 {/if}

@@ -13,15 +13,17 @@
 
   const buttons = ['Button One', 'Button Two', 'Button Three'];
 
-  onMount(() => (containerRect = container?.getBoundingClientRect()));
+  const updateRect = () => (containerRect = container?.getBoundingClientRect());
+
+  onMount(updateRect);
 </script>
 
-<svelte:window on:resize={() => (containerRect = container?.getBoundingClientRect())} />
+<svelte:window on:resize={updateRect} on:scroll={updateRect} />
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <article
   class="relative my-6 block cursor-none rounded-lg bg-dark/5 px-7 py-6 shadow-2xl shadow-dark/5 transition-shadow focus-within:shadow-dark/10 hover:shadow-dark/10 dark:bg-light/5 dark:shadow-light/5"
-  on:mouseover={() => (containerRect = container?.getBoundingClientRect())}
+  on:mouseover={updateRect}
   bind:this={container}
 >
   <header class="w-full pb-2">
@@ -30,7 +32,7 @@
     <Divider />
   </header>
 
-  <CursorTarget distance={38} let:active let:offset>
+  <CursorTarget distance={40} let:active let:offset>
     <Link
       href="{BASE_GIT_URL}/blob/main/svelte-app/src/components/experiments/mag-cursor.svelte"
       class="focus-outline absolute right-4 top-4 z-10 cursor-none rounded-sm p-2"

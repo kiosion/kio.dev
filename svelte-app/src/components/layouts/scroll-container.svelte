@@ -34,6 +34,10 @@
   role="none"
   data-test-id="scroll-container"
   bind:this={element}
+  on:scroll={(e) => {
+    // dispatch what looks like a scroll event to the window
+    window.dispatchEvent(new CustomEvent('scroll', { detail: e }));
+  }}
 >
   <slot {element} />
 </div>

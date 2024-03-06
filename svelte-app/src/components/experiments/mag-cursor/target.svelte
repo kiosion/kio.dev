@@ -5,6 +5,7 @@
 
   import {
     activeTarget,
+    BASE_TWEEN_MS,
     cursorTargets,
     DEFAULT_NO_SNAP_DIST,
     DEFAULT_SNAP_DIST,
@@ -29,7 +30,7 @@
         snapDist: distance,
         size,
         offset: tweened([0, 0], {
-          duration: 275,
+          duration: BASE_TWEEN_MS,
           easing: cubicOut
         })
       }
