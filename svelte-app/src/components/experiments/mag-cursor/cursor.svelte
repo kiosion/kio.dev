@@ -159,7 +159,7 @@
       });
 
       // offset should be exponential - i.e., the further the x,y from the center of the target, the more the offset
-      closestTarget.offset?.set([(x - rectCenter[0]) * 0.08, (y - rectCenter[1]) * 0.08]);
+      closestTarget.offset?.set([(x - rectCenter[0]) * 0.08, (y - rectCenter[1]) * 0.14]);
 
       innerCursor.set({
         x,

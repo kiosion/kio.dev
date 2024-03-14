@@ -29,7 +29,7 @@
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(
-      () => {
+      () =>
         createTooltip({
           id: tooltipId,
           content: text,
@@ -38,13 +38,16 @@
           followCursor: !fixed,
           offset,
           target: target as HTMLElement
-        });
-      },
-      Math.max(0, delay - 50)
+        }),
+      delay
     );
   };
 
-  const hideTooltip = () => {
+  const hideTooltip = (e?: Event) => {
+    if (e?.type === 'mouseleave' && target?.matches(':focus-visible')) {
+      return;
+    }
+
     clearTimeout(timeoutId);
     destroyTooltip(tooltipId);
   };
