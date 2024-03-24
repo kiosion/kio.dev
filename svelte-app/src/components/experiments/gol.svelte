@@ -123,6 +123,7 @@
   <Tooltip text={running ? 'Pause' : 'Resume'}>
     <button
       class="focus-outline absolute right-4 top-4 rounded-md p-2"
+      type="button"
       on:click={running ? stopGame : startGame}
     >
       {#if running}

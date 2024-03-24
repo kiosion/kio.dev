@@ -113,6 +113,7 @@
   <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]}>
     <button
       class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      type="button"
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
     >

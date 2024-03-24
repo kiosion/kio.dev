@@ -24,7 +24,6 @@
     },
     placeholderSrc =
       placeholder || buildImageUrl({ ref: _ref, crop, width: 30, blur: 40 }),
-    style = `max-width: ${imgDimensions.width}px; max-height: ${imgDimensions.height}px; aspect-ratio: ${imgDimensions.width} / ${imgDimensions.height};`,
     [send, receive] = crossfade({
       duration: (d: number) => Math.sqrt(d * 200),
       fallback(node, params) {
@@ -78,12 +77,13 @@
       class="mx-auto w-full select-none rounded-sm"
       src={placeholderSrc}
       draggable="false"
-      {style}
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     />
   {:then src}
     <button
       class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
-      {style}
+      type="button"
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
         showImageModal = true;
       }}
@@ -100,7 +100,7 @@
           src={placeholderSrc}
           alt={_key}
           draggable="false"
-          {style}
+          style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
           out:fade={{ duration: BASE_ANIMATION_DURATION }}
         />
       {:else}
@@ -120,7 +120,12 @@
     >
       Error: {e?.message || e}
     </p>
-    <img src={placeholderSrc} alt={_key} draggable="false" {style} />
+    <img
+      src={placeholderSrc}
+      alt={_key}
+      draggable="false"
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    />
   {/await}
   <img
     class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity"
@@ -128,7 +133,7 @@
     alt={_key}
     draggable="false"
     aria-hidden="true"
-    {style}
+    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
   />
 </div>
 
@@ -137,7 +142,7 @@
     class="mx-auto w-full select-none rounded-sm"
     src={fullSrc}
     alt={_key}
-    {style}
+    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
   />

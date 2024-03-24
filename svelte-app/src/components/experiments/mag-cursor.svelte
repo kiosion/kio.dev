@@ -59,6 +59,7 @@
             class="focus-outline-sm cursor-none select-none rounded-lg px-3 py-2 font-code text-base transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
               ? ' text-accent-light dark:text-accent-dark'
               : ''}"
+            type="button"
             tabindex="0"
           >
             <div style="transform: translate({offset?.[0]}px, {offset?.[1]}px)">

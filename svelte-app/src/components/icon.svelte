@@ -70,11 +70,7 @@
   const InnerIconComponent = getIcon(name);
 </script>
 
-<div
-  class={$$props.class || ''}
-  class:inline
-  style={`width: ${size}px; height: ${size}px;`}
->
+<div class={$$props.class || ''} class:inline style="width: {size}px; height: {size}px;">
   <BaseIconWrapper
     width={size}
     height={size}

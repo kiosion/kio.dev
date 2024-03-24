@@ -77,6 +77,7 @@
           width: {image.carouselDimensions.width}px;
           height: {image.carouselDimensions.height}px;
         "
+        type="button"
         on:click={() => {
           currentIndex = i;
           showImageModal = true;

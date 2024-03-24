@@ -14,6 +14,7 @@
   <Tooltip text={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}>
     <button
       class="focus-outline -m-1.5 flex h-6 w-6 items-center justify-center rounded-sm hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
+      type="button"
       aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
       data-test-id="theme-toggle"
       data-test-state={$theme}

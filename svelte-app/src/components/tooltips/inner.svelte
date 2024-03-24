@@ -139,7 +139,7 @@
 </script>
 
 <div
-  {style}
+  style="left: {position.x}px; top: {position.y}px;"
   class="pointer-events-none absolute z-50"
   id={`tooltip-${id}`}
   bind:this={tooltipElement}
