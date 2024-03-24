@@ -40,12 +40,18 @@
     class:focus-outline={data?.url}
     tabindex={data?.url ? 0 : -1}
     role="button"
-    on:click={() => {
+    on:click={(e) => {
+      if (e.target instanceof SVGElement || e.target instanceof HTMLLinkElement) {
+        return;
+      }
       if (data?.url) {
         window.open(data.url, '_blank');
       }
     }}
     on:keyup={(e) => {
+      if (e.target instanceof SVGElement || e.target instanceof HTMLLinkElement) {
+        return;
+      }
       if (e.key === 'Enter' && data?.url) {
         window.open(data.url, '_blank');
       }

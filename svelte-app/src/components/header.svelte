@@ -15,7 +15,7 @@
   >
     <HeaderLogo />
     <div
-      class="flex flex-row items-center justify-start gap-2 pt-0.5 text-dark/80 dark:text-light/80"
+      class="mt-0.5 flex flex-row items-center justify-start gap-2 text-dark/80 dark:text-light/80"
     >
       {#each NAV_LINKS as link, i}
         <NavLink {link} />
@@ -26,7 +26,7 @@
     </div>
   </nav>
   <div
-    class="flex flex-row items-center justify-end gap-5 pr-1.5 pt-0.5 text-dark/80 dark:text-light/80"
+    class="mt-0.5 flex flex-row items-center justify-end gap-x-4 text-dark/80 dark:text-light/80"
     aria-label="Page controls"
     role="group"
   >

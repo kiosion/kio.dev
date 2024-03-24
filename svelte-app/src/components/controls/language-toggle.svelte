@@ -29,7 +29,7 @@
     text={$t($currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English')}
   >
     <button
-      class="focus-outline -m-1.5 flex h-6 w-6 items-center justify-center rounded-sm hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
+      class="focus-outline -m-2 rounded-sm p-2 hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
       aria-label={$t(
         $currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English'
       )}
@@ -39,7 +39,7 @@
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
     >
-      <Icon name="script" size={18} />
+      <Icon name="script" size={20} />
     </button>
   </Tooltip>
 </Hoverable>
