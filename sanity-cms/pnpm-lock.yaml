@@ -10,8 +10,8 @@ overrides:
 
 dependencies:
   '@sanity/code-input':
-    specifier: 4.1.2
-    version: 4.1.2(@babel/runtime@7.23.8)(@codemirror/lint@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.30.1)(styled-components@6.1.8)
+    specifier: 4.1.3
+    version: 4.1.3(@babel/runtime@7.23.8)(@codemirror/lint@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.30.1)(styled-components@6.1.8)
   '@sanity/ui':
     specifier: 2.0.7
     version: 2.0.7(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
@@ -3562,8 +3562,8 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/code-input@4.1.2(@babel/runtime@7.23.8)(@codemirror/lint@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.30.1)(styled-components@6.1.8):
-    resolution: {integrity: sha512-XvUsaUIbl/FV/qP03XItG1UmuxeDC+EPrmFf9VCsE6enhaeTDJgCrtFfXIdS4D4Hmi4R8RclDEddFl58iRiSKA==}
+  /@sanity/code-input@4.1.3(@babel/runtime@7.23.8)(@codemirror/lint@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.30.1)(styled-components@6.1.8):
+    resolution: {integrity: sha512-HFx18dQm/TYNm4W/p+IGBnmNF9t8cDgquTupBwsfBDDKXKKntyHwFGsm+ltu8+4BcsMVCkxpB8iIMqJRsM7evQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^18
@@ -3889,7 +3889,7 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 2.2.5
-      '@sanity/icons': 2.10.2(react@18.2.0)
+      '@sanity/icons': 2.10.3(react@18.2.0)
       csstype: 3.1.3
       framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
