@@ -29,11 +29,11 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8"
-  tabindex="-1"
-  role="none"
-  data-test-id="scroll-container"
   bind:this={element}
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8"
+  data-test-id="scroll-container"
+  role="none"
+  tabindex="-1"
   on:scroll={(e) => {
     // dispatch what looks like a scroll event to the window
     window.dispatchEvent(new CustomEvent('scroll', { detail: e }));

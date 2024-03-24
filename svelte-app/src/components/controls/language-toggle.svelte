@@ -30,12 +30,12 @@
   >
     <button
       class="focus-outline -m-1.5 flex h-6 w-6 items-center justify-center rounded-sm hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
-      type="button"
       aria-label={$t(
         $currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English'
       )}
-      tabindex="0"
       data-test-id="language-toggle"
+      tabindex="0"
+      type="button"
       on:click={(e) => {
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}

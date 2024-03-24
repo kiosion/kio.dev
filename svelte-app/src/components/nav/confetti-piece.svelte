@@ -14,11 +14,11 @@
 </script>
 
 <div
-  class="absolute h-1 w-1 opacity-0 {colours[index % 5]}"
   style="--x-end: {Math.random() * 2 * spreadX - spreadX}px; --y-end: {Math.random() *
     2 *
     spreadY -
     spreadY / 2}px;"
+  class="absolute h-1 w-1 opacity-0 {colours[index % 5]}"
 />
 
 <style lang="scss">

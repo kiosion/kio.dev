@@ -38,9 +38,9 @@
 </script>
 
 <BaseLink
-  text={$t(link.name)}
-  href={link.url}
   active={isActive}
+  href={link.url}
   noTranslate
+  text={$t(link.name)}
   on:click={handleAction}
 />

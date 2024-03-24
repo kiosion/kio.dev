@@ -27,9 +27,9 @@
 {/if}
 <div>
   <ArrowButton
-    href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     align="left"
     fullWidth
+    href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     preload
   >
     <span class="flex items-center justify-start gap-2 text-base">

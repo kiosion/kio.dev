@@ -21,6 +21,7 @@
   class="contents {$$props.class ?? ''}"
   class:cursor-pointer={setPointer}
   data-test-id="hover-target"
+  role="none"
   on:mouseover={() => handleHoverIn()}
   on:mouseout={() => handleHoverOut()}
   on:focus={() => handleHoverIn()}
@@ -29,7 +30,6 @@
   on:mouseleave={() => handleHoverOut()}
   on:focusout={() => handleHoverOut()}
   on:blur={() => handleHoverOut()}
-  role="none"
 >
   <slot {hovered} />
 </span>

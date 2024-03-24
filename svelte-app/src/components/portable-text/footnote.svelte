@@ -41,9 +41,9 @@
   <Tooltip text={$t('Go to footnote')}>
     <sup
       ><a
-        href={`#note-${portableText.value._key}`}
         id="src-{portableText.value._key}"
         aria-label={$t('Go to footnote')}
+        href={`#note-${portableText.value._key}`}
         on:click={(e) => customScrollTo(e, `note-${portableText.value._key}`)}
         on:keydown={(e) => {
           if (e.code === 'Space' || e.code === 'Enter') {

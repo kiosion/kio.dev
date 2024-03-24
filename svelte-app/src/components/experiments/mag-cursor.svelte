@@ -22,9 +22,9 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <article
+  bind:this={container}
   class="relative my-6 block cursor-none rounded-lg bg-dark/5 px-7 py-6 shadow-2xl shadow-dark/5 transition-shadow focus-within:shadow-dark/10 hover:shadow-dark/10 dark:bg-light/5 dark:shadow-light/5"
   on:mouseover={updateRect}
-  bind:this={container}
 >
   <header class="w-full pb-2">
     <h3 class="pb-2 text-2xl font-bold">Magnetic cursor</h3>
@@ -34,19 +34,19 @@
 
   <CursorTarget distance={40} let:active let:offset>
     <Link
-      href="{BASE_GIT_URL}/blob/main/svelte-app/src/components/experiments/mag-cursor.svelte"
+      style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
       class="focus-outline absolute right-4 top-4 z-10 cursor-none rounded-sm p-2"
+      href="{BASE_GIT_URL}/blob/main/svelte-app/src/components/experiments/mag-cursor.svelte"
+      newtab
       tooltipDelay={150}
       tooltipText="View source"
-      newtab
-      style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
     >
       <Icon
         name="ExternalLink"
-        size={21}
         class="hover:text-accent-light/90 focus-visible:text-accent-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90 {active
           ? 'text-accent-light/90 dark:text-accent-dark/90'
           : 'text-dark/90 dark:text-light/90'}"
+        size={21}
       />
     </Link>
   </CursorTarget>
@@ -59,8 +59,8 @@
             class="focus-outline-sm cursor-none select-none rounded-lg px-3 py-2 font-code text-base transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
               ? ' text-accent-light dark:text-accent-dark'
               : ''}"
-            type="button"
             tabindex="0"
+            type="button"
           >
             <div style="transform: translate({offset?.[0]}px, {offset?.[1]}px)">
               {label}

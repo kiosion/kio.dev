@@ -115,7 +115,7 @@
     "svelte/valid-prop-names-in-kit-pages": ["error"],
     "svelte/no-reactive-functions": ["warn"],
     "svelte/button-has-type": ["warn"],
-    // "svelte/sort-attributes": ["warn"],
+    "svelte/sort-attributes": ["warn"],
     "svelte/require-optimized-style-attribute": ["warn"],
     "unused-imports/no-unused-imports": ["error"],
     "unused-imports/no-unused-vars": [

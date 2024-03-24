@@ -17,13 +17,13 @@
 <Divider />
 <div>
   {#if data.body}
-    <PortableText text={data.body} {routeFetch} />
+    <PortableText {routeFetch} text={data.body} />
   {:else}
     <EmptyContent />
   {/if}
 </div>
 <Divider />
-<Footer {model} {data} />
+<Footer {data} {model} />
 
 <style lang="scss">
   div {

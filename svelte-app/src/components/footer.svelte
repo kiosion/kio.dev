@@ -29,17 +29,17 @@
         <Icon name="At" class="text-accent-light/80 dark:text-accent-dark/80" size={20} />
         <div
           class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
-          role="group"
           aria-label={$t('Social links')}
+          role="group"
         >
           {#each socials as social, i}
-            <Tooltip text={social.url} delay={300} position="top">
+            <Tooltip delay={300} position="top" text={social.url}>
               <BaseLink
-                text={social.name}
                 href={social.url}
-                target={social.target}
-                rel={social.rel}
                 noTranslate
+                rel={social.rel}
+                target={social.target}
+                text={social.name}
               />
             </Tooltip>
             {#if i < socials.length - 1}
@@ -59,11 +59,11 @@
           class="text-accent-light/80 dark:text-accent-dark/80"
           size={20}
         />
-        <Tooltip text={$t('View latest commit on GitHub')} position="top">
+        <Tooltip position="top" text={$t('View latest commit on GitHub')}>
           <BaseLink
-            target="_blank"
-            rel="noopener noreferrer"
             href="{BASE_GIT_URL}/commit/{APP_VERSION}"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             {APP_VERSION.slice(0, 6)}
           </BaseLink>

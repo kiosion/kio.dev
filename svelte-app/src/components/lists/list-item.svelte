@@ -18,12 +18,12 @@
 
 <Hoverable let:hovered>
   <a
-    href={$linkTo(link)}
-    class:small
     class="focus-outline w-full rounded-md"
-    tabindex="0"
+    class:small
     data-sveltekit-preload-code
     data-sveltekit-preload-data
+    href={$linkTo(link)}
+    tabindex="0"
   >
     <div
       class="flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
@@ -43,12 +43,12 @@
 
     <h1
       class="min-w-fit font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
-      class:pb-1={!small && document.desc?.length}
-      class:underline={hovered}
-      class:text-lg={small}
-      class:text-xl={!small}
       class:decoration-2={small}
       class:decoration-[3px]={!small}
+      class:pb-1={!small && document.desc?.length}
+      class:text-lg={small}
+      class:text-xl={!small}
+      class:underline={hovered}
       class:underline-offset-2={small}
       class:underline-offset-4={!small}
     >

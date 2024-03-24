@@ -55,9 +55,9 @@
     </div>
     <ArrowButton
       class="focus-outline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
-      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
+      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       preload
     >
       <span class="flex items-center justify-end gap-2 text-base">
@@ -106,11 +106,11 @@
       <ImageCarousel {images} />
     {:else}
       <Image
+        crop={images[0].crop}
         image={images[0].sanityAsset}
         placeholder={images[0].placeholder}
-        crop={images[0].crop}
-        srcPromise={images[0].asset}
         {routeFetch}
+        srcPromise={images[0].asset}
       />
     {/if}
   {/if}

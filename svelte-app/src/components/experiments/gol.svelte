@@ -130,8 +130,8 @@
         <svg
           class="h-5 w-5 text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M10 4H5v16h5V4zm9 0h-5v16h5V4z" fill="currentColor" />
         </svg>
@@ -139,8 +139,8 @@
         <svg
           class="h-5 w-5 text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M10 20H8V4h2v2h2v3h2v2h2v2h-2v2h-2v3h-2v2z" fill="currentColor" />
         </svg>
@@ -149,7 +149,7 @@
   </Tooltip>
 
   <figure class="relative w-full overflow-clip rounded-md">
-    <div class="grid w-fit gap-0.5" style="grid-template-columns: repeat({cols}, 12px);">
+    <div style="grid-template-columns: repeat({cols}, 12px);" class="grid w-fit gap-0.5">
       {#each grid as row, rowIndex}
         {#each row as cell, colIndex}
           <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->

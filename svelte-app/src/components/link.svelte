@@ -22,24 +22,24 @@
 
 <Hoverable let:hovered>
   <Tooltip
+    delay={tooltipDelay}
     text={tooltipText ??
       (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
-    delay={tooltipDelay}
   >
     <svelte:element
       this={type}
-      target={newtab ? '_blank' : undefined}
-      rel={newtab ? 'noopener noreferrer' : undefined}
       class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
         ? 'decoration-[3px]'
         : 'decoration-2'} transition-[text-decoration-color]"
-      tabindex="0"
       aria-label={$$props['aria-label']}
+      rel={newtab ? 'noopener noreferrer' : undefined}
+      tabindex="0"
+      target={newtab ? '_blank' : undefined}
       {...$$restProps}
       href={link}
+      role={type === 'a' ? 'link' : 'button'}
       on:click={() => dispatch('click')}
       on:keyup={(e) => e.key === 'Enter' && dispatch('click')}
-      role={type === 'a' ? 'link' : 'button'}
     >
       <slot />
     </svelte:element>

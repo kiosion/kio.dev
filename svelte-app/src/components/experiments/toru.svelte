@@ -34,12 +34,12 @@
   onDestroy(() => stopSync(onUpdate));
 </script>
 
-<Hoverable let:hovered setPointer={!!data?.url}>
+<Hoverable setPointer={!!data?.url} let:hovered>
   <div
     class="relative block rounded-lg"
     class:focus-outline={data?.url}
-    tabindex={data?.url ? 0 : -1}
     role="button"
+    tabindex={data?.url ? 0 : -1}
     on:click={() => {
       if (data?.url) {
         window.open(data.url, '_blank');
@@ -61,15 +61,15 @@
       </header>
 
       <Link
-        href="https://github.com/kiosion/toru"
         class="focus-outline absolute right-4 top-4 z-10 rounded-sm p-2"
-        tooltipDelay={150}
+        href="https://github.com/kiosion/toru"
         newtab
+        tooltipDelay={150}
       >
         <Icon
           name="ExternalLink"
-          size={21}
           class="text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
+          size={21}
         />
       </Link>
 
@@ -79,9 +79,9 @@
         {#if data}
           <div class="relative flex-shrink-0 overflow-clip">
             <img
-              src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
-              alt="Album art for the currently playing track"
               class="pointer-events-none aspect-square h-28 w-28 rounded-lg"
+              alt="Album art for the currently playing track"
+              src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
             />
             {#if data.playing}
               <div
@@ -122,9 +122,9 @@
           </div>
 
           <img
-            src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
-            alt="Artist art for the currently playing track"
             class="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[150%] w-[150%] opacity-30 blur-xl"
+            alt="Artist art for the currently playing track"
+            src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
           />
           <div
             class="absolute bottom-0 left-0 right-0 top-0 -z-20 h-[150%] w-[150%] bg-light blur-xl transition-colors dark:bg-dark"
@@ -153,16 +153,16 @@
 
     <div
       class="pointer-events-none absolute -bottom-2 left-0 right-0 top-0 -z-40 transition-opacity"
-      aria-hidden="true"
+      class:dark:opacity-15={hovered}
       class:opacity-10={!hovered}
       class:opacity-20={hovered}
-      class:dark:opacity-15={hovered}
+      aria-hidden="true"
     >
       {#if data}
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-          src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
           class="h-full w-full blur-lg"
+          src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
         />
       {:else}
         <div class="h-full w-full bg-dark/10 dark:bg-light/10" />

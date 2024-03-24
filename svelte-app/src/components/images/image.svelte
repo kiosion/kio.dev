@@ -74,16 +74,16 @@
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
-      class="mx-auto w-full select-none rounded-sm"
-      src={placeholderSrc}
-      draggable="false"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+      class="mx-auto w-full select-none rounded-sm"
+      draggable="false"
+      src={placeholderSrc}
     />
   {:then src}
     <button
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
       type="button"
-      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
         showImageModal = true;
       }}
@@ -96,19 +96,19 @@
     >
       {#if showImageModal}
         <img
+          style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
           class="placeholder absolute left-0 top-0 mx-auto w-full select-none rounded-sm opacity-50"
-          src={placeholderSrc}
           alt={_key}
           draggable="false"
-          style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+          src={placeholderSrc}
           out:fade={{ duration: BASE_ANIMATION_DURATION }}
         />
       {:else}
         <img
-          {src}
           class="mx-auto w-full select-none rounded-sm"
           alt={_key}
           draggable="false"
+          {src}
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
           out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
         />
@@ -121,28 +121,28 @@
       Error: {e?.message || e}
     </p>
     <img
-      src={placeholderSrc}
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       alt={_key}
       draggable="false"
-      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+      src={placeholderSrc}
     />
   {/await}
   <img
-    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity"
-    src={placeholderSrc}
-    alt={_key}
-    draggable="false"
-    aria-hidden="true"
     style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity"
+    alt={_key}
+    aria-hidden="true"
+    draggable="false"
+    src={placeholderSrc}
   />
 </div>
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    class="mx-auto w-full select-none rounded-sm"
-    src={fullSrc}
-    alt={_key}
     style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    class="mx-auto w-full select-none rounded-sm"
+    alt={_key}
+    src={fullSrc}
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
   />

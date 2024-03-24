@@ -1,6 +1,6 @@
 <div
-  class="w-full transition-[max-width,margin] duration-200"
   id={$$props.id ?? undefined}
+  class="w-full transition-[max-width,margin] duration-200"
 >
   <slot />
 </div>

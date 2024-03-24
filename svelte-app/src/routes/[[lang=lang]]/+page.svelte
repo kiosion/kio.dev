@@ -17,15 +17,15 @@
 
 <svelte:head>
   <title>{$pageTitle}</title>
-  <meta itemprop="name" content={$pageTitle} />
-  <meta itemprop="description" content={description} />
+  <meta content={$pageTitle} itemprop="name" />
+  <meta content={description} itemprop="description" />
   <meta name="robots" content="index, follow" />
   <meta name="description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={$pageTitle} />
-  <meta property="og:description" content={description} />
-  <meta property="twitter:title" content={$pageTitle} />
-  <meta property="twitter:description" content={description} />
+  <meta content="website" property="og:type" />
+  <meta content={$pageTitle} property="og:title" />
+  <meta content={description} property="og:description" />
+  <meta content={$pageTitle} property="twitter:title" />
+  <meta content={description} property="twitter:description" />
 </svelte:head>
 
 {#if data.config?.about}
@@ -45,17 +45,17 @@
   {#if data.posts.length}
     <div
       class="mb-6 mt-5 flex flex-col gap-y-5"
-      role="group"
       aria-labelledby="{id}-heading"
+      role="group"
     >
       {#each data.posts as post}
         <ListItem document={post} small />
       {/each}
     </div>
-    <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
+    <ArrowButton fullWidth href={$linkTo('/thoughts')} preload>
       <span class="flex items-center justify-start gap-2">
         <p>{$t('See more')}</p>
-        <Icon name="ArrowRight" size={18} inline />
+        <Icon name="ArrowRight" inline size={18} />
       </span>
     </ArrowButton>
   {:else}

@@ -98,19 +98,19 @@
 
 <div
   class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/20 transition-colors dark:border-light/20"
-  role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
+  role="group"
 >
   {#if filename}
     <div
-      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20"
       id="{id}-filename"
+      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20"
     >
       {filename}
     </div>
   {/if}
-  <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]}>
+  <Tooltip delay={200} offset={[0, 2]} text={$t('Copy to clipboard')}>
     <button
       class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
       type="button"
@@ -123,12 +123,12 @@
     </button>
   </Tooltip>
   <div
-    class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     bind:this={codeContainer}
+    class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all"
       id="hljs-container"
+      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
@@ -154,8 +154,8 @@
             {#if showLineNumbers === true}
               <svelte:component
                 this={resolvedLineNumbers}
-                {highlighted}
                 hideBorder
+                {highlighted}
                 wrapLines
               />
             {/if}

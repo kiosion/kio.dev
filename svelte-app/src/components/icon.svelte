@@ -70,11 +70,11 @@
   const InnerIconComponent = getIcon(name);
 </script>
 
-<div class={$$props.class || ''} class:inline style="width: {size}px; height: {size}px;">
+<div style="width: {size}px; height: {size}px;" class={$$props.class || ''} class:inline>
   <BaseIconWrapper
-    width={size}
-    height={size}
     aria-label={name + $t(' icon')}
+    height={size}
+    width={size}
     {...$$restProps}
   >
     <InnerIconComponent />

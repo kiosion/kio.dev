@@ -26,8 +26,8 @@
 {#if show}
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <dialog
-    class="fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80"
     bind:this={dialog}
+    class="fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80"
     on:click={() => (show = false)}
     on:keydown={(e) => {
       if (e.key === 'Escape') {

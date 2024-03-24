@@ -22,8 +22,8 @@
 <span class="relative h-fit w-fit">
   <a
     class="focus-outline-sm w-fit select-none rounded-sm font-code text-xl font-extrabold transition-[color]"
-    href={$linkTo(clicks < 3 ? '/' : '/experiments')}
     aria-label={$t('Home')}
+    href={$linkTo(clicks < 3 ? '/' : '/experiments')}
     on:click={handleClick}
   >
     kio.dev

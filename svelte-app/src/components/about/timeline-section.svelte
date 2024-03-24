@@ -12,11 +12,11 @@
     id = Math.random().toString(36).substring(7);
 </script>
 
-<section class="my-6" role="group" aria-labelledby="{id}-heading">
+<section class="my-6" aria-labelledby="{id}-heading" role="group">
   <div class="pb-4">
     <h2
-      class="pb-1 text-lg font-bold text-dark transition-colors dark:text-white"
       id="{id}-heading"
+      class="pb-1 text-lg font-bold text-dark transition-colors dark:text-white"
     >
       {title}
     </h2>
@@ -34,10 +34,10 @@
 
   {#each section as item, i}
     <TimelineItem
-      title={item.subtitle}
       body={item.body}
-      range={item.range}
       last={i === section.length - 1}
+      range={item.range}
+      title={item.subtitle}
     />
   {/each}
 </section>

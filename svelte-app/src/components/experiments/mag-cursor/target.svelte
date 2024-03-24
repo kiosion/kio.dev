@@ -45,6 +45,6 @@
   $: tweenedOffset = $cursorTargets.find((t) => t.id === id)?.offset;
 </script>
 
-<div class="contents" bind:this={element}>
-  <slot {active} {id} offset={$tweenedOffset} />
+<div bind:this={element} class="contents">
+  <slot {id} {active} offset={$tweenedOffset} />
 </div>

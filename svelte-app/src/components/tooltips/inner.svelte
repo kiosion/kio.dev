@@ -139,10 +139,10 @@
 </script>
 
 <div
+  bind:this={tooltipElement}
+  id={`tooltip-${id}`}
   style="left: {position.x}px; top: {position.y}px;"
   class="pointer-events-none absolute z-50"
-  id={`tooltip-${id}`}
-  bind:this={tooltipElement}
 >
   <span
     class="block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light dark:bg-light dark:text-dark"

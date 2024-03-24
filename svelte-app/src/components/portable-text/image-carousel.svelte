@@ -71,12 +71,12 @@
   <div class="scroller">
     {#each $values as image, i}
       <button
-        class="focus-outline-sm"
         style="
           aspect-ratio: {image.crop.width} / {image.crop.height};
           width: {image.carouselDimensions.width}px;
           height: {image.carouselDimensions.height}px;
         "
+        class="focus-outline-sm"
         type="button"
         on:click={() => {
           currentIndex = i;
@@ -91,17 +91,17 @@
       >
         {#if showImageModal && currentIndex === i}
           <img
-            src={image.asset}
-            draggable="false"
-            alt={i.toString()}
             style="opacity: 0;"
+            alt={i.toString()}
+            draggable="false"
+            src={image.asset}
           />
         {:else}
           <img
-            src={image.asset}
-            draggable="false"
-            alt={i.toString()}
             bind:this={imageElements[i]}
+            alt={i.toString()}
+            draggable="false"
+            src={image.asset}
             in:receive={{ key: i, duration: BASE_ANIMATION_DURATION }}
             out:send={{ key: i, duration: BASE_ANIMATION_DURATION }}
           />
@@ -113,9 +113,9 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    src={$values[currentIndex].asset}
-    draggable="false"
     alt={currentIndex.toString()}
+    draggable="false"
+    src={$values[currentIndex].asset}
     in:receive={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}
   />

@@ -82,7 +82,6 @@
   {#if text}
     {#if plainText}
       <PortableText
-        value={text}
         components={{
           marks: {
             link: CustomLink,
@@ -91,10 +90,10 @@
             notranslate: NullMark
           }
         }}
+        value={text}
       />
     {:else}
       <PortableText
-        value={text}
         components={{
           types: {
             code: CodeBlock,
@@ -132,6 +131,7 @@
           footnotes,
           routeFetch
         }}
+        value={text}
       />
       {#if footnotes?.length}
         <div class="footnotes mt-8 transition-[color]">
@@ -142,19 +142,19 @@
             {#each footnotes as note}
               <li class="list-item">
                 <span class="flex flex-row flex-wrap items-center break-all">
-                  <svelte:self text={note.note} plaintext />
+                  <svelte:self plaintext text={note.note} />
                   <Tooltip text={$t('Go to footnote source')}>
                     <a
-                      class="ml-2"
-                      href={`#src-${note._key}`}
                       id="note-{note._key}"
+                      class="ml-2"
                       aria-label="Go to footnote source"
+                      href={`#src-${note._key}`}
                       on:click={(e) => customScrollTo(e, `src-${note._key}`)}
                       on:keydown={(e) => {
                         if (e.code === 'Space' || e.code === 'Enter') {
                           customScrollTo(e, `src-${note._key}`);
                         }
-                      }}><Icon name="arrow-bar-up" size={18} inline /></a
+                      }}><Icon name="arrow-bar-up" inline size={18} /></a
                     >
                   </Tooltip>
                 </span>

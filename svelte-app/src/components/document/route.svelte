@@ -41,24 +41,24 @@
 
 <svelte:head>
   <title>{pageTitle}</title>
-  <meta itemprop="name" content={pageTitle} />
-  <meta itemprop="description" content={pageDescription} />
+  <meta content={pageTitle} itemprop="name" />
+  <meta content={pageDescription} itemprop="description" />
   <meta name="robots" content="index, nofollow" />
   <meta name="description" content={pageDescription} />
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content={data.title} />
-  <meta property="twitter:description" content={pageDescription} />
-  <meta property="article:author" content="Kio" />
+  <meta content="article" property="og:type" />
+  <meta content={pageTitle} property="og:title" />
+  <meta content={pageDescription} property="og:description" />
+  <meta content="summary_large_image" property="twitter:card" />
+  <meta content={data.title} property="twitter:title" />
+  <meta content={pageDescription} property="twitter:description" />
+  <meta content="Kio" property="article:author" />
   <meta
-    property="article:published_time"
     content={new Date(data.date || '0')?.toISOString()}
+    property="article:published_time"
   />
   <meta
-    property="article:modified_time"
     content={new Date(data.date || '0')?.toISOString()}
+    property="article:modified_time"
   />
 </svelte:head>
 

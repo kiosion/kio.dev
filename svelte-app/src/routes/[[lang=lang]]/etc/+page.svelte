@@ -14,15 +14,15 @@
 
 <svelte:head>
   <title>{$pageTitle}</title>
-  <meta itemprop="name" content={$pageTitle} />
-  <meta itemprop="description" content={description} />
+  <meta content={$pageTitle} itemprop="name" />
+  <meta content={description} itemprop="description" />
   <meta name="robots" content="index, follow" />
   <meta name="description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={$pageTitle} />
-  <meta property="og:description" content={description} />
-  <meta property="twitter:title" content={$pageTitle} />
-  <meta property="twitter:description" content={description} />
+  <meta content="website" property="og:type" />
+  <meta content={$pageTitle} property="og:title" />
+  <meta content={description} property="og:description" />
+  <meta content={$pageTitle} property="twitter:title" />
+  <meta content={description} property="twitter:description" />
 </svelte:head>
 
 {#if data.config?.meta}

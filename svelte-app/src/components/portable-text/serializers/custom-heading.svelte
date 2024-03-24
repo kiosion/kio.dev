@@ -11,15 +11,15 @@
 
 <Hoverable let:hovered>
   <a
+    id={`heading-${value._key}`}
     class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
     class:mt-5={indexInParent === 0}
-    id={`heading-${value._key}`}
     href={`#${value._key}`}
   >
     <span
       class="pointer-events-none absolute -left-5 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-2xl font-black text-accent-light dark:text-accent-dark lg:block"
-      class:opacity-40={!hovered}
       class:opacity-100={hovered}
+      class:opacity-40={!hovered}
     >
       #
     </span>

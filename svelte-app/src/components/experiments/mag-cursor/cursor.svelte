@@ -201,27 +201,27 @@
 
 {#if !hidden}
   <div
-    class="pointer-events-none fixed left-0 top-0 z-10 shadow-lg {$activeTarget !==
-    undefined
-      ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
-      : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
     style="
 transform: translate(calc({$cursor.x}px - 50%), calc({$cursor.y}px - 50%));
 width: {$cursor.width}px;
 height: {$cursor.height}px;
 border-radius: {$cursor.borderRadius}px;
 "
+    class="pointer-events-none fixed left-0 top-0 z-10 shadow-lg {$activeTarget !==
+    undefined
+      ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
+      : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
   />
   <div
-    class="pointer-events-none fixed left-0 top-0 z-10 transition-colors {$activeTarget !==
-    undefined
-      ? 'bg-dark/20 dark:bg-light/20'
-      : 'bg-dark/40 dark:bg-light/40'}"
     style="
 transform: translate(calc({$innerCursor.x}px - 50%), calc({$innerCursor.y}px - 50%));
 width: {$innerCursor.width}px;
 height: {$innerCursor.height}px;
 border-radius: {$innerCursor.borderRadius}px;
 "
+    class="pointer-events-none fixed left-0 top-0 z-10 transition-colors {$activeTarget !==
+    undefined
+      ? 'bg-dark/20 dark:bg-light/20'
+      : 'bg-dark/40 dark:bg-light/40'}"
   />
 {/if}

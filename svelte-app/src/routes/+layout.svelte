@@ -106,27 +106,27 @@
   <meta name="author" content="Kio" />
   <meta name="theme-color" content={$theme === APP_THEMES.DARK ? '#16160e' : '#e5e4e6'} />
   <meta
-    property="og:locale"
     content={$currentLang === APP_LANGS[1] ? 'fr_CA' : 'en_CA'}
+    property="og:locale"
   />
-  <meta property="og:site_name" content="kio.dev" />
-  <meta property="og:url" content={$page?.url?.href} />
-  <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
-  <meta property="twitter:url" content={$page?.url?.href} />
-  <meta property="twitter:site" content="@0xKI0" />
-  <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+  <meta content="kio.dev" property="og:site_name" />
+  <meta content={$page?.url?.href} property="og:url" />
+  <meta content="{SELF_BASE_URL}/assets/dark-embed.png" property="og:image" />
+  <meta content={$page?.url?.href} property="twitter:url" />
+  <meta content="@0xKI0" property="twitter:site" />
+  <meta content="{SELF_BASE_URL}/assets/dark-embed.png" property="twitter:image" />
 </svelte:head>
 
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <span
   class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-md bg-light px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-black dark:text-light"
-  role="button"
   aria-label={$t('Skip to content')}
+  role="button"
   tabindex="0"
+  on:keydown={skipToContent}
   in:fly={{ delay: 100, duration: BASE_ANIMATION_DURATION / 3, y: -40 }}
-  out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}
-  on:keydown={skipToContent}>{$t('Skip to content')}</span
+  out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}>{$t('Skip to content')}</span
 >
 
 <div
