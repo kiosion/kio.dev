@@ -500,41 +500,51 @@ defmodule Hexerei.Translate do
     |> Enum.reject(&is_nil/1)
   end
 
-  defp replace_text_in_children(blocks, original_text, translations) do
-    # Build a map from original_text to translations for quick lookup
-    translation_map = original_text |> Enum.zip(translations) |> Map.new()
+  defp update_child(lookup_map) do
+    fn child ->
+      case child do
+        %{"text" => text, "marks" => marks} when text != nil ->
+          cond do
+            # If marked with 'notranslate' or is code block, don't translate
+            Enum.member?(marks || [], "notranslate") or Enum.member?(marks || [], "code") ->
+              child
 
-    Enum.map(blocks, fn block ->
+            # If a link, TODO: lookup mark in markDefs in parent to check if link.
+            # Add back leading whitespace if so.
+
+            true ->
+              Map.put(
+                child,
+                "text",
+                case lookup_map[text] do
+                  [single_translation] -> single_translation
+                  _ -> text
+                end
+              )
+          end
+
+        _ ->
+          child
+      end
+    end
+  end
+
+  defp update_block(lookup_map) do
+    fn block ->
       case Map.fetch(block, "children") do
         {:ok, children} ->
-          updated_children =
-            Enum.map(children, fn child ->
-              case child do
-                # Check if the child is a text node and it's not marked w/ "notranslate"
-                %{"text" => text, "marks" => marks} when text != nil ->
-                  if Enum.member?(marks || [], "notranslate") or Enum.member?(marks || [], "code") do
-                    child
-                  else
-                    translated =
-                      case translation_map[text] do
-                        # Unwrap single-item list
-                        [single_translation] -> single_translation
-                        _ -> text
-                      end
-
-                    Map.put(child, "text", translated)
-                  end
-
-                _ ->
-                  child
-              end
-            end)
-
-          Map.put(block, "children", updated_children)
+          Map.put(block, "children", children |> Enum.map(update_child(lookup_map)))
 
         :error ->
           block
       end
-    end)
+    end
+  end
+
+  defp replace_text_in_children(blocks, original_text, translations) do
+    # Build a map from original_text to translations for quick lookup
+    translation_map = original_text |> Enum.zip(translations) |> Map.new()
+
+    blocks |> Enum.map(update_block(translation_map))
   end
 end
