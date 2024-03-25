@@ -27,7 +27,7 @@
     "@portabletext/types": "2.0.8",
     "@sanity/image-url": "1.0.2",
     "@sveltejs/adapter-netlify": "4.1.0",
-    "@sveltejs/adapter-node": "4.0.1",
+    "@sveltejs/adapter-node": "5.0.1",
     "@sveltejs/kit": "2.5.3",
     "@sveltejs/vite-plugin-svelte": "3.0.2",
     "@tailwindcss/aspect-ratio": "0.4.2",
