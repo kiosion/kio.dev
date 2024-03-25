@@ -9,8 +9,8 @@ devDependencies:
     specifier: 1.41.2
     version: 1.41.2
   '@portabletext/svelte':
-    specifier: 2.1.5
-    version: 2.1.5(svelte@4.2.12)
+    specifier: 2.1.7
+    version: 2.1.7(svelte@4.2.12)
   '@portabletext/toolkit':
     specifier: 2.0.10
     version: 2.0.10
@@ -1933,12 +1933,12 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@portabletext/svelte@2.1.5(svelte@4.2.12):
-    resolution: {integrity: sha512-NDHIT6TRPnWCGnr0VjwsmYtuhZRVkD41aexajtElwsVLSoYUf/mxXd6PVxjg1e12DfubQo4aQv6lpRthIVbIIA==}
+  /@portabletext/svelte@2.1.7(svelte@4.2.12):
+    resolution: {integrity: sha512-hRN7gSA9ZGgrqe8L/m07ojag3dAGRzEYRBOUOme9qhr29jW1EVDq06yWFCC3Or7qL7GcSET78qoushbE2KfPEw==}
     peerDependencies:
       svelte: '>=3.47.0 <5.0.0'
     dependencies:
-      '@portabletext/toolkit': 2.0.10
+      '@portabletext/toolkit': 2.0.13
       svelte: 4.2.12
     dev: true
 
@@ -1947,6 +1947,18 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
       '@portabletext/types': 2.0.8
+    dev: true
+
+  /@portabletext/toolkit@2.0.13:
+    resolution: {integrity: sha512-RH/jzwlWcsDPnpJBO1xEByUnweVVciD1OVLGyRUA8P++XedAc+fxY3RlUkgi5FyDEyEdisPflKtUU/GAXtMSig==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@portabletext/types': 2.0.11
+    dev: true
+
+  /@portabletext/types@2.0.11:
+    resolution: {integrity: sha512-79Bj/tffVOV9mpMzQFLPMrxPpUXh4OKlUBG8eDJBirH/x1o28Qu8Tg2nO84/KAPmlCm4rC/TOGvDxqsP0apg5A==}
+    engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
     dev: true
 
   /@portabletext/types@2.0.8:
