@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.41.2",
-    "@portabletext/svelte": "2.1.5",
+    "@portabletext/svelte": "2.1.7",
     "@portabletext/toolkit": "2.0.10",
     "@portabletext/types": "2.0.8",
     "@sanity/image-url": "1.0.2",
