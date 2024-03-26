@@ -31,7 +31,22 @@
   };
 
   let running = false,
-    grid = createGrid(rows, cols);
+    grid = createGrid(rows, cols),
+    mouseDown = false;
+
+  const toggleOnDrag = (row: number, col: number) => {
+    if (mouseDown) {
+      toggleCell(row, col);
+    }
+  };
+
+  const handleMouseDown = () => {
+    mouseDown = true;
+  };
+
+  const handleMouseUp = () => {
+    mouseDown = false;
+  };
 
   const toggleCell = (row: number, col: number) => {
     grid[row][col] = !grid[row][col];
@@ -148,7 +163,13 @@
   </Tooltip>
 
   <figure class="relative w-full overflow-clip rounded-md">
-    <div class="grid w-fit gap-0.5" style="grid-template-columns: repeat({cols}, 12px);">
+    <div
+      class="grid w-fit gap-0.5"
+      style="grid-template-columns: repeat({cols}, 12px);"
+      role="none"
+      on:mousedown={handleMouseDown}
+      on:mouseup={handleMouseUp}
+    >
       {#each grid as row, rowIndex}
         {#each row as cell, colIndex}
           <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
@@ -157,6 +178,8 @@
               ? 'bg-violet-500/60 shadow-violet-500/30 dark:shadow-violet-500/10'
               : 'bg-transparent shadow-transparent'}"
             on:click={() => !running && toggleCell(rowIndex, colIndex)}
+            on:mouseenter={() => toggleOnDrag(rowIndex, colIndex)}
+            on:dragstart={(event) => event.preventDefault()}
           />
         {/each}
       {/each}

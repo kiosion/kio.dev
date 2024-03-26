@@ -24,10 +24,12 @@
 <Divider />
 
 {#if socials?.length || APP_VERSION?.length}
-  <footer class="flex flex-row items-center justify-between font-mono text-sm">
+  <footer
+    class="flex flex-row items-center justify-between font-mono text-sm print:hidden"
+  >
     {#if socials?.length}
       <Hoverable setPointer={false} let:hovered>
-        <div class="flex flex-row items-center justify-start gap-x-3">
+        <div class="flex select-none flex-row items-center justify-start gap-x-3">
           <Icon
             name="At"
             class={hovered
@@ -41,13 +43,12 @@
             aria-label={$t('Social links')}
           >
             {#each socials as social, i}
-              <Tooltip text={social.url} delay={300} position="top">
+              <Tooltip text={social.url} position="top">
                 <BaseLink
                   text={social.name}
                   href={social.url}
                   target={social.target}
                   rel={social.rel}
-                  noTranslate
                 />
               </Tooltip>
               {#if i < socials.length - 1}
@@ -61,7 +62,7 @@
     {#if APP_VERSION?.length}
       <Hoverable setPointer={false} let:hovered>
         <div
-          class="flex flex-row items-center justify-start gap-x-3 font-mono text-sm text-dark/90 dark:text-light/90"
+          class="flex select-none flex-row items-center justify-start gap-x-3 font-mono text-sm text-dark/90 dark:text-light/90"
           aria-label={$t('View latest commit on GitHub')}
         >
           <Icon
@@ -76,6 +77,7 @@
               target="_blank"
               rel="noopener noreferrer"
               href="{BASE_GIT_URL}/commit/{APP_VERSION}"
+              aria-label={$t('View latest commit on GitHub')}
             >
               {APP_VERSION.slice(0, 6)}
             </BaseLink>

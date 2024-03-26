@@ -9,6 +9,11 @@
       height: 100vh;
       overflow: hidden;
       transition: background 150ms ease;
+
+      @media print {
+        height: fit-content;
+        overflow: visible;
+      }
     }
 
     body,

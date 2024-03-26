@@ -21,6 +21,8 @@
     container: HTMLSpanElement,
     target: HTMLElement | null;
 
+  export const id = `tooltip-${tooltipId}`;
+
   const showTooltip = () => {
     if (!target || !text?.trim() || get(isMobile)) {
       return;
@@ -28,19 +30,21 @@
 
     clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(
-      () =>
-        createTooltip({
-          id: tooltipId,
-          content: text,
-          duration,
-          placement: position,
-          followCursor: !fixed,
-          offset,
-          target: target as HTMLElement
-        }),
-      delay
-    );
+    const opts = {
+      id: tooltipId,
+      content: text,
+      duration,
+      placement: position,
+      followCursor: !fixed,
+      offset,
+      target: target as HTMLElement
+    };
+
+    if (delay > 0) {
+      timeoutId = setTimeout(() => createTooltip(opts), delay);
+    } else {
+      createTooltip(opts);
+    }
   };
 
   const hideTooltip = (e?: Event) => {
@@ -93,5 +97,5 @@
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">
-  <slot />
+  <slot {id} />
 </span>

@@ -6,7 +6,7 @@ import { currentLang, t } from '$lib/i18n';
 export const formatDate = derived(
   [currentLang],
   ([currentLang]) =>
-    (dateStr: string, format: 'full' | 'med' | 'short' = 'full') => {
+    (dateStr: string, format: 'full' | 'med' | 'short' | 'days' = 'full') => {
       const date = new Date(dateStr);
 
       switch (format) {
@@ -30,6 +30,14 @@ export const formatDate = derived(
             year: 'numeric',
             timeZone: 'UTC'
           }).format(date);
+        case 'days': {
+          const now = new Date(),
+            diffDays = Math.floor((now.getTime() - date.getTime()) / 86400000);
+
+          return new Intl.RelativeTimeFormat(currentLang, {
+            numeric: 'auto'
+          }).format(-diffDays, 'day');
+        }
       }
     }
 );

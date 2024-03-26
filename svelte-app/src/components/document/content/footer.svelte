@@ -13,6 +13,7 @@
     model: 'post' | 'project' = data._type;
 </script>
 
+<Divider class="print:hidden" />
 {#if data._type === 'project' && data.github}
   <div>
     <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
@@ -25,7 +26,7 @@
   </div>
   <Divider />
 {/if}
-<div>
+<div class="print:hidden">
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     align="left"

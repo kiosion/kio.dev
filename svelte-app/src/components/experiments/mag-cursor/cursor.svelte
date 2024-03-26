@@ -15,7 +15,8 @@
 
   import type { CursorTarget } from '$components/experiments/mag-cursor/utils';
 
-  export let containerRect: DOMRect | undefined = undefined;
+  export let containerRect: DOMRect | undefined = undefined,
+    useOffset = true;
 
   let mouseDown = false,
     hidden = true;
@@ -91,8 +92,25 @@
         setVis(true);
       }
 
+      if (
+        !closestTarget ||
+        closestDistance >= closestTarget.snapDist ||
+        get(activeTarget) !== closestTarget
+      ) {
+        if (get(activeTarget)?.snap === true) {
+          const fakeMouseOut = new MouseEvent('mouseleave', {
+            view: window,
+            bubbles: true,
+            cancelable: true
+          });
+
+          get(activeTarget)?.element?.dispatchEvent(fakeMouseOut);
+        }
+      }
+
       if (!closestTarget || closestDistance >= closestTarget.snapDist) {
         get(activeTarget)?.offset?.set([0, 0]);
+
         activeTarget.set(undefined);
 
         cursor.set({
@@ -148,18 +166,32 @@
         return;
       }
 
+      // if 'snap' is true, we want to trigger a fake 'hover'/'mouseover' series of events since the real
+      // cursor may not be over the target yet but we want tooltips etc to trigger
+      const fakeMouseOver = new MouseEvent('mouseenter', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+      });
+
+      closestTarget.element?.dispatchEvent(fakeMouseOver);
+
       const rectCenter = [rect.left + rect.width / 2, rect.top + rect.height / 2];
 
       cursor.set({
-        x: rectCenter[0] + (x - rectCenter[0]) * 0.14,
-        y: rectCenter[1] + (y - rectCenter[1]) * 0.14,
+        x: useOffset ? rectCenter[0] + (x - rectCenter[0]) * 0.12 : rectCenter[0],
+        y: useOffset ? rectCenter[1] + (y - rectCenter[1]) * 0.12 : rectCenter[1],
         width: rect.width + closestTarget.size + (mouseDown ? 8 : 0),
         height: rect.height + closestTarget.size * 0.5 + (mouseDown ? 8 : 0),
         borderRadius: 8 * (mouseDown ? 2 : 1)
       });
 
       // offset should be exponential - i.e., the further the x,y from the center of the target, the more the offset
-      closestTarget.offset?.set([(x - rectCenter[0]) * 0.08, (y - rectCenter[1]) * 0.14]);
+      useOffset &&
+        closestTarget.offset?.set([
+          (x - rectCenter[0]) * 0.14,
+          (y - rectCenter[1]) * 0.14
+        ]);
 
       innerCursor.set({
         x,
@@ -185,8 +217,18 @@
 
   const setVis = (visible: boolean) => {
     hidden = !visible;
-    !visible && get(activeTarget)?.offset?.set([0, 0]);
-    !visible && activeTarget.set(undefined);
+
+    if (!visible) {
+      const fakeMouseOut = new MouseEvent('mouseleave', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+      });
+
+      get(activeTarget)?.element?.dispatchEvent(fakeMouseOut);
+      get(activeTarget)?.offset?.set([0, 0]);
+      activeTarget.set(undefined);
+    }
   };
 
   $: update($cursorTargets)();

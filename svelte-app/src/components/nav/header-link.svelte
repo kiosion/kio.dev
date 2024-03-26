@@ -41,6 +41,5 @@
   text={$t(link.name)}
   href={link.url}
   active={isActive}
-  noTranslate
   on:click={handleAction}
 />

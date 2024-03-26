@@ -11,6 +11,7 @@
   import Image from '$components/images/image.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
 
@@ -35,9 +36,11 @@
       })}
       role="group"
     >
-      <p class="cursor-default font-mono text-base">
-        {$formatDate(data.date, 'full') ?? $t('Unknown date')}
-      </p>
+      <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
+        <p class="cursor-default font-mono text-base" aria-label="Published date">
+          {$formatDate(data.date, 'full') ?? $t('Unknown date')}
+        </p>
+      </Tooltip>
       <BulletPoint />
       <p class="cursor-default font-mono text-base">
         {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
@@ -54,7 +57,7 @@
       {/if}
     </div>
     <ArrowButton
-      class="focus-outline-sm -mb-1 hidden flex-1 whitespace-nowrap sm:block"
+      class="focus-outline-sm -mb-1 hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
@@ -115,6 +118,7 @@
     {/if}
   {/if}
 </div>
+<Divider />
 
 <style lang="scss">
   h1 {

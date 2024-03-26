@@ -104,17 +104,22 @@
 >
   {#if filename}
     <div
-      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20"
+      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20 print:bg-transparent"
       id="{id}-filename"
     >
       {filename}
     </div>
   {/if}
-  <Tooltip text={$t('Copy to clipboard')} delay={200} offset={[0, 2]}>
+  <Tooltip
+    text={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+    delay={200}
+    offset={[0, 2]}
+  >
     <button
       class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
+      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
     >
       {#key copied}
         <Icon name={copied !== undefined ? 'Check' : 'Copy'} />
@@ -126,7 +131,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all"
+      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all print:bg-transparent"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}

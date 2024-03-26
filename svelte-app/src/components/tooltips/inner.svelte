@@ -6,6 +6,7 @@
   import { browser } from '$app/environment';
 
   import type { Tooltip } from '$lib/tooltips';
+  import type { FadeParams, TransitionConfig } from 'svelte/transition';
 
   const PADDING_PX = 8,
     MAX_LENGTH = 72;
@@ -18,6 +19,9 @@
     offset: Tooltip['offset'],
     target: Tooltip['target'],
     container: HTMLDivElement | undefined = undefined;
+
+  let maybeTransition =
+    duration > 0 ? fade : (node: Element, args: FadeParams): TransitionConfig => ({});
 
   onMount(() => {
     if (followCursor && target) {
@@ -135,18 +139,18 @@
   };
 
   $: calculatePosition(), [target, tooltipElement, placement, followCursor];
-  $: style = `left: ${position.x}px; top: ${position.y}px;`;
 </script>
 
 <div
-  {style}
-  class="pointer-events-none absolute z-50"
+  style="left: {position.x}px; top: {position.y}px;"
+  class="pointer-events-none absolute z-50 print:hidden"
   id={`tooltip-${id}`}
   bind:this={tooltipElement}
+  aria-hidden="true"
 >
   <span
     class="block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light dark:bg-light dark:text-dark"
-    transition:fade={{ duration, easing: cubicInOut }}
+    transition:maybeTransition={{ duration, easing: cubicInOut }}
   >
     {content.trim().length >= MAX_LENGTH
       ? `${content.trim().slice(0, MAX_LENGTH - 3)}...`

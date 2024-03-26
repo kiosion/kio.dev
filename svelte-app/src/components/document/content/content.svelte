@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Divider from '$components/divider.svelte';
   import Footer from '$components/document/content/footer.svelte';
   import Header from '$components/document/content/header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
@@ -14,7 +13,6 @@
 </script>
 
 <Header {data} {images} {routeFetch} />
-<Divider />
 <div>
   {#if data.body}
     <PortableText text={data.body} {routeFetch} />
@@ -22,7 +20,6 @@
     <EmptyContent />
   {/if}
 </div>
-<Divider />
 <Footer {model} {data} />
 
 <style lang="scss">

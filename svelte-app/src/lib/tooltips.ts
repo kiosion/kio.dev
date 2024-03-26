@@ -14,11 +14,17 @@ export type Tooltip = {
   offset: [number, number];
 };
 
-const tooltips = writable<Map<number, Tooltip>>(new Map());
+const tooltips = writable<Tooltip[]>([]);
 
 const createTooltip = (data: Tooltip) => {
   tooltips.update((t) => {
-    t.set(data.id, data);
+    const existing = t.findIndex(
+      (tooltip) => tooltip.id === data.id || tooltip.target === data.target
+    );
+    if (existing !== -1) {
+      t.splice(existing, 1);
+    }
+    t.push(data);
     return t;
   });
   return data.id;
@@ -29,9 +35,9 @@ const updateTooltip = (
   data: Partial<Exclude<Tooltip, 'id' | 'target' | 'duration'>>
 ) => {
   tooltips.update((t) => {
-    const tooltip = t.get(id);
-    if (tooltip) {
-      t.set(id, { ...tooltip, ...data });
+    const existing = t.findIndex((tooltip) => tooltip.id === id);
+    if (existing !== -1) {
+      t[existing] = { ...t[existing], ...data };
     }
     return t;
   });
@@ -39,7 +45,10 @@ const updateTooltip = (
 
 const destroyTooltip = (id: number) => {
   tooltips.update((t) => {
-    t.delete(id);
+    const existing = t.findIndex((tooltip) => tooltip.id === id);
+    if (existing !== -1) {
+      t.splice(existing, 1);
+    }
     return t;
   });
 };

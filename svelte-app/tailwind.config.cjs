@@ -31,7 +31,9 @@ module.exports = {
         sm: '0.2rem'
       },
       screens: {
-        '3xl': '1824px'
+        '3xl': '1824px',
+        print: { raw: 'print' },
+        screen: { raw: 'screen' }
       }
     }
   },

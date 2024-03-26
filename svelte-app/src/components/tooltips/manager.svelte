@@ -6,6 +6,6 @@
   export let container: HTMLDivElement | undefined = undefined;
 </script>
 
-{#each $tooltips.entries() as [_, tooltip]}
+{#each $tooltips as tooltip (tooltip.id)}
   <TooltipInner {...tooltip} {container} />
 {/each}

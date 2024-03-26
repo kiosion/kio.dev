@@ -123,7 +123,7 @@
     <img src={placeholderSrc} alt={_key} draggable="false" {style} />
   {/await}
   <img
-    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity"
+    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity print:hidden"
     src={placeholderSrc}
     alt={_key}
     draggable="false"

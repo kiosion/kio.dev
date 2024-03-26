@@ -29,7 +29,7 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8"
+  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 print:p-0"
   tabindex="-1"
   role="none"
   data-test-id="scroll-container"

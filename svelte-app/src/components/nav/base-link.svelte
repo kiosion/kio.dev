@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { linkTo, t } from '$lib/i18n';
+  import { linkTo } from '$lib/i18n';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -9,8 +9,7 @@
 
   export let active = false,
     text = '',
-    href: string,
-    noTranslate = false;
+    href: string;
 </script>
 
 <Hoverable let:hovered>
@@ -29,7 +28,7 @@
     target={$$props.target || undefined}
     rel={$$props.rel || undefined}
     aria-current={active ? 'page' : undefined}
-    aria-label={$$props['aria-label'] || noTranslate ? text : $t(text)}
+    aria-label={$$props['aria-label'] || text}
     data-sveltekit-preload-data
     data-sveltekit-preload-code
     on:click={(e) => dispatch('click', e)}
@@ -38,7 +37,7 @@
     {#if $$slots.default}
       <slot {hovered} />
     {:else}
-      {noTranslate ? text.toLowerCase() : $t(text).toLowerCase()}
+      {text.toLowerCase()}
     {/if}
   </a>
 </Hoverable>
