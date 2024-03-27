@@ -37,7 +37,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
     >,
     project =
       (!preview &&
-        _parent.projects?.find((proj) => proj.slug?.current === params.slug)) ||
+        _parent?.projects?.find?.((proj) => proj.slug?.current === params.slug)) ||
       handleLoadError(await findOne(fetch, 'project', opts));
 
   preview && (opts.preview = true);

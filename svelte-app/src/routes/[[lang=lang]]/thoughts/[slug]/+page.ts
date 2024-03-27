@@ -12,7 +12,9 @@ export const load = (async ({ parent, fetch, params, url }) => {
       string | boolean
     >,
     post =
-      (!preview && _parent.posts?.find((post) => post.slug?.current === params.slug)) ||
+      // in some cases _parent isn't defined during SSR...?
+      (!preview &&
+        _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
       handleLoadError(await findOne(fetch, 'post', opts));
 
   preview && (opts.preview = true);

@@ -1,11 +1,19 @@
 import { expect, test } from '@playwright/test';
 
 import { STUB_CONFIG, STUB_POST } from '../fixtures';
-import { API_CONFIG_ROUTE, API_POST_ROUTE, stubResponse } from '../utils';
+import {
+  API_CONFIG_ROUTE,
+  API_POST_MANY_ROUTE,
+  API_POST_ROUTE,
+  stubResponse
+} from '../utils';
 
 test.beforeEach(async ({ context }) => {
   await context.route(API_CONFIG_ROUTE, (route) =>
     route.fulfill(stubResponse({ data: STUB_CONFIG }))
+  );
+  await context.route(API_POST_MANY_ROUTE, (route) =>
+    route.fulfill(stubResponse({ data: [], meta: { total: 0, count: 0 } }))
   );
 });
 
