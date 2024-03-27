@@ -4,16 +4,18 @@ import { findOne } from '$lib/store';
 
 import type { PageLoad } from './$types';
 
-export const load = (async ({ fetch, params, url }) => {
-  const preview = url.searchParams.get('preview') === 'true' || false,
+export const load = (async ({ parent, fetch, params, url }) => {
+  const _parent = await parent(),
+    preview = url.searchParams.get('preview') === 'true' || false,
     opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
       string,
       string | boolean
-    >;
+    >,
+    post =
+      (!preview && _parent.posts?.find((post) => post.slug?.current === params.slug)) ||
+      handleLoadError(await findOne(fetch, 'post', opts));
 
   preview && (opts.preview = true);
-
-  const post = handleLoadError(await findOne(fetch, 'post', opts));
 
   return { post, routeFetch: fetch };
 }) satisfies PageLoad;

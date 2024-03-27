@@ -28,17 +28,21 @@ const urlToBase64Asset = async (url: string, fetch: typeof window.fetch) => {
   return `data:${mimeType};base64,${btoa(b64)}`;
 };
 
-export const load = (async ({ fetch, params, url }) => {
-  const preview = url.searchParams.get('preview') === 'true' || false,
+export const load = (async ({ parent, fetch, params, url }) => {
+  const _parent = await parent(),
+    preview = url.searchParams.get('preview') === 'true' || false,
     opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
       string,
       string | boolean
-    >;
+    >,
+    project =
+      (!preview &&
+        _parent.projects?.find((proj) => proj.slug?.current === params.slug)) ||
+      handleLoadError(await findOne(fetch, 'project', opts));
 
   preview && (opts.preview = true);
 
-  const project = handleLoadError(await findOne(fetch, 'project', opts)),
-    imagePromises: Promise<ProjectImage | undefined>[] = [];
+  const imagePromises: Promise<ProjectImage | undefined>[] = [];
 
   let images: ProjectImage[] = [];
 

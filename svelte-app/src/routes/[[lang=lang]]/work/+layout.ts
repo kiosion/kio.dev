@@ -2,7 +2,7 @@ import { DEFAULT_APP_LANG, DEFAULT_PROJECT_QUERY_PARAMS } from '$lib/consts';
 import { handleLoadError } from '$lib/data';
 import { find } from '$lib/store';
 
-import type { PageLoad } from './$types';
+import type { LayoutLoad } from './$types';
 import type { ProjectDocument, SiteConfig } from '$types';
 
 export const load = (async ({ parent, fetch, params }) => {
@@ -20,4 +20,4 @@ export const load = (async ({ parent, fetch, params }) => {
     ];
 
   return { config, projects };
-}) satisfies PageLoad;
+}) satisfies LayoutLoad;
