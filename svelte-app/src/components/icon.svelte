@@ -65,13 +65,23 @@
   // eslint-disable-next-line @typescript-eslint/ban-types
   export let name: IconName | (string & {}),
     inline = false,
-    size = 20;
+    size = 20,
+    active = false,
+    interactive = false;
 
-  const InnerIconComponent = getIcon(name);
+  $: InnerIconComponent = getIcon(name);
 </script>
 
 <div
-  class={$$props.class || ''}
+  class={interactive
+    ? active
+      ? 'text-accent-light/90 dark:text-accent-dark/90'
+      : 'text-dark/90 dark:text-light/90'
+    : undefined}
+  class:hover:text-accent-light={interactive}
+  class:focus-visible:text-accent-light={interactive}
+  class:dark:hover:text-accent-dark={interactive}
+  class:dark:focus-visible:text-accent-dark={interactive}
   class:inline
   style={`width: ${size}px; height: ${size}px;`}
 >

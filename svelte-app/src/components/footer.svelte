@@ -30,13 +30,7 @@
     {#if socials?.length}
       <Hoverable setPointer={false} let:hovered>
         <div class="flex select-none flex-row items-center justify-start gap-x-3">
-          <Icon
-            name="At"
-            class={hovered
-              ? 'text-accent-light/80 dark:text-accent-dark/80'
-              : 'text-dark/90 dark:text-light/90'}
-            size={20}
-          />
+          <Icon name="At" interactive active={hovered} size={20} />
           <div
             class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
             role="group"
@@ -65,13 +59,7 @@
           class="flex select-none flex-row items-center justify-start gap-x-3 font-mono text-sm text-dark/90 dark:text-light/90"
           aria-label={$t('View latest commit on GitHub')}
         >
-          <Icon
-            name="GitBranch"
-            class={hovered
-              ? 'text-accent-light/80 dark:text-accent-dark/80'
-              : 'text-dark/90 dark:text-light/90'}
-            size={20}
-          />
+          <Icon name="GitBranch" active={hovered} size={20} interactive />
           <Tooltip text={$t('View latest commit on GitHub')} position="top">
             <BaseLink
               target="_blank"

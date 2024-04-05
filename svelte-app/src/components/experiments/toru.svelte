@@ -72,11 +72,7 @@
         tooltipDelay={150}
         newtab
       >
-        <Icon
-          name="ExternalLink"
-          size={21}
-          class="text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
-        />
+        <Icon name="ExternalLink" size={21} interactive />
       </Link>
 
       <figure

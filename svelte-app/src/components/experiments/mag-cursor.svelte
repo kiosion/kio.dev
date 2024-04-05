@@ -86,13 +86,7 @@
             newtab
             style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
           >
-            <Icon
-              name="ExternalLink"
-              size={21}
-              class="hover:text-accent-light/90 focus-visible:text-accent-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90 {active
-                ? 'text-accent-light/90 dark:text-accent-dark/90'
-                : 'text-dark/90 dark:text-light/90'}"
-            />
+            <Icon name="ExternalLink" size={21} {active} interactive />
           </Link>
         </CursorTarget>
       </div>
