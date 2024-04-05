@@ -90,7 +90,10 @@ const constructUrl = (
   return `${basePath}${queryParams.length ? `?${queryParams.join('&')}` : ''}`;
 };
 
-const incViews = (fetch: RouteFetch, doc: DocumentRegistry[keyof DocumentRegistry]) => {
+export const incViews = (
+  fetch: RouteFetch,
+  doc: DocumentRegistry[keyof DocumentRegistry]
+) => {
   if (doc._type !== 'post' && doc._type !== 'project') {
     return;
   }
@@ -185,7 +188,6 @@ const findOne = async <T extends keyof DocumentRegistry>(
   if (browser && params.preview !== 'true') {
     const cachedData = cacheGet(cacheKey);
     if (cachedData) {
-      incViews(fetch, cachedData as DocumentRegistry[T]);
       return cachedData as DocumentRegistry[T];
     }
   }

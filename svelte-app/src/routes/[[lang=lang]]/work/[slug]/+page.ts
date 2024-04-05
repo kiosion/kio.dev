@@ -2,7 +2,7 @@ import { DEFAULT_APP_LANG } from '$lib/consts';
 import { fetchRepoStats, handleLoadError } from '$lib/data';
 import Logger from '$lib/logger';
 import { buildImageUrl, getCrop } from '$lib/sanity';
-import { findOne } from '$lib/store';
+import { findOne, incViews } from '$lib/store';
 
 import type { PageLoad } from './$types';
 import type { ProjectImage } from '$types';
@@ -82,6 +82,8 @@ export const load = (async ({ parent, fetch, params, url }) => {
 
   project.githubStars = stars;
   project.githubWatchers = watchers;
+
+  project && incViews(fetch, project);
 
   return { project, images, routeFetch: fetch };
 }) satisfies PageLoad;
