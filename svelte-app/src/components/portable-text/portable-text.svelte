@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { t } from '$lib/i18n';
   import Logger from '$lib/logger';
-  import { parseEmoji } from '$lib/utils';
 
   import Icon from '$components/icon.svelte';
   import Footnote from '$components/portable-text/footnote.svelte';
@@ -41,10 +38,6 @@
     routeFetch: RouteFetch | undefined = undefined;
 
   let ptContainer: HTMLElement;
-
-  onMount(() => {
-    parseEmoji(ptContainer);
-  });
 
   const customScrollTo = (event: Event, id: string) => {
     event.preventDefault();

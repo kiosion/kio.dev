@@ -116,9 +116,6 @@ devDependencies:
   tailwindcss:
     specifier: 3.4.1
     version: 3.4.1
-  twemoji:
-    specifier: 14.0.2
-    version: 14.0.2
   typescript:
     specifier: 5.3.3
     version: 5.3.3
@@ -5693,15 +5690,6 @@ packages:
       universalify: 2.0.0
     dev: true
 
-  /fs-extra@8.1.0:
-    resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
-    engines: {node: '>=6 <7 || >=8'}
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 4.0.0
-      universalify: 0.1.2
-    dev: true
-
   /fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
     engines: {node: '>= 8'}
@@ -7006,20 +6994,6 @@ packages:
 
   /jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
-    dev: true
-
-  /jsonfile@4.0.0:
-    resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
-    optionalDependencies:
-      graceful-fs: 4.2.11
-    dev: true
-
-  /jsonfile@5.0.0:
-    resolution: {integrity: sha512-NQRZ5CRo74MhMMC3/3r5g2k4fjodJ/wh8MxjFbCViWKFjxrnudWSY5vomh+23ZaXzAS7J3fBZIR2dV6WbmfM0w==}
-    dependencies:
-      universalify: 0.1.2
-    optionalDependencies:
-      graceful-fs: 4.2.11
     dev: true
 
   /jsonfile@6.1.0:
@@ -10748,19 +10722,6 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /twemoji-parser@14.0.0:
-    resolution: {integrity: sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==}
-    dev: true
-
-  /twemoji@14.0.2:
-    resolution: {integrity: sha512-BzOoXIe1QVdmsUmZ54xbEH+8AgtOKUiG53zO5vVP2iUu6h5u9lN15NcuS6te4OY96qx0H7JK9vjjl9WQbkTRuA==}
-    dependencies:
-      fs-extra: 8.1.0
-      jsonfile: 5.0.0
-      twemoji-parser: 14.0.0
-      universalify: 0.1.2
-    dev: true
-
   /type-check@0.3.2:
     resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
     engines: {node: '>= 0.8.0'}
@@ -10938,11 +10899,6 @@ packages:
 
   /universal-user-agent@6.0.0:
     resolution: {integrity: sha512-isyNax3wXoKaulPDZWHQqbmIx1k2tb9fb3GGDBRxCscfYV2Ch7WxPArBsFEG8s/safwXTT7H4QGhaIkTp9447w==}
-    dev: true
-
-  /universalify@0.1.2:
-    resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
-    engines: {node: '>= 4.0.0'}
     dev: true
 
   /universalify@0.2.0:
