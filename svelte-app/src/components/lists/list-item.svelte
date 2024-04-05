@@ -38,7 +38,7 @@
           >{document.tags[0].title.toLowerCase()}</span
         >
       {/if}
-      <p>{$t('{views} views', { views: $parseViews((document.views ?? 0) + 1) })}</p>
+      <p>{$t('{views} views', { views: $parseViews(document.views ?? 0) })}</p>
     </div>
 
     <h1
