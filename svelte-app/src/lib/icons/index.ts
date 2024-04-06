@@ -12,6 +12,7 @@ export { default as ExternalLink } from '$lib/icons/external-link.svelte';
 export { default as ForwardBurger } from '$lib/icons/forwardburger.svelte';
 export { default as GitBranch } from '$lib/icons/git-branch.svelte';
 export { default as GitCommit } from '$lib/icons/git-commit.svelte';
+export { default as Label } from '$lib/icons/label.svelte';
 export { default as Link } from '$lib/icons/link.svelte';
 export { default as MailArrowRight } from '$lib/icons/mail-arrow-right.svelte';
 export { default as MoonStars } from '$lib/icons/moon-stars.svelte';

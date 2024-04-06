@@ -26,10 +26,10 @@
     }
   
     body {
-      @apply bg-black text-light;
+      @apply bg-black/95 text-light;
     
       &.light {
-        @apply bg-light text-dark;
+        @apply bg-black/10 text-dark;
       }
 
       &:not(.is-loaded) {

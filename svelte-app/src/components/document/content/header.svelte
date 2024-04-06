@@ -6,9 +6,9 @@
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
   import Image from '$components/images/image.svelte';
+  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -21,9 +21,12 @@
     model = data._type;
 </script>
 
-<div data-test-id="{model}-header">
+<div
+  class="w-full border-b border-dark/80 px-6 pb-6 pt-7 dark:border-light/80 md:px-14"
+  data-test-id="{model}-header"
+>
   <h1
-    class="mb-4 mt-10 h-fit max-w-full text-4xl font-bold text-black transition-[color] dark:text-white lg:mt-12 lg:text-6xl lg:font-black"
+    class="h-fit max-w-full pb-4 text-4xl font-bold text-black transition-[color] dark:text-white lg:text-5xl lg:font-black"
   >
     {data.title}
   </h1>
@@ -57,7 +60,7 @@
       {/if}
     </div>
     <ArrowButton
-      class="focus-outline-sm -mb-1 hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+      class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
@@ -71,40 +74,44 @@
       </span>
     </ArrowButton>
   </div>
-  {#if data._type === 'project' && (data.tags?.length || data.github)}
-    <Divider />
-    <div
-      class="flex flex-row flex-wrap items-center justify-start gap-0.5 gap-y-3 text-base"
-    >
-      {#if data._type === 'project' && data.tags?.length}
-        <div
-          class="flex flex-row flex-wrap items-center justify-start gap-2"
-          aria-label={$t('Tags')}
-        >
-          {#each data.tags as tag}
-            <span
-              class="cursor-default rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
-            >
-              {tag.title.toLowerCase()}
-            </span>
-          {/each}
-        </div>
-      {/if}
-      {#if data.tags?.length && data._type === 'project' && data.github}
-        <BulletPoint />
-      {/if}
-      {#if data._type === 'project' && data.github}
-        <span class="font-mono">
-          <Link href={data.github}>
-            {'github.com/' + data.github.split('github.com/')?.[1]}
-          </Link>
-        </span>
-      {/if}
-    </div>
-  {/if}
 
-  {#if data._type === 'project' && images?.length}
-    <Divider />
+  {#if data.tags?.length}
+    <ConstrainWidth class="pt-5">
+      <div
+        class="flex flex-row flex-wrap items-center justify-start gap-2"
+        aria-label={$t('Tags')}
+      >
+        <div class="pr-1">
+          <Icon name="Label" size={20} />
+        </div>
+
+        {#each data.tags as tag}
+          <span
+            class="cursor-pointer select-none rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-0.5 font-code text-sm transition-colors dark:border-light/80 dark:bg-light/5"
+          >
+            {tag.title.toLowerCase()}
+          </span>
+        {/each}
+      </div>
+    </ConstrainWidth>
+  {/if}
+</div>
+
+{#if data._type === 'project' && data.github}
+  <div
+    class="flex w-full flex-row items-center justify-start gap-3 border-b border-dark/80 px-6 py-6 text-base dark:border-light/80 md:px-14"
+  >
+    <Icon name="GitCommit" />
+    <span class="font-mono">
+      <Link href={data.github}>
+        {'github.com/' + data.github.split('github.com/')?.[1]}
+      </Link>
+    </span>
+  </div>
+{/if}
+
+{#if data._type === 'project' && images?.length}
+  <div class="w-full border-b border-dark/80 px-6 py-6 dark:border-light/80 md:px-14">
     {#if images.length > 1}
       <ImageCarousel {images} />
     {:else}
@@ -116,9 +123,8 @@
         {routeFetch}
       />
     {/if}
-  {/if}
-</div>
-<Divider />
+  </div>
+{/if}
 
 <style lang="scss">
   h1 {

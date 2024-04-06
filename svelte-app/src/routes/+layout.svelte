@@ -23,8 +23,6 @@
 
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
-  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
-  import PageContent from '$components/layouts/page-content.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import TooltipManager from '$components/tooltips/manager.svelte';
@@ -130,23 +128,21 @@
 >
 
 <div
-  class="main relative h-full w-full overflow-x-hidden rounded-xl text-dark dark:text-light lg:text-lg"
-  in:fly={{ delay: 100, duration: 100, y: -40 }}
+  class="main h-full w-full overflow-x-hidden p-3 text-dark dark:text-light md:p-8 lg:text-lg"
 >
-  <ScrollContainer let:element>
-    <ConstrainWidth>
+  <ScrollContainer>
+    <svelte:fragment slot="before">
       <Header />
-    </ConstrainWidth>
+    </svelte:fragment>
 
-    <PageTransition pathname={data.pathname}>
-      <ConstrainWidth id="content-wrapper">
-        <PageContent>
-          <slot />
-          <Footer config={data.config} />
-        </PageContent>
-      </ConstrainWidth>
+    <PageTransition pathname={data.pathname} id="content-wrapper">
+      <slot />
     </PageTransition>
 
-    <TooltipManager container={element} />
+    <svelte:fragment slot="after">
+      <Footer config={data.config} />
+    </svelte:fragment>
   </ScrollContainer>
+
+  <TooltipManager />
 </div>

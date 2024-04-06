@@ -39,7 +39,7 @@
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
     >
-      <Icon name="script" size={20} />
+      <Icon name="script" size={21} />
     </button>
   </Tooltip>
 </Hoverable>

@@ -3,7 +3,6 @@
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
 
-  import Divider from '$components/divider.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Icon from '$components/icon.svelte';
   import BaseLink from '$components/nav/base-link.svelte';
@@ -21,11 +20,9 @@
   }));
 </script>
 
-<Divider />
-
 {#if socials?.length || APP_VERSION?.length}
   <footer
-    class="flex flex-row items-center justify-between font-mono text-sm print:hidden"
+    class="flex flex-row items-center justify-between border-t border-dark/80 px-7 py-5 font-mono text-sm transition-[border-color] dark:border-light/80 print:hidden"
   >
     {#if socials?.length}
       <Hoverable setPointer={false} let:hovered>

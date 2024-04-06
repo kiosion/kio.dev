@@ -27,7 +27,7 @@
 
 {#if data.config?.meta}
   {#each data.config.meta as metaSection, idx}
-    <HeadedBlock heading={metaSection.title}>
+    <HeadedBlock heading={metaSection.title} first={idx === 0}>
       <PortableText text={metaSection.content} />
     </HeadedBlock>
     {#if idx < data.config.meta.length - 1}

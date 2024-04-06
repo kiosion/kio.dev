@@ -43,11 +43,7 @@
 
 <HeadedBlock heading={$t('Recent thoughts')} let:id>
   {#if data.posts.length}
-    <div
-      class="mb-6 mt-5 flex flex-col gap-y-5"
-      role="group"
-      aria-labelledby="{id}-heading"
-    >
+    <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
         <ListItem document={post} small />
       {/each}
@@ -59,7 +55,7 @@
       </span>
     </ArrowButton>
   {:else}
-    <div class="mb-6 mt-5 flex flex-col gap-y-5">
+    <div class="mb-6 flex flex-col gap-y-5">
       <p class="p-4 font-code">{$t('No content')}</p>
     </div>
   {/if}

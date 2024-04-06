@@ -3,6 +3,7 @@
   import { linkTo, t } from '$lib/i18n';
   import { parseViews } from '$lib/utils';
 
+  import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
   import type { PostDocument, ProjectDocument } from '$types';
@@ -26,17 +27,20 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start gap-3 pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
       class:pb-1.5={small}
+      class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>
         {$formatDate(document.date || document._createdAt, 'med')}
       </p>
       {#if document.tags?.length}
         <span
-          class="rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
+          class="rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-0.5 font-code text-sm transition-colors dark:border-light/80 dark:bg-light/5"
           >{document.tags[0].title.toLowerCase()}</span
         >
+      {:else}
+        <BulletPoint />
       {/if}
       <p>{$t('{views} views', { views: $parseViews(document.views ?? 0) })}</p>
     </div>
