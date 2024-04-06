@@ -17,12 +17,15 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
-        mono: ['Work Sans', ...defaultTheme.fontFamily.mono],
-        code: ['Ubuntu Mono', ...defaultTheme.fontFamily.mono]
+        sans: ['TASA Orbiter Deck', ...defaultTheme.fontFamily.sans],
+        display: ['TASA Orbiter Display', ...defaultTheme.fontFamily.sans],
+        mono: ['Commit Mono', ...defaultTheme.fontFamily.mono]
       },
       fontSize: {
         'xs': ['0.75rem', '1'],
+        'sm': ['0.875rem', '1'],
+        'base': ['1rem', '1'],
+        'md': ['1.15rem', '1'],
         '4xl': ['2.25rem', '1.15'],
         '5xl': ['2.25rem', '1.15'],
         '6xl': ['3rem', '1.15']

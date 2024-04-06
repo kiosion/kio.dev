@@ -3,7 +3,14 @@
 
   export let portableText: BlockComponentProps;
 
-  $: ({ value: _value } = portableText);
+  $: ({ indexInParent } = portableText);
 </script>
 
-<p class="my-4 leading-[1.6] transition-[color]"><slot /></p>
+<p
+  class="leading-[1.6] transition-[color]"
+  class:my-4={indexInParent > 0}
+  class:mt-8={indexInParent === 0}
+  class:mb-4={indexInParent === 0}
+>
+  <slot />
+</p>

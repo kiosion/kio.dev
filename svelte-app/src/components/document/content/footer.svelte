@@ -13,7 +13,7 @@
 </script>
 
 {#if data._type === 'project' && data.github}
-  <div class="border-t border-dark/80 p-6 dark:border-light/80 md:px-14 print:hidden">
+  <div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
     <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
     <span class="flex items-center justify-start gap-2 text-base">
       <Icon name="GitCommit" inline />
@@ -24,14 +24,14 @@
   </div>
 {/if}
 
-<div class="border-t border-dark p-6 dark:border-light md:px-14 print:hidden">
+<div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     align="left"
     fullWidth
     preload
   >
-    <span class="flex items-center justify-start gap-2 text-base">
+    <span class="flex items-center justify-start gap-2 font-mono text-base">
       {#key $isMobile}
         <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline />
       {/key}

@@ -36,7 +36,7 @@
       </p>
       {#if document.tags?.length}
         <span
-          class="rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-0.5 font-code text-sm transition-colors dark:border-light/80 dark:bg-light/5"
+          class="rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 font-code text-xs transition-colors dark:border-light/60 dark:bg-light/5"
           >{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
@@ -46,11 +46,11 @@
     </div>
 
     <h1
-      class="min-w-fit font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
-      class:pb-1={!small && document.desc?.length}
+      class="min-w-fit font-sans font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
+      class:pb-3={!small && document.desc?.length}
       class:underline={hovered}
-      class:text-lg={small}
-      class:text-xl={!small}
+      class:text-xl={small}
+      class:text-2xl={!small}
       class:decoration-2={small}
       class:decoration-[3px]={!small}
       class:underline-offset-2={small}
@@ -60,7 +60,7 @@
     </h1>
 
     {#if !small && document.desc?.length}
-      <p class="line-clamp-1">{document.desc}</p>
+      <p class="line-clamp-1 text-base">{document.desc}</p>
     {/if}
   </a>
 </Hoverable>

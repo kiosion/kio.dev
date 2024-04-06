@@ -106,7 +106,7 @@
       <Divider />
       <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
         <span class="flex items-center justify-start gap-2">
-          <p class="text-base">{$t('See more')}</p>
+          <p class="font-mono text-base">{$t('See more')}</p>
           <Icon
             name="ArrowUp"
             size={18}

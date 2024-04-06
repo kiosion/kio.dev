@@ -14,7 +14,7 @@
 </script>
 
 <Header {data} {images} {routeFetch} />
-<ConstrainWidth class="px-6 pb-6 font-sans text-base md:px-14">
+<ConstrainWidth class="px-6 pb-6 font-sans text-base md:px-10">
   {#if data.body}
     <PortableText text={data.body} {routeFetch} />
   {:else}

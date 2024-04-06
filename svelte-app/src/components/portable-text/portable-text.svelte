@@ -71,7 +71,7 @@
   })(text);
 </script>
 
-<div bind:this={ptContainer} class={$$props.class ?? ''}>
+<div bind:this={ptContainer} class="text-base {$$props.class ?? ''}">
   {#if text}
     {#if plainText}
       <PortableText
@@ -128,7 +128,7 @@
       />
       {#if footnotes?.length}
         <div class="footnotes mt-8 transition-[color]">
-          <h3 class="mb-6 block text-2xl font-bold">
+          <h3 class="font-display mb-6 block text-2xl font-bold">
             {$t('Footnotes')}
           </h3>
           <ol class="ml-6 list-decimal leading-8">

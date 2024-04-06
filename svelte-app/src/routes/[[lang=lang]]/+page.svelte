@@ -50,7 +50,7 @@
     </div>
     <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
       <span class="flex items-center justify-start gap-2">
-        <p>{$t('See more')}</p>
+        <p class="font-mono text-sm">{$t('See more')}</p>
         <Icon name="ArrowRight" size={18} inline />
       </span>
     </ArrowButton>

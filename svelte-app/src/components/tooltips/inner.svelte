@@ -148,7 +148,7 @@
   aria-hidden="true"
 >
   <span
-    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light dark:bg-light dark:text-dark"
+    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1.5 font-mono text-xs text-light dark:bg-light dark:text-dark"
     transition:maybeTransition={{ duration, easing: cubicInOut }}
   >
     {content.trim().length >= MAX_LENGTH

@@ -17,16 +17,16 @@
     href={`#${value._key}`}
   >
     <span
-      class="pointer-events-none absolute -left-5 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 select-none text-2xl font-black text-accent-light dark:text-accent-dark md:block"
-      class:opacity-40={!hovered}
-      class:opacity-100={hovered}
+      class="font-display pointer-events-none absolute -left-4 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 select-none text-xl font-bold text-accent-light dark:text-accent-dark md:block"
+      class:opacity-20={!hovered}
+      class:opacity-80={hovered}
       aria-hidden="true"
     >
       #
     </span>
     <svelte:element
       this={style}
-      class="inline font-bold text-black transition-[color] dark:text-light"
+      class="font-display inline font-bold text-black transition-[color] dark:text-light"
     >
       <slot />
     </svelte:element>
@@ -54,19 +54,19 @@
   }
 
   h1 {
-    @apply text-5xl;
-  }
-  h2 {
     @apply text-4xl;
   }
-  h3 {
+  h2 {
     @apply text-3xl;
   }
-  h4 {
+  h3 {
     @apply text-2xl;
   }
-  h5 {
+  h4 {
     @apply text-xl;
+  }
+  h5 {
+    @apply text-lg;
   }
   h6 {
     @apply text-lg;

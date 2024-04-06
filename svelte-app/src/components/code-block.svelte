@@ -165,10 +165,10 @@
             {/if}
           </svelte:component>
         {:catch error}
-          <div class="p-3 font-code text-sm">Error loading: {error.message}</div>
+          <div class="p-3 font-mono text-sm">Error loading: {error.message}</div>
         {/await}
       {:else}
-        <div class="p-3 font-code text-sm">Error loading: {loadError.message}</div>
+        <div class="p-3 font-mono text-sm">Error loading: {loadError.message}</div>
       {/if}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>

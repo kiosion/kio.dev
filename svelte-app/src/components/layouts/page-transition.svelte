@@ -24,8 +24,7 @@
         : event.from?.url.pathname,
       to = get(isLocalized) ? event.to?.url.pathname.slice(3) : event.to?.url.pathname;
 
-    dist = getDist(from || '/', to || '/');
-    console.log({ dist, from, to });
+    dist = dist_inc * getDist(from || '/', to || '/');
   });
 
   // TODO: this is complete shit and needs to be refactored but i'm lazy and it works for now so like ehh
