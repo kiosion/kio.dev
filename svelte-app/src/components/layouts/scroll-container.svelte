@@ -26,8 +26,9 @@
   });
 </script>
 
+<!-- add custom 'hard' neo-brutalist shadow to bottom + right side -->
 <div
-  class="relative mx-auto flex h-full w-full max-w-[82rem] flex-col rounded-sm border border-dark/80 bg-white transition-colors dark:border-light/60 dark:bg-black"
+  class="relative mx-auto flex h-full w-full max-w-[82rem] flex-col rounded-sm border border-dark/80 bg-white shadow-lg shadow-dark/10 transition-colors dark:border-light/60 dark:bg-black dark:shadow-black/40"
 >
   <slot name="before" />
   <div

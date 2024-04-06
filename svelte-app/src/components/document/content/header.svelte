@@ -24,7 +24,7 @@
   data-test-id="{model}-header"
 >
   <h1
-    class="font-display h-fit max-w-full pb-4 text-5xl font-black text-black transition-[color] dark:text-white"
+    class="font-display h-fit max-w-full pb-4 text-5xl font-bold text-black transition-[color] dark:text-white"
   >
     {data.title}
   </h1>

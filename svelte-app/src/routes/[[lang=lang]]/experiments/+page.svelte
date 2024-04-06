@@ -7,7 +7,6 @@
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
 
   export let data;
 
@@ -27,16 +26,14 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<ConstrainWidth class="px-8 pt-5">
-  <HeadedBlock heading={$t('Experiments')}>
-    <ToruExperiment initPromise={data.nowPlayingData} />
+<HeadedBlock heading={$t('Experiments')}>
+  <ToruExperiment initPromise={data.nowPlayingData} />
 
-    <Divider class="my-8" />
+  <Divider class="my-8" />
 
-    <GameOfLifeExperiment />
+  <GameOfLifeExperiment />
 
-    <Divider class="my-8" />
+  <Divider class="my-8" />
 
-    <MagneticCursorExperiment />
-  </HeadedBlock>
-</ConstrainWidth>
+  <MagneticCursorExperiment />
+</HeadedBlock>

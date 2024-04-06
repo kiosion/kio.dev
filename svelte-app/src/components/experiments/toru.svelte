@@ -61,7 +61,7 @@
       class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl px-7 py-6"
     >
       <header class="z-10 w-full pb-2 transition-[color]">
-        <h3 class="pb-2 text-2xl font-bold">Toru</h3>
+        <h3 class="font-display pb-2 text-2xl font-bold">Toru</h3>
         <p>An Elixir-based API for generating embeds from last.fm listening activity.</p>
         <Divider />
       </header>
