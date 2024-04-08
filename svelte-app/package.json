@@ -44,7 +44,7 @@
     "eslint-plugin-unused-imports": "3.1.0",
     "highlight.js": "11.9.0",
     "jsdom": "24.0.0",
-    "netlify-cli": "17.21.1",
+    "netlify-cli": "17.21.2",
     "postcss": "8.4.38",
     "postcss-load-config": "5.0.3",
     "prettier": "3.2.5",
