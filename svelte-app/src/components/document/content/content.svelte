@@ -2,7 +2,7 @@
   import Footer from '$components/document/content/footer.svelte';
   import Header from '$components/document/content/header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
-  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
+  // import ConstrainWidth from '$components/layouts/constrain-width.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
@@ -14,11 +14,13 @@
 </script>
 
 <Header {data} {images} {routeFetch} />
-<ConstrainWidth class="px-6 pb-6 font-sans text-base md:px-10">
+<!-- <ConstrainWidth class="px-6 pb-6 font-sans text-base md:px-10"> -->
+<div class="pb-6 font-sans text-base">
   {#if data.body}
-    <PortableText text={data.body} {routeFetch} />
+    <PortableText text={data.body} {routeFetch} documentView />
   {:else}
     <EmptyContent />
   {/if}
-</ConstrainWidth>
+</div>
+<!-- </ConstrainWidth> -->
 <Footer {model} {data} />

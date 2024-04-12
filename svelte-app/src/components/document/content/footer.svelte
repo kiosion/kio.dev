@@ -31,7 +31,7 @@
     fullWidth
     preload
   >
-    <span class="flex items-center justify-start gap-2 font-mono text-base">
+    <span class="flex items-center justify-start gap-2 font-mono text-sm">
       {#key $isMobile}
         <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline />
       {/key}

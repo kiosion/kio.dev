@@ -35,6 +35,7 @@
 
   export let text: (PortableTextBlock | ArbitraryTypedObject)[],
     plainText = false,
+    documentView = false,
     routeFetch: RouteFetch | undefined = undefined;
 
   let ptContainer: HTMLElement;
@@ -123,12 +124,13 @@
         }}
         context={{
           footnotes,
-          routeFetch
+          routeFetch,
+          documentView
         }}
       />
       {#if footnotes?.length}
-        <div class="footnotes mt-8 transition-[color]">
-          <h3 class="font-display mb-6 block text-2xl font-bold">
+        <div class="footnotes mt-8 px-6 transition-[color] md:px-10">
+          <h3 class="mb-6 block font-display text-2xl font-bold">
             {$t('Footnotes')}
           </h3>
           <ol class="ml-6 list-decimal leading-8">

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
-
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;
@@ -9,29 +7,19 @@
   $: ({ style } = value);
 </script>
 
-<Hoverable let:hovered>
-  <a
-    class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
-    class:!mt-8={indexInParent === 0}
-    id={`heading-${value._key}`}
-    href={`#${value._key}`}
+<a
+  class="focus-outline-sm relative block w-full rounded-sm px-6 font-extrabold md:px-10 {style}"
+  class:!mt-8={indexInParent === 0}
+  id={`heading-${value._key}`}
+  href={`#${value._key}`}
+>
+  <svelte:element
+    this={style}
+    class="-ml-1.5 inline font-display font-bold text-black transition-[color] dark:text-light"
   >
-    <span
-      class="font-display pointer-events-none absolute -left-4 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 select-none text-xl font-bold text-accent-light dark:text-accent-dark md:block"
-      class:opacity-20={!hovered}
-      class:opacity-80={hovered}
-      aria-hidden="true"
-    >
-      #
-    </span>
-    <svelte:element
-      this={style}
-      class="font-display inline font-bold text-black transition-[color] dark:text-light"
-    >
-      <slot />
-    </svelte:element>
-  </a>
-</Hoverable>
+    <slot />
+  </svelte:element>
+</a>
 
 <style lang="scss">
   .h1 {

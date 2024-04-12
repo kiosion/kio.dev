@@ -1,12 +1,12 @@
 <script lang="ts">
   import { formatDate } from '$lib/date';
-  import { t } from '$lib/i18n';
+  import { linkTo, t } from '$lib/i18n';
   import { parseViews } from '$lib/utils';
 
   import BulletPoint from '$components/bullet-point.svelte';
+  import ArrowButton from '$components/controls/arrow-button.svelte';
   import Icon from '$components/icon.svelte';
   import Image from '$components/images/image.svelte';
-  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -24,12 +24,14 @@
   data-test-id="{model}-header"
 >
   <h1
-    class="font-display h-fit max-w-full pb-4 text-5xl font-bold text-black transition-[color] dark:text-white"
+    class="h-fit max-w-full pb-4 font-display text-5xl font-bold text-black transition-[color] dark:text-white"
   >
     {data.title}
   </h1>
 
-  <div class="flex select-none flex-row flex-wrap items-center justify-between gap-5">
+  <div
+    class="flex select-none flex-row flex-wrap items-center justify-between gap-5 pb-4"
+  >
     <div
       class="flex flex-row flex-wrap items-center justify-start gap-x-1 gap-y-2 transition-[color]"
       aria-label={$t('{document} details', {
@@ -57,24 +59,10 @@
         </p>
       {/if}
     </div>
-    <!-- <ArrowButton
-      class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
-      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-      align="right"
-      fullWidth
-      preload
-    >
-      <span class="flex items-center justify-end gap-2 text-base">
-        {#key $isMobile}
-          <Icon name="ArrowLeft" inline />
-        {/key}
-        <p>{$t('Read more')}</p>
-      </span>
-    </ArrowButton> -->
   </div>
 
-  {#if data.tags?.length}
-    <ConstrainWidth class="pt-4">
+  <div class="flex flex-wrap items-end justify-between">
+    {#if data.tags?.length}
       <div
         class="flex flex-row flex-wrap items-center justify-start gap-2"
         aria-label={$t('Tags')}
@@ -87,8 +75,20 @@
           </span>
         {/each}
       </div>
-    </ConstrainWidth>
-  {/if}
+    {/if}
+    <ArrowButton
+      class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
+      align="right"
+      fullWidth
+      preload
+    >
+      <span class="flex items-center justify-end gap-2 font-mono text-sm">
+        <Icon name="ArrowLeft" inline />
+        <p>{$t('Read more')}</p>
+      </span>
+    </ArrowButton>
+  </div>
 </div>
 
 {#if data._type === 'project' && data.github}

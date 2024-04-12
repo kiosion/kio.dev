@@ -27,7 +27,7 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-2 pt-0.5 font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-2 pt-0.5 font-mono text-xs leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
       class:pb-1.5={small}
       class:gap-3={document.tags?.length}
     >
@@ -36,7 +36,7 @@
       </p>
       {#if document.tags?.length}
         <span
-          class="rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 font-code text-xs transition-colors dark:border-light/60 dark:bg-light/5"
+          class="font-code rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 text-xs transition-colors dark:border-light/60 dark:bg-light/5"
           >{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
