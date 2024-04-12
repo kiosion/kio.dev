@@ -93,6 +93,6 @@
     aria-label={name + $t(' icon')}
     {...$$restProps}
   >
-    <InnerIconComponent />
+    <svelte:component this={InnerIconComponent} />
   </BaseIconWrapper>
 </div>
