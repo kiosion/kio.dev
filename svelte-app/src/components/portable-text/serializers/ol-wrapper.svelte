@@ -3,9 +3,13 @@
 
   export let portableText: ListComponentProps;
 
-  $: ({ value: _value } = portableText);
+  $: ({ global } = portableText);
 </script>
 
-<ol class="pt-ol my-6 ml-6 list-decimal px-6 leading-8 transition-[color] md:px-10">
+<ol
+  class="pt-ol my-6 ml-6 list-decimal leading-8 transition-[color]"
+  class:px-6={global.context.documentView}
+  class:md:px-10={global.context.documentView}
+>
   <slot />
 </ol>

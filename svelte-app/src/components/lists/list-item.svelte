@@ -27,8 +27,7 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-2 pt-0.5 font-mono text-xs leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
-      class:pb-1.5={small}
+      class="flex flex-row items-center justify-start pb-1.5 pt-0.5 font-mono text-xs leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
       class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>
@@ -47,7 +46,7 @@
 
     <h1
       class="min-w-fit font-sans font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
-      class:pb-3={!small && document.desc?.length}
+      class:pb-2={!small && document.desc?.length}
       class:underline={hovered}
       class:text-xl={small}
       class:text-2xl={!small}
@@ -60,7 +59,7 @@
     </h1>
 
     {#if !small && document.desc?.length}
-      <p class="line-clamp-1 text-base">{document.desc}</p>
+      <p class="line-clamp-1 text-base leading-6">{document.desc}</p>
     {/if}
   </a>
 </Hoverable>

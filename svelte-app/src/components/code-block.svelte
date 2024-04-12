@@ -103,7 +103,7 @@
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
-  <Divider class="my-0" />
+  <Divider margin="my-0" />
   {#if filename}
     <div
       class="bg-dark/5 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-light/5 print:bg-transparent"
@@ -111,7 +111,7 @@
     >
       {filename}
     </div>
-    <Divider class="my-0" />
+    <Divider margin="my-0" />
   {/if}
   <Tooltip
     text={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
@@ -119,9 +119,9 @@
     offset={[0, 2]}
   >
     <button
-      class="focus-outline-sm absolute right-1 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
-      class:top-2={!filename}
-      class:top-14={filename}
+      class="focus-outline-sm absolute right-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      class:top-1={!filename}
+      class:top-12={filename}
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
@@ -178,5 +178,5 @@
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
-  <Divider class="my-0" />
+  <Divider margin="my-0" />
 </div>

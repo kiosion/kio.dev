@@ -3,7 +3,13 @@
 
   export let portableText: ListComponentProps;
 
-  $: ({ value: _value } = portableText);
+  $: ({ global } = portableText);
 </script>
 
-<ul class="pt-ul my-6 ml-6 list-disc px-6 transition-[color] md:px-10"><slot /></ul>
+<ul
+  class="pt-ul my-6 ml-6 list-disc transition-[color]"
+  class:px-6={global.context.documentView}
+  class:md:px-10={global.context.documentView}
+>
+  <slot />
+</ul>

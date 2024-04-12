@@ -3,12 +3,14 @@
 
   export let portableText: BlockComponentProps;
 
-  $: ({ value, indexInParent } = portableText);
+  $: ({ global, value, indexInParent } = portableText);
   $: ({ style } = value);
 </script>
 
 <a
-  class="focus-outline-sm relative block w-full rounded-sm px-6 font-extrabold md:px-10 {style}"
+  class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
+  class:px-6={global.context.documentView}
+  class:md:px-10={global.context.documentView}
   class:!mt-8={indexInParent === 0}
   id={`heading-${value._key}`}
   href={`#${value._key}`}
