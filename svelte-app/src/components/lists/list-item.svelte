@@ -27,7 +27,7 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-1.5 pt-0.5 font-mono text-xs leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-1.5 pt-0.5 font-mono text-sm leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
       class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>

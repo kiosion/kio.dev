@@ -71,8 +71,8 @@
         async (res) =>
           (HighlightStyles =
             res === 'light'
-              ? (await import('svelte-highlight/styles/github')).default
-              : (await import('svelte-highlight/styles/github-dark')).default)
+              ? (await import('svelte-highlight/styles/nnfx-light')).default
+              : (await import('svelte-highlight/styles/night-owl')).default)
       )
     );
 

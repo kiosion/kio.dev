@@ -31,7 +31,7 @@
 {#if data.config?.about}
   {#each data.config.about as aboutSection}
     <HeadedBlock heading={aboutSection.title}>
-      <PortableText text={aboutSection.content} />
+      <PortableText text={aboutSection.content} class="-mt-2" />
     </HeadedBlock>
 
     <Divider />

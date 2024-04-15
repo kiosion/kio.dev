@@ -29,7 +29,7 @@
         <div class="flex select-none flex-row items-center justify-start gap-x-4">
           <Icon name="At" interactive active={hovered} size={20} />
           <div
-            class="text-md flex flex-row items-center justify-between gap-x-2 font-mono text-dark/90 dark:text-light/90"
+            class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
             role="group"
             aria-label={$t('Social links')}
           >
@@ -56,7 +56,7 @@
     {#if APP_VERSION?.length}
       <Hoverable setPointer={false} let:hovered>
         <div
-          class="text-md flex select-none flex-row items-center justify-start gap-x-4 font-mono text-dark/90 dark:text-light/90"
+          class="flex select-none flex-row items-center justify-start gap-x-4 font-mono text-sm text-dark/90 dark:text-light/90"
           aria-label={$t('View latest commit on GitHub')}
         >
           <Icon name="GitBranch" active={hovered} size={20} interactive />

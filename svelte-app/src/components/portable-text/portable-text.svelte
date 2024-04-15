@@ -72,7 +72,7 @@
   })(text);
 </script>
 
-<div bind:this={ptContainer} class="text-base {$$props.class ?? ''}">
+<div bind:this={ptContainer} class="text-md {$$props.class ?? ''}">
   {#if text}
     {#if plainText}
       <PortableText

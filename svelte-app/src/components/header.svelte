@@ -16,9 +16,9 @@
   >
     <HeaderLogo />
     <div class="mt-1 flex flex-col items-start justify-start gap-2.5 font-mono">
-      <span class="select-none text-base font-bold">kio.dev</span>
+      <span class="mb-0.5 select-none text-md font-bold">kio.dev</span>
       <div
-        class="text-md flex select-none flex-row items-center justify-start gap-2 text-dark/80 dark:text-light/80 print:hidden"
+        class="flex select-none flex-row items-center justify-start gap-2 text-sm text-dark/80 dark:text-light/80 print:hidden"
       >
         {#each NAV_LINKS as link, i}
           <NavLink {link} />
