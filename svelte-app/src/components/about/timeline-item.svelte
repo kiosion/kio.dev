@@ -21,7 +21,9 @@
     class="bullet block flex-shrink-0 rounded-full bg-accent-light/80 dark:bg-accent-dark/80"
   />
   <div class="content">
-    <h3 class="py-1 text-base font-bold text-dark transition-colors dark:text-white">
+    <h3
+      class="pb-3 pt-1.5 text-base font-bold text-dark transition-colors dark:text-white"
+    >
       {title}
     </h3>
     <p class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80">
@@ -31,7 +33,7 @@
       )}
     </p>
     {#if body}
-      <div class="-mb-4">
+      <div class="-mb-4 -mt-1">
         <PortableText text={body} />
       </div>
     {/if}

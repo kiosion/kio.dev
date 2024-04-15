@@ -56,7 +56,7 @@
     </ArrowButton>
   {:else}
     <div class="mb-6 flex flex-col gap-y-5">
-      <p class="p-4 font-code">{$t('No content')}</p>
+      <p class="font-code p-4">{$t('No content')}</p>
     </div>
   {/if}
 </HeadedBlock>
