@@ -15,8 +15,8 @@
     aria-label="Main navigation"
   >
     <HeaderLogo />
-    <div class="mt-1 flex flex-col items-start justify-start gap-2.5 font-mono">
-      <span class="mb-0.5 select-none text-md font-bold">kio.dev</span>
+    <div class="mt-1 flex flex-col items-start justify-start gap-1 font-mono">
+      <span class="select-none text-md font-bold">kio.dev</span>
       <div
         class="flex select-none flex-row items-center justify-start gap-2 text-sm text-dark/80 dark:text-light/80 print:hidden"
       >

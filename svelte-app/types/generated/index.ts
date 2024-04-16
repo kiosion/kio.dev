@@ -9,6 +9,7 @@ export type LocaleKey =
   | 'Click here to'
   | 'Code block'
   | 'Code content'
+  | 'Copied'
   | 'Copy to clipboard'
   | 'Date posted'
   | 'Duration'
