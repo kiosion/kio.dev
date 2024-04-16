@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#171a1d',
+        black: '#17181a',
         white: '#f5f5f5',
         dark: '#292c30',
         light: '#f2f2f2',
@@ -22,13 +22,13 @@ module.exports = {
         mono: ['Commit Mono', ...defaultTheme.fontFamily.mono]
       },
       fontSize: {
-        'xs': ['0.75rem', '1'],
-        'sm': ['0.9rem', '1'],
-        'base': ['1rem', '1'],
-        'md': ['1.125rem', '1'],
-        '4xl': ['2.25rem', '1.15'],
-        '5xl': ['2.5rem', '1.15'],
-        '6xl': ['3rem', '1.15']
+        'xs': ['0.75rem', '1.15'],
+        'sm': ['0.9rem', '1.25'],
+        'base': ['1rem', '1.5'],
+        'md': ['1.125rem', '1.5'],
+        '4xl': ['2.25rem', '1.75'],
+        '5xl': ['2.5rem', '1.75'],
+        '6xl': ['3rem', '1.75']
       },
       borderRadius: {
         sm: '0.2rem'

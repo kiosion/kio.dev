@@ -20,7 +20,6 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class:small
     class="focus-outline w-full rounded-md"
     tabindex="0"
     data-sveltekit-preload-code

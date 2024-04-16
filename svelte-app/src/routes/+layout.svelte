@@ -30,6 +30,7 @@
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[],
+    HighlightStyles: string | undefined,
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
 
   const { theme } = Settings,
@@ -81,6 +82,17 @@
       })
     );
 
+    // styles for hljs codeblocks
+    unsubscribers.push(
+      theme.subscribe(async (res) => {
+        console.log('codeblock got theme res', res);
+        HighlightStyles =
+          res === APP_THEMES.LIGHT
+            ? (await import('svelte-highlight/styles/nnfx-light')).default
+            : (await import('svelte-highlight/styles/night-owl')).default;
+      })
+    );
+
     ENV !== 'production' && checkTranslations();
 
     setTimeout(() => loading.set(false), 1000);
@@ -113,6 +125,11 @@
   <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:site" content="@0xKI0" />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+
+  {#if HighlightStyles}
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html HighlightStyles}
+  {/if}
 </svelte:head>
 
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />

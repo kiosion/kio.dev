@@ -31,7 +31,7 @@
 {#if data.config?.about}
   {#each data.config.about as aboutSection}
     <HeadedBlock heading={aboutSection.title}>
-      <PortableText text={aboutSection.content} class="-mt-2" />
+      <PortableText text={aboutSection.content} class="-mt-2 pb-0.5 text-md" />
     </HeadedBlock>
 
     <Divider />
@@ -45,7 +45,7 @@
   {#if data.posts.length}
     <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
-        <ListItem document={post} small />
+        <ListItem document={post} />
       {/each}
     </div>
     <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>

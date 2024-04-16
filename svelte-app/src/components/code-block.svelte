@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   import { browser } from '$app/environment';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
-  import Settings from '$lib/settings';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
@@ -13,7 +12,6 @@
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { ResolvedComponentType } from '$components/code-block/imports';
-  import type { Unsubscriber } from 'svelte/store';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
   export let content: string,
@@ -44,9 +42,7 @@
           (BASE_ANIMATION_DURATION / 2) * 10
         );
       }
-    },
-    { theme } = Settings,
-    unsubscribers: Unsubscriber[] = [];
+    };
 
   onMount(() => {
     lang = lang?.toLowerCase();
@@ -66,21 +62,7 @@
       res instanceof Error ? ((loadError = res), undefined) : res
     );
 
-    unsubscribers.push(
-      theme.subscribe(
-        async (res) =>
-          (HighlightStyles =
-            res === 'light'
-              ? (await import('svelte-highlight/styles/nnfx-light')).default
-              : (await import('svelte-highlight/styles/night-owl')).default)
-      )
-    );
-
     LanguageType = getLangType(lang);
-  });
-
-  onDestroy(() => {
-    unsubscribers.forEach((unsub) => unsub());
   });
 
   const updateHeight = (height?: number) =>
@@ -89,13 +71,6 @@
   $: updateHeight(innerHeight),
     browser && (hideLoader = loadError !== null || innerHeight > 52);
 </script>
-
-<svelte:head>
-  {#if HighlightStyles}
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html HighlightStyles}
-  {/if}
-</svelte:head>
 
 <div
   class="relative my-7 overflow-hidden"

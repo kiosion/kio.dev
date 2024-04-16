@@ -38,8 +38,6 @@
     documentView = false,
     routeFetch: RouteFetch | undefined = undefined;
 
-  let ptContainer: HTMLElement;
-
   const customScrollTo = (event: Event, id: string) => {
     event.preventDefault();
     const element = document.querySelector(`#${id}`);
@@ -72,7 +70,7 @@
   })(text);
 </script>
 
-<div bind:this={ptContainer} class="text-md {$$props.class ?? ''}">
+<div class={$$props.class ?? 'text-md'}>
   {#if text}
     {#if plainText}
       <PortableText
@@ -136,11 +134,11 @@
           <ol class="ml-6 list-decimal leading-8">
             {#each footnotes as note}
               <li class="list-item">
-                <span class="flex flex-row flex-wrap items-center break-all">
+                <span class="inline-flex flex-row items-start break-all">
                   <svelte:self text={note.note} plaintext />
                   <Tooltip text={$t('Go to footnote source')}>
                     <a
-                      class="ml-2"
+                      class="ml-2 mt-1"
                       href={`#src-${note._key}`}
                       id="note-{note._key}"
                       aria-label="Go to footnote source"

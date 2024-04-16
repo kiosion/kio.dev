@@ -7,7 +7,7 @@
 </script>
 
 <p
-  class="leading-7 transition-[color]"
+  class="transition-[color]"
   class:px-6={global.context.documentView}
   class:md:px-10={global.context.documentView}
   class:my-4={indexInParent > 0 || !global.context.documentView}
