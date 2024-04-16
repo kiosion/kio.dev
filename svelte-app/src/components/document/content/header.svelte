@@ -30,7 +30,8 @@
   </h1>
 
   <div
-    class="flex select-none flex-row flex-wrap items-center justify-between gap-5 pb-4"
+    class="flex select-none flex-row flex-wrap items-center justify-between gap-5"
+    class:pb-4={data.tags?.length}
   >
     <div
       class="flex flex-row flex-wrap items-center justify-start gap-x-1 gap-y-2 transition-[color]"
@@ -59,10 +60,24 @@
         </p>
       {/if}
     </div>
+    {#if !data.tags?.length}
+      <ArrowButton
+        class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+        href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
+        align="right"
+        fullWidth
+        preload
+      >
+        <span class="flex items-center justify-end gap-2 font-mono text-sm">
+          <Icon name="ArrowLeft" inline />
+          <p>{$t('Read more')}</p>
+        </span>
+      </ArrowButton>
+    {/if}
   </div>
 
-  <div class="flex flex-wrap items-end justify-between">
-    {#if data.tags?.length}
+  {#if data.tags?.length}
+    <div class="flex flex-wrap items-end justify-between">
       <div
         class="flex flex-row flex-wrap items-center justify-start gap-2"
         aria-label={$t('Tags')}
@@ -75,20 +90,20 @@
           </span>
         {/each}
       </div>
-    {/if}
-    <ArrowButton
-      class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
-      href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-      align="right"
-      fullWidth
-      preload
-    >
-      <span class="flex items-center justify-end gap-2 font-mono text-sm">
-        <Icon name="ArrowLeft" inline />
-        <p>{$t('Read more')}</p>
-      </span>
-    </ArrowButton>
-  </div>
+      <ArrowButton
+        class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+        href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
+        align="right"
+        fullWidth
+        preload
+      >
+        <span class="flex items-center justify-end gap-2 font-mono text-sm">
+          <Icon name="ArrowLeft" inline />
+          <p>{$t('Read more')}</p>
+        </span>
+      </ArrowButton>
+    </div>
+  {/if}
 </div>
 
 {#if data._type === 'project' && data.github}

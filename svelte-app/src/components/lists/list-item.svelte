@@ -8,8 +8,7 @@
 
   import type { PostDocument, ProjectDocument } from '$types';
 
-  export let document: PostDocument | ProjectDocument,
-    small = false;
+  export let document: PostDocument | ProjectDocument;
 
   const link =
     document._type === 'post'
@@ -26,7 +25,7 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-1.5 pt-0.5 font-mono text-sm leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
       class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>
@@ -44,21 +43,15 @@
     </div>
 
     <h1
-      class="min-w-fit font-sans font-bold decoration-accent-light transition-colors dark:decoration-accent-dark"
-      class:pb-2={!small && document.desc?.length}
+      class="line-clamp-1 font-sans text-2xl font-bold leading-9 decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark lg:max-w-[60rem]"
+      class:pb-0.5={document.desc?.length}
       class:underline={hovered}
-      class:text-xl={small}
-      class:text-2xl={!small}
-      class:decoration-2={small}
-      class:decoration-[3px]={!small}
-      class:underline-offset-2={small}
-      class:underline-offset-4={!small}
     >
       {document.title}
     </h1>
 
-    {#if !small && document.desc?.length}
-      <p class="line-clamp-1 text-base leading-6">{document.desc}</p>
+    {#if document.desc?.length}
+      <p class="line-clamp-2 lg:max-w-[60rem]">{document.desc}</p>
     {/if}
   </a>
 </Hoverable>

@@ -25,22 +25,22 @@
 
 <style lang="scss">
   .h1 {
-    @apply mb-6 mt-14;
+    @apply mb-6 mt-10;
   }
   .h2 {
-    @apply mb-6 mt-12;
+    @apply mb-6 mt-10;
   }
   .h3 {
-    @apply mb-5 mt-10;
+    @apply mb-5 mt-8;
   }
   .h4 {
-    @apply mb-4 mt-8;
+    @apply mb-5 mt-8;
   }
   .h5 {
     @apply mb-4 mt-6;
   }
   .h6 {
-    @apply mb-3 mt-5;
+    @apply mb-4 mt-6;
   }
 
   h1 {
