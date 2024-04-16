@@ -17,20 +17,13 @@ tbody.hljs, .hljs {
 
 tbody.hljs {
   @apply font-mono leading-5 text-sm;
-  // font-family: 'Commit Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    // 'Liberation Mono', 'Courier New', monospace !important;
-  // font-size: 1rem;
-  // line-height: 1.2rem;
 }
 
 code {
   &,
   &.hljs {
     @apply font-mono leading-5 text-sm;
-    // font-family: 'Commit Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    //   'Liberation Mono', 'Courier New', monospace !important;
-    // font-size: 1rem;
-    // line-height: 1.2rem;
+
     max-width: 100%;
 
     & {

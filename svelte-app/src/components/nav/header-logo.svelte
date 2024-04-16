@@ -26,7 +26,6 @@
     aria-label={$t('Home')}
     on:click={handleClick}
   >
-    <!-- kio.dev -->
     <img class="aspect-square" src="/assets/logo-standard.webp" alt="logo" />
   </a>
 

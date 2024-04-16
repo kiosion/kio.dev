@@ -4,14 +4,7 @@ import { find } from '$lib/store';
 
 import type { LayoutLoad } from './$types';
 
-export const load = (async ({ fetch, params, parent }) => {
-  const { pathname } = await parent();
-
-  // console.log({ _parent });
-  // if (!pathname.endsWith('/thoughts')) {
-  //   return {};
-  // }
-
+export const load = (async ({ fetch, params }) => {
   const posts = handleLoadError(
     await find(fetch, 'post', {
       ...DEFAULT_POST_QUERY_PARAMS,

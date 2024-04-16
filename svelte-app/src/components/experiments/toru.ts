@@ -62,39 +62,6 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
 
   socketInstance = new WebSocket('wss://toru.kio.dev/api/v1/ws/kiosion?cover_size=large');
 
-  // socketInstance.addEventListener('open', () => {
-  //   Logger.info('[ToruSync] Connected');
-  //   retries = 0;
-  // });
-
-  // socketInstance.addEventListener('message', (event: MessageEvent<string | unknown>) => {
-  //   if (!event.data || event.data === 'pong') {
-  //     return;
-  //   }
-
-  //   try {
-  //     const res = JSON.parse(event.data as string) as ToruData;
-
-  //     Logger.info('[ToruSync] Received frame');
-
-  //     if (res.title || res.album || res.artist) {
-  //       onUpdate(res);
-  //     }
-  //   } catch (e) {
-  //     Logger.error('[ToruSync] Error parsing', e);
-  //   }
-  // });
-
-  // socketInstance.addEventListener('error', (e) => {
-  //   Logger.error('[ToruSync] Error', e);
-  // });
-
-  // socketInstance.addEventListener('close', () => {
-  //   Logger.info('[ToruSync] Disconnected');
-
-  //   stop();
-  // });
-
   socketInstance.addEventListener('open', onOpen);
   socketInstance.addEventListener('message', onMessage(onUpdate));
   socketInstance.addEventListener('error', onError);
