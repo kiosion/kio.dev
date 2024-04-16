@@ -35,9 +35,8 @@
 
   export let text: (PortableTextBlock | ArbitraryTypedObject)[],
     plainText = false,
+    documentView = false,
     routeFetch: RouteFetch | undefined = undefined;
-
-  let ptContainer: HTMLElement;
 
   const customScrollTo = (event: Event, id: string) => {
     event.preventDefault();
@@ -71,7 +70,7 @@
   })(text);
 </script>
 
-<div bind:this={ptContainer} class={$$props.class ?? ''}>
+<div class={$$props.class ?? 'text-md'}>
   {#if text}
     {#if plainText}
       <PortableText
@@ -123,22 +122,23 @@
         }}
         context={{
           footnotes,
-          routeFetch
+          routeFetch,
+          documentView
         }}
       />
       {#if footnotes?.length}
-        <div class="footnotes mt-8 transition-[color]">
-          <h3 class="mb-6 block text-2xl font-bold">
+        <div class="footnotes mt-8 px-6 transition-[color] md:px-10">
+          <h3 class="mb-6 block font-display text-2xl font-bold">
             {$t('Footnotes')}
           </h3>
           <ol class="ml-6 list-decimal leading-8">
             {#each footnotes as note}
               <li class="list-item">
-                <span class="flex flex-row flex-wrap items-center break-all">
+                <span class="inline-flex flex-row items-start break-all">
                   <svelte:self text={note.note} plaintext />
                   <Tooltip text={$t('Go to footnote source')}>
                     <a
-                      class="ml-2"
+                      class="ml-2 mt-1"
                       href={`#src-${note._key}`}
                       id="note-{note._key}"
                       aria-label="Go to footnote source"

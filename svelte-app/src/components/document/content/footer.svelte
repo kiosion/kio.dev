@@ -3,7 +3,6 @@
   import { isMobile } from '$lib/responsive';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
 
@@ -13,9 +12,8 @@
     model: 'post' | 'project' = data._type;
 </script>
 
-<Divider class="print:hidden" />
 {#if data._type === 'project' && data.github}
-  <div>
+  <div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
     <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
     <span class="flex items-center justify-start gap-2 text-base">
       <Icon name="GitCommit" inline />
@@ -24,16 +22,16 @@
       </Link>
     </span>
   </div>
-  <Divider />
 {/if}
-<div class="print:hidden">
+
+<div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     align="left"
     fullWidth
     preload
   >
-    <span class="flex items-center justify-start gap-2 text-base">
+    <span class="flex items-center justify-start gap-2 font-mono text-sm">
       {#key $isMobile}
         <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline />
       {/key}

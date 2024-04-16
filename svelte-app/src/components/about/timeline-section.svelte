@@ -15,7 +15,7 @@
 <section class="my-6" role="group" aria-labelledby="{id}-heading">
   <div class="pb-4">
     <h2
-      class="pb-1 text-lg font-bold text-dark transition-colors dark:text-white"
+      class="pb-2 text-xl font-bold text-dark transition-colors dark:text-white"
       id="{id}-heading"
     >
       {title}

@@ -31,7 +31,7 @@
 {#if data.config?.about}
   {#each data.config.about as aboutSection}
     <HeadedBlock heading={aboutSection.title}>
-      <PortableText text={aboutSection.content} />
+      <PortableText text={aboutSection.content} class="-mt-2 pb-0.5 text-md" />
     </HeadedBlock>
 
     <Divider />
@@ -43,24 +43,20 @@
 
 <HeadedBlock heading={$t('Recent thoughts')} let:id>
   {#if data.posts.length}
-    <div
-      class="mb-6 mt-5 flex flex-col gap-y-5"
-      role="group"
-      aria-labelledby="{id}-heading"
-    >
+    <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
-        <ListItem document={post} small />
+        <ListItem document={post} />
       {/each}
     </div>
     <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
       <span class="flex items-center justify-start gap-2">
-        <p>{$t('See more')}</p>
+        <p class="font-mono text-sm">{$t('See more')}</p>
         <Icon name="ArrowRight" size={18} inline />
       </span>
     </ArrowButton>
   {:else}
-    <div class="mb-6 mt-5 flex flex-col gap-y-5">
-      <p class="p-4 font-code">{$t('No content')}</p>
+    <div class="mb-6 flex flex-col gap-y-5">
+      <p class="font-code p-4">{$t('No content')}</p>
     </div>
   {/if}
 </HeadedBlock>

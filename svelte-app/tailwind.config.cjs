@@ -7,9 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#171c22',
+        black: '#17181a',
         white: '#f5f5f5',
-        dark: '#242b33',
+        dark: '#292c30',
         light: '#f2f2f2',
         accent: {
           light: '#1e65e1',
@@ -17,15 +17,18 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
-        mono: ['Work Sans', ...defaultTheme.fontFamily.mono],
-        code: ['Ubuntu Mono', ...defaultTheme.fontFamily.mono]
+        sans: ['TASA Orbiter Deck', ...defaultTheme.fontFamily.sans],
+        display: ['TASA Orbiter Display', ...defaultTheme.fontFamily.sans],
+        mono: ['Commit Mono', ...defaultTheme.fontFamily.mono]
       },
       fontSize: {
-        'xs': ['0.75rem', '1'],
-        '4xl': ['2.25rem', '1.15'],
-        '5xl': ['2.25rem', '1.15'],
-        '6xl': ['3rem', '1.15']
+        'xs': ['0.75rem', '1.15'],
+        'sm': ['0.9rem', '1.25'],
+        'base': ['1rem', '1.5'],
+        'md': ['1.125rem', '1.5'],
+        '4xl': ['2.25rem', '1.75'],
+        '5xl': ['2.5rem', '1.75'],
+        '6xl': ['3rem', '1.75']
       },
       borderRadius: {
         sm: '0.2rem'

@@ -15,13 +15,13 @@
   class="relative flex flex-row items-start justify-start gap-x-6 pl-3"
   class:last
   class:pb-0={last}
-  class:pb-5={!last}
+  class:pb-4={!last}
 >
   <span
     class="bullet block flex-shrink-0 rounded-full bg-accent-light/80 dark:bg-accent-dark/80"
   />
   <div class="content">
-    <h3 class="py-1 text-base font-bold text-dark transition-colors dark:text-white">
+    <h3 class="pb-2 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
     </h3>
     <p class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80">
@@ -31,8 +31,8 @@
       )}
     </p>
     {#if body}
-      <div class="-mb-4">
-        <PortableText text={body} />
+      <div class="-mb-4 -mt-2">
+        <PortableText text={body} class="text-base" />
       </div>
     {/if}
   </div>

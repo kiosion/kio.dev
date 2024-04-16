@@ -1,18 +1,17 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   import { browser } from '$app/environment';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
-  import Settings from '$lib/settings';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
+  import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { ResolvedComponentType } from '$components/code-block/imports';
-  import type { Unsubscriber } from 'svelte/store';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
   export let content: string,
@@ -43,9 +42,7 @@
           (BASE_ANIMATION_DURATION / 2) * 10
         );
       }
-    },
-    { theme } = Settings,
-    unsubscribers: Unsubscriber[] = [];
+    };
 
   onMount(() => {
     lang = lang?.toLowerCase();
@@ -65,21 +62,7 @@
       res instanceof Error ? ((loadError = res), undefined) : res
     );
 
-    unsubscribers.push(
-      theme.subscribe(
-        async (res) =>
-          (HighlightStyles =
-            res === 'light'
-              ? (await import('svelte-highlight/styles/github')).default
-              : (await import('svelte-highlight/styles/github-dark')).default)
-      )
-    );
-
     LanguageType = getLangType(lang);
-  });
-
-  onDestroy(() => {
-    unsubscribers.forEach((unsub) => unsub());
   });
 
   const updateHeight = (height?: number) =>
@@ -89,26 +72,21 @@
     browser && (hideLoader = loadError !== null || innerHeight > 52);
 </script>
 
-<svelte:head>
-  {#if HighlightStyles}
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html HighlightStyles}
-  {/if}
-</svelte:head>
-
 <div
-  class="relative -mx-1 my-7 overflow-hidden rounded-sm border border-dark/20 transition-colors dark:border-light/20"
+  class="relative my-7 overflow-hidden"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
+  <Divider margin="my-0" />
   {#if filename}
     <div
-      class="border-b border-dark/20 bg-dark/5 py-[13px] pl-5 font-mono text-base transition-[background-color,border-color] dark:border-light/20 print:bg-transparent"
+      class="bg-dark/5 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-light/5 print:bg-transparent"
       id="{id}-filename"
     >
       {filename}
     </div>
+    <Divider margin="my-0" />
   {/if}
   <Tooltip
     text={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
@@ -116,7 +94,9 @@
     offset={[0, 2]}
   >
     <button
-      class="focus-outline-sm absolute right-0 top-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      class="focus-outline-sm absolute right-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      class:top-1={!filename}
+      class:top-12={filename}
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
@@ -131,7 +111,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 transition-all print:bg-transparent"
+      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 pl-10 transition-all dark:bg-light/5 print:bg-transparent"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
@@ -165,12 +145,13 @@
             {/if}
           </svelte:component>
         {:catch error}
-          <div class="p-3 font-code text-sm">Error loading: {error.message}</div>
+          <div class="p-3 font-mono text-sm">Error loading: {error.message}</div>
         {/await}
       {:else}
-        <div class="p-3 font-code text-sm">Error loading: {loadError.message}</div>
+        <div class="p-3 font-mono text-sm">Error loading: {loadError.message}</div>
       {/if}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
+  <Divider margin="my-0" />
 </div>

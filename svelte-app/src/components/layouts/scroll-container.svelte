@@ -4,9 +4,7 @@
   import { afterNavigate } from '$app/navigation';
   import { BASE_TRANSITION_DURATION } from '$lib/consts';
 
-  export let element: HTMLDivElement | undefined = undefined;
-
-  let timeout: ReturnType<typeof setTimeout> | undefined;
+  let element: HTMLDivElement, timeout: ReturnType<typeof setTimeout> | undefined;
 
   onDestroy(() => {
     if (timeout) {
@@ -29,15 +27,21 @@
 </script>
 
 <div
-  class="relative h-full w-full overflow-visible overflow-x-clip overflow-y-scroll p-8 print:p-0"
-  tabindex="-1"
-  role="none"
-  data-test-id="scroll-container"
-  bind:this={element}
-  on:scroll={(e) => {
-    // dispatch what looks like a scroll event to the window
-    window.dispatchEvent(new CustomEvent('scroll', { detail: e }));
-  }}
+  class="relative mx-auto flex h-full max-h-fit w-full max-w-[82rem] flex-col rounded-sm border border-dark/80 bg-white shadow-lg shadow-dark/10 transition-colors dark:border-light/60 dark:bg-black dark:shadow-black/40"
 >
-  <slot {element} />
+  <slot name="before" />
+  <div
+    class="flex-1 overflow-visible overflow-x-clip overflow-y-scroll"
+    tabindex="-1"
+    role="none"
+    data-test-id="scroll-container"
+    bind:this={element}
+    on:scroll={(e) => {
+      // dispatch what looks like a scroll event to the window
+      window.dispatchEvent(new CustomEvent('scroll', { detail: e }));
+    }}
+  >
+    <slot {element} />
+  </div>
+  <slot name="after" />
 </div>

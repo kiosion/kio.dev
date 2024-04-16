@@ -60,8 +60,8 @@
     <article
       class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl px-7 py-6"
     >
-      <header class="w-full pb-2 transition-[color]">
-        <h3 class="pb-2 text-2xl font-bold">Toru</h3>
+      <header class="z-10 w-full pb-2 transition-[color]">
+        <h3 class="font-display pb-2 text-2xl font-bold">Toru</h3>
         <p>An Elixir-based API for generating embeds from last.fm listening activity.</p>
         <Divider />
       </header>
@@ -72,18 +72,14 @@
         tooltipDelay={150}
         newtab
       >
-        <Icon
-          name="ExternalLink"
-          size={21}
-          class="text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
-        />
+        <Icon name="ExternalLink" size={21} interactive />
       </Link>
 
       <figure
         class="flex select-none flex-row items-center justify-start gap-5 px-1 pb-2"
       >
         {#if data}
-          <div class="relative flex-shrink-0 overflow-clip">
+          <div class="relative z-10 flex-shrink-0 overflow-clip">
             <img
               src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
               alt="Album art for the currently playing track"
@@ -109,7 +105,7 @@
           </div>
 
           <div
-            class="flex flex-col items-start justify-center gap-1 text-dark/90 transition-[color] dark:text-light/90"
+            class="z-10 flex flex-col items-start justify-center gap-1 text-dark/90 transition-[color] dark:text-light/90"
           >
             <h4
               class="line-clamp-2 text-xl font-black decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
@@ -127,13 +123,13 @@
             </p>
           </div>
 
+          <!-- svelte-ignore a11y-missing-attribute -->
           <img
             src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
-            alt="Artist art for the currently playing track"
-            class="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[150%] w-[150%] opacity-30 blur-xl"
+            class="absolute bottom-0 left-0 right-0 top-0 z-[2] h-[150%] w-[150%] opacity-30 blur-xl"
           />
           <div
-            class="absolute bottom-0 left-0 right-0 top-0 -z-20 h-[150%] w-[150%] bg-light blur-xl transition-colors dark:bg-dark"
+            class="absolute bottom-0 left-0 right-0 top-0 z-[1] h-[150%] w-[150%] bg-light blur-xl transition-colors dark:bg-dark"
           />
         {:else}
           <div class="relative flex-shrink-0 overflow-clip">
@@ -151,14 +147,14 @@
           </div>
 
           <div
-            class="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[150%] w-[150%] bg-dark/10 opacity-30 blur-xl transition-colors dark:bg-light/10"
+            class="absolute bottom-0 left-0 right-0 top-0 h-[150%] w-[150%] bg-dark/10 opacity-30 blur-xl transition-colors dark:bg-light/10"
           />
         {/if}
       </figure>
     </article>
 
     <div
-      class="pointer-events-none absolute -bottom-2 left-0 right-0 top-0 -z-40 transition-opacity"
+      class="pointer-events-none absolute -bottom-2 left-0 right-0 top-0 z-0 transition-opacity"
       aria-hidden="true"
       class:opacity-10={!hovered}
       class:opacity-20={hovered}

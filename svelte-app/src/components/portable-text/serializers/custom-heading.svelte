@@ -1,37 +1,27 @@
 <script lang="ts">
-  import Hoverable from '$components/hoverable.svelte';
-
   import type { BlockComponentProps } from '@portabletext/svelte';
 
   export let portableText: BlockComponentProps;
 
-  $: ({ value, indexInParent } = portableText);
+  $: ({ global, value, indexInParent } = portableText);
   $: ({ style } = value);
 </script>
 
-<Hoverable let:hovered>
-  <a
-    class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
-    class:mt-5={indexInParent === 0}
-    id={`heading-${value._key}`}
-    href={`#${value._key}`}
+<a
+  class="focus-outline-sm relative block w-full rounded-sm font-extrabold {style}"
+  class:px-6={global.context.documentView}
+  class:md:px-10={global.context.documentView}
+  class:!mt-8={indexInParent === 0}
+  id={`heading-${value._key}`}
+  href={`#${value._key}`}
+>
+  <svelte:element
+    this={style}
+    class="-ml-1.5 inline font-display font-bold text-black transition-[color] dark:text-light"
   >
-    <span
-      class="pointer-events-none absolute -left-5 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 select-none text-2xl font-black text-accent-light dark:text-accent-dark lg:block"
-      class:opacity-40={!hovered}
-      class:opacity-100={hovered}
-      aria-hidden="true"
-    >
-      #
-    </span>
-    <svelte:element
-      this={style}
-      class="inline font-bold text-black transition-[color] dark:text-light"
-    >
-      <slot />
-    </svelte:element>
-  </a>
-</Hoverable>
+    <slot />
+  </svelte:element>
+</a>
 
 <style lang="scss">
   .h1 {
@@ -54,19 +44,19 @@
   }
 
   h1 {
-    @apply text-5xl;
-  }
-  h2 {
     @apply text-4xl;
   }
-  h3 {
+  h2 {
     @apply text-3xl;
   }
-  h4 {
+  h3 {
     @apply text-2xl;
   }
-  h5 {
+  h4 {
     @apply text-xl;
+  }
+  h5 {
+    @apply text-lg;
   }
   h6 {
     @apply text-lg;

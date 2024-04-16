@@ -9,6 +9,7 @@
   import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import Icon from '$components/icon.svelte';
+  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
   import Link from '$components/link.svelte';
 
   import type { LocaleKey } from '$generated';
@@ -87,38 +88,40 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<div data-test-id="error-page">
-  <HeadedBlock {heading}>
-    <p class="my-4 text-base">
-      {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
-    </p>
-    <p class="my-4 text-base">
-      {$t('Please')}
-      <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
-        on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
-      >.
-    </p>
-  </HeadedBlock>
+<ConstrainWidth class="px-8 pt-5">
+  <div data-test-id="error-page">
+    <HeadedBlock {heading}>
+      <p class="my-4 text-base">
+        {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
+      </p>
+      <p class="my-4 text-base">
+        {$t('Please')}
+        <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
+          on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
+        >.
+      </p>
+    </HeadedBlock>
 
-  {#if causes?.length}
-    <Divider />
-    <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
-      <span class="flex items-center justify-start gap-2">
-        <p class="text-base">{$t('See more')}</p>
-        <Icon
-          name="ArrowUp"
-          size={18}
-          inline
-          style="transform: {showStack ? 'rotate(0deg)' : 'rotate(180deg)'};"
-        />
-      </span>
-    </ArrowButton>
-    {#if showStack}
-      <div class="pt-4" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
-        <pre
-          class="whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
-              />{/if}{/each}</pre>
-      </div>
+    {#if causes?.length}
+      <Divider />
+      <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
+        <span class="flex items-center justify-start gap-2">
+          <p class="font-mono text-base">{$t('See more')}</p>
+          <Icon
+            name="ArrowUp"
+            size={18}
+            inline
+            style="transform: {showStack ? 'rotate(0deg)' : 'rotate(180deg)'};"
+          />
+        </span>
+      </ArrowButton>
+      {#if showStack}
+        <div class="pt-4" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
+          <pre
+            class="whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+                />{/if}{/each}</pre>
+        </div>
+      {/if}
     {/if}
-  {/if}
-</div>
+  </div>
+</ConstrainWidth>

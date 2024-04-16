@@ -17,8 +17,7 @@
     placement: Tooltip['placement'],
     followCursor: Tooltip['followCursor'],
     offset: Tooltip['offset'],
-    target: Tooltip['target'],
-    container: HTMLDivElement | undefined = undefined;
+    target: Tooltip['target'];
 
   let maybeTransition =
     duration > 0 ? fade : (node: Element, args: FadeParams): TransitionConfig => ({});
@@ -50,8 +49,8 @@
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const pageScroll = {
-      x: container?.scrollLeft ?? window.scrollX,
-      y: container?.scrollTop ?? window.scrollY
+      x: window.scrollX,
+      y: window.scrollY
     };
     const { innerWidth, innerHeight } = window;
 
@@ -149,7 +148,7 @@
   aria-hidden="true"
 >
   <span
-    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1 font-code text-sm text-light dark:bg-light dark:text-dark"
+    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1.5 font-mono text-xs text-light dark:bg-light dark:text-dark"
     transition:maybeTransition={{ duration, easing: cubicInOut }}
   >
     {content.trim().length >= MAX_LENGTH

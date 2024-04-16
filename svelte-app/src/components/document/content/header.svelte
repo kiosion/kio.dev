@@ -1,12 +1,10 @@
 <script lang="ts">
   import { formatDate } from '$lib/date';
   import { linkTo, t } from '$lib/i18n';
-  import { isMobile } from '$lib/responsive';
   import { parseViews } from '$lib/utils';
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import Icon from '$components/icon.svelte';
   import Image from '$components/images/image.svelte';
   import Link from '$components/link.svelte';
@@ -21,90 +19,93 @@
     model = data._type;
 </script>
 
-<div data-test-id="{model}-header">
+<div
+  class="w-full border-b border-dark/80 px-6 py-7 dark:border-light/60 md:px-10"
+  data-test-id="{model}-header"
+>
   <h1
-    class="mb-4 mt-10 h-fit max-w-full text-4xl font-bold text-black transition-[color] dark:text-white lg:mt-12 lg:text-6xl lg:font-black"
+    class="h-fit max-w-full pb-1 font-display text-5xl font-bold text-black transition-[color] dark:text-white"
   >
     {data.title}
   </h1>
 
-  <div class="flex flex-row flex-wrap items-center justify-between gap-4">
+  <div
+    class="flex select-none flex-row flex-wrap items-center justify-between gap-5 pb-4"
+  >
     <div
-      class="flex flex-row flex-wrap items-center justify-start gap-y-2 transition-[color]"
+      class="flex flex-row flex-wrap items-center justify-start gap-x-1 gap-y-2 transition-[color]"
       aria-label={$t('{document} details', {
         document: model === 'post' ? 'Post' : 'Project'
       })}
       role="group"
     >
       <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
-        <p class="cursor-default font-mono text-base" aria-label="Published date">
+        <p class="cursor-default font-mono text-sm" aria-label="Published date">
           {$formatDate(data.date, 'full') ?? $t('Unknown date')}
         </p>
       </Tooltip>
       <BulletPoint />
-      <p class="cursor-default font-mono text-base">
+      <p class="cursor-default font-mono text-sm">
         {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
       </p>
       <BulletPoint />
-      <p class="cursor-default font-mono text-base">
+      <p class="cursor-default font-mono text-sm">
         {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
       </p>
       {#if data._type === 'project' && data.githubStars !== undefined && data.githubStars > 0}
         <BulletPoint />
-        <p class="cursor-default font-mono text-base">
+        <p class="cursor-default font-mono text-sm">
           {$t('{stars} stars', { stars: $parseViews(data.githubStars) })}
         </p>
       {/if}
     </div>
+  </div>
+
+  <div class="flex flex-wrap items-end justify-between">
+    {#if data.tags?.length}
+      <div
+        class="flex flex-row flex-wrap items-center justify-start gap-2"
+        aria-label={$t('Tags')}
+      >
+        {#each data.tags as tag}
+          <span
+            class="cursor-pointer select-none rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 font-mono text-xs transition-colors dark:border-light/60 dark:bg-light/5"
+          >
+            {tag.title.toLowerCase()}
+          </span>
+        {/each}
+      </div>
+    {/if}
     <ArrowButton
-      class="focus-outline-sm -mb-1 hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+      class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       align="right"
       fullWidth
       preload
     >
-      <span class="flex items-center justify-end gap-2 text-base">
-        {#key $isMobile}
-          <Icon name="ArrowLeft" inline />
-        {/key}
+      <span class="flex items-center justify-end gap-2 font-mono text-sm">
+        <Icon name="ArrowLeft" inline />
         <p>{$t('Read more')}</p>
       </span>
     </ArrowButton>
   </div>
-  {#if data._type === 'project' && (data.tags?.length || data.github)}
-    <Divider />
-    <div
-      class="flex flex-row flex-wrap items-center justify-start gap-0.5 gap-y-3 text-base"
-    >
-      {#if data._type === 'project' && data.tags?.length}
-        <div
-          class="flex flex-row flex-wrap items-center justify-start gap-2"
-          aria-label={$t('Tags')}
-        >
-          {#each data.tags as tag}
-            <span
-              class="cursor-default rounded-sm bg-dark/10 px-1.5 py-0.5 font-code text-sm transition-colors dark:bg-light/10"
-            >
-              {tag.title.toLowerCase()}
-            </span>
-          {/each}
-        </div>
-      {/if}
-      {#if data.tags?.length && data._type === 'project' && data.github}
-        <BulletPoint />
-      {/if}
-      {#if data._type === 'project' && data.github}
-        <span class="font-mono">
-          <Link href={data.github}>
-            {'github.com/' + data.github.split('github.com/')?.[1]}
-          </Link>
-        </span>
-      {/if}
-    </div>
-  {/if}
+</div>
 
-  {#if data._type === 'project' && images?.length}
-    <Divider />
+{#if data._type === 'project' && data.github}
+  <div
+    class="flex w-full flex-row items-center justify-start gap-3 border-b border-dark/80 px-6 py-6 text-base dark:border-light/60 md:px-10"
+  >
+    <Icon name="GitCommit" />
+    <span class="font-mono text-sm">
+      <Link href={data.github}>
+        {'github.com/' + data.github.split('github.com/')?.[1]}
+      </Link>
+    </span>
+  </div>
+{/if}
+
+{#if data._type === 'project' && images?.length}
+  <div class="w-full border-b border-dark/80 px-6 py-6 dark:border-light/60 md:px-10">
     {#if images.length > 1}
       <ImageCarousel {images} />
     {:else}
@@ -116,9 +117,8 @@
         {routeFetch}
       />
     {/if}
-  {/if}
-</div>
-<Divider />
+  </div>
+{/if}
 
 <style lang="scss">
   h1 {

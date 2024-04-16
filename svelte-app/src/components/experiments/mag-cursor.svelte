@@ -31,7 +31,7 @@
 >
   <header class="flex w-full flex-col pb-2">
     <div class="flex flex-row items-start justify-between">
-      <h3 class="pb-2 text-2xl font-bold">Magnetic cursor</h3>
+      <h3 class="font-display pb-2 text-2xl font-bold">Magnetic cursor</h3>
       <div class="flex flex-row gap-x-6">
         <CursorTarget distance={40} let:active let:offset>
           <Tooltip
@@ -40,7 +40,7 @@
           >
             <button
               class="-m-2 h-fit w-fit cursor-none p-2 hover:text-accent-light/90 focus-visible:text-accent-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90 {active
-                ? 'text-accent-light/90 dark:text-accent-light/90'
+                ? 'text-accent-light/90 dark:text-accent-dark/90'
                 : 'text-dark/80 dark:text-light/80'}"
               on:click={() => (useOffset = !useOffset)}
               on:keyup={(e) => e.key === 'Enter' && (useOffset = !useOffset)}
@@ -86,13 +86,7 @@
             newtab
             style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
           >
-            <Icon
-              name="ExternalLink"
-              size={21}
-              class="hover:text-accent-light/90 focus-visible:text-accent-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90 {active
-                ? 'text-accent-light/90 dark:text-accent-dark/90'
-                : 'text-dark/90 dark:text-light/90'}"
-            />
+            <Icon name="ExternalLink" size={21} {active} interactive />
           </Link>
         </CursorTarget>
       </div>
@@ -106,7 +100,7 @@
       {#each buttons as label}
         <CursorTarget let:active let:offset
           ><button
-            class="focus-outline-sm cursor-none select-none rounded-lg px-3 py-2 font-code text-base transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
+            class="focus-outline-sm cursor-none select-none rounded-lg px-4 py-3 font-mono text-sm transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
               ? ' text-accent-light dark:text-accent-dark'
               : ''}"
             tabindex="0"

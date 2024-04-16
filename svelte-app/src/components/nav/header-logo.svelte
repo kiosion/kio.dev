@@ -21,12 +21,12 @@
 
 <span class="relative h-fit w-fit">
   <a
-    class="focus-outline-sm w-fit select-none rounded-sm font-code text-xl font-extrabold transition-[color]"
+    class="focus-outline-sm block w-10 select-none rounded-sm invert-0 transition-[filter] dark:invert"
     href={$linkTo(clicks < 3 ? '/' : '/experiments')}
     aria-label={$t('Home')}
     on:click={handleClick}
   >
-    kio.dev
+    <img class="aspect-square" src="/assets/logo-standard.webp" alt="logo" />
   </a>
 
   {#if showConfetti}

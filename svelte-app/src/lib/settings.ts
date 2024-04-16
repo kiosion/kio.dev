@@ -17,7 +17,10 @@ const defaultSettings = {
 } as const;
 
 if (browser) {
-  const storedSettings = localStorage.getItem(LOCAL_SETTINGS_KEY);
+  const storedSettings = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${LOCAL_SETTINGS_KEY}=`))
+    ?.split('=')[1];
 
   if (storedSettings) {
     try {
@@ -53,7 +56,6 @@ for (const key in defaultSettings) {
       )
     );
 
-    localStorage.setItem(LOCAL_SETTINGS_KEY, settings);
     document.cookie = `${LOCAL_SETTINGS_KEY}=${settings}; path=/`;
   });
 }

@@ -39,7 +39,7 @@
 {#if data.projects.length}
   <Divider />
 
-  <HeadedBlock heading={$t('Projects')}>
+  <HeadedBlock heading={$t('Projects')} first={false}>
     <DocumentList documents={data.projects} />
   </HeadedBlock>
 {/if}

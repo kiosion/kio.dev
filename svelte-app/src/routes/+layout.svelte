@@ -23,8 +23,6 @@
 
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
-  import ConstrainWidth from '$components/layouts/constrain-width.svelte';
-  import PageContent from '$components/layouts/page-content.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import ScrollContainer from '$components/layouts/scroll-container.svelte';
   import TooltipManager from '$components/tooltips/manager.svelte';
@@ -32,6 +30,7 @@
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[],
+    HighlightStyles: string | undefined,
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
 
   const { theme } = Settings,
@@ -83,6 +82,17 @@
       })
     );
 
+    // styles for hljs codeblocks
+    unsubscribers.push(
+      theme.subscribe(async (res) => {
+        console.log('codeblock got theme res', res);
+        HighlightStyles =
+          res === APP_THEMES.LIGHT
+            ? (await import('svelte-highlight/styles/nnfx-light')).default
+            : (await import('svelte-highlight/styles/night-owl')).default;
+      })
+    );
+
     ENV !== 'production' && checkTranslations();
 
     setTimeout(() => loading.set(false), 1000);
@@ -115,6 +125,11 @@
   <meta property="twitter:url" content={$page?.url?.href} />
   <meta property="twitter:site" content="@0xKI0" />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+
+  {#if HighlightStyles}
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html HighlightStyles}
+  {/if}
 </svelte:head>
 
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
@@ -130,23 +145,21 @@
 >
 
 <div
-  class="main relative h-full w-full overflow-x-hidden rounded-xl text-dark dark:text-light lg:text-lg"
-  in:fly={{ delay: 100, duration: 100, y: -40 }}
+  class="main h-full w-full overflow-x-hidden p-3 text-dark dark:text-light md:p-8 lg:text-lg"
 >
-  <ScrollContainer let:element>
-    <ConstrainWidth>
+  <ScrollContainer>
+    <svelte:fragment slot="before">
       <Header />
-    </ConstrainWidth>
+    </svelte:fragment>
 
-    <PageTransition pathname={data.pathname}>
-      <ConstrainWidth id="content-wrapper">
-        <PageContent>
-          <slot />
-          <Footer config={data.config} />
-        </PageContent>
-      </ConstrainWidth>
+    <PageTransition pathname={data.pathname} id="content-wrapper">
+      <slot />
     </PageTransition>
 
-    <TooltipManager container={element} />
+    <svelte:fragment slot="after">
+      <Footer config={data.config} />
+    </svelte:fragment>
   </ScrollContainer>
+
+  <TooltipManager />
 </div>

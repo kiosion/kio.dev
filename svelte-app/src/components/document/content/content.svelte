@@ -13,17 +13,11 @@
 </script>
 
 <Header {data} {images} {routeFetch} />
-<div>
+<div class="pb-6 font-sans text-base">
   {#if data.body}
-    <PortableText text={data.body} {routeFetch} />
+    <PortableText text={data.body} {routeFetch} documentView />
   {:else}
     <EmptyContent />
   {/if}
 </div>
 <Footer {model} {data} />
-
-<style lang="scss">
-  div {
-    @apply font-sans text-base;
-  }
-</style>

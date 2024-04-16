@@ -3,7 +3,17 @@
 
   export let portableText: BlockComponentProps;
 
-  $: ({ value: _value } = portableText);
+  $: ({ indexInParent, global } = portableText);
 </script>
 
-<p class="my-4 leading-[1.6] transition-[color]"><slot /></p>
+<p
+  class="transition-[color]"
+  class:px-6={global.context.documentView}
+  class:md:px-10={global.context.documentView}
+  class:my-4={indexInParent > 0 || !global.context.documentView}
+  class:mt-8={indexInParent === 0 && global.context.documentView}
+  class:mb-4={indexInParent === 0 && global.context.documentView}
+  class:lg:max-w-[60rem]={global.context.documentView}
+>
+  <slot />
+</p>

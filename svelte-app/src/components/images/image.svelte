@@ -82,7 +82,7 @@
     />
   {:then src}
     <button
-      class="focus-outline-sm relative mx-auto block max-h-fit w-full rounded-sm"
+      class="focus-outline-sm relative block max-h-fit w-full rounded-sm"
       {style}
       on:click={() => {
         showImageModal = true;
@@ -96,7 +96,7 @@
     >
       {#if showImageModal}
         <img
-          class="placeholder absolute left-0 top-0 mx-auto w-full select-none rounded-sm opacity-50"
+          class="placeholder absolute left-0 top-0 w-full select-none rounded-sm opacity-50"
           src={placeholderSrc}
           alt={_key}
           draggable="false"
@@ -106,7 +106,7 @@
       {:else}
         <img
           {src}
-          class="mx-auto w-full select-none rounded-sm"
+          class=" w-full select-none rounded-sm"
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
@@ -123,7 +123,7 @@
     <img src={placeholderSrc} alt={_key} draggable="false" {style} />
   {/await}
   <img
-    class="backdrop absolute left-1/2 top-0 -z-[1] mx-auto w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity print:hidden"
+    class="backdrop absolute left-1/2 top-0 -z-[1] w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity print:hidden"
     src={placeholderSrc}
     alt={_key}
     draggable="false"
