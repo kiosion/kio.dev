@@ -84,13 +84,13 @@
 
     // styles for hljs codeblocks
     unsubscribers.push(
-      theme.subscribe(async (res) => {
-        console.log('codeblock got theme res', res);
-        HighlightStyles =
-          res === APP_THEMES.LIGHT
-            ? (await import('svelte-highlight/styles/nnfx-light')).default
-            : (await import('svelte-highlight/styles/night-owl')).default;
-      })
+      theme.subscribe(
+        async (res) =>
+          (HighlightStyles =
+            res === APP_THEMES.LIGHT
+              ? (await import('svelte-highlight/styles/nnfx-light')).default
+              : (await import('svelte-highlight/styles/night-owl')).default)
+      )
     );
 
     ENV !== 'production' && checkTranslations();

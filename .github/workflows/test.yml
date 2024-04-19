@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.0
+          node-version: 18.18.0
       - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
@@ -48,7 +48,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.0
+          node-version: 18.18.0
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
@@ -74,8 +74,7 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Install Playwright
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Ensure Playwright browsers are installed
         run: (cd ./svelte-app && pnpm exec playwright install --with-deps && pnpm exec playwright install-deps)
       - name: Run tests
         run: make playwright
