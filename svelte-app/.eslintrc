@@ -131,6 +131,15 @@
     "svelte/prefer-class-directive": ["error"],
     "svelte/valid-each-key": ["error"],
     "svelte/require-store-reactive-access": ["error"],
+    "svelte/button-has-type": ["error"],
+    "svelte/no-reactive-functions": ["error"],
+    "svelte/no-target-blank": ["error"],
+    "svelte/valid-prop-names-in-kit-pages": ["error"],
+    "svelte/require-store-callbacks-use-set-param": ["error"],
+    "svelte/no-reactive-reassign": ["error"],
+    "svelte/no-dom-manipulating": ["error"],
+    "svelte/no-reactive-literals": ["error"],
+    "svelte/prefer-destructured-store-props": ["error"],
     "unused-imports/no-unused-imports": ["error"],
     "unused-imports/no-unused-vars": [
       "error", {
