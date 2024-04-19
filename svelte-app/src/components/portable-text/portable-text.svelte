@@ -35,6 +35,7 @@
 
   export let text: (PortableTextBlock | ArbitraryTypedObject)[],
     plainText = false,
+    bodySize: 'base' | 'md' = 'md',
     documentView = false,
     routeFetch: RouteFetch | undefined = undefined;
 
@@ -70,7 +71,11 @@
   })(text);
 </script>
 
-<div class={$$props.class ?? 'text-md'}>
+<div
+  class={$$props.class ?? ''}
+  class:text-base={bodySize === 'base'}
+  class:text-md={bodySize === 'md'}
+>
   {#if text}
     {#if plainText}
       <PortableText
@@ -82,6 +87,10 @@
             highlight: CustomHighlight,
             notranslate: NullMark
           }
+        }}
+        context={{
+          documentView,
+          bodySize
         }}
       />
     {:else}
@@ -123,7 +132,8 @@
         context={{
           footnotes,
           routeFetch,
-          documentView
+          documentView,
+          bodySize
         }}
       />
       {#if footnotes?.length}

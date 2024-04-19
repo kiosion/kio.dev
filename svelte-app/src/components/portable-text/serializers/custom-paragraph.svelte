@@ -10,7 +10,9 @@
   class="transition-[color]"
   class:px-6={global.context.documentView}
   class:md:px-10={global.context.documentView}
-  class:my-4={indexInParent > 0 || !global.context.documentView}
+  class:my-4={(indexInParent > 0 && global.context.bodySize === 'md') ||
+    (!global.context.documentView && global.context.bodySize === 'md')}
+  class:my-2={indexInParent > 0 && global.context.bodySize === 'base'}
   class:mt-8={indexInParent === 0 && global.context.documentView}
   class:mb-4={indexInParent === 0 && global.context.documentView}
   class:lg:max-w-[60rem]={global.context.documentView}

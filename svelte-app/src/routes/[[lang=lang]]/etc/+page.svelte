@@ -28,7 +28,7 @@
 {#if data.config?.meta}
   {#each data.config.meta as metaSection, idx}
     <HeadedBlock heading={metaSection.title}>
-      <PortableText text={metaSection.content} class="-mt-2 text-md" />
+      <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
     </HeadedBlock>
     {#if idx < data.config.meta.length - 1}
       <Divider />

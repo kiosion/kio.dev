@@ -32,7 +32,7 @@
     </p>
     {#if body}
       <div class="-mb-4 -mt-2">
-        <PortableText text={body} class="text-base" />
+        <PortableText text={body} class="my-4" bodySize="base" />
       </div>
     {/if}
   </div>

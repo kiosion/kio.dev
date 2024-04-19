@@ -3,7 +3,12 @@
 
   export let portableText: ListItemComponentProps;
 
-  $: ({ value: _value } = portableText);
+  $: ({ global } = portableText);
 </script>
 
-<li><slot /></li>
+<li
+  class:mb-2={global.context.bodySize === 'md'}
+  class:mb-1={global.context.bodySize === 'base'}
+>
+  <slot />
+</li>

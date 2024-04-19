@@ -81,13 +81,6 @@
 }
 
 @layer components {
-  .pt-ol,
-  .pt-ul {
-    li {
-      @apply mb-2 leading-6;
-    }
-  }
-
   .pt-ol {
     li {
       ol {

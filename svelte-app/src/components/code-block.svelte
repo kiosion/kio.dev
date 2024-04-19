@@ -73,12 +73,11 @@
 </script>
 
 <div
-  class="relative my-7 overflow-hidden"
+  class="relative my-7 overflow-hidden border-b border-t border-dark/80 transition-[border-color] dark:border-light/60"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
-  <Divider margin="my-0" class="mt-px" />
   {#if filename}
     <div
       class="bg-dark/5 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-light/5 print:bg-transparent"
@@ -153,5 +152,4 @@
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
-  <Divider margin="my-0" class="mb-px" />
 </div>
