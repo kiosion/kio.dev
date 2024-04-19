@@ -111,6 +111,26 @@
       }
     ],
     "svelte/valid-compile": ["off"],
+    "svelte/no-dupe-use-directives": ["error"],
+    "svelte/no-dupe-on-directives": ["error"],
+    "svelte/infinite-reactive-loop": ["warn"],
+    "svelte/no-store-async": ["error"],
+    "svelte/block-lang": ["error", {
+      "enforceScriptPresent": false,
+      "enforceStylePresent": false,
+      "script": ["ts"],
+      "style": ["scss"]
+    }],
+    "svelte/no-at-debug-tags": ["error"],
+    "svelte/no-ignored-unsubscribe": ["error"],
+    "svelte/no-immutable-reactive-statements": ["error"],
+    "svelte/no-useless-mustaches": ["error"],
+    "svelte/require-optimized-style-attribute": ["error"],
+    "svelte/no-trailing-spaces": ["error"],
+    "svelte/no-spaces-around-equal-signs-in-attribute": ["error"],
+    "svelte/prefer-class-directive": ["error"],
+    "svelte/valid-each-key": ["error"],
+    "svelte/require-store-reactive-access": ["error"],
     "unused-imports/no-unused-imports": ["error"],
     "unused-imports/no-unused-vars": [
       "error", {
