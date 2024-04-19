@@ -13,7 +13,7 @@
 </script>
 
 <section class="my-6" role="group" aria-labelledby="{id}-heading">
-  <div class="pb-4">
+  <div class="pb-3">
     <h2
       class="pb-2 text-xl font-bold text-dark transition-colors dark:text-white"
       id="{id}-heading"

@@ -23,7 +23,6 @@
     HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
     LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
     Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
-    HighlightStyles: string | undefined,
     codeContainer: HTMLElement,
     innerHeight: number,
     hideLoader = false,

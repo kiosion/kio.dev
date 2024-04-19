@@ -112,11 +112,3 @@ jobs:
           image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest
           region: us-central1
           flags: '--platform managed --allow-unauthenticated'
-
-      # - name: Setup GCloud SDK
-      #   uses: google-github-actions/setup-gcloud@v2.1.0
-      #   with:
-      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
-      # - name: Deploy ${{ matrix.environment }} to Cloud Run
-      #   run: |
-      #     gcloud run deploy hexerei-${{ matrix.environment }} --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker/hexerei-${{ matrix.environment }}:latest --region us-central1 --platform managed
