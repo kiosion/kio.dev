@@ -92,6 +92,7 @@
           showImageModal = true;
         }
       }}
+      type="button"
     >
       {#if showImageModal}
         <img

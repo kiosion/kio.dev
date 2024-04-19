@@ -65,6 +65,8 @@
       };
     })
   );
+
+  $: ({ asset } = $values[currentIndex]);
 </script>
 
 <div class="carousel">
@@ -87,6 +89,7 @@
             showImageModal = true;
           }
         }}
+        type="button"
       >
         {#if showImageModal && currentIndex === i}
           <img
@@ -112,7 +115,7 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    src={$values[currentIndex].asset}
+    src={asset}
     draggable="false"
     alt={currentIndex.toString()}
     in:receive={{ key: currentIndex, duration: BASE_ANIMATION_DURATION }}

@@ -38,6 +38,7 @@
       on:click={(e) => {
         handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
       }}
+      type="button"
     >
       <Icon name="script" size={21}></Icon>
     </button>

@@ -232,6 +232,20 @@
   };
 
   $: update($cursorTargets)();
+  $: ({
+    x: cursorX,
+    y: cursorY,
+    width: cursorWidth,
+    height: cursorHeight,
+    borderRadius: cursorBorderRadius
+  } = $cursor);
+  $: ({
+    x: innerCursorX,
+    y: innerCursorY,
+    width: innerCursorWidth,
+    height: innerCursorHeight,
+    borderRadius: innerCursorBorderRadius
+  } = $innerCursor);
 </script>
 
 <svelte:window
@@ -247,13 +261,13 @@
     undefined
       ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
       : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
-    style="transform: translate(calc({$cursor.x}px - 50%), calc({$cursor.y}px - 50%)); width: {$cursor.width}px; height: {$cursor.height}px; border-radius: {$cursor.borderRadius}px;"
+    style="transform: translate(calc({cursorX}px - 50%), calc({cursorY}px - 50%)); width: {cursorWidth}px; height: {cursorHeight}px; border-radius: {cursorBorderRadius}px;"
   ></div>
   <div
-    class="pointer-events-none fixed left-0 top-0 z-10 transition-colors {$activeTarget !==
+    class="pointer-events-none fixed left-0 top-0 z-10 backdrop-blur-sm transition-colors {$activeTarget !==
     undefined
       ? 'bg-dark/20 dark:bg-light/20'
       : 'bg-dark/40 dark:bg-light/40'}"
-    style="transform: translate(calc({$innerCursor.x}px - 50%), calc({$innerCursor.y}px - 50%)); width: {$innerCursor.width}px; height: {$innerCursor.height}px; border-radius: {$innerCursor.borderRadius}px;"
+    style="transform: translate(calc({innerCursorX}px - 50%), calc({innerCursorY}px - 50%)); width: {innerCursorWidth}px; height: {innerCursorHeight}px; border-radius: {innerCursorBorderRadius}px;"
   ></div>
 {/if}

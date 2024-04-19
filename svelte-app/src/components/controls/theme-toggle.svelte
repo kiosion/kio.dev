@@ -21,6 +21,7 @@
       on:click={() => {
         theme.set($theme === APP_THEMES.LIGHT ? APP_THEMES.DARK : APP_THEMES.LIGHT);
       }}
+      type="button"
     >
       {#key $theme}
         <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={21}></Icon>

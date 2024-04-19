@@ -47,6 +47,7 @@
               role="switch"
               aria-checked={useOffset}
               style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
+              type="button"
             >
               {#if useOffset}
                 <svg
@@ -104,6 +105,7 @@
               ? ' text-accent-light dark:text-accent-dark'
               : ''}"
             tabindex="0"
+            type="button"
           >
             <div style="transform: translate({offset?.[0]}px, {offset?.[1]}px)">
               {label}

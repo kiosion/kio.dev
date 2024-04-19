@@ -139,6 +139,7 @@
     <button
       class="focus-outline absolute right-4 top-4 rounded-md p-2"
       on:click={running ? stopGame : startGame}
+      type="button"
     >
       {#if running}
         <svg

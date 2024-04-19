@@ -102,6 +102,7 @@
 
   export let data;
 
+  $: ({ url } = $page);
   $: isLocalized.set(
     APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
   );
@@ -120,9 +121,9 @@
     content={$currentLang === APP_LANGS[1] ? 'fr_CA' : 'en_CA'}
   />
   <meta property="og:site_name" content="kio.dev" />
-  <meta property="og:url" content={$page?.url?.href} />
+  <meta property="og:url" content={url?.href} />
   <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
-  <meta property="twitter:url" content={$page?.url?.href} />
+  <meta property="twitter:url" content={url?.href} />
   <meta property="twitter:site" content="@0xKI0" />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 

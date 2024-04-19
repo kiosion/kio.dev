@@ -99,6 +99,7 @@
       on:click={() => copy()}
       on:keydown={(e) => e.key === 'Enter' && copy()}
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+      type="button"
     >
       {#key copied}
         <Icon name={copied !== undefined ? 'Check' : 'Copy'}></Icon>

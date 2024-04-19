@@ -16,6 +16,7 @@
       onClick();
     }
   }}
+  type="button"
   {disabled}
 >
   <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22}></Icon>
