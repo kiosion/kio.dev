@@ -61,9 +61,9 @@
       class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl px-7 py-6"
     >
       <header class="z-10 w-full pb-2 transition-[color]">
-        <h3 class="font-display pb-2 text-2xl font-bold">Toru</h3>
+        <h3 class="pb-2 font-display text-2xl font-bold">Toru</h3>
         <p>An Elixir-based API for generating embeds from last.fm listening activity.</p>
-        <Divider />
+        <Divider></Divider>
       </header>
 
       <Link
@@ -72,7 +72,7 @@
         tooltipDelay={150}
         newtab
       >
-        <Icon name="ExternalLink" size={21} interactive />
+        <Icon name="ExternalLink" size={21} interactive></Icon>
       </Link>
 
       <figure
@@ -88,16 +88,15 @@
             {#if data.playing}
               <div
                 class="absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-dark/30 transition-colors dark:bg-dark/50"
-              />
+              ></div>
               <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div
                   id="np-icon"
                   class="relative flex h-3 w-fit justify-between gap-1 pt-0.5"
                 >
                   {#each Array(4) as _}
-                    <span
-                      class="h-full w-[2px] rounded-full bg-light dark:bg-accent-dark"
-                    />
+                    <span class="h-full w-[2px] rounded-full bg-light dark:bg-accent-dark"
+                    ></span>
                   {/each}
                 </div>
               </div>
@@ -130,13 +129,13 @@
           />
           <div
             class="absolute bottom-0 left-0 right-0 top-0 z-[1] h-[150%] w-[150%] bg-light blur-xl transition-colors dark:bg-dark"
-          />
+          ></div>
         {:else}
           <div class="relative flex-shrink-0 overflow-clip">
             <div
               class="flex h-28 w-28 items-center justify-center rounded-lg bg-dark/10 transition-colors dark:bg-light/10"
             >
-              <Spinner class="ml-0" />
+              <Spinner class="ml-0"></Spinner>
             </div>
           </div>
 
@@ -148,7 +147,7 @@
 
           <div
             class="absolute bottom-0 left-0 right-0 top-0 h-[150%] w-[150%] bg-dark/10 opacity-30 blur-xl transition-colors dark:bg-light/10"
-          />
+          ></div>
         {/if}
       </figure>
     </article>
@@ -167,7 +166,7 @@
           class="h-full w-full blur-lg"
         />
       {:else}
-        <div class="h-full w-full bg-dark/10 dark:bg-light/10" />
+        <div class="h-full w-full bg-dark/10 dark:bg-light/10"></div>
       {/if}
     </div>
   </div>

@@ -85,7 +85,7 @@
     >
       {filename}
     </div>
-    <Divider margin="my-0" />
+    <Divider margin="my-0"></Divider>
   {/if}
   <Tooltip
     text={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
@@ -101,7 +101,7 @@
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
     >
       {#key copied}
-        <Icon name={copied !== undefined ? 'Check' : 'Copy'} />
+        <Icon name={copied !== undefined ? 'Check' : 'Copy'}></Icon>
       {/key}
     </button>
   </Tooltip>
@@ -120,10 +120,10 @@
         class:opacity-0={hideLoader}
         aria-hidden="true"
       >
-        <Spinner />
+        <Spinner></Spinner>
       </div>
       {#if !hideLoader}
-        <span class="pointer-events-none mt-11 block" />
+        <span class="pointer-events-none mt-11 block"></span>
       {/if}
       {#if !loadError}
         <!-- eslint-disable-next-line prettier/prettier -->

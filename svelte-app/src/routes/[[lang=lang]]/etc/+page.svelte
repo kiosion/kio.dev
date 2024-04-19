@@ -28,13 +28,14 @@
 {#if data.config?.meta}
   {#each data.config.meta as metaSection, idx}
     <HeadedBlock heading={metaSection.title}>
-      <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
+      <PortableText text={metaSection.content} class="-mt-2" bodySize="base"
+      ></PortableText>
     </HeadedBlock>
     {#if idx < data.config.meta.length - 1}
-      <Divider />
+      <Divider></Divider>
     {/if}
   {/each}
 {:else}
-  <EmptyContent />
-  <Divider />
+  <EmptyContent></EmptyContent>
+  <Divider></Divider>
 {/if}

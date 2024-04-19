@@ -42,6 +42,7 @@ if (browser) {
 }
 
 for (const key in defaultSettings) {
+  // eslint-disable-next-line svelte/no-ignored-unsubscribe
   defaultSettings[key as keyof typeof defaultSettings].subscribe(() => {
     if (!browser) {
       return;
@@ -61,12 +62,15 @@ for (const key in defaultSettings) {
 }
 
 if (browser) {
+  // eslint-disable-next-line svelte/no-ignored-unsubscribe
   useMediaQuery(MEDIA_QUERIES.DARK_THEME).subscribe(
     (val) => val && defaultSettings.theme.set(APP_THEMES.DARK)
   );
+  // eslint-disable-next-line svelte/no-ignored-unsubscribe
   useMediaQuery(MEDIA_QUERIES.LIGHT_THEME).subscribe(
     (val) => val && defaultSettings.theme.set(APP_THEMES.LIGHT)
   );
+  // eslint-disable-next-line svelte/no-ignored-unsubscribe
   useMediaQuery(MEDIA_QUERIES.REDUCE_MOTION).subscribe((val) =>
     defaultSettings.reduce_motion.set(val)
   );

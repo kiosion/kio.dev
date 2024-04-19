@@ -28,18 +28,18 @@
 
 <HeadedBlock heading={$t("Where I've worked")}>
   {#if data.config?.timeline?.length}
-    <Timeline data={data.config.timeline} />
+    <Timeline data={data.config.timeline}></Timeline>
   {:else}
     <div class="w-full">
-      <EmptyContent />
+      <EmptyContent></EmptyContent>
     </div>
   {/if}
 </HeadedBlock>
 
 {#if data.projects.length}
-  <Divider />
+  <Divider></Divider>
 
-  <HeadedBlock heading={$t('Projects')} first={false}>
-    <DocumentList documents={data.projects} />
+  <HeadedBlock heading={$t('Projects')}>
+    <DocumentList documents={data.projects}></DocumentList>
   </HeadedBlock>
 {/if}

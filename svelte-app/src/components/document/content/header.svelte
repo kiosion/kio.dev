@@ -45,16 +45,16 @@
           {$formatDate(data.date, 'full') ?? $t('Unknown date')}
         </p>
       </Tooltip>
-      <BulletPoint />
+      <BulletPoint></BulletPoint>
       <p class="cursor-default font-mono text-sm">
         {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
       </p>
-      <BulletPoint />
+      <BulletPoint></BulletPoint>
       <p class="cursor-default font-mono text-sm">
         {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
       </p>
       {#if data._type === 'project' && data.githubStars !== undefined && data.githubStars > 0}
-        <BulletPoint />
+        <BulletPoint></BulletPoint>
         <p class="cursor-default font-mono text-sm">
           {$t('{stars} stars', { stars: $parseViews(data.githubStars) })}
         </p>
@@ -69,7 +69,7 @@
         preload
       >
         <span class="flex items-center justify-end gap-2 font-mono text-sm">
-          <Icon name="ArrowLeft" inline />
+          <Icon name="ArrowLeft" inline></Icon>
           <p>{$t('Read more')}</p>
         </span>
       </ArrowButton>
@@ -98,7 +98,7 @@
         preload
       >
         <span class="flex items-center justify-end gap-2 font-mono text-sm">
-          <Icon name="ArrowLeft" inline />
+          <Icon name="ArrowLeft" inline></Icon>
           <p>{$t('Read more')}</p>
         </span>
       </ArrowButton>
@@ -110,7 +110,7 @@
   <div
     class="flex w-full flex-row items-center justify-start gap-3 border-b border-dark/80 px-6 py-6 text-base dark:border-light/60 md:px-10"
   >
-    <Icon name="GitCommit" />
+    <Icon name="GitCommit"></Icon>
     <span class="font-mono text-sm">
       <Link href={data.github}>
         {'github.com/' + data.github.split('github.com/')?.[1]}
@@ -122,7 +122,7 @@
 {#if data._type === 'project' && images?.length}
   <div class="w-full border-b border-dark/80 px-6 py-6 dark:border-light/60 md:px-10">
     {#if images.length > 1}
-      <ImageCarousel {images} />
+      <ImageCarousel {images}></ImageCarousel>
     {:else}
       <Image
         image={images[0].sanityAsset}
@@ -130,7 +130,7 @@
         crop={images[0].crop}
         srcPromise={images[0].asset}
         {routeFetch}
-      />
+      ></Image>
     {/if}
   </div>
 {/if}

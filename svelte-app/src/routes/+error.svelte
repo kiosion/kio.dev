@@ -103,7 +103,7 @@
     </HeadedBlock>
 
     {#if causes?.length}
-      <Divider />
+      <Divider></Divider>
       <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
         <span class="flex items-center justify-start gap-2">
           <p class="font-mono text-base">{$t('See more')}</p>
@@ -112,13 +112,13 @@
             size={18}
             inline
             style="transform: {showStack ? 'rotate(0deg)' : 'rotate(180deg)'};"
-          />
+          ></Icon>
         </span>
       </ArrowButton>
       {#if showStack}
         <div class="pt-4" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
           <pre
-            class="whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 font-code text-sm dark:border-light/40">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+            class="font-code whitespace-pre-wrap break-all rounded-md border border-dark/40 p-4 text-sm dark:border-light/40">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
                 />{/if}{/each}</pre>
         </div>
       {/if}

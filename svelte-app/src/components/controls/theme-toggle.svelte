@@ -23,7 +23,7 @@
       }}
     >
       {#key $theme}
-        <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={21} />
+        <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={21}></Icon>
       {/key}
     </button>
   </Tooltip>

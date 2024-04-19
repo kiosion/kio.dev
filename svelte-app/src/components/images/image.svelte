@@ -24,7 +24,6 @@
     },
     placeholderSrc =
       placeholder || buildImageUrl({ ref: _ref, crop, width: 30, blur: 40 }),
-    style = `max-width: ${imgDimensions.width}px; max-height: ${imgDimensions.height}px; aspect-ratio: ${imgDimensions.width} / ${imgDimensions.height};`,
     [send, receive] = crossfade({
       duration: (d: number) => Math.sqrt(d * 200),
       fallback(node, params) {
@@ -69,21 +68,21 @@
 <div class="relative w-full">
   {#await srcPromise || new Promise((_res) => {})}
     <div
-      class="loading absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base"
+      class="loading font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
     >
-      <Spinner />
+      <Spinner></Spinner>
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
       class="mx-auto w-full select-none rounded-sm"
       src={placeholderSrc}
       draggable="false"
-      {style}
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     />
   {:then src}
     <button
       class="focus-outline-sm relative block max-h-fit w-full rounded-sm"
-      {style}
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
         showImageModal = true;
       }}
@@ -100,7 +99,7 @@
           src={placeholderSrc}
           alt={_key}
           draggable="false"
-          {style}
+          style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
           out:fade={{ duration: BASE_ANIMATION_DURATION }}
         />
       {:else}
@@ -116,11 +115,16 @@
     </button>
   {:catch e}
     <p
-      class="error absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center font-code text-base"
+      class="error font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
     >
       Error: {e?.message || e}
     </p>
-    <img src={placeholderSrc} alt={_key} draggable="false" {style} />
+    <img
+      src={placeholderSrc}
+      alt={_key}
+      draggable="false"
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    />
   {/await}
   <img
     class="backdrop absolute left-1/2 top-0 -z-[1] w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity print:hidden"
@@ -128,7 +132,7 @@
     alt={_key}
     draggable="false"
     aria-hidden="true"
-    {style}
+    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
   />
 </div>
 
@@ -137,7 +141,7 @@
     class="mx-auto w-full select-none rounded-sm"
     src={fullSrc}
     alt={_key}
-    {style}
+    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
   />

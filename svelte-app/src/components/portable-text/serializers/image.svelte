@@ -13,5 +13,5 @@
 </script>
 
 <ConstrainWidth class="px-6 md:px-10">
-  <Image image={portableText.value} {routeFetch} />
+  <Image image={portableText.value} {routeFetch}></Image>
 </ConstrainWidth>

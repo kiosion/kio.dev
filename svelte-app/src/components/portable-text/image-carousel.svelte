@@ -122,8 +122,8 @@
 
 {#if imageElements.length > 1}
   <div class="buttons">
-    <ScrollButton dir="left" onClick={scrollLeft} />
-    <ScrollButton dir="right" onClick={scrollRight} />
+    <ScrollButton dir="left" onClick={scrollLeft}></ScrollButton>
+    <ScrollButton dir="right" onClick={scrollRight}></ScrollButton>
   </div>
 {/if}
 

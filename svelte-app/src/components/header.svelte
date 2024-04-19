@@ -14,14 +14,14 @@
     class="flex flex-row items-center justify-start gap-5 text-base text-dark/90 transition-[color] dark:text-light/90"
     aria-label="Main navigation"
   >
-    <HeaderLogo />
+    <HeaderLogo></HeaderLogo>
     <div class="mt-1 flex flex-col items-start justify-start gap-1 font-mono">
       <span class="select-none text-md font-bold">kio.dev</span>
       <div
         class="flex select-none flex-row items-center justify-start gap-2 text-sm text-dark/80 dark:text-light/80 print:hidden"
       >
         {#each NAV_LINKS as link, i}
-          <NavLink {link} />
+          <NavLink {link}></NavLink>
           {#if i < NAV_LINKS.length - 1}
             <span
               class="cursor-default select-none text-sm text-dark/60 dark:text-light/60"
@@ -37,7 +37,7 @@
     aria-label="Page controls"
     role="group"
   >
-    <ThemeToggle />
-    <LanguageControls />
+    <ThemeToggle></ThemeToggle>
+    <LanguageControls></LanguageControls>
   </div>
 </header>

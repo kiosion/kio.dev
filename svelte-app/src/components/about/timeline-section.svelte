@@ -38,6 +38,6 @@
       body={item.body}
       range={item.range}
       last={i === section.length - 1}
-    />
+    ></TimelineItem>
   {/each}
 </section>

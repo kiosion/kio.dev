@@ -92,7 +92,7 @@
           documentView,
           bodySize
         }}
-      />
+      ></PortableText>
     {:else}
       <PortableText
         value={text}
@@ -135,7 +135,7 @@
           documentView,
           bodySize
         }}
-      />
+      ></PortableText>
       {#if footnotes?.length}
         <div class="footnotes mt-8 px-6 transition-[color] md:px-10">
           <h3 class="mb-6 block font-display text-2xl font-bold">
@@ -157,7 +157,7 @@
                         if (e.code === 'Space' || e.code === 'Enter') {
                           customScrollTo(e, `src-${note._key}`);
                         }
-                      }}><Icon name="arrow-bar-up" size={18} inline /></a
+                      }}><Icon name="arrow-bar-up" size={18} inline></Icon></a
                     >
                   </Tooltip>
                 </span>

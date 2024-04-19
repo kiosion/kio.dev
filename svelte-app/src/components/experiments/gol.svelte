@@ -130,9 +130,9 @@
   class="relative my-6 flex h-fit w-full cursor-pointer flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
 >
   <header class="w-full pb-2">
-    <h3 class="font-display pb-2 text-2xl font-bold">Game of life</h3>
+    <h3 class="pb-2 font-display text-2xl font-bold">Game of life</h3>
     <p>Conway's Game of Life starting with an R-pentomino pattern.</p>
-    <Divider />
+    <Divider></Divider>
   </header>
 
   <Tooltip text={running ? 'Pause' : 'Resume'}>
@@ -147,7 +147,7 @@
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
-          <path d="M10 4H5v16h5V4zm9 0h-5v16h5V4z" fill="currentColor" />
+          <path d="M10 4H5v16h5V4zm9 0h-5v16h5V4z" fill="currentColor"></path>
         </svg>
       {:else}
         <svg
@@ -156,7 +156,7 @@
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
-          <path d="M10 20H8V4h2v2h2v3h2v2h2v2h-2v2h-2v3h-2v2z" fill="currentColor" />
+          <path d="M10 20H8V4h2v2h2v3h2v2h2v2h-2v2h-2v3h-2v2z" fill="currentColor"></path>
         </svg>
       {/if}
     </button>
@@ -180,7 +180,7 @@
             on:click={() => !running && toggleCell(rowIndex, colIndex)}
             on:mouseenter={() => toggleOnDrag(rowIndex, colIndex)}
             on:dragstart={(event) => event.preventDefault()}
-          />
+          ></div>
         {/each}
       {/each}
     </div>

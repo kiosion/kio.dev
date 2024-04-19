@@ -37,7 +37,7 @@
           >{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
-        <BulletPoint />
+        <BulletPoint></BulletPoint>
       {/if}
       <p>{$t('{views} views', { views: $parseViews(document.views ?? 0) })}</p>
     </div>

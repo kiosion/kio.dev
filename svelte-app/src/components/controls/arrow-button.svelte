@@ -21,7 +21,7 @@
   class:w-full={fullWidth}
   class:text-right={align === 'right'}
   class:text-left={align === 'left'}
-  class="focus-outline inline-block rounded-sm font-code text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ??
+  class="focus-outline font-code inline-block rounded-sm text-accent-light hover:text-dark focus-visible:text-dark dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light {$$props.class ??
     ''}"
   aria-label={$$props['aria-label'] || undefined}
   role="button"

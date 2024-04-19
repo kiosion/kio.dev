@@ -32,9 +32,9 @@
       this={type}
       target={newtab ? '_blank' : undefined}
       rel={newtab ? 'noopener noreferrer' : undefined}
-      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] dark:decoration-accent-dark {hovered
-        ? 'decoration-[3px]'
-        : 'decoration-2'} transition-[text-decoration-color]"
+      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] transition-[text-decoration-color] dark:decoration-accent-dark"
+      class:decoration-[3px]={hovered}
+      class:decoration-2={!hovered}
       tabindex="0"
       aria-label={$$props['aria-label']}
       {...$$restProps}

@@ -30,6 +30,6 @@
   </a>
 
   {#if showConfetti}
-    <Confetti on:done={() => (showConfetti = false)} />
+    <Confetti on:done={() => (showConfetti = false)}></Confetti>
   {/if}
 </span>

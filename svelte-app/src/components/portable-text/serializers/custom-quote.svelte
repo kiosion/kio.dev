@@ -12,6 +12,6 @@
   class:md:px-10={global.context.documentView}
   class:lg:max-w-[60rem]={global.context.documentView}
 >
-  <div class="mr-3 block w-[2px] rounded-sm bg-dark/40 opacity-80 dark:bg-light/40" />
+  <div class="mr-3 block w-[2px] rounded-sm bg-dark/40 opacity-80 dark:bg-light/40"></div>
   <span class="block flex-grow"><slot /></span>
 </div>

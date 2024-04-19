@@ -31,27 +31,28 @@
 {#if data.config?.about}
   {#each data.config.about as aboutSection}
     <HeadedBlock heading={aboutSection.title}>
-      <PortableText text={aboutSection.content} class="-mt-2" bodySize="base" />
+      <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
+      ></PortableText>
     </HeadedBlock>
 
-    <Divider />
+    <Divider></Divider>
   {/each}
 {:else}
-  <EmptyContent />
-  <Divider />
+  <EmptyContent></EmptyContent>
+  <Divider></Divider>
 {/if}
 
 <HeadedBlock heading={$t('Recent thoughts')} let:id>
   {#if data.posts.length}
     <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
-        <ListItem document={post} />
+        <ListItem document={post}></ListItem>
       {/each}
     </div>
     <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
       <span class="flex items-center justify-start gap-2">
         <p class="font-mono text-sm">{$t('See more')}</p>
-        <Icon name="ArrowRight" size={18} inline />
+        <Icon name="ArrowRight" size={18} inline></Icon>
       </span>
     </ArrowButton>
   {:else}

@@ -31,7 +31,7 @@
 >
   <header class="flex w-full flex-col pb-2">
     <div class="flex flex-row items-start justify-between">
-      <h3 class="font-display pb-2 text-2xl font-bold">Magnetic cursor</h3>
+      <h3 class="pb-2 font-display text-2xl font-bold">Magnetic cursor</h3>
       <div class="flex flex-row gap-x-6">
         <CursorTarget distance={40} let:active let:offset>
           <Tooltip
@@ -58,7 +58,7 @@
                   <path
                     d="M4 5h16v2H4V5zm0 12H2V7h2v10zm16 0v2H4v-2h16zm0 0h2V7h-2v10zm-2-8h-4v6h4V9z"
                     fill="currentColor"
-                  />
+                  ></path>
                 </svg>
               {:else}
                 <svg
@@ -70,7 +70,7 @@
                   <path
                     d="M4 5h16v2H4V5zm0 12H2V7h2v10zm16 0v2H4v-2h16zm0 0h2V7h-2v10zM10 9H6v6h4V9z"
                     fill="currentColor"
-                  />
+                  ></path>
                 </svg>
               {/if}
             </button>
@@ -86,13 +86,13 @@
             newtab
             style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
           >
-            <Icon name="ExternalLink" size={21} {active} interactive />
+            <Icon name="ExternalLink" size={21} {active} interactive></Icon>
           </Link>
         </CursorTarget>
       </div>
     </div>
     <p>A simple magnetic cursor effect. Hover over the buttons to try it out.</p>
-    <Divider />
+    <Divider></Divider>
   </header>
 
   <figure class="h-fit w-full overflow-hidden">
@@ -113,6 +113,6 @@
       {/each}
     </div>
 
-    <Cursor {containerRect} {useOffset} />
+    <Cursor {containerRect} {useOffset}></Cursor>
   </figure>
 </article>

@@ -13,6 +13,6 @@
   aria-hidden="true"
 >
   {#each Array.from({ length: 30 }) as _, index (index)}
-    <ConfettiPiece {index} />
+    <ConfettiPiece {index}></ConfettiPiece>
   {/each}
 </div>

@@ -26,8 +26,8 @@
 
 <HeadedBlock heading={$t('pages.thoughts.title')} let:id>
   {#if data.posts.length}
-    <DocumentList documents={data.posts} aria-labelledby="{id}-heading" />
+    <DocumentList documents={data.posts} aria-labelledby="{id}-heading"></DocumentList>
   {:else}
-    <EmptyContent />
+    <EmptyContent></EmptyContent>
   {/if}
 </HeadedBlock>

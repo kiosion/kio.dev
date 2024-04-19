@@ -62,4 +62,4 @@
   />
 </svelte:head>
 
-<Content {data} {images} {routeFetch} />
+<Content {data} {images} {routeFetch}></Content>

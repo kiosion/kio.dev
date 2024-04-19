@@ -19,7 +19,7 @@
 >
   <span
     class="bullet block flex-shrink-0 rounded-full bg-accent-light/80 dark:bg-accent-dark/80"
-  />
+  ></span>
   <div class="content">
     <h3 class="pb-2 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
@@ -32,7 +32,7 @@
     </p>
     {#if body}
       <div class="-mb-4 -mt-2">
-        <PortableText text={body} class="my-4" bodySize="base" />
+        <PortableText text={body} class="my-4" bodySize="base"></PortableText>
       </div>
     {/if}
   </div>

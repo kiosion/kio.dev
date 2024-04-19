@@ -8,4 +8,4 @@
   $: ({ value: _value } = portableText);
 </script>
 
-<Divider />
+<Divider></Divider>

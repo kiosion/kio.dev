@@ -85,7 +85,7 @@
   class:dark:hover:text-accent-dark={interactive}
   class:dark:focus-visible:text-accent-dark={interactive}
   class:inline
-  style={`width: ${size}px; height: ${size}px;`}
+  style="width: {size}px; height: {size}px;"
 >
   <BaseIconWrapper
     width={size}

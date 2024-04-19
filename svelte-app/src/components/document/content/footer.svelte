@@ -16,7 +16,7 @@
   <div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
     <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
     <span class="flex items-center justify-start gap-2 text-base">
-      <Icon name="GitCommit" inline />
+      <Icon name="GitCommit" inline></Icon>
       <Link href={data.github}>
         {'github.com/' + data.github.split('github.com/')?.[1]}
       </Link>
@@ -33,7 +33,7 @@
   >
     <span class="flex items-center justify-start gap-2 font-mono text-sm">
       {#key $isMobile}
-        <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline />
+        <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline></Icon>
       {/key}
       <p>{$t('Read more')}</p>
     </span>

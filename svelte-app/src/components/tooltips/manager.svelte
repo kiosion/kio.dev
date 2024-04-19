@@ -7,5 +7,5 @@
 </script>
 
 {#each $tooltips as tooltip (tooltip.id)}
-  <TooltipInner {...tooltip} {container} />
+  <TooltipInner {...tooltip} {container}></TooltipInner>
 {/each}

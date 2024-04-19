@@ -27,13 +27,13 @@
 </svelte:head>
 
 <HeadedBlock heading={$t('Experiments')}>
-  <ToruExperiment initPromise={data.nowPlayingData} />
+  <ToruExperiment initPromise={data.nowPlayingData}></ToruExperiment>
 
-  <Divider class="my-8" />
+  <Divider class="my-8"></Divider>
 
-  <GameOfLifeExperiment />
+  <GameOfLifeExperiment></GameOfLifeExperiment>
 
-  <Divider class="my-8" />
+  <Divider class="my-8"></Divider>
 
-  <MagneticCursorExperiment />
+  <MagneticCursorExperiment></MagneticCursorExperiment>
 </HeadedBlock>

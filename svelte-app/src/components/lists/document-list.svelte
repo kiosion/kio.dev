@@ -8,6 +8,6 @@
 
 <div class="mb-6 flex w-full flex-col gap-8" role="group" {...$$restProps}>
   {#each documents as document}
-    <ListItem {document} />
+    <ListItem {document}></ListItem>
   {/each}
 </div>

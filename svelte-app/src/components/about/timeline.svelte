@@ -20,5 +20,5 @@
 </script>
 
 {#each Object.keys(sections) as section}
-  <TimelineSection section={sections[section]} />
+  <TimelineSection section={sections[section]}></TimelineSection>
 {/each}

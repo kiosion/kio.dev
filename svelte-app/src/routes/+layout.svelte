@@ -149,7 +149,7 @@
 >
   <ScrollContainer>
     <svelte:fragment slot="before">
-      <Header />
+      <Header></Header>
     </svelte:fragment>
 
     <PageTransition pathname={data.pathname} id="content-wrapper">
@@ -157,9 +157,9 @@
     </PageTransition>
 
     <svelte:fragment slot="after">
-      <Footer config={data.config} />
+      <Footer config={data.config}></Footer>
     </svelte:fragment>
   </ScrollContainer>
 
-  <TooltipManager />
+  <TooltipManager></TooltipManager>
 </div>

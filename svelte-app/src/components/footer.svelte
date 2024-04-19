@@ -27,7 +27,7 @@
     {#if socials?.length}
       <Hoverable setPointer={false} let:hovered>
         <div class="flex select-none flex-row items-center justify-start gap-x-4">
-          <Icon name="At" interactive active={hovered} size={20} />
+          <Icon name="At" interactive active={hovered} size={20}></Icon>
           <div
             class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
             role="group"
@@ -40,7 +40,7 @@
                   href={social.url}
                   target={social.target}
                   rel={social.rel}
-                />
+                ></BaseLink>
               </Tooltip>
               {#if i < socials.length - 1}
                 <span
@@ -59,7 +59,7 @@
           class="flex select-none flex-row items-center justify-start gap-x-4 font-mono text-sm text-dark/90 dark:text-light/90"
           aria-label={$t('View latest commit on GitHub')}
         >
-          <Icon name="GitBranch" active={hovered} size={20} interactive />
+          <Icon name="GitBranch" active={hovered} size={20} interactive></Icon>
           <Tooltip text={$t('View latest commit on GitHub')} position="top">
             <BaseLink
               target="_blank"
