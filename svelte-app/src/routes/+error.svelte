@@ -16,10 +16,8 @@
 
   let message: LocaleKey = 'errors.generic.message',
     title: LocaleKey = 'errors.generic.title',
-    showStack = false;
-
-  $: ({ status, error } = $page);
-  $: stack = error?.stack?.trimStart();
+    showStack = false,
+    status = $page.status;
 
   switch (status) {
     case 400:
@@ -80,6 +78,7 @@
     return [maybeNestedCause?.toString?.()];
   };
 
+  $: stack = $page.error?.stack?.trimStart();
   $: causes = parseCausesToFlatList($page.error?.cause, 0);
   $: heading = `${status}: ${$t(title)}`;
 </script>
@@ -93,7 +92,8 @@
   <div data-test-id="error-page">
     <HeadedBlock {heading}>
       <p class="my-4 text-base">
-        {error?.message && status !== 404 ? error.message : $t(message)}
+        <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
+        {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
       </p>
       <p class="my-4 text-base">
         {$t('Please')}
