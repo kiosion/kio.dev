@@ -7,7 +7,7 @@
   import Icon from '$components/icon.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  const { theme } = Settings;
+  const { theme, modified } = Settings;
 </script>
 
 <Hoverable>
@@ -19,12 +19,13 @@
       data-test-state={$theme}
       tabindex="0"
       on:click={() => {
+        modified.set(true);
         theme.set($theme === APP_THEMES.LIGHT ? APP_THEMES.DARK : APP_THEMES.LIGHT);
       }}
       type="button"
     >
       {#key $theme}
-        <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={21}></Icon>
+        <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={20}></Icon>
       {/key}
     </button>
   </Tooltip>

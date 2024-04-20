@@ -8,7 +8,7 @@
 </script>
 
 <section class="mb-6 w-full transition-colors" {id} data-test-id={testId}>
-  <div class="my-6 w-full px-8">
+  <div class="mb-5 mt-6 w-full px-8">
     <h1 class="font-display text-3xl font-black" id="{id}-heading">{heading}</h1>
   </div>
   <ConstrainWidth class="px-8">

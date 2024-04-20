@@ -8,23 +8,25 @@
 </script>
 
 <header
-  class="flex flex-row flex-wrap items-center justify-between gap-y-3 border-b border-dark/80 px-7 py-5 transition-[border-color] dark:border-light/60"
+  class="flex flex-row flex-wrap items-center justify-between border-b border-dark/80 px-7 py-5 transition-[border-color] dark:border-light/60"
 >
   <nav
-    class="flex flex-row items-center justify-start gap-5 text-base text-dark/90 transition-[color] dark:text-light/90"
+    class="flex flex-row items-center justify-start gap-4 text-base transition-[color]"
     aria-label="Main navigation"
   >
     <HeaderLogo></HeaderLogo>
-    <div class="mt-1 flex flex-col items-start justify-start gap-1 font-mono">
-      <span class="select-none text-md font-bold">kio.dev</span>
+    <div class="flex flex-col items-start justify-start gap-y-0.5 font-mono">
+      <span class="select-none text-base font-bold text-dark dark:text-light"
+        >kio.dev</span
+      >
       <div
-        class="flex select-none flex-row items-center justify-start gap-2 text-sm text-dark/80 dark:text-light/80 print:hidden"
+        class="flex select-none flex-row items-center justify-start gap-x-1.5 text-[13.5px] text-dark/80 dark:text-light/80 print:hidden"
       >
         {#each NAV_LINKS as link, i}
           <NavLink {link}></NavLink>
           {#if i < NAV_LINKS.length - 1}
             <span
-              class="cursor-default select-none text-sm text-dark/60 dark:text-light/60"
+              class="cursor-default select-none text-dark/60 dark:text-light/60"
               aria-hidden="true">/</span
             >
           {/if}
@@ -33,7 +35,7 @@
     </div>
   </nav>
   <div
-    class="flex flex-row items-center justify-end gap-x-4 text-dark/80 dark:text-light/80 print:hidden"
+    class="flex flex-row items-center justify-end gap-x-4 text-dark dark:text-light print:hidden"
     aria-label="Page controls"
     role="group"
   >

@@ -43,8 +43,8 @@
     </div>
 
     <h1
-      class="line-clamp-1 font-sans text-2xl font-bold leading-9 decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark lg:max-w-[60rem]"
-      class:pb-0.5={document.desc?.length}
+      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark lg:max-w-[60rem]"
+      class:pb-1={document.desc?.length}
       class:underline={hovered}
     >
       {document.title}

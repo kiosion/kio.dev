@@ -21,7 +21,7 @@
 
 <span class="relative h-fit w-fit">
   <a
-    class="focus-outline-sm block w-11 select-none rounded-sm invert-0 transition-[filter] dark:invert"
+    class="focus-outline-sm block w-10 select-none rounded-sm invert-0 transition-[filter] dark:invert"
     href={$linkTo(clicks < 3 ? '/' : '/experiments')}
     aria-label={$t('Home')}
     on:click={handleClick}

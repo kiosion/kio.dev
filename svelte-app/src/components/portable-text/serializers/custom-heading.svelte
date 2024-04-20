@@ -44,21 +44,21 @@
   }
 
   h1 {
-    @apply text-4xl;
+    @apply text-4xl leading-[1.1];
   }
   h2 {
-    @apply text-3xl;
+    @apply text-3xl leading-[1.05];
   }
   h3 {
-    @apply text-2xl;
+    @apply text-2xl leading-none;
   }
   h4 {
-    @apply text-xl;
+    @apply text-xl leading-none;
   }
   h5 {
-    @apply text-lg;
+    @apply text-lg leading-none;
   }
   h6 {
-    @apply text-lg;
+    @apply text-lg leading-none;
   }
 </style>

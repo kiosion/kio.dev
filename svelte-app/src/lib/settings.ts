@@ -1,4 +1,5 @@
-import { get, writable } from 'svelte/store';
+/* eslint-disable @typescript-eslint/ban-ts-comment, svelte/no-ignored-unsubscribe */
+import { get, type Writable, writable } from 'svelte/store';
 
 import { useMediaQuery } from 'svelte-breakpoints';
 
@@ -9,73 +10,125 @@ import Logger from '$lib/logger';
 type Settings = {
   theme: (typeof APP_THEMES)[keyof typeof APP_THEMES];
   reduce_motion: boolean;
+  modified: boolean;
 };
 
-const defaultSettings = {
-  theme: writable<(typeof APP_THEMES)[keyof typeof APP_THEMES]>('dark'),
-  reduce_motion: writable<boolean>(false)
-} as const;
+let themeSetting: (typeof APP_THEMES)[keyof typeof APP_THEMES] = APP_THEMES.DARK,
+  reduceMotionSetting = false,
+  modifiedSetting = false;
+
+const useStoredSettings = (settings?: string) => {
+  if (!settings) {
+    return false;
+  }
+
+  try {
+    const parsedSettings = JSON.parse(atob(settings)) as Settings | undefined;
+
+    if (!Array.isArray(parsedSettings)) {
+      return false;
+    }
+
+    parsedSettings.forEach(([key, savedSetting]) => {
+      switch (key) {
+        case 'theme':
+          if (
+            typeof savedSetting === 'string' &&
+            Object.values(APP_THEMES).includes(
+              savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES]
+            )
+          ) {
+            themeSetting = savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES];
+          }
+          break;
+        case 'modified':
+          if (typeof savedSetting === 'boolean') {
+            modifiedSetting = savedSetting;
+          }
+          break;
+        case 'reduce_motion':
+          if (typeof savedSetting === 'boolean') {
+            reduceMotionSetting = savedSetting;
+          }
+          break;
+      }
+      // if (
+      //   key === 'theme' &&
+      //   typeof savedSetting === 'string' &&
+      //   Object.values(APP_THEMES).includes(
+      //     savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES]
+      //   )
+      // ) {
+      //   themeSetting = savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES];
+      // } else if (key === 'reduce_motion' && typeof savedSetting === 'boolean') {
+      //   reduceMotionSetting = savedSetting;
+      // }
+    });
+
+    return true;
+  } catch (e) {
+    Logger.error('Failed to parse localStorage settings', e);
+    return false;
+  }
+};
+
+let storedSettings: string | undefined = undefined;
 
 if (browser) {
-  const storedSettings = document.cookie
+  storedSettings = document.cookie
     .split('; ')
     .find((row) => row.startsWith(`${LOCAL_SETTINGS_KEY}=`))
     ?.split('=')[1];
-
-  if (storedSettings) {
-    try {
-      const parsedSettings = JSON.parse(atob(storedSettings)) as Settings | undefined;
-
-      if (
-        typeof parsedSettings?.theme === 'string' &&
-        Object.values(APP_THEMES).includes(parsedSettings.theme)
-      ) {
-        defaultSettings.theme.set(parsedSettings.theme);
-      }
-      if (typeof parsedSettings?.reduce_motion === 'boolean') {
-        defaultSettings.reduce_motion.set(parsedSettings.reduce_motion);
-      }
-    } catch (e) {
-      Logger.error('Failed to parse localStorage settings', e);
-    }
-  }
 }
 
-for (const key in defaultSettings) {
-  // eslint-disable-next-line svelte/no-ignored-unsubscribe
-  defaultSettings[key as keyof typeof defaultSettings].subscribe(() => {
+useStoredSettings(storedSettings);
+
+// if (!useStoredSettings(storedSettings)) {
+//   themeSetting = APP_THEMES.DARK;
+//   reduceMotionSetting = false;
+//   modifiedSetting = false;
+// }
+
+const settings = {
+  theme: writable<Settings['theme']>(themeSetting),
+  reduce_motion: writable(reduceMotionSetting),
+  modified: writable(modifiedSetting)
+} as const satisfies { [K in keyof Settings]: Writable<Settings[K]> };
+
+for (const key in settings) {
+  settings[key as keyof typeof settings].subscribe(() => {
     if (!browser) {
       return;
     }
 
-    const settings = btoa(
+    const stringified = btoa(
       JSON.stringify(
-        Object.entries(defaultSettings).map(([key, setting]) => [
+        Object.entries(settings).map(([key, setting]) => [
           key,
           get<string | boolean>(setting)
         ])
       )
     );
 
-    document.cookie = `${LOCAL_SETTINGS_KEY}=${settings}; path=/`;
+    document.cookie = `${LOCAL_SETTINGS_KEY}=${stringified}; path=/`;
   });
 }
 
-if (browser) {
-  // eslint-disable-next-line svelte/no-ignored-unsubscribe
-  useMediaQuery(MEDIA_QUERIES.DARK_THEME).subscribe(
-    (val) => val && defaultSettings.theme.set(APP_THEMES.DARK)
-  );
-  // eslint-disable-next-line svelte/no-ignored-unsubscribe
-  useMediaQuery(MEDIA_QUERIES.LIGHT_THEME).subscribe(
-    (val) => val && defaultSettings.theme.set(APP_THEMES.LIGHT)
-  );
-  // eslint-disable-next-line svelte/no-ignored-unsubscribe
-  useMediaQuery(MEDIA_QUERIES.REDUCE_MOTION).subscribe((val) =>
-    defaultSettings.reduce_motion.set(val)
-  );
-}
+export const listenForMQLChange = () => {
+  return [
+    // Only update theme if user hasn't manually changed it prior
+    useMediaQuery(MEDIA_QUERIES.DARK_THEME).subscribe(
+      (val) => val && !get(settings.modified) && settings.theme.set(APP_THEMES.DARK)
+    ),
+    useMediaQuery(MEDIA_QUERIES.LIGHT_THEME).subscribe(
+      (val) => val && !get(settings.modified) && settings.theme.set(APP_THEMES.LIGHT)
+    ),
+    useMediaQuery(MEDIA_QUERIES.REDUCE_MOTION).subscribe((val) =>
+      settings.reduce_motion.set(val)
+    )
+  ];
+};
 
 export const loading = writable(false);
 
-export default defaultSettings;
+export default settings;

@@ -40,7 +40,7 @@
       }}
       type="button"
     >
-      <Icon name="script" size={21}></Icon>
+      <Icon name="script" size={20}></Icon>
     </button>
   </Tooltip>
 </Hoverable>

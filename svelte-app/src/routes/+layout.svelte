@@ -19,7 +19,7 @@
   } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
-  import Settings, { loading } from '$lib/settings';
+  import Settings, { listenForMQLChange, loading } from '$lib/settings';
 
   import Footer from '$components/footer.svelte';
   import Header from '$components/header.svelte';
@@ -79,7 +79,8 @@
     unsubscribers.push(
       currentLang.subscribe((lang) => {
         document.documentElement.lang = lang;
-      })
+      }),
+      ...listenForMQLChange()
     );
 
     // styles for hljs codeblocks
@@ -126,6 +127,8 @@
   <meta property="twitter:url" content={url?.href} />
   <meta property="twitter:site" content="@0xKI0" />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
+
+  <link rel="preload" href="/assets/logo-standard.webp" as="image" />
 
   {#if HighlightStyles}
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->

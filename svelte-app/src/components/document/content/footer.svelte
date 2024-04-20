@@ -24,7 +24,9 @@
   </div>
 {/if}
 
-<div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
+<div
+  class="border-t border-dark/80 px-6 pb-5 pt-6 dark:border-light/60 md:px-10 print:hidden"
+>
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
     align="left"

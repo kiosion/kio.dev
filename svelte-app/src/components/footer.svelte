@@ -22,14 +22,14 @@
 
 {#if socials?.length || APP_VERSION?.length}
   <footer
-    class="flex flex-row items-center justify-between border-t border-dark/80 px-7 py-5 font-mono text-sm transition-[border-color] dark:border-light/60 print:hidden"
+    class="flex flex-row items-center justify-between border-t border-dark/80 px-7 py-5 font-mono text-[13.5px] transition-[border-color] dark:border-light/60 print:hidden"
   >
     {#if socials?.length}
       <Hoverable setPointer={false} let:hovered>
         <div class="flex select-none flex-row items-center justify-start gap-x-4">
           <Icon name="At" interactive active={hovered} size={20}></Icon>
           <div
-            class="flex flex-row items-center justify-between gap-x-2 font-mono text-sm text-dark/90 dark:text-light/90"
+            class="flex flex-row items-center justify-between gap-x-1.5 text-dark/90 dark:text-light/90"
             role="group"
             aria-label={$t('Social links')}
           >
@@ -44,7 +44,7 @@
               </Tooltip>
               {#if i < socials.length - 1}
                 <span
-                  class="cursor-default select-none text-sm text-dark/60 dark:text-light/60"
+                  class="cursor-default select-none text-dark/60 dark:text-light/60"
                   aria-hidden="true">/</span
                 >
               {/if}
@@ -56,7 +56,7 @@
     {#if APP_VERSION?.length}
       <Hoverable setPointer={false} let:hovered>
         <div
-          class="flex select-none flex-row items-center justify-start gap-x-4 font-mono text-sm text-dark/90 dark:text-light/90"
+          class="flex select-none flex-row items-center justify-start gap-x-4 text-dark/90 dark:text-light/90"
           aria-label={$t('View latest commit on GitHub')}
         >
           <Icon name="GitBranch" active={hovered} size={20} interactive></Icon>
