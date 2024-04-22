@@ -81,7 +81,6 @@
           <Link
             href="{BASE_GIT_URL}/blob/main/svelte-app/src/components/experiments/mag-cursor.svelte"
             class="focus-outline z-10 -m-2 cursor-none rounded-sm p-2"
-            tooltipDelay={150}
             tooltipText="View source"
             tooltipPosition="top"
             newtab

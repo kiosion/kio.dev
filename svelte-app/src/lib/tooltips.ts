@@ -12,6 +12,7 @@ export type Tooltip = {
   followCursor: boolean;
   target: HTMLElement;
   offset: [number, number];
+  delay: number;
 };
 
 const tooltips = writable<Tooltip[]>([]);
@@ -45,11 +46,15 @@ const updateTooltip = (
 
 const destroyTooltip = (id: number) => {
   tooltips.update((t) => {
-    const existing = t.findIndex((tooltip) => tooltip.id === id);
-    if (existing !== -1) {
-      t.splice(existing, 1);
+    const filtered = [];
+
+    for (let i = 0; i < t.length; ++i) {
+      if (t[i].id !== id) {
+        filtered.push(t[i]);
+      }
     }
-    return t;
+
+    return filtered;
   });
 };
 

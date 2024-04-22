@@ -9,8 +9,7 @@
   const dispatch = createEventDispatcher(),
     type = $$props.href ? 'a' : 'button';
 
-  export let tooltipDelay = 300,
-    tooltipPosition: 'top' | 'bottom' = 'bottom',
+  export let tooltipPosition: 'top' | 'bottom' = 'bottom',
     tooltipText: string | undefined = undefined,
     newtab = false;
 
@@ -26,7 +25,7 @@
     text={tooltipText ??
       (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
     position={tooltipPosition}
-    delay={tooltipDelay}
+    inDelay={250}
   >
     <svelte:element
       this={type}

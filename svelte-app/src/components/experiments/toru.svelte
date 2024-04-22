@@ -69,7 +69,6 @@
       <Link
         href="https://github.com/kiosion/toru"
         class="focus-outline absolute right-4 top-4 z-10 rounded-sm p-2"
-        tooltipDelay={150}
         newtab
       >
         <Icon name="ExternalLink" size={21} interactive></Icon>

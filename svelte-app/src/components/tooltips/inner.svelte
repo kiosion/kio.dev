@@ -12,6 +12,7 @@
     MAX_LENGTH = 72;
 
   export let id: Tooltip['id'],
+    delay: Tooltip['delay'],
     content: Tooltip['content'],
     duration: Tooltip['duration'],
     placement: Tooltip['placement'],
@@ -149,7 +150,8 @@
 >
   <span
     class="block whitespace-nowrap rounded-sm bg-black px-2 py-1.5 font-mono text-xs text-light dark:bg-light dark:text-dark"
-    transition:maybeTransition={{ duration, easing: cubicInOut }}
+    in:maybeTransition={{ duration, easing: cubicInOut }}
+    out:maybeTransition={{ duration, easing: cubicInOut, delay }}
   >
     {content.trim().length >= MAX_LENGTH
       ? `${content.trim().slice(0, MAX_LENGTH - 3)}...`

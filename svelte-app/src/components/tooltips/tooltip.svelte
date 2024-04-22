@@ -10,8 +10,9 @@
   import type { Tooltip } from '$lib/tooltips';
 
   export let text: Tooltip['content'],
-    duration: Tooltip['duration'] = 200,
-    delay = 150,
+    duration: Tooltip['duration'] = 150,
+    inDelay = 50,
+    outDelay = 100,
     position: Tooltip['placement'] = 'bottom',
     fixed: Tooltip['followCursor'] = true,
     offset: Tooltip['offset'] = [0, 12];
@@ -37,11 +38,12 @@
       placement: position,
       followCursor: !fixed,
       offset,
-      target: target as HTMLElement
+      target: target as HTMLElement,
+      delay: outDelay
     };
 
-    if (delay > 0) {
-      timeoutId = setTimeout(() => createTooltip(opts), delay);
+    if (inDelay > 0) {
+      timeoutId = setTimeout(() => createTooltip(opts), inDelay);
     } else {
       createTooltip(opts);
     }
@@ -52,8 +54,8 @@
       return;
     }
 
-    clearTimeout(timeoutId);
     destroyTooltip(tooltipId);
+    clearTimeout(timeoutId);
   };
 
   const getActionableTarget = (el: HTMLElement | null): HTMLElement | null => {
