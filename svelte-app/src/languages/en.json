@@ -10,6 +10,7 @@
   "Code block": "Code block",
   "Code content": "Code content",
   "Copied": "Copied",
+  "Copy": "Copy",
   "Copy to clipboard": "Copy to clipboard",
   "Date posted": "Date posted",
   "Duration": "Duration",
@@ -25,6 +26,8 @@
   "Home": "Home",
   "Internal Error": "Internal Error",
   "Invalid date": "Invalid date",
+  "Language": "Language",
+  "Lights on": "Lights on",
   "Links": "Links",
   "Meta": "Meta",
   "More": "More",
@@ -43,6 +46,7 @@
   "See more": "See more",
   "Show stack trace": "Show stack trace",
   "Skip to content": "Skip to content",
+  "Social": "Social",
   "Social links": "Social links",
   "Sorry, something went wrong. Please try again.": "Sorry, something went wrong. Please try again.",
   "Switch to English": "Switch to English",
@@ -82,6 +86,9 @@
     "unauthorized": {
       "message": "Sorry, you don't have permission to access that resource.",
       "title": "Unauthorized"
+    },
+    "no-content": {
+      "message": "No content."
     }
   },
   "go back": "go back",

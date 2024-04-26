@@ -94,8 +94,7 @@
                   class="relative flex h-3 w-fit justify-between gap-1 pt-0.5"
                 >
                   {#each Array(4) as _}
-                    <span class="h-full w-[2px] rounded-full bg-light dark:bg-accent-dark"
-                    ></span>
+                    <span class="h-full w-[2px] rounded-full bg-orange-light"></span>
                   {/each}
                 </div>
               </div>
@@ -106,13 +105,13 @@
             class="z-10 flex flex-col items-start justify-center gap-1 text-dark/90 transition-[color] dark:text-light/90"
           >
             <h4
-              class="line-clamp-2 text-xl font-black decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
+              class="line-clamp-2 text-xl font-black decoration-orange-light decoration-2 underline-offset-4 dark:decoration-orange-light"
               class:underline={data.url && hovered}
             >
               {data.title ?? 'Unknown title'}
             </h4>
             <p
-              class="line-clamp-2 text-base decoration-accent-light decoration-2 underline-offset-4 dark:decoration-accent-dark"
+              class="line-clamp-2 text-base decoration-orange-light decoration-2 underline-offset-4 dark:decoration-orange-light"
               class:underline={data.artist && hovered}
             >
               {data.artist ?? ''}

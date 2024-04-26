@@ -52,17 +52,6 @@ const useStoredSettings = (settings?: string) => {
           }
           break;
       }
-      // if (
-      //   key === 'theme' &&
-      //   typeof savedSetting === 'string' &&
-      //   Object.values(APP_THEMES).includes(
-      //     savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES]
-      //   )
-      // ) {
-      //   themeSetting = savedSetting as (typeof APP_THEMES)[keyof typeof APP_THEMES];
-      // } else if (key === 'reduce_motion' && typeof savedSetting === 'boolean') {
-      //   reduceMotionSetting = savedSetting;
-      // }
     });
 
     return true;
@@ -82,12 +71,6 @@ if (browser) {
 }
 
 useStoredSettings(storedSettings);
-
-// if (!useStoredSettings(storedSettings)) {
-//   themeSetting = APP_THEMES.DARK;
-//   reduceMotionSetting = false;
-//   modifiedSetting = false;
-// }
 
 const settings = {
   theme: writable<Settings['theme']>(themeSetting),

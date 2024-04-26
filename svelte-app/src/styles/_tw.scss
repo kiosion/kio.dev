@@ -26,10 +26,10 @@
     }
   
     body {
-      @apply bg-black/95 text-light;
+      @apply bg-neutral-800 text-light;
     
       &.light {
-        @apply bg-black/10 text-dark;
+        @apply bg-neutral-100 text-dark;
       }
 
       &:not(.is-loaded) {
@@ -54,12 +54,12 @@
     }
     
     ::selection {
-      @apply bg-accent-light/80 text-light;
+      @apply bg-orange-light/90 text-light;
     }
 
     .dark {
       ::selection {
-        @apply bg-accent-dark/80 text-dark;
+        @apply bg-orange-light/90 text-dark;
       }
     }
   }
@@ -71,7 +71,7 @@
 
     &,
     &-sm {
-      @apply focus-visible:outline outline-accent-light outline-2 dark:outline-accent-dark;
+      @apply focus-visible:outline outline-orange-light outline-2;
     }
 
     &-sm {

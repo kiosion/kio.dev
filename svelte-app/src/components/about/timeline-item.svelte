@@ -17,11 +17,9 @@
   class:pb-0={last}
   class:pb-4={!last}
 >
-  <span
-    class="bullet block flex-shrink-0 rounded-full bg-accent-light/80 dark:bg-accent-dark/80"
-  ></span>
+  <span class="bullet block flex-shrink-0 rounded-xs bg-orange-light/90"></span>
   <div class="content">
-    <h3 class="pb-2 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
+    <h3 class="pb-1 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
     </h3>
     <p class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80">
@@ -50,6 +48,7 @@
     margin-top: $bulletTopMargin;
     width: $bulletSize;
     height: $bulletSize;
+    line-height: $bulletSize;
   }
 
   .content {
@@ -60,7 +59,7 @@
     }
 
     &:before {
-      @apply absolute bg-dark/20;
+      @apply absolute bg-neutral-300;
 
       $baseSpaceFromTop: $bulletTopMargin + $bulletSize;
 
@@ -71,7 +70,7 @@
       width: $lineWidth;
 
       @include dark {
-        @apply bg-white/20;
+        @apply bg-neutral-400;
       }
     }
   }

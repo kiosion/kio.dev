@@ -149,7 +149,7 @@
   aria-hidden="true"
 >
   <span
-    class="block whitespace-nowrap rounded-sm bg-black px-2 py-1.5 font-mono text-xs text-light dark:bg-light dark:text-dark"
+    class="block whitespace-nowrap rounded-sm bg-neutral-600 px-2 py-1.5 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark"
     in:maybeTransition={{ duration, easing: cubicInOut }}
     out:maybeTransition={{ duration, easing: cubicInOut, delay }}
   >

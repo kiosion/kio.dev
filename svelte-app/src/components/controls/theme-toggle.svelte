@@ -4,29 +4,28 @@
   import Settings from '$lib/settings';
 
   import Hoverable from '$components/hoverable.svelte';
-  import Icon from '$components/icon.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   const { theme, modified } = Settings;
 </script>
 
-<Hoverable>
-  <Tooltip text={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}>
-    <button
-      class="focus-outline -m-2 rounded-sm p-2 hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
-      aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
-      data-test-id="theme-toggle"
-      data-test-state={$theme}
-      tabindex="0"
-      on:click={() => {
-        modified.set(true);
-        theme.set($theme === APP_THEMES.LIGHT ? APP_THEMES.DARK : APP_THEMES.LIGHT);
-      }}
-      type="button"
-    >
-      {#key $theme}
-        <Icon name={$theme === APP_THEMES.LIGHT ? 'MoonStars' : 'Sun'} size={20}></Icon>
-      {/key}
-    </button>
-  </Tooltip>
+<Hoverable let:hovered>
+  <button
+    class="focus-outline -m-1 px-2 py-1 font-mono text-xs"
+    class:bg-neutral-500={hovered && $theme === APP_THEMES.DARK}
+    class:text-dark={$theme === APP_THEMES.LIGHT}
+    class:bg-orange-light={$theme === APP_THEMES.LIGHT}
+    class:hover:bg-orange-dark={$theme === APP_THEMES.LIGHT}
+    class:focus-visible:bg-orange-dark={$theme === APP_THEMES.LIGHT}
+    aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
+    data-test-id="theme-toggle"
+    data-test-state={$theme}
+    tabindex="0"
+    on:click={() => {
+      modified.set(true);
+      theme.set($theme === APP_THEMES.LIGHT ? APP_THEMES.DARK : APP_THEMES.LIGHT);
+    }}
+    type="button"
+  >
+    [{#if $theme === APP_THEMES.DARK}&nbsp;{:else}x{/if}] {$t('Lights on').toLowerCase()}
+  </button>
 </Hoverable>

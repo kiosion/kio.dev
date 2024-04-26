@@ -6,9 +6,7 @@
   import { t } from '$lib/i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import Icon from '$components/icon.svelte';
   import ConstrainWidth from '$components/layouts/constrain-width.svelte';
   import Link from '$components/link.svelte';
 
@@ -88,34 +86,29 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<ConstrainWidth class="px-8 pt-5">
-  <div data-test-id="error-page">
-    <HeadedBlock {heading}>
-      <p class="my-4 text-base">
-        <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
-        {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
-      </p>
-      <p class="my-4 text-base">
-        {$t('Please')}
-        <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
-          on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
-        >.
-      </p>
-    </HeadedBlock>
+<div data-test-id="error-page">
+  <HeadedBlock {heading}>
+    <p class="my-4 text-base">
+      <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
+      {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
+    </p>
+    <p class="my-4 text-base">
+      {$t('Please')}
+      <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
+        on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
+      >.
+    </p>
+  </HeadedBlock>
 
-    {#if causes?.length}
-      <Divider></Divider>
-      <ArrowButton align="left" on:click={() => (showStack = !showStack)} fullWidth>
-        <span class="flex items-center justify-start gap-2">
-          <p class="font-mono text-base">{$t('See more')}</p>
-          <Icon
-            name="ArrowUp"
-            size={18}
-            inline
-            style="transform: {showStack ? 'rotate(0deg)' : 'rotate(180deg)'};"
-          ></Icon>
-        </span>
-      </ArrowButton>
+  {#if causes?.length}
+    <ConstrainWidth class="px-8">
+      <ArrowButton
+        align="left"
+        placement="after"
+        text={$t('See more')}
+        dir={showStack ? 'up' : 'down'}
+        on:click={() => (showStack = !showStack)}
+      />
       {#if showStack}
         <div class="pt-4" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
           <pre
@@ -123,6 +116,6 @@
                 />{/if}{/each}</pre>
         </div>
       {/if}
-    {/if}
-  </div>
-</ConstrainWidth>
+    </ConstrainWidth>
+  {/if}
+</div>

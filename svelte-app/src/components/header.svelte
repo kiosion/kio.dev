@@ -14,20 +14,24 @@
     class="flex flex-row items-center justify-start gap-4 text-base transition-[color]"
     aria-label="Main navigation"
   >
-    <HeaderLogo></HeaderLogo>
-    <div class="flex flex-col items-start justify-start gap-y-0.5 font-mono">
+    <HeaderLogo />
+    <div class="flex flex-col items-start justify-start gap-y-1 font-mono">
       <span class="select-none text-base font-bold text-dark dark:text-light"
-        >kio.dev</span
+        >kio.dev <span
+          class="cursor-default select-none text-dark/60 dark:text-light/60"
+          aria-hidden="true">/</span
+        ></span
       >
+
       <div
-        class="flex select-none flex-row items-center justify-start gap-x-1.5 text-[13.5px] text-dark/80 dark:text-light/80 print:hidden"
+        class="flex select-none flex-row items-center justify-start text-[13.5px] text-dark/80 dark:text-light/80 print:hidden"
       >
         {#each NAV_LINKS as link, i}
-          <NavLink {link}></NavLink>
+          <NavLink {link} />
           {#if i < NAV_LINKS.length - 1}
             <span
               class="cursor-default select-none text-dark/60 dark:text-light/60"
-              aria-hidden="true">/</span
+              aria-hidden="true">,&nbsp;</span
             >
           {/if}
         {/each}
@@ -35,11 +39,11 @@
     </div>
   </nav>
   <div
-    class="flex flex-row items-center justify-end gap-x-4 text-dark dark:text-light print:hidden"
+    class="flex flex-col items-end justify-center gap-4 text-dark dark:text-light print:hidden"
     aria-label="Page controls"
     role="group"
   >
-    <ThemeToggle></ThemeToggle>
-    <LanguageControls></LanguageControls>
+    <ThemeToggle />
+    <LanguageControls />
   </div>
 </header>

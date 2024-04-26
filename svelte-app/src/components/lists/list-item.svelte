@@ -19,7 +19,9 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline w-full rounded-md"
+    class="focus-outline -mx-3 -my-2.5 w-full rounded-md px-3 py-2.5 transition-[background-color]"
+    class:bg-neutral-0={hovered}
+    class:dark:bg-neutral-700={hovered}
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
@@ -33,8 +35,9 @@
       </p>
       {#if document.tags?.length}
         <span
-          class="font-code rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 text-xs transition-colors dark:border-light/60 dark:bg-light/5"
-          >{document.tags[0].title.toLowerCase()}</span
+          class="font-code rounded-xs bg-neutral-100 px-1.5 py-1 text-xs transition-colors dark:bg-neutral-500"
+          class:bg-neutral-200={hovered}
+          class:dark:bg-neutral-400={hovered}>{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
         <BulletPoint></BulletPoint>
@@ -43,7 +46,7 @@
     </div>
 
     <h1
-      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark lg:max-w-[60rem]"
+      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors lg:max-w-[60rem]"
       class:pb-1={document.desc?.length}
       class:underline={hovered}
     >

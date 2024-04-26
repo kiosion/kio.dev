@@ -77,13 +77,13 @@
 <div
   class={interactive
     ? active
-      ? 'text-accent-light/90 dark:text-accent-dark/90'
+      ? 'text-orange-light'
       : 'text-dark/90 dark:text-light/90'
     : undefined}
-  class:hover:text-accent-light={interactive}
-  class:focus-visible:text-accent-light={interactive}
-  class:dark:hover:text-accent-dark={interactive}
-  class:dark:focus-visible:text-accent-dark={interactive}
+  class:hover:text-orange-light={interactive}
+  class:focus-visible:text-orange-light={interactive}
+  class:dark:hover:text-orange-light={interactive}
+  class:dark:focus-visible:text-orange-light={interactive}
   class:inline
   style="width: {size}px; height: {size}px;"
 >

@@ -6,7 +6,6 @@
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import Icon from '$components/icon.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
@@ -49,12 +48,13 @@
         <ListItem document={post}></ListItem>
       {/each}
     </div>
-    <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
-      <span class="flex items-center justify-start gap-2">
-        <p class="font-mono text-sm">{$t('See more')}</p>
-        <Icon name="ArrowRight" size={18} inline></Icon>
-      </span>
-    </ArrowButton>
+    <ArrowButton
+      href={$linkTo('/thoughts')}
+      dir="right"
+      placement="after"
+      text={$t('See more')}
+      preload
+    />
   {:else}
     <div class="mb-6 flex flex-col gap-y-5">
       <p class="font-code p-4">{$t('No content')}</p>

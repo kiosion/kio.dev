@@ -29,15 +29,8 @@
 >
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-    align="left"
-    fullWidth
+    dir={$isMobile ? 'up' : 'left'}
+    text={$t('Read more')}
     preload
-  >
-    <span class="flex items-center justify-start gap-2 font-mono text-sm">
-      {#key $isMobile}
-        <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline></Icon>
-      {/key}
-      <p>{$t('Read more')}</p>
-    </span>
-  </ArrowButton>
+  />
 </div>

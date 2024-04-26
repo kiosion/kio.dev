@@ -31,7 +31,7 @@
       this={type}
       target={newtab ? '_blank' : undefined}
       rel={newtab ? 'noopener noreferrer' : undefined}
-      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] transition-[text-decoration-color] dark:decoration-accent-dark"
+      class="focus-outline-sm rounded-xs font-semibold text-black underline decoration-neutral-200 underline-offset-[3px] hover:decoration-orange-light focus-visible:decoration-orange-dark dark:text-white dark:decoration-neutral-400 dark:hover:decoration-orange-light dark:focus-visible:decoration-orange-light"
       class:decoration-[3px]={hovered}
       class:decoration-2={!hovered}
       tabindex="0"

@@ -1,20 +1,23 @@
 <script lang="ts">
+  import { circInOut } from 'svelte/easing';
+  import { slide } from 'svelte/transition';
+
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { APP_LANGS } from '$lib/consts';
   import { currentLang, linkTo, t } from '$lib/i18n';
 
   import Hoverable from '$components/hoverable.svelte';
-  import Icon from '$components/icon.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
+
+  const BASE_TIMEOUT_MS = 50;
 
   const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
     if ($page?.url?.pathname?.startsWith(`/${lang}`)) {
-      return;
+      return Promise.resolve();
     }
 
-    goto(
+    return goto(
       $linkTo(`${$page.url.pathname}${$page.url.hash}`, $page.url.searchParams, lang),
       {
         invalidateAll: true,
@@ -22,25 +25,84 @@
       }
     ).catch(() => undefined);
   };
+
+  let showDropdown = false,
+    dropdown: HTMLDivElement | undefined,
+    dropdownTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  const handleMouseEnter = () => {
+    clearTimeout(dropdownTimeout);
+    dropdownTimeout = setTimeout(() => (showDropdown = true), BASE_TIMEOUT_MS * 2);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeout = setTimeout(() => (showDropdown = false), BASE_TIMEOUT_MS);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      if (
+        dropdown !== document?.activeElement &&
+        !dropdown?.contains(document?.activeElement)
+      ) {
+        showDropdown = false;
+      }
+    }, 0);
+  };
+
+  const dropdownOptions = [
+    {
+      label: 'English',
+      value: APP_LANGS[0]
+    },
+    {
+      label: 'French',
+      value: APP_LANGS[1]
+    }
+  ] as const;
 </script>
 
-<Hoverable>
-  <Tooltip
-    text={$t($currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English')}
-  >
-    <button
-      class="focus-outline -m-2 rounded-sm p-2 hover:text-accent-light focus-visible:text-accent-light dark:hover:text-accent-dark dark:focus-visible:text-accent-dark"
-      aria-label={$t(
-        $currentLang === APP_LANGS[0] ? 'Switch to French' : 'Switch to English'
-      )}
-      tabindex="0"
-      data-test-id="language-toggle"
-      on:click={(e) => {
-        handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0]);
-      }}
-      type="button"
+<svelte:window on:click={handleBlur} />
+
+<div
+  class="focus-outline relative z-10 -m-1 cursor-pointer select-none px-2 py-1 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:hover:bg-neutral-500 dark:focus-visible:bg-neutral-500"
+  on:mouseenter={handleMouseEnter}
+  on:focus={handleMouseEnter}
+  on:mouseleave={handleMouseLeave}
+  on:blur={handleBlur}
+  role="menu"
+  aria-label="Change language"
+  tabindex="0"
+>
+  <span class="z-10">
+    [{$currentLang === APP_LANGS[0] ? 'en' : 'fr'}] {$t('Language').toLowerCase()}
+  </span>
+  {#if showDropdown}
+    <div
+      class="absolute left-0 right-0 top-0 -z-[1] flex flex-col items-start gap-y-1 rounded-xs bg-neutral-100 pb-1 pt-7 font-mono text-xs dark:bg-neutral-500"
+      bind:this={dropdown}
+      transition:slide={{ axis: 'y', duration: 150, easing: circInOut }}
     >
-      <Icon name="script" size={20}></Icon>
-    </button>
-  </Tooltip>
-</Hoverable>
+      {#each dropdownOptions as opt}
+        <Hoverable let:hovered>
+          <button
+            class="focus-outline w-full px-2 py-2 text-left disabled:cursor-not-allowed disabled:opacity-50"
+            class:bg-neutral-200={hovered}
+            class:dark:bg-neutral-400={hovered}
+            on:click={(e) => {
+              handleClick(e, opt.value).finally(() => {
+                clearTimeout(dropdownTimeout);
+                showDropdown = false;
+              });
+            }}
+            type="button"
+            role="menuitem"
+            disabled={$currentLang === opt.value}
+          >
+            {$t(opt.label).toLowerCase()}
+          </button>
+        </Hoverable>
+      {/each}
+    </div>
+  {/if}
+</div>
