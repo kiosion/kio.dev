@@ -90,7 +90,7 @@ const constructUrl = (
   return `${basePath}${queryParams.length ? `?${queryParams.join('&')}` : ''}`;
 };
 
-export const incViews = (
+export const incViews = async (
   fetch: RouteFetch,
   doc: DocumentRegistry[keyof DocumentRegistry]
 ) => {
@@ -99,7 +99,7 @@ export const incViews = (
   }
 
   try {
-    fetch(`${API_URL}mutate`, {
+    const res = await fetch(`${API_URL}mutate`, {
       method: 'POST',
       body: JSON.stringify({
         id: doc._id,
@@ -107,8 +107,15 @@ export const incViews = (
         field: 'views'
       })
     });
+
+    if (!res.ok) {
+      Logger.error(`Failed to increment views for ${doc._type} ${doc._id}`, {
+        status: res.status,
+        statusText: res.statusText
+      });
+    }
   } catch (e) {
-    Logger.error('', e);
+    Logger.error('Error incrementing views', e);
   }
 };
 
@@ -131,7 +138,8 @@ const fetchData = async <T>(
 
     if (
       !(fetchResponse?.meta && fetchResponse?.data) ||
-      (typeof fetchResponse?.data === 'object' &&
+      (!Array.isArray(fetchResponse?.data) &&
+        typeof fetchResponse?.data === 'object' &&
         Object.keys(fetchResponse.data).length === 0) ||
       (Array.isArray(fetchResponse?.data) &&
         !fetchResponse?.meta &&
@@ -177,6 +185,7 @@ const find = async <T extends keyof DocumentRegistry>(
   return response;
 };
 
+// TODO: These types are a fucking mess and desperately need a refactor but honestly it _works_ and I can't be fucked
 const findOne = async <T extends keyof DocumentRegistry>(
   fetch: RouteFetch,
   model: T,

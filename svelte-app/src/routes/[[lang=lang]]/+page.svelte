@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n.js';
+  import { ENV } from '$lib/env';
+  import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
@@ -45,16 +46,27 @@
   {#if data.posts.length}
     <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
       {#each data.posts as post}
-        <ListItem document={post}></ListItem>
+        <ListItem document={post} />
       {/each}
     </div>
-    <ArrowButton
-      href={$linkTo('/thoughts')}
-      dir="right"
-      placement="after"
-      text={$t('See more')}
-      preload
-    />
+    <div class="flex flex-row items-center justify-start gap-x-6">
+      <ArrowButton
+        href={$linkTo('/thoughts')}
+        dir="right"
+        placement="after"
+        text={$t('All posts')}
+        preload
+      />
+      {#if ENV !== 'production'}
+        <ArrowButton
+          href={$linkTo('/thoughts')}
+          dir="right"
+          placement="after"
+          text={$t('Topics')}
+          preload
+        />
+      {/if}
+    </div>
   {:else}
     <div class="mb-6 flex flex-col gap-y-5">
       <p class="font-code p-4">{$t('No content')}</p>

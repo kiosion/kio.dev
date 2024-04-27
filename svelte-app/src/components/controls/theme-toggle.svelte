@@ -11,7 +11,7 @@
 <Hoverable let:hovered>
   <button
     class="focus-outline -m-1 px-2 py-1 font-mono text-xs"
-    class:bg-neutral-500={hovered && $theme === APP_THEMES.DARK}
+    class:bg-neutral-600={hovered && $theme === APP_THEMES.DARK}
     class:text-dark={$theme === APP_THEMES.LIGHT}
     class:bg-orange-light={$theme === APP_THEMES.LIGHT}
     class:hover:bg-orange-dark={$theme === APP_THEMES.LIGHT}
@@ -26,6 +26,6 @@
     }}
     type="button"
   >
-    [{#if $theme === APP_THEMES.DARK}&nbsp;{:else}x{/if}] {$t('Lights on').toLowerCase()}
+    [{#if $theme === APP_THEMES.DARK}o{:else}|{/if}] {$t('Lights on').toLowerCase()}
   </button>
 </Hoverable>

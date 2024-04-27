@@ -4,6 +4,8 @@
   "A project on kio.dev": "A project on kio.dev",
   "About": "About",
   "About me": "About me",
+  "All posts": "All posts",
+  "All topics": "All topics",
   "Back": "Back",
   "Blog": "Blog",
   "Click here to": "Click here to",
@@ -53,6 +55,8 @@
   "Switch to French": "Switch to French",
   "Tags": "Tags",
   "Thoughts": "Thoughts",
+  "Topic": "Topic",
+  "Topics": "Topics",
   "Unknown date": "Unknown date",
   "Use dark mode": "Use dark mode",
   "Use light mode": "Use light mode",
@@ -108,7 +112,11 @@
     },
     "thoughts": {
       "description": "Thoughts about tech, design, and development",
-      "title": "Thoughts"
+      "title": "Thoughts",
+      "sections": {
+        "topics": "Topics",
+        "posts": "Recent thoughts"
+      }
     },
     "work": {
       "description": "An overview of my work, prior roles, and open-source contributions",

@@ -14,7 +14,7 @@
 
 <Hoverable let:hovered>
   <a
-    class="focus-outline-sm text-dark/80 underline-offset-4 dark:text-light/80"
+    class="focus-outline-sm text-dark/80 underline-offset-4 transition-colors dark:text-light/80"
     class:active={active || hovered}
     class:slotted={$$slots.default !== undefined}
     class:flex={$$slots.default !== undefined}

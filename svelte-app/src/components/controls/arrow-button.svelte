@@ -25,8 +25,11 @@
     href={$$props.href || undefined}
     class:text-right={align === 'right'}
     class:text-left={align === 'left'}
-    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm hover:bg-neutral-light hover:text-orange-light focus-visible:bg-neutral-light dark:hover:bg-neutral-dark dark:focus-visible:bg-neutral-dark {$$props.class ??
+    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm {$$props.class ??
       ''}"
+    class:text-orange-light={hovered}
+    class:bg-neutral-100={hovered}
+    class:dark:bg-neutral-600={hovered}
     class:pr-2={placement === 'before'}
     class:pl-3={placement === 'before'}
     class:pr-3={placement === 'after'}

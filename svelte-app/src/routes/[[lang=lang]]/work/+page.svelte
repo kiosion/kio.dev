@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/i18n.js';
+  import { t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
   import Timeline from '$components/about/timeline.svelte';

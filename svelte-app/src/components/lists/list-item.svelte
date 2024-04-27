@@ -27,7 +27,7 @@
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-neutral-700 transition-colors dark:text-neutral-200"
       class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>
@@ -36,7 +36,6 @@
       {#if document.tags?.length}
         <span
           class="font-code rounded-xs bg-neutral-100 px-1.5 py-1 text-xs transition-colors dark:bg-neutral-500"
-          class:bg-neutral-200={hovered}
           class:dark:bg-neutral-400={hovered}>{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
