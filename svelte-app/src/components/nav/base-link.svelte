@@ -16,6 +16,7 @@
   <a
     class="focus-outline-sm text-dark/80 underline-offset-4 transition-colors dark:text-light/80"
     class:active={active || hovered}
+    class:underline={active || hovered}
     class:slotted={$$slots.default !== undefined}
     class:flex={$$slots.default !== undefined}
     class:flex-row={$$slots.default !== undefined}
@@ -41,13 +42,3 @@
     {/if}
   </a>
 </Hoverable>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  a {
-    @include focused('.active') {
-      @apply underline;
-    }
-  }
-</style>

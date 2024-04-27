@@ -16,7 +16,8 @@
   >
     <HeaderLogo />
     <div class="flex flex-col items-start justify-start gap-y-1 font-mono">
-      <span class="select-none text-base font-bold text-dark dark:text-light"
+      <span
+        class="select-none text-base font-bold text-dark transition-colors dark:text-light"
         >kio.dev <span
           class="cursor-default select-none text-dark/60 dark:text-light/60"
           aria-hidden="true">/</span

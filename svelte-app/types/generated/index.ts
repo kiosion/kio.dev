@@ -29,6 +29,7 @@ export type LocaleKey =
   | 'Internal Error'
   | 'Invalid date'
   | 'Language'
+  | 'Lights off'
   | 'Lights on'
   | 'Links'
   | 'Meta'

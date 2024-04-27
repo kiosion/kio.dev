@@ -9,7 +9,7 @@
 
   import Hoverable from '$components/hoverable.svelte';
 
-  const BASE_TIMEOUT_MS = 50;
+  const BASE_TIMEOUT_MS = 25;
 
   const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
@@ -66,7 +66,7 @@
 <svelte:window on:click={handleBlur} />
 
 <div
-  class="focus-outline relative z-10 -m-1 cursor-pointer select-none px-2 py-1 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
+  class="focus-outline relative z-10 -m-1 cursor-pointer select-none rounded-xs px-2 py-1 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
   on:mouseenter={handleMouseEnter}
   on:focus={handleMouseEnter}
   on:mouseleave={handleMouseLeave}
@@ -80,14 +80,14 @@
   </span>
   {#if showDropdown}
     <div
-      class="absolute left-0 right-0 top-0 -z-[1] flex flex-col items-start gap-y-1 rounded-xs bg-neutral-100 pb-1 pt-7 font-mono text-xs dark:bg-neutral-600"
+      class="absolute left-0 right-0 top-0 -z-[1] flex flex-col items-start rounded-xs bg-neutral-100 pt-6 font-mono text-xs dark:bg-neutral-600"
       bind:this={dropdown}
-      transition:slide={{ axis: 'y', duration: 150, easing: circInOut }}
+      transition:slide={{ axis: 'y', duration: 125, easing: circInOut }}
     >
       {#each dropdownOptions as opt}
         <Hoverable let:hovered>
           <button
-            class="focus-outline w-full px-2 py-2 text-left disabled:cursor-not-allowed disabled:opacity-50"
+            class="focus-outline w-full px-2 py-2.5 text-left disabled:cursor-not-allowed disabled:opacity-50"
             class:bg-neutral-200={hovered}
             class:dark:bg-neutral-500={hovered}
             on:click={(e) => {

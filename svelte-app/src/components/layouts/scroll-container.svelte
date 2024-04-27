@@ -27,7 +27,7 @@
 </script>
 
 <div
-  class="relative mx-auto flex h-full w-full max-w-[76rem] flex-col rounded-xs border border-dark/80 bg-neutral-50 shadow-lg shadow-dark/10 transition-colors dark:border-light/60 dark:bg-black dark:shadow-black/40"
+  class="relative mx-auto flex h-full w-full max-w-[76rem] flex-col rounded-sm border border-dark/80 bg-neutral-50 shadow-lg shadow-dark/10 transition-colors dark:border-light/60 dark:bg-black dark:shadow-black/40"
 >
   <slot name="before" />
   <div

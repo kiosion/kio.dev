@@ -19,7 +19,7 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline -mx-3 -my-2.5 w-full rounded-md px-3 py-2.5 transition-[background-color]"
+    class="focus-outline -mx-3 -my-2.5 w-full rounded-md px-3 py-2.5 transition-[background-color] duration-75"
     class:bg-neutral-0={hovered}
     class:dark:bg-neutral-700={hovered}
     tabindex="0"
@@ -53,7 +53,7 @@
     </h1>
 
     {#if document.desc?.length}
-      <p class="line-clamp-2 lg:max-w-[60rem]">{document.desc}</p>
+      <p class="line-clamp-2 transition-colors lg:max-w-[60rem]">{document.desc}</p>
     {/if}
   </a>
 </Hoverable>

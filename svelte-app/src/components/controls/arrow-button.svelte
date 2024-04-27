@@ -25,7 +25,7 @@
     href={$$props.href || undefined}
     class:text-right={align === 'right'}
     class:text-left={align === 'left'}
-    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm {$$props.class ??
+    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm transition-colors {$$props.class ??
       ''}"
     class:text-orange-light={hovered}
     class:bg-neutral-100={hovered}

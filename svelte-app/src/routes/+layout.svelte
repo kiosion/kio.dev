@@ -52,7 +52,7 @@
     clearTimeout(setLoadingTimer);
 
     if (event.from !== event.to) {
-      setLoadingTimer = setTimeout(() => loading.set(true), 100);
+      setLoadingTimer = setTimeout(() => loading.set(true), 50);
     }
   });
 
