@@ -54,7 +54,7 @@
         href={$linkTo('/thoughts')}
         dir="right"
         placement="after"
-        text={$t('All posts')}
+        text={$t('All thoughts')}
         preload
       />
       {#if ENV !== 'production'}

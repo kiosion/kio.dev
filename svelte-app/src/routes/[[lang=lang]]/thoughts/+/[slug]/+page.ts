@@ -1,15 +1,9 @@
-import { ENV } from '$lib/env';
-
 import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 import type { DocumentTags, PostDocument } from '$types';
 
 export const load = (async ({ parent, params }) => {
-  if (ENV === 'production') {
-    throw error(404, 'Not found');
-  }
-
   const _parent = await parent(),
     posts: PostDocument[] = [];
 

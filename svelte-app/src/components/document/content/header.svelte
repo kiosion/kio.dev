@@ -1,6 +1,5 @@
 <script lang="ts">
   import { formatDate } from '$lib/date';
-  import { ENV } from '$lib/env';
   import { linkTo, t } from '$lib/i18n';
   import { parseViews } from '$lib/utils';
 
@@ -66,7 +65,7 @@
         href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
         align="right"
         dir="left"
-        text={$t('All posts')}
+        text={$t('Read more')}
         preload
       />
     {/if}
@@ -81,11 +80,9 @@
         {#each data.tags as tag}
           <a
             class="focus-outline-sm select-none rounded-xs bg-neutral-100 px-1.5 py-1 font-mono text-xs hover:bg-orange-light focus-visible:bg-orange-light dark:bg-neutral-500 dark:hover:bg-orange-dark dark:focus-visible:bg-orange-dark"
-            href={ENV !== 'production'
-              ? $linkTo(
-                  `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
-                )
-              : undefined}
+            href={$linkTo(
+              `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
+            )}
             data-sveltekit-preload-code
             aria-label={$t('Topic') + ': ' + tag.title}
           >
@@ -98,7 +95,7 @@
         href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
         align="right"
         dir="left"
-        text={$t('All posts')}
+        text={$t('Read more')}
         preload
       />
     </div>

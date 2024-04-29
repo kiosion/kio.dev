@@ -25,7 +25,7 @@
     text={tooltipText ??
       (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
     position={tooltipPosition}
-    inDelay={250}
+    inDelay={500}
   >
     <svelte:element
       this={type}
