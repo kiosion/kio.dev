@@ -108,8 +108,8 @@ devDependencies:
     specifier: 3.6.9
     version: 3.6.9(postcss-load-config@5.0.3)(postcss@8.4.38)(sass@1.75.0)(svelte@4.2.15)
   svelte-eslint-parser:
-    specifier: 0.34.1
-    version: 0.34.1(svelte@4.2.15)
+    specifier: 0.35.0
+    version: 0.35.0(svelte@4.2.15)
   svelte-highlight:
     specifier: 7.6.0
     version: 7.6.0
@@ -4813,7 +4813,7 @@ packages:
       postcss-selector-parser: 6.0.16
       semver: 7.6.0
       svelte: 4.2.15
-      svelte-eslint-parser: 0.34.1(svelte@4.2.15)
+      svelte-eslint-parser: 0.35.0(svelte@4.2.15)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -10096,11 +10096,11 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-eslint-parser@0.34.1(svelte@4.2.15):
-    resolution: {integrity: sha512-9+uLA1pqI9AZioKVGJzYYmlOZWxfoCXSbAM9iaNm7H01XlYlzRTtJfZgl9o3StQGN41PfGJIbkKkfk3e/pHFfA==}
+  /svelte-eslint-parser@0.35.0(svelte@4.2.15):
+    resolution: {integrity: sha512-CtbPseajW0gjwEvHiuzYJkPDjAcHz2FaHt540j6RVYrZgnE6xWkzUBodQ4I3nV+G5AS0Svt8K6aIA/CIU9xT2Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
-      svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.94
+      svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.112
     peerDependenciesMeta:
       svelte:
         optional: true
