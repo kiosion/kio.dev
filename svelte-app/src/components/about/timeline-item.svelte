@@ -17,7 +17,10 @@
   class:pb-0={last}
   class:pb-4={!last}
 >
-  <span class="bullet block flex-shrink-0 rounded-xs bg-orange-light/90"></span>
+  <span
+    class="bullet block flex-shrink-0 rounded-xs text-orange-dark dark:text-orange-light"
+    >&rarr;</span
+  >
   <div class="content">
     <h3 class="pb-1 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
@@ -41,7 +44,7 @@
 
   $bulletTopMargin: 13px;
   $bulletSize: 6px;
-  $lineWidth: 2px;
+  $lineWidth: 1px;
   $lineGap: 14px;
 
   .bullet {
@@ -59,7 +62,7 @@
     }
 
     &:before {
-      @apply absolute bg-neutral-300;
+      @apply absolute bg-neutral-300/60;
 
       $baseSpaceFromTop: $bulletTopMargin + $bulletSize;
 
@@ -70,7 +73,7 @@
       width: $lineWidth;
 
       @include dark {
-        @apply bg-neutral-400;
+        @apply bg-neutral-300/60;
       }
     }
   }

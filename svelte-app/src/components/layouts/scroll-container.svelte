@@ -37,6 +37,7 @@
     class="h-full flex-1 overflow-visible overflow-x-clip overflow-y-scroll"
     tabindex="-1"
     role="none"
+    id="scroll-container"
     data-test-id="scroll-container"
     bind:this={element}
     on:scroll={(e) => {
@@ -48,3 +49,16 @@
   </div>
   <slot name="after" />
 </div>
+
+<style lang="scss">
+  @import '@styles/colors';
+  @import '@styles/mixins';
+
+  #scroll-container {
+    scrollbar-color: $neutral-100 $white;
+
+    @include dark {
+      scrollbar-color: $neutral-400 $black;
+    }
+  }
+</style>

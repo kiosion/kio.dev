@@ -54,12 +54,12 @@
         href={$linkTo('/thoughts')}
         dir="right"
         placement="after"
-        text={$t('All thoughts')}
+        text={$t('All posts')}
         preload
       />
       {#if ENV !== 'production'}
         <ArrowButton
-          href={$linkTo('/thoughts')}
+          href={$linkTo('/thoughts/+')}
           dir="right"
           placement="after"
           text={$t('Topics')}

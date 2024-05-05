@@ -23,6 +23,7 @@
     class:items-center={$$slots.default !== undefined}
     class:justify-start={$$slots.default !== undefined}
     class:gap-x-1.5={$$slots.default !== undefined}
+    class:dark:text-neutral-100={active || hovered}
     href={$linkTo(href)}
     tabindex="0"
     role={$$props.role || undefined}

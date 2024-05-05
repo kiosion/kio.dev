@@ -26,8 +26,6 @@
     }}
     type="button"
   >
-    [{#if $theme === APP_THEMES.DARK}&nbsp;{:else}x{/if}] {$t(
-      $theme === APP_THEMES.DARK ? 'Lights on' : 'Lights off'
-    ).toLowerCase()}
+    [{#if $theme === APP_THEMES.DARK}&nbsp;{:else}x{/if}] {$t('Lights on').toLowerCase()}
   </button>
 </Hoverable>

@@ -37,5 +37,9 @@
   })();
 </script>
 
-<BaseLink text={$t(link.name)} href={link.url} active={isActive} on:click={handleAction}
-></BaseLink>
+<BaseLink
+  text={$t(link.name)}
+  href={link.url}
+  active={isActive}
+  on:click={handleAction}
+/>

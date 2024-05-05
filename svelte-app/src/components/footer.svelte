@@ -20,7 +20,7 @@
 
 {#if socials?.length || APP_VERSION?.length}
   <footer
-    class="flex flex-row items-center justify-between border-t border-dark/80 px-7 py-5 font-mono text-[13.5px] transition-[border-color] dark:border-light/60 print:hidden"
+    class="flex flex-row flex-wrap items-center justify-between gap-x-6 gap-y-2 overflow-hidden border-t border-dark/80 px-6 py-4 font-mono text-[13.5px] transition-[border-color] dark:border-light/60 print:hidden"
   >
     {#if socials?.length}
       <div class="flex select-none flex-row items-center justify-start gap-x-2">
@@ -35,13 +35,18 @@
           aria-label={$t('Social links')}
         >
           {#each socials as social, i}
-            <Tooltip text={social.url} position="top">
+            <Tooltip
+              text={social.url.includes('mailto:')
+                ? social.url.split('mailto:')[1]
+                : social.url}
+              position="top"
+            >
               <BaseLink
                 text={social.name}
                 href={social.url}
                 target={social.target}
                 rel={social.rel}
-              ></BaseLink>
+              />
             </Tooltip>
             {#if i < socials.length - 1}
               <span

@@ -39,13 +39,7 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock let:id>
-  <svelte:fragment slot="heading" let:id>
-    <h1 class="font-display text-3xl font-black" id="{id}-heading">
-      {$t('pages.thoughts.sections.posts')}
-    </h1>
-  </svelte:fragment>
-
+<HeadedBlock heading={$t('pages.thoughts.title')} let:id>
   {#if data.posts.length}
     {#if tags.size}
       <div
