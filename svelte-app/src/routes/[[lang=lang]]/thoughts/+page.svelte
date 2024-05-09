@@ -53,7 +53,7 @@
           {#if i < MAX_TAGS}
             <span class="text-md text-neutral-400 dark:text-neutral-300">
               <a
-                class="focus-outline-sm -m-2 p-2 text-sm text-neutral-800 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
+                class="focus-outline-sm -m-2 p-2 text-sm text-neutral-700 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-200 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
                 href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
                 data-sveltekit-preload-code
                 aria-label={$t('Topic') + ': ' + tag.title}
@@ -62,7 +62,7 @@
               >{#if i < MAX_TAGS && i < tags.size - 1},{/if}
             </span>
           {:else if i === MAX_TAGS}
-            <span class="text-md text-neutral-800 dark:text-neutral-100">...</span>
+            <span class="text-md text-neutral-700 dark:text-neutral-200">...</span>
           {/if}
         {/each}
         <span

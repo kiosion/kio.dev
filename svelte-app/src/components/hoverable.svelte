@@ -4,14 +4,22 @@
   export let hovered = false,
     setPointer = true;
 
+  let debounce: ReturnType<typeof setTimeout> | undefined;
+
   const dispatch = createEventDispatcher(),
     handleHoverIn = () => {
-      hovered = true;
-      dispatch('update', { state: true });
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        hovered = true;
+        dispatch('update', { state: true });
+      }, 0);
     },
     handleHoverOut = () => {
-      hovered = false;
-      dispatch('update', { state: false });
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        hovered = false;
+        dispatch('update', { state: false });
+      }, 0);
     };
 
   onDestroy(handleHoverOut);
