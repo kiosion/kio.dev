@@ -4,12 +4,15 @@
   "A project on kio.dev": "Un projet sur kio.dev",
   "About": "À propos",
   "About me": "À propos de moi",
+  "All posts": "Tous les articles",
+  "All topics": "Tous les sujets",
   "Back": "Retour",
   "Blog": "Blog",
   "Click here to": "Cliquez ici pour",
   "Code block": "Bloc de code",
   "Code content": "Contenu du code",
   "Copied": "Copié",
+  "Copy": "Copier",
   "Copy to clipboard": "Copier dans le presse-papiers",
   "Date posted": "Date de publication",
   "Duration": "Durée",
@@ -25,6 +28,9 @@
   "Home": "Accueil",
   "Internal Error": "Erreur interne",
   "Invalid date": "Date invalide",
+  "Language": "Langue",
+  "Lights off": "Lumières éteintes",
+  "Lights on": "Lumières allumées",
   "Links": "Liens",
   "Meta": "Plus",
   "More": "Plus",
@@ -43,12 +49,16 @@
   "See more": "Voir plus",
   "Show stack trace": "Afficher la trace de la pile",
   "Skip to content": "Passer au contenu",
+  "Social": "Social",
   "Social links": "Liens sociaux",
   "Sorry, something went wrong. Please try again.": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
   "Switch to English": "Passer à l'Anglais",
   "Switch to French": "Passer au Français",
   "Tags": "Tags",
+  "Theme": "Thème",
   "Thoughts": "Pensées",
+  "Topic": "Sujet",
+  "Topics": "Sujets",
   "Unknown date": "Date inconnue",
   "Use dark mode": "Utiliser le mode sombre",
   "Use light mode": "Utiliser le mode clair",
@@ -82,6 +92,9 @@
     "unauthorized": {
       "message": "Désolé, vous n'êtes pas autorisé à accéder à cette ressource.",
       "title": "Non Autorisé"
+    },
+    "no-content": {
+      "message": "Pas de contenu."
     }
   },
   "go back": "retourner",
@@ -101,7 +114,11 @@
     },
     "thoughts": {
       "description": "Pensées sur la technologie, le design et le développement",
-      "title": "Pensées"
+      "title": "Pensées",
+      "sections": {
+        "topics": "Sujets",
+        "posts": "Articles récents"
+      }
     },
     "work": {
       "description": "Un aperçu de mon travail, de mes rôles précédents et de mes contributions open-source",

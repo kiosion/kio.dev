@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n.js';
+  import { ENV } from '$lib/env';
+  import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import Icon from '$components/icon.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
@@ -42,21 +42,40 @@
   <Divider></Divider>
 {/if}
 
-<HeadedBlock heading={$t('Recent thoughts')} let:id>
+<HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false}>
   {#if data.posts.length}
-    <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
+    <div
+      class="mx-8 mb-6 flex flex-col gap-y-5"
+      role="group"
+      aria-labelledby="{id}-heading"
+    >
       {#each data.posts as post}
-        <ListItem document={post}></ListItem>
+        <ListItem document={post} />
+        <span
+          class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+        ></span>
       {/each}
     </div>
-    <ArrowButton href={$linkTo('/thoughts')} fullWidth preload>
-      <span class="flex items-center justify-start gap-2">
-        <p class="font-mono text-sm">{$t('See more')}</p>
-        <Icon name="ArrowRight" size={18} inline></Icon>
-      </span>
-    </ArrowButton>
+    <div class="mx-8 flex flex-row items-center justify-start gap-x-6">
+      <ArrowButton
+        href={$linkTo('/thoughts')}
+        dir="right"
+        placement="after"
+        text={$t('All posts')}
+        preload
+      />
+      {#if ENV !== 'production'}
+        <ArrowButton
+          href={$linkTo('/thoughts/+')}
+          dir="right"
+          placement="after"
+          text={$t('Topics')}
+          preload
+        />
+      {/if}
+    </div>
   {:else}
-    <div class="mb-6 flex flex-col gap-y-5">
+    <div class="mx-8 mb-6 flex flex-col gap-y-5">
       <p class="font-code p-4">{$t('No content')}</p>
     </div>
   {/if}

@@ -1,23 +1,36 @@
 <script lang="ts">
-  import Icon from '$components/icon.svelte';
+  import Hoverable from '$components/hoverable.svelte';
 
   export let dir: 'left' | 'right',
     onClick: () => void,
     disabled = false;
 </script>
 
-<button
-  class="focus-outline-sm mt-4 flex flex-grow items-center rounded-md text-accent-light hover:text-dark focus-visible:text-dark disabled:cursor-not-allowed disabled:text-dark/60 dark:text-accent-dark dark:hover:text-light dark:focus-visible:text-light dark:disabled:text-light/60"
-  class:justify-end={dir === 'right'}
-  class:justify-start={dir === 'left'}
-  on:click={onClick}
-  on:keydown={(e) => {
-    if (e.key === 'Enter') {
-      onClick();
-    }
-  }}
-  type="button"
-  {disabled}
->
-  <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22}></Icon>
-</button>
+<Hoverable let:hovered>
+  <button
+    class="focus-outline mt-4 flex flex-grow items-center font-mono text-xs text-dark/90 disabled:cursor-not-allowed disabled:text-dark/60 dark:text-light/90 dark:disabled:text-light/60"
+    class:justify-end={dir === 'right'}
+    class:justify-start={dir === 'left'}
+    on:click={onClick}
+    on:keydown={(e) => {
+      if (e.key === 'Enter') {
+        onClick();
+      }
+    }}
+    type="button"
+    {disabled}
+  >
+    <span
+      class="-mx-2 -my-1.5 px-2 py-1.5"
+      class:bg-neutral-100={hovered}
+      class:dark:bg-neutral-500={hovered}
+    >
+      {#if dir === 'left'}
+        [prev]
+      {:else}
+        [next]
+      {/if}
+    </span>
+    <!-- <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22}></Icon> -->
+  </button>
+</Hoverable>

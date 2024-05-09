@@ -39,8 +39,8 @@
             text={useOffset ? "Disable 'pulling' targets" : "Enable 'pulling' targets"}
           >
             <button
-              class="-m-2 h-fit w-fit cursor-none p-2 hover:text-accent-light/90 focus-visible:text-accent-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90 {active
-                ? 'text-accent-light/90 dark:text-accent-dark/90'
+              class="-m-2 h-fit w-fit cursor-none p-2 hover:text-orange-light/90 focus-visible:text-orange-light/90 hover:dark:text-orange-light/90 focus-visible:dark:text-orange-light/90 {active
+                ? 'text-orange-light/90 dark:text-orange-light/90'
                 : 'text-dark/80 dark:text-light/80'}"
               on:click={() => (useOffset = !useOffset)}
               on:keyup={(e) => e.key === 'Enter' && (useOffset = !useOffset)}
@@ -100,8 +100,8 @@
       {#each buttons as label}
         <CursorTarget let:active let:offset
           ><button
-            class="focus-outline-sm cursor-none select-none rounded-lg px-4 py-3 font-mono text-sm transition-colors active:text-accent-light/80 dark:active:text-accent-dark/80 {active
-              ? ' text-accent-light dark:text-accent-dark'
+            class="focus-outline-sm cursor-none select-none rounded-lg px-4 py-3 font-mono text-sm transition-colors active:text-orange-light/80 dark:active:text-orange-light/80 {active
+              ? ' text-orange-light dark:text-orange-light'
               : ''}"
             tabindex="0"
             type="button"

@@ -5,7 +5,6 @@
 
   import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Icon from '$components/icon.svelte';
   import Image from '$components/images/image.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
@@ -62,17 +61,13 @@
     </div>
     {#if !data.tags?.length}
       <ArrowButton
-        class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+        class="hidden whitespace-nowrap sm:block print:hidden"
         href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
         align="right"
-        fullWidth
+        dir="left"
+        text={$t('Read more')}
         preload
-      >
-        <span class="flex items-center justify-end gap-2 font-mono text-sm">
-          <Icon name="ArrowLeft" inline></Icon>
-          <p>{$t('Read more')}</p>
-        </span>
-      </ArrowButton>
+      />
     {/if}
   </div>
 
@@ -83,25 +78,26 @@
         aria-label={$t('Tags')}
       >
         {#each data.tags as tag}
-          <span
-            class="cursor-pointer select-none rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 font-mono text-xs transition-colors dark:border-light/60 dark:bg-light/5"
+          <a
+            class="focus-outline-sm select-none rounded-xs bg-neutral-100 px-1.5 py-1 font-mono text-xs hover:bg-orange-light focus-visible:bg-orange-light dark:bg-neutral-500 dark:hover:bg-orange-dark dark:focus-visible:bg-orange-dark"
+            href={$linkTo(
+              `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
+            )}
+            data-sveltekit-preload-code
+            aria-label={$t('Topic') + ': ' + tag.title}
           >
             {tag.title.toLowerCase()}
-          </span>
+          </a>
         {/each}
       </div>
       <ArrowButton
-        class="focus-outline-sm hidden flex-1 select-none whitespace-nowrap sm:block print:hidden"
+        class="hidden whitespace-nowrap sm:block print:hidden"
         href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
         align="right"
-        fullWidth
+        dir="left"
+        text={$t('Read more')}
         preload
-      >
-        <span class="flex items-center justify-end gap-2 font-mono text-sm">
-          <Icon name="ArrowLeft" inline></Icon>
-          <p>{$t('Read more')}</p>
-        </span>
-      </ArrowButton>
+      />
     </div>
   {/if}
 </div>
@@ -110,7 +106,10 @@
   <div
     class="flex w-full flex-row items-center justify-start gap-3 border-b border-dark/80 px-6 py-6 text-base dark:border-light/60 md:px-10"
   >
-    <Icon name="GitCommit"></Icon>
+    <span
+      class="cursor-default select-none font-mono text-sm text-dark/80 dark:text-light/80"
+      >url /</span
+    >
     <span class="font-mono text-sm">
       <Link href={data.github}>
         {'github.com/' + data.github.split('github.com/')?.[1]}

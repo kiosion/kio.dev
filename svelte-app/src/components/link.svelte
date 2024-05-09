@@ -25,13 +25,15 @@
     text={tooltipText ??
       (link && link.length > 50 ? `${link.slice(0, 50 - 3)}...` : link ?? $t('Visit'))}
     position={tooltipPosition}
-    inDelay={250}
+    inDelay={500}
   >
     <svelte:element
       this={type}
       target={newtab ? '_blank' : undefined}
       rel={newtab ? 'noopener noreferrer' : undefined}
-      class="focus-outline-sm rounded-sm from-accent-light underline decoration-accent-light underline-offset-[2px] transition-[text-decoration-color] dark:decoration-accent-dark"
+      class="focus-outline-sm rounded-xs font-semibold text-black underline decoration-neutral-200 underline-offset-[3px] transition-[text-decoration-color,color] dark:text-white dark:decoration-neutral-400"
+      class:decoration-orange-light={hovered}
+      class:dark:decoration-orange-light={hovered}
       class:decoration-[3px]={hovered}
       class:decoration-2={!hovered}
       tabindex="0"

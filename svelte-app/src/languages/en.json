@@ -4,12 +4,15 @@
   "A project on kio.dev": "A project on kio.dev",
   "About": "About",
   "About me": "About me",
+  "All posts": "All posts",
+  "All topics": "All topics",
   "Back": "Back",
   "Blog": "Blog",
   "Click here to": "Click here to",
   "Code block": "Code block",
   "Code content": "Code content",
   "Copied": "Copied",
+  "Copy": "Copy",
   "Copy to clipboard": "Copy to clipboard",
   "Date posted": "Date posted",
   "Duration": "Duration",
@@ -25,6 +28,9 @@
   "Home": "Home",
   "Internal Error": "Internal Error",
   "Invalid date": "Invalid date",
+  "Language": "Language",
+  "Lights off": "Lights off",
+  "Lights on": "Lights on",
   "Links": "Links",
   "Meta": "Meta",
   "More": "More",
@@ -43,12 +49,16 @@
   "See more": "See more",
   "Show stack trace": "Show stack trace",
   "Skip to content": "Skip to content",
+  "Social": "Social",
   "Social links": "Social links",
   "Sorry, something went wrong. Please try again.": "Sorry, something went wrong. Please try again.",
   "Switch to English": "Switch to English",
   "Switch to French": "Switch to French",
   "Tags": "Tags",
+  "Theme": "Theme",
   "Thoughts": "Thoughts",
+  "Topic": "Topic",
+  "Topics": "Topics",
   "Unknown date": "Unknown date",
   "Use dark mode": "Use dark mode",
   "Use light mode": "Use light mode",
@@ -82,6 +92,9 @@
     "unauthorized": {
       "message": "Sorry, you don't have permission to access that resource.",
       "title": "Unauthorized"
+    },
+    "no-content": {
+      "message": "No content."
     }
   },
   "go back": "go back",
@@ -101,7 +114,11 @@
     },
     "thoughts": {
       "description": "Thoughts about tech, design, and development",
-      "title": "Thoughts"
+      "title": "Thoughts",
+      "sections": {
+        "topics": "Topics",
+        "posts": "Recent thoughts"
+      }
     },
     "work": {
       "description": "An overview of my work, prior roles, and open-source contributions",

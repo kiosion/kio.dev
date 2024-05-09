@@ -55,5 +55,9 @@ const getEndpoint = (
           }${params.get('preview') === 'true' ? '&preview=true' : ''}`;
     case 'config':
       return `${REMOTE_API_URL}/config?lang=${params.get('lang') || 'en'}`;
+    case 'tag':
+      return many
+        ? `${REMOTE_API_URL}/query/${type}s?${params}`
+        : `${REMOTE_API_URL}/query/${type}/${params.get('id')}?type=${params.get('type')}`;
   }
 };

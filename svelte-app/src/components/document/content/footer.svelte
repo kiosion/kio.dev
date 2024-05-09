@@ -25,19 +25,12 @@
 {/if}
 
 <div
-  class="border-t border-dark/80 px-6 pb-5 pt-6 dark:border-light/60 md:px-10 print:hidden"
+  class="border-t border-dark/80 px-6 pb-5 pt-4 dark:border-light/60 md:px-10 print:hidden"
 >
   <ArrowButton
     href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-    align="left"
-    fullWidth
+    dir={$isMobile ? 'up' : 'left'}
+    text={$t('Read more')}
     preload
-  >
-    <span class="flex items-center justify-start gap-2 font-mono text-sm">
-      {#key $isMobile}
-        <Icon name={$isMobile ? 'ArrowUp' : 'ArrowLeft'} inline></Icon>
-      {/key}
-      <p>{$t('Read more')}</p>
-    </span>
-  </ArrowButton>
+  />
 </div>

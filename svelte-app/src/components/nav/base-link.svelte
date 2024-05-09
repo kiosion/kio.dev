@@ -14,14 +14,16 @@
 
 <Hoverable let:hovered>
   <a
-    class="focus-outline-sm rounded-sm text-dark/80 dark:text-light/80"
+    class="focus-outline-sm text-dark/80 underline-offset-4 transition-colors dark:text-light/80"
     class:active={active || hovered}
+    class:underline={active || hovered}
     class:slotted={$$slots.default !== undefined}
     class:flex={$$slots.default !== undefined}
     class:flex-row={$$slots.default !== undefined}
     class:items-center={$$slots.default !== undefined}
     class:justify-start={$$slots.default !== undefined}
     class:gap-x-1.5={$$slots.default !== undefined}
+    class:dark:text-neutral-100={active || hovered}
     href={$linkTo(href)}
     tabindex="0"
     role={$$props.role || undefined}
@@ -41,17 +43,3 @@
     {/if}
   </a>
 </Hoverable>
-
-<style lang="scss">
-  @import '@styles/mixins';
-
-  a {
-    @include focused('.active') {
-      @apply text-accent-light;
-
-      @include dark {
-        @apply text-accent-dark;
-      }
-    }
-  }
-</style>

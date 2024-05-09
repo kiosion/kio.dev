@@ -28,12 +28,12 @@ code {
 
     & {
       &::selection {
-        background: $accent-light !important;
+        background: $orange-light !important;
         color: $light !important;
       }
       .dark & {
         &::selection {
-          background: $accent-dark !important;
+          background: $orange-light !important;
           color: $dark !important;
         }
       }

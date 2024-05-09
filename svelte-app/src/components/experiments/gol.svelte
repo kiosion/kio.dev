@@ -143,7 +143,7 @@
     >
       {#if running}
         <svg
-          class="h-5 w-5 text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
+          class="h-5 w-5 text-dark/90 hover:text-orange-light/90 focus-visible:text-orange-light/90 dark:text-light/90 hover:dark:text-orange-light/90 focus-visible:dark:text-orange-light/90"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -152,7 +152,7 @@
         </svg>
       {:else}
         <svg
-          class="h-5 w-5 text-dark/90 hover:text-accent-light/90 focus-visible:text-accent-light/90 dark:text-light/90 hover:dark:text-accent-dark/90 focus-visible:dark:text-accent-dark/90"
+          class="h-5 w-5 text-dark/90 hover:text-orange-light/90 focus-visible:text-orange-light/90 dark:text-light/90 hover:dark:text-orange-light/90 focus-visible:dark:text-orange-light/90"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

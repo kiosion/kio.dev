@@ -28,8 +28,9 @@ defmodule Router.Api.V1.Tags do
         |> Query.project([
           "_id",
           "_rev",
-          ["'objectID'", "_id"],
           "_type",
+          "_createdAt",
+          "_updatedAt",
           "title",
           "slug"
         ])

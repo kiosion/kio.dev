@@ -19,13 +19,13 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline w-full rounded-md"
+    class="focus-outline relative -mx-3 -my-2.5 w-[calc(100%+24px)] px-3 py-2.5 transition-[color] duration-75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-dark/80 transition-colors dark:text-light/80"
+      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-neutral-700 transition-colors dark:text-neutral-200"
       class:gap-3={document.tags?.length}
     >
       <p class="line-clamp-1" aria-label={$t('Date posted')}>
@@ -33,8 +33,8 @@
       </p>
       {#if document.tags?.length}
         <span
-          class="font-code rounded-sm border border-dark/80 bg-dark/5 px-1.5 py-1 text-xs transition-colors dark:border-light/60 dark:bg-light/5"
-          >{document.tags[0].title.toLowerCase()}</span
+          class="font-code rounded-xs bg-neutral-100 px-1.5 py-1 text-xs transition-colors dark:bg-neutral-500"
+          class:dark:bg-neutral-400={hovered}>{document.tags[0].title.toLowerCase()}</span
         >
       {:else}
         <BulletPoint></BulletPoint>
@@ -43,7 +43,7 @@
     </div>
 
     <h1
-      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-accent-light decoration-[3px] underline-offset-4 transition-colors dark:decoration-accent-dark lg:max-w-[60rem]"
+      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors lg:max-w-[60rem]"
       class:pb-1={document.desc?.length}
       class:underline={hovered}
     >
@@ -51,7 +51,17 @@
     </h1>
 
     {#if document.desc?.length}
-      <p class="line-clamp-2 lg:max-w-[60rem]">{document.desc}</p>
+      <p
+        class="line-clamp-2 text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
+      >
+        {document.desc}
+      </p>
     {/if}
+
+    <span
+      class="absolute right-6 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
+      class:opacity-100={hovered}
+      class:translate-x-1.5={hovered}>&rarr;</span
+    >
   </a>
 </Hoverable>

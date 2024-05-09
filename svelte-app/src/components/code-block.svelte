@@ -7,9 +7,8 @@
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
-  import Icon from '$components/icon.svelte';
+  import Hoverable from '$components/hoverable.svelte';
   import Spinner from '$components/loading/spinner.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { ResolvedComponentType } from '$components/code-block/imports';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
@@ -79,20 +78,17 @@
 >
   {#if filename}
     <div
-      class="bg-dark/5 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-light/5 print:bg-transparent"
+      class="bg-neutral-0 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-neutral-800/5 print:bg-transparent"
       id="{id}-filename"
     >
       {filename}
     </div>
     <Divider margin="my-0"></Divider>
   {/if}
-  <Tooltip
-    text={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-    delay={200}
-    offset={[0, 2]}
-  >
+
+  <Hoverable let:hovered>
     <button
-      class="focus-outline-sm absolute right-0 z-[2] cursor-pointer rounded-sm pb-3 pl-3 pr-4 pt-4 text-dark/60 hover:text-dark/80 dark:text-light/60 dark:hover:text-light/80"
+      class="focus-outline-sm absolute right-0 z-[2] cursor-pointer rounded-xs pb-3 pl-3 pr-4 pt-4 font-mono text-xs text-dark/80 dark:text-light/80"
       class:top-1={!filename}
       class:top-12={filename}
       on:click={() => copy()}
@@ -100,17 +96,23 @@
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
       type="button"
     >
-      {#key copied}
-        <Icon name={copied !== undefined ? 'Check' : 'Copy'}></Icon>
-      {/key}
+      <span
+        class="-mx-2 -my-1.5 px-2 py-1.5"
+        class:bg-neutral-100={hovered}
+        class:text-dark={hovered}
+        class:dark:bg-neutral-500={hovered}
+        class:dark:text-light={hovered}
+      >
+        [{$t(copied !== undefined ? 'Copied' : 'Copy').toLowerCase()}]
+      </span>
     </button>
-  </Tooltip>
+  </Hoverable>
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-dark/5 p-1 pl-10 transition-all dark:bg-light/5 print:bg-transparent"
+      class="h-fit w-full min-w-full rounded-sm bg-neutral-0 p-1 pl-10 transition-all dark:bg-neutral-100/5 print:bg-transparent"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}

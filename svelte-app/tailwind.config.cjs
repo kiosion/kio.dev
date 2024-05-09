@@ -7,13 +7,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#17181a',
-        white: '#f5f5f5',
-        dark: '#292c30',
-        light: '#f2f2f2',
+        black: '#0d0c0c',
+        white: '#ffffff',
+        dark: '#181717',
+        light: '#f2f0ed',
         accent: {
           light: '#1e65e1',
           dark: '#affa71'
+        },
+        orange: {
+          light: '#ff4800',
+          dark: '#e03400'
+        },
+        neutral: {
+          0: '#f2f0ed',
+          100: '#e4e0dc',
+          200: '#cfc9c2',
+          300: '#b5aca1',
+          400: '#595650',
+          500: '#383432',
+          600: '#2a2726',
+          700: '#1e1c1b',
+          800: '#181717',
+          light: '#e4e0dc',
+          dark: '#383432'
         }
       },
       fontFamily: {
@@ -34,6 +51,7 @@ module.exports = {
         '5xl': ['2.5rem', '1.5']
       },
       borderRadius: {
+        xs: '0.125rem',
         sm: '0.2rem'
       },
       screens: {

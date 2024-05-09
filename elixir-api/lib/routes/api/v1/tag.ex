@@ -35,10 +35,10 @@ defmodule Router.Api.V1.Tag do
         ])
         |> Query.project([
           "_id",
-          ["'objectID'", "_id"],
           "_rev",
           "_type",
           "title",
+          "views",
           "publishedAt",
           %{
             "tags[]" => [
@@ -46,7 +46,7 @@ defmodule Router.Api.V1.Tag do
               "title",
               "slug"
             ],
-            :follow => true
+            :join => "->"
           },
           "slug",
           "body",
@@ -74,17 +74,34 @@ defmodule Router.Api.V1.Tag do
         parsed_counts = Task.await(counts)
 
         {transformed_result, meta, code} =
-          transform_result_document(query, result, :tag, params, %{
-            "total" => parsed_counts["result"]["total"],
-            "count" => parsed_counts["result"]["count"],
-            "id" => id,
-            "type" => params["type"]
-          })
+          transform_result_document(
+            query,
+            result,
+            String.to_atom(params["type"] <> "s"),
+            params,
+            %{
+              "total" => parsed_counts["result"]["total"],
+              "count" => parsed_counts["result"]["count"]
+            }
+          )
+
+        # parsed_counts = Task.await(counts)
+
+        # {transformed_result, meta, code} =
+        #   transform_result_document(query, result, :tag, params, %{
+        #     "total" => parsed_counts["result"]["total"],
+        #     "count" => parsed_counts["result"]["count"],
+        #     "id" => id,
+        #     "type" => params["type"]
+        #   })
 
         update_meta_and_send_response(conn, code, transformed_result, meta, duration)
       end)
     else
       false ->
+        {:ok, params} = validate_query_params(conn, %{"type" => nil})
+        Logger.info("type param: #{inspect(params["type"])}")
+        Logger.info("ID: #{inspect(id)}")
         conn |> error_res(400, "Invalid request", [%{message: "Missing ID or invalid type"}])
 
       {:error, reason} ->
