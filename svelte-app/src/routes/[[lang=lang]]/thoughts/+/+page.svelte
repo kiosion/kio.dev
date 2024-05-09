@@ -28,7 +28,7 @@
   {#if data.tags?.length}
     <div class="flex flex-col gap-5 px-8 pt-3">
       {#each data.tags as tag}
-        {@const posts = data.postsByTag.get(tag)}
+        {@const posts = data.postsByTag[tag._id]}
         <Hoverable let:hovered>
           <a
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}

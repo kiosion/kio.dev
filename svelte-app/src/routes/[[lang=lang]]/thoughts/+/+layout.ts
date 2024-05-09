@@ -9,32 +9,34 @@ const UNCATEGORIZED_TAG = {
 
 export const load = (async ({ parent }) => {
   const _parent = await parent(),
-    tags = new Set<Pick<DocumentTags, '_id' | 'slug' | 'title'>>(),
-    postsByTag = new Map<Pick<DocumentTags, '_id' | 'slug' | 'title'>, PostDocument[]>();
+    tags: Pick<DocumentTags, '_id' | 'slug' | 'title'>[] = [],
+    postsByTag: Record<DocumentTags['_id'], PostDocument[]> = {};
 
   for (const post of _parent.posts ?? []) {
     if (!post.tags?.length) {
-      !tags.has(UNCATEGORIZED_TAG) && tags.add(UNCATEGORIZED_TAG);
-      postsByTag.set(UNCATEGORIZED_TAG, [
-        ...(postsByTag.get(UNCATEGORIZED_TAG) ?? []),
+      !tags.some((tag) => tag._id === UNCATEGORIZED_TAG._id) &&
+        tags.push(UNCATEGORIZED_TAG);
+
+      postsByTag[UNCATEGORIZED_TAG._id] = [
+        ...(postsByTag[UNCATEGORIZED_TAG._id] ?? []),
         post
-      ]);
+      ];
       continue;
     }
 
     for (const tag of post.tags) {
-      !tags.has(tag) && tags.add(tag);
-      postsByTag.set(tag, [...(postsByTag.get(tag) ?? []), post]);
+      !tags.some((t) => t._id === tag._id) && tags.push(tag);
+      postsByTag[tag._id] = [...(postsByTag[tag._id] ?? []), post];
     }
   }
 
   return {
-    tags: Array.from(tags).sort((a, b) =>
+    tags: tags.sort((a, b) =>
       a._id === UNCATEGORIZED_TAG._id
         ? -1
         : b._id === UNCATEGORIZED_TAG._id
           ? 1
-          : a.title.localeCompare(b.title)
+          : postsByTag[b._id].length - postsByTag[a._id].length
     ),
     postsByTag
   };

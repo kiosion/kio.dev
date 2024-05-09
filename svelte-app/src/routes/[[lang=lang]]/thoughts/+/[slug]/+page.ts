@@ -10,5 +10,5 @@ export const load = (async ({ parent, params }) => {
     throw error(404, 'Not found');
   }
 
-  return { posts: _parent.postsByTag.get(tag), tag };
+  return { posts: _parent.postsByTag[tag._id], tag };
 }) satisfies PageLoad;
