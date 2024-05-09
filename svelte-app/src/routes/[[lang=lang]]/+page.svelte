@@ -42,14 +42,21 @@
   <Divider></Divider>
 {/if}
 
-<HeadedBlock heading={$t('Recent thoughts')} let:id>
+<HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false}>
   {#if data.posts.length}
-    <div class="mb-6 flex flex-col gap-y-5" role="group" aria-labelledby="{id}-heading">
+    <div
+      class="mx-8 mb-6 flex flex-col gap-y-5"
+      role="group"
+      aria-labelledby="{id}-heading"
+    >
       {#each data.posts as post}
         <ListItem document={post} />
+        <span
+          class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+        ></span>
       {/each}
     </div>
-    <div class="flex flex-row items-center justify-start gap-x-6">
+    <div class="mx-8 flex flex-row items-center justify-start gap-x-6">
       <ArrowButton
         href={$linkTo('/thoughts')}
         dir="right"
@@ -68,7 +75,7 @@
       {/if}
     </div>
   {:else}
-    <div class="mb-6 flex flex-col gap-y-5">
+    <div class="mx-8 mb-6 flex flex-col gap-y-5">
       <p class="font-code p-4">{$t('No content')}</p>
     </div>
   {/if}

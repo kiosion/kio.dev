@@ -39,11 +39,11 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('pages.thoughts.title')} let:id>
+<HeadedBlock heading={$t('pages.thoughts.title')} let:id constrainWidth={false}>
   {#if data.posts.length}
     {#if tags.size}
       <div
-        class="flex select-none flex-row flex-wrap items-center justify-start gap-x-1 font-mono text-base"
+        class="flex select-none flex-row flex-wrap items-center justify-start gap-x-1 px-8 font-mono text-base"
         class:mb-4={tags.size > MAX_TAGS}
         class:mb-8={tags.size <= MAX_TAGS}
       >

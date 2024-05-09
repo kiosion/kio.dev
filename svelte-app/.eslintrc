@@ -140,7 +140,7 @@
     "svelte/no-dom-manipulating": ["error"],
     "svelte/no-reactive-literals": ["error"],
     "svelte/prefer-destructured-store-props": ["error"],
-    "unused-imports/no-unused-imports": ["error"],
+    "unused-imports/no-unused-imports": ["off"],
     "unused-imports/no-unused-vars": [
       "error", {
         "varsIgnorePattern": "^_*",

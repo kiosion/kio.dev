@@ -1,11 +1,13 @@
 <script lang="ts">
   import { circInOut } from 'svelte/easing';
+  import { get } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { APP_LANGS } from '$lib/consts';
   import { currentLang, linkTo, t } from '$lib/i18n';
+  import { isMobile } from '$lib/responsive';
 
   import Hoverable from '$components/hoverable.svelte';
 
@@ -13,7 +15,8 @@
 
   const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
-    if ($page?.url?.pathname?.startsWith(`/${lang}`)) {
+
+    if ($page?.url?.pathname?.startsWith(`/${lang}`) || !get(isMobile)) {
       return Promise.resolve();
     }
 
@@ -30,12 +33,16 @@
     dropdown: HTMLDivElement | undefined,
     dropdownTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  const handleMouseEnter = () => {
+  const handleShow = () => {
     clearTimeout(dropdownTimeout);
+    if (get(isMobile)) {
+      return;
+    }
+
     dropdownTimeout = setTimeout(() => (showDropdown = true), BASE_TIMEOUT_MS * 2);
   };
 
-  const handleMouseLeave = () => {
+  const handleHide = () => {
     clearTimeout(dropdownTimeout);
     dropdownTimeout = setTimeout(() => (showDropdown = false), BASE_TIMEOUT_MS);
   };
@@ -67,16 +74,23 @@
 
 <div
   class="focus-outline relative z-10 -m-1 cursor-pointer select-none rounded-xs px-2 py-1 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
-  on:mouseenter={handleMouseEnter}
-  on:focus={handleMouseEnter}
-  on:mouseleave={handleMouseLeave}
+  on:mouseenter={handleShow}
+  on:focus={handleShow}
+  on:mouseleave={handleHide}
   on:blur={handleBlur}
+  on:click={(e) =>
+    handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0])}
+  on:keyup={(e) =>
+    e.key === 'Enter' &&
+    handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0])}
   role="menu"
   aria-label="Change language"
   tabindex="0"
 >
   <span class="z-10">
-    [{$currentLang === APP_LANGS[0] ? 'en' : 'fr'}] {$t('Language').toLowerCase()}
+    [{$currentLang === APP_LANGS[0] ? 'en' : 'fr'}]<span class="hidden md:inline-block"
+      >&nbsp;{$t('Language').toLowerCase()}</span
+    >
   </span>
   {#if showDropdown}
     <div

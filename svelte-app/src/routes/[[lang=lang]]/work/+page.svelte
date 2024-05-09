@@ -39,7 +39,7 @@
 {#if data.projects.length}
   <Divider></Divider>
 
-  <HeadedBlock heading={$t('Projects')}>
+  <HeadedBlock heading={$t('Projects')} constrainWidth={false}>
     <DocumentList documents={data.projects}></DocumentList>
   </HeadedBlock>
 {/if}

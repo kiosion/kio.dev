@@ -10,12 +10,7 @@
 
 <Hoverable let:hovered>
   <button
-    class="focus-outline -m-1 rounded-xs px-2 py-1 font-mono text-xs"
-    class:bg-neutral-600={hovered && $theme === APP_THEMES.DARK}
-    class:text-dark={$theme === APP_THEMES.LIGHT}
-    class:bg-orange-light={$theme === APP_THEMES.LIGHT}
-    class:hover:bg-orange-dark={$theme === APP_THEMES.LIGHT}
-    class:focus-visible:bg-orange-dark={$theme === APP_THEMES.LIGHT}
+    class="focus-outline -m-1 rounded-xs px-2 py-1 font-mono text-xs text-dark hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:text-light dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
     aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
     data-test-id="theme-toggle"
     data-test-state={$theme}
@@ -26,6 +21,8 @@
     }}
     type="button"
   >
-    [{#if $theme === APP_THEMES.DARK}&nbsp;{:else}x{/if}] {$t('Lights on').toLowerCase()}
+    [{#if $theme === APP_THEMES.DARK}dark{:else}light{/if}]<span
+      class="hidden md:inline-block">&nbsp;{$t('Theme').toLowerCase()}</span
+    >
   </button>
 </Hoverable>

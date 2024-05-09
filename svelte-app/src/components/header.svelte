@@ -9,7 +9,9 @@
 <header
   class="flex flex-row flex-wrap items-center justify-start gap-x-6 border-b border-dark/80 px-6 py-4 transition-[border-color] dark:border-light/60"
 >
-  <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-y-4">
+  <div
+    class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-4"
+  >
     <nav
       class="flex flex-col items-start justify-center gap-y-3 text-base transition-[color]"
       aria-label="Main navigation"
@@ -27,19 +29,19 @@
           class="inline-flex select-none flex-row flex-wrap items-center justify-start gap-y-1 text-[13.5px] text-dark/80 dark:text-light/80 print:hidden"
         >
           {#each NAV_LINKS as link, i}
-            <NavLink {link} />
-            {#if i < NAV_LINKS.length - 1}
-              <span
-                class="cursor-default select-none text-dark/60 dark:text-light/60"
-                aria-hidden="true">,&nbsp;</span
-              >
-            {/if}
+            <span>
+              <NavLink {link} />{#if i < NAV_LINKS.length - 1}<span
+                  class="cursor-default select-none text-dark/60 dark:text-light/60"
+                  aria-hidden="true">,&nbsp;</span
+                >
+              {/if}
+            </span>
           {/each}
         </span>
       </div>
     </nav>
     <div
-      class="flex flex-row flex-wrap items-center justify-start gap-4 text-right text-dark dark:text-light print:hidden"
+      class="flex flex-row items-center justify-start gap-2 text-right text-dark dark:text-light md:gap-3 print:hidden"
       aria-label="Page controls"
       role="group"
     >

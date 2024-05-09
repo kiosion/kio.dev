@@ -19,9 +19,7 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline -mx-3 -my-2.5 w-full rounded-md px-3 py-2.5 transition-[background-color] duration-75"
-    class:bg-neutral-0={hovered}
-    class:dark:bg-neutral-700={hovered}
+    class="focus-outline -mx-3 -my-2.5 w-[calc(100%+24px)] px-3 py-2.5 transition-[color] duration-75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data

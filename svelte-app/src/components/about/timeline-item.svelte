@@ -62,18 +62,18 @@
     }
 
     &:before {
-      @apply absolute bg-neutral-300/60;
+      @apply absolute border-l border-dashed border-neutral-200 transition-colors;
 
       $baseSpaceFromTop: $bulletTopMargin + $bulletSize;
 
       content: '';
       top: #{$bulletTopMargin + $bulletSize + $lineGap};
       bottom: #{0px + $lineGap - $bulletTopMargin};
-      left: #{$bulletSize * 2 + $lineWidth};
+      left: #{$bulletSize * 2};
       width: $lineWidth;
 
       @include dark {
-        @apply bg-neutral-300/60;
+        @apply border-neutral-400;
       }
     }
   }

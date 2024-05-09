@@ -22,7 +22,7 @@
         href={$linkTo('/thoughts')}
         dir="left"
         placement="before"
-        text={$t('All topics')}
+        text={$t('All posts')}
         preload
       />
     </div>

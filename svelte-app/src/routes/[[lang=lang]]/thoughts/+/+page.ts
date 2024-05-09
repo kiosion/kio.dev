@@ -13,24 +13,17 @@ export const load = (async ({ parent }) => {
     postsByTag = new Map<Pick<DocumentTags, '_id' | 'slug' | 'title'>, PostDocument[]>();
 
   for (const post of _parent.posts ?? []) {
-    if (!post.tags) {
+    if (!post.tags?.length) {
+      !tags.has(UNCATEGORIZED_TAG) && tags.add(UNCATEGORIZED_TAG);
+      postsByTag.set(UNCATEGORIZED_TAG, [
+        ...(postsByTag.get(UNCATEGORIZED_TAG) ?? []),
+        post
+      ]);
       continue;
     }
 
-    for (const post of _parent.posts ?? []) {
-      if (!post.tags) {
-        !tags.has(UNCATEGORIZED_TAG) && tags.add(UNCATEGORIZED_TAG);
-        postsByTag.set(UNCATEGORIZED_TAG, [
-          ...(postsByTag.get(UNCATEGORIZED_TAG) ?? []),
-          post
-        ]);
-        continue;
-      }
-
-      const tag = post.tags[0];
-
+    for (const tag of post.tags) {
       !tags.has(tag) && tags.add(tag);
-
       postsByTag.set(tag, [...(postsByTag.get(tag) ?? []), post]);
     }
   }
