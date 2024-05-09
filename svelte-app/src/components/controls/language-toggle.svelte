@@ -16,7 +16,7 @@
   const handleClick = (event: Event, lang: (typeof APP_LANGS)[number]) => {
     event.preventDefault();
 
-    if ($page?.url?.pathname?.startsWith(`/${lang}`) || !get(isMobile)) {
+    if ($page?.url?.pathname?.startsWith(`/${lang}`)) {
       return Promise.resolve();
     }
 
@@ -79,9 +79,11 @@
   on:mouseleave={handleHide}
   on:blur={handleBlur}
   on:click={(e) =>
+    get(isMobile) &&
     handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0])}
   on:keyup={(e) =>
     e.key === 'Enter' &&
+    get(isMobile) &&
     handleClick(e, $currentLang === APP_LANGS[0] ? APP_LANGS[1] : APP_LANGS[0])}
   role="menu"
   aria-label="Change language"
