@@ -64,15 +64,13 @@
         text={$t('All posts')}
         preload
       />
-      {#if ENV !== 'production'}
-        <ArrowButton
-          href={$linkTo('/thoughts/+')}
-          dir="right"
-          placement="after"
-          text={$t('Topics')}
-          preload
-        />
-      {/if}
+      <ArrowButton
+        href={$linkTo('/thoughts/+')}
+        dir="right"
+        placement="after"
+        text={$t('Topics')}
+        preload
+      />
     </div>
   {:else}
     <div class="mx-8 mb-6 flex flex-col gap-y-5">
