@@ -43,9 +43,7 @@
   {#if data.posts.length}
     {#if tags.size}
       <div
-        class="flex select-none flex-row flex-wrap items-center justify-start gap-x-1 px-8 font-mono text-base"
-        class:mb-4={tags.size > MAX_TAGS}
-        class:mb-8={tags.size <= MAX_TAGS}
+        class="mb-8 flex select-none flex-row flex-wrap items-center justify-start gap-x-1.5 gap-y-2 px-8 font-mono text-base"
       >
         <span
           class="-ml-2.5 mr-1 text-2xl leading-[1.3] text-neutral-200 transition-colors dark:text-neutral-500"
@@ -55,7 +53,7 @@
           {#if i < MAX_TAGS}
             <span class="text-lg text-neutral-400 dark:text-neutral-300">
               <a
-                class="focus-outline-sm rounded-xs text-base text-neutral-800 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
+                class="focus-outline-sm -m-2 p-2 text-base text-neutral-800 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
                 href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
                 data-sveltekit-preload-code
                 aria-label={$t('Topic') + ': ' + tag.title}
@@ -72,17 +70,19 @@
         >
           &rpar;</span
         >
+        <span class="inline-flex flex-1 items-center justify-between">
+          <span
+            class="ml-5 mr-6 block flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+          ></span>
+          <ArrowButton
+            href={$linkTo(`/thoughts/+/`)}
+            dir="right"
+            placement="after"
+            text={$t('All topics')}
+            preload
+          />
+        </span>
       </div>
-      {#if tags.size > MAX_TAGS}
-        <ArrowButton
-          class="mb-8"
-          onClick={() => {}}
-          dir="right"
-          placement="after"
-          text={$t('All topics')}
-          preload
-        />
-      {/if}
     {/if}
 
     <DocumentList documents={data.posts} aria-labelledby="{id}-heading"></DocumentList>

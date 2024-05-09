@@ -9,7 +9,7 @@
   export let data;
 </script>
 
-<HeadedBlock heading={data.tag.title} let:id>
+<HeadedBlock heading={data.tag.title} let:id constrainWidth={false}>
   <svelte:fragment slot="heading">
     <div class="flex w-full flex-row items-center justify-between">
       <h1 class="line-clamp-1 font-mono text-md text-neutral-600 dark:text-neutral-300">

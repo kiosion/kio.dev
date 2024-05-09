@@ -55,6 +55,7 @@ export type LocaleKey =
   | 'Switch to English'
   | 'Switch to French'
   | 'Tags'
+  | 'Theme'
   | 'Thoughts'
   | 'Topic'
   | 'Topics'
