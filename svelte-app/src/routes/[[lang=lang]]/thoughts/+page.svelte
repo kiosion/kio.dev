@@ -13,7 +13,7 @@
 
   $: description = $t('pages.thoughts.description');
 
-  const MAX_TAGS = 12;
+  const MAX_TAGS = 6;
 
   const tags =
     data.posts?.reduce((acc, post) => {
@@ -62,7 +62,7 @@
               >{#if i < MAX_TAGS && i < tags.size - 1},{/if}
             </span>
           {:else if i === MAX_TAGS}
-            <span class="text-md text-neutral-700 dark:text-neutral-200">...</span>
+            <span class="text-md text-neutral-400 dark:text-neutral-300">...</span>
           {/if}
         {/each}
         <span
