@@ -9,12 +9,12 @@ const UNCATEGORIZED_TAG = {
 
 export const load = (async ({ parent }) => {
   const _parent = await parent(),
-    tags: Pick<DocumentTags, '_id' | 'slug' | 'title'>[] = [],
+    tags = new Set<Pick<DocumentTags, '_id' | 'slug' | 'title'>>(),
     postsByTag = new Map<Pick<DocumentTags, '_id' | 'slug' | 'title'>, PostDocument[]>();
 
   for (const post of _parent.posts ?? []) {
     if (!post.tags?.length) {
-      !tags.includes(UNCATEGORIZED_TAG) && tags.push(UNCATEGORIZED_TAG);
+      !tags.has(UNCATEGORIZED_TAG) && tags.add(UNCATEGORIZED_TAG);
       postsByTag.set(UNCATEGORIZED_TAG, [
         ...(postsByTag.get(UNCATEGORIZED_TAG) ?? []),
         post
@@ -23,13 +23,13 @@ export const load = (async ({ parent }) => {
     }
 
     for (const tag of post.tags) {
-      !tags.includes(tag) && tags.push(tag);
+      !tags.has(tag) && tags.add(tag);
       postsByTag.set(tag, [...(postsByTag.get(tag) ?? []), post]);
     }
   }
 
   return {
-    tags: tags.sort((a, b) =>
+    tags: Array.from(tags).sort((a, b) =>
       a._id === UNCATEGORIZED_TAG._id
         ? -1
         : b._id === UNCATEGORIZED_TAG._id
