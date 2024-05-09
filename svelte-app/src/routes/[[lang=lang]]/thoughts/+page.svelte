@@ -46,14 +46,14 @@
         class="mb-8 flex select-none flex-row flex-wrap items-center justify-start gap-x-1.5 gap-y-2 px-8 font-mono text-base"
       >
         <span
-          class="-ml-2.5 mr-1 text-2xl leading-[1.3] text-neutral-200 transition-colors dark:text-neutral-500"
+          class="-ml-2.5 mr-1 text-lg leading-[1.5] text-neutral-200 transition-colors dark:text-neutral-500"
           >&lpar;
         </span>
         {#each tags.values() as tag, i}
           {#if i < MAX_TAGS}
-            <span class="text-lg text-neutral-400 dark:text-neutral-300">
+            <span class="text-md text-neutral-400 dark:text-neutral-300">
               <a
-                class="focus-outline-sm -m-2 p-2 text-base text-neutral-800 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
+                class="focus-outline-sm -m-2 p-2 text-sm text-neutral-800 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
                 href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
                 data-sveltekit-preload-code
                 aria-label={$t('Topic') + ': ' + tag.title}
@@ -66,7 +66,7 @@
           {/if}
         {/each}
         <span
-          class="-mr-2.5 ml-1 text-2xl leading-[1.3] text-neutral-200 transition-colors dark:text-neutral-500"
+          class="-mr-2.5 ml-1 text-lg leading-[1.5] text-neutral-200 transition-colors dark:text-neutral-500"
         >
           &rpar;</span
         >
