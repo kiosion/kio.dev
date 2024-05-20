@@ -6,8 +6,8 @@
   import { t } from '$lib/i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import HeadedBlock from '$components/headings/headed-block.svelte';
   import Divider from '$components/divider.svelte';
+  import HeadedBlock from '$components/headings/headed-block.svelte';
   import Link from '$components/link.svelte';
 
   import type { LocaleKey } from '$generated';

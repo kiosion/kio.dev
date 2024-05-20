@@ -8,7 +8,8 @@
 
   import type { SiteConfig } from '$types';
 
-  export let config: SiteConfig;
+  export let config: SiteConfig,
+    scrollShadow: { bottom: boolean; top: boolean } | undefined;
 
   const socials = config?.socialLinks?.map((social) => ({
     name: social.name,
@@ -21,6 +22,7 @@
 {#if socials?.length || APP_VERSION?.length}
   <footer
     class="flex flex-row flex-wrap items-center justify-between gap-x-6 gap-y-2 overflow-hidden border-t border-dark/80 px-6 py-4 font-mono text-[13.5px] transition-[border-color] dark:border-light/60 print:hidden"
+    class:shadow-b={scrollShadow?.bottom}
   >
     {#if socials?.length}
       <div class="flex select-none flex-row items-center justify-start gap-x-2">
@@ -82,3 +84,12 @@
     {/if}
   </footer>
 {/if}
+
+<style lang="scss">
+  @import '@styles/colors';
+
+  .shadow-b {
+    box-shadow: 0 -5px 0 0 rgba($dark, 0.1);
+    z-index: 200;
+  }
+</style>

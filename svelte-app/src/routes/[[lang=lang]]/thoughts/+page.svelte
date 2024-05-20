@@ -75,7 +75,7 @@
             class="ml-5 mr-6 block flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
           ></span>
           <ArrowButton
-            href={$linkTo(`/thoughts/+/`)}
+            href={$linkTo('/thoughts/+/')}
             dir="right"
             placement="after"
             text={$t('All topics')}

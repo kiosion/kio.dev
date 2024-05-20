@@ -31,7 +31,8 @@
 
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
-    setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
+    setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
+    scrollShadow = { top: false, bottom: false };
 
   const { theme } = Settings,
     skipToContent = (e: KeyboardEvent) => {
@@ -151,9 +152,9 @@
 <div
   class="main h-full w-full overflow-x-hidden p-3 text-dark dark:text-light md:p-8 lg:text-lg"
 >
-  <ScrollContainer>
+  <ScrollContainer bind:shadow={scrollShadow}>
     <svelte:fragment slot="before">
-      <Header />
+      <Header {scrollShadow} />
     </svelte:fragment>
 
     <PageTransition pathname={data.pathname} id="content-wrapper">
@@ -161,7 +162,7 @@
     </PageTransition>
 
     <svelte:fragment slot="after">
-      <Footer config={data.config} />
+      <Footer config={data.config} {scrollShadow} />
     </svelte:fragment>
   </ScrollContainer>
 

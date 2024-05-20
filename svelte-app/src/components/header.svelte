@@ -4,10 +4,13 @@
   import LanguageControls from '$components/controls/language-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import NavLink from '$components/nav/header-link.svelte';
+
+  export let scrollShadow: { top: boolean; bottom: boolean } | undefined;
 </script>
 
 <header
   class="flex flex-row flex-wrap items-center justify-start gap-x-6 border-b border-dark/80 px-6 py-4 transition-[border-color] dark:border-light/60"
+  class:shadow-t={scrollShadow?.top}
 >
   <div
     class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-4"
@@ -50,3 +53,12 @@
     </div>
   </div>
 </header>
+
+<style lang="scss">
+  @import '@styles/colors';
+
+  .shadow-t {
+    box-shadow: 0 5px 0 0 rgba($dark, 0.1);
+    z-index: 200;
+  }
+</style>
