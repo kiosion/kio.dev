@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@sanity/code-input": "4.1.4",
-    "@sanity/ui": "2.1.12",
+    "@sanity/ui": "2.1.14",
     "@sanity/vision": "3.40.0",
     "ace-builds": "1.34.2",
     "react": "18.3.1",
