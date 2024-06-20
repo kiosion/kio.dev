@@ -79,7 +79,7 @@ jobs:
       - name: Run tests
         run: make playwright
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-results
