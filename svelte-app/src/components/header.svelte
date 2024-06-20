@@ -56,9 +56,14 @@
 
 <style lang="scss">
   @import '@styles/colors';
+  @import '@styles/mixins';
 
   .shadow-t {
     box-shadow: 0 5px 0 0 rgba($dark, 0.1);
     z-index: 200;
+
+    @include dark {
+      box-shadow: 0 5px 0 0 rgba($light, 0.2);
+    }
   }
 </style>

@@ -59,9 +59,9 @@
     {/if}
 
     <span
-      class="absolute right-6 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
+      class="absolute right-8 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
       class:opacity-100={hovered}
-      class:translate-x-1.5={hovered}>&rarr;</span
+      class:translate-x-2={hovered}>&rarr;</span
     >
   </a>
 </Hoverable>
