@@ -26,7 +26,7 @@
 {#if show}
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <dialog
-    class="fixed inset-0 z-50 flex h-full w-full flex-col items-center justify-center bg-black/80"
+    class="fixed inset-0 z-50 flex h-full w-full cursor-zoom-out flex-col items-center justify-center bg-black/80"
     bind:this={dialog}
     on:click={() => (show = false)}
     on:keydown={(e) => {

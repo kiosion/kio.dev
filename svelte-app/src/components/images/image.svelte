@@ -81,7 +81,7 @@
     />
   {:then src}
     <button
-      class="focus-outline-sm relative block max-h-fit w-full rounded-sm"
+      class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-sm"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
         showImageModal = true;

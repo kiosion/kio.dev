@@ -8,8 +8,8 @@
   export const id = Math.random().toString(36).substring(2);
 </script>
 
-<section class="mb-6 w-full transition-colors" {id} data-test-id={testId}>
-  <div class="mb-5 mt-6 w-full px-8">
+<section class="mb-5 w-full transition-colors md:mb-6" {id} data-test-id={testId}>
+  <div class="mb-4 mt-5 w-full px-6 md:mb-5 md:mt-6 md:px-8">
     {#if $$slots.heading}
       <slot name="heading" {id} />
     {:else}
@@ -17,7 +17,7 @@
     {/if}
   </div>
   {#if constrainWidth}
-    <ConstrainWidth class="px-8">
+    <ConstrainWidth class="px-6 md:px-8">
       <div class="mx-1 font-sans text-base text-dark/90 dark:text-light/90">
         <slot {id} />
       </div>

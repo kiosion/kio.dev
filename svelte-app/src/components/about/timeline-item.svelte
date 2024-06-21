@@ -69,8 +69,7 @@
       content: '';
       top: #{$bulletTopMargin + $bulletSize + $lineGap};
       bottom: #{0px + $lineGap - $bulletTopMargin};
-      left: #{$bulletSize * 2};
-      width: $lineWidth;
+      left: #{$bulletSize * 2 + 1px};
 
       @include dark {
         @apply border-neutral-400;

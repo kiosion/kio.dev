@@ -150,7 +150,7 @@
 >
 
 <div
-  class="main h-full w-full overflow-x-hidden p-3 text-dark dark:text-light md:p-8 lg:text-lg"
+  class="main h-full w-full overflow-x-hidden p-2 text-dark dark:text-light md:p-6 lg:text-lg xl:p-8"
 >
   <ScrollContainer bind:shadow={scrollShadow}>
     <svelte:fragment slot="before">

@@ -112,7 +112,7 @@
     bind:this={codeContainer}
   >
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-neutral-0 p-1 pl-10 transition-all dark:bg-neutral-100/5 print:bg-transparent"
+      class="h-fit w-full min-w-full rounded-sm bg-neutral-0 p-1 pl-4 transition-all dark:bg-neutral-100/5 md:pl-10 print:bg-transparent"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
@@ -129,7 +129,7 @@
       {/if}
       {#if !loadError}
         <!-- eslint-disable-next-line prettier/prettier -->
-        {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+        {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
           <svelte:component
             this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
             code={content}

@@ -6,7 +6,11 @@
   export let documents: (ProjectDocument | PostDocument)[];
 </script>
 
-<div class="mb-6 flex w-full flex-col gap-8 px-8" role="group" {...$$restProps}>
+<div
+  class="mb-5 flex w-full flex-col gap-8 px-6 md:mb-6 md:px-8"
+  role="group"
+  {...$$restProps}
+>
   {#each documents as document, idx}
     <ListItem {document}></ListItem>
     {#if idx < documents.length - 1}
