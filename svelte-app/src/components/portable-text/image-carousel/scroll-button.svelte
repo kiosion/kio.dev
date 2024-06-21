@@ -31,6 +31,5 @@
         [next]
       {/if}
     </span>
-    <!-- <Icon name={dir === 'left' ? 'ArrowLeft' : 'ArrowRight'} size={22}></Icon> -->
   </button>
 </Hoverable>

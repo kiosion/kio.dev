@@ -2,7 +2,6 @@
   import { t } from '$lib/i18n';
   import Logger from '$lib/logger';
 
-  import Icon from '$components/icon.svelte';
   import Footnote from '$components/portable-text/footnote.svelte';
   import CodeBlock from '$components/portable-text/serializers/code-block.svelte';
   import CustomCode from '$components/portable-text/serializers/custom-code.svelte';
@@ -17,7 +16,6 @@
   import NullMark from '$components/portable-text/serializers/null-mark.svelte';
   import OlWrapper from '$components/portable-text/serializers/ol-wrapper.svelte';
   import UlWrapper from '$components/portable-text/serializers/ul-wrapper.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import { PortableText } from '@portabletext/svelte';
 
@@ -146,20 +144,18 @@
               <li class="list-item">
                 <span class="inline-flex flex-row items-start break-all">
                   <svelte:self text={note.note} plaintext />
-                  <Tooltip text={$t('Go to footnote source')}>
-                    <a
-                      class="ml-2 mt-1"
-                      href={`#src-${note._key}`}
-                      id="note-{note._key}"
-                      aria-label="Go to footnote source"
-                      on:click={(e) => customScrollTo(e, `src-${note._key}`)}
-                      on:keydown={(e) => {
-                        if (e.code === 'Space' || e.code === 'Enter') {
-                          customScrollTo(e, `src-${note._key}`);
-                        }
-                      }}><Icon name="arrow-bar-up" size={18} inline></Icon></a
-                    >
-                  </Tooltip>
+                  <a
+                    class="ml-2 rounded-xs px-2 py-1 text-sm transition-colors hover:bg-neutral-light hover:text-orange-light dark:hover:bg-neutral-dark"
+                    href={`#src-${note._key}`}
+                    id="note-{note._key}"
+                    aria-label="Go to footnote source"
+                    on:click={(e) => customScrollTo(e, `src-${note._key}`)}
+                    on:keydown={(e) => {
+                      if (e.code === 'Space' || e.code === 'Enter') {
+                        customScrollTo(e, `src-${note._key}`);
+                      }
+                    }}>&uarr;</a
+                  >
                 </span>
               </li>
             {/each}

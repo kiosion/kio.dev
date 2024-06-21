@@ -137,28 +137,14 @@
 
   <Tooltip text={running ? 'Pause' : 'Resume'}>
     <button
-      class="focus-outline absolute right-4 top-4 rounded-md p-2"
+      class="focus-outline absolute right-4 top-4 rounded-xs p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 hover:text-orange-light/90 focus-visible:bg-violet-100/80 focus-visible:text-orange-light/90 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
       on:click={running ? stopGame : startGame}
       type="button"
     >
       {#if running}
-        <svg
-          class="h-5 w-5 text-dark/90 hover:text-orange-light/90 focus-visible:text-orange-light/90 dark:text-light/90 hover:dark:text-orange-light/90 focus-visible:dark:text-orange-light/90"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path d="M10 4H5v16h5V4zm9 0h-5v16h5V4z" fill="currentColor"></path>
-        </svg>
+        [x]
       {:else}
-        <svg
-          class="h-5 w-5 text-dark/90 hover:text-orange-light/90 focus-visible:text-orange-light/90 dark:text-light/90 hover:dark:text-orange-light/90 focus-visible:dark:text-orange-light/90"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path d="M10 20H8V4h2v2h2v3h2v2h2v2h-2v2h-2v3h-2v2z" fill="currentColor"></path>
-        </svg>
+        [&gt;]
       {/if}
     </button>
   </Tooltip>

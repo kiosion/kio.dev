@@ -6,7 +6,6 @@
   import Divider from '$components/divider.svelte';
   import { initSync, stopSync } from '$components/experiments/toru';
   import Hoverable from '$components/hoverable.svelte';
-  import Icon from '$components/icon.svelte';
   import Link from '$components/link.svelte';
   import Spinner from '$components/loading/spinner.svelte';
 
@@ -68,10 +67,10 @@
 
       <Link
         href="https://github.com/kiosion/toru"
-        class="focus-outline absolute right-4 top-4 z-10 rounded-sm p-2"
+        class="focus-outline absolute right-4 top-4 z-10 rounded-xs p-2 font-mono text-sm transition-colors hover:bg-neutral-light/50 hover:text-orange-light focus-visible:bg-neutral-light/50 dark:hover:bg-neutral-dark/50 dark:focus-visible:bg-neutral-dark/50 dark:focus-visible:text-orange-light"
         newtab
       >
-        <Icon name="ExternalLink" size={21} interactive></Icon>
+        [code]
       </Link>
 
       <figure
