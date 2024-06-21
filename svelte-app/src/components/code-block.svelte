@@ -174,6 +174,7 @@
             updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
           }
         }}
+        type="button"
         >{$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
         {#if showingMore}
           &uarr;
