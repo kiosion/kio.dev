@@ -48,6 +48,7 @@
   "Say hello": "Say hello",
   "See more": "See more",
   "Show stack trace": "Show stack trace",
+  "Show {amount}": "Show {amount}",
   "Skip to content": "Skip to content",
   "Social": "Social",
   "Social links": "Social links",
@@ -98,6 +99,8 @@
     }
   },
   "go back": "go back",
+  "less": "less",
+  "more": "more",
   "now": "now",
   "pages": {
     "about": {

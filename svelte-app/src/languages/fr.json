@@ -48,6 +48,7 @@
   "Say hello": "Dire bonjour",
   "See more": "Voir plus",
   "Show stack trace": "Afficher la trace de la pile",
+  "Show {amount}": "Afficher {amount}",
   "Skip to content": "Passer au contenu",
   "Social": "Social",
   "Social links": "Liens sociaux",
@@ -98,6 +99,8 @@
     }
   },
   "go back": "retourner",
+  "less": "moins",
+  "more": "plus",
   "now": "maintenant",
   "pages": {
     "about": {

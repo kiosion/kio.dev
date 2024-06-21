@@ -18,15 +18,20 @@
     showLineNumbers = true,
     lang: string | undefined;
 
+  const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 4;
+
   let LanguageType: Promise<_LanguageType<string>>,
     HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
     LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
     Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
     codeContainer: HTMLElement,
+    showMoreHeight: number | undefined,
     innerHeight: number,
     hideLoader = false,
     copied: ReturnType<typeof setTimeout> | undefined,
-    loadError: Error | null = null;
+    loadError: Error | null = null,
+    containerHeight = DEFAULT_CODE_BLOCK_HEIGHT,
+    showingMore = false;
 
   const id = Math.random().toString(36).substring(2),
     copy = () => {
@@ -63,15 +68,18 @@
     LanguageType = getLangType(lang);
   });
 
-  const updateHeight = (height?: number) =>
-    codeContainer && height && (codeContainer.style.height = `${height}px`);
+  const updateHeight = (height?: number) => height && (containerHeight = height);
 
-  $: updateHeight(innerHeight),
-    browser && (hideLoader = loadError !== null || innerHeight > 52);
+  // $: showingMore || hideLoader && updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight),
+  //   browser && (hideLoader = loadError !== null || innerHeight > 52);
+  $: hideLoader = loadError !== null || innerHeight > 52;
+  $: hideLoader &&
+    (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore) &&
+    updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight);
 </script>
 
 <div
-  class="relative my-7 overflow-hidden border-b border-t border-dark/80 transition-[border-color] dark:border-light/60"
+  class="relative my-7 overflow-hidden border-b border-t border-dark/80 bg-neutral-0 transition-[border-color] dark:border-light/60"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
@@ -109,24 +117,22 @@
   </Hoverable>
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
+    style="height: {containerHeight}px"
     bind:this={codeContainer}
   >
+    <div
+      class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
+      class:opacity-0={hideLoader}
+      aria-hidden="true"
+    >
+      <Spinner />
+    </div>
     <div
       class="h-fit w-full min-w-full rounded-sm bg-neutral-0 p-1 pl-4 transition-all dark:bg-neutral-100/5 md:pl-10 print:bg-transparent"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
-      <div
-        class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
-        class:opacity-0={hideLoader}
-        aria-hidden="true"
-      >
-        <Spinner></Spinner>
-      </div>
-      {#if !hideLoader}
-        <span class="pointer-events-none mt-11 block"></span>
-      {/if}
       {#if !loadError}
         <!-- eslint-disable-next-line prettier/prettier -->
         {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
@@ -154,4 +160,41 @@
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
+
+  {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
+    <div
+      class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 pb-4 pt-6 text-center"
+      bind:clientHeight={showMoreHeight}
+    >
+      <button
+        class="focus-outline rounded-xs px-2 py-1.5 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        on:click={() => {
+          showingMore = !showingMore;
+          if (!showingMore) {
+            updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
+          }
+        }}
+        >{$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
+        {#if showingMore}
+          &uarr;
+        {:else}
+          &darr;
+        {/if}
+      </button>
+    </div>
+  {/if}
 </div>
+
+<style lang="scss">
+  @import '@styles/colors';
+  @import '@styles/helpers';
+  @import '@styles/mixins';
+
+  .show-more-gradient {
+    background: ease-gradient('to top', $neutral-0, transparent);
+
+    @include dark {
+      background: ease-gradient('to top', $neutral-700, transparent);
+    }
+  }
+</style>
