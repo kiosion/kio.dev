@@ -65,7 +65,17 @@ export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   return rest;
 }) as Omit<AppRoute, 'children'>[];
 
-export const ROUTE_ORDER = ['index', 'blog', 'blog/*', 'work', 'work/*', 'etc'];
+export const ROUTE_ORDER = [
+  '/',
+  '/thoughts',
+  '/thoughts/*',
+  '/thoughts/*/*',
+  '/work',
+  '/work/*',
+  '/work/*/*',
+  '/etc',
+  '/experiments'
+];
 
 export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
   (route) => ({

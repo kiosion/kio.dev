@@ -76,14 +76,14 @@
     background: radial-gradient(
       circle at 100% 80%,
       rgba($neutral-0, 1),
-      rgba($neutral-0, 0.3)
+      rgba($neutral-0, 0.4)
     );
 
     @include dark {
       background: radial-gradient(
         circle at 100% 80%,
         rgba($neutral-700, 1),
-        rgba($neutral-700, 0.3)
+        rgba($neutral-700, 0.4)
       );
     }
   }

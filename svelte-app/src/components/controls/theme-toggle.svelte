@@ -10,7 +10,7 @@
 
 <Hoverable let:hovered>
   <button
-    class="focus-outline -m-1 rounded-xs px-2 py-1 font-mono text-xs text-dark hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:text-light dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
+    class="focus-outline -m-1 rounded-xs px-2 py-1 font-mono text-xs text-dark hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:text-light dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600"
     aria-label={$t($theme === APP_THEMES.LIGHT ? 'Use dark mode' : 'Use light mode')}
     data-test-id="theme-toggle"
     data-test-state={$theme}

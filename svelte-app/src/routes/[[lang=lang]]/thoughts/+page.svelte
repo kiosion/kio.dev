@@ -15,15 +15,44 @@
 
   const MAX_TAGS = 6;
 
-  const tags =
-    data.posts?.reduce((acc, post) => {
-      if (post.tags) {
-        post.tags.forEach((tag) => {
-          acc.add(tag);
-        });
+  const tags: DocumentTags[] = [],
+    tagCounts: Record<DocumentTags['_id'], number> = {};
+
+  for (let i = 0; i < data.posts?.length ?? 0; i++) {
+    const postTags = data.posts[i]?.tags ?? [];
+
+    if (!postTags.length) {
+      continue;
+    }
+
+    for (let j = 0; j < postTags.length; j++) {
+      const tag = postTags[j];
+      tagCounts[tag._id] = (tagCounts[tag._id] ?? 0) + 1;
+
+      if (tagCounts[tag._id] === 1) {
+        tags.push(tag);
       }
-      return acc;
-    }, new Set<DocumentTags>()) ?? new Set<DocumentTags>();
+    }
+  }
+
+  for (let i = 1; i < tags.length; i++) {
+    const currentTag = tags[i];
+    const currentCount = tagCounts[currentTag._id];
+    let j = i - 1;
+
+    // Find the correct position for the currentTag
+    while (
+      j >= 0 &&
+      (tagCounts[tags[j]._id] < currentCount ||
+        (tagCounts[tags[j]._id] === currentCount &&
+          tags[j].title.localeCompare(currentTag.title) > 0))
+    ) {
+      tags[j + 1] = tags[j];
+      j--;
+    }
+
+    tags[j + 1] = currentTag;
+  }
 </script>
 
 <svelte:head>
@@ -41,7 +70,7 @@
 
 <HeadedBlock heading={$t('pages.thoughts.title')} let:id constrainWidth={false}>
   {#if data.posts.length}
-    {#if tags.size}
+    {#if tags.length}
       <div
         class="mb-8 flex select-none flex-row flex-wrap items-center justify-start gap-x-1.5 gap-y-2 px-8 font-mono text-base"
       >
@@ -49,7 +78,7 @@
           class="-ml-2.5 mr-1 text-lg leading-[1.5] text-neutral-200 transition-colors dark:text-neutral-500"
           >&lpar;
         </span>
-        {#each tags.values() as tag, i}
+        {#each tags as tag, i}
           {#if i < MAX_TAGS}
             <span class="text-md text-neutral-400 dark:text-neutral-300">
               <a
@@ -59,7 +88,7 @@
                 aria-label={$t('Topic') + ': ' + tag.title}
               >
                 {tag.title.toLowerCase()}</a
-              >{#if i < MAX_TAGS && i < tags.size - 1},{/if}
+              >{#if i < MAX_TAGS && i < tags.length - 1},{/if}
             </span>
           {:else if i === MAX_TAGS}
             <span class="text-md text-neutral-400 dark:text-neutral-300">...</span>

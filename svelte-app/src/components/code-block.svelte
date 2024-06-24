@@ -18,7 +18,7 @@
     showLineNumbers = true,
     lang: string | undefined;
 
-  const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 4;
+  const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 7;
 
   let LanguageType: Promise<_LanguageType<string>>,
     HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
@@ -195,7 +195,7 @@
     background: ease-gradient('to top', $neutral-0, transparent);
 
     @include dark {
-      background: ease-gradient('to top', $black, transparent);
+      background: ease-gradient('to top', $neutral-800, transparent);
     }
   }
 </style>

@@ -32,7 +32,8 @@
         <Hoverable let:hovered>
           <a
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-            class="focus-outline -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 border-neutral-100 px-3 py-2 transition-[border-color,color] hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:border-neutral-600 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
+            class="focus-outline -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 border-neutral-100 px-3 py-2 transition-[border-color,color] dark:border-neutral-600"
+            class:active={hovered}
             data-sveltekit-preload-code
           >
             <h2
@@ -58,3 +59,25 @@
     <EmptyContent />
   {/if}
 </HeadedBlock>
+
+<style lang="scss">
+  @import '@styles/mixins';
+  @import '@styles/helpers';
+  @import '@styles/colors';
+
+  a.active {
+    background: radial-gradient(
+      circle at 100% 80%,
+      rgba($neutral-0, 1),
+      rgba($neutral-0, 0.4)
+    );
+
+    @include dark {
+      background: radial-gradient(
+        circle at 100% 80%,
+        rgba($neutral-700, 1),
+        rgba($neutral-700, 0.4)
+      );
+    }
+  }
+</style>
