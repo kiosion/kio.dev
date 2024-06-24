@@ -43,7 +43,7 @@
     "eslint-plugin-svelte": "2.38.0",
     "eslint-plugin-unused-imports": "3.2.0",
     "highlight.js": "11.9.0",
-    "jsdom": "24.0.0",
+    "jsdom": "24.1.0",
     "netlify-cli": "17.22.1",
     "postcss": "8.4.38",
     "postcss-load-config": "5.1.0",
