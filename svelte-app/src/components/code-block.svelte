@@ -79,7 +79,7 @@
 </script>
 
 <div
-  class="relative my-7 overflow-hidden border-b border-t border-dark/80 bg-neutral-0 transition-[border-color] dark:border-light/60"
+  class="relative my-7 overflow-hidden border-b border-t border-dark/80 bg-neutral-0 transition-[border-color] dark:border-light/60 dark:bg-neutral-100/5 print:bg-transparent"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
@@ -128,7 +128,7 @@
       <Spinner />
     </div>
     <div
-      class="h-fit w-full min-w-full rounded-sm bg-neutral-0 p-1 pl-4 transition-all dark:bg-neutral-100/5 md:pl-10 print:bg-transparent"
+      class="h-fit w-full min-w-full rounded-sm p-1 pl-4 pr-8 transition-all md:pl-10"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
@@ -195,7 +195,7 @@
     background: ease-gradient('to top', $neutral-0, transparent);
 
     @include dark {
-      background: ease-gradient('to top', $neutral-700, transparent);
+      background: ease-gradient('to top', $black, transparent);
     }
   }
 </style>

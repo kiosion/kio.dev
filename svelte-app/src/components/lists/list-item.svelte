@@ -19,7 +19,8 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline relative -mx-3 -my-2.5 w-[calc(100%+24px)] px-3 py-2.5 transition-[color] duration-75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
+    class:active={hovered}
+    class="focus-outline relative -mx-3 -my-2.5 w-[calc(100%+24px)] rounded-sm px-3 py-2.5"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
@@ -59,9 +60,31 @@
     {/if}
 
     <span
-      class="absolute right-8 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
+      class="absolute right-6 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
       class:opacity-100={hovered}
       class:translate-x-2={hovered}>&rarr;</span
     >
   </a>
 </Hoverable>
+
+<style lang="scss">
+  @import '@styles/colors';
+  @import '@styles/helpers';
+  @import '@styles/mixins';
+
+  a.active {
+    background: radial-gradient(
+      circle at 100% 80%,
+      rgba($neutral-0, 1),
+      rgba($neutral-0, 0.3)
+    );
+
+    @include dark {
+      background: radial-gradient(
+        circle at 100% 80%,
+        rgba($neutral-700, 1),
+        rgba($neutral-700, 0.3)
+      );
+    }
+  }
+</style>
