@@ -32,7 +32,7 @@
         <Hoverable let:hovered>
           <a
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-            class="focus-outline -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 border-neutral-100 px-3 py-2 transition-[border-color,color] dark:border-neutral-600"
+            class="focus-outline -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 px-3 py-2 transition-[color]"
             class:active={hovered}
             data-sveltekit-preload-code
           >

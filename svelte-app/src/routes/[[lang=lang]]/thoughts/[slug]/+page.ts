@@ -10,14 +10,14 @@ export const load = (async ({ parent, fetch, params, url }) => {
     opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
       string,
       string | boolean
-    >,
-    post =
-      // in some cases _parent isn't defined during SSR...?
-      (!preview &&
-        _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
-      handleLoadError(await findOne(fetch, 'post', opts));
+    >;
 
   preview && (opts.preview = true);
+
+  const post =
+    // in some cases _parent isn't defined during SSR...?
+    (!preview && _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
+    handleLoadError(await findOne(fetch, 'post', opts));
 
   post && incViews(fetch, post);
 
