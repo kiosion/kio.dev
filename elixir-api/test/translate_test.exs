@@ -56,6 +56,7 @@ defmodule TranslateTest do
     stub_post = TestFixtures.stub_post()
     stub_posts = TestFixtures.stub_posts()
     stub_invalid = %{"someKey" => "someValue"}
+    stub_translated_text = "someTranslatedText"
 
     Hexerei.HTTP.MockClient
     |> Mox.stub(
@@ -71,7 +72,7 @@ defmodule TranslateTest do
                    data: %{
                      translations: [
                        %{
-                         translatedText: "someTranslatedText"
+                         translatedText: stub_translated_text
                        }
                      ]
                    }
@@ -108,7 +109,7 @@ defmodule TranslateTest do
            |> List.first()
            |> Map.get("children")
            |> List.first()
-           |> Map.get("text") == "someTranslatedText"
+           |> Map.get("text") == stub_translated_text
 
     assert is_map(translated_post)
 
@@ -116,23 +117,16 @@ defmodule TranslateTest do
            |> List.first()
            |> Map.get("children")
            |> List.first()
-           |> Map.get("text") == "someTranslatedText"
+           |> Map.get("text") == stub_translated_text
 
     assert is_map(translated_posts)
-    # Posts should not have their body translated
+    # Posts should have their body translated
     assert translated_posts["result"]
            |> List.first()
            |> Map.get("body")
            |> List.first()
            |> Map.get("children")
            |> List.first()
-           |> Map.get("text") ==
-             stub_posts["result"]
-             |> List.first()
-             |> Map.get("body")
-             |> List.first()
-             |> Map.get("children")
-             |> List.first()
-             |> Map.get("text")
+           |> Map.get("text") == stub_translated_text
   end
 end

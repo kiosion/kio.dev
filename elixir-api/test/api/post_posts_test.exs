@@ -220,12 +220,10 @@ defmodule PostPostsTest do
         total: length(stub_posts["result"])
       )
 
-    stub_posts_translatable_calls = length(stub_posts["result"])
-
     Hexerei.HTTP.MockClient
     |> Mox.expect(
       :get,
-      2,
+      length(stub_posts["result"]),
       fn url, _headers ->
         if String.contains?(url, "count") and String.contains?(url, "total") do
           {:ok,
@@ -244,7 +242,8 @@ defmodule PostPostsTest do
     )
     |> Mox.expect(
       :post,
-      stub_posts_translatable_calls,
+      # title, desc, and body
+      3,
       fn url, body, _params ->
         assert String.contains?(url, "https://translation.googleapis.com/")
 
