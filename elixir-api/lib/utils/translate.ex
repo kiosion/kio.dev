@@ -254,7 +254,7 @@ defmodule Hexerei.Translate do
               translated_blocks
 
               # {:error, reason} ->
-              #   Logger.error("Error translating: #{reason}")
+              #   Logger.error("Error translating post blocks: #{reason}")
               #   text_blocks
           end
 
@@ -275,7 +275,7 @@ defmodule Hexerei.Translate do
 
     updated_docs =
       Enum.map(documents, fn document ->
-        translate_post(%{"result" => document}, target_lang, source_lang, true)
+        translate_post(%{"result" => document}, target_lang, source_lang)
       end)
 
     {left, right} =
@@ -430,29 +430,35 @@ defmodule Hexerei.Translate do
     updated_fields =
       pt_blocks
       |> Enum.map(fn {key, value} ->
-        text_array = get_text_from_blocks(value)
+        case value do
+          nil ->
+            {key, nil}
 
-        translations =
-          text_array
-          |> Task.async_stream(&translate_field(&1, target_lang, source_lang),
-            max_concurrency: Enum.count(text_array)
-          )
-          |> Enum.to_list()
-          |> Enum.map(fn
-            {:ok, {:ok, result}} ->
-              result
+          _ ->
+            text_array = get_text_from_blocks(value)
 
-            {:ok, {:error, _}} ->
-              {:error, "Error translating block"}
+            translations =
+              text_array
+              |> Task.async_stream(&translate_field(&1, target_lang, source_lang),
+                max_concurrency: Enum.count(text_array)
+              )
+              |> Enum.to_list()
+              |> Enum.map(fn
+                {:ok, {:ok, result}} ->
+                  result
 
-            {:exit, reason} ->
-              Logger.error("Error translating block: #{inspect(reason)}")
-              {:error, "Error translating block"}
-          end)
+                {:ok, {:error, _}} ->
+                  {:error, "Error translating block"}
 
-        updated_blocks = replace_text_in_children(value, text_array, translations)
+                {:exit, reason} ->
+                  Logger.error("Error translating block: #{inspect(reason)}")
+                  {:error, "Error translating block"}
+              end)
 
-        {key, updated_blocks}
+            updated_blocks = replace_text_in_children(value, text_array, translations)
+
+            {key, updated_blocks}
+        end
       end)
 
     {:ok, updated_fields |> Enum.into(%{})}
