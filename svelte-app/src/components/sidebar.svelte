@@ -7,10 +7,14 @@
   import Link from '$components/link.svelte';
   import HeaderLink from '$components/nav/header-link.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
+  import ToruWidget from '$components/sidebar/toru.svelte';
 
+  import type { ToruData } from '$components/sidebar/toru';
   import type { SiteConfig } from '$types';
 
-  export let config: SiteConfig, scrollContainer: HTMLElement | null | undefined;
+  export let config: SiteConfig,
+    toruData: Promise<ToruData | undefined>,
+    scrollContainer: HTMLElement | null | undefined;
 
   const socials = config?.socialLinks?.map((social) => ({
     name: social.name,
@@ -20,7 +24,9 @@
   }));
 </script>
 
-<div class="flex h-fit w-full flex-col gap-5 lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
+<div
+  class="min-h-fith-full flex w-full flex-col gap-5 rounded-xl lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
+>
   <div
     class="lg:orger-1 order-2 flex flex-col items-start justify-start gap-y-4 rounded-xl bg-neutral-100 p-4 transition-colors dark:bg-neutral-600"
   >
@@ -37,7 +43,7 @@
           Maxim Dietz
         </h1>
         <p
-          class="rounded-full border border-neutral-300 bg-neutral-0/75 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-700 dark:bg-neutral-700/75 dark:text-neutral-300"
+          class="rounded-full border border-neutral-200 bg-neutral-0/75 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-800 dark:bg-neutral-800/75 dark:text-neutral-200"
         >
           /kio.dev
         </p>
@@ -81,9 +87,9 @@
       </ul>
     </div>
 
-    <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-1">
+    <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-2">
       <p
-        class="px-1 text-sm font-medium text-neutral-500 transition-colors dark:text-neutral-300"
+        class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-200"
       >
         {$t('Contents')}
       </p>
@@ -105,4 +111,6 @@
   </div>
 
   <SidebarBlock {scrollContainer} />
+
+  <ToruWidget initPromise={toruData} />
 </div>

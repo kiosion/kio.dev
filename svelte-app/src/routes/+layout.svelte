@@ -151,7 +151,7 @@
   <div
     class="flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
   >
-    <Sidebar config={data.config} {scrollContainer} />
+    <Sidebar config={data.config} toruData={data.toruData} {scrollContainer} />
 
     <div
       class="max-w-6xl flex-1 rounded-xl lg:overflow-x-hidden lg:overflow-y-scroll"

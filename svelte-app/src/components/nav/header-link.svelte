@@ -56,7 +56,7 @@
 
     &:hover,
     &:focus-visible {
-      background-color: $neutral-0;
+      background-color: rgba($neutral-0, 0.75);
 
       @include dark {
         background-color: rgba($neutral-800, 0.75);

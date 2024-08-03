@@ -2,7 +2,7 @@ import { TORU_API_URL } from '$lib/consts';
 import Logger from '$lib/logger';
 
 import type { PageLoad } from './$types';
-import type { ToruData } from '$components/experiments/toru';
+import type { ToruData } from '$components/sidebar/toru';
 
 export const load = (({ fetch }) => {
   const nowPlayingData = fetch(`${TORU_API_URL}/kiosion?res=json&cover_size=medium`)

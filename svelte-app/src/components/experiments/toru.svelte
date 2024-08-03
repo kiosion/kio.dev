@@ -4,12 +4,12 @@
   import { beforeNavigate } from '$app/navigation';
 
   import Divider from '$components/divider.svelte';
-  import { initSync, stopSync } from '$components/experiments/toru';
   import Hoverable from '$components/hoverable.svelte';
   import Link from '$components/link.svelte';
   import Spinner from '$components/loading/spinner.svelte';
+  import { initSync, stopSync } from '$components/sidebar/toru';
 
-  import type { ToruData } from '$components/experiments/toru';
+  import type { ToruData } from '$components/sidebar/toru';
 
   export let initPromise: Promise<ToruData | undefined>;
 

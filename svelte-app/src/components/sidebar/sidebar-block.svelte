@@ -87,7 +87,7 @@
 
 {#if $sidebarBlock && $isDesktop}
   <div
-    class="flex flex-col rounded-xl bg-neutral-100 px-4 py-2 transition-colors dark:bg-neutral-600"
+    class="order-3 flex flex-col rounded-xl bg-neutral-100 px-4 py-3 transition-colors dark:bg-neutral-600"
     in:blur={blurInOpts}
     out:blur={blurOutOpts}
   >
@@ -100,21 +100,21 @@
     <p class="py-1 font-display text-xl font-bold">{title}</p>
 
     {#if tags?.length}
-      <div class="flex flex-row items-center justify-start gap-2 py-1">
+      <div class="flex flex-row flex-wrap items-center justify-start gap-2 py-1">
         {#each tags as tag}
           <a
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-            class="flex w-fit flex-row items-center justify-start gap-x-2 rounded-md bg-neutral-0/75 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            class="flex w-fit flex-row items-center justify-start gap-x-2 whitespace-nowrap rounded-md bg-neutral-0/75 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
           >
             <span class="font-bold">#</span>
-            <span>{tag.title}</span>
+            <span>{tag.title.toLowerCase()}</span>
           </a>
         {/each}
       </div>
     {/if}
 
     {#if desc}
-      <p class="py-1 text-base text-neutral-500 dark:text-neutral-300">
+      <p class="line-clamp-5 p-1 text-base text-neutral-500 dark:text-neutral-300">
         {desc}
       </p>
     {/if}
