@@ -26,14 +26,20 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('Experiments')}>
-  <ToruExperiment initPromise={data.nowPlayingData}></ToruExperiment>
+<div class="rounded-xl bg-neutral-100">
+  <HeadedBlock heading={$t('Experiments')} first>
+    <ToruExperiment initPromise={data.nowPlayingData}></ToruExperiment>
 
-  <Divider class="my-8"></Divider>
+    <span
+      class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+    ></span>
 
-  <GameOfLifeExperiment></GameOfLifeExperiment>
+    <GameOfLifeExperiment></GameOfLifeExperiment>
 
-  <Divider class="my-8"></Divider>
+    <span
+      class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+    ></span>
 
-  <MagneticCursorExperiment></MagneticCursorExperiment>
-</HeadedBlock>
+    <MagneticCursorExperiment></MagneticCursorExperiment>
+  </HeadedBlock>
+</div>

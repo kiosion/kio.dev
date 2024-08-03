@@ -19,18 +19,14 @@
     };
 </script>
 
-<Hoverable let:hovered>
+<Hoverable>
   <svelte:element
     this={self}
     href={$$props.href || undefined}
     class:text-right={align === 'right'}
     class:text-left={align === 'left'}
-    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm transition-colors hover:bg-neutral-0 hover:text-orange-light focus-visible:bg-neutral-0 focus-visible:text-orange-light dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600 {$$props.class ??
+    class="focus-outline-sm flex select-none flex-row gap-2 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm transition-all hover:gap-3 hover:bg-neutral-0 focus-visible:gap-3 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800 {$$props.class ??
       ''}"
-    class:pr-2={placement === 'before'}
-    class:pl-3={placement === 'before'}
-    class:pr-3={placement === 'after'}
-    class:pl-2={placement === 'after'}
     aria-label={$$props['aria-label'] || undefined}
     role="button"
     tabindex="0"
@@ -39,40 +35,34 @@
     data-sveltekit-preload-code={$$props.preload ? 'hover' : 'off'}
     data-sveltekit-preload-data={$$props.preload ? 'hover' : 'off'}
   >
-    <div
-      class="flex items-center gap-2"
-      class:justify-start={align === 'left'}
-      class:justify-end={align === 'right'}
-    >
-      {#if placement === 'after'}
+    {#if placement === 'after'}
+      <span>
         {#if $$slots.default}
           <slot />
         {:else}
           {text}
         {/if}
+      </span>
+    {/if}
+    <span>
+      {#if dir === 'left'}
+        &larr;
+      {:else if dir === 'right'}
+        &rarr;
+      {:else if dir === 'up'}
+        &uarr;
+      {:else if dir === 'down'}
+        &darr;
       {/if}
-      <div
-        class="mt-px transition-transform"
-        class:-translate-x-1={hovered && dir === 'left'}
-        class:translate-x-1={hovered && dir === 'right'}
-      >
-        {#if dir === 'left'}
-          &larr;
-        {:else if dir === 'right'}
-          &rarr;
-        {:else if dir === 'up'}
-          &uarr;
-        {:else if dir === 'down'}
-          &darr;
-        {/if}
-      </div>
-      {#if placement === 'before'}
+    </span>
+    {#if placement === 'before'}
+      <span>
         {#if $$slots.default}
           <slot />
         {:else}
           {text}
         {/if}
-      {/if}
-    </div>
+      </span>
+    {/if}
   </svelte:element>
 </Hoverable>

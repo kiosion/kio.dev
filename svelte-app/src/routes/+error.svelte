@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { slide } from 'svelte/transition';
+  import { blur, slide } from 'svelte/transition';
 
   import { page } from '$app/stores';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import Link from '$components/link.svelte';
 
@@ -86,42 +85,38 @@
   <meta name="robots" content="none" />
 </svelte:head>
 
-<div data-test-id="error-page">
-  <HeadedBlock {heading}>
-    <p class="my-4 text-base">
-      <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
-      {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
-    </p>
-    <p class="my-4 text-base">
-      {$t('Please')}
-      <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
-        on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
-      >.
-    </p>
-  </HeadedBlock>
+<div class="flex flex-col gap-5" data-test-id="error-page">
+  <div class="rounded-xl bg-neutral-100 transition-colors dark:bg-neutral-600">
+    <HeadedBlock {heading} first>
+      <p class="my-4 text-base">
+        <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
+        {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
+      </p>
+      <p class="my-4 text-base">
+        {$t('Please')}
+        <Link on:click={() => window.history.back()}>{$t('go back')}</Link>, or <Link
+          on:click={() => window.location.reload()}>{$t('refresh the page')}</Link
+        >.
+      </p>
+    </HeadedBlock>
+  </div>
 
   {#if causes?.length}
-    <div class="px-8">
-      <span
-        class="my-4 block w-full border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
-      ></span>
+    <div class="rounded-xl bg-neutral-100 p-2 transition-colors dark:bg-neutral-600">
       <ArrowButton
-        align="left"
-        placement="after"
-        text={$t('See more')}
         dir={showStack ? 'up' : 'down'}
+        text={$t('See more')}
         on:click={() => (showStack = !showStack)}
       />
     </div>
     {#if showStack}
-      <div class="px-8 pt-5" transition:slide={{ duration: BASE_ANIMATION_DURATION }}>
-        <div
-          class="border-b border-t border-dashed border-neutral-200 py-4 transition-[border-color] dark:border-neutral-400"
-        >
-          <pre
-            class="font-code whitespace-pre-wrap break-all bg-neutral-0 px-4 py-2 text-sm transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
-                />{/if}{/each}</pre>
-        </div>
+      <div
+        class="rounded-xl bg-neutral-100 p-2 transition-colors dark:bg-neutral-600"
+        transition:blur={{ duration: BASE_ANIMATION_DURATION, amount: 6 }}
+      >
+        <pre
+          class="font-code whitespace-pre-wrap break-all rounded-lg bg-neutral-0/75 p-4 text-sm transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+              />{/if}{/each}</pre>
       </div>
     {/if}
   {/if}

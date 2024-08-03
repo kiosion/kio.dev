@@ -25,17 +25,16 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-{#if data.config?.meta}
-  {#each data.config.meta as metaSection, idx}
-    <HeadedBlock heading={metaSection.title}>
-      <PortableText text={metaSection.content} class="-mt-2" bodySize="base"
-      ></PortableText>
-    </HeadedBlock>
-    {#if idx < data.config.meta.length - 1}
-      <Divider></Divider>
-    {/if}
-  {/each}
-{:else}
-  <EmptyContent></EmptyContent>
-  <Divider></Divider>
-{/if}
+<div class="flex flex-col gap-5">
+  {#if data.config?.meta}
+    {#each data.config.meta as metaSection}
+      <div class="rounded-xl bg-neutral-100 transition-colors dark:bg-neutral-600">
+        <HeadedBlock heading={metaSection.title} first>
+          <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
+        </HeadedBlock>
+      </div>
+    {/each}
+  {:else}
+    <EmptyContent />
+  {/if}
+</div>

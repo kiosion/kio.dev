@@ -8,7 +8,8 @@
 
   import type { PostDocument, ProjectDocument } from '$types';
 
-  export let document: PostDocument | ProjectDocument;
+  export let document: PostDocument | ProjectDocument,
+    lone = false;
 
   const link =
     document._type === 'post'
@@ -19,32 +20,41 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class:active={hovered}
-    class="focus-outline relative -mx-3 -my-2.5 w-[calc(100%+24px)] rounded-sm px-3 py-2.5"
+    class="focus-outline relative max-w-lg rounded-xl p-2 transition-colors {lone
+      ? 'bg-neutral-0/75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800'
+      : 'bg-neutral-100 hover:bg-neutral-100/50 focus-visible:bg-neutral-100/50 dark:bg-neutral-600 dark:hover:bg-neutral-600/50 dark:focus-visible:bg-neutral-600/50'}"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
   >
     <div
-      class="flex flex-row items-center justify-start pb-1 pt-0.5 font-mono text-sm leading-[1.2] text-neutral-700 transition-colors dark:text-neutral-200"
-      class:gap-3={document.tags?.length}
+      class="flex flex-row flex-wrap items-center justify-start gap-2 p-1.5 font-mono text-sm leading-[1.2] text-neutral-700 transition-colors dark:text-neutral-200"
     >
-      <p class="line-clamp-1" aria-label={$t('Date posted')}>
-        {$formatDate(document.date || document._createdAt, 'med')}
-      </p>
-      {#if document.tags?.length}
+      <span
+        class="flex flex-row gap-1.5 rounded-md px-2 py-1.5 font-sans text-sm transition-colors {lone
+          ? 'bg-neutral-100/75 dark:bg-neutral-500/50'
+          : 'bg-neutral-0/75 dark:bg-neutral-500'}"
+        class:dark:bg-neutral-400={hovered}
+      >
+        <span class="font-bold">#</span>
         <span
-          class="font-code rounded-xs bg-neutral-100 px-1.5 py-1 text-xs transition-colors dark:bg-neutral-500"
-          class:dark:bg-neutral-400={hovered}>{document.tags[0].title.toLowerCase()}</span
+          >{document.tags?.[0]?.title?.toLowerCase() ||
+            $t('Uncategorized').toLowerCase()}</span
         >
-      {:else}
-        <BulletPoint></BulletPoint>
-      {/if}
-      <p>{$t('{views} views', { views: $parseViews(document.views ?? 0) })}</p>
+      </span>
+      <span class="flex flex-row flex-wrap items-center justify-start gap-2 text-xs">
+        <p class="whitespace-nowrap px-1.5 py-1" aria-label={$t('Date posted')}>
+          {$formatDate(document.date || document._createdAt, 'med')}
+        </p>
+        /
+        <p class="whitespace-nowrap px-1.5 py-1">
+          {$t('{views} views', { views: $parseViews(document.views ?? 0) })}
+        </p>
+      </span>
     </div>
 
     <h1
-      class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors lg:max-w-[60rem]"
+      class="line-clamp-2 px-2 font-sans text-2xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors lg:max-w-[60rem]"
       class:pb-1={document.desc?.length}
       class:underline={hovered}
     >
@@ -53,21 +63,21 @@
 
     {#if document.desc?.length}
       <p
-        class="line-clamp-2 text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
+        class="line-clamp-2 px-2 pb-1.5 text-base text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
       >
         {document.desc}
       </p>
     {/if}
 
-    <span
+    <!-- <span
       class="absolute right-6 top-1/2 block -translate-y-1/2 text-orange-light opacity-0 transition-[opacity,transform]"
       class:opacity-100={hovered}
       class:translate-x-2={hovered}>&rarr;</span
-    >
+    > -->
   </a>
 </Hoverable>
 
-<style lang="scss">
+<!-- <style lang="scss">
   @import '@styles/colors';
   @import '@styles/helpers';
   @import '@styles/mixins';
@@ -87,4 +97,4 @@
       );
     }
   }
-</style>
+</style> -->

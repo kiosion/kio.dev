@@ -21,10 +21,8 @@
   import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
   import Settings, { listenForMQLChange, loading } from '$lib/settings';
 
-  import Footer from '$components/footer.svelte';
-  import Header from '$components/header.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
-  import ScrollContainer from '$components/layouts/scroll-container.svelte';
+  import Sidebar from '$components/sidebar.svelte';
   import TooltipManager from '$components/tooltips/manager.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
@@ -32,7 +30,7 @@
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    scrollShadow = { top: false, bottom: false };
+    scrollContainer: HTMLElement | null;
 
   const { theme } = Settings,
     skipToContent = (e: KeyboardEvent) => {
@@ -149,22 +147,22 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div
-  class="main h-full w-full overflow-x-hidden p-2 text-dark dark:text-light md:p-6 lg:text-lg xl:p-8"
->
-  <ScrollContainer bind:shadow={scrollShadow}>
-    <svelte:fragment slot="before">
-      <Header {scrollShadow} />
-    </svelte:fragment>
+<div class="main h-full w-full p-5 text-dark dark:text-light lg:text-lg">
+  <div
+    class="flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
+  >
+    <Sidebar config={data.config} {scrollContainer} />
 
-    <PageTransition pathname={data.pathname} id="content-wrapper">
-      <slot />
-    </PageTransition>
+    <div
+      class="max-w-6xl flex-1 rounded-xl lg:overflow-x-hidden lg:overflow-y-scroll"
+      id="content-wrapper"
+      bind:this={scrollContainer}
+    >
+      <PageTransition pathname={data.pathname}>
+        <slot />
+      </PageTransition>
+    </div>
+  </div>
 
-    <svelte:fragment slot="after">
-      <Footer config={data.config} {scrollShadow} />
-    </svelte:fragment>
-  </ScrollContainer>
-
-  <TooltipManager></TooltipManager>
+  <TooltipManager />
 </div>

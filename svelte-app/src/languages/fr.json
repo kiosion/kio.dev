@@ -11,9 +11,11 @@
   "Click here to": "Cliquez ici pour",
   "Code block": "Bloc de code",
   "Code content": "Contenu du code",
+  "Contents": "Sommaire",
   "Copied": "Copié",
   "Copy": "Copier",
   "Copy to clipboard": "Copier dans le presse-papiers",
+  "Dark": "Sombre",
   "Date posted": "Date de publication",
   "Duration": "Durée",
   "English": "Anglais",
@@ -29,6 +31,7 @@
   "Internal Error": "Erreur interne",
   "Invalid date": "Date invalide",
   "Language": "Langue",
+  "Light": "Clair",
   "Lights off": "Lumières éteintes",
   "Lights on": "Lumières allumées",
   "Links": "Liens",
@@ -43,6 +46,7 @@
   "Project": "Projet",
   "Projects": "Projets",
   "Read more": "Lire la suite",
+  "Reading": "Lecture",
   "Recent projects": "Projets récents",
   "Recent thoughts": "Pensées récentes",
   "Say hello": "Dire bonjour",
@@ -60,6 +64,7 @@
   "Thoughts": "Pensées",
   "Topic": "Sujet",
   "Topics": "Sujets",
+  "Uncategorized": "Non classé",
   "Unknown date": "Date inconnue",
   "Use dark mode": "Utiliser le mode sombre",
   "Use light mode": "Utiliser le mode clair",
@@ -100,6 +105,8 @@
   },
   "go back": "retourner",
   "less": "moins",
+  "min left": "min rest",
+  "mins left": "mins rest",
   "more": "plus",
   "now": "maintenant",
   "pages": {
@@ -126,6 +133,10 @@
     "work": {
       "description": "Un aperçu de mon travail, de mes rôles précédents et de mes contributions open-source",
       "title": "Travail"
+    },
+    "home": {
+      "description": "Ingénieur logiciel chez Gravitational et designer UI/UX basé à Toronto, Canada",
+      "title": "Accueil"
     }
   },
   "present": "présent",

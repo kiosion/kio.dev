@@ -9,28 +9,29 @@
   export let data;
 </script>
 
-<HeadedBlock heading={data.tag.title} let:id constrainWidth={false}>
-  <svelte:fragment slot="heading">
-    <div class="flex w-full flex-row items-center justify-between">
-      <h1 class="line-clamp-1 font-mono text-md text-neutral-600 dark:text-neutral-300">
-        {$t('Topic').toLowerCase()}:
-        <span class="font-display text-3xl font-black text-dark dark:text-light"
-          >{data.tag.title}</span
-        >
-      </h1>
-      <ArrowButton
-        href={$linkTo('/thoughts/+')}
-        dir="left"
-        placement="before"
-        text={$t('All topics')}
-        preload
-      />
+<div class="flex flex-col gap-5">
+  <div
+    class="flex flex-row flex-wrap items-center justify-between gap-3 rounded-xl bg-neutral-100 p-2 dark:bg-neutral-600"
+  >
+    <div
+      class="flex cursor-default select-none flex-row items-center gap-2 rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm dark:bg-neutral-800/75"
+    >
+      <span class="font-bold">#</span>
+      <span class="line-clamp-1">{data.tag.title.toLowerCase()}</span>
     </div>
-  </svelte:fragment>
+
+    <ArrowButton
+      href={$linkTo('/thoughts/+')}
+      dir="left"
+      placement="before"
+      text={$t('All topics')}
+      preload
+    />
+  </div>
 
   {#if data.posts?.length}
-    <DocumentList documents={data.posts} aria-labelledby="{id}-heading" />
+    <DocumentList documents={data.posts} />
   {:else}
     <EmptyContent />
   {/if}
-</HeadedBlock>
+</div>

@@ -12,12 +12,14 @@
     routeFetch: RouteFetch | undefined = undefined;
 </script>
 
-<Header {data} {images} {routeFetch}></Header>
-<div class="pb-6 font-sans text-base">
-  {#if data.body}
-    <PortableText text={data.body} {routeFetch} documentView></PortableText>
-  {:else}
-    <EmptyContent></EmptyContent>
-  {/if}
+<div class="flex h-full w-full flex-col gap-y-5">
+  <Header {data} {images} {routeFetch} />
+  <div class="rounded-xl bg-neutral-100 pb-6 font-sans text-base dark:bg-neutral-600">
+    {#if data.body}
+      <PortableText text={data.body} {routeFetch} documentView />
+    {:else}
+      <EmptyContent />
+    {/if}
+  </div>
+  <Footer {model} {data}></Footer>
 </div>
-<Footer {model} {data}></Footer>

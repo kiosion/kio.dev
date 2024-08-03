@@ -23,7 +23,7 @@ export default class RouteTrie {
   }
 
   search(route: string): number | null {
-    let node = this.root;
+    const node = this.root;
     const parts = route.split('/').filter(Boolean);
     let bestMatchIndex: number | null = null;
     let bestMatchDepth = -1;
@@ -33,7 +33,9 @@ export default class RouteTrie {
         bestMatchIndex = node.index;
         bestMatchDepth = depth;
       }
-      if (depth >= parts.length) return;
+      if (depth >= parts.length) {
+        return;
+      }
 
       const part = parts[depth];
       if (node.children[part]) {

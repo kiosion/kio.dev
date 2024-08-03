@@ -11,9 +11,11 @@
   "Click here to": "Click here to",
   "Code block": "Code block",
   "Code content": "Code content",
+  "Contents": "Contents",
   "Copied": "Copied",
   "Copy": "Copy",
   "Copy to clipboard": "Copy to clipboard",
+  "Dark": "Dark",
   "Date posted": "Date posted",
   "Duration": "Duration",
   "English": "English",
@@ -29,6 +31,7 @@
   "Internal Error": "Internal Error",
   "Invalid date": "Invalid date",
   "Language": "Language",
+  "Light": "Light",
   "Lights off": "Lights off",
   "Lights on": "Lights on",
   "Links": "Links",
@@ -43,6 +46,7 @@
   "Project": "Project",
   "Projects": "Projects",
   "Read more": "Read more",
+  "Reading": "Reading",
   "Recent projects": "Recent projects",
   "Recent thoughts": "Recent thoughts",
   "Say hello": "Say hello",
@@ -60,6 +64,7 @@
   "Thoughts": "Thoughts",
   "Topic": "Topic",
   "Topics": "Topics",
+  "Uncategorized": "Uncategorized",
   "Unknown date": "Unknown date",
   "Use dark mode": "Use dark mode",
   "Use light mode": "Use light mode",
@@ -100,6 +105,8 @@
   },
   "go back": "go back",
   "less": "less",
+  "min left": "min left",
+  "mins left": "mins left",
   "more": "more",
   "now": "now",
   "pages": {
@@ -126,6 +133,10 @@
     "work": {
       "description": "An overview of my work, prior roles, and open-source contributions",
       "title": "Work"
+    },
+    "home": {
+      "description": "Software engineer at Gravitational and UI/UX designer based in Toronto, Canada",
+      "title": "Home"
     }
   },
   "present": "present",

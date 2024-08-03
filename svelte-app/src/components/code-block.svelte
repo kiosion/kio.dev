@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
+  // import { browser } from '$app/environment';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
@@ -9,6 +9,7 @@
   import Divider from '$components/divider.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Spinner from '$components/loading/spinner.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { ResolvedComponentType } from '$components/code-block/imports';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
@@ -79,42 +80,68 @@
 </script>
 
 <div
-  class="relative my-7 overflow-hidden border-b border-t border-dark/80 bg-neutral-0 transition-[border-color] dark:border-light/60 dark:bg-neutral-100/5 print:bg-transparent"
+  class="relative mx-7 overflow-hidden rounded-lg bg-neutral-0 transition-colors dark:bg-neutral-800"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
   {#if filename}
     <div
-      class="bg-neutral-0 py-4 pl-14 font-mono text-sm transition-[background-color] dark:bg-neutral-800/5 print:bg-transparent"
+      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-0 px-8 py-4 font-mono text-sm transition-[background-color] dark:bg-neutral-800/5 print:bg-transparent"
       id="{id}-filename"
     >
-      {filename}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        class="size-4"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+
+      <span>{filename}</span>
     </div>
     <Divider margin="my-0"></Divider>
   {/if}
 
-  <Hoverable let:hovered>
-    <button
-      class="focus-outline-sm absolute right-0 z-[2] cursor-pointer rounded-xs pb-3 pl-3 pr-4 pt-4 font-mono text-xs text-dark/80 dark:text-light/80"
-      class:top-1={!filename}
-      class:top-12={filename}
-      on:click={() => copy()}
-      on:keydown={(e) => e.key === 'Enter' && copy()}
-      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-      type="button"
-    >
-      <span
-        class="-mx-2 -my-1.5 px-2 py-1.5"
+  <Tooltip text={$t('Copy to clipboard')} position="top">
+    <Hoverable let:hovered>
+      <button
+        class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors dark:text-light/80"
+        class:top-1={!filename}
+        class:top-12={filename}
         class:bg-neutral-100={hovered}
         class:text-dark={hovered}
         class:dark:bg-neutral-500={hovered}
         class:dark:text-light={hovered}
+        on:click={() => copy()}
+        on:keydown={(e) => e.key === 'Enter' && copy()}
+        aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+        type="button"
       >
-        [{$t(copied !== undefined ? 'Copied' : 'Copy').toLowerCase()}]
-      </span>
-    </button>
-  </Hoverable>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="size-5 transition-colors"
+          class:text-orange-light={copied !== undefined}
+        >
+          <path
+            d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 0 1 3.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0 1 21 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 0 1 7.5 16.125V3.375Z"
+          />
+          <path
+            d="M15 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 17.25 7.5h-1.875A.375.375 0 0 1 15 7.125V5.25ZM4.875 6H6v10.125A3.375 3.375 0 0 0 9.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V7.875C3 6.839 3.84 6 4.875 6Z"
+          />
+        </svg>
+
+        <!-- [{$t(copied !== undefined ? 'Copied' : 'Copy').toLowerCase()}] -->
+      </button>
+    </Hoverable>
+  </Tooltip>
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     style="height: {containerHeight}px"
@@ -128,14 +155,14 @@
       <Spinner />
     </div>
     <div
-      class="h-fit w-full min-w-full rounded-sm p-1 pl-4 pr-8 transition-all md:pl-10"
+      class="h-fit w-full min-w-full rounded-sm p-1 pl-4 pr-8 transition-all"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
       {#if !loadError}
         <!-- eslint-disable-next-line prettier/prettier -->
-        {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+        {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
           <svelte:component
             this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
             code={content}
@@ -167,7 +194,7 @@
       bind:clientHeight={showMoreHeight}
     >
       <button
-        class="focus-outline rounded-xs px-2 py-1.5 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        class="focus-outline rounded-md px-2 py-1.5 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
         on:click={() => {
           showingMore = !showingMore;
           if (!showingMore) {

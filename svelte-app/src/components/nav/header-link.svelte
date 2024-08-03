@@ -3,8 +3,6 @@
   import { navigating, page } from '$app/stores';
   import { isLocalized, linkTo, t } from '$lib/i18n';
 
-  import BaseLink from '$components/nav/base-link.svelte';
-
   export let link: {
       name: string;
       url: string;
@@ -37,9 +35,49 @@
   })();
 </script>
 
-<BaseLink
-  text={$t(link.name)}
+<a
   href={link.url}
-  active={isActive}
+  class="-mx-2 block w-[calc(100%+16px)] rounded-lg px-3 py-1.5 text-md text-neutral-700 transition-colors dark:text-neutral-200"
+  class:active={isActive}
+  class:font-semibold={isActive}
+  data-sveltekit-preload-code
   on:click={handleAction}
-/>
+  on:keydown={(e) => e.key === 'Enter' && handleAction(e)}
+>
+  {$t(link.name)}
+</a>
+
+<style lang="scss">
+  @import '@styles/colors';
+  @import '@styles/mixins';
+
+  a {
+    background-color: transparent;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $neutral-0;
+
+      @include dark {
+        background-color: rgba($neutral-800, 0.75);
+      }
+    }
+
+    &.active {
+      background-color: $neutral-0;
+
+      @include dark {
+        background-color: $neutral-800;
+      }
+
+      &:hover,
+      &:focus-visible {
+        background-color: rgba($neutral-0, 0.75);
+
+        @include dark {
+          background-color: rgba($neutral-800, 0.75);
+        }
+      }
+    }
+  }
+</style>
