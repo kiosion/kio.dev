@@ -133,16 +133,19 @@
     "work": {
       "description": "Un aperçu de mon travail, de mes rôles précédents et de mes contributions open-source",
       "title": "Travail"
-    },
-    "home": {
-      "description": "Ingénieur logiciel chez Gravitational et designer UI/UX basé à Toronto, Canada",
-      "title": "Accueil"
     }
   },
   "present": "présent",
   "refresh the page": "rafraîchir la page",
+  "toru": {
+    "status": {
+      "playing": "En cours de lecture",
+      "paused": "Récemment joué"
+    }
+  },
   "{document} details": "Détails de {document}",
   "{length} min read": "{length} minute de lecture",
+  "{length} words": "{length} mots",
   "{months} months": "{months} mois",
   "{month} month": "{month} mois",
   "{stars} stars": "{stars} étoiles",

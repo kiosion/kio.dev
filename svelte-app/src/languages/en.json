@@ -133,16 +133,19 @@
     "work": {
       "description": "An overview of my work, prior roles, and open-source contributions",
       "title": "Work"
-    },
-    "home": {
-      "description": "Software engineer at Gravitational and UI/UX designer based in Toronto, Canada",
-      "title": "Home"
     }
   },
   "present": "present",
   "refresh the page": "refresh the page",
+  "toru": {
+    "status": {
+      "playing": "Now playing",
+      "paused": "Recently played"
+    }
+  },
   "{document} details": "{document} details",
   "{length} min read": "{length} min read",
+  "{length} words": "{length} words",
   "{months} months": "{months} months",
   "{month} month": "{month} month",
   "{stars} stars": "{stars} stars",
