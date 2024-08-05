@@ -3,7 +3,6 @@
   import { linkTo, t } from '$lib/i18n';
   import { parseViews } from '$lib/utils';
 
-  import BulletPoint from '$components/bullet-point.svelte';
   import Hoverable from '$components/hoverable.svelte';
 
   import type { PostDocument, ProjectDocument } from '$types';

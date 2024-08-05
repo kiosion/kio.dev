@@ -147,9 +147,9 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div class="main h-full w-full p-5 text-dark dark:text-light lg:text-lg">
+<div class="main mx-auto h-full w-fit p-5 text-dark dark:text-light lg:text-lg">
   <div
-    class="flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
+    class="flex h-full w-fit flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
   >
     <Sidebar config={data.config} toruData={data.toruData} {scrollContainer} />
 

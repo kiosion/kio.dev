@@ -5,6 +5,7 @@
   import Timeline from '$components/about/timeline.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import ListItem from '$components/lists/list-item.svelte';
 
   export let data;
@@ -26,7 +27,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-5">
-  <div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+  <BaseContainer>
     <HeadedBlock heading={$t("Where I've worked")} first>
       {#if data.config?.timeline?.length}
         <Timeline data={data.config.timeline}></Timeline>
@@ -36,10 +37,10 @@
         </div>
       {/if}
     </HeadedBlock>
-  </div>
+  </BaseContainer>
 
   {#if data.projects.length}
-    <div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+    <BaseContainer>
       <HeadedBlock heading={$t('Projects')} constrainWidth={false} first let:id>
         <div
           class="flex flex-row flex-wrap gap-5 px-5"
@@ -49,9 +50,8 @@
           {#each data.projects as project}
             <ListItem document={project} lone />
           {/each}
-          <!-- <DocumentList documents={data.projects}></DocumentList> -->
         </div>
       </HeadedBlock>
-    </div>
+    </BaseContainer>
   {/if}
 </div>

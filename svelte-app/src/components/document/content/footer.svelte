@@ -3,6 +3,7 @@
   import { isMobile } from '$lib/responsive';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
 
   import type { PostDocument, ProjectDocument } from '$types';
@@ -11,7 +12,7 @@
     model: 'post' | 'project' = data._type;
 </script>
 
-<div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+<BaseContainer>
   {#if data._type === 'project' && data.github}
     <div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
       <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
@@ -35,4 +36,4 @@
       preload
     />
   </div>
-</div>
+</BaseContainer>

@@ -27,7 +27,7 @@ const onOpen = () => {
 
 const onClose = () => {
   Logger.info('[ToruSync] Disconnected');
-  stop();
+  // stop();
 };
 
 const onError = (e: Event) => {
@@ -81,7 +81,10 @@ export const stopSync = (onUpdate: (data: ToruData) => void) => {
 
   clearInterval(repeat);
 
-  if (socketInstance.readyState !== WebSocket.CLOSED) {
+  if (
+    socketInstance.readyState === WebSocket.OPEN ||
+    socketInstance.readyState === WebSocket.CONNECTING
+  ) {
     socketInstance.close();
   }
 

@@ -5,14 +5,13 @@
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
 
   export let data;
 </script>
 
 <div class="flex flex-col gap-5">
-  <div
-    class="flex flex-row items-center justify-end gap-3 rounded-xl bg-neutral-100 p-2 dark:bg-neutral-600"
-  >
+  <BaseContainer class="flex flex-row items-center justify-end gap-3 p-2">
     <ArrowButton
       href={$linkTo('/thoughts')}
       dir="left"
@@ -20,9 +19,9 @@
       text={$t('All posts')}
       preload
     />
-  </div>
+  </BaseContainer>
 
-  <div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+  <BaseContainer>
     <HeadedBlock heading={$t('Topics')} constrainWidth={false} first>
       {#if data.tags?.length}
         <div class="flex flex-col gap-5 px-8 pt-3">
@@ -58,7 +57,7 @@
         <EmptyContent />
       {/if}
     </HeadedBlock>
-  </div>
+  </BaseContainer>
 </div>
 
 <style lang="scss">

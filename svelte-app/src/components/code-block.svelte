@@ -71,8 +71,6 @@
 
   const updateHeight = (height?: number) => height && (containerHeight = height);
 
-  // $: showingMore || hideLoader && updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight),
-  //   browser && (hideLoader = loadError !== null || innerHeight > 52);
   $: hideLoader = loadError !== null || innerHeight > 52;
   $: hideLoader &&
     (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore) &&
@@ -80,7 +78,7 @@
 </script>
 
 <div
-  class="relative mx-7 overflow-hidden rounded-lg bg-neutral-0 transition-colors dark:bg-neutral-800"
+  class="relative mx-7 my-5 overflow-hidden rounded-lg bg-neutral-0 transition-colors dark:bg-neutral-800"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
@@ -194,7 +192,7 @@
       bind:clientHeight={showMoreHeight}
     >
       <button
-        class="focus-outline rounded-md px-2 py-1.5 font-mono text-xs hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        class="focus-outline rounded-md px-2 py-1.5 font-mono text-xs transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
         on:click={() => {
           showingMore = !showingMore;
           if (!showingMore) {

@@ -7,6 +7,7 @@
   import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
@@ -29,7 +30,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-y-5">
-  <div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+  <BaseContainer>
     {#if data.config?.about}
       {#each data.config.about as aboutSection, idx}
         <HeadedBlock heading={aboutSection.title} first={idx === 0}>
@@ -46,9 +47,9 @@
     {:else}
       <EmptyContent />
     {/if}
-  </div>
+  </BaseContainer>
 
-  <div class="rounded-xl bg-neutral-100 dark:bg-neutral-600">
+  <BaseContainer>
     <HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false} first>
       {#if data.posts.length}
         <div
@@ -66,11 +67,9 @@
         </div>
       {/if}
     </HeadedBlock>
-  </div>
+  </BaseContainer>
 
-  <div
-    class="flex flex-row gap-3 rounded-xl bg-neutral-100 p-2 text-sm dark:bg-neutral-600"
-  >
+  <BaseContainer class="flex flex-row gap-3 p-2 text-sm">
     <ArrowButton
       href={$linkTo('/thoughts')}
       dir="right"
@@ -85,5 +84,5 @@
       text={$t('Topics')}
       preload
     />
-  </div>
+  </BaseContainer>
 </div>

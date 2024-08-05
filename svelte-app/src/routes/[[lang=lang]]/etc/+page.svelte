@@ -2,9 +2,9 @@
   import { t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   export let data;
@@ -28,11 +28,11 @@
 <div class="flex flex-col gap-5">
   {#if data.config?.meta}
     {#each data.config.meta as metaSection}
-      <div class="rounded-xl bg-neutral-100 transition-colors dark:bg-neutral-600">
+      <BaseContainer>
         <HeadedBlock heading={metaSection.title} first>
           <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
         </HeadedBlock>
-      </div>
+      </BaseContainer>
     {/each}
   {:else}
     <EmptyContent />

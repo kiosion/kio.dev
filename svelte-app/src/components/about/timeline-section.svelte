@@ -12,7 +12,11 @@
     id = Math.random().toString(36).substring(7);
 </script>
 
-<section class="my-6" role="group" aria-labelledby="{id}-heading">
+<section
+  class="my-5 rounded-lg bg-neutral-0/75 px-5 pb-6 pt-3 transition-colors dark:bg-neutral-800/75"
+  role="group"
+  aria-labelledby="{id}-heading"
+>
   <div class="pb-3">
     <h2
       class="pb-1 text-xl font-bold text-dark transition-colors dark:text-white"

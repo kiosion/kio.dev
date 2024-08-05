@@ -4,6 +4,7 @@
 
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
   import HeaderLink from '$components/nav/header-link.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
@@ -27,12 +28,12 @@
 <div
   class="min-h-fith-full flex w-full flex-col gap-5 rounded-xl lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
 >
-  <div
-    class="lg:orger-1 order-2 flex flex-col items-start justify-start gap-y-4 rounded-xl bg-neutral-100 p-4 transition-colors dark:bg-neutral-600"
+  <BaseContainer
+    class="lg:orger-1 order-2 flex flex-col items-start justify-start gap-y-4 p-4"
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
       <img
-        class="aspect-square h-14 w-14 flex-shrink-0 rounded-lg bg-orange-light/40 p-0 transition-colors dark:bg-orange-light/60"
+        class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-orange-light/40 p-0 transition-colors dark:bg-orange-light/60"
         src="/assets/tmp_avi.png"
         alt="kio.dev"
       />
@@ -40,20 +41,24 @@
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
         >
-          Maxim Dietz
+          {config.name}
         </h1>
-        <p
-          class="rounded-full border border-neutral-200 bg-neutral-0/75 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-800 dark:bg-neutral-800/75 dark:text-neutral-200"
-        >
-          /kio.dev
-        </p>
+        {#if config.handle}
+          <p
+            class="rounded-full border border-neutral-200 bg-neutral-0/75 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-800 dark:bg-neutral-800/75 dark:text-neutral-200"
+          >
+            {config.handle}
+          </p>
+        {/if}
       </div>
     </div>
 
     <div class="flex flex-col items-start justify-center gap-y-2 pb-2">
-      <p class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200">
-        {$t('pages.home.description')}
-      </p>
+      {#if config.bio}
+        <p class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200">
+          {config.bio}
+        </p>
+      {/if}
       <ul class="flex flex-col items-start justify-start gap-y-1.5 text-base">
         {#each socials as social}
           <li
@@ -101,16 +106,16 @@
         {/each}
       </ul>
     </nav>
-  </div>
+  </BaseContainer>
 
-  <div
-    class="order-1 flex flex-row gap-2 rounded-xl bg-neutral-100 p-2 transition-colors dark:bg-neutral-600 lg:order-2"
-  >
+  <BaseContainer class="order-1 flex flex-row gap-2 p-2 lg:order-2 print:hidden">
     <LangToggle />
     <ThemeToggle />
-  </div>
+  </BaseContainer>
 
   <SidebarBlock {scrollContainer} />
 
-  <ToruWidget initPromise={toruData} />
+  {#if config.enableToru}
+    <ToruWidget initPromise={toruData} />
+  {/if}
 </div>

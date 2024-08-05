@@ -14,25 +14,6 @@ export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';
 
 export const load = (async ({ params, url, fetch }) => {
-  const toruData = fetch(`${TORU_API_URL}/kiosion?res=json&cover_size=medium`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Failed to fetch now playing data');
-      }
-
-      return res
-        .json()
-        .then((data) => data.data)
-        .catch((e) => {
-          throw new Error('Failed to parse now playing data', e);
-        });
-    })
-    .catch((e) => {
-      Logger.error(e);
-
-      return undefined;
-    }) satisfies Promise<ToruData | undefined>;
-
   const config = (await findOne(fetch, 'config', {
     lang: params.lang || DEFAULT_APP_LANG
   }).catch((e: Error) => {
@@ -43,6 +24,27 @@ export const load = (async ({ params, url, fetch }) => {
       stack: e?.stack
     });
   })) as SiteConfig;
+
+  const toruData = config.enableToru
+    ? (fetch(`${TORU_API_URL}/kiosion?res=json&cover_size=medium`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Failed to fetch now playing data');
+          }
+
+          return res
+            .json()
+            .then((data) => data.data)
+            .catch((e) => {
+              throw new Error('Failed to parse now playing data', e);
+            });
+        })
+        .catch((e) => {
+          Logger.error(e);
+
+          return undefined;
+        }) satisfies Promise<ToruData | undefined>)
+    : Promise.resolve(undefined);
 
   return {
     pathname: url.pathname,

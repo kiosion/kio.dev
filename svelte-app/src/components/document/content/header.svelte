@@ -4,12 +4,10 @@
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
   import { formatDate } from '$lib/date';
-  import { linkTo, t } from '$lib/i18n';
-  import Logger from '$lib/logger';
-  import { sidebarBlock } from '$lib/sidebar';
+  import { currentLang, linkTo, t } from '$lib/i18n';
+  import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
   import { parseViews } from '$lib/utils';
 
-  import BulletPoint from '$components/bullet-point.svelte';
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import Image from '$components/images/image.svelte';
   import Link from '$components/link.svelte';
@@ -41,37 +39,50 @@
     });
 
     observer.observe(container);
+
+    if (data.headings?.length) {
+      console.log('headings', data.headings);
+      sidebarHeadings.set(data.headings);
+    }
   });
 
   onDestroy(() => {
     observer?.disconnect();
     sidebarBlock.set(undefined);
+    sidebarHeadings.set(undefined);
   });
 
   afterNavigate(() => {
     sidebarBlock.set(undefined);
+    sidebarHeadings.set(undefined);
   });
 </script>
 
 <div
-  class="flex w-full flex-row flex-wrap justify-between gap-2 rounded-xl bg-neutral-100 p-2 text-sm text-neutral-700 dark:bg-neutral-600 dark:text-neutral-100"
+  class="flex w-full flex-row flex-wrap justify-between gap-2 rounded-xl bg-neutral-100 p-2 text-sm text-neutral-700 transition-colors dark:bg-neutral-600 dark:text-neutral-100"
 >
   <div class="flex flex-row gap-2">
     <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
       <p
-        class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 dark:bg-neutral-800/75"
+        class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
         aria-label="Published date"
       >
         {$formatDate(data.date, 'full') ?? $t('Unknown date')}
       </p>
     </Tooltip>
-    <p
-      class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 dark:bg-neutral-800/75"
+    <Tooltip
+      text={$t('{length} words', {
+        length: (data.estimatedWordCount ?? 0).toLocaleString($currentLang)
+      })}
     >
-      {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
-    </p>
+      <p
+        class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
+      >
+        {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
+      </p>
+    </Tooltip>
     <p
-      class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 dark:bg-neutral-800/75"
+      class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
     >
       {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
     </p>
@@ -85,7 +96,7 @@
 </div>
 
 <div
-  class="rounded-xl bg-neutral-100 p-2 dark:bg-neutral-600"
+  class="rounded-xl bg-neutral-100 p-2 transition-colors dark:bg-neutral-600"
   data-test-id="{model}-header"
   bind:this={container}
 >
@@ -120,90 +131,6 @@
       {/each}
     </div>
   {/if}
-
-  <!-- <div
-    class="w-full border-b border-dark/80 px-6 py-7 dark:border-light/60 md:px-10"
-    data-test-id="{model}-header"
-  >
-    <h1
-      class="h-fit max-w-full pb-2.5 font-display text-5xl font-bold leading-[1.1] text-black transition-[color] dark:text-white"
-    >
-      {data.title}
-    </h1>
-
-    <div
-      class="flex select-none flex-row flex-wrap items-center justify-between gap-5"
-      class:pb-4={data.tags?.length}
-    >
-      <div
-        class="flex flex-row flex-wrap items-center justify-start gap-x-1 gap-y-2 transition-[color]"
-        aria-label={$t('{document} details', {
-          document: model === 'post' ? 'Post' : 'Project'
-        })}
-        role="group"
-      >
-        <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
-          <p class="cursor-default font-mono text-sm" aria-label="Published date">
-            {$formatDate(data.date, 'full') ?? $t('Unknown date')}
-          </p>
-        </Tooltip>
-        <BulletPoint></BulletPoint>
-        <p class="cursor-default font-mono text-sm">
-          {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
-        </p>
-        <BulletPoint></BulletPoint>
-        <p class="cursor-default font-mono text-sm">
-          {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
-        </p>
-        {#if data._type === 'project' && data.githubStars !== undefined && data.githubStars > 0}
-          <BulletPoint></BulletPoint>
-          <p class="cursor-default font-mono text-sm">
-            {$t('{stars} stars', { stars: $parseViews(data.githubStars) })}
-          </p>
-        {/if}
-      </div>
-      {#if !data.tags?.length}
-        <ArrowButton
-          class="hidden whitespace-nowrap sm:block print:hidden"
-          href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-          align="right"
-          dir="left"
-          text={$t('Read more')}
-          preload
-        />
-      {/if}
-    </div>
-
-    {#if data.tags?.length}
-      <div class="flex flex-wrap items-end justify-between">
-        <div
-          class="flex flex-row flex-wrap items-center justify-start gap-2"
-          aria-label={$t('Tags')}
-        >
-          {#each data.tags as tag}
-            <a
-              class="focus-outline-sm select-none rounded-xs bg-neutral-100 px-1.5 py-1 font-mono text-xs hover:bg-orange-light focus-visible:bg-orange-light dark:bg-neutral-500 dark:hover:bg-orange-dark dark:focus-visible:bg-orange-dark"
-              href={$linkTo(
-                `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
-              )}
-              data-sveltekit-preload-code
-              aria-label={$t('Topic') + ': ' + tag.title}
-            >
-              {tag.title.toLowerCase()}
-            </a>
-          {/each}
-        </div>
-        <ArrowButton
-          class="hidden whitespace-nowrap sm:block print:hidden"
-          href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
-          align="right"
-          dir="left"
-          text={$t('Read more')}
-          preload
-        />
-      </div>
-    {/if}
-  </div> -->
 
   {#if data._type === 'project' && data.github}
     <div

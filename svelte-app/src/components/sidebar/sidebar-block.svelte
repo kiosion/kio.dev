@@ -8,7 +8,11 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { linkTo, t } from '$lib/i18n';
   import { isDesktop } from '$lib/responsive';
-  import { sidebarBlock } from '$lib/sidebar';
+  import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
+
+  import Divider from '$components/divider.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
+  import SidebarHeadings from '$components/sidebar/sidebar-headings.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
@@ -85,38 +89,43 @@
   });
 </script>
 
-{#if $sidebarBlock && $isDesktop}
-  <div
-    class="order-3 flex flex-col rounded-xl bg-neutral-100 px-4 py-3 transition-colors dark:bg-neutral-600"
-    in:blur={blurInOpts}
-    out:blur={blurOutOpts}
-  >
-    <p class="cursor-default select-none text-base font-medium dark:text-neutral-300">
-      {$t('Reading')}&nbsp;&mdash;&nbsp;{estRemainingTime}&nbsp;{$t(
-        estRemainingTime === 1 ? 'min left' : 'mins left'
-      )}
-    </p>
-
-    <p class="py-1 font-display text-xl font-bold">{title}</p>
-
-    {#if tags?.length}
-      <div class="flex flex-row flex-wrap items-center justify-start gap-2 py-1">
-        {#each tags as tag}
-          <a
-            href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-            class="flex w-fit flex-row items-center justify-start gap-x-2 whitespace-nowrap rounded-md bg-neutral-0/75 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
-          >
-            <span class="font-bold">#</span>
-            <span>{tag.title.toLowerCase()}</span>
-          </a>
-        {/each}
-      </div>
-    {/if}
-
-    {#if desc}
-      <p class="line-clamp-5 p-1 text-base text-neutral-500 dark:text-neutral-300">
-        {desc}
+{#if $isDesktop && $sidebarBlock}
+  <div class="order-3" in:blur={blurInOpts} out:blur={blurOutOpts}>
+    <BaseContainer class="flex flex-col px-4 py-3">
+      <p class="cursor-default select-none text-base font-medium dark:text-neutral-300">
+        {$t('Reading')}&nbsp;&mdash;&nbsp;{estRemainingTime}&nbsp;{$t(
+          estRemainingTime === 1 ? 'min left' : 'mins left'
+        )}
       </p>
-    {/if}
+
+      <p class="py-1 font-display text-xl font-bold">{title}</p>
+
+      {#if tags?.length}
+        <div class="flex flex-row flex-wrap items-center justify-start gap-2 pb-2 pt-1">
+          {#each tags as tag}
+            <a
+              href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
+              class="flex w-fit flex-row items-center justify-start gap-x-2 whitespace-nowrap rounded-md bg-neutral-0/75 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            >
+              <span class="font-bold">#</span>
+              <span>{tag.title.toLowerCase()}</span>
+            </a>
+          {/each}
+        </div>
+      {/if}
+
+      {#if desc}
+        <p class="line-clamp-4 p-1 text-base text-neutral-500 dark:text-neutral-200">
+          {desc}
+        </p>
+      {/if}
+
+      {#if $sidebarHeadings}
+        <Divider margin="my-3" />
+        <div class="flex flex-col px-1">
+          <SidebarHeadings headings={$sidebarHeadings} />
+        </div>
+      {/if}
+    </BaseContainer>
   </div>
 {/if}
