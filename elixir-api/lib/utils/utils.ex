@@ -172,6 +172,43 @@ defmodule Hexerei.Utils do
               }
             end
 
+          (meta["count"] > 0 and type == :posts) or type == :projects ->
+            # for each post/project, build a summary
+            {headings_by_item, heading_errors} =
+              Enum.reduce(
+                translated_result["result"],
+                {%{}, []},
+                fn item, {acc, errors} ->
+                  case PT.build_summary(item["body"]) do
+                    {:error, headings, err} ->
+                      {Map.put(acc, item["_id"], headings), [err | errors]}
+
+                    {:ok, headings} ->
+                      {Map.put(acc, item["_id"], headings), errors}
+                  end
+                end
+              )
+
+            if Map.keys(headings_by_item) |> Enum.empty?() do
+              {translated_result, [translate_errors | heading_errors]}
+            else
+              {
+                Kernel.put_in(
+                  translated_result,
+                  ["result"],
+                  translated_result["result"]
+                  |> Enum.map(fn item ->
+                    Kernel.put_in(
+                      item,
+                      ["headings"],
+                      Map.get(headings_by_item, item["_id"])
+                    )
+                  end)
+                ),
+                [translate_errors | heading_errors]
+              }
+            end
+
           true ->
             {translated_result, translate_errors}
         end

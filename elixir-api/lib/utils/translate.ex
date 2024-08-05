@@ -160,10 +160,40 @@ defmodule Hexerei.Translate do
     end
   end
 
+  # TODO: Refactor to pattern-match err cases for better readability
+  # defp translate_config(%{ "result" => nil }, _target_lang, _source_lang) do
+  #   Logger.error("Cannot translate invalid document: #{inspect(sanity_response)}")
+  #   {:error, sanity_response, [%{message: "Cannot translate, invalid document"}]}
+  # end
+
   defp translate_config(sanity_response, target_lang, source_lang) do
     with document <- sanity_response["result"],
          true <- document != nil do
+      field_names = ["bio"]
       content_arrays = ["about", "meta"]
+
+      # for each field name, fetch value from document, translate, and add to map by original field name
+      translated_fields =
+        Enum.reduce(field_names, %{}, fn key, acc ->
+          case Map.get(document, key) do
+            value when is_binary(value) ->
+              translated_field =
+                case translate_pt_fields([value], target_lang, source_lang) do
+                  {:ok, translated_fields} ->
+                    {:ok, translated_fields}
+
+                  {:error, errors} ->
+                    Logger.error("Error(s) translating: #{inspect(errors)}")
+                    # value
+                    {:error, errors}
+                end
+
+              Map.put(acc, key, translated_field)
+
+            value ->
+              Logger.warning("Cannot translate invalid field: #{inspect(value)}")
+          end
+        end)
 
       translated_content_arrays =
         Enum.map(content_arrays, fn name ->
@@ -178,6 +208,12 @@ defmodule Hexerei.Translate do
           {:error, errors} -> errors
           _ -> []
         end)
+        |> Enum.concat(
+          Enum.flat_map(translated_fields, fn
+            {_key, {:error, errors}} -> errors
+            _ -> []
+          end)
+        )
 
       if not Enum.empty?(collected_errors) do
         {:error, sanity_response, collected_errors}
@@ -187,6 +223,14 @@ defmodule Hexerei.Translate do
             idx = content_arrays |> Enum.find_index(fn k -> k == key end)
             Map.put(acc, key, Enum.at(translated_content_arrays, idx))
           end)
+          |> (fn acc ->
+                Enum.reduce(translated_fields, acc, fn {k, v}, acc ->
+                  case v do
+                    {:ok, [translation]} -> Map.put(acc, k, translation)
+                    _ -> Map.put(acc, k, Map.get(document, k))
+                  end
+                end)
+              end).()
 
         {:ok,
          %{
