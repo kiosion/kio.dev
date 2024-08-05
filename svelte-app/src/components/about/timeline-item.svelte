@@ -18,7 +18,7 @@
   class:pb-4={!last}
 >
   <span
-    class="bullet block flex-shrink-0 rounded-xs text-orange-dark dark:text-orange-light"
+    class="bullet block flex-shrink-0 select-none rounded-xs text-orange-dark dark:text-orange-light"
     >&rarr;</span
   >
   <div class="content">

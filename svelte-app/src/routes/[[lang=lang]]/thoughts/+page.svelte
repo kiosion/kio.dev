@@ -75,13 +75,19 @@
       {#each tags as tag, i}
         {#if i < MAX_TAGS}
           <a
-            class="items-between flex select-none flex-row justify-center gap-x-1 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            class="flex select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
             data-sveltekit-preload-code
             aria-label={$t('Topic') + ': ' + tag.title}
           >
-            <span class="font-semibold">#</span>
-            <span>{tag.title.toLowerCase()}</span>
+            <span class="flex flex-row items-center justify-start gap-x-1">
+              <span class="select-none font-semibold">#</span>
+              <span>{tag.title.toLowerCase()}</span>
+            </span>
+            <span class="text-xs"
+              >{tagCounts[tag._id]}
+              {$t(tagCounts[tag._id] === 1 ? 'Post' : 'Posts').toLowerCase()}</span
+            >
           </a>
         {/if}
       {/each}

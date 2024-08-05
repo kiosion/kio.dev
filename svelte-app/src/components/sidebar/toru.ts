@@ -1,3 +1,5 @@
+import { writable } from 'svelte/store';
+
 import { browser } from '$app/environment';
 import Logger from '$lib/logger';
 
@@ -20,6 +22,8 @@ let socketInstance: WebSocket | undefined,
 
 const interval = 36_000;
 
+export const data = writable<ToruData | undefined>(undefined);
+
 const onOpen = () => {
   Logger.info('[ToruSync] Connected');
   retries = 0;
@@ -34,26 +38,25 @@ const onError = (e: Event) => {
   Logger.error('[ToruSync] Error', e);
 };
 
-const onMessage =
-  (onUpdate: (data: ToruData) => void) => (e: MessageEvent<string | unknown>) => {
-    if (!e.data || e.data === 'pong') {
-      return;
+const onMessage = (e: MessageEvent<string | unknown>) => {
+  if (!e.data || e.data === 'pong') {
+    return;
+  }
+
+  try {
+    const res = JSON.parse(e.data as string) as ToruData;
+
+    Logger.info('[ToruSync] Received frame');
+
+    if (res.title || res.album || res.artist) {
+      data.set(res);
     }
+  } catch (e) {
+    Logger.error('[ToruSync] Error parsing', e);
+  }
+};
 
-    try {
-      const res = JSON.parse(e.data as string) as ToruData;
-
-      Logger.info('[ToruSync] Received frame');
-
-      if (res.title || res.album || res.artist) {
-        onUpdate(res);
-      }
-    } catch (e) {
-      Logger.error('[ToruSync] Error parsing', e);
-    }
-  };
-
-export const initSync = (onUpdate: (data: ToruData) => void) => {
+export const initSync = () => {
   if (!browser || (socketInstance && socketInstance.readyState === WebSocket.OPEN)) {
     return;
   }
@@ -63,7 +66,7 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
   socketInstance = new WebSocket('wss://toru.kio.dev/api/v1/ws/kiosion?cover_size=large');
 
   socketInstance.addEventListener('open', onOpen);
-  socketInstance.addEventListener('message', onMessage(onUpdate));
+  socketInstance.addEventListener('message', onMessage);
   socketInstance.addEventListener('error', onError);
   socketInstance.addEventListener('close', onClose);
 
@@ -74,7 +77,7 @@ export const initSync = (onUpdate: (data: ToruData) => void) => {
   }, interval);
 };
 
-export const stopSync = (onUpdate: (data: ToruData) => void) => {
+export const stopSync = () => {
   if (!browser || !socketInstance) {
     return;
   }
@@ -89,7 +92,7 @@ export const stopSync = (onUpdate: (data: ToruData) => void) => {
   }
 
   socketInstance.removeEventListener('open', onOpen);
-  socketInstance.removeEventListener('message', onMessage(onUpdate));
+  socketInstance.removeEventListener('message', onMessage);
   socketInstance.removeEventListener('error', onError);
   socketInstance.removeEventListener('close', onClose);
 

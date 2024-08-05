@@ -45,10 +45,6 @@
     });
 
     observer.observe(container);
-
-    if (data.headings?.length) {
-      sidebarHeadings.set(data.headings);
-    }
   });
 
   onDestroy(() => {
@@ -59,7 +55,6 @@
     }
 
     sidebarBlock.set(undefined);
-    sidebarHeadings.set(undefined);
   });
 
   afterNavigate(() => {
@@ -68,8 +63,9 @@
     }
 
     sidebarBlock.set(undefined);
-    sidebarHeadings.set(undefined);
   });
+
+  $: sidebarHeadings.set(data.headings?.length ? data.headings : undefined);
 </script>
 
 <div
@@ -139,7 +135,7 @@
           data-sveltekit-preload-code
           aria-label={$t('Topic') + ': ' + tag.title}
         >
-          <span class="font-bold">#</span>
+          <span class="select-none font-bold">#</span>
           <span>{tag.title.toLowerCase()}</span>
         </a>
       {/each}

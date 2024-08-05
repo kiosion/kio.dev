@@ -19,7 +19,7 @@
 <Hoverable let:hovered>
   <a
     href={$linkTo(link)}
-    class="focus-outline relative max-w-lg rounded-xl p-2 transition-colors {lone
+    class="focus-outline relative w-full min-w-[18rem] rounded-xl p-2 transition-colors xl:max-w-[calc(50%_-_.625rem)] {lone
       ? 'bg-neutral-0/75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800'
       : 'bg-neutral-100 hover:bg-neutral-100/50 focus-visible:bg-neutral-100/50 dark:bg-neutral-600 dark:hover:bg-neutral-600/50 dark:focus-visible:bg-neutral-600/50'}"
     tabindex="0"
@@ -35,7 +35,7 @@
           : 'bg-neutral-0/75 dark:bg-neutral-500'}"
         class:dark:bg-neutral-400={hovered}
       >
-        <span class="font-bold">#</span>
+        <span class="select-none font-bold">#</span>
         <span
           >{document.tags?.[0]?.title?.toLowerCase() ||
             $t('Uncategorized').toLowerCase()}</span
@@ -45,7 +45,7 @@
         <p class="whitespace-nowrap px-1.5 py-1" aria-label={$t('Date posted')}>
           {$formatDate(document.date || document._createdAt, 'med')}
         </p>
-        /
+        <span class="select-none">/</span>
         <p class="whitespace-nowrap px-1.5 py-1">
           {$t('{views} views', { views: $parseViews(document.views ?? 0) })}
         </p>
@@ -62,7 +62,7 @@
 
     {#if document.desc?.length}
       <p
-        class="line-clamp-2 px-2 pb-1.5 text-base text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
+        class="line-clamp-3 px-2 pb-1.5 text-base text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
       >
         {document.desc}
       </p>

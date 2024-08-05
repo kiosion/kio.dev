@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { circIn, circOut } from 'svelte/easing';
-  import { writable } from 'svelte/store';
   import { blur, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
@@ -9,14 +8,12 @@
   import { isDesktop } from '$lib/responsive';
 
   import Hoverable from '$components/hoverable.svelte';
-  import { initSync, stopSync } from '$components/sidebar/toru';
+  import { data, initSync, stopSync } from '$components/sidebar/toru';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import type { ToruData } from '$components/sidebar/toru';
 
   export let initPromise: Promise<ToruData | undefined>;
-
-  const data = writable<ToruData | undefined>(undefined);
 
   const blurInOpts = {
       duration: BASE_ANIMATION_DURATION * 0.8,
@@ -35,16 +32,14 @@
       duration: BASE_ANIMATION_DURATION * 0.5
     };
 
-  const onUpdate = (res: ToruData) => data.set(res);
-
   onMount(() =>
     initPromise.then((res) => {
       data.set(res);
-      initSync(onUpdate);
+      initSync();
     })
   );
 
-  onDestroy(() => stopSync(onUpdate));
+  onDestroy(() => stopSync());
 
   $: ({ artist, title, playing, url, cover_art, album } = $data ?? {
     artist: undefined,

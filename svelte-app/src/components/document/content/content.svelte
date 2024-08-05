@@ -10,7 +10,7 @@
   export let data: PostDocument | ProjectDocument,
     images: ProjectImage[] | undefined = undefined,
     model = data._type,
-    routeFetch: RouteFetch | undefined = undefined;
+    routeFetch: RouteFetch;
 </script>
 
 <div class="flex h-full w-full flex-col gap-y-5">

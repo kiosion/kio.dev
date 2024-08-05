@@ -14,7 +14,7 @@
     <div
       class="flex cursor-default select-none flex-row items-center gap-2 rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm dark:bg-neutral-800/75"
     >
-      <span class="font-bold">#</span>
+      <span class="select-none font-bold">#</span>
       <span class="line-clamp-1">{data.tag.title.toLowerCase()}</span>
     </div>
 

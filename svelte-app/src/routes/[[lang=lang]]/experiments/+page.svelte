@@ -2,14 +2,11 @@
   import { t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
-  import Divider from '$components/divider.svelte';
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
-
-  export let data;
 
   $: description = $t('pages.experiments.description');
 </script>
@@ -29,7 +26,7 @@
 
 <BaseContainer>
   <HeadedBlock heading={$t('Experiments')} first>
-    <ToruExperiment initPromise={data.nowPlayingData}></ToruExperiment>
+    <ToruExperiment />
 
     <span
       class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"

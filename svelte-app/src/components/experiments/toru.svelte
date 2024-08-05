@@ -1,58 +1,40 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-
-  import { beforeNavigate } from '$app/navigation';
-
   import Divider from '$components/divider.svelte';
   import Hoverable from '$components/hoverable.svelte';
   import Link from '$components/link.svelte';
   import Spinner from '$components/loading/spinner.svelte';
-  import { initSync, stopSync } from '$components/sidebar/toru';
+  import { data } from '$components/sidebar/toru';
 
-  import type { ToruData } from '$components/sidebar/toru';
-
-  export let initPromise: Promise<ToruData | undefined>;
-
-  let data: ToruData | undefined;
-
-  const onUpdate = (res: ToruData) => (data = res);
-
-  onMount(() =>
-    initPromise.then((res) => {
-      data = res;
-      initSync(onUpdate);
-    })
-  );
-
-  beforeNavigate((navigation) => {
-    if (navigation.to !== navigation.from) {
-      stopSync(onUpdate);
-    }
+  $: ({ artist, title, playing, url, cover_art, album } = $data ?? {
+    artist: undefined,
+    title: undefined,
+    playing: false,
+    url: undefined,
+    cover_art: undefined,
+    album: undefined
   });
-
-  onDestroy(() => stopSync(onUpdate));
 </script>
 
-<Hoverable let:hovered setPointer={!!data?.url}>
+<Hoverable let:hovered setPointer={!!url}>
   <div
     class="relative block rounded-lg"
-    class:focus-outline={data?.url}
-    tabindex={data?.url ? 0 : -1}
+    class:focus-outline={url}
+    tabindex={url ? 0 : -1}
     role="button"
     on:click={(e) => {
       if (e.target instanceof SVGElement || e.target instanceof HTMLLinkElement) {
         return;
       }
-      if (data?.url) {
-        window.open(data.url, '_blank');
+      if (url) {
+        window.open(url, '_blank');
       }
     }}
     on:keyup={(e) => {
       if (e.target instanceof SVGElement || e.target instanceof HTMLLinkElement) {
         return;
       }
-      if (e.key === 'Enter' && data?.url) {
-        window.open(data.url, '_blank');
+      if (e.key === 'Enter' && url) {
+        window.open(url, '_blank');
       }
     }}
   >
@@ -90,11 +72,11 @@
         {#if data}
           <div class="relative z-10 flex-shrink-0 overflow-clip">
             <img
-              src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
+              src="data:{cover_art?.mime_type};base64,{cover_art?.data}"
               alt="Album art for the currently playing track"
               class="pointer-events-none aspect-square h-28 w-28 rounded-lg"
             />
-            {#if data.playing}
+            {#if playing}
               <div
                 class="absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-dark/30 transition-colors dark:bg-dark/50"
               ></div>
@@ -116,23 +98,23 @@
           >
             <h4
               class="line-clamp-2 text-xl font-black decoration-orange-light decoration-2 underline-offset-4 dark:decoration-orange-light"
-              class:underline={data.url && hovered}
+              class:underline={url && hovered}
             >
-              {data.title ?? 'Unknown title'}
+              {title ?? 'Unknown title'}
             </h4>
             <p
               class="line-clamp-2 text-base decoration-orange-light decoration-2 underline-offset-4 dark:decoration-orange-light"
-              class:underline={data.artist && hovered}
+              class:underline={artist && hovered}
             >
-              {data.artist ?? ''}
-              {data.artist && data.album ? '—' : ''}
-              {data.album ?? ''}
+              {artist ?? ''}
+              {artist && album ? '—' : ''}
+              {album ?? ''}
             </p>
           </div>
 
           <!-- svelte-ignore a11y-missing-attribute -->
           <img
-            src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
+            src="data:{cover_art?.mime_type};base64,{cover_art?.data}"
             class="absolute bottom-0 left-0 right-0 top-0 z-[2] h-[150%] w-[150%] opacity-30 blur-xl"
           />
           <div
@@ -170,7 +152,7 @@
       {#if data}
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-          src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
+          src="data:{cover_art?.mime_type};base64,{cover_art?.data}"
           class="h-full w-full blur-lg"
         />
       {:else}

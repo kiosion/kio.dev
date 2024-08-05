@@ -107,7 +107,7 @@
               href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
               class="flex w-fit flex-row items-center justify-start gap-x-2 whitespace-nowrap rounded-md bg-neutral-0/75 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             >
-              <span class="font-bold">#</span>
+              <span class="select-none font-bold">#</span>
               <span>{tag.title.toLowerCase()}</span>
             </a>
           {/each}

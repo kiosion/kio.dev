@@ -576,21 +576,16 @@ defmodule Hexerei.Translate do
             updated_blocks = replace_text_in_children(value, text_array, translations)
 
             {key, updated_blocks, collected_errors}
-            # {key, updated_blocks}
         end
       end)
 
     all_errors = Enum.flat_map(updated_fields, fn {_, _, errors} -> errors end)
-
-    # updated_fields = Enum.map(updated_fields, fn {key, value, _} -> {key, value} end) |> Enum.into(%{})
 
     if Enum.empty?(all_errors) do
       {:ok, Enum.map(updated_fields, fn {key, value, _} -> {key, value} end) |> Enum.into(%{})}
     else
       {:error, all_errors}
     end
-
-    # {:ok, updated_fields |> Enum.into(%{})}
   end
 
   defp translate_field(text, target_lang, source_lang) do

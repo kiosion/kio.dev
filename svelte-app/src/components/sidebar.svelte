@@ -26,10 +26,10 @@
 </script>
 
 <div
-  class="min-h-fith-full flex w-full flex-col gap-5 rounded-xl lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
+  class="min-h-fith-full flex w-full flex-col gap-5 rounded-xl transition-[width,max-width] duration-300 ease-in-out lg:ml-auto lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
 >
   <BaseContainer
-    class="lg:orger-1 order-2 flex flex-col items-start justify-start gap-y-4 p-4"
+    class="order-2 flex flex-col items-start justify-start gap-y-4 p-4 lg:order-1"
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
       <img
@@ -37,7 +37,7 @@
         src="/assets/tmp_avi.jpg"
         alt="kio.dev"
       />
-      <div class="flex flex-col items-start justify-center gap-y-0.5">
+      <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
         >
@@ -59,10 +59,14 @@
           {config.bio}
         </p>
       {/if}
-      <ul class="flex flex-col items-start justify-start gap-y-1.5 text-base">
+      <ul
+        class="flex select-none flex-col items-start justify-start gap-y-1.5 text-base"
+        role="list"
+      >
         {#each socials as social}
           <li
             class="flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
+            role="listitem"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +102,10 @@
       >
         {$t('Contents')}
       </p>
-      <ul class="flex w-full flex-col items-start justify-start gap-y-1">
+      <ul
+        class="flex w-full select-none flex-col items-start justify-start gap-y-1"
+        role="navigation"
+      >
         {#each NAV_LINKS as link}
           <li class="h-fit w-full">
             <HeaderLink {link} />

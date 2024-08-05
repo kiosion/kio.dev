@@ -5,6 +5,7 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { scrollTo } from '$lib/navigation';
+  import { sidebarHeadings } from '$lib/sidebar';
 
   import Content from '$components/document/content/content.svelte';
 
@@ -12,7 +13,7 @@
   import type { Unsubscriber } from 'svelte/store';
 
   export let data: ProjectDocument | PostDocument,
-    routeFetch: RouteFetch | undefined = undefined,
+    routeFetch: RouteFetch,
     model = data._type,
     images: ProjectImage[] | undefined = undefined;
 
