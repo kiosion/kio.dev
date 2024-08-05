@@ -20,6 +20,10 @@ export type WorkTimelineItem = SanityAsset & {
 };
 
 export interface SiteConfig extends SanityAsset {
+  name: string;
+  handle?: string;
+  bio?: string;
+  enableToru?: boolean;
   about: ContentSection[];
   meta: ContentSection[];
   timeline: WorkTimelineItem[];

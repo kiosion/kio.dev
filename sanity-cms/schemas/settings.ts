@@ -27,11 +27,115 @@ export default {
   type: 'document',
   groups: [
     {
+      name: 'sidebar',
+      title: 'Sidebar'
+    },
+    {
       name: 'sections',
       title: 'Sections'
     }
   ],
   fields: [
+    {
+      name: 'name',
+      type: 'string',
+      title: 'Name',
+      validation: (Rule: Rule) => Rule.required(),
+      group: 'sidebar'
+    },
+    {
+      name: 'handle',
+      type: 'string',
+      title: 'Handle',
+      group: 'sidebar'
+    },
+    {
+      name: 'bio',
+      type: 'text',
+      title: 'Bio',
+      group: 'sidebar'
+    },
+    {
+      name: 'enableToru',
+      type: 'boolean',
+      title: 'Enable Toru',
+      group: 'sidebar',
+      initialValue: false,
+      // options: {
+      // layout:
+      // },
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      title: 'Social Links',
+      of: [
+        {
+          title: 'Social',
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+              validation: (Rule: Rule) => Rule.required()
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              validation: (Rule: Rule) => {
+                return Rule.uri({
+                  allowRelative: true,
+                  scheme: ['https', 'http', 'mailto', 'tel']
+                });
+              }
+            },
+            {
+              name: 'internal',
+              title: 'Internal',
+              type: 'boolean',
+              initialValue: false,
+              options: {
+                layout: 'checkbox'
+              },
+              description: 'Relative to the site root, e.g. /about'
+            },
+            {
+              name: 'rel',
+              title: 'Rel',
+              type: 'array',
+              of: [
+                {
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: 'nofollow', value: 'nofollow' },
+                      { title: 'noopener', value: 'noopener' },
+                      { title: 'noreferrer', value: 'noreferrer' },
+                      { title: 'me', value: 'me' }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'url'
+            },
+            prepare: ({ title, subtitle }) =>
+              ({
+                title,
+                subtitle
+              }) as PreviewValue
+          } satisfies PreviewConfig
+        }
+      ],
+      group: 'sidebar'
+    },
     {
       name: 'about',
       type: 'array',
@@ -106,75 +210,6 @@ export default {
               ({
                 title,
                 subtitle: `${start ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date(start)) : ''}${start ? ' to ' : ''}${end ? new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date(end)) : 'now'}${subtitle ? ' - ' : ''}${subtitle ? subtitle : ''}`
-              }) as PreviewValue
-          } satisfies PreviewConfig
-        }
-      ]
-    },
-    {
-      name: 'socialLinks',
-      type: 'array',
-      title: 'Social Links',
-      of: [
-        {
-          title: 'Social',
-          type: 'object',
-          fields: [
-            {
-              name: 'name',
-              title: 'Name',
-              type: 'string',
-              validation: (Rule: Rule) => Rule.required()
-            },
-            {
-              name: 'url',
-              title: 'URL',
-              type: 'string',
-              validation: (Rule: Rule) => {
-                return Rule.uri({
-                  allowRelative: true,
-                  scheme: ['https', 'http', 'mailto', 'tel']
-                });
-              }
-            },
-            {
-              name: 'internal',
-              title: 'Internal',
-              type: 'boolean',
-              initialValue: false,
-              options: {
-                layout: 'checkbox'
-              },
-              description: 'Relative to the site root, e.g. /about'
-            },
-            {
-              name: 'rel',
-              title: 'Rel',
-              type: 'array',
-              of: [
-                {
-                  type: 'string',
-                  options: {
-                    list: [
-                      { title: 'nofollow', value: 'nofollow' },
-                      { title: 'noopener', value: 'noopener' },
-                      { title: 'noreferrer', value: 'noreferrer' },
-                      { title: 'me', value: 'me' }
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          preview: {
-            select: {
-              title: 'name',
-              subtitle: 'url'
-            },
-            prepare: ({ title, subtitle }) =>
-              ({
-                title,
-                subtitle
               }) as PreviewValue
           } satisfies PreviewConfig
         }
