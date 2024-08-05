@@ -139,8 +139,8 @@
   "refresh the page": "refresh the page",
   "toru": {
     "status": {
-      "playing": "Now playing",
-      "paused": "Recently played"
+      "playing": "Listening to",
+      "paused": "Last listened to"
     }
   },
   "{document} details": "{document} details",

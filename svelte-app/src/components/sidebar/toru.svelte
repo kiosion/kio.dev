@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { circIn, circOut } from 'svelte/easing';
+  import { writable } from 'svelte/store';
   import { blur, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
@@ -15,7 +16,7 @@
 
   export let initPromise: Promise<ToruData | undefined>;
 
-  let data: ToruData | undefined;
+  const data = writable<ToruData | undefined>(undefined);
 
   const blurInOpts = {
       duration: BASE_ANIMATION_DURATION * 0.8,
@@ -34,25 +35,32 @@
       duration: BASE_ANIMATION_DURATION * 0.5
     };
 
-  const onUpdate = (res: ToruData) => (data = res);
+  const onUpdate = (res: ToruData) => data.set(res);
 
   onMount(() =>
     initPromise.then((res) => {
-      data = res;
+      data.set(res);
       initSync(onUpdate);
     })
   );
 
   onDestroy(() => stopSync(onUpdate));
+
+  $: ({ artist, title, playing, url, cover_art, album } = $data ?? {
+    artist: undefined,
+    title: undefined,
+    playing: false,
+    url: undefined,
+    cover_art: undefined,
+    album: undefined
+  });
 </script>
 
-{#if data && $isDesktop}
-  <Tooltip
-    text={`${data.artist ?? ''}${data.artist && data.title ? ' — ' : ''}${data.title ?? ''}`}
-  >
+{#if $data && $isDesktop}
+  <Tooltip text={`${artist ?? ''}${artist && title ? ' — ' : ''}${title ?? ''}`}>
     <Hoverable let:hovered>
       <a
-        href={data.url ?? '#'}
+        href={url ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
         class="relative order-4 flex select-none flex-row items-center justify-start gap-4 rounded-xl bg-neutral-100 p-3 transition-colors ease-in-out hover:bg-neutral-100/75 dark:bg-neutral-600 dark:hover:bg-neutral-600/75 print:hidden"
@@ -61,11 +69,11 @@
       >
         <div class="relative flex-shrink-0 overflow-clip rounded-lg">
           <img
-            src="data:{data.cover_art.mime_type};base64,{data.cover_art.data}"
+            src="data:{cover_art?.mime_type};base64,{cover_art?.data}"
             alt="Album art for the currently playing track"
             class="pointer-events-none aspect-square h-20 w-20 rounded-lg"
           />
-          {#if data.playing && !hovered}
+          {#if playing && !hovered}
             <div
               class="absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-neutral-700/40 transition-colors dark:bg-neutral-700/50"
               in:fade={fadeInOpts}
@@ -89,19 +97,19 @@
           <p
             class="text-sm font-medium text-neutral-500 transition-colors dark:text-neutral-300"
           >
-            {$t(data.playing ? 'toru.status.playing' : 'toru.status.paused')}
+            {$t(playing ? 'toru.status.playing' : 'toru.status.paused')}
           </p>
           <div
             class="flex flex-col items-start justify-center text-neutral-600 transition-colors dark:text-neutral-100"
           >
             <p class="line-clamp-1 text-md font-bold">
-              {data.title ?? 'Unknown title'}
+              {title ?? 'Unknown title'}
             </p>
 
             <p class="line-clamp-1 text-sm">
-              {data.artist ?? ''}
-              {data.artist && data.album ? '—' : ''}
-              {data.album ?? ''}
+              {artist ?? ''}
+              {artist && album ? '—' : ''}
+              {album ?? ''}
             </p>
           </div>
         </div>

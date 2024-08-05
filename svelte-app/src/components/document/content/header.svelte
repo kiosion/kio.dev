@@ -21,7 +21,9 @@
     images: ProjectImage[] | undefined = undefined,
     model = data._type;
 
-  let container: HTMLDivElement, observer: IntersectionObserver | undefined;
+  let container: HTMLDivElement,
+    observer: IntersectionObserver | undefined,
+    sidebarTimeout: ReturnType<typeof setTimeout> | undefined;
 
   onMount(() => {
     if (!browser) {
@@ -31,9 +33,13 @@
     observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          sidebarBlock.set(undefined);
+          if (sidebarTimeout) {
+            clearTimeout(sidebarTimeout);
+          }
+
+          sidebarTimeout = setTimeout(() => sidebarBlock.set(undefined), 250);
         } else {
-          sidebarBlock.set(data);
+          sidebarTimeout = setTimeout(() => sidebarBlock.set(data), 250);
         }
       });
     });
@@ -41,18 +47,26 @@
     observer.observe(container);
 
     if (data.headings?.length) {
-      console.log('headings', data.headings);
       sidebarHeadings.set(data.headings);
     }
   });
 
   onDestroy(() => {
     observer?.disconnect();
+
+    if (sidebarTimeout) {
+      clearTimeout(sidebarTimeout);
+    }
+
     sidebarBlock.set(undefined);
     sidebarHeadings.set(undefined);
   });
 
   afterNavigate(() => {
+    if (sidebarTimeout) {
+      clearTimeout(sidebarTimeout);
+    }
+
     sidebarBlock.set(undefined);
     sidebarHeadings.set(undefined);
   });
