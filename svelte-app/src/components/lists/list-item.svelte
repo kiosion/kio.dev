@@ -21,7 +21,7 @@
     href={$linkTo(link)}
     class="focus-outline relative w-full min-w-[18rem] rounded-xl p-2 transition-colors xl:max-w-[calc(50%_-_.625rem)] {lone
       ? 'bg-neutral-0/75 hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800'
-      : 'bg-neutral-100 hover:bg-neutral-100/50 focus-visible:bg-neutral-100/50 dark:bg-neutral-600 dark:hover:bg-neutral-600/50 dark:focus-visible:bg-neutral-600/50'}"
+      : 'border border-neutral-200/50 bg-neutral-100 hover:bg-neutral-100/50 focus-visible:bg-neutral-100/50 dark:border-neutral-500/50 dark:bg-neutral-600 dark:hover:bg-neutral-600/50 dark:focus-visible:bg-neutral-600/50'}"
     tabindex="0"
     data-sveltekit-preload-code
     data-sveltekit-preload-data
@@ -30,10 +30,11 @@
       class="flex flex-row flex-wrap items-center justify-start gap-2 p-1.5 font-mono text-sm leading-[1.2] text-neutral-700 transition-colors dark:text-neutral-200"
     >
       <span
-        class="flex flex-row gap-1.5 rounded-md px-2 py-1.5 font-sans text-sm transition-colors {lone
+        class="flex flex-row items-center justify-start gap-1.5 rounded-md px-2 py-1.5 font-sans text-sm transition-colors {lone
           ? 'bg-neutral-100/75 dark:bg-neutral-500/50'
           : 'bg-neutral-0/75 dark:bg-neutral-500'}"
-        class:dark:bg-neutral-400={hovered}
+        class:bg-neutral-0={hovered && !lone}
+        class:dark:bg-neutral-400={hovered && !lone}
       >
         <span class="select-none font-bold">#</span>
         <span

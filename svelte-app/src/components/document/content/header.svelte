@@ -9,7 +9,9 @@
   import { parseViews } from '$lib/utils';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
+  import Divider from '$components/divider.svelte';
   import Image from '$components/images/image.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -68,8 +70,8 @@
   $: sidebarHeadings.set(data.headings?.length ? data.headings : undefined);
 </script>
 
-<div
-  class="flex w-full flex-row flex-wrap justify-between gap-2 rounded-xl bg-neutral-100 p-2 text-sm text-neutral-700 transition-colors dark:bg-neutral-600 dark:text-neutral-100"
+<BaseContainer
+  class="flex w-full flex-row flex-wrap justify-between gap-2 p-2 text-sm text-neutral-700 dark:text-neutral-100"
 >
   <div class="flex flex-row gap-2">
     <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
@@ -103,10 +105,10 @@
     text={$t('All posts')}
     preload
   />
-</div>
+</BaseContainer>
 
 <div
-  class="rounded-xl bg-neutral-100 p-2 transition-colors dark:bg-neutral-600"
+  class="rounded-xl border border-neutral-200/50 bg-neutral-100 p-2 transition-colors dark:border-neutral-500/90 dark:bg-neutral-600"
   data-test-id="{model}-header"
   bind:this={container}
 >
@@ -118,6 +120,20 @@
     </h1>
     {#if data.desc}
       <p class="pt-3 text-base text-neutral-700 dark:text-neutral-100">{data.desc}</p>
+    {/if}
+    {#if data._type === 'project' && data.github}
+      <div class="flex flex-row items-center justify-start gap-2 px-1 py-4 text-base">
+        <span class="select-none text-base text-neutral-700 dark:text-neutral-100"
+          >url</span
+        >
+        <span class="select-none text-base text-neutral-700 dark:text-neutral-100">/</span
+        >
+        <span class="text-base">
+          <Link href={data.github}>
+            {'github.com/' + data.github.split('github.com/')?.[1]}
+          </Link>
+        </span>
+      </div>
     {/if}
   </div>
 
@@ -142,24 +158,9 @@
     </div>
   {/if}
 
-  {#if data._type === 'project' && data.github}
-    <div
-      class="flex w-full flex-row items-center justify-start gap-3 border-b border-dark/80 px-6 py-6 text-base dark:border-light/60 md:px-10"
-    >
-      <span
-        class="cursor-default select-none font-mono text-sm text-dark/80 dark:text-light/80"
-        >url /</span
-      >
-      <span class="font-mono text-sm">
-        <Link href={data.github}>
-          {'github.com/' + data.github.split('github.com/')?.[1]}
-        </Link>
-      </span>
-    </div>
-  {/if}
-
   {#if data._type === 'project' && images?.length}
-    <div class="w-full border-b border-dark/80 px-6 py-6 dark:border-light/60 md:px-10">
+    <Divider margin="my-3" />
+    <div class="w-full px-6 py-4">
       {#if images.length > 1}
         <ImageCarousel {images}></ImageCarousel>
       {:else}

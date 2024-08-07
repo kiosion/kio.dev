@@ -32,7 +32,7 @@
     <ArrowButton
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       dir={$isMobile ? 'up' : 'left'}
-      text={$t('All posts')}
+      text={model === 'post' ? $t('All posts') : $t('All projects')}
       preload
     />
   </div>

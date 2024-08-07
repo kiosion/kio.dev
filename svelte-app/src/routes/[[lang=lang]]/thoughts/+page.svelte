@@ -4,6 +4,7 @@
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import DocumentList from '$components/lists/document-list.svelte';
 
   import type { DocumentTags } from '$types';
@@ -68,8 +69,8 @@
 </svelte:head>
 
 <div class="flex flex-col gap-5">
-  <div
-    class="flex w-full flex-row flex-wrap items-center justify-between gap-4 rounded-xl bg-neutral-100 p-2 dark:bg-neutral-600"
+  <BaseContainer
+    class="flex w-full flex-row flex-wrap items-center justify-between gap-4 p-2"
   >
     <div class="flex flex-row flex-wrap items-center justify-start gap-2">
       {#each tags as tag, i}
@@ -99,7 +100,7 @@
       text={$t('All topics')}
       preload
     />
-  </div>
+  </BaseContainer>
 
   {#if data.posts.length}
     <DocumentList documents={data.posts}></DocumentList>

@@ -57,13 +57,17 @@ export const APP_ROUTES = [
     path: '/etc',
     hidden: false
   }
-] as AppRoute[];
+] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { children, ...rest } = r;
+  if (!('children' in r)) {
+    return r;
+  }
+
+  const { children: _children, ...rest } = r;
+
   return rest;
-}) as Omit<AppRoute, 'children'>[];
+}) satisfies Omit<AppRoute, 'children'>[];
 
 export const ROUTE_ORDER = [
   '/',

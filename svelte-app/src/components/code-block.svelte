@@ -1,13 +1,19 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  // import { browser } from '$app/environment';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
   import Hoverable from '$components/hoverable.svelte';
+  import ClipboardDocument from '$components/icons/clipboard-document.svelte';
+  import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
+  import DocumentTextSmall from '$components/icons/document-text-small.svelte';
+  import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
+  import MinusSmall from '$components/icons/minus-small.svelte';
+  import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
+  import PlusSmall from '$components/icons/plus-small.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
@@ -85,22 +91,10 @@
 >
   {#if filename}
     <div
-      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-0 px-8 py-4 font-mono text-sm transition-[background-color] dark:bg-neutral-800/5 print:bg-transparent"
+      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-0 px-8 py-4 font-mono text-sm transition-colors dark:bg-neutral-800/5"
       id="{id}-filename"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 16 16"
-        fill="currentColor"
-        class="size-4"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z"
-          clip-rule="evenodd"
-        />
-      </svg>
-
+      <DocumentTextSmall class="text-neutral-500 dark:text-neutral-300" />
       <span>{filename}</span>
     </div>
     <Divider margin="my-0"></Divider>
@@ -111,7 +105,7 @@
       <button
         class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors dark:text-light/80"
         class:top-1={!filename}
-        class:top-12={filename}
+        class:top-14={filename}
         class:bg-neutral-100={hovered}
         class:text-dark={hovered}
         class:dark:bg-neutral-500={hovered}
@@ -121,20 +115,9 @@
         aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
         type="button"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="size-5 transition-colors"
-          class:text-orange-light={copied !== undefined}
-        >
-          <path
-            d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 0 1 3.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0 1 21 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 0 1 7.5 16.125V3.375Z"
-          />
-          <path
-            d="M15 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 17.25 7.5h-1.875A.375.375 0 0 1 15 7.125V5.25ZM4.875 6H6v10.125A3.375 3.375 0 0 0 9.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V7.875C3 6.839 3.84 6 4.875 6Z"
-          />
-        </svg>
+        <svelte:component
+          this={copied !== undefined ? ClipboardDocumentCheck : ClipboardDocument}
+        />
       </button>
     </Hoverable>
   </Tooltip>
@@ -186,25 +169,32 @@
 
   {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
     <div
-      class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 pb-4 pt-6 text-center"
+      class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pb-4 pt-6 text-center"
       bind:clientHeight={showMoreHeight}
     >
-      <button
-        class="focus-outline rounded-md px-2 py-1.5 font-mono text-xs transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-        on:click={() => {
-          showingMore = !showingMore;
-          if (!showingMore) {
-            updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
-          }
-        }}
-        type="button"
-        >{$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
-        {#if showingMore}
-          &uarr;
-        {:else}
-          &darr;
-        {/if}
-      </button>
+      <Hoverable let:hovered>
+        <button
+          class="focus-outline flex w-fit flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-100/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+          on:click={() => {
+            showingMore = !showingMore;
+            if (!showingMore) {
+              updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
+            }
+          }}
+          type="button"
+        >
+          <svelte:component
+            this={showingMore
+              ? hovered
+                ? MinusCircleSmall
+                : MinusSmall
+              : hovered
+                ? PlusCircleSmall
+                : PlusSmall}
+          />
+          {$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
+        </button>
+      </Hoverable>
     </div>
   {/if}
 </div>
