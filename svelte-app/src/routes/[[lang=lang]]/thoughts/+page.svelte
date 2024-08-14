@@ -69,14 +69,12 @@
 </svelte:head>
 
 <div class="flex flex-col gap-5">
-  <BaseContainer
-    class="flex w-full flex-row flex-wrap items-center justify-between gap-4 p-2"
-  >
-    <div class="flex flex-row flex-wrap items-center justify-start gap-2">
+  <BaseContainer class="flex w-full flex-row items-start justify-between gap-4 p-2">
+    <div class="flex shrink flex-row flex-wrap items-center justify-start gap-2">
       {#each tags as tag, i}
         {#if i < MAX_TAGS}
           <a
-            class="flex select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            class="flex shrink-0 select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
             data-sveltekit-preload-code
             aria-label={$t('Topic') + ': ' + tag.title}
