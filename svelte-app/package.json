@@ -21,7 +21,7 @@
     "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\""
   },
   "devDependencies": {
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.46.1",
     "@portabletext/svelte": "2.1.11",
     "@portabletext/toolkit": "2.0.15",
     "@portabletext/types": "2.0.13",
