@@ -48,7 +48,7 @@
           aria-labelledby="{id}-heading"
         >
           {#each data.projects as project}
-            <ListItem document={project} lone />
+            <ListItem document={project} />
           {/each}
         </div>
       </HeadedBlock>

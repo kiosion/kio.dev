@@ -27,9 +27,11 @@
     />
   </BaseContainer>
 
-  {#if data.posts?.length}
-    <DocumentList documents={data.posts} />
-  {:else}
-    <EmptyContent />
-  {/if}
+  <BaseContainer class="px-5 py-6">
+    {#if data.posts?.length}
+      <DocumentList documents={data.posts} />
+    {:else}
+      <EmptyContent />
+    {/if}
+  </BaseContainer>
 </div>

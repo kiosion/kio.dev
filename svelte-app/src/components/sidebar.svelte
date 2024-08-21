@@ -40,7 +40,7 @@
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
       <img
         class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-orange-light/40 p-0 transition-colors dark:bg-orange-light/60"
-        src="/assets/tmp_avi.jpg"
+        src="/assets/tmp_avi.png"
         alt="kio.dev"
       />
       <div class="flex select-none flex-col items-start justify-center gap-y-0.5">

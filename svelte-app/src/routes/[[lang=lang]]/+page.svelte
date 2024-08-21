@@ -56,7 +56,7 @@
           aria-labelledby="{id}-heading"
         >
           {#each data.posts as post}
-            <ListItem document={post} lone />
+            <ListItem document={post} />
           {/each}
         </div>
       {:else}

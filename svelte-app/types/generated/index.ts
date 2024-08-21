@@ -40,6 +40,7 @@ export type LocaleKey =
   | 'No content'
   | 'PGP'
   | 'Page content'
+  | 'Pages'
   | 'Please'
   | 'Post'
   | 'Posts'

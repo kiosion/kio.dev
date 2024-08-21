@@ -31,6 +31,7 @@
 
   let scrollObserverUnsubscriber: Unsubscriber | undefined,
     scrollProgress = 0,
+    scrollProgressUpdateInterval: ReturnType<typeof setInterval> | undefined,
     handleScrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
   const handleScroll = () => {
@@ -58,22 +59,15 @@
       return;
     }
 
-    scrollObserverUnsubscriber = sidebarBlock.subscribe((_) => {
-      if (!scrollContainer) {
-        return;
-      }
-
-      scrollContainer.removeEventListener('scroll', handleScroll);
-      scrollContainer.removeEventListener('wheel', handleScroll);
-      scrollContainer.addEventListener('scroll', handleScroll);
-      scrollContainer.addEventListener('wheel', handleScroll);
-    });
+    scrollObserverUnsubscriber = sidebarBlock.subscribe((_) => handleScroll());
+    scrollProgressUpdateInterval = setInterval(() => handleScroll(), 1000);
   });
 
   onDestroy(() => {
+    handleScrollTimeout && clearTimeout(handleScrollTimeout);
+    scrollProgressUpdateInterval && clearInterval(scrollProgressUpdateInterval);
+
     scrollObserverUnsubscriber?.();
-    scrollContainer?.removeEventListener('scroll', handleScroll);
-    scrollContainer?.removeEventListener('wheel', handleScroll);
   });
 
   $: estRemainingTime = Math.round(
@@ -98,7 +92,7 @@
         )}
       </p>
 
-      <p class="py-1 font-display text-xl font-bold">{title}</p>
+      <p class="py-1 font-display text-xl font-bold leading-tight">{title}</p>
 
       {#if tags?.length}
         <div class="flex flex-row flex-wrap items-center justify-start gap-2 pb-2 pt-1">

@@ -74,7 +74,7 @@
       {#each tags as tag, i}
         {#if i < MAX_TAGS}
           <a
-            class="flex shrink-0 select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            class="focus-outline-sm flex shrink-0 select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
             data-sveltekit-preload-code
             aria-label={$t('Topic') + ': ' + tag.title}
@@ -100,9 +100,11 @@
     />
   </BaseContainer>
 
-  {#if data.posts.length}
-    <DocumentList documents={data.posts}></DocumentList>
-  {:else}
-    <EmptyContent />
-  {/if}
+  <BaseContainer class="px-5 py-6">
+    {#if data.posts.length}
+      <DocumentList documents={data.posts}></DocumentList>
+    {:else}
+      <EmptyContent />
+    {/if}
+  </BaseContainer>
 </div>
