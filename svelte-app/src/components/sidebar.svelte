@@ -98,7 +98,7 @@
       <p
         class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-200"
       >
-        {$t('Contents')}
+        {$t('Pages')}
       </p>
       <ul
         class="flex w-full select-none flex-col items-start justify-start gap-y-1"

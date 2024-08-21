@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
+  import { navigating } from '$app/stores';
   import { formatDate } from '$lib/date';
   import { currentLang, linkTo, t } from '$lib/i18n';
   import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
@@ -34,14 +36,14 @@
 
     observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (sidebarTimeout) {
-            clearTimeout(sidebarTimeout);
-          }
+        if (sidebarTimeout) {
+          clearTimeout(sidebarTimeout);
+        }
 
+        if (entry.isIntersecting || get(navigating)) {
           sidebarTimeout = setTimeout(() => sidebarBlock.set(undefined), 250);
         } else {
-          sidebarTimeout = setTimeout(() => sidebarBlock.set(data), 250);
+          sidebarTimeout = setTimeout(() => sidebarBlock.set(data), 500);
         }
       });
     });

@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { ENV } from '$lib/env';
   import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
