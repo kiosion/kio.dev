@@ -27,7 +27,7 @@
     />
   </BaseContainer>
 
-  <BaseContainer class="px-5 py-6">
+  <BaseContainer class="px-4 py-6">
     {#if data.posts?.length}
       <DocumentList documents={data.posts} />
     {:else}

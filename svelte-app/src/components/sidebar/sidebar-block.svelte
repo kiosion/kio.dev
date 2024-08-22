@@ -86,13 +86,17 @@
 {#if $isDesktop && $sidebarBlock}
   <div class="order-3" in:blur={blurInOpts} out:blur={blurOutOpts}>
     <BaseContainer class="flex flex-col px-4 py-3">
-      <p class="cursor-default select-none text-base font-medium dark:text-neutral-300">
+      <p
+        class="cursor-default select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+      >
         {$t('Reading')}&nbsp;&mdash;&nbsp;{estRemainingTime}&nbsp;{$t(
           estRemainingTime === 1 ? 'min left' : 'mins left'
         )}
       </p>
 
-      <p class="py-1 font-display text-xl font-bold leading-tight">{title}</p>
+      <p class="py-1 font-display text-xl font-bold leading-tight transition-colors">
+        {title}
+      </p>
 
       {#if tags?.length}
         <div class="flex flex-row flex-wrap items-center justify-start gap-2 pb-2 pt-1">
@@ -109,14 +113,20 @@
       {/if}
 
       {#if desc}
-        <p class="line-clamp-4 p-1 text-base text-neutral-500 dark:text-neutral-200">
+        <p
+          class="line-clamp-4 p-1 text-base text-neutral-600 transition-colors dark:text-neutral-100"
+        >
           {desc}
         </p>
       {/if}
 
       {#if $sidebarHeadings}
-        <Divider margin="my-3" />
-        <div class="flex flex-col px-1">
+        <div
+          class="mb-2 mt-3 select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+        >
+          {$t('Summary')}
+        </div>
+        <div class="flex flex-col px-1.5">
           <SidebarHeadings headings={$sidebarHeadings} />
         </div>
       {/if}

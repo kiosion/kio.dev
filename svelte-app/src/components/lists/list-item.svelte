@@ -16,10 +16,9 @@
 
 <a
   href={$linkTo(link)}
-  class="focus-outline group relative -mx-1 -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-200/30 focus-visible:bg-neutral-200/30 dark:hover:bg-neutral-900/50 dark:focus-visible:bg-neutral-900/50"
+  class="focus-outline group relative -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-0/75 focus-visible:bg-neutral-0/75 dark:hover:bg-neutral-800/50 dark:focus-visible:bg-neutral-800/50"
   tabindex="0"
   data-sveltekit-preload-code
-  data-sveltekit-preload-data
 >
   <div
     class="flex flex-row flex-wrap items-center justify-start gap-0.5 px-0.5 font-sans text-sm font-medium text-neutral-700 transition-colors dark:text-neutral-200"
@@ -35,7 +34,7 @@
     </span>
   </div>
   <h1
-    class="line-clamp-2 font-sans text-2xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors group-hover:underline group-focus-visible:underline lg:max-w-[60rem]"
+    class="line-clamp-2 font-sans text-xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors group-hover:underline group-focus-visible:underline lg:max-w-[60rem]"
   >
     {document.title}
   </h1>

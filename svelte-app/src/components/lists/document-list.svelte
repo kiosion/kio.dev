@@ -6,7 +6,7 @@
   export let documents: (ProjectDocument | PostDocument)[];
 </script>
 
-<div class="flex w-full flex-row flex-wrap gap-5" role="group" {...$$restProps}>
+<div class="flex w-full flex-row flex-wrap gap-5 py-1" role="group" {...$$restProps}>
   {#each documents as document}
     <ListItem {document} />
   {/each}

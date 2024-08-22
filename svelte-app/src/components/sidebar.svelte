@@ -96,7 +96,7 @@
 
     <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-2">
       <p
-        class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-200"
+        class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
       >
         {$t('Pages')}
       </p>
