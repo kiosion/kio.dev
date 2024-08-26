@@ -18,8 +18,8 @@ importers:
         specifier: 3.52.2
         version: 3.52.2(@babel/runtime@7.24.6)(@codemirror/lint@6.8.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       ace-builds:
-        specifier: 1.34.2
-        version: 1.34.2
+        specifier: 1.36.0
+        version: 1.36.0
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -2657,8 +2657,8 @@ packages:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
 
-  ace-builds@1.34.2:
-    resolution: {integrity: sha512-wiOZYuxyOSYfZzDasQTe+ZWmRlYxXSJM/kMKZ/bSqO1VgrBl+PaaTz/Sc+y7hXCKAUj3syUdpwxQyvwv9vQe6w==}
+  ace-builds@1.36.0:
+    resolution: {integrity: sha512-7to4F86V5N13EY4M9LWaGo2Wmr9iWe5CrYpc28F+/OyYCf7yd+xBV5x9v/GB73EBGGoYd89m6JjeIUjkL6Yw+w==}
 
   acorn-import-attributes@1.9.5:
     resolution: {integrity: sha512-n02Vykv5uA3eHGM/Z2dQrcD56kL8TyDb2p1+0P83PClMnC/nc+anbQRhIOWnSq4Ke/KvDPrY3C9hDtC/A3eHnQ==}
@@ -11259,7 +11259,7 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  ace-builds@1.34.2: {}
+  ace-builds@1.36.0: {}
 
   acorn-import-attributes@1.9.5(acorn@8.11.3):
     dependencies:
