@@ -6,7 +6,6 @@
 
   import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
-  import Hoverable from '$components/hoverable.svelte';
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
   import DocumentTextSmall from '$components/icons/document-text-small.svelte';
@@ -101,25 +100,19 @@
   {/if}
 
   <Tooltip text={$t('Copy to clipboard')} position="top">
-    <Hoverable let:hovered>
-      <button
-        class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors dark:text-light/80"
-        class:top-1={!filename}
-        class:top-14={filename}
-        class:bg-neutral-100={hovered}
-        class:text-dark={hovered}
-        class:dark:bg-neutral-500={hovered}
-        class:dark:text-light={hovered}
-        on:click={() => copy()}
-        on:keydown={(e) => e.key === 'Enter' && copy()}
-        aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-        type="button"
-      >
-        <svelte:component
-          this={copied !== undefined ? ClipboardDocumentCheck : ClipboardDocument}
-        />
-      </button>
-    </Hoverable>
+    <button
+      class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-100 hover:text-dark focus-visible:bg-neutral-100 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
+      class:top-1={!filename}
+      class:top-14={filename}
+      on:click={() => copy()}
+      on:keydown={(e) => e.key === 'Enter' && copy()}
+      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+      type="button"
+    >
+      <svelte:component
+        this={copied !== undefined ? ClipboardDocumentCheck : ClipboardDocument}
+      />
+    </button>
   </Tooltip>
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
@@ -141,7 +134,7 @@
     >
       {#if !loadError}
         <!-- eslint-disable-next-line prettier/prettier -->
-        {#await Promise.all([HighlightSvelte, Highlight, LanguageType, LineNumbers]) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+        {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
           <svelte:component
             this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
             code={content}
@@ -172,29 +165,25 @@
       class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pb-4 pt-6 text-center"
       bind:clientHeight={showMoreHeight}
     >
-      <Hoverable let:hovered>
-        <button
-          class="focus-outline flex w-fit flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-100/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-          on:click={() => {
-            showingMore = !showingMore;
-            if (!showingMore) {
-              updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
-            }
-          }}
-          type="button"
-        >
-          <svelte:component
-            this={showingMore
-              ? hovered
-                ? MinusCircleSmall
-                : MinusSmall
-              : hovered
-                ? PlusCircleSmall
-                : PlusSmall}
-          />
-          {$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
-        </button>
-      </Hoverable>
+      <button
+        class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-100/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        on:click={() => {
+          showingMore = !showingMore;
+          if (!showingMore) {
+            updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
+          }
+        }}
+        type="button"
+      >
+        {#if showingMore}
+          <MinusSmall class="group-hover:hidden group-focus-visible:hidden" />
+          <MinusCircleSmall class="hidden group-hover:block group-focus-visible:block" />
+        {:else}
+          <PlusSmall class="group-hover:hidden group-focus-visible:hidden" />
+          <PlusCircleSmall class="hidden group-hover:block group-focus-visible:block" />
+        {/if}
+        {$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
+      </button>
     </div>
   {/if}
 </div>

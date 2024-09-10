@@ -2,7 +2,7 @@
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 16 16"
   fill="currentColor"
-  class={$$props.class || 'size-4'}
+  class="size-4 {$$props.class || ''}"
 >
   <path
     fill-rule="evenodd"

@@ -70,26 +70,29 @@
         role="list"
       >
         {#each socials as social}
-          <Hoverable let:hovered>
-            <li
-              class="flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
-              role="listitem"
-            >
-              <svelte:component
-                this={social.url.includes('mailto')
-                  ? hovered
-                    ? EnvelopeOpenSmall
-                    : EnvelopeSmall
-                  : hovered
-                    ? GlobeAsiaAustraliaSmall
-                    : GlobeAmericasSmall}
-                class="mt-px"
+          <li
+            class="group flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
+            role="listitem"
+          >
+            {#if social.url.includes('mailto')}
+              <EnvelopeSmall
+                class="mt-px group-hover:hidden group-focus-visible:hidden"
               />
-              <Link href={social.url} newtab>
-                {social.name}
-              </Link>
-            </li>
-          </Hoverable>
+              <EnvelopeOpenSmall
+                class="mt-px hidden group-hover:block group-focus-visible:block"
+              />
+            {:else}
+              <GlobeAmericasSmall
+                class="mt-px group-hover:hidden group-focus-visible:hidden"
+              />
+              <GlobeAsiaAustraliaSmall
+                class="mt-px hidden group-hover:block group-focus-visible:block"
+              />
+            {/if}
+            <Link href={social.url} newtab>
+              {social.name}
+            </Link>
+          </li>
         {/each}
       </ul>
     </div>
@@ -113,7 +116,9 @@
     </nav>
   </BaseContainer>
 
-  <BaseContainer class="order-1 flex flex-row gap-2 p-2 lg:order-2 print:hidden">
+  <BaseContainer
+    class="group/container order-1 flex flex-row gap-2 p-2 group-first/container:border-r-2 lg:order-2 print:hidden"
+  >
     <LangToggle />
     <ThemeToggle />
   </BaseContainer>

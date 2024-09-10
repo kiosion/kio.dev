@@ -14,6 +14,7 @@ export type LocaleKey =
   | 'Contents'
   | 'Copied'
   | 'Copy'
+  | 'Copy {value}'
   | 'Copy to clipboard'
   | 'Dark'
   | 'Date posted'
