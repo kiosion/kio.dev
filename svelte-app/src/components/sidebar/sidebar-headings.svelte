@@ -9,7 +9,7 @@
 </script>
 
 {#each headings as heading}
-  <div class="w-full pt-0.5 text-base">
+  <div class="w-full pt-1 text-base">
     <a
       href={`#${heading.key}`}
       class="focus-outline-sm group flex w-full flex-row items-center gap-x-2 rounded-xs text-neutral-700 decoration-orange-light transition-colors hover:text-orange-light dark:text-neutral-100 dark:hover:text-orange-light"

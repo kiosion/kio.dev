@@ -26,11 +26,12 @@
     <h3 class="pb-1 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
     </h3>
-    <p class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80">
-      {$displayRange(range.start, range.end)} &bull; {$displayMonthDuration(
-        range.start,
-        range.end
-      )}
+    <p
+      class="inline-flex flex-row items-center justify-start gap-x-2 font-sans text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+    >
+      <span>{$displayRange(range.start, range.end)}</span><span>&bull;</span><span
+        >{$displayMonthDuration(range.start, range.end)}</span
+      >
     </p>
     {#if body}
       <div class="-mb-4 -mt-2">

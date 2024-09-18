@@ -122,7 +122,7 @@
 
       {#if $sidebarHeadings}
         <div
-          class="mb-2 mt-3 select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+          class="mt-3 select-none pb-1 text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
         >
           {$t('Summary')}
         </div>

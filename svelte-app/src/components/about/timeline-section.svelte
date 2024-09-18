@@ -19,20 +19,27 @@
 >
   <div class="pb-3">
     <h2
-      class="pb-1 text-xl font-bold text-dark transition-colors dark:text-white"
+      class="text-xl font-bold text-dark transition-colors dark:text-white"
       id="{id}-heading"
     >
       {title}
     </h2>
     <p
-      class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      class="inline-flex flex-row items-center justify-start gap-x-2 font-sans text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
       aria-label={$t('Duration')}
     >
-      {$displayRange(section[section.length - 1].range.start, section[0].range.end)} &bull;
-      {$displayMonthDuration(
-        section[section.length - 1].range.start,
-        section[0].range.end
-      )}
+      <span
+        >{$displayRange(
+          section[section.length - 1].range.start,
+          section[0].range.end
+        )}</span
+      ><span>&bull;</span>
+      <span
+        >{$displayMonthDuration(
+          section[section.length - 1].range.start,
+          section[0].range.end
+        )}</span
+      >
     </p>
   </div>
 
