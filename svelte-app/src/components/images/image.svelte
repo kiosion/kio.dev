@@ -3,6 +3,7 @@
   import { crossfade, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
   import { buildImageUrl, getCrop } from '$lib/sanity';
 
   import ImageModal from '$components/images/image-modal.svelte';
@@ -120,7 +121,7 @@
     <p
       class="error font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
     >
-      Error: {e?.message || e}
+      {$t('Error')}:&nbsp;{e?.message || e}
     </p>
     <img
       src={placeholderSrc}

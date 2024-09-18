@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
+  import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -130,8 +131,8 @@
   class="relative my-6 flex h-fit w-full cursor-pointer flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
 >
   <header class="w-full pb-2">
-    <h3 class="pb-2 font-display text-2xl font-bold">Game of life</h3>
-    <p>Conway's Game of Life starting with an R-pentomino pattern.</p>
+    <h3 class="pb-2 font-display text-2xl font-bold">{$t('Game of life')}</h3>
+    <p>{$t("Conway's Game of Life starting with an R-pentomino pattern.")}</p>
     <Divider></Divider>
   </header>
 

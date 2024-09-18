@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t } from '$lib/i18n';
+
   import Divider from '$components/divider.svelte';
   import CodeBracket from '$components/icons/code-bracket.svelte';
   import Link from '$components/link.svelte';
@@ -42,8 +44,10 @@
     class="relative my-6 flex h-fit w-full flex-col items-start justify-center overflow-clip rounded-xl px-7 py-6"
   >
     <header class="z-10 w-full pb-2 transition-[color]">
-      <h3 class="pb-2 font-display text-2xl font-bold">Toru</h3>
-      <p>An Elixir-based API for generating embeds from last.fm listening activity.</p>
+      <h3 class="pb-2 font-display text-2xl font-bold">{$t('Toru')}</h3>
+      <p>
+        {$t('An Elixir-based API for generating embeds from last.fm listening activity.')}
+      </p>
       <Divider></Divider>
     </header>
 
@@ -121,7 +125,7 @@
         <div
           class="flex flex-col items-start justify-center text-dark/90 transition-[color] dark:text-light/90"
         >
-          <h4 class="text-xl font-bold">Loading...</h4>
+          <h4 class="text-xl font-bold">{$t('Loading')}...</h4>
         </div>
 
         <div

@@ -133,8 +133,9 @@
       bind:clientHeight={innerHeight}
     >
       {#if !loadError}
-        <!-- eslint-disable-next-line prettier/prettier -->
+        <!-- eslint-disable space-in-parens prettier/prettier -->
         {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
+          <!-- eslint-enable space-in-parens prettier/prettier -->
           <svelte:component
             this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
             code={content}
@@ -151,10 +152,14 @@
             {/if}
           </svelte:component>
         {:catch error}
-          <div class="p-3 font-mono text-sm">Error loading: {error.message}</div>
+          <div class="p-3 font-mono text-sm">
+            {$t('Error loading')}:&nbsp;{error.message}
+          </div>
         {/await}
       {:else}
-        <div class="p-3 font-mono text-sm">Error loading: {loadError.message}</div>
+        <div class="p-3 font-mono text-sm">
+          {$t('Error loading')}:&nbsp;{loadError.message}
+        </div>
       {/if}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>

@@ -125,11 +125,13 @@
     {/if}
     {#if data._type === 'project' && data.github}
       <div class="flex flex-row items-center justify-start gap-2 px-1 py-4 text-base">
+        <!-- eslint-disable -->
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100"
           >url</span
         >
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100">/</span
         >
+        <!-- eslint-enable -->
         <span class="text-base">
           <Link href={data.github}>
             {'github.com/' + data.github.split('github.com/')?.[1]}

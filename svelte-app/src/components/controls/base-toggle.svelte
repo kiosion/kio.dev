@@ -7,12 +7,13 @@
     click: MouseEvent | KeyboardEvent;
   }>();
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   export let icon: typeof SvelteComponent<{}>,
     options: { label: string; value: string; selected: boolean }[];
 </script>
 
 <button
-  class="focus-outline group flex h-10 flex-1 flex-row items-center rounded-lg py-0.5 pl-4 pr-0 text-sm"
+  class="focus-outline group flex h-10 flex-1 flex-row items-center rounded-lg py-1.5 pl-4 pr-0 text-sm"
   tabindex="0"
   on:click={(e) => dispatch('click', e)}
   on:keyup={(e) => e.key === 'Enter' && dispatch('click', e)}
@@ -35,7 +36,7 @@
       </span>
     </span>
     <span
-      class="absolute bottom-0 left-0 top-0 z-0 block w-1/2 rounded-md bg-neutral-0/75 transition-all group-hover:bg-neutral-0 group-focus:bg-neutral-0 peer-aria-selected/0:translate-x-0 peer-aria-selected/1:translate-x-full group-hover:peer-aria-selected/0:translate-x-full group-hover:peer-aria-selected/1:translate-x-0 group-focus:peer-aria-selected/0:translate-x-full group-focus:peer-aria-selected/1:translate-x-0 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/75 group-focus:dark:bg-neutral-800/75"
+      class="absolute bottom-0 left-0 top-0 z-0 block w-1/2 rounded-md bg-neutral-0/75 transition-all group-hover:bg-neutral-0 group-focus:bg-neutral-0 peer-aria-selected/0:translate-x-0 peer-aria-selected/1:translate-x-full group-hover:peer-aria-selected/0:translate-x-full group-hover:peer-aria-selected/1:translate-x-0 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/75 group-focus:dark:bg-neutral-800/75"
     ></span>
   </div>
 </button>

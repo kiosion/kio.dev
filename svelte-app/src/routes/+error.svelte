@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { blur, slide } from 'svelte/transition';
+  import { blur } from 'svelte/transition';
 
   import { page } from '$app/stores';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
@@ -84,6 +84,7 @@
 </script>
 
 <svelte:head>
+  <!-- eslint-disable-next-line -->
   <title>kio.dev | {status}</title>
   <meta name="robots" content="none" />
 </svelte:head>

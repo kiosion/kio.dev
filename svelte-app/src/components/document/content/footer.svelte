@@ -17,10 +17,12 @@
     <div class="border-t border-dark/80 p-6 dark:border-light/60 md:px-10 print:hidden">
       <h1 class="my-4 text-2xl font-bold">{$t('Links')}</h1>
       <span class="flex items-center justify-start gap-2 text-base">
+        <!-- eslint-disable -->
         <span
           class="cursor-default select-none font-mono text-sm text-dark/80 dark:text-light/80"
           >git /</span
         >
+        <!-- eslint-enable -->
         <Link href={data.github}>
           {'github.com/' + data.github.split('github.com/')?.[1]}
         </Link>

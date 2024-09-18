@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t } from '$lib/i18n';
+
   export let dir: 'left' | 'right',
     onClick: () => void,
     disabled = false;
@@ -20,10 +22,6 @@
   <span
     class="-mx-2 -my-1.5 px-2 py-1.5 group-hover:bg-neutral-100 group-focus-visible:bg-neutral-100 group-hover:dark:bg-neutral-500 group-focus-visible:dark:bg-neutral-500"
   >
-    {#if dir === 'left'}
-      [prev]
-    {:else}
-      [next]
-    {/if}
+    [{#if dir === 'left'}{$t('prev')}{:else}{$t('next')}{/if}]
   </span>
 </button>
