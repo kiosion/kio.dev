@@ -36,7 +36,7 @@
       </span>
     </span>
     <span
-      class="absolute bottom-0 left-0 top-0 z-0 block w-1/2 rounded-md bg-neutral-0/75 transition-all group-hover:bg-neutral-0 group-focus:bg-neutral-0 peer-aria-selected/0:translate-x-0 peer-aria-selected/1:translate-x-full group-hover:peer-aria-selected/0:translate-x-full group-hover:peer-aria-selected/1:translate-x-0 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/75 group-focus:dark:bg-neutral-800/75"
+      class="absolute bottom-0 left-0 top-0 z-0 block w-1/2 rounded-md bg-neutral-200/50 transition-all group-hover:bg-neutral-200 group-focus:bg-neutral-200 peer-aria-selected/0:translate-x-0 peer-aria-selected/1:translate-x-full group-hover:peer-aria-selected/0:translate-x-full group-hover:peer-aria-selected/1:translate-x-0 dark:bg-neutral-800 group-hover:dark:bg-neutral-700 group-focus:dark:bg-neutral-700"
     ></span>
   </div>
 </button>

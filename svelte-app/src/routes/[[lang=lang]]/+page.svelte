@@ -51,7 +51,7 @@
     <HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false} first>
       {#if data.posts.length}
         <div
-          class="flex flex-row flex-wrap gap-5 px-5"
+          class="flex flex-row flex-wrap gap-5 px-5 pb-1"
           role="group"
           aria-labelledby="{id}-heading"
         >
@@ -73,14 +73,15 @@
       dir="right"
       placement="after"
       text={$t('All posts')}
-      preload
+      preload-code
     />
     <ArrowButton
       href={$linkTo('/thoughts/+')}
       dir="right"
       placement="after"
       text={$t('Topics')}
-      preload
+      preload-code
+      preload-data
     />
   </BaseContainer>
 </div>

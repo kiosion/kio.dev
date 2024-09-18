@@ -13,7 +13,7 @@
 </script>
 
 <section
-  class="my-5 rounded-lg bg-neutral-0/75 px-5 pb-6 pt-3 transition-colors dark:bg-neutral-800/75"
+  class="my-5 rounded-lg bg-neutral-200/50 px-5 pb-6 pt-3 transition-colors dark:bg-neutral-700"
   role="group"
   aria-labelledby="{id}-heading"
 >

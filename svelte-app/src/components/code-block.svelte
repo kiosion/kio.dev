@@ -83,14 +83,14 @@
 </script>
 
 <div
-  class="relative mx-7 my-5 overflow-hidden rounded-lg bg-neutral-0 transition-colors dark:bg-neutral-800"
+  class="relative mx-7 my-5 overflow-hidden rounded-lg bg-neutral-200/50 transition-colors dark:bg-neutral-700"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
 >
   {#if filename}
     <div
-      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-0 px-8 py-4 font-mono text-sm transition-colors dark:bg-neutral-800/5"
+      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-200/50 px-8 py-4 font-mono text-sm transition-colors dark:bg-neutral-800/5"
       id="{id}-filename"
     >
       <DocumentTextSmall class="text-neutral-500 dark:text-neutral-300" />
@@ -101,7 +101,7 @@
 
   <Tooltip text={$t('Copy to clipboard')} position="top">
     <button
-      class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-100 hover:text-dark focus-visible:bg-neutral-100 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
+      class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-300/50 hover:text-dark focus-visible:bg-neutral-300/50 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
       class:top-1={!filename}
       class:top-14={filename}
       on:click={() => copy()}
@@ -168,10 +168,11 @@
   {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
     <div
       class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pb-4 pt-6 text-center"
+      class:showingMore
       bind:clientHeight={showMoreHeight}
     >
       <button
-        class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-100/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-100 focus-visible:bg-neutral-100 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-300/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-300 focus-visible:bg-neutral-300 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
         on:click={() => {
           showingMore = !showingMore;
           if (!showingMore) {
@@ -199,10 +200,10 @@
   @import '@styles/mixins';
 
   .show-more-gradient {
-    background: ease-gradient('to top', $neutral-0, transparent);
+    background: ease-gradient('to top', $neutral-200, transparent);
 
     @include dark {
-      background: ease-gradient('to top', $neutral-800, transparent);
+      background: ease-gradient('to top', $neutral-700, transparent);
     }
   }
 </style>

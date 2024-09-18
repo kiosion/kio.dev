@@ -56,15 +56,15 @@
 
     &:hover,
     &:focus-visible {
-      background-color: rgba($neutral-0, 0.75);
+      background-color: rgba($neutral-200, 0.5);
 
       @include dark {
-        background-color: rgba($neutral-800, 0.75);
+        background-color: rgba($neutral-700, 1);
       }
     }
 
     &.active {
-      background-color: $neutral-0;
+      background-color: $neutral-200;
 
       @include dark {
         background-color: $neutral-800;
@@ -72,10 +72,10 @@
 
       &:hover,
       &:focus-visible {
-        background-color: rgba($neutral-0, 0.75);
+        background-color: rgba($neutral-200, 0.5);
 
         @include dark {
-          background-color: rgba($neutral-800, 0.75);
+          background-color: rgba($neutral-700, 1);
         }
       }
     }

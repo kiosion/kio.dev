@@ -51,7 +51,7 @@
         </h1>
         {#if config.handle}
           <p
-            class="rounded-full border border-neutral-200 bg-neutral-0/75 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-800 dark:bg-neutral-800/75 dark:text-neutral-200"
+            class="rounded-full border border-neutral-200 bg-neutral-200/50 px-2 py-1 text-sm text-neutral-500 transition-colors dark:border-neutral-800 dark:bg-neutral-800/75 dark:text-neutral-200"
           >
             {config.handle}
           </p>

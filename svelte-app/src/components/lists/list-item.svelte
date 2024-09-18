@@ -16,7 +16,7 @@
 
 <a
   href={$linkTo(link)}
-  class="focus-outline group relative -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-0/75 focus-visible:bg-neutral-0/75 dark:hover:bg-neutral-800/50 dark:focus-visible:bg-neutral-800/50"
+  class="focus-outline group relative -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-200/50 focus-visible:bg-neutral-200/50 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
   tabindex="0"
   data-sveltekit-preload-code
 >

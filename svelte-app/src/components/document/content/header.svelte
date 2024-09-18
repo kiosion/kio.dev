@@ -78,7 +78,7 @@
   <div class="flex flex-row gap-2">
     <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
       <p
-        class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
+        class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
         aria-label="Published date"
       >
         {$formatDate(data.date, 'full') ?? $t('Unknown date')}
@@ -90,13 +90,13 @@
       })}
     >
       <p
-        class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
+        class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
       >
         {$t('{length} min read', { length: data.estimatedReadingTime ?? 0 })}
       </p>
     </Tooltip>
     <p
-      class="cursor-default rounded-lg bg-neutral-0/75 px-2.5 py-2 transition-colors dark:bg-neutral-800/75"
+      class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
     >
       {$t('{views} views', { views: $parseViews((data.views ?? 0) + 1) })}
     </p>
@@ -105,7 +105,7 @@
     href={$linkTo(model === 'post' ? '/thoughts' : '/work')}
     dir="left"
     text={$t('All posts')}
-    preload
+    preload-code
   />
 </BaseContainer>
 
@@ -148,7 +148,7 @@
     >
       {#each data.tags as tag}
         <a
-          class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-0/75 px-2.5 py-2 transition-colors hover:bg-neutral-0 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+          class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
           href={$linkTo(
             `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
           )}

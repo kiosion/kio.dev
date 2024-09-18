@@ -87,12 +87,13 @@
       class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-md"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
-        showImageModal = true;
+        showImageModal = !showImageModal;
       }}
-      on:keydown={(e) => {
+      on:keyup={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.stopPropagation();
-          showImageModal = true;
+          e.preventDefault();
+          showImageModal = !showImageModal;
         }
       }}
       type="button"

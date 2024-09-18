@@ -35,7 +35,7 @@
       href={model === 'post' ? $linkTo('/thoughts') : $linkTo('/work')}
       dir={$isMobile ? 'up' : 'left'}
       text={model === 'post' ? $t('All posts') : $t('All projects')}
-      preload
+      preload-code
     />
   </div>
 </BaseContainer>

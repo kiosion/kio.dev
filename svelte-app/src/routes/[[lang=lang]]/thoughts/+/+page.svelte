@@ -10,7 +10,15 @@
 </script>
 
 <div class="flex flex-col gap-5">
-  <BaseContainer class="flex flex-row items-center justify-end gap-3 p-2">
+  <BaseContainer
+    class="flex flex-row items-center justify-between gap-3 p-2 text-sm text-neutral-700 dark:text-neutral-100"
+  >
+    <p
+      class="cursor-default rounded-lg bg-neutral-200/75 px-2.5 py-2 text-sm transition-colors dark:bg-neutral-800/75"
+    >
+      {data.tags?.length ?? 0}
+      {$t('Topics').toLowerCase()}
+    </p>
     <ArrowButton
       href={$linkTo('/thoughts')}
       dir="left"
@@ -28,7 +36,7 @@
             {@const posts = data.postsByTag[tag._id]}
             <a
               href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-              class="pointer-cursor focus-outline group -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 rounded-lg px-3 py-2 transition-colors hover:bg-neutral-0/75 focus-visible:bg-neutral-0/75 dark:hover:bg-neutral-800/75 dark:focus-visible:bg-neutral-800/75"
+              class="pointer-cursor focus-outline group -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 rounded-lg px-3 py-2 transition-colors hover:bg-neutral-200/50 focus-visible:bg-neutral-200/50 dark:hover:bg-neutral-800/75 dark:focus-visible:bg-neutral-800/75"
               data-sveltekit-preload-code
             >
               <h2

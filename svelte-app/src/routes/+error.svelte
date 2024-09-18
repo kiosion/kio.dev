@@ -1,9 +1,10 @@
 <script lang="ts">
   import { blur } from 'svelte/transition';
 
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { t } from '$lib/i18n';
+  import { linkTo, t } from '$lib/i18n';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
@@ -91,9 +92,14 @@
 
 <div class="flex flex-col gap-5" data-test-id="error-page">
   <BaseContainer class="flex flex-row items-center justify-end gap-3 p-2">
-    <ArrowButton dir="left" text={$t('Go back')} on:click={() => window.history.back()} />
+    <ArrowButton
+      dir="left"
+      text={$t('Go back')}
+      on:click={() =>
+        window.history.length > 2 ? window.history.back() : goto($linkTo('/'))}
+    />
     <button
-      class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-2 rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-0 focus-visible:gap-3 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+      class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-2 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
       on:click={() => window.location.reload()}
       type="button"
     >
@@ -137,7 +143,7 @@
     </p>
     {#if causes?.length}
       <button
-        class="focus-outline group mt-8 flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-lg bg-neutral-0/75 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-0 focus-visible:gap-3 focus-visible:bg-neutral-0 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+        class="focus-outline group mt-8 flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
         on:click={() => (showStack = !showStack)}
         type="button"
       >
@@ -159,7 +165,7 @@
       transition:blur={{ duration: BASE_ANIMATION_DURATION, amount: 6 }}
     >
       <pre
-        class="font-code whitespace-pre-wrap break-all rounded-lg bg-neutral-0/75 p-4 text-sm transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+        class="font-code whitespace-pre-wrap break-all rounded-lg bg-neutral-200/75 p-4 text-sm transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
             />{/if}{/each}</pre>
     </div>
   {/if}
