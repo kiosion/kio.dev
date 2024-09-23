@@ -13,7 +13,6 @@
       if (!show) {
         return;
       }
-      console.log(e.key);
       if (e.key === ' ' || e.key === 'Escape') {
         e.stopPropagation();
         e.preventDefault();

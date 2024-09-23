@@ -33,12 +33,12 @@
   aria-label={$t(`Switch to ${$currentLang === APP_LANGS[0] ? 'French' : 'English'}`)}
   options={[
     {
-      label: 'En',
+      label: $t('English'),
       value: APP_LANGS[0],
       selected: $currentLang === APP_LANGS[0]
     },
     {
-      label: 'Fr',
+      label: $t('French'),
       value: APP_LANGS[1],
       selected: $currentLang === APP_LANGS[1]
     }

@@ -38,7 +38,7 @@
   href={$$props.href || undefined}
   class:text-right={align === 'right'}
   class:text-left={align === 'left'}
-  class="focus-outline-sm group flex cursor-pointer select-none flex-row items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-neutral-200/75 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 disabled:cursor-not-allowed dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800 {$$props.class ??
+  class="focus-outline-sm group flex cursor-pointer select-none flex-row items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 disabled:cursor-not-allowed dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800 {$$props.class ??
     ''}"
   aria-label={$$props['aria-label'] || undefined}
   role="button"

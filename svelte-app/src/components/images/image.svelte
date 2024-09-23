@@ -143,7 +143,7 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    class="mx-auto w-full select-none rounded-md"
+    class="mx-auto h-full select-none rounded-md"
     src={fullSrc}
     alt={_key}
     style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"

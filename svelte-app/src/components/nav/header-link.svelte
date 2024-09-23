@@ -64,7 +64,7 @@
     }
 
     &.active {
-      background-color: $neutral-200;
+      background-color: rgba($neutral-200, 0.75);
 
       @include dark {
         background-color: $neutral-800;
