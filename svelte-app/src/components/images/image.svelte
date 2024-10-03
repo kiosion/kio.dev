@@ -66,7 +66,7 @@
   });
 </script>
 
-<div class="relative w-full">
+<div class="relative h-full">
   {#await srcPromise || new Promise((_res) => {})}
     <div
       class="loading font-code absolute top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
@@ -110,7 +110,7 @@
       {:else}
         <img
           {src}
-          class=" w-full select-none rounded-md"
+          class="w-full select-none rounded-md"
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}

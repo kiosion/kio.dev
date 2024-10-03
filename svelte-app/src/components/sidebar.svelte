@@ -2,7 +2,7 @@
   import { APP_THEMES, BASE_GIT_URL, NAV_LINKS } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
-  import settings from '$lib/settings';
+  import Settings from '$lib/settings';
 
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
@@ -30,7 +30,12 @@
     target: social.internal ? undefined : '_blank'
   }));
 
-  const { theme } = settings;
+  const { theme } = Settings;
+
+  $: pfp =
+    $theme === APP_THEMES.DARK
+      ? '/assets/avi/standard.png'
+      : '/assets/avi/line_sunglases.png';
 </script>
 
 <div
@@ -41,11 +46,8 @@
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
       <img
-        class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-orange-light/60 p-0 transition-colors dark:bg-orange-light/80"
-        draggable={false}
-        src={$theme === APP_THEMES.DARK
-          ? '/assets/pfp/standard.png'
-          : '/assets/pfp/sunglasses.png'}
+        class="p-0d aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-orange-light/60"
+        src={pfp}
         alt="kio.dev"
       />
       <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
