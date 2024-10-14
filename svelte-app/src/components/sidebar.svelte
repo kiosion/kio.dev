@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { APP_THEMES, BASE_GIT_URL, NAV_LINKS } from '$lib/consts';
+  import { APP_THEMES, BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
   import Settings from '$lib/settings';
@@ -30,6 +30,8 @@
     target: social.internal ? undefined : '_blank'
   }));
 
+  const name = config instanceof Error ? BASE_PAGE_TITLE : config.name;
+
   const { theme } = Settings;
 
   $: pfp =
@@ -54,7 +56,7 @@
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
         >
-          {config.name}
+          {name}
         </h1>
         {#if config.handle}
           <p
@@ -66,43 +68,49 @@
       </div>
     </div>
 
-    <div class="flex flex-col items-start justify-center gap-y-2 pb-2">
-      {#if config.bio}
-        <p class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200">
-          {config.bio}
-        </p>
-      {/if}
-      <ul
-        class="flex select-none flex-col items-start justify-start gap-y-1.5 text-base"
-        role="list"
-      >
-        {#each socials as social}
-          <li
-            class="group flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
-            role="listitem"
+    {#if config.bio && socials}
+      <div class="flex flex-col items-start justify-center gap-y-2 pb-2">
+        {#if config.bio}
+          <p
+            class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200"
           >
-            {#if social.url.includes('mailto')}
-              <EnvelopeSmall
-                class="mt-px group-hover:hidden group-focus-visible:hidden"
-              />
-              <EnvelopeOpenSmall
-                class="hidden group-hover:block group-focus-visible:block"
-              />
-            {:else}
-              <GlobeAmericasSmall
-                class="mt-px group-hover:hidden group-focus-visible:hidden"
-              />
-              <GlobeAsiaAustraliaSmall
-                class="mt-px hidden group-hover:block group-focus-visible:block"
-              />
-            {/if}
-            <Link href={social.url} newtab>
-              {social.name}
-            </Link>
-          </li>
-        {/each}
-      </ul>
-    </div>
+            {config.bio}
+          </p>
+        {/if}
+        {#if socials}
+          <ul
+            class="flex select-none flex-col items-start justify-start gap-y-1.5 text-base"
+            role="list"
+          >
+            {#each socials as social}
+              <li
+                class="group flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
+                role="listitem"
+              >
+                {#if social.url.includes('mailto')}
+                  <EnvelopeSmall
+                    class="mt-px group-hover:hidden group-focus-visible:hidden"
+                  />
+                  <EnvelopeOpenSmall
+                    class="hidden group-hover:block group-focus-visible:block"
+                  />
+                {:else}
+                  <GlobeAmericasSmall
+                    class="mt-px group-hover:hidden group-focus-visible:hidden"
+                  />
+                  <GlobeAsiaAustraliaSmall
+                    class="mt-px hidden group-hover:block group-focus-visible:block"
+                  />
+                {/if}
+                <Link href={social.url} newtab>
+                  {social.name}
+                </Link>
+              </li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
+    {/if}
 
     <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-2">
       <p

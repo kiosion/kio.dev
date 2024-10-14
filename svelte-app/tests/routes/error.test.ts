@@ -24,7 +24,7 @@ test('handles config load error', async ({ context, page }) => {
     timeout: 4000
   });
 
-  await page.click('text=See more');
+  await page.click('text=Show more');
 
   expect(await page.textContent('[data-test-id="error-page"]')).toContain(
     'Failed to fetch config data.'
@@ -46,7 +46,7 @@ test('handles project load error', async ({ context, page }) => {
     timeout: 4000
   });
 
-  await page.click('text=See more');
+  await page.click('text=Show more');
 
   expect(await page.textContent('[data-test-id="error-page"]')).toContain(
     '404: Not Found'
@@ -71,7 +71,7 @@ test('handles post load error', async ({ context, page }) => {
     timeout: 4000
   });
 
-  await page.click('text=See more');
+  await page.click('text=Show more');
 
   expect(await page.textContent('[data-test-id="error-page"]')).toContain(
     '404: Not Found'

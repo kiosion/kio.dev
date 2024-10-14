@@ -12,6 +12,7 @@
     "noEmit": true,
     "removeComments": true,
     "rootDir": "./",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -27,7 +28,5 @@
     "*.js",
     "*.ts"
   ],
-  "exclude": [
-    "**/node_modules"
-  ]
+  "exclude": ["**/node_modules"]
 }
