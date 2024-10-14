@@ -368,41 +368,32 @@ defmodule Hexerei.Translate do
   defp translate_posts(sanity_response, target_lang, source_lang) do
     documents = sanity_response["result"]
 
-    updated_docs =
+    updated_docs_with_errors =
       Enum.map(documents, fn document ->
-        translate_post(%{"result" => document}, target_lang, source_lang)
-      end)
+        case translate_post(%{"result" => document}, target_lang, source_lang, true) do
+          {:ok, translated_doc} ->
+            {:ok, translated_doc["result"], []}
 
-    {left, right} =
-      Enum.split_with(updated_docs, fn doc ->
-        case doc do
-          {:ok, _} -> true
-          {:error, _} -> false
-          {:error, _, _} -> false
+          {:error, _doc, errors} ->
+            {:error, document, errors}
         end
       end)
 
-    if Enum.empty?(right) do
-      {
-        :ok,
-        %{
-          "result" =>
-            Enum.map(left, fn item ->
-              {_status, doc} = item
-              doc["result"]
-            end)
-        }
-      }
-    else
-      {all_docs, errors} =
-        Enum.reduce(updated_docs, {[], []}, fn item, {acc, errors} ->
-          case item do
-            {:ok, doc} -> {[doc["result"] | acc], errors}
-            {:error, doc, doc_errors} -> {[doc["result"] | acc], [errors | doc_errors]}
-          end
-        end)
+    {successful, failed} =
+      Enum.split_with(updated_docs_with_errors, fn
+        {:ok, _doc, _errors} -> true
+        {:error, _doc, _errors} -> false
+      end)
 
-      {:error, %{"result" => all_docs}, errors}
+    translated_results = Enum.map(successful, fn {:ok, doc, _errors} -> doc end)
+    failed_results = Enum.map(failed, fn {:error, doc, _errors} -> doc end)
+
+    errors = Enum.flat_map(failed, fn {:error, _doc, errors} -> errors end)
+
+    if Enum.empty?(errors) do
+      {:ok, %{"result" => translated_results}}
+    else
+      {:error, %{"result" => translated_results ++ failed_results}, errors}
     end
   end
 
@@ -468,40 +459,32 @@ defmodule Hexerei.Translate do
   defp translate_projects(sanity_response, target_lang, source_lang) do
     documents = sanity_response["result"]
 
-    updated_documents =
+    updated_docs_with_errors =
       Enum.map(documents, fn document ->
-        translate_project(%{"result" => document}, target_lang, source_lang, true)
-      end)
+        case translate_project(%{"result" => document}, target_lang, source_lang, true) do
+          {:ok, translated_doc} ->
+            {:ok, translated_doc["result"], []}
 
-    {left, right} =
-      Enum.split_with(updated_documents, fn doc ->
-        case doc do
-          {:ok, _} -> true
-          {:error, _, _} -> false
+          {:error, _doc, errors} ->
+            {:error, document, errors}
         end
       end)
 
-    if Enum.empty?(right) do
-      {
-        :ok,
-        %{
-          "result" =>
-            Enum.map(left, fn item ->
-              {_status, doc} = item
-              doc["result"]
-            end)
-        }
-      }
-    else
-      {all_docs, errors} =
-        Enum.reduce(updated_documents, {[], []}, fn item, {acc, errors} ->
-          case item do
-            {:ok, doc} -> {[doc["result"] | acc], errors}
-            {:error, doc, doc_errors} -> {[doc["result"] | acc], [errors | doc_errors]}
-          end
-        end)
+    {successful, failed} =
+      Enum.split_with(updated_docs_with_errors, fn
+        {:ok, _doc, _errors} -> true
+        {:error, _doc, _errors} -> false
+      end)
 
-      {:error, %{"result" => all_docs}, errors}
+    translated_results = Enum.map(successful, fn {:ok, doc, _errors} -> doc end)
+    failed_results = Enum.map(failed, fn {:error, doc, _errors} -> doc end)
+
+    errors = Enum.flat_map(failed, fn {:error, _doc, errors} -> errors end)
+
+    if Enum.empty?(errors) do
+      {:ok, %{"result" => translated_results}}
+    else
+      {:error, %{"result" => translated_results ++ failed_results}, errors}
     end
   end
 
@@ -544,7 +527,7 @@ defmodule Hexerei.Translate do
       |> Enum.map(fn {key, value} ->
         case value do
           nil ->
-            {key, nil}
+            {key, nil, []}
 
           _ ->
             text_array = get_text_from_blocks(value)
@@ -630,41 +613,117 @@ defmodule Hexerei.Translate do
     |> Enum.reject(&is_nil/1)
   end
 
-  defp replace_text_in_children(blocks, original_text, translations) do
-    # Build a map from original_text to translations for quick lookup
-    translation_map = original_text |> Enum.zip(translations) |> Map.new()
+  defp replace_text_in_children(blocks, original_texts, translations) do
+    # Build a list of text entries with their whitespace
+    texts_with_ws =
+      original_texts
+      |> Enum.map(fn text ->
+        {leading_ws, trimmed_text, trailing_ws} = extract_whitespace(text)
 
+        %{
+          original_text: text,
+          trimmed_text: trimmed_text,
+          leading_ws: leading_ws,
+          trailing_ws: trailing_ws
+        }
+      end)
+
+    # Re-attach whitespace to translations
+    translations_with_ws =
+      texts_with_ws
+      |> Enum.zip(translations)
+      |> Enum.map(fn {text_info, translation} ->
+        # Unwrap single-item list
+        translation_string =
+          case translation do
+            [single_translation] -> single_translation
+            translation when is_binary(translation) -> translation
+            _ -> ""
+          end
+
+        new_text = text_info.leading_ws <> translation_string <> text_info.trailing_ws
+        {text_info.original_text, new_text}
+      end)
+
+    replace_text_in_blocks(blocks, Map.new(translations_with_ws))
+  end
+
+  defp replace_text_in_blocks(blocks, translation_map) do
     Enum.map(blocks, fn block ->
-      case Map.fetch(block, "children") do
-        {:ok, children} ->
-          updated_children =
-            Enum.map(children, fn child ->
-              case child do
-                # Check if the child is a text node and it's not marked w/ "notranslate"
-                %{"text" => text, "marks" => marks} when text != nil ->
-                  if Enum.member?(marks || [], "notranslate") or Enum.member?(marks || [], "code") do
-                    child
-                  else
-                    translated =
-                      case translation_map[text] do
-                        # Unwrap single-item list
-                        [single_translation] -> single_translation
-                        _ -> text
-                      end
-
-                    Map.put(child, "text", translated)
-                  end
-
-                _ ->
-                  child
-              end
-            end)
-
-          Map.put(block, "children", updated_children)
-
-        :error ->
-          block
-      end
+      update_block(block, translation_map)
     end)
   end
+
+  defp update_block(%{"children" => children} = block, translation_map) do
+    updated_children =
+      Enum.map(children, fn child ->
+        update_child(child, translation_map)
+      end)
+
+    Map.put(block, "children", updated_children)
+  end
+
+  defp update_block(block, _translation_map), do: block
+
+  defp update_child(%{"text" => text, "marks" => marks} = child, translation_map)
+       when is_binary(text) do
+    marks_list = marks || []
+
+    if Enum.any?(marks_list, &(&1 == "notranslate" or &1 == "code")) do
+      child
+    else
+      Map.put(child, "text", Map.get(translation_map, text, text))
+    end
+  end
+
+  defp update_child(child, _translation_map), do: child
+
+  defp extract_whitespace(text) when is_binary(text) do
+    trimmed_text = String.trim(text)
+    leading_ws_length = String.length(text) - String.length(String.trim_leading(text))
+    trailing_ws_length = String.length(text) - String.length(String.trim_trailing(text))
+    leading_ws = String.slice(text, 0, leading_ws_length) || ""
+    trailing_ws = String.slice(text, -trailing_ws_length, trailing_ws_length) || ""
+    {leading_ws, trimmed_text, trailing_ws}
+  end
+
+  defp extract_whitespace(_), do: {"", "", ""}
+
+  # defp replace_text_in_children(blocks, original_text, translations) do
+  #   # Build a map from original_text to translations for quick lookup
+  #   translation_map = original_text |> Enum.zip(translations) |> Map.new()
+
+  #   Enum.map(blocks, fn block ->
+  #     case Map.fetch(block, "children") do
+  #       {:ok, children} ->
+  #         updated_children =
+  #           Enum.map(children, fn child ->
+  #             case child do
+  #               # Check if the child is a text node and it's not marked w/ "notranslate"
+  #               %{"text" => text, "marks" => marks} when text != nil ->
+  #                 if Enum.member?(marks || [], "notranslate") or Enum.member?(marks || [], "code") do
+  #                   child
+  #                 else
+  #                   translated =
+  #                     case translation_map[text] do
+  #                       # Unwrap single-item list
+  #                       [single_translation] -> single_translation
+  #                       _ -> text
+  #                     end
+
+  #                   Map.put(child, "text", translated)
+  #                 end
+
+  #               _ ->
+  #                 child
+  #             end
+  #           end)
+
+  #         Map.put(block, "children", updated_children)
+
+  #       :error ->
+  #         block
+  #     end
+  #   end)
+  # end
 end

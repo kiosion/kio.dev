@@ -124,10 +124,12 @@
       <p class="pt-3 text-base text-neutral-700 dark:text-neutral-100">{data.desc}</p>
     {/if}
     {#if data._type === 'project' && data.github}
-      <div class="flex flex-row items-center justify-start gap-2 px-1 py-4 text-base">
+      <div
+        class="flex flex-row items-center justify-start gap-2 px-1 pb-1 pt-4 text-base"
+      >
         <!-- eslint-disable -->
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100"
-          >url</span
+          >git</span
         >
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100">/</span
         >
@@ -161,12 +163,13 @@
       {/each}
     </div>
   {/if}
+</div>
 
-  {#if data._type === 'project' && images?.length}
-    <Divider margin="my-3" />
-    <div class="w-full px-6 py-4">
+{#if data._type === 'project' && images?.length}
+  <BaseContainer>
+    <div class="w-full px-6 pb-5 pt-6">
       {#if images.length > 1}
-        <ImageCarousel {images}></ImageCarousel>
+        <ImageCarousel {images} />
       {:else}
         <Image
           image={images[0].sanityAsset}
@@ -177,8 +180,8 @@
         ></Image>
       {/if}
     </div>
-  {/if}
-</div>
+  </BaseContainer>
+{/if}
 
 <style lang="scss">
   h1 {

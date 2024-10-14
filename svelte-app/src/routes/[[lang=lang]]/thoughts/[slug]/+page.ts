@@ -16,7 +16,9 @@ export const load = (async ({ parent, fetch, params, url }) => {
 
   const post =
     // in some cases _parent isn't defined during SSR...?
-    (!preview && _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
+    (!preview &&
+      opts.lang === DEFAULT_APP_LANG &&
+      _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
     handleLoadError(await findOne(fetch, 'post', opts));
 
   post && incViews(fetch, post);
