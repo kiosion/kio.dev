@@ -242,8 +242,8 @@ defmodule PostPostsTest do
     )
     |> Mox.expect(
       :post,
-      # title, desc, and body
-      3,
+      # title + desc
+      2,
       fn url, body, _params ->
         assert String.contains?(url, "https://translation.googleapis.com/")
 

@@ -120,13 +120,20 @@ defmodule TranslateTest do
            |> Map.get("text") == stub_translated_text
 
     assert is_map(translated_posts)
-    # Posts should have their body translated
+
+    # Posts should not have their body translated
     assert translated_posts["result"]
            |> List.first()
            |> Map.get("body")
            |> List.first()
            |> Map.get("children")
            |> List.first()
-           |> Map.get("text") == stub_translated_text
+           |> Map.get("text") ==
+             stub_post["result"]
+             |> Map.get("body")
+             |> List.first()
+             |> Map.get("children")
+             |> List.first()
+             |> Map.get("text")
   end
 end

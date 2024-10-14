@@ -38,6 +38,8 @@ defmodule TestFixtures do
             "title" => "About me"
           }
         ],
+        "bio" =>
+          "Hey, I'm Maxim! I build stuff for the web. This is a fake fixture bio, but it's still pretty cool.",
         "meta" => [
           %{
             "_key" => "718d6c28e1ed",
