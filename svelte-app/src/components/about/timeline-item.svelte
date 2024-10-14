@@ -23,7 +23,7 @@
     ><ChevronRightSmall /></span
   >
   <div class="content">
-    <h3 class="pb-1 pt-1 text-base font-bold text-dark transition-colors dark:text-white">
+    <h3 class="pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
     </h3>
     <p
@@ -64,7 +64,7 @@
     }
 
     &:before {
-      @apply absolute border-l border-dashed border-neutral-200 transition-colors;
+      @apply absolute border-l border-dashed border-neutral-300 transition-colors;
 
       content: '';
       top: #{$bulletTopMargin + $bulletSize + $lineGap};

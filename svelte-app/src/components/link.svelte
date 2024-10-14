@@ -36,6 +36,7 @@
       ? `${link.slice(0, 50 - 3)}...`
       : link ?? $t('Visit')}
   placement={tooltipPlacement}
+  delay={[500, 0]}
 >
   <svelte:element
     this={type}
