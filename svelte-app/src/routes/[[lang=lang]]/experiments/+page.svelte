@@ -2,13 +2,11 @@
   import { t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
-  import Divider from '$components/divider.svelte';
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-
-  export let data;
+  import BaseContainer from '$components/layouts/base-container.svelte';
 
   $: description = $t('pages.experiments.description');
 </script>
@@ -26,14 +24,20 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('Experiments')}>
-  <ToruExperiment initPromise={data.nowPlayingData}></ToruExperiment>
+<BaseContainer>
+  <HeadedBlock heading={$t('Experiments')} first>
+    <ToruExperiment />
 
-  <Divider class="my-8"></Divider>
+    <span
+      class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+    ></span>
 
-  <GameOfLifeExperiment></GameOfLifeExperiment>
+    <GameOfLifeExperiment></GameOfLifeExperiment>
 
-  <Divider class="my-8"></Divider>
+    <span
+      class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+    ></span>
 
-  <MagneticCursorExperiment></MagneticCursorExperiment>
-</HeadedBlock>
+    <MagneticCursorExperiment></MagneticCursorExperiment>
+  </HeadedBlock>
+</BaseContainer>

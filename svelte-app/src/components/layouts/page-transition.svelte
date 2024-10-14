@@ -8,7 +8,7 @@
 
   export let pathname: string | undefined;
 
-  const duration = BASE_ANIMATION_DURATION * 0.8,
+  const duration = BASE_ANIMATION_DURATION,
     dist = 6;
 
   let dir = 1;
@@ -25,8 +25,8 @@
 {#key pathname}
   <div
     {...$$restProps}
-    in:fly={{ duration, delay: duration, easing: circOut, x: dist * dir }}
-    out:fly={{ duration, easing: circIn, x: -dist * dir }}
+    in:fly={{ duration, delay: duration, easing: circOut, y: dist * dir }}
+    out:fly={{ duration, easing: circIn, y: -dist * dir }}
   >
     <slot />
   </div>

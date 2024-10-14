@@ -4,7 +4,7 @@
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
-  import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import DocumentList from '$components/lists/document-list.svelte';
 
   import type { DocumentTags } from '$types';
@@ -13,7 +13,7 @@
 
   $: description = $t('pages.thoughts.description');
 
-  const MAX_TAGS = 6;
+  const MAX_TAGS = 5;
 
   const tags: DocumentTags[] = [],
     tagCounts: Record<DocumentTags['_id'], number> = {};
@@ -68,54 +68,44 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t('pages.thoughts.title')} let:id constrainWidth={false}>
-  {#if data.posts.length}
-    {#if tags.length}
-      <div
-        class="mb-8 flex select-none flex-row flex-wrap items-center justify-start gap-x-1.5 gap-y-2 px-8 font-mono text-base"
-      >
-        <span
-          class="-ml-2.5 mr-1 text-lg leading-[1.5] text-neutral-200 transition-colors dark:text-neutral-500"
-          >&lpar;
-        </span>
-        {#each tags as tag, i}
-          {#if i < MAX_TAGS}
-            <span class="text-md text-neutral-400 dark:text-neutral-300">
-              <a
-                class="focus-outline-sm -m-2 p-2 text-sm text-neutral-700 hover:text-orange-light focus-visible:text-orange-light dark:text-neutral-200 dark:hover:text-orange-light dark:focus-visible:text-orange-light"
-                href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-                data-sveltekit-preload-code
-                aria-label={$t('Topic') + ': ' + tag.title}
-              >
-                {tag.title.toLowerCase()}</a
-              >{#if i < MAX_TAGS && i < tags.length - 1},{/if}
+<div class="flex flex-col gap-5">
+  <BaseContainer class="flex w-full flex-row items-start justify-between gap-4 p-2">
+    <div class="flex shrink flex-row flex-wrap items-center justify-start gap-2">
+      {#each tags as tag, i}
+        {#if i < MAX_TAGS}
+          <a
+            class="focus-outline-sm flex shrink-0 select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
+            data-sveltekit-preload-code
+            aria-label={$t('Topic') + ': ' + tag.title}
+          >
+            <span class="flex flex-row items-center justify-start gap-x-1">
+              <span class="select-none font-semibold">#</span>
+              <span>{tag.title.toLowerCase()}</span>
             </span>
-          {:else if i === MAX_TAGS}
-            <span class="text-md text-neutral-400 dark:text-neutral-300">...</span>
-          {/if}
-        {/each}
-        <span
-          class="-mr-2.5 ml-1 text-lg leading-[1.5] text-neutral-200 transition-colors dark:text-neutral-500"
-        >
-          &rpar;</span
-        >
-        <span class="inline-flex flex-1 items-center justify-between">
-          <span
-            class="ml-5 mr-6 block flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
-          ></span>
-          <ArrowButton
-            href={$linkTo('/thoughts/+/')}
-            dir="right"
-            placement="after"
-            text={$t('All topics')}
-            preload
-          />
-        </span>
-      </div>
-    {/if}
+            <span class="text-xs"
+              >{tagCounts[tag._id]}
+              {$t(tagCounts[tag._id] === 1 ? 'Post' : 'Posts').toLowerCase()}</span
+            >
+          </a>
+        {/if}
+      {/each}
+    </div>
+    <ArrowButton
+      href={$linkTo('/thoughts/+')}
+      dir="right"
+      placement="after"
+      text={$t('All topics')}
+      preload-code
+      preload-data
+    />
+  </BaseContainer>
 
-    <DocumentList documents={data.posts} aria-labelledby="{id}-heading"></DocumentList>
-  {:else}
-    <EmptyContent />
-  {/if}
-</HeadedBlock>
+  <BaseContainer class="px-4 py-6">
+    {#if data.posts.length}
+      <DocumentList documents={data.posts}></DocumentList>
+    {:else}
+      <EmptyContent />
+    {/if}
+  </BaseContainer>
+</div>

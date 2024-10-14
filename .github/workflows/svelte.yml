@@ -2,17 +2,17 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '**/.husky'
-      - 'sanity-cms/**'
-      - 'express-api/**'
-      - 'rust-api/**'
-      - 'elixir-api/**'
+      - "**/*.md"
+      - "LICENSE"
+      - "**/.husky"
+      - "sanity-cms/**"
+      - "express-api/**"
+      - "rust-api/**"
+      - "elixir-api/**"
 
-concurrency: 
+concurrency:
   group: ci
   cancel-in-progress: true
 
@@ -31,13 +31,13 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 9.1.0
+          version: 9.8.0
           run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v4
         id: nm-cache
         with:
-          path: 'svelte-app/node_modules'
+          path: "svelte-app/node_modules"
           key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-npm-
@@ -52,6 +52,6 @@ jobs:
     secrets: inherit
   deploy:
     name: Deploy
-    needs: [ lint, tests ]
+    needs: [lint, tests]
     uses: ./.github/workflows/netlify-deploy.yml
     secrets: inherit

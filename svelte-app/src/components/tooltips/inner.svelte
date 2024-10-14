@@ -1,144 +1,121 @@
 <script lang="ts">
-  import { onDestroy, onMount, tick } from 'svelte';
-  import { cubicInOut } from 'svelte/easing';
-  import { fade } from 'svelte/transition';
+  import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
 
-  import type { Tooltip } from '$lib/tooltips';
-  import type { FadeParams, TransitionConfig } from 'svelte/transition';
+  import {
+    arrow,
+    autoUpdate,
+    computePosition,
+    flip,
+    offset as offsetFn,
+    shift
+  } from '@floating-ui/dom';
 
-  const PADDING_PX = 8,
-    MAX_LENGTH = 72;
+  import type { ComputePositionConfig, Placement } from '@floating-ui/dom';
+  import type { TransitionConfig } from 'svelte/transition';
 
-  export let id: Tooltip['id'],
-    delay: Tooltip['delay'],
-    content: Tooltip['content'],
-    duration: Tooltip['duration'],
-    placement: Tooltip['placement'],
-    followCursor: Tooltip['followCursor'],
-    offset: Tooltip['offset'],
-    target: Tooltip['target'];
-
-  let maybeTransition =
-    duration > 0 ? fade : (node: Element, args: FadeParams): TransitionConfig => ({});
-
-  onMount(() => {
-    if (followCursor && target) {
-      target.addEventListener('mousemove', calculatePosition);
-    }
-
-    calculatePosition();
-  });
-
-  onDestroy(() => {
-    if (followCursor && target) {
-      target.removeEventListener('mousemove', calculatePosition);
-    }
-  });
+  export let id: number,
+    className: string | undefined = undefined,
+    duration: number,
+    placement: Placement,
+    offset: number,
+    followCursor: boolean,
+    showArrow: boolean,
+    transition: ((node: Element, args?: unknown) => TransitionConfig) | undefined =
+      undefined,
+    target: HTMLElement;
 
   let tooltipElement: HTMLDivElement,
-    position = { x: 0, y: 0 };
+    arrowElement: HTMLSpanElement,
+    position = { x: 0, y: 0 },
+    cleanup: () => void,
+    maybeTransition =
+      transition && duration > 0
+        ? transition
+        : (_node: Element, _args?: unknown): TransitionConfig => ({});
 
   const calculatePosition = async (e?: MouseEvent) => {
     if (!browser || !target || !tooltipElement) {
       return;
     }
 
-    await tick();
-
-    const tooltipRect = tooltipElement.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    const pageScroll = {
-      x: window.scrollX,
-      y: window.scrollY
-    };
-    const { innerWidth, innerHeight } = window;
+    let targetToUse = target;
 
     if (followCursor && e) {
-      position = {
-        x: Math.max(0, Math.min(innerWidth, e.clientX + offset[0])),
-        y: Math.max(0, Math.min(innerHeight, e.clientY + offset[1]))
-      };
+      targetToUse = {
+        getBoundingClientRect: () => ({
+          left: e.clientX,
+          top: e.clientY,
+          right: e.clientX,
+          bottom: e.clientY,
+          width: offset * 1.5,
+          height: offset * 1.5
+        })
+      } as HTMLElement;
+    }
 
+    const middleware: ComputePositionConfig['middleware'] = [
+      offsetFn(offset),
+      flip(),
+      shift({ padding: 10 })
+    ];
+
+    if (showArrow) {
+      middleware.push(arrow({ element: arrowElement }));
+    }
+
+    const {
+      x,
+      y,
+      placement: actualPlacement,
+      middlewareData
+    } = await computePosition(targetToUse, tooltipElement, {
+      placement,
+      middleware
+    });
+
+    position.x = x;
+    position.y = y;
+
+    if (showArrow) {
+      const staticSide = (
+        {
+          top: 'bottom',
+          right: 'left',
+          bottom: 'top',
+          left: 'right'
+        } as const
+      )[actualPlacement.split('-')[0]]!;
+
+      Object.assign(arrowElement.style, {
+        left: middlewareData.arrow?.x ? `${middlewareData.arrow.x}px` : '',
+        top: middlewareData.arrow?.y ? `${middlewareData.arrow.y}px` : '',
+        right: '',
+        bottom: '',
+        [staticSide]: '-4px'
+      });
+    }
+  };
+
+  onMount(() => {
+    if (!target || !tooltipElement) {
       return;
     }
 
-    let x = pageScroll.x,
-      y = pageScroll.y;
+    cleanup = autoUpdate(target, tooltipElement, calculatePosition, {
+      animationFrame: false
+    });
 
-    switch (placement) {
-      case 'top':
-        x += targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
-        y += targetRect.top - targetRect.height - tooltipRect.height;
-        break;
-      case 'bottom':
-        x += targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
-        y += targetRect.top + targetRect.height;
-        break;
-      case 'left':
-        x += targetRect.left;
-        y += targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
-        break;
-      case 'right':
-        x += targetRect.left + targetRect.width;
-        y += targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
-        break;
-      case 'top-start':
-        x += targetRect.left;
-        y += targetRect.top;
-        break;
-      case 'top-end':
-        x += targetRect.left + targetRect.width;
-        y += targetRect.top;
-        break;
-      case 'bottom-start':
-        x += targetRect.left;
-        y += targetRect.top + targetRect.height;
-        break;
-      case 'bottom-end':
-        x += targetRect.left + targetRect.width;
-        y += targetRect.top + targetRect.height;
-        break;
-      case 'left-start':
-        x += targetRect.left;
-        y += targetRect.top;
-        break;
-      case 'left-end':
-        x += targetRect.left;
-        y += targetRect.top + targetRect.height;
-        break;
-      case 'right-start':
-        x += targetRect.left + targetRect.width;
-        y += targetRect.top;
-        break;
-      case 'right-end':
-        x += targetRect.left + targetRect.width;
-        y += targetRect.top + targetRect.height;
-        break;
+    if (followCursor) {
+      target.addEventListener('mousemove', calculatePosition);
     }
+  });
 
-    // if x-pos will result in tooltip being off-screen, adjust it
-    if (x + tooltipRect.width > innerWidth + pageScroll.x - PADDING_PX) {
-      x = innerWidth + pageScroll.x - tooltipRect.width - PADDING_PX;
-    } else if (x < PADDING_PX) {
-      x = PADDING_PX;
-    }
-
-    // same for height
-    if (y + tooltipRect.height > innerHeight + pageScroll.y - PADDING_PX) {
-      y = innerHeight + pageScroll.y - tooltipRect.height - PADDING_PX;
-    } else if (y < PADDING_PX) {
-      y = PADDING_PX;
-    }
-
-    position = {
-      x: Math.max(0, Math.min(innerWidth + pageScroll.x, x + offset[0])),
-      y: Math.max(0, Math.min(innerHeight + pageScroll.y, y + offset[1]))
-    };
-  };
-
-  $: calculatePosition(), [target, tooltipElement, placement, followCursor];
+  onDestroy(() => {
+    cleanup?.();
+    target?.removeEventListener('mousemove', calculatePosition);
+  });
 </script>
 
 <div
@@ -147,14 +124,16 @@
   id={`tooltip-${id}`}
   bind:this={tooltipElement}
   aria-hidden="true"
+  in:maybeTransition={{ duration }}
+  out:maybeTransition={{ duration }}
 >
-  <span
-    class="block whitespace-nowrap rounded-sm bg-neutral-600 px-2 py-1.5 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark"
-    in:maybeTransition={{ duration, easing: cubicInOut }}
-    out:maybeTransition={{ duration, easing: cubicInOut, delay }}
-  >
-    {content.trim().length >= MAX_LENGTH
-      ? `${content.trim().slice(0, MAX_LENGTH - 3)}...`
-      : content.trim()}
+  <span class="block px-2 py-1.5 {className || ''}">
+    <slot />
   </span>
+  {#if showArrow}
+    <span
+      class="absolute block h-2 w-2 rotate-45 bg-neutral-600 dark:bg-neutral-100"
+      bind:this={arrowElement}
+    ></span>
+  {/if}
 </div>

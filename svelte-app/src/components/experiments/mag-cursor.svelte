@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import { BASE_GIT_URL } from '$lib/consts';
+  import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
   import Cursor from '$components/experiments/mag-cursor/cursor.svelte';
@@ -30,12 +31,12 @@
 >
   <header class="flex w-full flex-col pb-2">
     <div class="flex flex-row items-start justify-between">
-      <h3 class="pb-2 font-display text-2xl font-bold">Magnetic cursor</h3>
+      <h3 class="pb-2 font-display text-2xl font-bold">{$t('Magnetic cursor')}</h3>
       <div class="flex flex-row gap-x-6">
         <CursorTarget distance={40} let:active let:offset>
           <Tooltip
-            position="top"
-            text={useOffset ? "Disable 'pulling' targets" : "Enable 'pulling' targets"}
+            placement="top"
+            content={useOffset ? "Disable 'pulling' targets" : "Enable 'pulling' targets"}
           >
             <button
               class="-m-2 h-fit w-fit cursor-none p-2 font-mono text-sm hover:text-orange-light/90 focus-visible:text-orange-light/90 {active
@@ -48,11 +49,8 @@
               style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
               type="button"
             >
-              {#if useOffset}
-                [x]
-              {:else}
-                [&nbsp;]
-              {/if}
+              <!-- eslint-disable-next-line -->
+              [{#if useOffset}x{:else}&nbsp;{/if}]
             </button>
           </Tooltip>
         </CursorTarget>
@@ -65,13 +63,12 @@
             tooltipPosition="top"
             newtab
             style="transform: translate({offset?.[0]}px, {offset?.[1]}px)"
+            >[{$t('code')}]</Link
           >
-            [code]
-          </Link>
         </CursorTarget>
       </div>
     </div>
-    <p>A simple magnetic cursor effect. Hover over the buttons to try it out.</p>
+    <p>{$t('A simple magnetic cursor effect. Hover over the buttons to try it out.')}</p>
     <Divider></Divider>
   </header>
 

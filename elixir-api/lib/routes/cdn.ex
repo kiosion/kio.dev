@@ -47,11 +47,20 @@ defmodule Router.Cdn do
 
     with true <- is_binary(url_parts.filetype),
          {:ok, url} <- Hexerei.SanityClient.urlFor(url_parts.asset, conn.query_string) do
-      with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+      with {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} <-
              Hexerei.Env.get(:http_client, Hexerei.HTTP.DefaultClient).get(url) do
+        content_type =
+          headers
+          |> Enum.find(fn {k, _} -> String.downcase(k) == "content-type" end)
+          |> case do
+            {k, v} -> String.downcase(v)
+            # fall back to filetype from ext, if present
+            _ -> "image/#{url_parts.filetype}"
+          end
+
         conn
         |> put_resp_header("Access-Control-Allow-Origin", "*")
-        |> put_resp_content_type("image/#{url_parts.filetype}")
+        |> put_resp_content_type(content_type)
         |> send_resp(200, body)
       else
         {:ok, %HTTPoison.Response{status_code: 404}} ->

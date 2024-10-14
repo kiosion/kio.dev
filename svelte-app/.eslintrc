@@ -16,14 +16,16 @@
     "plugin:svelte/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:local-rules/all"
   ],
   "plugins": [
     "prettier",
     "import",
     "@typescript-eslint",
     "simple-import-sort",
-    "unused-imports"
+    "unused-imports",
+    "local-rules"
   ],
   "rules": {
     "@typescript-eslint/prefer-namespace-keyword": ["off"],
@@ -156,6 +158,9 @@
       "parser": "svelte-eslint-parser",
       "parserOptions": {
         "parser": "@typescript-eslint/parser"
+      },
+      "rules": {
+        "local-rules/no-bare-strings": ["error"]
       }
     },
     {

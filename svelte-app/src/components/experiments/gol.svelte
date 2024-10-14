@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
+  import { t } from '$lib/i18n';
 
   import Divider from '$components/divider.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -130,22 +131,37 @@
   class="relative my-6 flex h-fit w-full cursor-pointer flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
 >
   <header class="w-full pb-2">
-    <h3 class="pb-2 font-display text-2xl font-bold">Game of life</h3>
-    <p>Conway's Game of Life starting with an R-pentomino pattern.</p>
+    <h3 class="pb-2 font-display text-2xl font-bold">{$t('Game of life')}</h3>
+    <p>{$t("Conway's Game of Life starting with an R-pentomino pattern.")}</p>
     <Divider></Divider>
   </header>
 
-  <Tooltip text={running ? 'Pause' : 'Resume'}>
+  <Tooltip content={running ? 'Pause' : 'Resume'}>
     <button
-      class="focus-outline absolute right-4 top-4 rounded-xs p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 hover:text-orange-light/90 focus-visible:bg-violet-100/80 focus-visible:text-orange-light/90 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
+      class="focus-outline absolute right-4 top-4 rounded-lg p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 hover:text-orange-light/90 focus-visible:bg-violet-100/80 focus-visible:text-orange-light/90 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
       on:click={running ? stopGame : startGame}
       type="button"
     >
-      {#if running}
-        [x]
-      {:else}
-        [&gt;]
-      {/if}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-5"
+      >
+        {#if running}
+          <path
+            fill-rule="evenodd"
+            d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
+            clip-rule="evenodd"
+          />
+        {:else}
+          <path
+            fill-rule="evenodd"
+            d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+            clip-rule="evenodd"
+          />
+        {/if}
+      </svg>
     </button>
   </Tooltip>
 

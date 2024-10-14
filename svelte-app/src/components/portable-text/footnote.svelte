@@ -38,7 +38,7 @@
 
 <span>
   <slot />&nbsp;
-  <Tooltip text={$t('Go to footnote')}>
+  <Tooltip content={$t('Go to footnote')}>
     <sup
       ><a
         href={`#note-${portableText.value._key}`}

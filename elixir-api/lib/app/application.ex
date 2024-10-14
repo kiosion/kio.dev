@@ -30,7 +30,7 @@ defmodule Hexerei.Application do
         Hexerei.Cache.TranslateCache,
         [
           options: [
-            max_size: 512
+            max_size: 1024
           ]
         ]
       },

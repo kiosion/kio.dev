@@ -48,7 +48,7 @@ test('should render error page on failed data fetch', async ({ context, page }) 
   await page.waitForSelector('body.is-loaded');
   expect(await page.waitForSelector('[data-test-id="error-page"]')).toBeTruthy();
 
-  await page.click('text=See more');
+  await page.click('text=Show more');
   expect(await page.textContent('[data-test-id="error-page"]')).toContain(
     'Failed to fetch config data.'
   );

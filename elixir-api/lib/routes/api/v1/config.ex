@@ -15,7 +15,7 @@ defmodule Router.Api.V1.Config do
     with {:ok, params} <- validate_query_params(conn, %{"lang" => "en"}) do
       query =
         Query.new()
-        |> Query.filter([%{"_type" => "'siteSettings'"}])
+        |> Query.filter([%{"_id" => "'siteSettings'"}])
         |> Query.qualify("[0]")
         |> Query.build!()
 

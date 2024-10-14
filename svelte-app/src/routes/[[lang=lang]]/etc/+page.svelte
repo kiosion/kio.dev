@@ -2,9 +2,9 @@
   import { t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   export let data;
@@ -25,17 +25,16 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-{#if data.config?.meta}
-  {#each data.config.meta as metaSection, idx}
-    <HeadedBlock heading={metaSection.title}>
-      <PortableText text={metaSection.content} class="-mt-2" bodySize="base"
-      ></PortableText>
-    </HeadedBlock>
-    {#if idx < data.config.meta.length - 1}
-      <Divider></Divider>
-    {/if}
-  {/each}
-{:else}
-  <EmptyContent></EmptyContent>
-  <Divider></Divider>
-{/if}
+<div class="flex flex-col gap-5">
+  {#if data.config?.meta}
+    {#each data.config.meta as metaSection}
+      <BaseContainer>
+        <HeadedBlock heading={metaSection.title} first>
+          <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
+        </HeadedBlock>
+      </BaseContainer>
+    {/each}
+  {:else}
+    <EmptyContent />
+  {/if}
+</div>

@@ -90,9 +90,10 @@ const _translate = <K extends LocaleKey>(
   key: K,
   params?: ExtractTVars<K> extends never
     ? never
-    : Record<ExtractTVars<K>, string | number>
+    : Record<ExtractTVars<K>, string | number>,
+  overrideLang?: string
 ): string => {
-  const lang = currentLang || DEFAULT_APP_LANG;
+  const lang = overrideLang || currentLang || DEFAULT_APP_LANG;
 
   // For any provided params, replace the corresponding placeholders if any
   // e.g. "Hello {name}" with { name: "World" } becomes "Hello World"
@@ -123,7 +124,8 @@ const translate = derived<
     key: K,
     params?: ExtractTVars<K> extends never
       ? never
-      : Record<ExtractTVars<K>, string | number>
+      : Record<ExtractTVars<K>, string | number>,
+    overrideLang?: string
   ) => string
 >(
   currentLang,
@@ -132,9 +134,10 @@ const translate = derived<
       key: K,
       params?: ExtractTVars<K> extends never
         ? never
-        : Record<ExtractTVars<K>, string | number>
+        : Record<ExtractTVars<K>, string | number>,
+      overrideLang?: string
     ) =>
-      _translate(val, key, params)
+      _translate(val, key, params, overrideLang)
 );
 
 const addSearchParams = (path: string, params?: URLSearchParams): string => {

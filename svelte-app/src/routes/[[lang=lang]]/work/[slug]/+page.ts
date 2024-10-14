@@ -37,6 +37,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
     >,
     project =
       (!preview &&
+        opts.lang === DEFAULT_APP_LANG &&
         _parent?.projects?.find?.((proj) => proj.slug?.current === params.slug)) ||
       handleLoadError(await findOne(fetch, 'project', opts));
 

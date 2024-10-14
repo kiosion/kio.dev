@@ -57,13 +57,17 @@ export const APP_ROUTES = [
     path: '/etc',
     hidden: false
   }
-] as AppRoute[];
+] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { children, ...rest } = r;
+  if (!('children' in r)) {
+    return r;
+  }
+
+  const { children: _children, ...rest } = r;
+
   return rest;
-}) as Omit<AppRoute, 'children'>[];
+}) satisfies Omit<AppRoute, 'children'>[];
 
 export const ROUTE_ORDER = [
   '/',
@@ -92,8 +96,8 @@ export const ERRORS = {
 export const BASE_TRANSITION_DURATION = 200 as const;
 export const BASE_ANIMATION_DURATION = 300 as const;
 
-export const HOMEPAGE_POSTS_NUM = 3 as const;
-export const HOMEPAGE_PROJECTS_NUM = 3 as const;
+export const HOMEPAGE_POSTS_NUM = 4 as const;
+export const HOMEPAGE_PROJECTS_NUM = 4 as const;
 
 export const RECENT_POSTS_COUNT = 99;
 export const RECENT_PROJECTS_COUNT = 99;

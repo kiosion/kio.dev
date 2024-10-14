@@ -2,6 +2,8 @@
   import { t } from '$lib/i18n';
   import Logger from '$lib/logger';
 
+  import ChevronDoubleUpSmall from '$components/icons/chevron-double-up-small.svelte';
+  import ChevronUpSmall from '$components/icons/chevron-up-small.svelte';
   import Footnote from '$components/portable-text/footnote.svelte';
   import CodeBlock from '$components/portable-text/serializers/code-block.svelte';
   import CustomCode from '$components/portable-text/serializers/custom-code.svelte';
@@ -16,6 +18,7 @@
   import NullMark from '$components/portable-text/serializers/null-mark.svelte';
   import OlWrapper from '$components/portable-text/serializers/ol-wrapper.svelte';
   import UlWrapper from '$components/portable-text/serializers/ul-wrapper.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
 
   import { PortableText } from '@portabletext/svelte';
 
@@ -144,18 +147,27 @@
               <li class="list-item">
                 <span class="inline-flex flex-row items-start break-all">
                   <svelte:self text={note.note} plaintext />
-                  <a
-                    class="ml-2 rounded-xs px-2 py-1 text-sm transition-colors hover:bg-neutral-light hover:text-orange-light dark:hover:bg-neutral-dark"
-                    href={`#src-${note._key}`}
-                    id="note-{note._key}"
-                    aria-label="Go to footnote source"
-                    on:click={(e) => customScrollTo(e, `src-${note._key}`)}
-                    on:keydown={(e) => {
-                      if (e.code === 'Space' || e.code === 'Enter') {
-                        customScrollTo(e, `src-${note._key}`);
-                      }
-                    }}>&uarr;</a
-                  >
+                  <Tooltip content={$t('Go to footnote source')} position="top">
+                    <a
+                      class="focus-outline-sm group ml-2 rounded-xs px-2 py-1 text-sm transition-colors hover:bg-neutral-light dark:hover:bg-neutral-dark"
+                      href={`#src-${note._key}`}
+                      id="note-{note._key}"
+                      aria-label={$t('Go to footnote source')}
+                      on:click={(e) => customScrollTo(e, `src-${note._key}`)}
+                      on:keydown={(e) => {
+                        if (e.code === 'Space' || e.code === 'Enter') {
+                          customScrollTo(e, `src-${note._key}`);
+                        }
+                      }}
+                    >
+                      <span class="hidden group-hover:inline group-focus-visible:inline">
+                        <ChevronDoubleUpSmall />
+                      </span>
+                      <span class="inline group-hover:hidden group-focus-visible:hidden">
+                        <ChevronUpSmall />
+                      </span>
+                    </a>
+                  </Tooltip>
                 </span>
               </li>
             {/each}

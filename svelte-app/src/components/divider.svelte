@@ -3,6 +3,6 @@
 </script>
 
 <span
-  class="block h-px w-full bg-dark/80 transition-[background-color] duration-75 dark:bg-light/60 {margin} {$$props.class ||
+  class="block w-full border-t border-dashed border-neutral-300 dark:border-neutral-400 {margin} {$$props.class ||
     ''}"
 ></span>

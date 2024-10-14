@@ -2,6 +2,7 @@
   import Footer from '$components/document/content/footer.svelte';
   import Header from '$components/document/content/header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
   import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
@@ -9,15 +10,17 @@
   export let data: PostDocument | ProjectDocument,
     images: ProjectImage[] | undefined = undefined,
     model = data._type,
-    routeFetch: RouteFetch | undefined = undefined;
+    routeFetch: RouteFetch;
 </script>
 
-<Header {data} {images} {routeFetch}></Header>
-<div class="pb-6 font-sans text-base">
-  {#if data.body}
-    <PortableText text={data.body} {routeFetch} documentView></PortableText>
-  {:else}
-    <EmptyContent></EmptyContent>
-  {/if}
+<div class="flex h-full w-full flex-col gap-y-5">
+  <Header {data} {images} {routeFetch} />
+  <BaseContainer class="pb-6 font-sans text-base">
+    {#if data.body}
+      <PortableText text={data.body} {routeFetch} documentView />
+    {:else}
+      <EmptyContent />
+    {/if}
+  </BaseContainer>
+  <Footer {model} {data}></Footer>
 </div>
-<Footer {model} {data}></Footer>

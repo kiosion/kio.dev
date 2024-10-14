@@ -1,7 +1,14 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import Hoverable from '$components/hoverable.svelte';
+  import ChevronDoubleDownSmall from '$components/icons/chevron-double-down-small.svelte';
+  import ChevronDoubleLeftSmall from '$components/icons/chevron-double-left-small.svelte';
+  import ChevronDoubleRightSmall from '$components/icons/chevron-double-right-small.svelte';
+  import ChevronDoubleUpSmall from '$components/icons/chevron-double-up-small.svelte';
+  import ChevronDownSmall from '$components/icons/chevron-down-small.svelte';
+  import ChevronLeftSmall from '$components/icons/chevron-left-small.svelte';
+  import ChevronRightSmall from '$components/icons/chevron-right-small.svelte';
+  import ChevronUpSmall from '$components/icons/chevron-up-small.svelte';
 
   export let text: string,
     placement: 'before' | 'after' = 'before',
@@ -17,62 +24,50 @@
 
       dispatch('click');
     };
+
+  $: [StandardArrow, FocusArrow] = {
+    left: [ChevronLeftSmall, ChevronDoubleLeftSmall],
+    right: [ChevronRightSmall, ChevronDoubleRightSmall],
+    up: [ChevronUpSmall, ChevronDoubleUpSmall],
+    down: [ChevronDownSmall, ChevronDoubleDownSmall]
+  }[dir];
 </script>
 
-<Hoverable let:hovered>
-  <svelte:element
-    this={self}
-    href={$$props.href || undefined}
-    class:text-right={align === 'right'}
-    class:text-left={align === 'left'}
-    class="focus-outline-sm -mx-2 -my-1 inline-block select-none whitespace-nowrap rounded-xs py-1 font-mono text-sm transition-colors hover:bg-neutral-0 hover:text-orange-light focus-visible:bg-neutral-0 focus-visible:text-orange-light dark:hover:bg-neutral-600 dark:focus-visible:bg-neutral-600 {$$props.class ??
-      ''}"
-    class:pr-2={placement === 'before'}
-    class:pl-3={placement === 'before'}
-    class:pr-3={placement === 'after'}
-    class:pl-2={placement === 'after'}
-    aria-label={$$props['aria-label'] || undefined}
-    role="button"
-    tabindex="0"
-    on:click={handleClick}
-    on:keydown={handleClick}
-    data-sveltekit-preload-code={$$props.preload ? 'hover' : 'off'}
-    data-sveltekit-preload-data={$$props.preload ? 'hover' : 'off'}
-  >
-    <div
-      class="flex items-center gap-2"
-      class:justify-start={align === 'left'}
-      class:justify-end={align === 'right'}
-    >
-      {#if placement === 'after'}
-        {#if $$slots.default}
-          <slot />
-        {:else}
-          {text}
-        {/if}
+<svelte:element
+  this={self}
+  href={$$props.href || undefined}
+  class:text-right={align === 'right'}
+  class:text-left={align === 'left'}
+  class="focus-outline-sm group flex cursor-pointer select-none flex-row items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 disabled:cursor-not-allowed dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800 {$$props.class ??
+    ''}"
+  aria-label={$$props['aria-label'] || undefined}
+  role="button"
+  tabindex="0"
+  on:click={handleClick}
+  on:keydown={handleClick}
+  data-sveltekit-preload-code={$$props['preload-code'] ? 'hover' : 'off'}
+  data-sveltekit-preload-data={$$props['preload-data'] ? 'hover' : 'off'}
+>
+  {#if placement === 'after'}
+    <span>
+      {#if $$slots.default}
+        <slot />
+      {:else}
+        {text}
       {/if}
-      <div
-        class="mt-px transition-transform"
-        class:-translate-x-1={hovered && dir === 'left'}
-        class:translate-x-1={hovered && dir === 'right'}
-      >
-        {#if dir === 'left'}
-          &larr;
-        {:else if dir === 'right'}
-          &rarr;
-        {:else if dir === 'up'}
-          &uarr;
-        {:else if dir === 'down'}
-          &darr;
-        {/if}
-      </div>
-      {#if placement === 'before'}
-        {#if $$slots.default}
-          <slot />
-        {:else}
-          {text}
-        {/if}
+    </span>
+  {/if}
+
+  <StandardArrow class="block group-hover:hidden group-focus:hidden" />
+  <FocusArrow class="hidden group-hover:block group-focus:block" />
+
+  {#if placement === 'before'}
+    <span>
+      {#if $$slots.default}
+        <slot />
+      {:else}
+        {text}
       {/if}
-    </div>
-  </svelte:element>
-</Hoverable>
+    </span>
+  {/if}
+</svelte:element>

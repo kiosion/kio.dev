@@ -3,6 +3,7 @@
   import { crossfade, fade } from 'svelte/transition';
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
   import { buildImageUrl, getCrop } from '$lib/sanity';
 
   import ImageModal from '$components/images/image-modal.svelte';
@@ -65,38 +66,41 @@
   });
 </script>
 
-<div class="relative w-full">
+<div class="relative h-full">
   {#await srcPromise || new Promise((_res) => {})}
     <div
-      class="loading font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
+      class="loading font-code absolute top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
+      style="max-width: {imgDimensions.width}px; left: min(50%, {imgDimensions.width /
+        2}px);"
     >
       <Spinner></Spinner>
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
-      class="mx-auto w-full select-none rounded-sm"
+      class="w-full select-none rounded-md"
       src={placeholderSrc}
       draggable="false"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     />
   {:then src}
     <button
-      class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-sm"
+      class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-md"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
       on:click={() => {
-        showImageModal = true;
+        showImageModal = !showImageModal;
       }}
-      on:keydown={(e) => {
+      on:keyup={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.stopPropagation();
-          showImageModal = true;
+          e.preventDefault();
+          showImageModal = !showImageModal;
         }
       }}
       type="button"
     >
       {#if showImageModal}
         <img
-          class="placeholder absolute left-0 top-0 w-full select-none rounded-sm opacity-50"
+          class="placeholder absolute left-0 top-0 w-full select-none rounded-md opacity-50"
           src={placeholderSrc}
           alt={_key}
           draggable="false"
@@ -106,7 +110,7 @@
       {:else}
         <img
           {src}
-          class=" w-full select-none rounded-sm"
+          class="w-full select-none rounded-md"
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
@@ -118,7 +122,7 @@
     <p
       class="error font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
     >
-      Error: {e?.message || e}
+      {$t('Error')}:&nbsp;{e?.message || e}
     </p>
     <img
       src={placeholderSrc}
@@ -128,7 +132,7 @@
     />
   {/await}
   <img
-    class="backdrop absolute left-1/2 top-0 -z-[1] w-full -translate-x-1/2 select-none rounded-sm opacity-20 blur-lg transition-opacity print:hidden"
+    class="backdrop absolute left-1/2 top-0 -z-[1] w-full -translate-x-1/2 select-none rounded-md opacity-20 blur-lg transition-opacity print:hidden"
     src={placeholderSrc}
     alt={_key}
     draggable="false"
@@ -139,10 +143,10 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    class="mx-auto w-full select-none rounded-sm"
+    class="mx-auto box-border max-h-full max-w-full select-none rounded-md"
     src={fullSrc}
     alt={_key}
-    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    style="object-fit: contain; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
   />

@@ -2,16 +2,16 @@ name: CI - Sanity
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '**/.husky'
-      - 'svelte-app/**'
-      - 'express-api/**'
-      - 'elixir-api/**'
+      - "**/*.md"
+      - "LICENSE"
+      - "**/.husky"
+      - "svelte-app/**"
+      - "express-api/**"
+      - "elixir-api/**"
 
-concurrency: 
+concurrency:
   group: sanity
   cancel-in-progress: true
 
@@ -30,13 +30,13 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 9.1.0
+          version: 9.8.0
           run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v4
         id: nm-cache
         with:
-          path: 'sanity-cms/node_modules'
+          path: "sanity-cms/node_modules"
           key: ${{ runner.os }}-npm-${{ hashFiles('sanity-cms/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-npm-

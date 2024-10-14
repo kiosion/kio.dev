@@ -1,4 +1,9 @@
-import type { ArbitraryTypedObject, PortableTextBlock, SanityAsset } from '$types/sanity';
+import type {
+  ArbitraryTypedObject,
+  PortableTextBlock,
+  SanityAsset,
+  SanityImageObject
+} from '$types/sanity';
 
 interface ContentSection extends SanityAsset {
   title: string;
@@ -20,6 +25,14 @@ export type WorkTimelineItem = SanityAsset & {
 };
 
 export interface SiteConfig extends SanityAsset {
+  name: string;
+  image: SanityAsset & {
+    dark: SanityImageObject;
+    light: SanityImageObject;
+  };
+  handle?: string;
+  bio?: string;
+  enableToru?: boolean;
   about: ContentSection[];
   meta: ContentSection[];
   timeline: WorkTimelineItem[];

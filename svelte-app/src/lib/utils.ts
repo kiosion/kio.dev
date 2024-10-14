@@ -1,10 +1,10 @@
 // Misc utils that don't fit anywhere else
 import { derived, get } from 'svelte/store';
 
+import { ROUTE_ORDER } from '$lib/consts';
 import { currentLang, isLocalized } from '$lib/i18n';
 import Logger from '$lib/logger';
 import RouteTrie from '$lib/route-trie';
-import { ROUTE_ORDER } from '$lib/consts';
 
 const _parseViews = (views: number | undefined, lang: string) => {
   if (!views || views < 1) {

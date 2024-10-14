@@ -1,51 +1,47 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
+  import { cubicInOut } from 'svelte/easing';
   import { get } from 'svelte/store';
+  import { fade, fly } from 'svelte/transition';
 
-  import { browser } from '$app/environment';
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Logger from '$lib/logger';
   import { isMobile } from '$lib/responsive';
-  import { createTooltip, destroyTooltip, updateTooltip } from '$lib/tooltips';
 
-  import type { Tooltip } from '$lib/tooltips';
+  import Inner from '$components/tooltips/inner.svelte';
 
-  export let text: Tooltip['content'],
-    duration: Tooltip['duration'] = 150,
-    inDelay = 50,
-    outDelay = 100,
-    position: Tooltip['placement'] = 'bottom',
-    fixed: Tooltip['followCursor'] = true,
-    offset: Tooltip['offset'] = [0, 12];
+  import type { Placement } from '@floating-ui/dom';
 
-  let tooltipId = Math.floor(Math.random() * 100000),
-    timeoutId: ReturnType<typeof setTimeout>,
+  export let content: string | undefined = undefined,
+    duration: number = BASE_ANIMATION_DURATION,
+    placement: Placement = 'bottom',
+    delay: [number, number] = [0, 0],
+    offset: number = 10,
+    showArrow = false,
+    followCursor = false;
+
+  const tooltipId = Math.floor(Math.random() * 100000);
+
+  let timeoutInId: ReturnType<typeof setTimeout>,
+    timeoutOutId: ReturnType<typeof setTimeout>,
     container: HTMLSpanElement,
-    target: HTMLElement | null;
+    target: HTMLElement | null,
+    active = false;
 
   export const id = `tooltip-${tooltipId}`;
 
   const showTooltip = () => {
-    if (!target || !text?.trim() || get(isMobile)) {
+    if (!target || (!content && !$$slots?.content) || get(isMobile)) {
       return;
     }
 
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutInId);
+    clearTimeout(timeoutOutId);
 
-    const opts = {
-      id: tooltipId,
-      content: text,
-      duration,
-      placement: position,
-      followCursor: !fixed,
-      offset,
-      target: target as HTMLElement,
-      delay: outDelay
-    };
-
-    if (inDelay > 0) {
-      timeoutId = setTimeout(() => createTooltip(opts), inDelay);
+    if (delay[0] > 0) {
+      timeoutInId = setTimeout(() => (active = true), delay[0]);
     } else {
-      createTooltip(opts);
+      active = true;
     }
   };
 
@@ -54,8 +50,13 @@
       return;
     }
 
-    destroyTooltip(tooltipId);
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutInId);
+
+    if (delay[1] > 0) {
+      timeoutOutId = setTimeout(() => (active = false), delay[1]);
+    } else {
+      active = false;
+    }
   };
 
   const getActionableTarget = (el: HTMLElement | null): HTMLElement | null => {
@@ -66,6 +67,14 @@
     return el;
   };
 
+  const events = [
+    ['mouseenter', showTooltip],
+    ['mouseleave', hideTooltip],
+    ['focusin', showTooltip],
+    ['focusout', hideTooltip],
+    ['blur', hideTooltip]
+  ] as const;
+
   onMount(() => {
     target = getActionableTarget(container?.firstChild as HTMLElement | null);
 
@@ -74,11 +83,7 @@
       return;
     }
 
-    target.addEventListener('mouseenter', showTooltip);
-    target.addEventListener('mouseleave', hideTooltip);
-    target.addEventListener('focusin', showTooltip);
-    target.addEventListener('focusout', hideTooltip);
-    target.addEventListener('blur', hideTooltip);
+    events.forEach(([event, handler]) => target!.addEventListener(event, handler));
   });
 
   onDestroy(() => {
@@ -88,16 +93,33 @@
       return;
     }
 
-    target.removeEventListener('mouseenter', showTooltip);
-    target.removeEventListener('mouseleave', hideTooltip);
-    target.removeEventListener('focusin', showTooltip);
-    target.removeEventListener('focusout', hideTooltip);
-    target.removeEventListener('blur', hideTooltip);
+    events.forEach(([event, handler]) => target!.removeEventListener(event, handler));
   });
-
-  $: tooltipId && text?.trim() && browser && updateTooltip(tooltipId, { content: text });
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">
   <slot {id} />
 </span>
+
+{#if active && target}
+  <Inner
+    id={tooltipId}
+    transition={content
+      ? (node, args) => fade(node, { ...(args ?? {}), easing: cubicInOut })
+      : (node, args) => fly(node, { ...(args ?? {}), easing: cubicInOut, x: 4 })}
+    {duration}
+    {placement}
+    {offset}
+    {target}
+    {showArrow}
+    {followCursor}
+    className={content &&
+      'bg-neutral-600 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark whitespace-nowrap rounded-md'}
+  >
+    {#if content}
+      {content}
+    {:else}
+      <slot name="content" {id} />
+    {/if}
+  </Inner>
+{/if}

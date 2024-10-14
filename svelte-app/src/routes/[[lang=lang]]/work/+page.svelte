@@ -3,10 +3,10 @@
   import { pageTitle } from '$lib/navigation';
 
   import Timeline from '$components/about/timeline.svelte';
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
-  import DocumentList from '$components/lists/document-list.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
+  import ListItem from '$components/lists/list-item.svelte';
 
   export let data;
 
@@ -26,20 +26,32 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-<HeadedBlock heading={$t("Where I've worked")}>
-  {#if data.config?.timeline?.length}
-    <Timeline data={data.config.timeline}></Timeline>
-  {:else}
-    <div class="w-full">
-      <EmptyContent></EmptyContent>
-    </div>
+<div class="flex flex-col gap-5">
+  <BaseContainer>
+    <HeadedBlock heading={$t("Where I've worked")} first>
+      {#if data.config?.timeline?.length}
+        <Timeline data={data.config.timeline}></Timeline>
+      {:else}
+        <div class="w-full">
+          <EmptyContent></EmptyContent>
+        </div>
+      {/if}
+    </HeadedBlock>
+  </BaseContainer>
+
+  {#if data.projects.length}
+    <BaseContainer>
+      <HeadedBlock heading={$t('Projects')} constrainWidth={false} first let:id>
+        <div
+          class="flex flex-row flex-wrap gap-5 px-5"
+          role="group"
+          aria-labelledby="{id}-heading"
+        >
+          {#each data.projects as project}
+            <ListItem document={project} />
+          {/each}
+        </div>
+      </HeadedBlock>
+    </BaseContainer>
   {/if}
-</HeadedBlock>
-
-{#if data.projects.length}
-  <Divider></Divider>
-
-  <HeadedBlock heading={$t('Projects')} constrainWidth={false}>
-    <DocumentList documents={data.projects}></DocumentList>
-  </HeadedBlock>
-{/if}
+</div>

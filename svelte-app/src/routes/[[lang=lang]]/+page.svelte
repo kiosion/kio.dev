@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { ENV } from '$lib/env';
   import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
@@ -28,53 +27,61 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-{#if data.config?.about}
-  {#each data.config.about as aboutSection}
-    <HeadedBlock heading={aboutSection.title}>
-      <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
-      ></PortableText>
-    </HeadedBlock>
+<div class="flex flex-col gap-y-5">
+  <BaseContainer>
+    {#if data.config?.about}
+      {#each data.config.about as aboutSection, idx}
+        <HeadedBlock heading={aboutSection.title} first={idx === 0}>
+          <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
+          ></PortableText>
+        </HeadedBlock>
 
-    <Divider></Divider>
-  {/each}
-{:else}
-  <EmptyContent></EmptyContent>
-  <Divider></Divider>
-{/if}
-
-<HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false}>
-  {#if data.posts.length}
-    <div
-      class="mx-8 mb-6 flex flex-col gap-y-5"
-      role="group"
-      aria-labelledby="{id}-heading"
-    >
-      {#each data.posts as post}
-        <ListItem document={post} />
-        <span
-          class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
-        ></span>
+        {#if idx < data.config.about.length - 1}
+          <span
+            class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+          ></span>
+        {/if}
       {/each}
-    </div>
-    <div class="mx-8 flex flex-row items-center justify-start gap-x-6">
-      <ArrowButton
-        href={$linkTo('/thoughts')}
-        dir="right"
-        placement="after"
-        text={$t('All posts')}
-        preload
-      />
-      <ArrowButton
-        href={$linkTo('/thoughts/+')}
-        dir="right"
-        placement="after"
-        text={$t('Topics')}
-        preload
-      />
-    </div>
-  {:else}
-    <div class="mx-8 mb-6 flex flex-col gap-y-5">
-      <p class="font-code p-4">{$t('No content')}</p>
-    </div>
-  {/if}
-</HeadedBlock>
+    {:else}
+      <EmptyContent />
+    {/if}
+  </BaseContainer>
+
+  <BaseContainer>
+    <HeadedBlock heading={$t('Recent thoughts')} let:id constrainWidth={false} first>
+      {#if data.posts.length}
+        <div
+          class="flex flex-row flex-wrap gap-5 px-5 pb-1"
+          role="group"
+          aria-labelledby="{id}-heading"
+        >
+          {#each data.posts as post}
+            <ListItem document={post} />
+          {/each}
+        </div>
+      {:else}
+        <div class="px-8">
+          <p class="font-code p-4">{$t('No content')}</p>
+        </div>
+      {/if}
+    </HeadedBlock>
+  </BaseContainer>
+
+  <BaseContainer class="flex flex-row gap-3 p-2 text-sm">
+    <ArrowButton
+      href={$linkTo('/thoughts')}
+      dir="right"
+      placement="after"
+      text={$t('All posts')}
+      preload-code
+    />
+    <ArrowButton
+      href={$linkTo('/thoughts/+')}
+      dir="right"
+      placement="after"
+      text={$t('Topics')}
+      preload-code
+      preload-data
+    />
+  </BaseContainer>
+</div>

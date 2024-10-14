@@ -12,23 +12,34 @@
     id = Math.random().toString(36).substring(7);
 </script>
 
-<section class="my-6" role="group" aria-labelledby="{id}-heading">
+<section
+  class="my-5 rounded-lg bg-neutral-200/50 px-5 pb-6 pt-3 transition-colors dark:bg-neutral-700"
+  role="group"
+  aria-labelledby="{id}-heading"
+>
   <div class="pb-3">
     <h2
-      class="pb-1 text-xl font-bold text-dark transition-colors dark:text-white"
+      class="text-xl font-bold text-dark transition-colors dark:text-white"
       id="{id}-heading"
     >
       {title}
     </h2>
     <p
-      class="font-mono text-sm text-dark/80 transition-colors dark:text-light/80"
+      class="inline-flex flex-row items-center justify-start gap-x-2 font-sans text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
       aria-label={$t('Duration')}
     >
-      {$displayRange(section[section.length - 1].range.start, section[0].range.end)} &bull;
-      {$displayMonthDuration(
-        section[section.length - 1].range.start,
-        section[0].range.end
-      )}
+      <span
+        >{$displayRange(
+          section[section.length - 1].range.start,
+          section[0].range.end
+        )}</span
+      ><span>&bull;</span>
+      <span
+        >{$displayMonthDuration(
+          section[section.length - 1].range.start,
+          section[0].range.end
+        )}</span
+      >
     </p>
   </div>
 

@@ -1,4 +1,4 @@
-import { DEFAULT_APP_LANG } from '$lib/consts';
+import { DEFAULT_APP_LANG, TORU_API_URL } from '$lib/consts';
 import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 import { findOne } from '$lib/store';
@@ -6,6 +6,7 @@ import { findOne } from '$lib/store';
 import { error } from '@sveltejs/kit';
 
 import type { LayoutLoad } from './$types';
+import type { ToruData } from '$components/sidebar/toru';
 import type { SiteConfig } from '$types';
 
 export const trailingSlash = 'ignore';
@@ -19,13 +20,38 @@ export const load = (async ({ params, url, fetch }) => {
     Logger.error('Failed to load layout data:', e);
     throw error(500, {
       message: 'Sorry, something went wrong during load.',
+      // @ts-expect-error - Overriding base type
       cause: e?.cause,
       stack: e?.stack
     });
   })) as SiteConfig;
 
+  const toruData = (
+    config.enableToru
+      ? (fetch(`${TORU_API_URL}/kiosion?res=json&cover_size=medium`)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Failed to fetch now playing data');
+            }
+
+            return res
+              .json()
+              .then((data) => data.data)
+              .catch((e) => {
+                throw new Error('Failed to parse now playing data', e);
+              });
+          })
+          .catch((e) => {
+            Logger.error(e);
+
+            return undefined;
+          }) as Promise<ToruData | undefined>)
+      : Promise.resolve(undefined)
+  ) satisfies Promise<ToruData | undefined>;
+
   return {
     pathname: url.pathname,
+    toruData,
     config
   };
 }) satisfies LayoutLoad;
