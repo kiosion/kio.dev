@@ -23,7 +23,6 @@
 
   import PageTransition from '$components/layouts/page-transition.svelte';
   import Sidebar from '$components/sidebar.svelte';
-  import TooltipManager from '$components/tooltips/manager.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
@@ -154,7 +153,7 @@
     <Sidebar config={data.config} toruData={data.toruData} {scrollContainer} />
 
     <div
-      class="max-w-6xl flex-1 rounded-xl lg:mr-auto lg:overflow-x-hidden lg:overflow-y-scroll"
+      class="focus-outline max-w-6xl flex-1 rounded-xl lg:mr-auto lg:overflow-x-hidden lg:overflow-y-scroll"
       id="content-wrapper"
       bind:this={scrollContainer}
     >
@@ -163,6 +162,4 @@
       </PageTransition>
     </div>
   </div>
-
-  <TooltipManager />
 </div>

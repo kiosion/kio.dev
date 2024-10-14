@@ -76,7 +76,7 @@
   class="flex w-full flex-row flex-wrap justify-between gap-2 p-2 text-sm text-neutral-700 dark:text-neutral-100"
 >
   <div class="flex flex-row gap-2">
-    <Tooltip text={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
+    <Tooltip content={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
       <p
         class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
         aria-label="Published date"
@@ -85,7 +85,7 @@
       </p>
     </Tooltip>
     <Tooltip
-      text={$t('{length} words', {
+      content={$t('{length} words', {
         length: (data.estimatedWordCount ?? 0).toLocaleString($currentLang)
       })}
     >

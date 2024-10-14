@@ -5,7 +5,9 @@
 
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  export let tooltipPosition: 'top' | 'bottom' = 'bottom',
+  import type { Placement } from '@floating-ui/dom';
+
+  export let tooltipPlacement: Placement = 'bottom',
     tooltipText: string | undefined = undefined,
     newtab = false;
 
@@ -28,13 +30,12 @@
 </script>
 
 <Tooltip
-  text={tooltipText ?? isMailLink
+  content={tooltipText ?? isMailLink
     ? $t('Copy {value}', { value: `'${mailAddress}'` })
     : link && link.length > 50
       ? `${link.slice(0, 50 - 3)}...`
       : link ?? $t('Visit')}
-  position={tooltipPosition}
-  inDelay={500}
+  placement={tooltipPlacement}
 >
   <svelte:element
     this={type}

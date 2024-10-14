@@ -83,10 +83,11 @@
 </script>
 
 <div
-  class="relative mx-7 my-5 overflow-hidden rounded-lg bg-neutral-200/50 transition-colors dark:bg-neutral-700"
+  class="mx-7 my-5 rounded-lg bg-neutral-200/50 transition-colors dark:bg-neutral-700"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
+  style="content-visibility: auto"
 >
   {#if filename}
     <div
@@ -99,7 +100,7 @@
     <Divider margin="my-0"></Divider>
   {/if}
 
-  <Tooltip text={$t('Copy to clipboard')} position="top">
+  <Tooltip content={$t('Copy to clipboard')} placement="left">
     <button
       class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-300/50 hover:text-dark focus-visible:bg-neutral-300/50 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
       class:top-1={!filename}

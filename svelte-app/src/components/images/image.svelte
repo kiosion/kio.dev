@@ -143,10 +143,10 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    class="mx-auto h-full select-none rounded-md"
+    class="mx-auto box-border max-h-full max-w-full select-none rounded-md"
     src={fullSrc}
     alt={_key}
-    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
+    style="object-fit: contain; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
     out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
   />

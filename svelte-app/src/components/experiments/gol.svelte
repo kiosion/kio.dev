@@ -136,7 +136,7 @@
     <Divider></Divider>
   </header>
 
-  <Tooltip text={running ? 'Pause' : 'Resume'}>
+  <Tooltip content={running ? 'Pause' : 'Resume'}>
     <button
       class="focus-outline absolute right-4 top-4 rounded-lg p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 hover:text-orange-light/90 focus-visible:bg-violet-100/80 focus-visible:text-orange-light/90 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
       on:click={running ? stopGame : startGame}

@@ -12,8 +12,8 @@
   import GlobeAsiaAustraliaSmall from '$components/icons/globe-asia-australia-small.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
-  import HeaderLink from '$components/nav/header-link.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
+  import SidebarLink from '$components/sidebar/sidebar-link.svelte';
   import ToruWidget from '$components/sidebar/toru.svelte';
 
   import type { ToruData } from '$components/sidebar/toru';
@@ -34,8 +34,8 @@
 
   $: pfp =
     $theme === APP_THEMES.DARK
-      ? '/assets/avi/standard.png'
-      : '/assets/avi/line_sunglases.png';
+      ? '/assets/avi/standard_transparent.png'
+      : '/assets/avi/line_sunglasses_transparent.png';
 </script>
 
 <div
@@ -46,7 +46,7 @@
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
       <img
-        class="p-0d aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-orange-light/60"
+        class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-neutral-300/50 p-0 dark:bg-neutral-100/50"
         src={pfp}
         alt="kio.dev"
       />
@@ -86,7 +86,7 @@
                 class="mt-px group-hover:hidden group-focus-visible:hidden"
               />
               <EnvelopeOpenSmall
-                class="mt-px hidden group-hover:block group-focus-visible:block"
+                class="hidden group-hover:block group-focus-visible:block"
               />
             {:else}
               <GlobeAmericasSmall
@@ -116,7 +116,7 @@
       >
         {#each NAV_LINKS as link}
           <li class="h-fit w-full">
-            <HeaderLink {link} />
+            <SidebarLink {link} />
           </li>
         {/each}
       </ul>
@@ -124,7 +124,7 @@
   </BaseContainer>
 
   <BaseContainer
-    class="group/container order-1 flex flex-row gap-2 p-2 group-first/container:border-r-2 lg:order-2 print:hidden"
+    class="group/container order-1 flex flex-row gap-2 p-2 px-3 group-first/container:border-r-2 lg:order-2 print:hidden"
   >
     <LangToggle />
     <ThemeToggle />
@@ -138,12 +138,12 @@
 
   {#if APP_VERSION?.length}
     <div
-      class="order-5 mt-auto flex w-full flex-row items-center justify-center gap-x-2 p-2 text-sm"
+      class="order-5 mt-auto hidden w-full flex-row items-center justify-center gap-x-2 p-2 text-sm lg:flex"
     >
       <span class="text-neutral-600/30 dark:text-neutral-200/40"
         ><a
           href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}
-          class="font-medium hover:underline"
+          class="focus-outline-sm rounded-xs font-medium hover:underline"
           target="_blank"
           rel="noopener noreferrer">#{APP_VERSION.slice(0, 6)}</a
         ></span

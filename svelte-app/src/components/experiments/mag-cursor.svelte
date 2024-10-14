@@ -35,8 +35,8 @@
       <div class="flex flex-row gap-x-6">
         <CursorTarget distance={40} let:active let:offset>
           <Tooltip
-            position="top"
-            text={useOffset ? "Disable 'pulling' targets" : "Enable 'pulling' targets"}
+            placement="top"
+            content={useOffset ? "Disable 'pulling' targets" : "Enable 'pulling' targets"}
           >
             <button
               class="-m-2 h-fit w-fit cursor-none p-2 font-mono text-sm hover:text-orange-light/90 focus-visible:text-orange-light/90 {active
