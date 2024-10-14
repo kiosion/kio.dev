@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { APP_THEMES, BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
+  import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
-  import Settings from '$lib/settings';
 
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
@@ -12,6 +11,7 @@
   import GlobeAsiaAustraliaSmall from '$components/icons/globe-asia-australia-small.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
+  import ProfileImage from '$components/sidebar/profile-image.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
   import SidebarLink from '$components/sidebar/sidebar-link.svelte';
   import ToruWidget from '$components/sidebar/toru.svelte';
@@ -31,13 +31,6 @@
   }));
 
   const name = config instanceof Error ? BASE_PAGE_TITLE : config.name;
-
-  const { theme } = Settings;
-
-  $: pfp =
-    $theme === APP_THEMES.DARK
-      ? '/assets/avi/standard_transparent.png'
-      : '/assets/avi/line_sunglasses_transparent.png';
 </script>
 
 <div
@@ -47,11 +40,7 @@
     class="order-2 flex flex-col items-start justify-start gap-y-4 p-4 lg:order-1"
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
-      <img
-        class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-neutral-300/50 p-0 dark:bg-neutral-100/50"
-        src={pfp}
-        alt="kio.dev"
-      />
+      <ProfileImage images={config.image} />
       <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"

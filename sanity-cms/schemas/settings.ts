@@ -44,6 +44,27 @@ export default {
       group: 'sidebar'
     },
     {
+      name: 'image',
+      type: 'object',
+      title: 'Profile Picture',
+      validation: (Rule: Rule) => Rule.required(),
+      fields: [
+        {
+          name: 'dark',
+          type: 'image',
+          title: 'Dark Mode',
+          validation: (Rule: Rule) => Rule.required()
+        },
+        {
+          name: 'light',
+          type: 'image',
+          title: 'Light Mode',
+          validation: (Rule: Rule) => Rule.required()
+        }
+      ],
+      group: 'sidebar'
+    },
+    {
       name: 'handle',
       type: 'string',
       title: 'Handle',

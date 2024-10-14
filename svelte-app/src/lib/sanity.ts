@@ -5,6 +5,7 @@ import imageUrlBuilder from '@sanity/image-url';
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
 import type {
   FitMode,
+  ImageFormat,
   SanityClientLike,
   SanityImageObject,
   SanityImageSource
@@ -63,6 +64,7 @@ type baseBuildImageUrlOptions = {
   height?: number;
   blur?: number;
   fit?: FitMode;
+  format?: ImageFormat;
 };
 
 type buildImageUrlOptions = baseBuildImageUrlOptions &
@@ -78,7 +80,7 @@ type buildImageUrlOptions = baseBuildImageUrlOptions &
   );
 
 export const buildImageUrl = (
-  { baseUrl, ref, crop, width, height, blur, fit }: buildImageUrlOptions = {
+  { baseUrl, ref, crop, width, height, blur, fit, format }: buildImageUrlOptions = {
     baseUrl: undefined
   } as buildImageUrlOptions
 ) => {
@@ -102,5 +104,10 @@ export const buildImageUrl = (
   } else if (crop) {
     baseUrl = baseUrl.fit('crop');
   }
-  return baseUrl.auto('format').url();
+  if (format) {
+    baseUrl = baseUrl.format(format);
+  } else {
+    baseUrl = baseUrl.auto('format');
+  }
+  return baseUrl.url();
 };
