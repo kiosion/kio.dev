@@ -40,7 +40,9 @@
     class="order-2 flex flex-col items-start justify-start gap-y-4 p-4 lg:order-1"
   >
     <div class="flex w-full flex-shrink-0 flex-row items-center justify-start gap-x-4">
-      <ProfileImage images={config.image} />
+      {#if config.image}
+        <ProfileImage images={config.image} />
+      {/if}
       <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
