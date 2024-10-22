@@ -34,7 +34,7 @@
 </script>
 
 <div
-  class="min-h-fith-full flex w-full flex-col gap-5 rounded-xl transition-all duration-300 ease-in-out lg:ml-auto lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
+  class="themed-scrollbar min-h-fith-full flex w-full flex-col gap-5 rounded-xl transition-all duration-300 ease-in-out lg:ml-auto lg:max-w-xs lg:overflow-y-auto xl:max-w-sm 2xl:max-w-md"
 >
   <BaseContainer
     class="order-2 flex flex-col items-start justify-start gap-y-4 p-4 lg:order-1"

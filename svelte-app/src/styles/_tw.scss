@@ -1,3 +1,5 @@
+@import 'colors';
+
 @layer base {
   body {
     @apply h-full w-full overflow-x-hidden;
@@ -24,10 +26,10 @@
     img {
       box-sizing: border-box;
     }
-  
+
     body {
       @apply bg-neutral-800 text-light;
-    
+
       &.light {
         @apply bg-neutral-0 text-dark;
       }
@@ -52,7 +54,7 @@
         }
       }
     }
-    
+
     ::selection {
       @apply bg-orange-light/90 text-light;
     }
@@ -71,11 +73,20 @@
 
     &,
     &-sm {
-      @apply focus-visible:outline outline-orange-light outline-2;
+      @apply outline-2 outline-orange-light focus-visible:outline;
     }
 
     &-sm {
       @apply outline-offset-2;
+    }
+  }
+
+  .themed-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: $neutral-200 transparent;
+
+    .dark & {
+      scrollbar-color: $neutral-400 transparent;
     }
   }
 }
@@ -84,7 +95,7 @@
   .pt-ol {
     li {
       ol {
-        @apply list-[lower-alpha] my-3;
+        @apply my-3 list-[lower-alpha];
       }
     }
   }
@@ -92,7 +103,7 @@
   .pt-ul {
     li {
       ul {
-        @apply list-disc my-3;
+        @apply my-3 list-disc;
       }
     }
   }
