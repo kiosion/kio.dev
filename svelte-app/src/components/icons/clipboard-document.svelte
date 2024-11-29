@@ -1,5 +1,9 @@
+<script lang="ts">
+  const { class: _class } = $props<{ class?: string }>();
+</script>
+
 <svg
-  class="size-5 {$$props.class || ''}"
+  class="size-5 {_class || ''}"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 20 20"
   fill="currentColor"

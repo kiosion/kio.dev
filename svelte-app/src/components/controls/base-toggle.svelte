@@ -13,8 +13,7 @@
     selected: boolean;
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  export let icon: typeof SvelteComponent<{}>, options: [Option, Option];
+  export let icon: typeof SvelteComponent<object>, options: [Option, Option];
 </script>
 
 <button

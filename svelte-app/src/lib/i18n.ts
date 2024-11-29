@@ -71,7 +71,7 @@ const getKey = (
 
     switch (typeof currentObject?.[keyPart]) {
       case 'string':
-        return currentObject[keyPart] as string;
+        return currentObject[keyPart];
       case 'object':
         currentObject = currentObject[keyPart] as Record<string, unknown>;
         break;
@@ -176,7 +176,7 @@ const _linkTo = (
 
   APP_LANGS.forEach((l) => path.startsWith(`/${l}/`) && (path = path.slice(3)));
 
-  return APP_LANGS.includes(lang.toLowerCase() as (typeof APP_LANGS)[number])
+  return APP_LANGS.includes(lang.toLowerCase())
     ? `/${lang}${
         path.startsWith('/')
           ? addSearchParams(path, params)

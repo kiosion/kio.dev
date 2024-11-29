@@ -18,7 +18,7 @@
   const tags: DocumentTags[] = [],
     tagCounts: Record<DocumentTags['_id'], number> = {};
 
-  for (let i = 0; i < data.posts?.length ?? 0; i++) {
+  for (let i = 0; i < data.posts.length; i++) {
     const postTags = data.posts[i]?.tags ?? [];
 
     if (!postTags.length) {

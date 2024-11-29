@@ -10,13 +10,12 @@
   import { isDesktop } from '$lib/responsive';
   import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
 
-  import Divider from '$components/divider.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import SidebarHeadings from '$components/sidebar/sidebar-headings.svelte';
 
   import type { Unsubscriber } from 'svelte/store';
 
-  export let scrollContainer: HTMLElement | null | undefined;
+  let { scrollContainer }: { scrollContainer?: HTMLElement | null } = $props();
 
   const blurInOpts = {
       duration: BASE_ANIMATION_DURATION * 0.8,
@@ -30,7 +29,7 @@
     };
 
   let scrollObserverUnsubscriber: Unsubscriber | undefined,
-    scrollProgress = 0,
+    scrollProgress = $state(0),
     scrollProgressUpdateInterval: ReturnType<typeof setInterval> | undefined,
     handleScrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -50,37 +49,47 @@
     }, 250);
   };
 
-  afterNavigate(() => {
-    scrollProgress = 0;
-  });
-
-  onMount(() => {
+  const setup = () => {
     if (!scrollContainer || !browser) {
       return;
     }
 
     scrollObserverUnsubscriber = sidebarBlock.subscribe((_) => handleScroll());
-    scrollProgressUpdateInterval = setInterval(() => handleScroll(), 1000);
-  });
+    scrollProgressUpdateInterval = setInterval(() => handleScroll(), 1500);
+  };
 
-  onDestroy(() => {
+  const teardown = () => {
     handleScrollTimeout && clearTimeout(handleScrollTimeout);
     scrollProgressUpdateInterval && clearInterval(scrollProgressUpdateInterval);
-
     scrollObserverUnsubscriber?.();
+  };
+
+  afterNavigate(() => {
+    scrollProgress = 0;
   });
 
-  $: estRemainingTime = Math.round(
-    Math.max(
-      0,
-      ($sidebarBlock?.estimatedReadingTime ?? 0) * Math.min(1, 1 - scrollProgress)
-    )
-  );
-  $: ({ title, desc, tags } = $sidebarBlock ?? {
-    title: undefined,
-    desc: undefined,
-    tags: undefined
+  onMount(setup);
+
+  onDestroy(teardown);
+
+  $effect(() => {
+    if (scrollContainer) {
+      teardown();
+      setup();
+    }
   });
+
+  let estRemainingTime = $derived(
+      Math.round(
+        Math.max(
+          0,
+          ($sidebarBlock?.estimatedReadingTime ?? 0) * Math.min(1, 1 - scrollProgress)
+        )
+      )
+    ),
+    { title, desc, tags } = $derived(
+      $sidebarBlock ?? { title: undefined, desc: undefined, tags: undefined }
+    );
 </script>
 
 {#if $isDesktop && $sidebarBlock}

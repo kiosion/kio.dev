@@ -27,9 +27,10 @@
   import type { Unsubscriber } from 'svelte/store';
 
   let unsubscribers = [] as Unsubscriber[],
-    HighlightStyles: string | undefined,
     setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    scrollContainer: HTMLElement | null;
+    HighlightStyles = $state<string | undefined>(undefined),
+    scrollContainer = $state<HTMLElement | null>(null),
+    url = $derived($page.url);
 
   const { theme } = Settings,
     skipToContent = (e: KeyboardEvent) => {
@@ -99,17 +100,14 @@
 
   onDestroy(() => unsubscribers.forEach((u) => u()));
 
-  export let data;
+  const { children, data } = $props();
 
-  $: ({ url } = $page);
-  $: isLocalized.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-  );
-  $: currentLang.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-      ? $page?.params?.lang
-      : DEFAULT_APP_LANG
-  );
+  $effect(() => {
+    isLocalized.set(APP_LANGS.includes($page?.params?.lang));
+    currentLang.set(
+      APP_LANGS.includes($page?.params?.lang) ? $page?.params?.lang : DEFAULT_APP_LANG
+    );
+  });
 </script>
 
 <svelte:head>
@@ -129,7 +127,6 @@
   <link rel="preload" href="/assets/logo-standard.webp" as="image" />
 
   {#if HighlightStyles}
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html HighlightStyles}
   {/if}
 </svelte:head>
@@ -143,7 +140,7 @@
   tabindex="0"
   in:fly={{ delay: 100, duration: BASE_ANIMATION_DURATION / 3, y: -40 }}
   out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}
-  on:keydown={skipToContent}>{$t('Skip to content')}</span
+  onkeydown={skipToContent}>{$t('Skip to content')}</span
 >
 
 <div class="main mx-auto h-full w-full p-5 text-dark dark:text-light lg:text-lg">
@@ -158,7 +155,7 @@
       bind:this={scrollContainer}
     >
       <PageTransition pathname={data.pathname}>
-        <slot />
+        {@render children?.()}
       </PageTransition>
     </div>
   </div>

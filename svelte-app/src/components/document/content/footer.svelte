@@ -19,7 +19,7 @@
       <span class="flex items-center justify-start gap-2 text-base">
         <!-- eslint-disable -->
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100"
-          >git</span
+          >{$t('git')}</span
         >
         <span class="select-none text-base text-neutral-700 dark:text-neutral-100">/</span
         >

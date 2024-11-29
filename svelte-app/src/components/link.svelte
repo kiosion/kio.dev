@@ -30,11 +30,11 @@
 </script>
 
 <Tooltip
-  content={tooltipText ?? isMailLink
+  content={(tooltipText ?? isMailLink)
     ? $t('Copy {value}', { value: `'${mailAddress}'` })
     : link && link.length > 50
       ? `${link.slice(0, 50 - 3)}...`
-      : link ?? $t('Visit')}
+      : (link ?? $t('Visit'))}
   placement={tooltipPlacement}
   delay={[500, 0]}
 >

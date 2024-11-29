@@ -3,7 +3,7 @@ import { security } from '$lib/fixtures/well-known';
 
 import type { RequestHandler } from './$types';
 
-export const GET = (async ({ url }) => {
+export const GET = (({ url }) => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {

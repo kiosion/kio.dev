@@ -1,4 +1,5 @@
-@import 'breakpoints';
+@use 'sass:list';
+@use 'breakpoints';
 
 @mixin media($key) {
   @if not map-has-key($breakpoints, $key) {
@@ -16,7 +17,7 @@
     @content;
   }
 
-  @if length($selectors) > 0 {
+  @if list.length($selectors) > 0 {
     @each $selector in $selectors {
       @if str-index($selector, ".") == 1 {
         &#{"" + $selector} {

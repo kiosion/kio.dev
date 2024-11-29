@@ -1,3 +1,5 @@
+@use '../colors';
+
 #hljs-container {
   > pre {
     white-space: break-spaces;
@@ -28,13 +30,13 @@ code {
 
     & {
       &::selection {
-        background: $orange-light !important;
-        color: $light !important;
+        background: colors.$orange-light !important;
+        color: colors.$light !important;
       }
       .dark & {
         &::selection {
-          background: $orange-light !important;
-          color: $dark !important;
+          background: colors.$orange-light !important;
+          color: colors.$dark !important;
         }
       }
     }

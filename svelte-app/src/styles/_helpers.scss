@@ -1,3 +1,7 @@
+@use 'sass:string';
+@use 'sass:color';
+@use 'sass:math';
+
 @function ease-in-out($t) {
   @if ($t < 0.5) {
     @return 2 * $t * $t;
@@ -8,13 +12,13 @@
 
 @function ease-gradient($dir, $color1, $color2) {
   $stops: 20; // Number of stops for a smoother gradient
-  $percentage-step: 100% / ($stops - 1);
+  $percentage-step: math.div(100%, $stops - 1);
   $gradient: '';
 
   @for $i from 0 through ($stops - 1) {
     $percentage: $i * $percentage-step;
-    $eased-percentage: ease-in-out($percentage / 100);
-    $interpolated-color: mix($color2, $color1, $eased-percentage * 100%);
+    $eased-percentage: ease-in-out(math.div($percentage, 100));
+    $interpolated-color: color.mix($color2, $color1, calc($eased-percentage / 1% / 1% / 1% * 1%) * 100%);
     @if $i == 0 {
       $gradient: '#{$interpolated-color} #{$percentage}';
     } @else {
@@ -22,19 +26,19 @@
     }
   }
 
-  $gradient-string: unquote('linear-gradient(#{$dir}, #{$gradient})');
+  $gradient-string: string.unquote('linear-gradient(#{$dir}, #{$gradient})');
   @return $gradient-string;
 }
 
 @function ease-gradient-lab($dir, $color1, $color2) {
   $stops: 20; // Number of stops for a smoother gradient
-  $percentage-step: 100% / ($stops - 1);
+  $percentage-step: math.div(100%, $stops - 1);
   $gradient: '';
 
   @for $i from 0 through ($stops - 1) {
     $percentage: $i * $percentage-step;
-    $eased-percentage: ease-in-out($percentage / 100);
-    $interpolated-color: interpolate-lab($color1, $color2, $eased-percentage);
+    $eased-percentage: ease-in-out(math.div($percentage, 100));
+    $interpolated-color: interpolate-lab($color1, $color2, calc($eased-percentage / 1% / 1% / 1% * 1%));
     @if $i == 0 {
       $gradient: '#{$interpolated-color} #{$percentage}';
     } @else {
@@ -42,7 +46,7 @@
     }
   }
 
-  $gradient-string: unquote('linear-gradient(#{$dir}, #{$gradient})');
+  $gradient-string: string.unquote('linear-gradient(#{$dir}, #{$gradient})');
   @return $gradient-string;
 }
 

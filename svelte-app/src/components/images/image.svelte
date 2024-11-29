@@ -4,6 +4,7 @@
 
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
+  import Logger from '$lib/logger';
   import { buildImageUrl, getCrop } from '$lib/sanity';
 
   import ImageModal from '$components/images/image-modal.svelte';
@@ -11,11 +12,19 @@
 
   import type { RouteFetch, SanityImageObject } from '$types';
 
-  export let image: SanityImageObject,
-    routeFetch: RouteFetch,
-    placeholder: string | undefined = undefined,
-    crop: SanityImageObject['crop'] & { width: number; height: number } = getCrop(image),
-    srcPromise: Promise<string> | undefined = undefined;
+  let {
+    image,
+    routeFetch,
+    placeholder,
+    crop = getCrop(image),
+    srcPromise
+  }: {
+    image: SanityImageObject;
+    routeFetch: RouteFetch;
+    placeholder?: string;
+    crop?: SanityImageObject['crop'] & { width: number; height: number };
+    srcPromise?: Promise<string>;
+  } = $props();
 
   const { _key } = image,
     { _ref } = image.asset,
@@ -42,9 +51,9 @@
       }
     });
 
-  let fullSrc: string,
-    dialog: HTMLDialogElement,
-    showImageModal = false;
+  let fullSrc = $state<string>(),
+    dialog = $state<HTMLDialogElement>()!,
+    showImageModal = $state(false);
 
   onMount(() => {
     srcPromise ||= routeFetch(
@@ -62,7 +71,7 @@
       return `data:${mimeType};base64,${btoa(buf)}`;
     });
 
-    srcPromise.then((res) => (fullSrc = res));
+    srcPromise.then((res) => (fullSrc = res)).catch(Logger.error);
   });
 </script>
 
@@ -75,7 +84,7 @@
     >
       <Spinner></Spinner>
     </div>
-    <!-- svelte-ignore a11y-missing-attribute -->
+    <!-- svelte-ignore a11y_missing_attribute -->
     <img
       class="w-full select-none rounded-md"
       src={placeholderSrc}
@@ -86,10 +95,10 @@
     <button
       class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-md"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
-      on:click={() => {
+      onclick={() => {
         showImageModal = !showImageModal;
       }}
-      on:keyup={(e) => {
+      onkeyup={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.stopPropagation();
           e.preventDefault();
@@ -153,10 +162,10 @@
 </ImageModal>
 
 <style lang="scss">
-  @import '@styles/mixins';
+  @use '@styles/mixins';
 
   div {
-    @include focused {
+    @include mixins.focused {
       .backdrop {
         @apply opacity-30;
       }

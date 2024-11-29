@@ -74,9 +74,10 @@ export const load = (async ({ parent, fetch, params, url }) => {
       );
     }
 
-    images = (await Promise.all(imagePromises)).filter(
+    // @ts-expect-error idek this type just seems fucked
+    images = (await Promise.all<ProjectImage[]>(imagePromises)).filter(
       (entry) => entry !== undefined
-    ) as ProjectImage[];
+    );
   }
 
   const { stars, watchers } = await fetchRepoStats(fetch, project.github);
@@ -84,7 +85,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
   project.githubStars = stars;
   project.githubWatchers = watchers;
 
-  project && incViews(fetch, project);
+  project && incViews(fetch, project).catch(Logger.error);
 
   return { project, images, routeFetch: fetch };
 }) satisfies PageLoad;

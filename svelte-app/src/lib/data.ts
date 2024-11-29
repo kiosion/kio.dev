@@ -6,10 +6,8 @@ import { error } from '@sveltejs/kit';
 
 const createGenericError = (message: string) => new Error(message);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Clean<T> = T extends Error ? never : T extends any[] ? CleanArray<T> : T;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CleanArray<T extends any[]> = {
   [P in keyof T]: Clean<T[P]>;
 };
@@ -23,7 +21,7 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
   }
 
   if (data instanceof Error) {
-    throw error((data as Error)?.code ?? 500, {
+    throw error(data?.code ?? 500, {
       message: data?.message || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
       cause: data?.cause,
       stack: data?.stack || createGenericError(ERRORS.GENERIC_SOMETHING_WENT_WRONG).stack
@@ -31,10 +29,10 @@ export const handleLoadError = <T>(data?: T | Error): Clean<T> => {
   }
 
   if (Array.isArray(data)) {
-    const erroredData = data.filter((item) => item instanceof Error) as Error[];
+    const erroredData = data.filter((item) => item instanceof Error);
 
     if (erroredData.length) {
-      throw error((erroredData[0] as Error)?.code ?? 500, {
+      throw error(erroredData[0]?.code ?? 500, {
         message: erroredData[0]?.message || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
         cause: erroredData[0]?.cause,
         stack:

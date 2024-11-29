@@ -1,5 +1,6 @@
 import { DEFAULT_APP_LANG } from '$lib/consts';
 import { handleLoadError } from '$lib/data';
+import Logger from '$lib/logger';
 import { findOne, incViews } from '$lib/store';
 
 import type { PageLoad } from './$types';
@@ -21,7 +22,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
       _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
     handleLoadError(await findOne(fetch, 'post', opts));
 
-  post && incViews(fetch, post);
+  post && incViews(fetch, post).catch(Logger.error);
 
   return { post, routeFetch: fetch };
 }) satisfies PageLoad;

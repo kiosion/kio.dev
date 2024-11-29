@@ -39,8 +39,9 @@
 </a>
 
 <style lang="scss">
-  @import '@styles/colors';
-  @import '@styles/mixins';
+  @use 'sass:color';
+  @use '@styles/colors';
+  @use '@styles/mixins';
 
   .h1 {
     @apply mb-6 mt-10;
@@ -81,10 +82,10 @@
   }
 
   .highlighted {
-    color: mix($neutral-800, $orange-dark);
+    color: color.mix(colors.$neutral-800, colors.$orange-dark);
 
-    @include dark {
-      color: mix($neutral-0, $orange-light);
+    @include mixins.dark {
+      color: color.mix(colors.$neutral-0, colors.$orange-light);
     }
   }
 </style>
