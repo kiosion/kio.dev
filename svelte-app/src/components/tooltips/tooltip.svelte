@@ -11,27 +11,44 @@
   import Inner from '$components/tooltips/inner.svelte';
 
   import type { Placement } from '@floating-ui/dom';
+  import type { Snippet } from 'svelte';
 
-  export let content: string | undefined = undefined,
-    duration: number = BASE_ANIMATION_DURATION,
-    placement: Placement = 'bottom',
-    delay: [number, number] = [0, 0],
-    offset: number = 10,
+  let {
+    children,
+    content = undefined,
+    duration = BASE_ANIMATION_DURATION,
+    placement = 'bottom',
+    delay = [0, 0],
+    offset = 10,
     showArrow = false,
-    followCursor = false;
+    followCursor = false
+  }: {
+    children?: Snippet<[{ id: string }]>;
+    content?: string | Snippet<[{ id: string }]>;
+    duration?: number;
+    placement?: Placement;
+    delay?: [number, number];
+    offset?: number;
+    showArrow?: boolean;
+    followCursor?: boolean;
+  } = $props();
 
   const tooltipId = Math.floor(Math.random() * 100000);
 
   let timeoutInId: ReturnType<typeof setTimeout>,
     timeoutOutId: ReturnType<typeof setTimeout>,
     container: HTMLSpanElement,
-    target: HTMLElement | null,
-    active = false;
+    target = $state<Element | null>(null),
+    active = $state(false);
 
   export const id = `tooltip-${tooltipId}`;
 
   const showTooltip = () => {
-    if (!target || (!content && !$$slots?.content) || get(isMobile)) {
+    if (
+      !target ||
+      (typeof content !== 'string' && typeof content !== 'function') ||
+      get(isMobile)
+    ) {
       return;
     }
 
@@ -59,9 +76,17 @@
     }
   };
 
-  const getActionableTarget = (el: HTMLElement | null): HTMLElement | null => {
-    if (el && getComputedStyle(el)?.display === 'contents') {
-      return getActionableTarget(el?.firstChild as HTMLElement | null);
+  const getActionableTarget = <E extends Element>(el: E | null): E | null => {
+    if (!el) {
+      return null;
+    }
+
+    try {
+      if (getComputedStyle(el)?.display === 'contents') {
+        return getActionableTarget(el?.firstElementChild as E | null);
+      }
+    } catch (e) {
+      Logger.error('Finding tooltip target', e, el);
     }
 
     return el;
@@ -76,10 +101,10 @@
   ] as const;
 
   onMount(() => {
-    target = getActionableTarget(container?.firstChild as HTMLElement | null);
+    target = getActionableTarget(container?.firstElementChild);
 
     if (!target) {
-      Logger.error('Tooltip target not found!');
+      Logger.error('tooltip target not found for', { container });
       return;
     }
 
@@ -98,7 +123,7 @@
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">
-  <slot {id} />
+  {@render children?.({ id })}
 </span>
 
 {#if active && target}
@@ -116,10 +141,10 @@
     className={content &&
       'bg-neutral-600 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark whitespace-nowrap rounded-md'}
   >
-    {#if content}
+    {#if typeof content === 'string'}
       {content}
     {:else}
-      <slot name="content" {id} />
+      {@render content?.({ id })}
     {/if}
   </Inner>
 {/if}

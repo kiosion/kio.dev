@@ -1,4 +1,4 @@
-@import 'colors';
+@use 'colors';
 
 @layer base {
   body {
@@ -83,10 +83,10 @@
 
   .themed-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: $neutral-200 transparent;
+    scrollbar-color: colors.$neutral-200 transparent;
 
     .dark & {
-      scrollbar-color: $neutral-400 transparent;
+      scrollbar-color: colors.$neutral-400 transparent;
     }
   }
 }

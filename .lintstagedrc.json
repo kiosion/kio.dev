@@ -7,7 +7,7 @@
   ],
   "svelte-app/**/*.{svelte,ts,js}": [
     "./svelte-app/node_modules/.bin/prettier --write",
-    "./svelte-app/node_modules/.bin/eslint --fix \"./svelte-app/src/**/*.{ts,svelte}\" \"./svelte-app/types/**/*.ts\""
+    "./svelte-app/node_modules/.bin/eslint --config \"./svelte-app/eslint.config.js\" --fix \"./svelte-app/src/**/*.{ts,svelte}\" \"./svelte-app/types/**/*.ts\""
   ],
   "svelte-app/src/languages/*.json": [
     "bun ./svelte-app/scripts/lint-json.ts",

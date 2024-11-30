@@ -56,34 +56,34 @@
 <!-- </Tooltip> -->
 
 <style lang="scss">
-  @import '@styles/colors';
-  @import '@styles/mixins';
+  @use '@styles/colors';
+  @use '@styles/mixins';
 
   a {
     background-color: transparent;
 
     &:hover,
     &:focus-visible {
-      background-color: rgba($neutral-200, 0.5);
+      background-color: rgba(colors.$neutral-200, 0.5);
 
-      @include dark {
-        background-color: rgba($neutral-700, 1);
+      @include mixins.dark {
+        background-color: rgba(colors.$neutral-700, 1);
       }
     }
 
     &.active {
-      background-color: rgba($neutral-200, 0.75);
+      background-color: rgba(colors.$neutral-200, 0.75);
 
-      @include dark {
-        background-color: $neutral-800;
+      @include mixins.dark {
+        background-color: colors.$neutral-800;
       }
 
       &:hover,
       &:focus-visible {
-        background-color: rgba($neutral-200, 0.5);
+        background-color: rgba(colors.$neutral-200, 0.5);
 
-        @include dark {
-          background-color: rgba($neutral-700, 1);
+        @include mixins.dark {
+          background-color: rgba(colors.$neutral-700, 1);
         }
       }
     }

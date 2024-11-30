@@ -15,33 +15,6 @@
 
   import type { LocaleKey } from '$generated';
 
-  let message: LocaleKey = 'errors.generic.message',
-    title: LocaleKey = 'errors.generic.title',
-    showStack = false,
-    status = $page.status;
-
-  switch (status) {
-    case 400:
-      title = 'errors.bad-request.title';
-      message = 'errors.bad-request.message';
-      break;
-    case 401:
-      title = 'errors.unauthorized.title';
-      message = 'errors.unauthorized.message';
-      break;
-    case 404:
-      title = 'errors.not-found.title';
-      message = 'errors.not-found.message';
-      break;
-    case 403:
-      title = 'errors.forbidden.title';
-      message = 'errors.forbidden.message';
-      break;
-    case 500:
-      title = 'errors.internal.title';
-      break;
-  }
-
   const parseCausesToFlatList = (
     maybeNestedCause:
       | NonNullable<NonNullable<(typeof $page)['error']>['cause']>
@@ -76,17 +49,39 @@
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return [maybeNestedCause?.toString?.()];
   };
 
-  $: stack = $page.error?.stack?.trimStart();
-  $: causes = parseCausesToFlatList($page.error?.cause, 0);
-  $: heading = `${status}: ${$t(title)}`;
+  let showStack = $state(false),
+    status = $derived($page.status),
+    [title, message] = $derived<[LocaleKey, LocaleKey]>(
+      (() => {
+        switch ($page.status) {
+          case 400:
+            return ['errors.bad-request.title', 'errors.bad-request.message'];
+          case 401:
+            return ['errors.unauthorized.title', 'errors.unauthorized.message'];
+          case 404:
+            return ['errors.not-found.title', 'errors.not-found.message'];
+          case 403:
+            return ['errors.forbidden.title', 'errors.forbidden.message'];
+          case 500:
+            return ['errors.internal.title', 'errors.internal.message'];
+          default:
+            return ['errors.generic.title', 'errors.generic.message'];
+        }
+      })()
+    );
+
+  const stack = $derived($page.error?.stack?.trimStart()),
+    causes = $derived(parseCausesToFlatList($page.error?.cause, 0)),
+    heading = $derived(`${status}: ${$t(title)}`);
 </script>
 
 <svelte:head>
   <!-- eslint-disable-next-line -->
-  <title>kio.dev | {status}</title>
+  <title>{$t('kio.dev | ')}{status}</title>
   <meta name="robots" content="none" />
 </svelte:head>
 
@@ -95,12 +90,12 @@
     <ArrowButton
       dir="left"
       text={$t('Go back')}
-      on:click={() =>
+      onclick={() =>
         window.history.length > 2 ? window.history.back() : goto($linkTo('/'))}
     />
     <button
       class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-2 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
-      on:click={() => window.location.reload()}
+      onclick={() => window.location.reload()}
       type="button"
     >
       <svg
@@ -144,7 +139,7 @@
     {#if causes?.length}
       <button
         class="focus-outline group mt-8 flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
-        on:click={() => (showStack = !showStack)}
+        onclick={() => (showStack = !showStack)}
         type="button"
       >
         {#if showStack}

@@ -42,7 +42,7 @@
 </div>
 
 <style lang="scss">
-  @import '@styles/mixins';
+  @use '@styles/mixins';
 
   $bulletTopMargin: 10px;
   $bulletSize: 8px;
@@ -71,7 +71,7 @@
       bottom: #{0px + $lineGap - $bulletTopMargin - $bulletSize};
       left: #{$bulletSize * 2 + $lineWidth * 3};
 
-      @include dark {
+      @include mixins.dark {
         @apply border-neutral-400;
       }
     }

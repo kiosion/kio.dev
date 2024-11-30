@@ -1,21 +1,22 @@
-/* eslint-disable quote-props, prettier/prettier */
 import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import Inspect from 'vite-plugin-inspect';
-import StripTestSelectors from 'vite-plugin-test-selectors';
 
-export default defineConfig(({ mode }) => {
-  const isTesting = mode === 'testing',
-    isDev = ['development', 'backed'].some((m) => m === mode);
+// import Inspect from 'vite-plugin-inspect';
+// import StripTestSelectors from 'vite-plugin-test-selectors';
+import type { UserConfigFnObject } from 'vite';
+
+export default defineConfig(({ mode: _mode }) => {
+  // const isTesting = mode === 'testing',
+  //   isDev = ['development', 'backed'].some((m) => m === mode);
 
   return {
     plugins: [
-      sveltekit(),
-      StripTestSelectors({
-        dev: !isTesting
-      }),
-      (isDev || isTesting) && Inspect()
+      sveltekit()
+      // StripTestSelectors({
+      //   dev: !isTesting
+      // }),
+      // (isDev || isTesting) && Inspect()
     ],
     resolve: {
       alias: [
@@ -27,7 +28,6 @@ export default defineConfig(({ mode }) => {
     },
     optimizeDeps: {
       include: [
-        'twemoji',
         'svelte-highlight',
         'highlight.js',
         'highlight.js/lib/core',
@@ -37,10 +37,10 @@ export default defineConfig(({ mode }) => {
     test: {
       include: ['tests/unit/**.test.ts'],
       globals: true,
-      environment: 'jsdom',
-      deps: {
-        registerNodeLoader: true
-      }
+      environment: 'jsdom'
+      // deps: {
+      //   registerNodeLoader: true
+      // }
     },
     build: {
       rollupOptions: {
@@ -59,4 +59,4 @@ export default defineConfig(({ mode }) => {
     },
     appType: 'custom'
   };
-});
+}) satisfies UserConfigFnObject;

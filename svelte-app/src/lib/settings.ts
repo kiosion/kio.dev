@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment, svelte/no-ignored-unsubscribe */
+/* eslint-disable svelte/no-ignored-unsubscribe */
 import { get, type Writable, writable } from 'svelte/store';
 
 import { useMediaQuery } from 'svelte-breakpoints';

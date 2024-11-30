@@ -21,6 +21,7 @@
   },
   "include": [
     "src/**/*",
+    "src/routes/[[lang=lang]]/.well-known/[path]/+server.ts",
     "test/**/*",
     "tests/**/*",
     "types/**/*",

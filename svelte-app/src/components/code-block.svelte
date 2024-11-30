@@ -1,10 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import Highlight from 'svelte-highlight/Highlight.svelte';
+  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
+  import { markdown } from 'svelte-highlight/languages';
+  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
+
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
-  import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
@@ -13,33 +17,37 @@
   import MinusSmall from '$components/icons/minus-small.svelte';
   import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
   import PlusSmall from '$components/icons/plus-small.svelte';
-  import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  import type { ResolvedComponentType } from '$components/code-block/imports';
   import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
 
-  export let content: string,
-    filename: string | undefined,
+  let {
+    content,
+    filename,
     showLineNumbers = true,
-    lang: string | undefined;
+    lang
+  } = $props<{
+    content: string;
+    filename?: string;
+    showLineNumbers?: boolean;
+    lang?: string;
+  }>();
 
-  const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 7;
+  const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 8;
 
-  let LanguageType: Promise<_LanguageType<string>>,
-    HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
-    LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
-    Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
-    codeContainer: HTMLElement,
-    showMoreHeight: number | undefined,
-    innerHeight: number,
-    hideLoader = false,
-    copied: ReturnType<typeof setTimeout> | undefined,
-    loadError: Error | null = null,
-    containerHeight = DEFAULT_CODE_BLOCK_HEIGHT,
-    showingMore = false;
+  let LanguageType = $state<Promise<_LanguageType<string>> | undefined>(),
+    codeContainer = $state<HTMLElement | null>(null),
+    innerContainer = $state<HTMLElement | null>(null),
+    showMoreHeight = $state<number | undefined>(),
+    innerHeight = $derived<number>(innerContainer?.clientHeight ?? 0),
+    copied = $state<ReturnType<typeof setTimeout> | undefined>(),
+    containerHeight = $state(DEFAULT_CODE_BLOCK_HEIGHT),
+    showingMore = $state(false);
 
-  const id = Math.random().toString(36).substring(2),
+  const CopyIcon = $derived(
+      copied !== undefined ? ClipboardDocumentCheck : ClipboardDocument
+    ),
+    id = Math.random().toString(36).substring(2),
     copy = () => {
       content && navigator.clipboard.writeText(content);
 
@@ -53,33 +61,50 @@
       }
     };
 
+  const getLangType = (lang?: string): Promise<_LanguageType<string>> | undefined => {
+    try {
+      // Handle some cases where the name isn't the import name
+      switch (lang) {
+        case 'c#':
+          return import('svelte-highlight/languages/csharp').then((res) => res.csharp);
+        case 'c++':
+          return import('svelte-highlight/languages/cpp').then((res) => res.cpp);
+        case 'html':
+          return import('svelte-highlight/languages/xml').then((res) => res.xml);
+        case 'sh':
+        case 'shell':
+          return import('svelte-highlight/languages/bash').then((res) => res.bash);
+        case 'svelte':
+        case undefined:
+        case null:
+        case '':
+          return undefined;
+        default:
+          return import(`../../node_modules/svelte-highlight/languages/${lang}.js`).then(
+            (res) => res[lang as PropertyKey]
+          );
+      }
+    } catch {
+      return undefined;
+    }
+  };
+
   onMount(() => {
     lang = lang?.toLowerCase();
-
-    LineNumbers = showLineNumbers
-      ? genericAsyncImport('LineNumbers').then((res) =>
-          res instanceof Error ? ((loadError = res), undefined) : res
-        )
-      : Promise.resolve(undefined);
-    HighlightSvelte =
-      lang === 'svelte'
-        ? genericAsyncImport('HighlightSvelte').then((res) =>
-            res instanceof Error ? ((loadError = res), undefined) : res
-          )
-        : Promise.resolve(undefined);
-    Highlight = genericAsyncImport('Highlight').then((res) =>
-      res instanceof Error ? ((loadError = res), undefined) : res
-    );
-
     LanguageType = getLangType(lang);
   });
 
-  const updateHeight = (height?: number) => height && (containerHeight = height);
+  $effect(() => {
+    if (innerHeight > DEFAULT_CODE_BLOCK_HEIGHT || showingMore) {
+      const newHeight = showingMore
+        ? innerHeight + (showMoreHeight ?? 0) / 2
+        : innerHeight;
 
-  $: hideLoader = loadError !== null || innerHeight > 52;
-  $: hideLoader &&
-    (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore) &&
-    updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight);
+      if (newHeight && newHeight !== containerHeight) {
+        containerHeight = newHeight;
+      }
+    }
+  });
 </script>
 
 <div
@@ -105,68 +130,54 @@
       class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-300/50 hover:text-dark focus-visible:bg-neutral-300/50 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
       class:top-1={!filename}
       class:top-14={filename}
-      on:click={() => copy()}
-      on:keydown={(e) => e.key === 'Enter' && copy()}
+      onclick={() => copy()}
+      onkeydown={(e) => e.key === 'Enter' && copy()}
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
       type="button"
     >
-      <svelte:component
-        this={copied !== undefined ? ClipboardDocumentCheck : ClipboardDocument}
-      />
+      <CopyIcon />
     </button>
   </Tooltip>
   <div
-    class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
-    style="height: {containerHeight}px"
+    class="focus-outline relative h-fit min-h-0 w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
+    style="max-height: {containerHeight}px"
     bind:this={codeContainer}
   >
-    <div
-      class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
-      class:opacity-0={hideLoader}
-      aria-hidden="true"
-    >
-      <Spinner />
-    </div>
     <div
       class="h-fit w-full min-w-full rounded-sm p-1 pl-4 pr-8 transition-all"
       id="hljs-container"
       aria-hidden="true"
-      bind:clientHeight={innerHeight}
+      bind:this={innerContainer}
     >
-      {#if !loadError}
-        <!-- eslint-disable space-in-parens prettier/prettier -->
-        {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
-          <!-- eslint-enable space-in-parens prettier/prettier -->
-          <svelte:component
-            this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
+      {#await LanguageType then resolvedLang}
+        {#if lang === 'svelte'}
+          <HighlightSvelte code={content} {lang} let:highlighted>
+            {#if showLineNumbers === true}
+              <LineNumbers {highlighted} hideBorder wrapLines />
+            {/if}
+          </HighlightSvelte>
+        {:else}
+          <Highlight
             code={content}
-            language={resolvedLang}
+            {lang}
+            language={resolvedLang ?? markdown}
             let:highlighted
           >
             {#if showLineNumbers === true}
-              <svelte:component
-                this={resolvedLineNumbers}
-                {highlighted}
-                hideBorder
-                wrapLines
-              />
+              <LineNumbers {highlighted} hideBorder wrapLines />
             {/if}
-          </svelte:component>
-        {:catch error}
-          <div class="p-3 font-mono text-sm">
-            {$t('Error loading')}:&nbsp;{error.message}
-          </div>
-        {/await}
-      {:else}
+          </Highlight>
+        {/if}
+      {:catch error}
         <div class="p-3 font-mono text-sm">
-          {$t('Error loading')}:&nbsp;{loadError.message}
+          {$t('Error')}:&nbsp;{error.message}
         </div>
-      {/if}
+      {/await}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
 
-  {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
+  {#if innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
     <div
       class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pb-4 pt-6 text-center"
       class:showingMore
@@ -174,10 +185,10 @@
     >
       <button
         class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-300/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-300 focus-visible:bg-neutral-300 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-        on:click={() => {
+        onclick={() => {
           showingMore = !showingMore;
           if (!showingMore) {
-            updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
+            containerHeight = DEFAULT_CODE_BLOCK_HEIGHT;
           }
         }}
         type="button"
@@ -196,15 +207,15 @@
 </div>
 
 <style lang="scss">
-  @import '@styles/colors';
-  @import '@styles/helpers';
-  @import '@styles/mixins';
+  @use '@styles/colors';
+  @use '@styles/helpers';
+  @use '@styles/mixins';
 
   .show-more-gradient {
-    background: ease-gradient('to top', $neutral-200, transparent);
+    background: helpers.ease-gradient('to top', colors.$neutral-200, transparent);
 
-    @include dark {
-      background: ease-gradient('to top', $neutral-700, transparent);
+    @include mixins.dark {
+      background: helpers.ease-gradient('to top', colors.$neutral-700, transparent);
     }
   }
 </style>

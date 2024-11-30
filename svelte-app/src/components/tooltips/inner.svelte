@@ -13,22 +13,36 @@
   } from '@floating-ui/dom';
 
   import type { ComputePositionConfig, Placement } from '@floating-ui/dom';
+  import type { Snippet } from 'svelte';
   import type { TransitionConfig } from 'svelte/transition';
 
-  export let id: number,
-    className: string | undefined = undefined,
-    duration: number,
-    placement: Placement,
-    offset: number,
-    followCursor: boolean,
-    showArrow: boolean,
-    transition: ((node: Element, args?: unknown) => TransitionConfig) | undefined =
-      undefined,
-    target: HTMLElement;
+  let {
+    children,
+    id,
+    className = undefined,
+    duration,
+    placement,
+    offset,
+    followCursor,
+    showArrow,
+    transition = undefined,
+    target
+  }: {
+    children?: Snippet;
+    id: number;
+    className?: string;
+    duration: number;
+    placement: Placement;
+    offset: number;
+    followCursor: boolean;
+    showArrow: boolean;
+    transition?: ((node: Element, args?: unknown) => TransitionConfig) | undefined;
+    target: Element;
+  } = $props();
 
   let tooltipElement: HTMLDivElement,
-    arrowElement: HTMLSpanElement,
-    position = { x: 0, y: 0 },
+    arrowElement = $state<HTMLSpanElement>()!,
+    position = $state({ x: 0, y: 0 }),
     cleanup: () => void,
     maybeTransition =
       transition && duration > 0
@@ -103,18 +117,21 @@
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     cleanup = autoUpdate(target, tooltipElement, calculatePosition, {
       animationFrame: false
     });
 
     if (followCursor) {
-      target.addEventListener('mousemove', calculatePosition);
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      (target as HTMLElement).addEventListener('mousemove', calculatePosition);
     }
   });
 
   onDestroy(() => {
     cleanup?.();
-    target?.removeEventListener('mousemove', calculatePosition);
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    (target as HTMLElement)?.removeEventListener('mousemove', calculatePosition);
   });
 </script>
 
@@ -128,7 +145,7 @@
   out:maybeTransition={{ duration }}
 >
   <span class="block px-2 py-1.5 {className || ''}">
-    <slot />
+    {@render children?.()}
   </span>
   {#if showArrow}
     <span
