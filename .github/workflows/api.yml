@@ -78,7 +78,7 @@ jobs:
             echo "::set-output name=token::${{ secrets.API_TOKEN }}"
           fi
       - name: Build and Push ${{ matrix.environment }} image
-        uses: docker/build-push-action@v6.5.0
+        uses: docker/build-push-action@v6.10.0
         with:
           provenance: false
           context: ./elixir-api
