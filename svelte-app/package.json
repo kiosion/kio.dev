@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.6.11",
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.49.1",
     "@portabletext/svelte": "2.1.11",
     "@portabletext/toolkit": "2.0.15",
     "@portabletext/types": "2.0.13",
