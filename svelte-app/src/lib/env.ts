@@ -17,6 +17,10 @@ export const REMOTE_API_BASE_URL =
 export const REMOTE_API_URL = `${REMOTE_API_BASE_URL}/api/${REMOTE_API_VERSION}`;
 export const REMOTE_CDN_URL = `${REMOTE_API_BASE_URL}/cdn`;
 
+export const SANITY_PROJECT_ID: string = import.meta.env.VITE_SANITY_PROJECT_ID;
+export const SANITY_DATASET: 'production' | 'dev' =
+  ENV === 'production' ? 'production' : 'dev';
+
 export const SELF_BASE_URL = (() => {
   switch (ENV) {
     case 'backed':

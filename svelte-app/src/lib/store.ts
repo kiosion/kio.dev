@@ -143,9 +143,7 @@ const fetchData = async <T>(
         Object.keys(fetchResponse.data).length === 0) ||
       (Array.isArray(fetchResponse?.data) &&
         !fetchResponse?.meta &&
-        fetchResponse?.data.length === 0) ||
-      ((fetchResponse?.meta as Record<string, unknown> | undefined)?.total !== 0 &&
-        !fetchResponse?.data)
+        fetchResponse?.data.length === 0)
     ) {
       const err = new Error(`Failed to fetch ${model} data.`);
 

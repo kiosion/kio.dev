@@ -5,7 +5,7 @@ export interface SingleDocumentQueryParams {
 
 export interface DocumentQueryParams {
   limit?: number;
-  skip?: number;
+  page?: number;
   sort?: string;
   order?: string;
   date?: string;
@@ -16,7 +16,10 @@ export interface ResData<T> {
   meta: {
     count: string | number;
     total: string | number;
-    filter: string;
+    page: {
+      current: string | number;
+      total: string | number;
+    };
   };
   data: T;
 }

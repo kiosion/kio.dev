@@ -1,4 +1,4 @@
-import { REMOTE_CDN_URL } from '$lib/env';
+import { REMOTE_CDN_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
 import imageUrlBuilder from '@sanity/image-url';
 
@@ -22,9 +22,10 @@ export interface ImageCrop {
 
 const config: SanityClientLike = {
   clientConfig: {
+    // TODO: Use Sanity CDN apiHost, need to fix CORS first
     apiHost: `${REMOTE_CDN_URL}`,
-    projectId: 'dataset', // This is kinda jank, should find a workaround to not include at all
-    dataset: '0'
+    projectId: SANITY_PROJECT_ID,
+    dataset: SANITY_DATASET
   }
 };
 
@@ -85,6 +86,9 @@ export const buildImageUrl = (
   } as buildImageUrlOptions
 ) => {
   if (!baseUrl) {
+    if (!ref) {
+      throw new Error('Either baseUrl or ref must be provided to buildImageUrl');
+    }
     baseUrl = urlFor(ref);
   }
   if (crop) {

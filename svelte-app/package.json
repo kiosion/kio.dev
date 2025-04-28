@@ -26,6 +26,7 @@
     "@portabletext/svelte": "2.1.11",
     "@portabletext/toolkit": "2.0.15",
     "@portabletext/types": "2.0.13",
+    "@sanity/client": "^6.29.1",
     "@sanity/image-url": "1.0.2",
     "@sveltejs/adapter-netlify": "4.2.0",
     "@sveltejs/adapter-node": "5.0.1",
