@@ -13,7 +13,7 @@
   import PlusSmall from '$components/icons/plus-small.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
 
-  import type { LocaleKey } from '$generated';
+  import type { LocaleKey } from '$types/generated';
 
   let message: LocaleKey = 'errors.generic.message',
     title: LocaleKey = 'errors.generic.title',

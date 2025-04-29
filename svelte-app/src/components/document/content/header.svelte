@@ -11,16 +11,18 @@
   import { parseViews } from '$lib/utils';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Divider from '$components/divider.svelte';
   import Image from '$components/images/image.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
   import ImageCarousel from '$components/portable-text/image-carousel.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
+  import type { HeadingNode, ProjectImage, RouteFetch } from '$types';
+  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
 
-  export let data: PostDocument | ProjectDocument,
+  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult> & {
+      headings: HeadingNode[];
+    },
     routeFetch: RouteFetch,
     images: ProjectImage[] | undefined = undefined,
     model = data._type;

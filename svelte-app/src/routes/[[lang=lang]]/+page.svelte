@@ -31,15 +31,17 @@
   <BaseContainer>
     {#if data.config?.about}
       {#each data.config.about as aboutSection, idx}
-        <HeadedBlock heading={aboutSection.title} first={idx === 0}>
-          <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
-          ></PortableText>
-        </HeadedBlock>
+        {#if aboutSection.content}
+          <HeadedBlock heading={aboutSection.title} first={idx === 0}>
+            <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
+            ></PortableText>
+          </HeadedBlock>
 
-        {#if idx < data.config.about.length - 1}
-          <span
-            class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
-          ></span>
+          {#if idx < data.config.about.length - 1}
+            <span
+              class="-my-1 block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
+            ></span>
+          {/if}
         {/if}
       {/each}
     {:else}

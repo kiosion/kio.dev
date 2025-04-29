@@ -5,9 +5,13 @@
   import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
+  import type { RouteFetch } from '$types';
+  import type { HeadingNode, ProjectImage } from '$types/documents';
+  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
 
-  export let data: PostDocument | ProjectDocument,
+  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult> & {
+      headings: HeadingNode[];
+    },
     images: ProjectImage[] | undefined = undefined,
     model = data._type,
     routeFetch: RouteFetch;

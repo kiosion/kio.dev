@@ -1,3 +1,5 @@
+import { type APIFailure, type APIResponse, isAPISuccess } from '$lib/api/client';
+import { buildSummary } from '$lib/data.server';
 import { ENV } from '$lib/env';
 import {
   SANITY_API_TOKEN,
@@ -5,29 +7,52 @@ import {
   SANITY_DATASET,
   SANITY_PROJECT_ID
 } from '$lib/env.server';
+import {
+  CountPostsQuery,
+  CountProjectsQuery,
+  GetConfigQuery,
+  GetPostQuery,
+  GetPostsQuery,
+  GetProjectQuery,
+  GetProjectsQuery
+} from '$lib/sanity.queries.server';
 
-import { ClientError, createClient } from '@sanity/client';
+import { ClientError, createClient, type SanityDocument } from '@sanity/client';
 
-export const client = createClient({
+import type { Result } from '$lib/api/result';
+import type { HeadingNode } from '$types/documents';
+import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+
+const clientConfig = {
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
   useCdn: ENV === 'production',
   apiVersion: SANITY_API_VERSION,
   token: SANITY_API_TOKEN
+};
+
+const client = createClient({
+  ...clientConfig,
+  perspective: 'published'
 });
 
-const EXCLUDE_DRAFTS = "!(_id in path('drafts.**'))";
+const previewClient = createClient({
+  ...clientConfig,
+  perspective: 'drafts'
+});
 
-const handleNoResults = <T>(res: T): T | { status: number; errors: string[] } => {
-  return res
-    ? res
+const handleNoResults = <T>(res: T): APIResponse<T> =>
+  res
+    ? {
+        status: 200,
+        data: res
+      }
     : {
         status: 404,
         errors: ['No results found']
       };
-};
 
-const handleSanityError = (err: Error): { status: number; errors: string[] } => {
+const handleSanityError = (err: Error): APIFailure => {
   const errorResp = {
     status: 500,
     errors: ['Failed to fetch data']
@@ -45,33 +70,58 @@ const handleSanityError = (err: Error): { status: number; errors: string[] } => 
   return errorResp;
 };
 
-export const incViews = async ({ id }: { id: string }) => {
-  const res = await client
+const processHeadings = <
+  D extends Pick<NonNullable<GetPostQueryResult | GetProjectQueryResult>, 'body'>
+>(
+  d: D
+): Result<D & { headings?: HeadingNode[] }> => {
+  if (!d.body) {
+    return [d, undefined];
+  }
+
+  const [headings, err] = buildSummary(d.body);
+  if (err) {
+    return [d, err];
+  }
+
+  return [
+    {
+      ...d,
+      headings
+    },
+    undefined
+  ];
+};
+
+export const incViews = async ({
+  id
+}: {
+  id: string;
+}): Promise<APIResponse<SanityDocument>> => {
+  const res = (await client
     .patch(id)
     .setIfMissing({ views: 0 })
     .inc({ views: 1 })
     .commit()
+    .then((res) => ({
+      status: 200,
+      errors: [],
+      data: res
+    }))
     .catch((err) => {
       if (err instanceof ClientError) {
         return {
           status: err.response?.statusCode || 500,
-          errors: [`Sanity Error: ${err.details.type}: ${err.details.description}`]
+          errors: [`Sanity Error: ${err.details?.type}: ${err.details?.description}`]
         };
       }
       return {
         status: 500,
         errors: [err.message || 'An unknown error occurred']
       };
-    });
+    })) satisfies APIResponse<SanityDocument>;
 
-  if (res.errors) {
-    return res;
-  }
-
-  return {
-    status: 200,
-    errors: []
-  };
+  return res;
 };
 
 export const getPosts = async ({
@@ -85,41 +135,17 @@ export const getPosts = async ({
   tag?: string;
   page?: number;
   limit?: number;
-  sort?: 'date' | 'title' | 'views' | 'publishedAt';
-  order?: 'asc' | 'desc';
+  sort?: string;
+  order?: string;
   preview?: boolean;
 }) => {
   const startNumber = page * limit;
   const endNumber = startNumber + limit;
-  const tagFilter = tag
-    ? ` && references(*[_type == 'tag' && slug.current == ${tag}][0]._id)`
-    : '';
   const sortOrder = `${sort} ${order}`;
 
-  const query = `*[${!preview ? `${EXCLUDE_DRAFTS} && ` : ''}_type == 'post'${tagFilter}]{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
-  slug,
-  body,
-  desc,
-  date,
-  views,
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-} | order($sortOrder) [$startNumber...$endNumber]`;
-
-  const posts = await client
-    .fetch(query, {
+  // TODO: Add tag filtering
+  const result = await (preview ? previewClient : client)
+    .fetch(GetPostsQuery, {
       startNumber,
       endNumber,
       sortOrder
@@ -127,25 +153,24 @@ export const getPosts = async ({
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (posts.errors) {
-    return posts;
+  if (!isAPISuccess(result)) {
+    return result;
   }
 
-  const totalPostsQuery = await client.fetch(
-    `count(*[!(_id in path('drafts.**')) && _type == 'post'${tagFilter}])`
-  );
-  const totalPosts = parseInt(totalPostsQuery, 10);
+  // TODO: Reuse original query to narrow the count; this counts *everything* even w/ filters.
+  const totalPosts = await (preview ? previewClient : client)
+    .fetch(CountPostsQuery)
+    .catch(() => 0);
   const totalPages = Math.ceil(totalPosts / limit);
   const hasMore = totalPosts > endNumber;
   const hasLess = startNumber > 0;
 
   return {
     status: 200,
-    errors: [],
-    data: posts,
+    data: result.data,
     meta: {
       total: totalPosts,
-      count: posts.length,
+      count: result.data.length,
       hasMore,
       hasLess,
       page: {
@@ -156,52 +181,40 @@ export const getPosts = async ({
   };
 };
 
-type GetPostParams = {
-  preview?: boolean;
-} & ({ slug: string; id?: never } | { slug?: never; id: string });
-
-export const getPost = async ({ slug, id, preview }: GetPostParams) => {
-  const idOrSlugFilter = id ? `&& _id == '${id}'` : `&& slug.current == '${slug}'`;
-
-  const query = `*[${!preview ? `${EXCLUDE_DRAFTS} && ` : ''}_type == 'post' ${idOrSlugFilter}]{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
+export const getPost = async ({
   slug,
-  body,
-  desc,
-  date,
-  'views': coalesce(views, 0),
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-}[0]`;
+  id,
+  preview
+}: {
+  id?: string;
+  slug?: string;
+  preview?: boolean;
+}) => {
+  if (!slug && !id) {
+    return {
+      status: 400,
+      errors: ['Missing slug or id']
+    };
+  }
 
-  const postQuery = await client
-    .fetch(query)
+  const result = await (preview ? previewClient : client)
+    .fetch(GetPostQuery, {
+      id,
+      slug
+    })
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (postQuery.errors) {
-    return postQuery;
+  if (!isAPISuccess(result)) {
+    return result;
   }
+
+  const [post, err] = processHeadings(result.data);
 
   return {
     status: 200,
-    errors: [],
-    data: postQuery,
-    meta: {
-      total: 1,
-      count: 1
-    }
+    data: post,
+    errors: err ? [err.message] : undefined
   };
 };
 
@@ -216,42 +229,16 @@ export const getProjects = async ({
   tag?: string;
   page?: number;
   limit?: number;
-  sort?: 'date' | 'title' | 'views';
-  order?: 'asc' | 'desc';
+  sort?: string;
+  order?: string;
   preview?: boolean;
 }) => {
   const startNumber = page * limit;
   const endNumber = startNumber + limit;
-  const tagFilter = tag
-    ? ` && references(*[_type == 'tag' && slug.current == ${tag}][0]._id)`
-    : '';
   const sortOrder = `${sort} ${order}`;
 
-  const query = `*[${!preview ? `${EXCLUDE_DRAFTS} && ` : ''}_type == 'project'${tagFilter}]{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
-  slug,
-  body,
-  desc,
-  date,
-  images,
-  'views': coalesce(views, 0),
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-} | order($sortOrder) [$startNumber...$endNumber]`;
-
-  const projects = await client
-    .fetch(query, {
+  const result = await (preview ? previewClient : client)
+    .fetch(GetProjectsQuery, {
       startNumber,
       endNumber,
       sortOrder
@@ -259,26 +246,23 @@ export const getProjects = async ({
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (projects.errors) {
-    return projects;
+  if (!isAPISuccess(result)) {
+    return result;
   }
 
-  const totalProjectsQuery = await client.fetch(
-    `count(*[!(_id in path('drafts.**')) && _type == 'project'${tagFilter}])`
-  );
-
-  const totalProjects = parseInt(totalProjectsQuery, 10);
+  const totalProjects = await (preview ? previewClient : client)
+    .fetch(CountProjectsQuery)
+    .catch(() => 0);
   const totalPages = Math.ceil(totalProjects / limit);
   const hasMore = totalProjects > endNumber;
   const hasLess = startNumber > 0;
 
   return {
     status: 200,
-    errors: [],
-    data: projects,
+    data: result.data,
     meta: {
       total: totalProjects,
-      count: projects.length,
+      count: result.data.length,
       hasMore,
       hasLess,
       page: {
@@ -289,60 +273,45 @@ export const getProjects = async ({
   };
 };
 
-type GetProjectParams = {
-  preview?: boolean;
-} & ({ slug: string; id?: never } | { slug?: never; id: string });
-
-export const getProject = async ({ slug, id, preview }: GetProjectParams) => {
-  const idOrSlugFilter = id ? `&& _id == '${id}'` : `&& slug.current == '${slug}'`;
-
-  const query = `*[${!preview ? `${EXCLUDE_DRAFTS} && ` : ''}_type == 'project' ${idOrSlugFilter}]{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
+export const getProject = async ({
   slug,
-  body,
-  desc,
-  date,
-  images,
-  'views': coalesce(views, 0),
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-}[0]`;
+  id,
+  preview = false
+}: {
+  id?: string;
+  slug?: string;
+  preview?: boolean;
+}) => {
+  if (!slug && !id) {
+    return {
+      status: 400,
+      errors: ['Missing slug or id']
+    };
+  }
 
-  const projectQuery = await client
-    .fetch(query)
+  const result = await (preview ? previewClient : client)
+    .fetch(GetProjectQuery, { id, slug })
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (projectQuery.errors) {
-    return projectQuery;
+  if (!isAPISuccess(result)) {
+    return result;
   }
+
+  const [project, err] = processHeadings(result.data);
 
   return {
     status: 200,
-    errors: [],
-    data: projectQuery,
-    meta: {
-      total: 1,
-      count: 1
-    }
+    data: project,
+    errors: err ? [err.message] : undefined
   };
 };
 
-export const getConfig = async () => {
-  const query = "*[!(_id in path('drafts.**')) && _type == 'siteSettings'][0]";
-
-  const config = await client.fetch(query).then(handleNoResults).catch(handleSanityError);
+export const getConfig = async ({ preview = false }: { preview?: boolean }) => {
+  const config = await (preview ? previewClient : client)
+    .fetch(GetConfigQuery)
+    .then(handleNoResults)
+    .catch(handleSanityError);
 
   if (config.errors) {
     return config;
@@ -350,11 +319,6 @@ export const getConfig = async () => {
 
   return {
     status: 200,
-    errors: [],
-    data: config,
-    meta: {
-      total: 1,
-      count: 1
-    }
+    data: config
   };
 };

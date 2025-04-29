@@ -1,17 +1,17 @@
 import type { LayoutLoad } from './$types';
-import type { DocumentTags, PostDocument } from '$types';
+import type { GetPostsQueryResult, Tag } from '$types/sanity';
 
 const UNCATEGORIZED_TAG = {
   _id: 'uncategorized',
   title: 'Uncategorized',
-  slug: { _id: 'uncategorized', current: 'uncategorized' }
-} satisfies Pick<DocumentTags, '_id' | 'slug' | 'title'>;
+  slug: { _type: 'slug', current: 'uncategorized' }
+} satisfies Pick<Tag, '_id' | 'slug' | 'title'>;
 
 export const load = (async ({ parent }) => {
   const _parent = await parent(),
-    tags: Pick<DocumentTags, '_id' | 'slug' | 'title'>[] = [],
-    tagCounts: Record<DocumentTags['_id'], number> = {},
-    postsByTag: Record<DocumentTags['_id'], PostDocument[]> = {};
+    tags: Pick<Tag, '_id' | 'slug' | 'title'>[] = [],
+    tagCounts: Record<Tag['_id'], number> = {},
+    postsByTag: Record<Tag['_id'], NonNullable<GetPostsQueryResult>> = {};
 
   for (const post of _parent.posts ?? []) {
     if (!post.tags?.length) {

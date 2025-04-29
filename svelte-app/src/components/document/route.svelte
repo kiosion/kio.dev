@@ -5,14 +5,17 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { scrollTo } from '$lib/navigation';
-  import { sidebarHeadings } from '$lib/sidebar';
 
   import Content from '$components/document/content/content.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
+  import type { RouteFetch } from '$types';
+  import type { HeadingNode, ProjectImage } from '$types/documents';
+  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
   import type { Unsubscriber } from 'svelte/store';
 
-  export let data: ProjectDocument | PostDocument,
+  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult> & {
+      headings: HeadingNode[];
+    },
     routeFetch: RouteFetch,
     model = data._type,
     images: ProjectImage[] | undefined = undefined;

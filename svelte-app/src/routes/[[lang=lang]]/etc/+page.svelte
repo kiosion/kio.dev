@@ -27,10 +27,10 @@
 
 <div class="flex flex-col gap-5">
   {#if data.config?.meta}
-    {#each data.config.meta as metaSection}
+    {#each data.config.meta as { title, content }}
       <BaseContainer>
-        <HeadedBlock heading={metaSection.title} first>
-          <PortableText text={metaSection.content} class="-mt-2" bodySize="base" />
+        <HeadedBlock heading={title} first>
+          <PortableText text={content} class="-mt-2" bodySize="base" />
         </HeadedBlock>
       </BaseContainer>
     {/each}

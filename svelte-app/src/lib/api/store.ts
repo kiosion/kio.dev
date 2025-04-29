@@ -1,0 +1,162 @@
+/* eslint-disable no-redeclare */
+import { browser } from '$app/environment';
+import * as cache from '$lib/api/cache';
+import { request } from '$lib/api/client';
+import Logger from '$lib/logger';
+
+import type { Result } from '$lib/api/result';
+import type { RouteFetch } from '$types';
+import type { HeadingNode } from '$types/documents';
+import type {
+  GetConfigQueryResult,
+  GetPostQueryResult,
+  GetProjectQueryResult,
+  Tag
+} from '$types/sanity';
+
+interface DocumentRegistry {
+  config: NonNullable<GetConfigQueryResult>;
+  post: NonNullable<GetPostQueryResult & { headings: HeadingNode[] }>;
+  project: NonNullable<GetProjectQueryResult & { headings: HeadingNode[] }>;
+  tag: Tag;
+}
+
+export type Model = keyof DocumentRegistry;
+
+type BaseParams = {
+  lang?: string;
+  preview?: boolean;
+};
+
+type CollectionFilter = {
+  page?: number;
+  limit?: number;
+  sort?: 'date' | 'title' | 'views' | 'publishedAt';
+  order?: 'asc' | 'desc';
+};
+
+type SlugOrId =
+  | {
+      slug: string;
+      id?: never;
+    }
+  | {
+      slug?: never;
+      id: string;
+    };
+
+export type SingleParams<M extends Model> = M extends 'post' | 'project'
+  ? SlugOrId & BaseParams
+  : BaseParams;
+
+export type ManyParams<M extends Model> = M extends 'post' | 'project'
+  ? { tags?: string[] } & CollectionFilter & BaseParams
+  : M extends 'tag'
+    ? CollectionFilter & BaseParams
+    : BaseParams;
+
+const buildPath = (
+  model: string,
+  many: boolean,
+  params: Record<string, unknown> = {}
+): string => {
+  const url = new URL(`get/${model}${many ? '/many' : ''}`, 'https://dummy');
+  for (const [k, v] of Object.entries(params)) {
+    if (!v) {
+      continue;
+    }
+    if (Array.isArray(v)) {
+      if (v.length > 0) {
+        url.searchParams.append(k, v.join(','));
+      }
+    } else {
+      url.searchParams.append(k, String(v));
+    }
+  }
+  return url.pathname + url.search;
+};
+
+const withCache = async <T>(
+  key: string,
+  ttl: number,
+  fn: () => Promise<Result<T>>
+): Promise<Result<T>> => {
+  if (!browser) {
+    return await fn();
+  }
+  const cached = cache.get<T>(key);
+  if (cached) {
+    return [cached, undefined];
+  }
+  const res = await fn();
+  if (res?.[0]) {
+    cache.set(key, res[0], ttl);
+  }
+  return res;
+};
+
+async function getOne<M extends 'post' | 'project' | 'config' | 'tag'>(
+  fetch: RouteFetch,
+  model: M,
+  params: SingleParams<M>
+): Promise<Result<DocumentRegistry[M]>>;
+
+async function getOne<M extends 'config'>(
+  fetch: RouteFetch,
+  model: M,
+  params?: SingleParams<M>
+): Promise<Result<DocumentRegistry[M]>>;
+
+async function getOne<M extends Model>(
+  fetch: RouteFetch,
+  model: M,
+  params?: SingleParams<M>
+): Promise<Result<DocumentRegistry[M]>> {
+  const key = JSON.stringify({ model, params, many: false });
+  return withCache(key, cache.DEFAULT_TTL, () =>
+    request<DocumentRegistry[M]>(fetch, buildPath(model, false, params))
+  );
+}
+
+async function getMany<M extends 'post' | 'project' | 'tag'>(
+  fetch: RouteFetch,
+  model: M,
+  params?: ManyParams<M>
+): Promise<Result<DocumentRegistry[M][]>> {
+  const key = JSON.stringify({ model, params, many: true });
+  return withCache(key, cache.DEFAULT_TTL, () =>
+    request<DocumentRegistry[M][]>(fetch, buildPath(model, true, params))
+  );
+}
+
+async function incViews<M extends 'post' | 'project'>(
+  fetch: RouteFetch,
+  model: DocumentRegistry[M] & { _type: M }
+): Promise<Result<Pick<DocumentRegistry[M], '_id' | 'views'>>> {
+  if (!['post', 'project'].includes(model._type)) {
+    return [model, new Error('Invalid document type')];
+  }
+
+  try {
+    return await request<Pick<DocumentRegistry[M], '_id' | 'views'>>(fetch, 'mutate', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: model._id,
+        action: 'inc',
+        field: 'views'
+      })
+    });
+  } catch (err) {
+    const error = err instanceof Error ? err : new Error('Unknown error');
+    Logger.error(`Error incrementing views for ${model._type} ${model._id}`, error);
+    return [
+      model,
+      new Error('Failed to increment views', {
+        code: 500,
+        stack: error.message
+      } as Error)
+    ];
+  }
+}
+
+export { getMany as find, getOne as findOne, incViews };

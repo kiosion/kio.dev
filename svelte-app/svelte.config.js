@@ -40,7 +40,8 @@ export default {
       $routes: 'src/routes',
       $tests: 'tests',
       $types: 'types/app',
-      $generated: 'types/generated'
+      '$types/generated': 'types/generated',
+      '$types/sanity': 'types/generated/sanity.types'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'

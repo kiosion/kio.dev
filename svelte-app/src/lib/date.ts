@@ -43,7 +43,11 @@ export const formatDate = derived(
 );
 
 export const displayRange = derived([currentLang, t], ([currentLang, t]) => {
-  return (start: string, end: string | undefined) => {
+  return (start: string | undefined, end: string | undefined) => {
+    if (!start) {
+      return t('present');
+    }
+
     try {
       const startDate = new Date(start),
         endDate = end ? new Date(end) : undefined;

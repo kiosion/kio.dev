@@ -99,17 +99,19 @@ export const BASE_ANIMATION_DURATION = 300 as const;
 export const HOMEPAGE_POSTS_NUM = 4 as const;
 export const HOMEPAGE_PROJECTS_NUM = 4 as const;
 
-export const RECENT_POSTS_COUNT = 99;
-export const RECENT_PROJECTS_COUNT = 99;
+export const DEFAULT_FILTER_QUERY_PARAMS = {
+  page: 0,
+  limit: 10,
+  sort: 'date',
+  order: 'desc'
+} as const;
 
 export const DEFAULT_POST_QUERY_PARAMS = {
+  page: DEFAULT_FILTER_QUERY_PARAMS.page,
   limit: 99,
-  skip: 0,
-  sort: 'date',
-  order: 'desc',
-  date: '',
-  tags: []
-};
+  sort: DEFAULT_FILTER_QUERY_PARAMS.sort,
+  order: DEFAULT_FILTER_QUERY_PARAMS.order
+} as const;
 
 export const DEFAULT_PROJECT_QUERY_PARAMS = DEFAULT_POST_QUERY_PARAMS;
 

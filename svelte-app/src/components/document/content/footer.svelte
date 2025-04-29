@@ -6,10 +6,10 @@
   import BaseContainer from '$components/layouts/base-container.svelte';
   import Link from '$components/link.svelte';
 
-  import type { PostDocument, ProjectDocument } from '$types';
+  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
 
-  export let data: PostDocument | ProjectDocument,
-    model: 'post' | 'project' = data._type;
+  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult>,
+    model = data._type;
 </script>
 
 {#if data._type === 'project' && data.github}

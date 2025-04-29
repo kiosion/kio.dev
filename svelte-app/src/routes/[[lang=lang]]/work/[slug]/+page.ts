@@ -1,11 +1,22 @@
+import { unwrap } from '$lib/api/result';
+import { findOne, incViews } from '$lib/api/store';
 import { DEFAULT_APP_LANG } from '$lib/consts';
-import { fetchRepoStats, handleLoadError } from '$lib/data';
+import { fetchRepoStats } from '$lib/data';
 import Logger from '$lib/logger';
 import { buildImageUrl, getCrop } from '$lib/sanity';
-import { findOne, incViews } from '$lib/store';
 
 import type { PageLoad } from './$types';
-import type { ProjectImage } from '$types';
+import type { SingleParams } from '$lib/api/store';
+import type { ProjectImage } from '$types/documents';
+
+// TODO: bad bad no good solution to broken/weird type narrowing
+type RecurseNonNullable<T> = T extends null | undefined
+  ? never
+  : T extends object
+    ? {
+        [P in keyof T]-?: RecurseNonNullable<T[P]>;
+      }
+    : T;
 
 const urlToBase64Asset = async (url: string, fetch: typeof window.fetch) => {
   const response = await fetch(url);
@@ -31,17 +42,17 @@ const urlToBase64Asset = async (url: string, fetch: typeof window.fetch) => {
 export const load = (async ({ parent, fetch, params, url }) => {
   const _parent = await parent(),
     preview = url.searchParams.get('preview') === 'true' || false,
-    opts = { id: params.slug, lang: params.lang || DEFAULT_APP_LANG } as Record<
-      string,
-      string | boolean
-    >,
-    project =
-      (!preview &&
-        opts.lang === DEFAULT_APP_LANG &&
-        _parent?.projects?.find?.((proj) => proj.slug?.current === params.slug)) ||
-      handleLoadError(await findOne(fetch, 'project', opts));
-
+    opts: SingleParams<'project'> = {
+      id: params.slug,
+      lang: params.lang || DEFAULT_APP_LANG
+    };
   preview && (opts.preview = true);
+
+  const project =
+    (!preview &&
+      opts.lang === DEFAULT_APP_LANG &&
+      _parent?.projects?.find?.((proj) => proj.slug?.current === params.slug)) ||
+    unwrap(await findOne(fetch, 'project', opts));
 
   const imagePromises: Promise<ProjectImage | undefined>[] = [];
 
@@ -49,17 +60,21 @@ export const load = (async ({ parent, fetch, params, url }) => {
 
   if (project.images?.length) {
     for (const imageAsset of project.images) {
+      if (!imageAsset?.asset?._ref) {
+        continue;
+      }
+      const sanityAsset = imageAsset as RecurseNonNullable<typeof imageAsset>;
       imagePromises.push(
         (async () => {
-          const crop = getCrop(imageAsset),
+          const crop = getCrop(sanityAsset),
             placeholder = buildImageUrl({
-              ref: imageAsset.asset._ref,
+              ref: sanityAsset.asset._ref,
               crop,
               height: 80,
               blur: 40
             }),
             url = buildImageUrl({
-              ref: imageAsset.asset._ref,
+              ref: sanityAsset.asset._ref,
               crop,
               height: 800
             });
@@ -68,7 +83,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
             crop,
             placeholder: await urlToBase64Asset(placeholder, fetch),
             asset: urlToBase64Asset(url, fetch),
-            sanityAsset: imageAsset
+            sanityAsset
           } satisfies ProjectImage;
         })()
       );
@@ -79,10 +94,14 @@ export const load = (async ({ parent, fetch, params, url }) => {
     ) as ProjectImage[];
   }
 
-  const { stars, watchers } = await fetchRepoStats(fetch, project.github);
+  if (project?.github) {
+    const { stars, watchers } = await fetchRepoStats(fetch, project.github);
 
-  project.githubStars = stars;
-  project.githubWatchers = watchers;
+    // @ts-expect-error: Include these separately since they don't exist on API resp
+    project.githubStars = stars;
+    // @ts-expect-error: Include these separately since they don't exist on API resp
+    project.githubWatchers = watchers;
+  }
 
   project && incViews(fetch, project);
 

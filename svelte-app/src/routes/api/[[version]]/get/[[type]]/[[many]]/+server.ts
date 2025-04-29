@@ -1,80 +1,54 @@
-import { VALID_DOC_TYPES } from '$lib/consts';
+import { DEFAULT_FILTER_QUERY_PARAMS, VALID_DOC_TYPES } from '$lib/consts';
 import { endpointResponse } from '$lib/data.server';
-import { getConfig, getPost, getPosts } from '$lib/sanity.server';
+import {
+  getConfig,
+  getPost,
+  getPosts,
+  getProject,
+  getProjects
+} from '$lib/sanity.server';
 
 import type { RequestHandler } from './$types';
+import type { APIResponse } from '$lib/api/client';
+import type { Model } from '$lib/api/store';
 
 export const GET = (async ({ url, params }) => {
-  const docType = params.type as (typeof VALID_DOC_TYPES)[number],
+  const docType = params.type as Model,
     many = !!params.many;
 
-  const id = url.searchParams.get('id'),
-    slug = url.searchParams.get('slug'),
-    preview = url.searchParams.get('preview'),
-    page = url.searchParams.get('page'),
-    limit = url.searchParams.get('limit'),
-    tag = url.searchParams.get('tag');
+  let res: APIResponse<unknown>;
 
-  if ((docType === 'post' || docType === 'project') && !many && !id && !slug) {
+  // TODO: tidy this up, centralize logic from 'store' here instead, handle translation w/ Gtranslate API, properly type responses
+  if (['post', 'project'].includes(docType) && many) {
+    // @ts-expect-error - TODO: fix this
+    res = await (docType === 'post' ? getPosts : getProjects)({
+      page: parseInt(
+        url.searchParams.get('page') ?? DEFAULT_FILTER_QUERY_PARAMS.page.toString()
+      ),
+      limit: parseInt(
+        url.searchParams.get('limit') ?? DEFAULT_FILTER_QUERY_PARAMS.limit.toString()
+      ),
+      sort: url.searchParams.get('sort') ?? DEFAULT_FILTER_QUERY_PARAMS.sort,
+      order: url.searchParams.get('order') ?? DEFAULT_FILTER_QUERY_PARAMS.order,
+      preview: !!url.searchParams.get('preview')
+    });
+  } else if (['post', 'project'].includes(docType) && !many) {
+    res = await (docType === 'post' ? getPost : getProject)({
+      id: url.searchParams.get('id') ?? undefined,
+      slug: url.searchParams.get('slug') ?? undefined,
+      preview: !!url.searchParams.get('preview')
+    });
+  } else if (docType === 'config') {
+    res = await getConfig({ preview: !!url.searchParams.get('preview') });
+  } else {
     return endpointResponse(
       {
         status: 400,
-        errors: ['Endpoint error: Missing or invalid query parameter: id']
+        errors: ['Missing or invalid parameter: type']
       },
       400
     );
   }
 
-  // TODO: tidy this up, centralize logic from 'store' here instead, handle translation w/ Gtranslate API, properly type responses
-  switch (docType) {
-    case 'post': {
-      if (many) {
-        const res = await getPosts({
-          tag: tag ? tag : undefined,
-          page: page ? parseInt(page) : 0,
-          limit: limit ? parseInt(limit) : 10,
-          preview: preview === 'true'
-        });
-        return endpointResponse(res, res.status);
-      }
-      // @ts-expect-error - Need to fix types for getPost opts.
-      const res = await getPost({
-        id: id ? id : undefined,
-        slug: slug ? slug : undefined,
-        preview: preview === 'true'
-      });
-      return endpointResponse(res, res.status);
-    }
-    case 'project': {
-      if (many) {
-        const res = await getPosts({
-          tag: tag ? tag : undefined,
-          page: page ? parseInt(page) : 0,
-          limit: limit ? parseInt(limit) : 10,
-          preview: preview === 'true'
-        });
-        return endpointResponse(res, res.status);
-      }
-      // @ts-expect-error - Need to fix types for getPost opts.
-      const res = await getProject({
-        id: id ? id : undefined,
-        slug: slug ? slug : undefined,
-        preview: preview === 'true'
-      });
-      return endpointResponse(res, res.status);
-    }
-    case 'config': {
-      const res = await getConfig();
-      return endpointResponse(res, res.status);
-    }
-  }
-
-  return endpointResponse(
-    {
-      status: 400,
-      errors: ['Endpoint error: Missing or invalid parameter: type'],
-      data: undefined
-    },
-    400
-  );
+  return endpointResponse(res, res.status);
 }) satisfies RequestHandler;

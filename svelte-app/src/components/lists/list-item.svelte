@@ -4,9 +4,9 @@
 
   import BulletPoint from '$components/bullet-point.svelte';
 
-  import type { PostDocument, ProjectDocument } from '$types';
+  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
 
-  export let document: PostDocument | ProjectDocument;
+  export let document: NonNullable<GetPostQueryResult | GetProjectQueryResult>;
 
   const link =
     document._type === 'post'

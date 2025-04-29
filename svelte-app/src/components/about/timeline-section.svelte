@@ -4,9 +4,13 @@
 
   import TimelineItem from '$components/about/timeline-item.svelte';
 
-  import type { WorkTimelineItem } from '$types';
+  import type { GetConfigQueryResult } from '$types/sanity';
 
-  export let section: WorkTimelineItem[];
+  type WorkTimelineItem = NonNullable<
+    NonNullable<GetConfigQueryResult>['timeline']
+  >[number];
+
+  export let section: NonNullable<WorkTimelineItem>[];
 
   const title = section[0].title,
     id = Math.random().toString(36).substring(7);
@@ -30,25 +34,27 @@
     >
       <span
         >{$displayRange(
-          section[section.length - 1].range.start,
-          section[0].range.end
+          section[section.length - 1].range?.start,
+          section[0].range?.end
         )}</span
       ><span>&bull;</span>
       <span
         >{$displayMonthDuration(
-          section[section.length - 1].range.start,
-          section[0].range.end
+          section[section.length - 1].range?.start,
+          section[0].range?.end
         )}</span
       >
     </p>
   </div>
 
   {#each section as item, i}
-    <TimelineItem
-      title={item.subtitle}
-      body={item.body}
-      range={item.range}
-      last={i === section.length - 1}
-    ></TimelineItem>
+    {#if item}
+      <TimelineItem
+        title={item.subtitle}
+        body={item.body}
+        range={item.range}
+        last={i === section.length - 1}
+      ></TimelineItem>
+    {/if}
   {/each}
 </section>

@@ -147,7 +147,7 @@
               <li class="list-item">
                 <span class="inline-flex flex-row items-start break-all">
                   <svelte:self text={note.note} plaintext />
-                  <Tooltip content={$t('Go to footnote source')} position="top">
+                  <Tooltip content={$t('Go to footnote source')} placement="top">
                     <a
                       class="focus-outline-sm group ml-2 rounded-xs px-2 py-1 text-sm transition-colors hover:bg-neutral-light dark:hover:bg-neutral-dark"
                       href={`#src-${note._key}`}

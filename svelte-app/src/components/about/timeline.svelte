@@ -1,7 +1,11 @@
 <script lang="ts">
   import TimelineSection from '$components/about/timeline-section.svelte';
 
-  import type { WorkTimelineItem } from '$types';
+  import type { GetConfigQueryResult } from '$types/sanity';
+
+  type WorkTimelineItem = NonNullable<
+    NonNullable<GetConfigQueryResult>['timeline']
+  >[number];
 
   export let data: WorkTimelineItem[];
 

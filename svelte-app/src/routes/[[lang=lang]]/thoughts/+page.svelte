@@ -7,7 +7,7 @@
   import BaseContainer from '$components/layouts/base-container.svelte';
   import DocumentList from '$components/lists/document-list.svelte';
 
-  import type { DocumentTags } from '$types';
+  import type { Tag } from '$types/sanity';
 
   export let data;
 
@@ -15,10 +15,10 @@
 
   const MAX_TAGS = 5;
 
-  const tags: DocumentTags[] = [],
-    tagCounts: Record<DocumentTags['_id'], number> = {};
+  const tags: Pick<Tag, '_id' | 'slug' | 'title'>[] = [],
+    tagCounts: Record<Tag['_id'], number> = {};
 
-  for (let i = 0; i < data.posts?.length ?? 0; i++) {
+  for (let i = 0; i < data.posts?.length; i++) {
     const postTags = data.posts[i]?.tags ?? [];
 
     if (!postTags.length) {
