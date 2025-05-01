@@ -1,4 +1,4 @@
-import { unwrap } from '$lib/api/result';
+import { unwrapAPIResponse } from '$lib/api/result';
 import { findOne } from '$lib/api/store';
 import { DEFAULT_APP_LANG, TORU_API_URL } from '$lib/consts';
 import { ENV } from '$lib/env';
@@ -9,10 +9,11 @@ import type { ToruData } from '$components/sidebar/toru';
 
 export const trailingSlash = 'ignore';
 
-export const ssr = ENV !== 'testing';
+// export const ssr = ENV !== 'testing';
+export const ssr = false;
 
 export const load = (async ({ params, url, fetch }) => {
-  const config = unwrap(
+  const config = unwrapAPIResponse(
     await findOne(fetch, 'config', { lang: params.lang || DEFAULT_APP_LANG })
   );
 

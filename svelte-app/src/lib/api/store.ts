@@ -2,9 +2,9 @@
 import { browser } from '$app/environment';
 import * as cache from '$lib/api/cache';
 import { request } from '$lib/api/client';
+import { type APIResponse, isAPISuccess } from '$lib/api/result';
 import Logger from '$lib/logger';
 
-import type { Result } from '$lib/api/result';
 import type { RouteFetch } from '$types';
 import type { HeadingNode } from '$types/documents';
 import type {
@@ -60,7 +60,7 @@ const buildPath = (
   many: boolean,
   params: Record<string, unknown> = {}
 ): string => {
-  const url = new URL(`get/${model}${many ? '/many' : ''}`, 'https://dummy');
+  const url = new URL(`get/${model}${many ? 's' : ''}`, 'https://dummy');
   for (const [k, v] of Object.entries(params)) {
     if (!v) {
       continue;
@@ -79,18 +79,21 @@ const buildPath = (
 const withCache = async <T>(
   key: string,
   ttl: number,
-  fn: () => Promise<Result<T>>
-): Promise<Result<T>> => {
+  fn: () => Promise<APIResponse<T>>
+): Promise<APIResponse<T>> => {
   if (!browser) {
     return await fn();
   }
   const cached = cache.get<T>(key);
   if (cached) {
-    return [cached, undefined];
+    return {
+      status: 200,
+      data: cached
+    };
   }
   const res = await fn();
-  if (res?.[0]) {
-    cache.set(key, res[0], ttl);
+  if (isAPISuccess(res)) {
+    cache.set(key, res.data, ttl);
   }
   return res;
 };
@@ -99,19 +102,19 @@ async function getOne<M extends 'post' | 'project' | 'config' | 'tag'>(
   fetch: RouteFetch,
   model: M,
   params: SingleParams<M>
-): Promise<Result<DocumentRegistry[M]>>;
+): Promise<APIResponse<DocumentRegistry[M]>>;
 
 async function getOne<M extends 'config'>(
   fetch: RouteFetch,
   model: M,
   params?: SingleParams<M>
-): Promise<Result<DocumentRegistry[M]>>;
+): Promise<APIResponse<DocumentRegistry[M]>>;
 
 async function getOne<M extends Model>(
   fetch: RouteFetch,
   model: M,
   params?: SingleParams<M>
-): Promise<Result<DocumentRegistry[M]>> {
+): Promise<APIResponse<DocumentRegistry[M]>> {
   const key = JSON.stringify({ model, params, many: false });
   return withCache(key, cache.DEFAULT_TTL, () =>
     request<DocumentRegistry[M]>(fetch, buildPath(model, false, params))
@@ -122,7 +125,7 @@ async function getMany<M extends 'post' | 'project' | 'tag'>(
   fetch: RouteFetch,
   model: M,
   params?: ManyParams<M>
-): Promise<Result<DocumentRegistry[M][]>> {
+): Promise<APIResponse<DocumentRegistry[M][]>> {
   const key = JSON.stringify({ model, params, many: true });
   return withCache(key, cache.DEFAULT_TTL, () =>
     request<DocumentRegistry[M][]>(fetch, buildPath(model, true, params))
@@ -132,9 +135,12 @@ async function getMany<M extends 'post' | 'project' | 'tag'>(
 async function incViews<M extends 'post' | 'project'>(
   fetch: RouteFetch,
   model: DocumentRegistry[M] & { _type: M }
-): Promise<Result<Pick<DocumentRegistry[M], '_id' | 'views'>>> {
+): Promise<APIResponse<Pick<DocumentRegistry[M], '_id' | 'views'>>> {
   if (!['post', 'project'].includes(model._type)) {
-    return [model, new Error('Invalid document type')];
+    return {
+      status: 400,
+      errors: ['Invalid document type: ' + model._type]
+    };
   }
 
   try {
@@ -149,13 +155,11 @@ async function incViews<M extends 'post' | 'project'>(
   } catch (err) {
     const error = err instanceof Error ? err : new Error('Unknown error');
     Logger.error(`Error incrementing views for ${model._type} ${model._id}`, error);
-    return [
-      model,
-      new Error('Failed to increment views', {
-        code: 500,
-        stack: error.message
-      } as Error)
-    ];
+
+    return {
+      status: 500,
+      errors: ['Failed to increment views']
+    };
   }
 }
 

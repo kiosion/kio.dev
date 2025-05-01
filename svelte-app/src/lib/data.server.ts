@@ -3,12 +3,17 @@ import Logger from '$lib/logger';
 import type { Result } from '$lib/api/result';
 import type { HeadingNode } from '$types/documents';
 
-export const endpointResponse = (content: Record<string, unknown>, status = 200) => {
+export const endpointResponse = <T extends Record<PropertyKey, unknown>>(
+  content: T,
+  status = 200,
+  init: ResponseInit = {}
+) => {
   return new Response(JSON.stringify(content), {
     headers: {
       'content-type': 'application/json; charset=utf-8'
     },
-    status
+    status,
+    ...init
   });
 };
 
@@ -73,8 +78,6 @@ export const buildSummary = (body?: unknown): Result<HeadingNode[]> => {
     return [undefined, err];
   }
 };
-
-
 
 const isHeadingBlock = (b: unknown): b is MaybeBlock & HeadingBlock => {
   if (!b || typeof b !== 'object') {

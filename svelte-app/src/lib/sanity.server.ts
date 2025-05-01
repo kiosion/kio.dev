@@ -1,4 +1,4 @@
-import { type APIFailure, type APIResponse, isAPISuccess } from '$lib/api/client';
+import { isAPISuccess } from '$lib/api/result';
 import { buildSummary } from '$lib/data.server';
 import { ENV } from '$lib/env';
 import {
@@ -19,9 +19,13 @@ import {
 
 import { ClientError, createClient, type SanityDocument } from '@sanity/client';
 
-import type { Result } from '$lib/api/result';
+import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import type { HeadingNode } from '$types/documents';
-import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+import type {
+  GetPostQueryResult,
+  GetPostsQueryResult,
+  GetProjectQueryResult
+} from '$types/sanity';
 
 const clientConfig = {
   projectId: SANITY_PROJECT_ID,
@@ -165,9 +169,22 @@ export const getPosts = async ({
   const hasMore = totalPosts > endNumber;
   const hasLess = startNumber > 0;
 
+  const [posts, errs] = result.data.reduce(
+    (acc: [GetPostsQueryResult, Error[]], post: GetPostsQueryResult[number]) => {
+      const [postWithHeadings, err] = processHeadings(post);
+      if (err) {
+        acc[1].push(err);
+      }
+      acc[0].push(postWithHeadings || post);
+      return acc;
+    },
+    [[], []]
+  );
+
   return {
     status: 200,
-    data: result.data,
+    data: posts,
+    errors: [...(result.errors ?? []), ...errs.map((e) => e.message)],
     meta: {
       total: totalPosts,
       count: result.data.length,
@@ -214,7 +231,7 @@ export const getPost = async ({
   return {
     status: 200,
     data: post,
-    errors: err ? [err.message] : undefined
+    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
   };
 };
 
@@ -303,7 +320,7 @@ export const getProject = async ({
   return {
     status: 200,
     data: project,
-    errors: err ? [err.message] : undefined
+    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
   };
 };
 
@@ -313,12 +330,12 @@ export const getConfig = async ({ preview = false }: { preview?: boolean }) => {
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (config.errors) {
+  if (!isAPISuccess(config)) {
     return config;
   }
 
   return {
     status: 200,
-    data: config
+    data: config.data
   };
 };

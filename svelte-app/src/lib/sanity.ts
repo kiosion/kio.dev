@@ -1,4 +1,4 @@
-import { REMOTE_CDN_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
+import { API_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
 import imageUrlBuilder from '@sanity/image-url';
 
@@ -24,8 +24,6 @@ export interface ImageCrop {
 
 const config: SanityClientLike = {
   clientConfig: {
-    // TODO: Use Sanity CDN apiHost, need to fix CORS first
-    apiHost: `${REMOTE_CDN_URL}`,
     projectId: SANITY_PROJECT_ID,
     dataset: SANITY_DATASET
   }

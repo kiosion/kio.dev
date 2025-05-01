@@ -1,4 +1,4 @@
-import { unwrap } from '$lib/api/result';
+import { unwrapAPIResponse } from '$lib/api/result';
 import { findOne, incViews } from '$lib/api/store';
 import { DEFAULT_APP_LANG } from '$lib/consts';
 import { fetchRepoStats } from '$lib/data';
@@ -52,7 +52,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
     (!preview &&
       opts.lang === DEFAULT_APP_LANG &&
       _parent?.projects?.find?.((proj) => proj.slug?.current === params.slug)) ||
-    unwrap(await findOne(fetch, 'project', opts));
+    unwrapAPIResponse(await findOne(fetch, 'project', opts));
 
   const imagePromises: Promise<ProjectImage | undefined>[] = [];
 

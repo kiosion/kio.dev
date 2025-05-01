@@ -1,4 +1,4 @@
-import { unwrap } from '$lib/api/result';
+import { isAPISuccess, unwrapAPIResponse } from '$lib/api/result';
 import { findOne, incViews } from '$lib/api/store';
 import { DEFAULT_APP_LANG } from '$lib/consts';
 
@@ -20,12 +20,12 @@ export const load = (async ({ parent, fetch, params, url }) => {
     (!preview &&
       opts.lang === DEFAULT_APP_LANG &&
       _parent?.posts?.find?.((post) => post.slug?.current === params.slug)) ||
-    unwrap(await findOne(fetch, 'post', opts));
+    unwrapAPIResponse(await findOne(fetch, 'post', opts));
 
   if (post) {
-    await incViews(fetch, post).then(([data, _]) => {
-      if (data) {
-        post.views = data.views;
+    await incViews(fetch, post).then((res) => {
+      if (isAPISuccess(res)) {
+        post.views = res.data.views;
       }
     });
   }
