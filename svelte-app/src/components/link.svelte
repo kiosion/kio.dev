@@ -45,14 +45,14 @@
     aria-label={$$props['aria-label']}
     {...$$restProps}
     href={link}
-    on:click={() => {
+    onclick={() => {
       if (isMailLink) {
         navigator.clipboard.writeText(mailAddress);
       }
 
       dispatch('click');
     }}
-    on:keyup={(e) => {
+    onkeyup={(e: KeyboardEvent) => {
       if (e.key !== 'Enter') {
         return;
       }

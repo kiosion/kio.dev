@@ -17,6 +17,8 @@
   import { t } from '$lib/i18n';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
 
+  import ErrorBoundary from './error-boundary.svelte';
+
   export let config: NonNullable<GetConfigQueryResult>,
     toruData: Promise<ToruData | undefined>,
     scrollContainer: HTMLElement | null | undefined;
@@ -129,10 +131,14 @@
     <ThemeToggle />
   </BaseContainer>
 
-  <SidebarBlock {scrollContainer} />
+  <ErrorBoundary>
+    <SidebarBlock {scrollContainer} />
+  </ErrorBoundary>
 
   {#if config.enableToru}
-    <ToruWidget initPromise={toruData} />
+    <ErrorBoundary>
+      <ToruWidget initPromise={toruData} />
+    </ErrorBoundary>
   {/if}
 
   {#if APP_VERSION?.length}

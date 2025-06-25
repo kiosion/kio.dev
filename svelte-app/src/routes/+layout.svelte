@@ -8,6 +8,7 @@
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { page } from '$app/stores';
+  import ErrorBoundary from '$components/error-boundary.svelte';
   import PageTransition from '$components/layouts/page-transition.svelte';
   import Sidebar from '$components/sidebar.svelte';
   import {
@@ -37,11 +38,10 @@
         const content = document.getElementById('content-wrapper'),
           focusable = content?.querySelectorAll(
             '[tabindex="0"], a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-          ),
-          elem = focusable?.[0] as HTMLElement | null;
-        elem?.focus();
+          )?.[0] as HTMLElement | null;
+        focusable?.focus();
         // @ts-expect-error - scrollToOptions is not yet in the DOM typings
-        elem?.scrollTo({ behavior: 'smooth', block: 'center' });
+        focusable?.scrollTo({ behavior: 'smooth', block: 'center' });
       }
     };
 
@@ -91,9 +91,11 @@
       )
     );
 
-    ENV !== 'production' && checkTranslations();
+    if (ENV !== 'production') {
+      checkTranslations();
+    }
 
-    setTimeout(() => loading.set(false), 1000);
+    loading.set(false);
   });
 
   onDestroy(() => unsubscribers.forEach((u) => u()));
@@ -152,7 +154,9 @@
       bind:this={scrollContainer}
     >
       <PageTransition pathname={data.pathname}>
-        <slot />
+        <ErrorBoundary>
+          <slot />
+        </ErrorBoundary>
       </PageTransition>
     </div>
   </div>

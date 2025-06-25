@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ErrorBoundary from '$components/error-boundary.svelte';
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
@@ -25,18 +26,24 @@
 
 <BaseContainer>
   <HeadedBlock heading={$t('Experiments')} first>
-    <ToruExperiment />
+    <ErrorBoundary>
+      <ToruExperiment />
+    </ErrorBoundary>
 
     <span
       class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
     ></span>
 
-    <GameOfLifeExperiment></GameOfLifeExperiment>
+    <ErrorBoundary>
+      <GameOfLifeExperiment />
+    </ErrorBoundary>
 
     <span
       class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
     ></span>
 
-    <MagneticCursorExperiment></MagneticCursorExperiment>
+    <ErrorBoundary>
+      <MagneticCursorExperiment />
+    </ErrorBoundary>
   </HeadedBlock>
 </BaseContainer>

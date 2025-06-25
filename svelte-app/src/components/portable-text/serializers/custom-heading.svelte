@@ -12,10 +12,13 @@
 
     clearTimeout(highlightedTimeout);
 
-    val &&
-      (highlightedTimeout = setTimeout(() => {
-        isHighlighted = false;
-      }, 5000));
+    if (!val) {
+      return;
+    }
+
+    highlightedTimeout = setTimeout(() => {
+      isHighlighted = false;
+    }, 5000);
   };
 
   $: ({ global, value, indexInParent } = portableText);

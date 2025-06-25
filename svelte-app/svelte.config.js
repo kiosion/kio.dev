@@ -14,7 +14,8 @@ export default {
   },
   preprocess: [
     vitePreprocess({
-      script: true,
+      // Seems to break snippet exports from modules >= 5.5.0
+      // script: true,
       style: {
         resolve: {
           alias: [
