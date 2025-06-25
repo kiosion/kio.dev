@@ -111,7 +111,7 @@
 >
   <div class="w-full px-4 py-2">
     <h1
-      class="h-fit max-w-full py-2 font-display text-5xl font-bold leading-[1.1] text-black transition-[color] dark:text-white"
+      class="font-display h-fit max-w-full py-2 text-5xl leading-[1.1] font-bold text-black transition-[color] dark:text-white"
     >
       {data.title}
     </h1>
@@ -127,12 +127,12 @@
     >
       {#each data.tags as tag}
         <a
-          class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+          class="focus-outline-sm flex flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors select-none hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
           href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
           data-sveltekit-preload-code
           aria-label={$t('Topic') + ': ' + tag.title}
         >
-          <span class="select-none font-bold">#</span>
+          <span class="font-bold select-none">#</span>
           <span>{tag.title.toLowerCase()}</span>
         </a>
       {/each}

@@ -130,14 +130,14 @@
   class="relative my-6 flex h-fit w-full cursor-pointer flex-col items-start justify-center overflow-clip rounded-xl bg-violet-800/20 px-7 py-6 shadow-2xl shadow-violet-950/10 transition-all focus-within:shadow-violet-950/15 hover:shadow-violet-950/15 dark:bg-violet-900/20 dark:shadow-violet-500/5 dark:focus-within:shadow-violet-500/15 dark:hover:shadow-violet-500/15"
 >
   <header class="w-full pb-2">
-    <h3 class="pb-2 font-display text-2xl font-bold">{$t('Game of life')}</h3>
+    <h3 class="font-display pb-2 text-2xl font-bold">{$t('Game of life')}</h3>
     <p>{$t("Conway's Game of Life starting with an R-pentomino pattern.")}</p>
     <Divider></Divider>
   </header>
 
   <Tooltip content={running ? 'Pause' : 'Resume'}>
     <button
-      class="focus-outline absolute right-4 top-4 rounded-lg p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 hover:text-orange-light/90 focus-visible:bg-violet-100/80 focus-visible:text-orange-light/90 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
+      class="focus-outline hover:text-orange-light/90 focus-visible:text-orange-light/90 absolute top-4 right-4 rounded-lg p-2 font-mono text-sm transition-colors hover:bg-violet-100/80 focus-visible:bg-violet-100/80 dark:hover:bg-violet-700/80 dark:focus-visible:bg-violet-700/80"
       on:click={running ? stopGame : startGame}
       type="button"
     >

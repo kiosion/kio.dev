@@ -57,7 +57,7 @@
   span {
     &,
     sup > a {
-      @apply underline decoration-dark/80 decoration-dotted underline-offset-4;
+      @apply decoration-dark/80 underline decoration-dotted underline-offset-4;
     }
   }
 

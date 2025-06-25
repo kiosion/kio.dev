@@ -9,7 +9,7 @@
 
 {#if markType === 'code'}
   <code
-    class="font-code mx-0.5 rounded bg-dark/5 px-1 py-0.5 transition-[background-color] dark:bg-light/10"
+    class="font-code bg-dark/5 dark:bg-light/10 mx-0.5 rounded px-1 py-0.5 transition-[background-color]"
     >{plainTextContent}</code
   >
 {:else}

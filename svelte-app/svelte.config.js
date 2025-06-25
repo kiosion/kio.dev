@@ -1,6 +1,5 @@
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
-// import { vitePreprocess } from '@sveltejs/kit/vite';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -21,7 +20,7 @@ export default {
           alias: [
             {
               find: /^@styles\/(.*)$/,
-              replacement: path.resolve(__dirname, 'src/styles/_$1.scss')
+              replacement: path.resolve(__dirname, 'src/styles/$1.scss')
             }
           ]
         }

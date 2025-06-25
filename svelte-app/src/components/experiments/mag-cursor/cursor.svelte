@@ -255,14 +255,14 @@
 
 {#if !hidden}
   <div
-    class="pointer-events-none fixed left-0 top-0 z-10 shadow-lg {$activeTarget !==
+    class="pointer-events-none fixed top-0 left-0 z-10 shadow-lg {$activeTarget !==
     undefined
       ? 'bg-dark/10 shadow-dark/5 dark:bg-light/10 dark:shadow-light/5'
-      : 'bg-dark/15 shadow-transparent dark:bg-light/15'} transition-colors"
+      : 'bg-dark/15 dark:bg-light/15 shadow-transparent'} transition-colors"
     style="transform: translate(calc({cursorX}px - 50%), calc({cursorY}px - 50%)); width: {cursorWidth}px; height: {cursorHeight}px; border-radius: {cursorBorderRadius}px;"
   ></div>
   <div
-    class="pointer-events-none fixed left-0 top-0 z-10 backdrop-blur-sm transition-colors {$activeTarget !==
+    class="pointer-events-none fixed top-0 left-0 z-10 backdrop-blur-sm transition-colors {$activeTarget !==
     undefined
       ? 'bg-dark/20 dark:bg-light/20'
       : 'bg-dark/40 dark:bg-light/40'}"
