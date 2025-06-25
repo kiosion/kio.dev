@@ -40,6 +40,7 @@
 <style lang="scss">
   @use '@styles/colors';
   @use '@styles/mixins';
+
   @reference 'tailwindcss';
 
   .h1 {
