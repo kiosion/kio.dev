@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
-  // import '../app.css';
+  // eslint-disable-next-line no-restricted-imports
+  import '../tailwind.css';
   // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
   import { browser } from '$app/environment';
