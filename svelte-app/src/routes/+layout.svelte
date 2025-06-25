@@ -15,6 +15,7 @@
     APP_LANGS,
     APP_THEMES,
     BASE_ANIMATION_DURATION,
+    BASE_PAGE_TITLE,
     DEFAULT_APP_LANG
   } from '$lib/consts';
   import { ENV, SELF_BASE_URL } from '$lib/env';
@@ -119,11 +120,10 @@
     property="og:locale"
     content={$currentLang === APP_LANGS[1] ? 'fr_CA' : 'en_CA'}
   />
-  <meta property="og:site_name" content="kio.dev" />
+  <meta property="og:site_name" content={BASE_PAGE_TITLE} />
   <meta property="og:url" content={url?.href} />
   <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
   <meta property="twitter:url" content={url?.href} />
-  <meta property="twitter:site" content="@0xKI0" />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 
   <link rel="preload" href="/assets/logo-standard.webp" as="image" />
