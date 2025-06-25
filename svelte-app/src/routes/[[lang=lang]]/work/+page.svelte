@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-  import { pageTitle } from '$lib/navigation';
-
   import Timeline from '$components/about/timeline.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
+  import { t } from '$lib/i18n';
+  import { pageTitle } from '$lib/navigation';
 
   export let data;
 

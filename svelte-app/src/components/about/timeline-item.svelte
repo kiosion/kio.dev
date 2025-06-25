@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { displayMonthDuration, displayRange } from '$lib/date';
-
   import ChevronRightSmall from '$components/icons/chevron-right-small.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-
+  import { displayMonthDuration, displayRange } from '$lib/date';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
 
   type WorkTimelineItem = NonNullable<

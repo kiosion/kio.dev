@@ -3,7 +3,6 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
-import StripTestSelectors from 'vite-plugin-test-selectors';
 
 import type { ConfigEnv } from 'vite';
 
@@ -14,9 +13,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   return {
     plugins: [
       sveltekit(),
-      StripTestSelectors({
-        dev: !isTesting
-      }),
       (isDev || isTesting) && Inspect()
     ],
     resolve: {
@@ -29,7 +25,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     },
     optimizeDeps: {
       include: [
-        'twemoji',
         'svelte-highlight',
         'highlight.js',
         'highlight.js/lib/core',

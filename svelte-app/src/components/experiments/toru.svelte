@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-
   import Divider from '$components/divider.svelte';
   import CodeBracket from '$components/icons/code-bracket.svelte';
   import Link from '$components/link.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import { data } from '$components/sidebar/toru';
+  import { t } from '$lib/i18n';
 
   $: ({ artist, title, playing, url, cover_art, album } = $data ?? {
     artist: undefined,
@@ -60,7 +59,7 @@
     </Link>
 
     <figure class="flex select-none flex-row items-center justify-start gap-5 px-1 pb-2">
-      {#if data}
+      {#if $data}
         <div class="relative z-10 flex-shrink-0 overflow-clip">
           <img
             src="data:{cover_art?.mime_type};base64,{cover_art?.data}"
@@ -139,7 +138,7 @@
     class="pointer-events-none absolute -bottom-2 left-0 right-0 top-0 z-0 opacity-10 transition-opacity group-hover:opacity-20 group-focus:opacity-20 group-hover:dark:opacity-15 group-focus:dark:opacity-15"
     aria-hidden="true"
   >
-    {#if data}
+    {#if $data}
       <!-- svelte-ignore a11y-missing-attribute -->
       <img
         src="data:{cover_art?.mime_type};base64,{cover_art?.data}"

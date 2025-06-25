@@ -1,6 +1,5 @@
-import { APP_LANGS, APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
-
 import type { Handle, HandleServerError, ResolveOptions } from '@sveltejs/kit';
+import { APP_LANGS, APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
 
 const replaceTheme = (html: string, theme: string) => {
   const classAttrRegexp = /<body([^>]*?)class="([^"]*?)"/i,

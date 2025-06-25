@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-
-  import Tooltip from '$components/tooltips/tooltip.svelte';
-
   import type { MarkComponentProps } from '@portabletext/svelte';
   import type {
     PortableTextBlock,
     PortableTextMarkDefinition
   } from '@portabletext/types';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { t } from '$lib/i18n';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;

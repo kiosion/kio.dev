@@ -1,8 +1,7 @@
 <script lang="ts">
+  import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import Image from '$components/images/image.svelte';
   import ConstrainWidth from '$components/layouts/constrain-width.svelte';
-
-  import type { CustomBlockComponentProps } from '@portabletext/svelte';
   import type { RouteFetch, SanityImageObject } from '$types';
 
   export let portableText: Omit<CustomBlockComponentProps, 'value'> & {

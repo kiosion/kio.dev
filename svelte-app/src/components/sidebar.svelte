@@ -1,8 +1,4 @@
 <script lang="ts">
-  import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
-  import { APP_VERSION } from '$lib/env';
-  import { t } from '$lib/i18n';
-
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import EnvelopeOpenSmall from '$components/icons/envelope-open-small.svelte';
@@ -14,9 +10,11 @@
   import ProfileImage from '$components/sidebar/profile-image.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
   import SidebarLink from '$components/sidebar/sidebar-link.svelte';
-  import ToruWidget from '$components/sidebar/toru.svelte';
-
   import type { ToruData } from '$components/sidebar/toru';
+  import ToruWidget from '$components/sidebar/toru.svelte';
+  import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
+  import { APP_VERSION } from '$lib/env';
+  import { t } from '$lib/i18n';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
 
   export let config: NonNullable<GetConfigQueryResult>,

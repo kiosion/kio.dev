@@ -1,11 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { linkTo, t } from '$lib/i18n';
-
-  import Tooltip from '$components/tooltips/tooltip.svelte';
-
   import type { Placement } from '@floating-ui/dom';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { linkTo, t } from '$lib/i18n';
 
   export let tooltipPlacement: Placement = 'bottom',
     tooltipText: string | undefined = undefined,
@@ -30,11 +28,11 @@
 </script>
 
 <Tooltip
-  content={tooltipText ?? isMailLink
+  content={(tooltipText ?? isMailLink)
     ? $t('Copy {value}', { value: `'${mailAddress}'` })
     : link && link.length > 50
       ? `${link.slice(0, 50 - 3)}...`
-      : link ?? $t('Visit')}
+      : (link ?? $t('Visit'))}
   placement={tooltipPlacement}
   delay={[500, 0]}
 >

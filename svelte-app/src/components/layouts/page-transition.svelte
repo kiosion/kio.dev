@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { circIn, circOut } from 'svelte/easing';
-  import { fly } from 'svelte/transition';
-
   import { beforeNavigate } from '$app/navigation';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { getNavigationDirection } from '$lib/utils';
+  import { circIn, circOut } from 'svelte/easing';
+  import { fly } from 'svelte/transition';
 
   export let pathname: string | undefined;
 
