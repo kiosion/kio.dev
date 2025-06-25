@@ -1,7 +1,10 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-  import Logger from '$lib/logger';
-
+  import { PortableText } from '@portabletext/svelte';
+  import type {
+    ArbitraryTypedObject,
+    PortableTextBlock,
+    PortableTextMarkDefinition
+  } from '@portabletext/types';
   import ChevronDoubleUpSmall from '$components/icons/chevron-double-up-small.svelte';
   import ChevronUpSmall from '$components/icons/chevron-up-small.svelte';
   import Footnote from '$components/portable-text/footnote.svelte';
@@ -19,14 +22,8 @@
   import OlWrapper from '$components/portable-text/serializers/ol-wrapper.svelte';
   import UlWrapper from '$components/portable-text/serializers/ul-wrapper.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
-
-  import { PortableText } from '@portabletext/svelte';
-
-  import type {
-    ArbitraryTypedObject,
-    PortableTextBlock,
-    PortableTextMarkDefinition
-  } from '@portabletext/types';
+  import { t } from '$lib/i18n';
+  import Logger from '$lib/logger';
   import type { RouteFetch } from '$types';
 
   interface FootnoteProps extends PortableTextMarkDefinition {

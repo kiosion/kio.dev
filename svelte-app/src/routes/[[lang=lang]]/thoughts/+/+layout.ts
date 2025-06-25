@@ -1,5 +1,6 @@
-import type { LayoutLoad } from './$types';
 import type { GetPostsQueryResult, Tag } from '$types/sanity';
+
+import type { LayoutLoad } from './$types';
 
 const UNCATEGORIZED_TAG = {
   _id: 'uncategorized',

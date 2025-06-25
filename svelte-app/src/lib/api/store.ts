@@ -4,7 +4,6 @@ import * as cache from '$lib/api/cache';
 import { request } from '$lib/api/client';
 import { type APIResponse, isAPISuccess } from '$lib/api/result';
 import Logger from '$lib/logger';
-
 import type { RouteFetch } from '$types';
 import type { HeadingNode } from '$types/documents';
 import type { GetConfigQueryResult, GetPostQueryResult, Tag } from '$types/sanity';

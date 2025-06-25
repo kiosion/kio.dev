@@ -1,16 +1,14 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { cubicInOut } from 'svelte/easing';
-  import { get } from 'svelte/store';
-  import { fade, fly } from 'svelte/transition';
 
+  import type { Placement } from '@floating-ui/dom';
+  import Inner from '$components/tooltips/inner.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Logger from '$lib/logger';
   import { isMobile } from '$lib/responsive';
-
-  import Inner from '$components/tooltips/inner.svelte';
-
-  import type { Placement } from '@floating-ui/dom';
+  import { cubicInOut } from 'svelte/easing';
+  import { get } from 'svelte/store';
+  import { fade, fly } from 'svelte/transition';
 
   export let content: string | undefined = undefined,
     duration: number = BASE_ANIMATION_DURATION,

@@ -1,7 +1,6 @@
-import { writable } from 'svelte/store';
-
 import { browser } from '$app/environment';
 import Logger from '$lib/logger';
+import { writable } from 'svelte/store';
 
 export type ToruData = {
   title: string;

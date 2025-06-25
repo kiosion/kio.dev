@@ -2,10 +2,9 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { browser } from '$app/environment';
-  import { t } from '$lib/i18n';
-
   import Divider from '$components/divider.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { t } from '$lib/i18n';
 
   const rows = 26,
     cols = 58,

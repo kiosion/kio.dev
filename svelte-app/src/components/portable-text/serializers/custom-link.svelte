@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Link from '$components/link.svelte';
-
   import type { MarkComponentProps } from '@portabletext/svelte';
+  import Link from '$components/link.svelte';
 
   export let portableText: MarkComponentProps;
 

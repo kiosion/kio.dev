@@ -1,7 +1,5 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { cubicOut } from 'svelte/easing';
-  import { tweened } from 'svelte/motion';
 
   import {
     activeTarget,
@@ -11,6 +9,8 @@
     DEFAULT_SNAP_DIST,
     getFirstPositionedChild
   } from '$components/experiments/mag-cursor/utils';
+  import { cubicOut } from 'svelte/easing';
+  import { tweened } from 'svelte/motion';
 
   export const id = Math.random().toString(36).slice(4);
 

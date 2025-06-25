@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { cubicOut } from 'svelte/easing';
-  import { tweened } from 'svelte/motion';
-  import { get } from 'svelte/store';
-
+  import type { CursorTarget } from '$components/experiments/mag-cursor/utils';
   import {
     activeTarget,
     BASE_CURSOR_INNER_SIZE,
@@ -12,8 +9,9 @@
     cursorTargets,
     findDistance
   } from '$components/experiments/mag-cursor/utils';
-
-  import type { CursorTarget } from '$components/experiments/mag-cursor/utils';
+  import { cubicOut } from 'svelte/easing';
+  import { tweened } from 'svelte/motion';
+  import { get } from 'svelte/store';
 
   export let containerRect: DOMRect | undefined = undefined,
     useOffset = true;

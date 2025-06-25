@@ -1,9 +1,7 @@
 <script lang="ts">
+  import TimelineItem from '$components/about/timeline-item.svelte';
   import { displayMonthDuration, displayRange } from '$lib/date';
   import { t } from '$lib/i18n';
-
-  import TimelineItem from '$components/about/timeline-item.svelte';
-
   import type { GetConfigQueryResult } from '$types/sanity';
 
   type WorkTimelineItem = NonNullable<

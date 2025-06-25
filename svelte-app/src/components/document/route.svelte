@@ -2,12 +2,10 @@
   import { onDestroy, onMount } from 'svelte';
 
   import { page } from '$app/stores';
+  import Content from '$components/document/content/content.svelte';
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { scrollTo } from '$lib/navigation';
-
-  import Content from '$components/document/content/content.svelte';
-
   import type { RouteFetch } from '$types';
   import type { HeadingNode } from '$types/documents';
   import type { GetPostQueryResult } from '$types/sanity';

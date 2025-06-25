@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { fade, fly } from 'svelte/transition';
-
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
+  import { fade, fly } from 'svelte/transition';
 
   export let dialog: HTMLDialogElement,
     show = false;

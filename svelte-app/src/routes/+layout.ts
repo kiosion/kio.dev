@@ -1,3 +1,4 @@
+import type { ToruData } from '$components/sidebar/toru';
 import { unwrapAPIResponse } from '$lib/api/result';
 import { findOne } from '$lib/api/store';
 import { DEFAULT_APP_LANG, TORU_API_URL } from '$lib/consts';
@@ -5,7 +6,6 @@ import { ENV } from '$lib/env';
 import Logger from '$lib/logger';
 
 import type { LayoutLoad } from './$types';
-import type { ToruData } from '$components/sidebar/toru';
 
 export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';

@@ -1,12 +1,10 @@
-import { derived, get, writable } from 'svelte/store';
-
 import { page } from '$app/stores';
 import EN from '$langs/en.json';
 import FR from '$langs/fr.json';
 import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
 import Logger from '$lib/logger';
-
 import type { LocaleKey } from '$types/generated';
+import { derived, get, writable } from 'svelte/store';
 
 const isLocalized = writable(false);
 const currentLang = writable(DEFAULT_APP_LANG);
@@ -176,7 +174,7 @@ const _linkTo = (
 
   APP_LANGS.forEach((l) => path.startsWith(`/${l}/`) && (path = path.slice(3)));
 
-  return APP_LANGS.includes(lang.toLowerCase() as (typeof APP_LANGS)[number])
+  return APP_LANGS.includes(lang.toLowerCase())
     ? `/${lang}${
         path.startsWith('/')
           ? addSearchParams(path, params)

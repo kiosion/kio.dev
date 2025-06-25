@@ -1,19 +1,16 @@
 <script lang="ts">
-  import { blur } from 'svelte/transition';
-
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { linkTo, t } from '$lib/i18n';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
   import MinusSmall from '$components/icons/minus-small.svelte';
   import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
   import PlusSmall from '$components/icons/plus-small.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
-
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { linkTo, t } from '$lib/i18n';
   import type { LocaleKey } from '$types/generated';
+  import { blur } from 'svelte/transition';
 
   let message: LocaleKey = 'errors.generic.message',
     title: LocaleKey = 'errors.generic.title',
@@ -86,7 +83,7 @@
 
 <svelte:head>
   <!-- eslint-disable-next-line -->
-  <title>kio.dev | {status}</title>
+  <title>{$t('kio.dev | ')}{status}</title>
   <meta name="robots" content="none" />
 </svelte:head>
 

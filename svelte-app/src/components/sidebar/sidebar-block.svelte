@@ -1,20 +1,18 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { circIn, circOut } from 'svelte/easing';
-  import { blur } from 'svelte/transition';
 
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
+  import Divider from '$components/divider.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
+  import SidebarHeadings from '$components/sidebar/sidebar-headings.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { linkTo, t } from '$lib/i18n';
   import { isDesktop } from '$lib/responsive';
   import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
-
-  import Divider from '$components/divider.svelte';
-  import BaseContainer from '$components/layouts/base-container.svelte';
-  import SidebarHeadings from '$components/sidebar/sidebar-headings.svelte';
-
+  import { circIn, circOut } from 'svelte/easing';
   import type { Unsubscriber } from 'svelte/store';
+  import { blur } from 'svelte/transition';
 
   export let scrollContainer: HTMLElement | null | undefined;
 

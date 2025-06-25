@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Divider from '$components/divider.svelte';
-
   import type { CustomBlockComponentProps } from '@portabletext/svelte';
+  import Divider from '$components/divider.svelte';
 
   export let portableText: CustomBlockComponentProps;
 

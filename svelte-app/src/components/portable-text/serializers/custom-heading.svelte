@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-
   import type { BlockComponentProps } from '@portabletext/svelte';
+  import { page } from '$app/stores';
 
   export let portableText: BlockComponentProps;
 

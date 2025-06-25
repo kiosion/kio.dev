@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores';
-
   import type { HeadingNode } from '$types/documents';
 
   export let headings: HeadingNode[];

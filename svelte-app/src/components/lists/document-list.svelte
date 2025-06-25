@@ -1,6 +1,5 @@
 <script lang="ts">
   import ListItem from '$components/lists/list-item.svelte';
-
   import type { GetPostsQueryResult } from '$types/sanity';
 
   export let documents: NonNullable<GetPostsQueryResult>;

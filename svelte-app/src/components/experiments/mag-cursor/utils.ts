@@ -1,8 +1,6 @@
-import { writable } from 'svelte/store';
-
 import { browser } from '$app/environment';
-
 import type { Tweened } from 'svelte/motion';
+import { writable } from 'svelte/store';
 
 export type CursorTarget = {
   element: HTMLElement | undefined;

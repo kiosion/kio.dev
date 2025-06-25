@@ -1,9 +1,7 @@
 <script lang="ts">
+  import BulletPoint from '$components/bullet-point.svelte';
   import { formatDate } from '$lib/date';
   import { linkTo, t } from '$lib/i18n';
-
-  import BulletPoint from '$components/bullet-point.svelte';
-
   import type { GetPostQueryResult } from '$types/sanity';
 
   export let document: NonNullable<GetPostQueryResult>;

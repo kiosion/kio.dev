@@ -1,15 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { crossfade, fade } from 'svelte/transition';
-
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { t } from '$lib/i18n';
-  import { buildImageUrl, getCrop } from '$lib/sanity';
 
   import ImageModal from '$components/images/image-modal.svelte';
   import Spinner from '$components/loading/spinner.svelte';
-
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
+  import { buildImageUrl, getCrop } from '$lib/sanity';
   import type { RouteFetch, SanityImageObject } from '$types';
+  import { crossfade, fade } from 'svelte/transition';
 
   export let image: SanityImageObject,
     routeFetch: RouteFetch,

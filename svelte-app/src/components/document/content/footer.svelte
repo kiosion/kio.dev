@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n';
-  import { isMobile } from '$lib/responsive';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
+  import { linkTo, t } from '$lib/i18n';
+  import { isMobile } from '$lib/responsive';
 </script>
 
 <BaseContainer>

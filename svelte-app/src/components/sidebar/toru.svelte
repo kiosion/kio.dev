@@ -1,14 +1,12 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { blur } from 'svelte/transition';
 
+  import type { ToruData } from '$components/sidebar/toru';
+  import { data, initSync, stopSync } from '$components/sidebar/toru';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { isDesktop } from '$lib/responsive';
-
-  import { data, initSync, stopSync } from '$components/sidebar/toru';
-
-  import type { ToruData } from '$components/sidebar/toru';
+  import { blur } from 'svelte/transition';
 
   export let initPromise: Promise<ToruData | undefined>;
 

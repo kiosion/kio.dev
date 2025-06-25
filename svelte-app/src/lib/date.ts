@@ -1,7 +1,6 @@
 /* eslint-disable func-call-spacing */
-import { derived } from 'svelte/store';
-
 import { currentLang, t } from '$lib/i18n';
+import { derived } from 'svelte/store';
 
 export const formatDate = derived(
   [currentLang],

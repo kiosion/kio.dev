@@ -1,16 +1,12 @@
 <script lang="ts">
-  // eslint-disable-next-line no-restricted-imports
-  import '../app.scss';
-
   import { onDestroy, onMount } from 'svelte';
-  import { get } from 'svelte/store';
-  import { fly } from 'svelte/transition';
 
-  import { classList } from 'svelte-body';
-
+  import '../app.scss';
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { page } from '$app/stores';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import Sidebar from '$components/sidebar.svelte';
   import {
     APP_LANGS,
     APP_THEMES,
@@ -21,11 +17,10 @@
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
   import Settings, { listenForMQLChange, loading } from '$lib/settings';
-
-  import PageTransition from '$components/layouts/page-transition.svelte';
-  import Sidebar from '$components/sidebar.svelte';
-
   import type { Unsubscriber } from 'svelte/store';
+  import { get } from 'svelte/store';
+  import { fly } from 'svelte/transition';
+  import { classList } from 'svelte-body';
 
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
@@ -103,13 +98,9 @@
   export let data;
 
   $: ({ url } = $page);
-  $: isLocalized.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-  );
+  $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
   $: currentLang.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-      ? $page?.params?.lang
-      : DEFAULT_APP_LANG
+    APP_LANGS.includes($page?.params?.lang) ? $page?.params?.lang : DEFAULT_APP_LANG
   );
 </script>
 

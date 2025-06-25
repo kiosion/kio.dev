@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-  import { pageTitle } from '$lib/navigation';
-
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
+  import { t } from '$lib/i18n';
+  import { pageTitle } from '$lib/navigation';
 
   $: description = $t('pages.experiments.description');
 </script>
