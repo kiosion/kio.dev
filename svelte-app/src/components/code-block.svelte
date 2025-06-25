@@ -4,7 +4,6 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
-  import { genericAsyncImport, getLangType } from '$components/code-block/imports';
   import Divider from '$components/divider.svelte';
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
@@ -16,8 +15,14 @@
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  import type { ResolvedComponentType } from '$components/code-block/imports';
-  import type { LanguageType as _LanguageType } from 'svelte-highlight/languages';
+  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
+  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
+  import Highlight from 'svelte-highlight/Highlight.svelte';
+
+  import type { LanguageType as SHLanguageType } from 'svelte-highlight/languages';
+  import type * as SHLanguages from 'svelte-highlight/languages';
+
+  type SHLanguageUnion = Extract<keyof typeof SHLanguages, string>;
 
   export let content: string,
     filename: string | undefined,
@@ -26,16 +31,12 @@
 
   const DEFAULT_CODE_BLOCK_HEIGHT = 52 * 7;
 
-  let LanguageType: Promise<_LanguageType<string>>,
-    HighlightSvelte: Promise<ResolvedComponentType<'HighlightSvelte'> | undefined>,
-    LineNumbers: Promise<ResolvedComponentType<'LineNumbers'> | undefined>,
-    Highlight: Promise<ResolvedComponentType<'Highlight'> | undefined>,
+  let LanguageType: Promise<SHLanguageType<string>>,
     codeContainer: HTMLElement,
     showMoreHeight: number | undefined,
     innerHeight: number,
     hideLoader = false,
     copied: ReturnType<typeof setTimeout> | undefined,
-    loadError: Error | null = null,
     containerHeight = DEFAULT_CODE_BLOCK_HEIGHT,
     showingMore = false;
 
@@ -53,30 +54,37 @@
       }
     };
 
+  const getLangType = async (lang?: string): Promise<SHLanguageType<SHLanguageUnion>> => {
+    try {
+      // Handle some cases where the name isn't the import name
+      switch (lang) {
+        case 'c#':
+          return (await import('svelte-highlight/languages/csharp')).csharp;
+        case 'c++':
+          return (await import('svelte-highlight/languages/cpp')).cpp;
+        case 'html':
+          return (await import('svelte-highlight/languages/xml')).xml;
+        case 'sh':
+        case 'shell':
+          return (await import('svelte-highlight/languages/bash')).bash;
+        case 'svelte':
+        case undefined:
+          return (await import('svelte-highlight/languages/markdown')).markdown;
+        default:
+          return (await import(`../../node_modules/svelte-highlight/languages/${lang}.js`))[lang];
+      }
+    } catch {
+      return (await import('svelte-highlight/languages/markdown')).markdown;
+    }
+  };
+
   onMount(() => {
-    lang = lang?.toLowerCase();
-
-    LineNumbers = showLineNumbers
-      ? genericAsyncImport('LineNumbers').then((res) =>
-          res instanceof Error ? ((loadError = res), undefined) : res
-        )
-      : Promise.resolve(undefined);
-    HighlightSvelte =
-      lang === 'svelte'
-        ? genericAsyncImport('HighlightSvelte').then((res) =>
-            res instanceof Error ? ((loadError = res), undefined) : res
-          )
-        : Promise.resolve(undefined);
-    Highlight = genericAsyncImport('Highlight').then((res) =>
-      res instanceof Error ? ((loadError = res), undefined) : res
-    );
-
-    LanguageType = getLangType(lang);
+    LanguageType = getLangType(lang?.toLowerCase());
   });
 
   const updateHeight = (height?: number) => height && (containerHeight = height);
 
-  $: hideLoader = loadError !== null || innerHeight > 52;
+  $: hideLoader = innerHeight > 52;
   $: hideLoader &&
     (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore) &&
     updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight);
@@ -133,35 +141,25 @@
       aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
-      {#if !loadError}
-        <!-- eslint-disable space-in-parens prettier/prettier -->
-        {#await Promise.all( [HighlightSvelte, Highlight, LanguageType, LineNumbers] ) then [resolvedHighlightSvelte, resolvedHighlight, resolvedLang, resolvedLineNumbers]}
-          <!-- eslint-enable space-in-parens prettier/prettier -->
-          <svelte:component
-            this={lang === 'svelte' ? resolvedHighlightSvelte : resolvedHighlight}
-            code={content}
-            language={resolvedLang}
-            let:highlighted
-          >
+      {#await LanguageType then resolvedLang}
+        {#if lang === 'svelte'}
+          <HighlightSvelte code={content} let:highlighted>
             {#if showLineNumbers === true}
-              <svelte:component
-                this={resolvedLineNumbers}
-                {highlighted}
-                hideBorder
-                wrapLines
-              />
+              <LineNumbers {highlighted} hideBorder wrapLines />
             {/if}
-          </svelte:component>
-        {:catch error}
-          <div class="p-3 font-mono text-sm">
-            {$t('Error loading')}:&nbsp;{error.message}
-          </div>
-        {/await}
-      {:else}
+          </HighlightSvelte>
+        {:else}
+          <Highlight code={content} language={resolvedLang} let:highlighted>
+            {#if showLineNumbers === true}
+              <LineNumbers {highlighted} hideBorder wrapLines />
+            {/if}
+          </Highlight>
+        {/if}
+      {:catch error}
         <div class="p-3 font-mono text-sm">
-          {$t('Error loading')}:&nbsp;{loadError.message}
+          {$t('Error loading')}:&nbsp;{error.message}
         </div>
-      {/if}
+      {/await}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>

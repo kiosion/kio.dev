@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @function ease-in-out($t) {
   @if ($t < 0.5) {
     @return 2 * $t * $t;
@@ -8,12 +10,12 @@
 
 @function ease-gradient($dir, $color1, $color2) {
   $stops: 20; // Number of stops for a smoother gradient
-  $percentage-step: 100% / ($stops - 1);
+  $percentage-step: math.div(100%, ($stops - 1));
   $gradient: '';
 
   @for $i from 0 through ($stops - 1) {
     $percentage: $i * $percentage-step;
-    $eased-percentage: ease-in-out($percentage / 100);
+    $eased-percentage: ease-in-out(math.div($percentage, 100%));
     $interpolated-color: mix($color2, $color1, $eased-percentage * 100%);
     @if $i == 0 {
       $gradient: '#{$interpolated-color} #{$percentage}';

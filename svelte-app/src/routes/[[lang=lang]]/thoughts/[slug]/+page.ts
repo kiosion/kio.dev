@@ -9,7 +9,7 @@ export const load = (async ({ parent, fetch, params, url }) => {
   const _parent = await parent(),
     preview = url.searchParams.get('preview') === 'true',
     opts: SingleParams<'post'> = {
-      id: params.slug,
+      slug: params.slug,
       lang: params.lang || DEFAULT_APP_LANG
     };
 
