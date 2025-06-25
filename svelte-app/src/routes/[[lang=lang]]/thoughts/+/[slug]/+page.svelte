@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import DocumentList from '$components/lists/document-list.svelte';
+  import { linkTo, t } from '$lib/i18n';
 
   export let data;
 </script>

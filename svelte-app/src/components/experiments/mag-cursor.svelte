@@ -1,14 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { BASE_GIT_URL } from '$lib/consts';
-  import { t } from '$lib/i18n';
-
   import Divider from '$components/divider.svelte';
   import Cursor from '$components/experiments/mag-cursor/cursor.svelte';
   import CursorTarget from '$components/experiments/mag-cursor/target.svelte';
   import Link from '$components/link.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { BASE_GIT_URL } from '$lib/consts';
+  import { t } from '$lib/i18n';
 
   let container: HTMLElement, containerRect: DOMRect;
 

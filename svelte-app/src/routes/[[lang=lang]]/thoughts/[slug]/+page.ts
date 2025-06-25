@@ -1,9 +1,9 @@
 import { isAPISuccess, unwrapAPIResponse } from '$lib/api/result';
+import type { SingleParams } from '$lib/api/store';
 import { findOne, incViews } from '$lib/api/store';
 import { DEFAULT_APP_LANG } from '$lib/consts';
 
 import type { PageLoad } from './$types';
-import type { SingleParams } from '$lib/api/store';
 
 export const load = (async ({ parent, fetch, params, url }) => {
   const _parent = await parent(),

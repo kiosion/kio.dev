@@ -1,21 +1,19 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import { get } from 'svelte/store';
 
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
   import { navigating } from '$app/stores';
+  import ArrowButton from '$components/controls/arrow-button.svelte';
+  import BaseContainer from '$components/layouts/base-container.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
   import { formatDate } from '$lib/date';
   import { currentLang, linkTo, t } from '$lib/i18n';
   import { sidebarBlock, sidebarHeadings } from '$lib/sidebar';
   import { parseViews } from '$lib/utils';
-
-  import ArrowButton from '$components/controls/arrow-button.svelte';
-  import BaseContainer from '$components/layouts/base-container.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
-
   import type { HeadingNode } from '$types/documents';
   import type { GetPostQueryResult } from '$types/sanity';
+  import { get } from 'svelte/store';
 
   export let data: NonNullable<GetPostQueryResult> & {
       headings: HeadingNode[];

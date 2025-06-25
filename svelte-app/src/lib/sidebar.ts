@@ -1,8 +1,6 @@
-/* eslint-disable func-call-spacing */
-import { writable } from 'svelte/store';
-
 import type { HeadingNode } from '$types/documents';
 import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+import { writable } from 'svelte/store';
 
 type SidebarBlockContent = Pick<
   NonNullable<GetPostQueryResult | GetProjectQueryResult>,

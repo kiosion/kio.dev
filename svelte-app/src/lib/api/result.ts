@@ -1,7 +1,6 @@
 /* eslint-disable no-redeclare */
-import { ERRORS } from '$lib/consts';
-
 import { error } from '@sveltejs/kit';
+import { ERRORS } from '$lib/consts';
 
 export type Result<T> = [T, undefined] | [T | undefined, Error];
 

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { buildImageUrl, getCrop } from '$lib/sanity';
   import settings from '$lib/settings';
-
   import type { SiteConfig } from '$types';
 
   const { theme } = settings;

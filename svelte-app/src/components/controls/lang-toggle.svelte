@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { get } from 'svelte/store';
-
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { APP_LANGS } from '$lib/consts';
-  import { currentLang, linkTo, t } from '$lib/i18n';
-
   import BaseToggle from '$components/controls/base-toggle.svelte';
   import LanguageSmall from '$components/icons/language-small.svelte';
+  import { APP_LANGS } from '$lib/consts';
+  import { currentLang, linkTo, t } from '$lib/i18n';
+  import { get } from 'svelte/store';
 
   const handleChange = (e: Event) => {
     e.preventDefault();

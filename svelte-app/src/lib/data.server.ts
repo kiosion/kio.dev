@@ -1,6 +1,5 @@
-import Logger from '$lib/logger';
-
 import type { Result } from '$lib/api/result';
+import Logger from '$lib/logger';
 import type { HeadingNode } from '$types/documents';
 
 export const endpointResponse = <T extends Record<PropertyKey, unknown>>(

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function, prefer-rest-params */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ENV } from '$lib/env';
 
 const canLog = ENV !== 'production',

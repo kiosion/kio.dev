@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-
   import type { NAV_LINKS } from '$lib/consts';
+  import { t } from '$lib/i18n';
 
   export let link: (typeof NAV_LINKS)[number];
 

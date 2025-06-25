@@ -1,8 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import type { SvelteComponent } from 'svelte';
-
   const dispatch = createEventDispatcher<{
     click: MouseEvent | KeyboardEvent;
   }>();
@@ -13,8 +11,8 @@
     selected: boolean;
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  export let icon: typeof SvelteComponent<{}>, options: [Option, Option];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export let icon: any, options: [Option, Option];
 </script>
 
 <button
