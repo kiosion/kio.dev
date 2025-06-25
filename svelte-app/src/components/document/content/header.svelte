@@ -11,20 +11,15 @@
   import { parseViews } from '$lib/utils';
 
   import ArrowButton from '$components/controls/arrow-button.svelte';
-  import Image from '$components/images/image.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
-  import Link from '$components/link.svelte';
-  import ImageCarousel from '$components/portable-text/image-carousel.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  import type { HeadingNode, ProjectImage, RouteFetch } from '$types';
-  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+  import type { HeadingNode } from '$types/documents';
+  import type { GetPostQueryResult } from '$types/sanity';
 
-  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult> & {
+  export let data: NonNullable<GetPostQueryResult> & {
       headings: HeadingNode[];
     },
-    routeFetch: RouteFetch,
-    images: ProjectImage[] | undefined = undefined,
     model = data._type;
 
   let container: HTMLDivElement,
@@ -125,24 +120,6 @@
     {#if data.desc}
       <p class="pt-3 text-base text-neutral-700 dark:text-neutral-100">{data.desc}</p>
     {/if}
-    {#if data._type === 'project' && data.github}
-      <div
-        class="flex flex-row items-center justify-start gap-2 px-1 pb-1 pt-4 text-base"
-      >
-        <!-- eslint-disable -->
-        <span class="select-none text-base text-neutral-700 dark:text-neutral-100"
-          >git</span
-        >
-        <span class="select-none text-base text-neutral-700 dark:text-neutral-100">/</span
-        >
-        <!-- eslint-enable -->
-        <span class="text-base">
-          <Link href={data.github}>
-            {'github.com/' + data.github.split('github.com/')?.[1]}
-          </Link>
-        </span>
-      </div>
-    {/if}
   </div>
 
   {#if data.tags?.length}
@@ -153,9 +130,7 @@
       {#each data.tags as tag}
         <a
           class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
-          href={$linkTo(
-            `/${model === 'post' ? 'thoughts' : 'work'}/+/${tag.slug.current}`
-          )}
+          href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
           data-sveltekit-preload-code
           aria-label={$t('Topic') + ': ' + tag.title}
         >
@@ -166,24 +141,6 @@
     </div>
   {/if}
 </div>
-
-{#if data._type === 'project' && images?.length}
-  <BaseContainer>
-    <div class="w-full px-6 pb-5 pt-6">
-      {#if images.length > 1}
-        <ImageCarousel {images} />
-      {:else}
-        <Image
-          image={images[0].sanityAsset}
-          placeholder={images[0].placeholder}
-          crop={images[0].crop}
-          srcPromise={images[0].asset}
-          {routeFetch}
-        ></Image>
-      {/if}
-    </div>
-  </BaseContainer>
-{/if}
 
 <style lang="scss">
   h1 {

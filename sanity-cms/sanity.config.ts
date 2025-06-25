@@ -5,7 +5,6 @@ import { schemaTypes } from '$schema/schema';
 import { structure } from '$/structure';
 import { codeInput } from '@sanity/code-input';
 import { visionTool } from '@sanity/vision';
-// import { BrandLogo } from '$components/BrandLogo';
 
 const dataset =
   (import.meta as { env?: Record<string, string> }).env
@@ -25,12 +24,6 @@ export default defineConfig({
     }),
     codeInput()
   ],
-  // logo: BrandLogo,
-  // navbar: {
-  //   components: {
-  //     logo: BrandLogo
-  //   }
-  // },
   theme: {
     ...studioTheme
   },
@@ -52,7 +45,7 @@ export default defineConfig({
       }
       switch (document._type) {
         case 'post':
-          return `${baseUrl}/blog/${slug.current}`;
+          return `${baseUrl}/thoughts/${slug.current}`;
         case 'project':
           return `${baseUrl}/work/${slug.current}`;
       }

@@ -4,18 +4,13 @@
 
   import BulletPoint from '$components/bullet-point.svelte';
 
-  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+  import type { GetPostQueryResult } from '$types/sanity';
 
-  export let document: NonNullable<GetPostQueryResult | GetProjectQueryResult>;
-
-  const link =
-    document._type === 'post'
-      ? `/thoughts/${document.slug.current}`
-      : `/work/${document.slug.current}`;
+  export let document: NonNullable<GetPostQueryResult>;
 </script>
 
 <a
-  href={$linkTo(link)}
+  href={$linkTo(`/thoughts/${document.slug.current}`)}
   class="focus-outline group relative -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-200/50 focus-visible:bg-neutral-200/50 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
   tabindex="0"
   data-sveltekit-preload-code

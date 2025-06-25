@@ -9,23 +9,16 @@ import {
 } from '$lib/env.server';
 import {
   CountPostsQuery,
-  CountProjectsQuery,
   GetConfigQuery,
   GetPostQuery,
-  GetPostsQuery,
-  GetProjectQuery,
-  GetProjectsQuery
+  GetPostsQuery
 } from '$lib/sanity.queries.server';
 
 import { ClientError, createClient, type SanityDocument } from '@sanity/client';
 
 import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import type { HeadingNode } from '$types/documents';
-import type {
-  GetPostQueryResult,
-  GetPostsQueryResult,
-  GetProjectQueryResult
-} from '$types/sanity';
+import type { GetPostQueryResult, GetPostsQueryResult } from '$types/sanity';
 
 const clientConfig = {
   projectId: SANITY_PROJECT_ID,
@@ -74,9 +67,7 @@ const handleSanityError = (err: Error): APIFailure => {
   return errorResp;
 };
 
-const processHeadings = <
-  D extends Pick<NonNullable<GetPostQueryResult | GetProjectQueryResult>, 'body'>
->(
+const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>>(
   d: D
 ): Result<D & { headings?: HeadingNode[] }> => {
   if (!d.body) {
@@ -231,95 +222,6 @@ export const getPost = async ({
   return {
     status: 200,
     data: post,
-    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
-  };
-};
-
-export const getProjects = async ({
-  tag,
-  page = 0,
-  limit = 10,
-  sort = 'date',
-  order = 'desc',
-  preview = false
-}: {
-  tag?: string;
-  page?: number;
-  limit?: number;
-  sort?: string;
-  order?: string;
-  preview?: boolean;
-}) => {
-  const startNumber = page * limit;
-  const endNumber = startNumber + limit;
-  const sortOrder = `${sort} ${order}`;
-
-  const result = await (preview ? previewClient : client)
-    .fetch(GetProjectsQuery, {
-      startNumber,
-      endNumber,
-      sortOrder
-    })
-    .then(handleNoResults)
-    .catch(handleSanityError);
-
-  if (!isAPISuccess(result)) {
-    return result;
-  }
-
-  const totalProjects = await (preview ? previewClient : client)
-    .fetch(CountProjectsQuery)
-    .catch(() => 0);
-  const totalPages = Math.ceil(totalProjects / limit);
-  const hasMore = totalProjects > endNumber;
-  const hasLess = startNumber > 0;
-
-  return {
-    status: 200,
-    data: result.data,
-    meta: {
-      total: totalProjects,
-      count: result.data.length,
-      hasMore,
-      hasLess,
-      page: {
-        current: page,
-        total: totalPages
-      }
-    }
-  };
-};
-
-export const getProject = async ({
-  slug,
-  id,
-  preview = false
-}: {
-  id?: string;
-  slug?: string;
-  preview?: boolean;
-}) => {
-  if (!slug && !id) {
-    return {
-      status: 400,
-      errors: ['Missing slug or id']
-    };
-  }
-
-  const result = await (preview ? previewClient : client)
-    .fetch(GetProjectQuery, { id, slug })
-    .then(handleNoResults)
-    .catch(handleSanityError);
-
-  if (!isAPISuccess(result)) {
-    return result;
-  }
-
-  const [project, err] = processHeadings(result.data);
-
-  return {
-    status: 200,
-    data: project,
     errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
   };
 };

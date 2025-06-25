@@ -5,7 +5,6 @@ import { DEFAULT_APP_LANG, DEFAULT_POST_QUERY_PARAMS } from '$lib/consts';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ fetch, params }) => {
-  // TODO: Once tags are refactored should actually fetch here instead of reducing posts to tags.
   const posts = unwrapAPIResponse(
     await find(fetch, 'post', {
       ...DEFAULT_POST_QUERY_PARAMS,

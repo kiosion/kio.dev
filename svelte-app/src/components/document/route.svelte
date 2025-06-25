@@ -9,16 +9,14 @@
   import Content from '$components/document/content/content.svelte';
 
   import type { RouteFetch } from '$types';
-  import type { HeadingNode, ProjectImage } from '$types/documents';
-  import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
+  import type { HeadingNode } from '$types/documents';
+  import type { GetPostQueryResult } from '$types/sanity';
   import type { Unsubscriber } from 'svelte/store';
 
-  export let data: NonNullable<GetPostQueryResult | GetProjectQueryResult> & {
+  export let data: NonNullable<GetPostQueryResult> & {
       headings: HeadingNode[];
     },
-    routeFetch: RouteFetch,
-    model = data._type,
-    images: ProjectImage[] | undefined = undefined;
+    routeFetch: RouteFetch;
 
   let pageUnsubscriber: Unsubscriber;
 
@@ -40,7 +38,7 @@
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`
       : data.desc
-    : $t(`A ${model === 'post' ? 'blog post' : 'project'} on kio.dev`);
+    : $t(`A blog post on ${BASE_PAGE_TITLE}`);
 </script>
 
 <svelte:head>
@@ -66,4 +64,4 @@
   />
 </svelte:head>
 
-<Content {data} {images} {routeFetch}></Content>
+<Content {data} {routeFetch}></Content>

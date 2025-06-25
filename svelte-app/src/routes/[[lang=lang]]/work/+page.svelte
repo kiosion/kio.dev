@@ -6,7 +6,6 @@
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
-  import ListItem from '$components/lists/list-item.svelte';
 
   export let data;
 
@@ -38,20 +37,4 @@
       {/if}
     </HeadedBlock>
   </BaseContainer>
-
-  {#if data.projects.length}
-    <BaseContainer>
-      <HeadedBlock heading={$t('Projects')} constrainWidth={false} first let:id>
-        <div
-          class="flex flex-row flex-wrap gap-5 px-5"
-          role="group"
-          aria-labelledby="{id}-heading"
-        >
-          {#each data.projects as project}
-            <ListItem document={project} />
-          {/each}
-        </div>
-      </HeadedBlock>
-    </BaseContainer>
-  {/if}
 </div>

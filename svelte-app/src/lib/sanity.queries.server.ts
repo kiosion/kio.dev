@@ -27,32 +27,6 @@ export const GetPostQuery = defineQuery(
 }[0]`
 );
 
-export const GetProjectQuery =
-  defineQuery(`*[_type == 'project' && (_id == '$id' || slug.current == '$slug')]{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  _createdAt,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
-  slug,
-  body,
-  desc,
-  'date': coalesce(date, _createdAt),
-  images,
-  github,
-  'views': coalesce(views, 0),
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-}[0]`);
-
 export const GetPostsQuery = defineQuery(`*[_type == 'post']{
   _id,
   'objectID': _id,
@@ -77,30 +51,3 @@ export const GetPostsQuery = defineQuery(`*[_type == 'post']{
 } | order($sortOrder) [$startNumber...$endNumber]`);
 
 export const CountPostsQuery = defineQuery("count(*[_type == 'post'])");
-
-export const GetProjectsQuery = defineQuery(`*[_type == 'project']{
-  _id,
-  'objectID': _id,
-  _rev,
-  _type,
-  _createdAt,
-  title,
-  publishedAt,
-  tags[]->{
-    _id,
-    title,
-    slug
-  },
-  slug,
-  body,
-  desc,
-  'date': coalesce(date, _createdAt),
-  images,
-  github,
-  'views': coalesce(views, 0),
-  'numberOfCharacters': length(pt::text(body)),
-  'estimatedWordCount': round(length(pt::text(body)) / 5),
-  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-} | order($sortOrder) [$startNumber...$endNumber]`);
-
-export const CountProjectsQuery = defineQuery("count(*[_type == 'project'])");

@@ -7,17 +7,11 @@ import Logger from '$lib/logger';
 
 import type { RouteFetch } from '$types';
 import type { HeadingNode } from '$types/documents';
-import type {
-  GetConfigQueryResult,
-  GetPostQueryResult,
-  GetProjectQueryResult,
-  Tag
-} from '$types/sanity';
+import type { GetConfigQueryResult, GetPostQueryResult, Tag } from '$types/sanity';
 
 interface DocumentRegistry {
   config: NonNullable<GetConfigQueryResult>;
   post: NonNullable<GetPostQueryResult & { headings: HeadingNode[] }>;
-  project: NonNullable<GetProjectQueryResult & { headings: HeadingNode[] }>;
   tag: Tag;
 }
 
@@ -98,7 +92,7 @@ const withCache = async <T>(
   return res;
 };
 
-async function getOne<M extends 'post' | 'project' | 'config' | 'tag'>(
+async function getOne<M extends 'post' | 'config' | 'tag'>(
   fetch: RouteFetch,
   model: M,
   params: SingleParams<M>
@@ -121,7 +115,7 @@ async function getOne<M extends Model>(
   );
 }
 
-async function getMany<M extends 'post' | 'project' | 'tag'>(
+async function getMany<M extends 'post' | 'tag'>(
   fetch: RouteFetch,
   model: M,
   params?: ManyParams<M>
@@ -132,11 +126,11 @@ async function getMany<M extends 'post' | 'project' | 'tag'>(
   );
 }
 
-async function incViews<M extends 'post' | 'project'>(
+async function incViews<M extends 'post'>(
   fetch: RouteFetch,
   model: DocumentRegistry[M] & { _type: M }
 ): Promise<APIResponse<Pick<DocumentRegistry[M], '_id' | 'views'>>> {
-  if (!['post', 'project'].includes(model._type)) {
+  if (model._type !== 'post') {
     return {
       status: 400,
       errors: ['Invalid document type: ' + model._type]
