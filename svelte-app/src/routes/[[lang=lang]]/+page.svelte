@@ -7,6 +7,7 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
+  import { failed } from '$lib/snippets.svelte';
 
   export let data;
 
@@ -32,8 +33,7 @@
       {#each data.config.about as aboutSection, idx}
         {#if aboutSection.content}
           <HeadedBlock heading={aboutSection.title} first={idx === 0}>
-            <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
-            ></PortableText>
+            <PortableText text={aboutSection.content} class="-mt-2" bodySize="base" />
           </HeadedBlock>
 
           {#if idx < data.config.about.length - 1}

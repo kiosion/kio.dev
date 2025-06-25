@@ -13,8 +13,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   return {
     plugins: [
       tailwindcss(),
-      sveltekit(),
-      (isDev || isTesting) && Inspect()
+      sveltekit()
+      // (isDev || isTesting) && Inspect()
     ],
     resolve: {
       alias: [
