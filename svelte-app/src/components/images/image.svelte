@@ -1,15 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import type { SanityImageObject } from '@sanity/image-url/lib/types/types';
   import ImageModal from '$components/images/image-modal.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { buildImageUrl, getCrop } from '$lib/sanity';
-  import type { RouteFetch, SanityImageObject } from '$types';
+  import type { RouteFetch } from '$types';
   import { crossfade, fade } from 'svelte/transition';
 
-  export let image: SanityImageObject,
+  export let image: SanityImageObject & { _key: string },
     routeFetch: RouteFetch,
     placeholder: string | undefined = undefined,
     crop: SanityImageObject['crop'] & { width: number; height: number } = getCrop(image),

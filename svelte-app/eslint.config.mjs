@@ -31,6 +31,10 @@ export default tseslint.config(
     rules: {
       // original overrides
       '@typescript-eslint/no-unused-expressions': [1],
+      // this rule is just wrong too often.
+      '@typescript-eslint/no-redundant-type-constituents': [0],
+      // same with this one, apparently 'Element' and 'HTMLElement' are identical, ffs.
+      '@typescript-eslint/no-unnecessary-type-assertion': [0],
       '@typescript-eslint/no-unsafe-assignment': [0],
       '@typescript-eslint/no-floating-promises': [0],
       '@typescript-eslint/only-throw-error': [0],
@@ -42,7 +46,6 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-arguments': [0],
       '@typescript-eslint/prefer-namespace-keyword': [0],
       '@typescript-eslint/no-namespace': [0],
-      '@typescript-eslint/no-redundant-type-constituents': [1],
       '@typescript-eslint/restrict-template-expressions': [0],
       '@typescript-eslint/no-unused-vars': [0],
       '@typescript-eslint/ban-ts-comment': [

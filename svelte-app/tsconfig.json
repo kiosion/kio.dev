@@ -12,12 +12,11 @@
     "noEmit": true,
     "removeComments": true,
     "rootDir": "./",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "typeRoots": ["./types", "./types/generated"]
+    "strict": true
   },
   "include": [
     "src/**/*",
