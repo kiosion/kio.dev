@@ -5,17 +5,18 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { t } from '$lib/i18n';
   import { scrollTo } from '$lib/navigation';
-  import { sidebarHeadings } from '$lib/sidebar';
 
   import Content from '$components/document/content/content.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
+  import type { RouteFetch } from '$types';
+  import type { HeadingNode } from '$types/documents';
+  import type { GetPostQueryResult } from '$types/sanity';
   import type { Unsubscriber } from 'svelte/store';
 
-  export let data: ProjectDocument | PostDocument,
-    routeFetch: RouteFetch,
-    model = data._type,
-    images: ProjectImage[] | undefined = undefined;
+  export let data: NonNullable<GetPostQueryResult> & {
+      headings: HeadingNode[];
+    },
+    routeFetch: RouteFetch;
 
   let pageUnsubscriber: Unsubscriber;
 
@@ -37,7 +38,7 @@
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`
       : data.desc
-    : $t(`A ${model === 'post' ? 'blog post' : 'project'} on kio.dev`);
+    : $t(`A blog post on ${BASE_PAGE_TITLE}`);
 </script>
 
 <svelte:head>
@@ -63,4 +64,4 @@
   />
 </svelte:head>
 
-<Content {data} {images} {routeFetch}></Content>
+<Content {data} {routeFetch}></Content>

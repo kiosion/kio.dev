@@ -1,131 +1,114 @@
-import { REMOTE_API_TOKEN } from '$lib/env.server';
 import Logger from '$lib/logger';
 
-export type ResponseOrError =
-  | {
-      code: null | undefined;
-      message: never;
-      errors: string[];
-      data: never;
-    }
-  | {
-      code: number;
-      message: string;
-      errors: string[];
-      data: never;
-    }
-  | {
-      code: number;
-      message: never;
-      errors: string[];
-      data: ResData;
-    };
+import type { Result } from '$lib/api/result';
+import type { HeadingNode } from '$types/documents';
 
-interface ResData extends Record<string, unknown> {
-  result: Record<string, unknown>;
-  ms?: number;
-  query?: string;
-  meta?: {
-    total?: number;
-    count?: number;
-    id?: string;
-    type?: string;
-  };
-}
-
-type Normalized =
-  | {
-      code: number;
-      errors: string[];
-      data?: undefined;
-      meta?: undefined;
-    }
-  | {
-      code?: undefined;
-      errors: string[];
-      data: ResData['result'];
-      meta: ResData['meta'] & { [key: string]: unknown };
-    };
-
-export const endpointResponse = (content: Record<string, unknown>, status = 200) => {
+export const endpointResponse = <T extends Record<PropertyKey, unknown>>(
+  content: T,
+  status = 200,
+  init: ResponseInit = {}
+) => {
   return new Response(JSON.stringify(content), {
     headers: {
       'content-type': 'application/json; charset=utf-8'
     },
-    status
+    status,
+    ...init
   });
 };
 
-/**
- * Util to serialize recieved API data to common types
- */
-const normalize = (data: ResponseOrError) => {
-  if (!data?.code || (!data?.message && !data?.data)) {
-    throw new Error('Failed to normalize data: Invalid or undefined data recieved');
-  }
-
-  const normalized = {} as Normalized;
-
-  normalized.errors = data.errors || [];
-
-  if (data.message) {
-    normalized.code = data.code;
-    return normalized;
-  }
-
-  const { data: resData } = data;
-
-  normalized.data = resData?.result;
-  normalized.meta = {} as Normalized['meta'];
-  resData?.meta && (normalized.meta = { ...resData.meta });
-
-  const keys = Object.keys(resData);
-
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    if (['result', 'meta'].includes(key)) {
-      continue;
-    }
-    (normalized.meta as ResData['meta'] & { [key: string]: unknown })[key] = resData[key];
-  }
-
-  return normalized;
+type MaybeBlock = {
+  _type?: unknown;
+  _key?: unknown;
+  style?: unknown;
+  children?: unknown;
 };
 
-const fetchRemote = async (endpoint: string | URL): Promise<Normalized> => {
+type RawChild = {
+  text?: unknown;
+};
+
+type HeadingBlock = {
+  _type: 'block';
+  _key: string;
+  style: `h${1 | 2 | 3 | 4 | 5 | 6}`;
+  children: RawChild[];
+};
+
+export const buildSummary = (body?: unknown): Result<HeadingNode[]> => {
   try {
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${REMOTE_API_TOKEN}`
-      }
-    });
-
-    const jsonResponse = (await response.json()) as ResponseOrError;
-
-    if (response.status !== 200 || !jsonResponse?.data?.result) {
-      Logger.error(`Failed to fetch from ${endpoint} - ${response.status}`);
-
-      return {
-        code: response.status,
-        errors: jsonResponse?.errors || [
-          `Failed to fetch from ${endpoint} - ${response.status}`
-        ]
-      };
+    if (!Array.isArray(body)) {
+      return [[], undefined];
     }
 
-    const normalizedResponse = normalize(jsonResponse);
+    const headingBlocks = body.filter(isHeadingBlock);
 
-    return normalizedResponse;
-  } catch (err: unknown) {
-    Logger.error(`Failed to fetch from ${endpoint} - Unknown error occured`, {
-      err
-    });
-    return {
-      code: 500,
-      errors: [`Unknown or unhandled error occured - ${err}`]
-    };
+    if (headingBlocks.length === 0) {
+      return [[], undefined];
+    }
+
+    const headings = headingBlocks.map(blockToHeading);
+
+    const tree: HeadingNode[] = [];
+    const stack: HeadingNode[] = [];
+
+    for (const heading of headings) {
+      /* unwind to the correct depth */
+      while (stack.length && stack[stack.length - 1].typeLevel >= heading.typeLevel) {
+        stack.pop();
+      }
+
+      if (stack.length === 0) {
+        tree.push(heading);
+      } else {
+        const parent = stack[stack.length - 1];
+        parent.children ??= [];
+        parent.children.push(heading);
+        heading.parent = parent.key;
+      }
+
+      stack.push(heading);
+    }
+
+    return [tree, undefined];
+  } catch (e) {
+    const err =
+      e instanceof Error ? e : new Error('Unknown error while building summary');
+    Logger.error('Error building heading summary', err);
+    return [undefined, err];
   }
 };
 
-export { fetchRemote, normalize };
+const isHeadingBlock = (b: unknown): b is MaybeBlock & HeadingBlock => {
+  if (!b || typeof b !== 'object') {
+    return false;
+  }
+  const blk = b as MaybeBlock;
+
+  if (blk._type !== 'block') {
+    return false;
+  }
+  if (typeof blk._key !== 'string') {
+    return false;
+  }
+  if (typeof blk.style !== 'string') {
+    return false;
+  }
+  if (!/^h[1-6]$/.test(blk.style)) {
+    return false;
+  }
+  if (!Array.isArray(blk.children)) {
+    return false;
+  }
+
+  return true;
+};
+
+const blockToHeading = (b: HeadingBlock): HeadingNode => ({
+  text: b.children.map((c) => (typeof c.text === 'string' ? c.text : '')).join(''),
+  key: b._key,
+  type: b.style,
+  typeLevel: Number((b.style as string)[1]) as 1 | 2 | 3 | 4 | 5 | 6,
+  children: [],
+  parent: null
+});

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
 
-  import type { PostDocument, ProjectDocument } from '$types';
+  import type { HeadingNode } from '$types/documents';
 
-  export let headings: (PostDocument | ProjectDocument)['headings'];
+  export let headings: HeadingNode[];
 
   $: ({ hash } = $page?.url || { hash: '' });
 </script>

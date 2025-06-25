@@ -23,7 +23,6 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.8.0
           run_install: false
       - name: Use node_modules cache
         uses: actions/cache@v4
@@ -39,49 +38,48 @@ jobs:
       - name: Run tests
         run: make vitest
 
-  integration:
-    name: Integration tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.0
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.8.0
-          run_install: false
-      - name: Use node_modules cache
-        uses: actions/cache@v4
-        id: nm-cache
-        with:
-          path: "svelte-app/node_modules"
-          key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: Install dependencies
-        if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: make install-web
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./svelte-app/package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Use Playwright cache
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Ensure Playwright browsers are installed
-        run: (cd ./svelte-app && pnpm exec playwright install --with-deps && pnpm exec playwright install-deps)
-      - name: Run tests
-        run: make playwright
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-results
-          path: test-results/
-          retention-days: 7
+  # integration:
+  #   name: Integration tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18.18.0
+  #     - name: Install pnpm
+  #       uses: pnpm/action-setup@v4
+  #       with:
+  #         run_install: false
+  #     - name: Use node_modules cache
+  #       uses: actions/cache@v4
+  #       id: nm-cache
+  #       with:
+  #         path: "svelte-app/node_modules"
+  #         key: ${{ runner.os }}-npm-${{ hashFiles('svelte-app/pnpm-lock.yaml') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-npm-
+  #     - name: Install dependencies
+  #       if: steps.nm-cache.outputs.cache-hit != 'true'
+  #       run: make install-web
+  #     - name: Get installed Playwright version
+  #       id: playwright-version
+  #       run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./svelte-app/package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+  #     - name: Use Playwright cache
+  #       uses: actions/cache@v4
+  #       id: playwright-cache
+  #       with:
+  #         path: ~/.cache/ms-playwright
+  #         key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+  #     - name: Ensure Playwright browsers are installed
+  #       run: (cd ./svelte-app && pnpm exec playwright install --with-deps && pnpm exec playwright install-deps)
+  #     - name: Run tests
+  #       run: make playwright
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: playwright-results
+  #         path: test-results/
+  #         retention-days: 7

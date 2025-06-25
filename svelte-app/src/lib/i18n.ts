@@ -6,7 +6,7 @@ import FR from '$langs/fr.json';
 import { APP_LANGS, DEFAULT_APP_LANG } from '$lib/consts';
 import Logger from '$lib/logger';
 
-import type { LocaleKey } from '$generated';
+import type { LocaleKey } from '$types/generated';
 
 const isLocalized = writable(false);
 const currentLang = writable(DEFAULT_APP_LANG);

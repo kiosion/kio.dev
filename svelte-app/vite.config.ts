@@ -5,9 +5,11 @@ import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
 import StripTestSelectors from 'vite-plugin-test-selectors';
 
-export default defineConfig(({ mode }) => {
+import type { ConfigEnv } from 'vite';
+
+export default defineConfig(({ mode }: ConfigEnv) => {
   const isTesting = mode === 'testing',
-    isDev = ['development', 'backed'].some((m) => m === mode);
+    isDev = mode === 'development';
 
   return {
     plugins: [
@@ -37,10 +39,7 @@ export default defineConfig(({ mode }) => {
     test: {
       include: ['tests/unit/**.test.ts'],
       globals: true,
-      environment: 'jsdom',
-      deps: {
-        registerNodeLoader: true
-      }
+      environment: 'jsdom'
     },
     build: {
       rollupOptions: {
@@ -57,6 +56,6 @@ export default defineConfig(({ mode }) => {
     ssr: {
       noExternal: ['@portabletext/toolkit']
     },
-    appType: 'custom'
+    appType: 'custom' as const
   };
 });

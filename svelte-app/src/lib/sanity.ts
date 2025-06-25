@@ -1,4 +1,4 @@
-import { REMOTE_CDN_URL } from '$lib/env';
+import { API_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
 import imageUrlBuilder from '@sanity/image-url';
 
@@ -7,7 +7,9 @@ import type {
   FitMode,
   ImageFormat,
   SanityClientLike,
+  SanityImageCrop,
   SanityImageObject,
+  SanityImageRect,
   SanityImageSource
 } from '@sanity/image-url/lib/types/types';
 
@@ -22,9 +24,8 @@ export interface ImageCrop {
 
 const config: SanityClientLike = {
   clientConfig: {
-    apiHost: `${REMOTE_CDN_URL}`,
-    projectId: 'dataset', // This is kinda jank, should find a workaround to not include at all
-    dataset: '0'
+    projectId: SANITY_PROJECT_ID,
+    dataset: SANITY_DATASET
   }
 };
 
@@ -32,9 +33,12 @@ const builder = imageUrlBuilder(config);
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
-export const getCrop = (image: SanityImageObject | undefined) => {
+export const getCrop = (
+  image: SanityImageObject | undefined
+): SanityImageCrop & SanityImageRect => {
   if (!image || !image?.asset) {
     return {
+      _type: 'sanity.imageCrop',
       top: 0,
       left: 0,
       bottom: 0,
@@ -45,12 +49,15 @@ export const getCrop = (image: SanityImageObject | undefined) => {
   }
   const ref = image.asset._ref,
     dimensions = ref?.split('-')?.[2]?.split('x'),
-    crop: ImageCrop = {
+    crop = {
+      _type: 'sanity.imageCrop',
       top: Math.floor(dimensions[1] * (image?.crop?.top ?? 0)),
       left: Math.floor(dimensions[0] * (image?.crop?.left ?? 0)),
       bottom: Math.floor(dimensions[1] * (image?.crop?.bottom ?? 0)),
-      right: Math.floor(dimensions[0] * (image?.crop?.right ?? 0))
-    } as ImageCrop;
+      right: Math.floor(dimensions[0] * (image?.crop?.right ?? 0)),
+      width: 0,
+      height: 0
+    };
 
   crop.width = Math.floor(dimensions[0] - (crop.left + crop.right));
   crop.height = Math.floor(dimensions[1] - (crop.top + crop.bottom));
@@ -85,6 +92,9 @@ export const buildImageUrl = (
   } as buildImageUrlOptions
 ) => {
   if (!baseUrl) {
+    if (!ref) {
+      throw new Error('Either baseUrl or ref must be provided to buildImageUrl');
+    }
     baseUrl = urlFor(ref);
   }
   if (crop) {

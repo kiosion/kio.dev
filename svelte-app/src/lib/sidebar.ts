@@ -1,16 +1,14 @@
 /* eslint-disable func-call-spacing */
 import { writable } from 'svelte/store';
 
-import type { PostDocument, ProjectDocument } from '$types';
+import type { HeadingNode } from '$types/documents';
+import type { GetPostQueryResult, GetProjectQueryResult } from '$types/sanity';
 
 type SidebarBlockContent = Pick<
-  PostDocument | ProjectDocument,
-  'title' | 'desc' | 'tags' | 'date' | 'estimatedReadingTime' | 'views'
-  // eslint-disable-next-line @typescript-eslint/ban-types
-> & {};
+  NonNullable<GetPostQueryResult | GetProjectQueryResult>,
+  'title' | 'desc' | 'tags' | 'date' | 'views'
+> & { estimatedReadingTime: number };
 
 export const sidebarBlock = writable<SidebarBlockContent | undefined>(undefined);
 
-export const sidebarHeadings = writable<
-  (PostDocument | ProjectDocument)['headings'] | undefined
->(undefined);
+export const sidebarHeadings = writable<HeadingNode[] | undefined>(undefined);

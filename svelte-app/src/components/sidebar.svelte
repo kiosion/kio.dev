@@ -17,9 +17,9 @@
   import ToruWidget from '$components/sidebar/toru.svelte';
 
   import type { ToruData } from '$components/sidebar/toru';
-  import type { SiteConfig } from '$types';
+  import type { GetConfigQueryResult } from '$types/generated/sanity.types';
 
-  export let config: SiteConfig,
+  export let config: NonNullable<GetConfigQueryResult>,
     toruData: Promise<ToruData | undefined>,
     scrollContainer: HTMLElement | null | undefined;
 
@@ -74,29 +74,31 @@
             role="list"
           >
             {#each socials as social}
-              <li
-                class="group flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
-                role="listitem"
-              >
-                {#if social.url.includes('mailto')}
-                  <EnvelopeSmall
-                    class="mt-px group-hover:hidden group-focus-visible:hidden"
-                  />
-                  <EnvelopeOpenSmall
-                    class="hidden group-hover:block group-focus-visible:block"
-                  />
-                {:else}
-                  <GlobeAmericasSmall
-                    class="mt-px group-hover:hidden group-focus-visible:hidden"
-                  />
-                  <GlobeAsiaAustraliaSmall
-                    class="mt-px hidden group-hover:block group-focus-visible:block"
-                  />
-                {/if}
-                <Link href={social.url} newtab>
-                  {social.name}
-                </Link>
-              </li>
+              {#if social.url}
+                <li
+                  class="group flex flex-row items-center justify-start gap-x-2 text-neutral-700 transition-colors dark:text-neutral-200"
+                  role="listitem"
+                >
+                  {#if social.url.includes('mailto')}
+                    <EnvelopeSmall
+                      class="mt-px group-hover:hidden group-focus-visible:hidden"
+                    />
+                    <EnvelopeOpenSmall
+                      class="hidden group-hover:block group-focus-visible:block"
+                    />
+                  {:else}
+                    <GlobeAmericasSmall
+                      class="mt-px group-hover:hidden group-focus-visible:hidden"
+                    />
+                    <GlobeAsiaAustraliaSmall
+                      class="mt-px hidden group-hover:block group-focus-visible:block"
+                    />
+                  {/if}
+                  <Link href={social.url} newtab>
+                    {social.name}
+                  </Link>
+                </li>
+              {/if}
             {/each}
           </ul>
         {/if}

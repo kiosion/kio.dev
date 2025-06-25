@@ -4,7 +4,11 @@
   import ChevronRightSmall from '$components/icons/chevron-right-small.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { WorkTimelineItem } from '$types';
+  import type { GetConfigQueryResult } from '$types/generated/sanity.types';
+
+  type WorkTimelineItem = NonNullable<
+    NonNullable<GetConfigQueryResult>['timeline']
+  >[number];
 
   export let title: WorkTimelineItem['subtitle'],
     body: WorkTimelineItem['body'],
@@ -26,13 +30,15 @@
     <h3 class="pt-1 text-base font-bold text-dark transition-colors dark:text-white">
       {title}
     </h3>
-    <p
-      class="inline-flex flex-row items-center justify-start gap-x-2 font-sans text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
-    >
-      <span>{$displayRange(range.start, range.end)}</span><span>&bull;</span><span
-        >{$displayMonthDuration(range.start, range.end)}</span
+    {#if range}
+      <p
+        class="inline-flex flex-row items-center justify-start gap-x-2 font-sans text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
       >
-    </p>
+        <span>{$displayRange(range.start, range.end)}</span><span>&bull;</span><span
+          >{$displayMonthDuration(range.start, range.end)}</span
+        >
+      </p>
+    {/if}
     {#if body}
       <div class="-mb-4 -mt-2">
         <PortableText text={body} class="mb-3 mt-4" bodySize="base"></PortableText>

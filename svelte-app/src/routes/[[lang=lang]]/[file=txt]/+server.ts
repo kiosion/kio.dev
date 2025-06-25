@@ -1,3 +1,6 @@
+import { isAPIFailure } from '$lib/api/result';
+import { findOne } from '$lib/api/store';
+import { ERRORS } from '$lib/consts';
 import Robots from '$lib/fixtures/robots';
 
 import type { RequestHandler } from './$types';
@@ -14,12 +17,24 @@ export const GET = (async ({ url, fetch }) => {
         }
       });
     case 'pgp.txt': {
-      const res = (
-        await fetch('/api/v1/get/config', {
-          method: 'GET'
-        })
-      )?.json();
-      const { pgpKey } = (await res)?.data ?? {};
+      const res = await findOne(fetch, 'config');
+      if (isAPIFailure(res)) {
+        return new Response(
+          JSON.stringify({
+            status: res.status,
+            message: res.errors[0] || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
+            stack: res.errors.join('\n')
+          }),
+          {
+            status: res.status,
+            headers: {
+              'content-type': 'application/json',
+              charset: 'utf-8'
+            }
+          }
+        );
+      }
+      const { pgpKey } = res.data ?? {};
       return new Response(pgpKey as string, {
         headers: {
           'content-type': 'text/plain',

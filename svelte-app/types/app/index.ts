@@ -24,9 +24,3 @@ declare global {
 }
 
 export type RouteFetch = (info: RequestInfo, init?: RequestInit) => Promise<Response>;
-
-// Re-exports
-export * from '$types/api';
-export * from '$types/config';
-export * from '$types/documents';
-export * from '$types/sanity';

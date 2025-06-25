@@ -5,16 +5,18 @@
   import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
 
-  import type { PostDocument, ProjectDocument, ProjectImage, RouteFetch } from '$types';
+  import type { RouteFetch } from '$types';
+  import type { HeadingNode } from '$types/documents';
+  import type { GetPostQueryResult } from '$types/sanity';
 
-  export let data: PostDocument | ProjectDocument,
-    images: ProjectImage[] | undefined = undefined,
-    model = data._type,
+  export let data: NonNullable<GetPostQueryResult> & {
+      headings: HeadingNode[];
+    },
     routeFetch: RouteFetch;
 </script>
 
 <div class="flex h-full w-full flex-col gap-y-5">
-  <Header {data} {images} {routeFetch} />
+  <Header {data} />
   <BaseContainer class="pb-6 font-sans text-base">
     {#if data.body}
       <PortableText text={data.body} {routeFetch} documentView />
@@ -22,5 +24,5 @@
       <EmptyContent />
     {/if}
   </BaseContainer>
-  <Footer {model} {data}></Footer>
+  <Footer></Footer>
 </div>
