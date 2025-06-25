@@ -138,7 +138,7 @@ async function incViews<M extends 'post'>(
   }
 
   try {
-    return await request<Pick<DocumentRegistry[M], '_id' | 'views'>>(fetch, 'mutate', {
+    return await request<Pick<DocumentRegistry[M], '_id' | 'views'>>(fetch, '/mutate', {
       method: 'POST',
       body: JSON.stringify({
         id: model._id,
