@@ -28,14 +28,14 @@
     </span>
   </div>
   <h1
-    class="line-clamp-2 font-sans text-xl font-bold leading-9 decoration-orange-light decoration-[3px] underline-offset-4 transition-colors group-hover:underline group-focus-visible:underline lg:max-w-[60rem]"
+    class="decoration-orange-light line-clamp-2 font-sans text-xl leading-9 font-bold decoration-[3px] underline-offset-4 transition-colors group-hover:underline group-focus-visible:underline lg:max-w-[60rem]"
   >
     {document.title}
   </h1>
 
   {#if document.desc?.length}
     <p
-      class="line-clamp-3 text-base text-neutral-700 transition-colors dark:text-neutral-200 lg:max-w-[60rem]"
+      class="line-clamp-3 text-base text-neutral-700 transition-colors lg:max-w-[60rem] dark:text-neutral-200"
     >
       {document.desc}
     </p>

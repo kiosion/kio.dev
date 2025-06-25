@@ -1,13 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import Highlight from 'svelte-highlight/Highlight.svelte';
-  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
-  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
-
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { t } from '$lib/i18n';
-
   import Divider from '$components/divider.svelte';
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
@@ -18,11 +11,16 @@
   import PlusSmall from '$components/icons/plus-small.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
-
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { t } from '$lib/i18n';
+  import Highlight from 'svelte-highlight/Highlight.svelte';
+  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
   // eslint-disable-next-line import/no-duplicates
   import type { LanguageType as SHLanguageType } from 'svelte-highlight/languages';
   // eslint-disable-next-line import/no-duplicates
+  // eslint-disable-next-line import/no-duplicates
   import type * as SHLanguages from 'svelte-highlight/languages';
+  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
 
   type SHLanguageUnion = Extract<keyof typeof SHLanguages, string>;
 
@@ -115,7 +113,7 @@
 
   <Tooltip content={$t('Copy to clipboard')} placement="left">
     <button
-      class="focus-outline-sm absolute right-0 z-[2] mr-2.5 mt-2 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs text-dark/80 transition-colors hover:bg-neutral-300/50 hover:text-dark focus-visible:bg-neutral-300/50 focus-visible:text-dark dark:text-light/80 hover:dark:bg-neutral-500 hover:dark:text-light focus-visible:dark:bg-neutral-500 focus-visible:dark:text-light"
+      class="focus-outline-sm text-dark/80 hover:text-dark focus-visible:text-dark dark:text-light/80 hover:dark:text-light focus-visible:dark:text-light absolute right-0 z-[2] mt-2 mr-2.5 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs transition-colors hover:bg-neutral-300/50 focus-visible:bg-neutral-300/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
       class:top-1={!filename}
       class:top-14={filename}
       on:click={() => copy()}
@@ -134,14 +132,14 @@
     bind:this={codeContainer}
   >
     <div
-      class="pointer-events-none absolute left-1/2 top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
+      class="pointer-events-none absolute top-1/2 left-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
       class:opacity-0={hideLoader}
       aria-hidden="true"
     >
       <Spinner />
     </div>
     <div
-      class="h-fit w-full min-w-full rounded-sm p-1 pl-4 pr-8 transition-all"
+      class="h-fit w-full min-w-full rounded-sm p-1 pr-8 pl-4 transition-all"
       id="hljs-container"
       aria-hidden="true"
       bind:clientHeight={innerHeight}
@@ -173,7 +171,7 @@
 
   {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
     <div
-      class="show-more-gradient absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pb-4 pt-6 text-center"
+      class="show-more-gradient absolute right-0 bottom-0 left-0 z-10 flex items-center justify-center pt-6 pb-4 text-center"
       class:showingMore
       bind:clientHeight={showMoreHeight}
     >
@@ -201,15 +199,15 @@
 </div>
 
 <style lang="scss">
-  @import '@styles/colors';
-  @import '@styles/helpers';
-  @import '@styles/mixins';
+  @use '@styles/colors';
+  @use '@styles/helpers';
+  @use '@styles/mixins';
 
   .show-more-gradient {
-    background: ease-gradient('to top', $neutral-200, transparent);
+    background: helpers.ease-gradient('to top', colors.$neutral-200, transparent);
 
-    @include dark {
-      background: ease-gradient('to top', $neutral-700, transparent);
+    @include mixins.dark {
+      background: helpers.ease-gradient('to top', colors.$neutral-700, transparent);
     }
   }
 </style>

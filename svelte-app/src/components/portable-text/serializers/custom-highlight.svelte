@@ -7,10 +7,10 @@
 </script>
 
 <span class="relative p-0.5">
-  <span class="relative z-[1] text-dark transition-colors">
+  <span class="text-dark relative z-[1] transition-colors">
     <slot />
   </span>
   <span
-    class="absolute bottom-0 left-0 right-0 top-0 z-[0] bg-orange-light/90 transition-colors"
+    class="bg-orange-light/90 absolute top-0 right-0 bottom-0 left-0 z-[0] transition-colors"
   ></span>
 </span>

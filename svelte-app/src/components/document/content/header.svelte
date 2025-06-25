@@ -112,7 +112,7 @@
 >
   <div class="w-full px-4 py-2">
     <h1
-      class="h-fit max-w-full py-2 font-display text-5xl font-bold leading-[1.1] text-black transition-[color] dark:text-white"
+      class="font-display h-fit max-w-full py-2 text-5xl leading-[1.1] font-bold text-black transition-[color] dark:text-white"
     >
       {data.title}
     </h1>

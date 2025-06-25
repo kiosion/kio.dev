@@ -21,11 +21,11 @@
   class:pb-4={!last}
 >
   <span
-    class="bullet block shrink-0 select-none rounded-xs text-orange-dark dark:text-orange-light"
+    class="bullet text-orange-dark dark:text-orange-light block shrink-0 rounded-xs select-none"
     ><ChevronRightSmall /></span
   >
   <div class="content">
-    <h3 class="pt-1 text-base font-bold text-dark transition-colors dark:text-white">
+    <h3 class="text-dark pt-1 text-base font-bold transition-colors dark:text-white">
       {title}
     </h3>
     {#if range}
@@ -38,15 +38,16 @@
       </p>
     {/if}
     {#if body}
-      <div class="-mb-4 -mt-2">
-        <PortableText text={body} class="mb-3 mt-4" bodySize="base"></PortableText>
+      <div class="-mt-2 -mb-4">
+        <PortableText text={body} class="mt-4 mb-3" bodySize="base"></PortableText>
       </div>
     {/if}
   </div>
 </div>
 
 <style lang="scss">
-  @import '@styles/mixins';
+  @use '@styles/mixins';
+  @reference 'tailwindcss';
 
   $bulletTopMargin: 10px;
   $bulletSize: 8px;
@@ -75,7 +76,7 @@
       bottom: #{0px + $lineGap - $bulletTopMargin - $bulletSize};
       left: #{$bulletSize * 2 + $lineWidth * 3};
 
-      @include dark {
+      @include mixins.dark {
         @apply border-neutral-400;
       }
     }

@@ -73,7 +73,7 @@
 
     &,
     &-sm {
-      @apply outline-2 outline-orange-light focus-visible:outline;
+      @apply focus-visible:outline-2 outline-orange-light;
     }
 
     &-sm {
