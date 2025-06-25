@@ -43,7 +43,7 @@
     href={url ?? '#'}
     target={url ? '_blank' : undefined}
     rel={url ? 'noopener noreferrer' : undefined}
-    class="focus-outline-sm group relative order-4 flex select-none flex-row items-center justify-start gap-4 rounded-xl border border-neutral-200/50 bg-neutral-100 p-3 transition-colors duration-150 ease-in-out hover:bg-neutral-100/75 dark:border-neutral-500/90 dark:bg-neutral-600 dark:hover:bg-neutral-600/75 print:hidden"
+    class="focus-outline-sm group relative order-4 flex flex-row items-center justify-start gap-4 rounded-xl border border-neutral-200/50 bg-neutral-100 p-3 transition-colors duration-150 ease-in-out select-none hover:bg-neutral-100/75 dark:border-neutral-500/90 dark:bg-neutral-600 dark:hover:bg-neutral-600/75 print:hidden"
     class:cursor-pointer={url}
     in:blur={blurInOpts}
     out:blur={blurOutOpts}
@@ -56,14 +56,14 @@
       />
       {#if playing}
         <div
-          class="absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-neutral-700/40 transition-all group-hover:opacity-0 group-focus-visible:opacity-0 dark:bg-neutral-700/50"
+          class="absolute top-0 left-0 aspect-square h-full w-full rounded-lg bg-neutral-700/40 transition-all group-hover:opacity-0 group-focus-visible:opacity-0 dark:bg-neutral-700/50"
         ></div>
         <div
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity group-hover:opacity-0 group-focus-visible:opacity-0"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity group-hover:opacity-0 group-focus-visible:opacity-0"
         >
           <div id="np-icon" class="relative flex h-2.5 w-fit justify-between gap-1">
             {#each Array(4) as _}
-              <span class="h-full w-[2px] rounded-full bg-orange-light"></span>
+              <span class="bg-orange-light h-full w-[2px] rounded-full"></span>
             {/each}
           </div>
         </div>
@@ -79,7 +79,7 @@
       <div
         class="flex flex-col items-start justify-center pb-1 text-neutral-600 transition-colors dark:text-neutral-100"
       >
-        <p class="line-clamp-1 text-md font-bold">
+        <p class="text-md line-clamp-1 font-bold">
           {title ?? 'Unknown title'}
         </p>
 
@@ -95,7 +95,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
       fill="currentColor"
-      class="absolute right-4 top-4 size-4 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+      class="absolute top-4 right-4 size-4 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
     >
       <path
         d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z"

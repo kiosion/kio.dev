@@ -41,7 +41,7 @@
       {#if config.image}
         <ProfileImage images={config.image} />
       {/if}
-      <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
+      <div class="flex flex-col items-start justify-center gap-y-0.5 select-none">
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
         >
@@ -61,14 +61,14 @@
       <div class="flex flex-col items-start justify-center gap-y-2 pb-2">
         {#if config.bio}
           <p
-            class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200"
+            class="text-md pb-2 text-neutral-400 transition-colors dark:text-neutral-200"
           >
             {config.bio}
           </p>
         {/if}
         {#if socials}
           <ul
-            class="flex select-none flex-col items-start justify-start gap-y-1.5 text-base"
+            class="flex flex-col items-start justify-start gap-y-1.5 text-base select-none"
             role="list"
           >
             {#each socials as social}
@@ -105,12 +105,12 @@
 
     <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-2">
       <p
-        class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+        class="text-sm font-medium text-neutral-600 transition-colors select-none dark:text-neutral-300"
       >
         {$t('Pages')}
       </p>
       <ul
-        class="flex w-full select-none flex-col items-start justify-start gap-y-1"
+        class="flex w-full flex-col items-start justify-start gap-y-1 select-none"
         role="navigation"
       >
         {#each NAV_LINKS as link}

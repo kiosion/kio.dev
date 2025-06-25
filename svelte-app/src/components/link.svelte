@@ -40,7 +40,7 @@
     this={type}
     target={newtab ? '_blank' : undefined}
     rel={newtab ? 'noopener noreferrer' : undefined}
-    class="focus-outline-sm rounded-xs font-semibold text-black underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-[text-decoration-color,color] hover:decoration-orange-light hover:decoration-[3px] focus-visible:decoration-orange-light focus-visible:decoration-[3px] dark:text-white dark:decoration-neutral-400 hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light"
+    class="focus-outline-sm hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs font-semibold text-black underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-[text-decoration-color,color] hover:decoration-[3px] focus-visible:decoration-[3px] dark:text-white dark:decoration-neutral-400"
     tabindex="0"
     aria-label={$$props['aria-label']}
     {...$$restProps}

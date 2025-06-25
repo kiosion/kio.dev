@@ -15,13 +15,13 @@
 </script>
 
 <section
-  class="my-5 rounded-lg bg-neutral-200/50 px-5 pb-6 pt-3 transition-colors dark:bg-neutral-700"
+  class="my-5 rounded-lg bg-neutral-200/50 px-5 pt-3 pb-6 transition-colors dark:bg-neutral-700"
   role="group"
   aria-labelledby="{id}-heading"
 >
   <div class="pb-3">
     <h2
-      class="text-xl font-bold text-dark transition-colors dark:text-white"
+      class="text-dark text-xl font-bold transition-colors dark:text-white"
       id="{id}-heading"
     >
       {title}

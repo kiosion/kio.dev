@@ -36,7 +36,7 @@
 
 <a
   href={link.url}
-  class="focus-outline-sm -mx-2 block w-[calc(100%+16px)] rounded-lg px-3 py-1.5 text-md text-neutral-700 transition-colors dark:text-neutral-200"
+  class="focus-outline-sm text-md -mx-2 block w-[calc(100%+16px)] rounded-lg px-3 py-1.5 text-neutral-700 transition-colors dark:text-neutral-200"
   class:active={isActive}
   class:font-semibold={isActive}
   aria-current={isActive ? 'page' : undefined}

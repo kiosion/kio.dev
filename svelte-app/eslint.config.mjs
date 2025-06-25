@@ -30,6 +30,7 @@ export default tseslint.config(
     },
     rules: {
       // original overrides
+      '@typescript-eslint/no-unused-expressions': [1],
       '@typescript-eslint/no-unsafe-assignment': [0],
       '@typescript-eslint/no-floating-promises': [0],
       '@typescript-eslint/only-throw-error': [0],
@@ -153,6 +154,7 @@ export default tseslint.config(
       svelte: sveltePlugin
     },
     rules: {
+      'no-undef': [0],
       'svelte/missing-declaration': [0],
       // 'local-rules/no-bare-strings': [2],
       'svelte/no-dupe-use-directives': [2],

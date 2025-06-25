@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
+  // import '../app.css';
+  // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
@@ -128,7 +130,7 @@
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <span
-  class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 dark:text-light print:hidden"
+  class="focus-outline-sm text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
   role="button"
   aria-label={$t('Skip to content')}
   tabindex="0"
@@ -137,7 +139,7 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div class="main mx-auto h-full w-full p-5 text-dark dark:text-light lg:text-lg">
+<div class="main text-dark dark:text-light mx-auto h-full w-full p-5 lg:text-lg">
   <div
     class="themed-scrollbar flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
   >

@@ -32,10 +32,10 @@
 </script>
 
 <div
-  class="pointer-events-none flex max-w-64 flex-col gap-1 rounded-lg bg-neutral-600 px-3 pb-3 pt-2 text-light dark:bg-neutral-100 dark:text-dark"
+  class="text-light dark:text-dark pointer-events-none flex max-w-64 flex-col gap-1 rounded-lg bg-neutral-600 px-3 pt-2 pb-3 dark:bg-neutral-100"
 >
   <span>
     <p class="font-sans text-base font-semibold">{title}</p>
   </span>
-  <p class="text-wrap font-sans text-sm">{description}</p>
+  <p class="font-sans text-sm text-wrap">{description}</p>
 </div>

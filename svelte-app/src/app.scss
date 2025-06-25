@@ -1,10 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@config '../tailwind.config.cjs';
 
-@import 'styles/breakpoints';
-@import 'styles/colors';
-@import 'styles/fonts';
-@import 'styles/tw';
+@import '@styles/colors';
+@import '@styles/fonts';
+@import '@styles/helpers';
+@import '@styles/mixins';
+@import '@styles/tw';
 
-@import 'styles/components/code-block';
+@import '@styles/components/code-block';

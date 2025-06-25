@@ -59,7 +59,7 @@
 
   const getActionableTarget = (el: HTMLElement | null): HTMLElement | null => {
     if (el && getComputedStyle(el)?.display === 'contents') {
-      return getActionableTarget(el?.firstChild as HTMLElement | null);
+      return getActionableTarget(el?.firstElementChild as HTMLElement | null);
     }
 
     return el;
@@ -74,7 +74,7 @@
   ] as const;
 
   onMount(() => {
-    target = getActionableTarget(container?.firstChild as HTMLElement | null);
+    target = getActionableTarget(container?.firstElementChild as HTMLElement | null);
 
     if (!target) {
       Logger.error('Tooltip target not found!');

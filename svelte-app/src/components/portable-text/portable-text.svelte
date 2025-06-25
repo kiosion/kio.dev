@@ -136,7 +136,7 @@
       ></PortableText>
       {#if footnotes?.length}
         <div class="footnotes mt-8 px-6 transition-[color] md:px-10">
-          <h3 class="mb-6 block font-display text-2xl font-bold">
+          <h3 class="font-display mb-6 block text-2xl font-bold">
             {$t('Footnotes')}
           </h3>
           <ol class="ml-6 list-decimal leading-8">
@@ -146,7 +146,7 @@
                   <svelte:self text={note.note} plaintext />
                   <Tooltip content={$t('Go to footnote source')} placement="top">
                     <a
-                      class="focus-outline-sm group ml-2 rounded-xs px-2 py-1 text-sm transition-colors hover:bg-neutral-light dark:hover:bg-neutral-dark"
+                      class="focus-outline-sm group hover:bg-neutral-light dark:hover:bg-neutral-dark ml-2 rounded-xs px-2 py-1 text-sm transition-colors"
                       href={`#src-${note._key}`}
                       id="note-{note._key}"
                       aria-label={$t('Go to footnote source')}

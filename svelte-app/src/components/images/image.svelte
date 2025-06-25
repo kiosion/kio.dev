@@ -75,7 +75,7 @@
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
-      class="w-full select-none rounded-md"
+      class="w-full rounded-md select-none"
       src={placeholderSrc}
       draggable="false"
       style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
@@ -98,7 +98,7 @@
     >
       {#if showImageModal}
         <img
-          class="placeholder absolute left-0 top-0 w-full select-none rounded-md opacity-50"
+          class="placeholder absolute top-0 left-0 w-full rounded-md opacity-50 select-none"
           src={placeholderSrc}
           alt={_key}
           draggable="false"
@@ -108,7 +108,7 @@
       {:else}
         <img
           {src}
-          class="w-full select-none rounded-md"
+          class="w-full rounded-md select-none"
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
@@ -118,7 +118,7 @@
     </button>
   {:catch e}
     <p
-      class="error font-code absolute left-1/2 top-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
+      class="error font-code absolute top-1/2 left-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
     >
       {$t('Error')}:&nbsp;{e?.message || e}
     </p>
@@ -130,7 +130,7 @@
     />
   {/await}
   <img
-    class="backdrop absolute left-1/2 top-0 -z-[1] w-full -translate-x-1/2 select-none rounded-md opacity-20 blur-lg transition-opacity print:hidden"
+    class="backdrop absolute top-0 left-1/2 -z-[1] w-full -translate-x-1/2 rounded-md opacity-20 blur-lg transition-opacity select-none print:hidden"
     src={placeholderSrc}
     alt={_key}
     draggable="false"
@@ -141,7 +141,7 @@
 
 <ImageModal bind:dialog bind:show={showImageModal}>
   <img
-    class="mx-auto box-border max-h-full max-w-full select-none rounded-md"
+    class="mx-auto box-border max-h-full max-w-full rounded-md select-none"
     src={fullSrc}
     alt={_key}
     style="object-fit: contain; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"

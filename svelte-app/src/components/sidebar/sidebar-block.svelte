@@ -86,25 +86,25 @@
   <div class="order-3" in:blur={blurInOpts} out:blur={blurOutOpts}>
     <BaseContainer class="flex flex-col px-4 py-3">
       <p
-        class="cursor-default select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+        class="cursor-default text-sm font-medium text-neutral-600 transition-colors select-none dark:text-neutral-300"
       >
         {$t('Reading')}&nbsp;&mdash;&nbsp;{estRemainingTime}&nbsp;{$t(
           estRemainingTime === 1 ? 'min left' : 'mins left'
         )}
       </p>
 
-      <p class="py-1 font-display text-xl font-bold leading-tight transition-colors">
+      <p class="font-display py-1 text-xl leading-tight font-bold transition-colors">
         {title}
       </p>
 
       {#if tags?.length}
-        <div class="flex flex-row flex-wrap items-center justify-start gap-2 pb-2 pt-1">
+        <div class="flex flex-row flex-wrap items-center justify-start gap-2 pt-1 pb-2">
           {#each tags as tag}
             <a
               href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
-              class="focus-outline-sm flex w-fit flex-row items-center justify-start gap-x-2 whitespace-nowrap rounded-md bg-neutral-200/50 px-1.5 py-1 text-sm transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+              class="focus-outline-sm flex w-fit flex-row items-center justify-start gap-x-2 rounded-md bg-neutral-200/50 px-1.5 py-1 text-sm whitespace-nowrap transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             >
-              <span class="select-none font-bold">#</span>
+              <span class="font-bold select-none">#</span>
               <span>{tag.title.toLowerCase()}</span>
             </a>
           {/each}
@@ -121,7 +121,7 @@
 
       {#if $sidebarHeadings}
         <div
-          class="mt-3 select-none pb-1 text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+          class="mt-3 pb-1 text-sm font-medium text-neutral-600 transition-colors select-none dark:text-neutral-300"
         >
           {$t('Summary')}
         </div>

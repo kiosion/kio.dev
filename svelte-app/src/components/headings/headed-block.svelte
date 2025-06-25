@@ -25,12 +25,12 @@
   </div>
   {#if constrainWidth}
     <ConstrainWidth class="px-6 md:px-8">
-      <div class="mx-1 font-sans text-base text-dark/90 dark:text-light/90">
+      <div class="text-dark/90 dark:text-light/90 mx-1 font-sans text-base">
         <slot {id} />
       </div>
     </ConstrainWidth>
   {:else}
-    <div class="mx-1 font-sans text-base text-dark/90 dark:text-light/90">
+    <div class="text-dark/90 dark:text-light/90 mx-1 font-sans text-base">
       <slot {id} />
     </div>
   {/if}
