@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-
   import type { BlockComponentProps } from '@portabletext/svelte';
+  import { page } from '$app/stores';
 
   export let portableText: BlockComponentProps;
 
@@ -13,10 +12,13 @@
 
     clearTimeout(highlightedTimeout);
 
-    val &&
-      (highlightedTimeout = setTimeout(() => {
-        isHighlighted = false;
-      }, 5000));
+    if (!val) {
+      return;
+    }
+
+    highlightedTimeout = setTimeout(() => {
+      isHighlighted = false;
+    }, 5000);
   };
 
   $: ({ global, value, indexInParent } = portableText);
@@ -25,7 +27,7 @@
 </script>
 
 <a
-  class="focus-outline-sm relative block w-full rounded-sm font-extrabold text-neutral-800 decoration-orange-light decoration-2 underline-offset-4 transition-colors dark:text-neutral-0 {style}"
+  class="focus-outline-sm decoration-orange-light dark:text-neutral-0 relative block w-full rounded-sm font-extrabold text-neutral-800 decoration-2 underline-offset-4 transition-colors {style}"
   class:px-6={global.context.documentView}
   class:md:px-10={global.context.documentView}
   class:!mt-8={indexInParent === 0}
@@ -33,32 +35,34 @@
   id={`heading-${value._key}`}
   href={`#${value._key}`}
 >
-  <svelte:element this={style} class="-ml-1.5 inline font-display font-bold">
+  <svelte:element this={style} class="font-display -ml-1.5 inline font-bold">
     <slot />
   </svelte:element>
 </a>
 
 <style lang="scss">
-  @import '@styles/colors';
-  @import '@styles/mixins';
+  @use '@styles/colors';
+  @use '@styles/mixins';
+
+  @reference 'tailwindcss';
 
   .h1 {
-    @apply mb-6 mt-10;
+    @apply mt-10 mb-6;
   }
   .h2 {
-    @apply mb-6 mt-10;
+    @apply mt-10 mb-6;
   }
   .h3 {
-    @apply mb-5 mt-8;
+    @apply mt-8 mb-5;
   }
   .h4 {
-    @apply mb-5 mt-8;
+    @apply mt-8 mb-5;
   }
   .h5 {
-    @apply mb-4 mt-6;
+    @apply mt-6 mb-4;
   }
   .h6 {
-    @apply mb-4 mt-6;
+    @apply mt-6 mb-4;
   }
 
   h1 {
@@ -81,10 +85,10 @@
   }
 
   .highlighted {
-    color: mix($neutral-800, $orange-dark);
+    color: mix(colors.$neutral-800, colors.$orange-dark);
 
-    @include dark {
-      color: mix($neutral-0, $orange-light);
+    @include mixins.dark {
+      color: mix(colors.$neutral-0, colors.$orange-light);
     }
   }
 </style>

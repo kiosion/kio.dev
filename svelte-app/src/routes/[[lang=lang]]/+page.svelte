@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n';
-  import { pageTitle } from '$lib/navigation';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import ListItem from '$components/lists/list-item.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
+  import { linkTo, t } from '$lib/i18n';
+  import { pageTitle } from '$lib/navigation';
+  import { failed } from '$lib/snippets.svelte';
 
   export let data;
 
@@ -33,8 +33,7 @@
       {#each data.config.about as aboutSection, idx}
         {#if aboutSection.content}
           <HeadedBlock heading={aboutSection.title} first={idx === 0}>
-            <PortableText text={aboutSection.content} class="-mt-2" bodySize="base"
-            ></PortableText>
+            <PortableText text={aboutSection.content} class="-mt-2" bodySize="base" />
           </HeadedBlock>
 
           {#if idx < data.config.about.length - 1}

@@ -1,19 +1,16 @@
 <script lang="ts">
-  import { blur } from 'svelte/transition';
-
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { linkTo, t } from '$lib/i18n';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
   import MinusSmall from '$components/icons/minus-small.svelte';
   import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
   import PlusSmall from '$components/icons/plus-small.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
-
+  import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { linkTo, t } from '$lib/i18n';
   import type { LocaleKey } from '$types/generated';
+  import { blur } from 'svelte/transition';
 
   let message: LocaleKey = 'errors.generic.message',
     title: LocaleKey = 'errors.generic.title',
@@ -86,7 +83,7 @@
 
 <svelte:head>
   <!-- eslint-disable-next-line -->
-  <title>kio.dev | {status}</title>
+  <title>{$t('kio.dev | ')}{status}</title>
   <meta name="robots" content="none" />
 </svelte:head>
 
@@ -133,11 +130,11 @@
 
   <BaseContainer class="p-5">
     <h1
-      class="mb-4 px-1 font-display text-3xl font-black text-neutral-900 dark:text-neutral-100"
+      class="font-display mb-4 px-1 text-3xl font-black text-neutral-900 dark:text-neutral-100"
     >
       {heading}
     </h1>
-    <p class="px-1 text-md">
+    <p class="text-md px-1">
       <!-- eslint-disable-next-line svelte/prefer-destructured-store-props -->
       {$page.error?.message && $page.status !== 404 ? $page.error.message : $t(message)}
     </p>
@@ -165,7 +162,7 @@
       transition:blur={{ duration: BASE_ANIMATION_DURATION, amount: 6 }}
     >
       <pre
-        class="font-code whitespace-pre-wrap break-all rounded-lg bg-neutral-200/75 p-4 text-sm transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
+        class="font-code rounded-lg bg-neutral-200/75 p-4 text-sm break-all whitespace-pre-wrap transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br
             />{/if}{/each}</pre>
     </div>
   {/if}

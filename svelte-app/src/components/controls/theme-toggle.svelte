@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { APP_THEMES } from '$lib/consts';
-  import { t } from '$lib/i18n';
-  import Settings from '$lib/settings';
-
   import BaseToggle from '$components/controls/base-toggle.svelte';
   import MoonSmall from '$components/icons/moon-small.svelte';
   import SunSmall from '$components/icons/sun-small.svelte';
+  import { APP_THEMES } from '$lib/consts';
+  import { t } from '$lib/i18n';
+  import Settings from '$lib/settings';
 
   const { theme, modified } = Settings;
 </script>

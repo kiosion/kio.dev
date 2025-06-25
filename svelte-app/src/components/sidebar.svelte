@@ -1,8 +1,4 @@
 <script lang="ts">
-  import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
-  import { APP_VERSION } from '$lib/env';
-  import { t } from '$lib/i18n';
-
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
   import EnvelopeOpenSmall from '$components/icons/envelope-open-small.svelte';
@@ -14,10 +10,14 @@
   import ProfileImage from '$components/sidebar/profile-image.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
   import SidebarLink from '$components/sidebar/sidebar-link.svelte';
-  import ToruWidget from '$components/sidebar/toru.svelte';
-
   import type { ToruData } from '$components/sidebar/toru';
+  import ToruWidget from '$components/sidebar/toru.svelte';
+  import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
+  import { APP_VERSION } from '$lib/env';
+  import { t } from '$lib/i18n';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
+
+  import ErrorBoundary from './error-boundary.svelte';
 
   export let config: NonNullable<GetConfigQueryResult>,
     toruData: Promise<ToruData | undefined>,
@@ -43,7 +43,7 @@
       {#if config.image}
         <ProfileImage images={config.image} />
       {/if}
-      <div class="flex select-none flex-col items-start justify-center gap-y-0.5">
+      <div class="flex flex-col items-start justify-center gap-y-0.5 select-none">
         <h1
           class="text-lg font-bold text-neutral-900 transition-colors dark:text-neutral-100"
         >
@@ -63,14 +63,14 @@
       <div class="flex flex-col items-start justify-center gap-y-2 pb-2">
         {#if config.bio}
           <p
-            class="pb-2 text-md text-neutral-400 transition-colors dark:text-neutral-200"
+            class="text-md pb-2 text-neutral-400 transition-colors dark:text-neutral-200"
           >
             {config.bio}
           </p>
         {/if}
         {#if socials}
           <ul
-            class="flex select-none flex-col items-start justify-start gap-y-1.5 text-base"
+            class="flex flex-col items-start justify-start gap-y-1.5 text-base select-none"
             role="list"
           >
             {#each socials as social}
@@ -107,12 +107,12 @@
 
     <nav class="-mb-2 flex w-full flex-col items-start justify-center gap-y-2">
       <p
-        class="select-none text-sm font-medium text-neutral-600 transition-colors dark:text-neutral-300"
+        class="text-sm font-medium text-neutral-600 transition-colors select-none dark:text-neutral-300"
       >
         {$t('Pages')}
       </p>
       <ul
-        class="flex w-full select-none flex-col items-start justify-start gap-y-1"
+        class="flex w-full flex-col items-start justify-start gap-y-1 select-none"
         role="navigation"
       >
         {#each NAV_LINKS as link}
@@ -131,10 +131,14 @@
     <ThemeToggle />
   </BaseContainer>
 
-  <SidebarBlock {scrollContainer} />
+  <ErrorBoundary>
+    <SidebarBlock {scrollContainer} />
+  </ErrorBoundary>
 
   {#if config.enableToru}
-    <ToruWidget initPromise={toruData} />
+    <ErrorBoundary>
+      <ToruWidget initPromise={toruData} />
+    </ErrorBoundary>
   {/if}
 
   {#if APP_VERSION?.length}

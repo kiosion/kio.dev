@@ -1,16 +1,16 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
+
+  // eslint-disable-next-line no-restricted-imports
+  import '../tailwind.css';
   // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
-
-  import { onDestroy, onMount } from 'svelte';
-  import { get } from 'svelte/store';
-  import { fly } from 'svelte/transition';
-
-  import { classList } from 'svelte-body';
-
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { page } from '$app/stores';
+  import ErrorBoundary from '$components/error-boundary.svelte';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import Sidebar from '$components/sidebar.svelte';
   import {
     APP_LANGS,
     APP_THEMES,
@@ -21,11 +21,10 @@
   import { ENV, SELF_BASE_URL } from '$lib/env';
   import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
   import Settings, { listenForMQLChange, loading } from '$lib/settings';
-
-  import PageTransition from '$components/layouts/page-transition.svelte';
-  import Sidebar from '$components/sidebar.svelte';
-
   import type { Unsubscriber } from 'svelte/store';
+  import { get } from 'svelte/store';
+  import { fly } from 'svelte/transition';
+  import { classList } from 'svelte-body';
 
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
@@ -39,11 +38,10 @@
         const content = document.getElementById('content-wrapper'),
           focusable = content?.querySelectorAll(
             '[tabindex="0"], a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-          ),
-          elem = focusable?.[0] as HTMLElement | null;
-        elem?.focus();
+          )?.[0] as HTMLElement | null;
+        focusable?.focus();
         // @ts-expect-error - scrollToOptions is not yet in the DOM typings
-        elem?.scrollTo({ behavior: 'smooth', block: 'center' });
+        focusable?.scrollTo({ behavior: 'smooth', block: 'center' });
       }
     };
 
@@ -93,9 +91,11 @@
       )
     );
 
-    ENV !== 'production' && checkTranslations();
+    if (ENV !== 'production') {
+      checkTranslations();
+    }
 
-    setTimeout(() => loading.set(false), 1000);
+    loading.set(false);
   });
 
   onDestroy(() => unsubscribers.forEach((u) => u()));
@@ -103,13 +103,9 @@
   export let data;
 
   $: ({ url } = $page);
-  $: isLocalized.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-  );
+  $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
   $: currentLang.set(
-    APP_LANGS.includes($page?.params?.lang as (typeof APP_LANGS)[number])
-      ? $page?.params?.lang
-      : DEFAULT_APP_LANG
+    APP_LANGS.includes($page?.params?.lang) ? $page?.params?.lang : DEFAULT_APP_LANG
   );
 </script>
 
@@ -137,7 +133,7 @@
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <span
-  class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 dark:text-light print:hidden"
+  class="focus-outline-sm text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
   role="button"
   aria-label={$t('Skip to content')}
   tabindex="0"
@@ -146,7 +142,7 @@
   on:keydown={skipToContent}>{$t('Skip to content')}</span
 >
 
-<div class="main mx-auto h-full w-full p-5 text-dark dark:text-light lg:text-lg">
+<div class="main text-dark dark:text-light mx-auto h-full w-full p-5 lg:text-lg">
   <div
     class="themed-scrollbar flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
   >
@@ -158,7 +154,9 @@
       bind:this={scrollContainer}
     >
       <PageTransition pathname={data.pathname}>
-        <slot />
+        <ErrorBoundary>
+          <slot />
+        </ErrorBoundary>
       </PageTransition>
     </div>
   </div>

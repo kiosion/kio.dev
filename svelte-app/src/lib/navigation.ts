@@ -1,10 +1,8 @@
-import { derived } from 'svelte/store';
-
+import type { Page as PageStore } from '@sveltejs/kit';
 import { page } from '$app/stores';
 import { APP_ROUTES, BASE_PAGE_TITLE } from '$lib/consts';
 import { isLocalized, t } from '$lib/i18n';
-
-import type { Page as PageStore } from '@sveltejs/kit';
+import { derived } from 'svelte/store';
 
 export const pageTitle = derived([isLocalized, t, page], (vals) => {
   const basePathname = vals[2]?.url?.pathname ?? '/',

@@ -4,7 +4,6 @@
   import EmptyContent from '$components/empty-content.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
-
   import type { RouteFetch } from '$types';
   import type { HeadingNode } from '$types/documents';
   import type { GetPostQueryResult } from '$types/sanity';

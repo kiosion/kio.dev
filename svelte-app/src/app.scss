@@ -1,10 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import 'styles/breakpoints';
-@import 'styles/colors';
-@import 'styles/fonts';
-@import 'styles/tw';
-
-@import 'styles/components/code-block';
+@import '@styles/colors';
+@import '@styles/fonts';
+@import '@styles/helpers';
+@import '@styles/mixins';
