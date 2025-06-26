@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import Highlight from 'svelte-highlight/Highlight.svelte';
+  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
+  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
+
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
 
@@ -15,11 +19,9 @@
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
 
-  import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
-  import LineNumbers from 'svelte-highlight/LineNumbers.svelte';
-  import Highlight from 'svelte-highlight/Highlight.svelte';
-
+  // eslint-disable-next-line import/no-duplicates
   import type { LanguageType as SHLanguageType } from 'svelte-highlight/languages';
+  // eslint-disable-next-line import/no-duplicates
   import type * as SHLanguages from 'svelte-highlight/languages';
 
   type SHLanguageUnion = Extract<keyof typeof SHLanguages, string>;
@@ -71,7 +73,9 @@
         case undefined:
           return (await import('svelte-highlight/languages/markdown')).markdown;
         default:
-          return (await import(`../../node_modules/svelte-highlight/languages/${lang}.js`))[lang];
+          return (
+            await import(`../../node_modules/svelte-highlight/languages/${lang}.js`)
+          )[lang];
       }
     } catch {
       return (await import('svelte-highlight/languages/markdown')).markdown;

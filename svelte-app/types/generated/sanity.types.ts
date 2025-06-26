@@ -74,9 +74,9 @@ export type SiteSettings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  image: {
-    dark: {
+  name?: string;
+  image?: {
+    dark?: {
       asset?: {
         _ref: string;
         _type: 'reference';
@@ -87,7 +87,7 @@ export type SiteSettings = {
       crop?: SanityImageCrop;
       _type: 'image';
     };
-    light: {
+    light?: {
       asset?: {
         _ref: string;
         _type: 'reference';
@@ -101,16 +101,16 @@ export type SiteSettings = {
   };
   handle?: string;
   bio?: string;
-  enableToru: boolean;
+  enableToru?: boolean;
   socialLinks?: Array<{
-    name: string;
+    name?: string;
     url?: string;
     internal?: boolean;
     rel?: Array<'nofollow' | 'noopener' | 'noreferrer' | 'me'>;
     _key: string;
   }>;
   about?: Array<{
-    title: string;
+    title?: string;
     content?: Array<
       | {
           children?: Array<{
@@ -183,7 +183,7 @@ export type SiteSettings = {
     _key: string;
   }>;
   meta?: Array<{
-    title: string;
+    title?: string;
     content?: Array<
       | {
           children?: Array<{
@@ -256,10 +256,10 @@ export type SiteSettings = {
     _key: string;
   }>;
   timeline?: Array<{
-    title: string;
+    title?: string;
     subtitle?: string;
     range?: {
-      start: string;
+      start?: string;
       end?: string;
     };
     body?: Array<
@@ -342,8 +342,8 @@ export type Tag = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
   desc?: string;
 };
 
@@ -353,8 +353,8 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
   desc?: string;
   date?: string;
   views?: number;
@@ -448,8 +448,8 @@ export type Project = {
   }>;
   github?: string;
   links?: Array<{
-    title: string;
-    url: string;
+    title?: string;
+    url?: string;
     _key: string;
   }>;
 };
@@ -460,8 +460,8 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
   desc?: string;
   date?: string;
   views?: number;
@@ -602,14 +602,14 @@ export type SanityImageMetadata = {
 
 export type Slug = {
   _type: 'slug';
-  current: string;
+  current?: string;
   source?: string;
 };
 
 export type Header = {
   _type: 'header';
-  icon: string;
-  title: string;
+  icon?: string;
+  title?: string;
 };
 
 export type Divider = {
@@ -654,9 +654,9 @@ export type GetConfigQueryResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  image: {
-    dark: {
+  name?: string;
+  image?: {
+    dark?: {
       asset?: {
         _ref: string;
         _type: 'reference';
@@ -667,7 +667,7 @@ export type GetConfigQueryResult = {
       crop?: SanityImageCrop;
       _type: 'image';
     };
-    light: {
+    light?: {
       asset?: {
         _ref: string;
         _type: 'reference';
@@ -681,16 +681,16 @@ export type GetConfigQueryResult = {
   };
   handle?: string;
   bio?: string;
-  enableToru: boolean;
+  enableToru?: boolean;
   socialLinks?: Array<{
-    name: string;
+    name?: string;
     url?: string;
     internal?: boolean;
     rel?: Array<'me' | 'nofollow' | 'noopener' | 'noreferrer'>;
     _key: string;
   }>;
   about?: Array<{
-    title: string;
+    title?: string;
     content?: Array<
       | ({
           _key: string;
@@ -763,7 +763,7 @@ export type GetConfigQueryResult = {
     _key: string;
   }>;
   meta?: Array<{
-    title: string;
+    title?: string;
     content?: Array<
       | ({
           _key: string;
@@ -836,10 +836,10 @@ export type GetConfigQueryResult = {
     _key: string;
   }>;
   timeline?: Array<{
-    title: string;
+    title?: string;
     subtitle?: string;
     range?: {
-      start: string;
+      start?: string;
       end?: string;
     };
     body?: Array<
@@ -916,21 +916,21 @@ export type GetConfigQueryResult = {
   pgpKey?: string;
 } | null;
 // Variable: GetPostQuery
-// Query: *[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': coalesce(date, _createdAt),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)}[0]
+// Query: *[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  ),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)}[0]
 export type GetPostQueryResult = {
   _id: string;
   objectID: string;
   _rev: string;
   _type: 'post';
   _createdAt: string;
-  title: string;
+  title: string | null;
   publishedAt: null;
   tags: Array<{
     _id: string;
-    title: string;
-    slug: Slug;
+    title: string | null;
+    slug: Slug | null;
   }> | null;
-  slug: Slug;
+  slug: Slug | null;
   body: Array<
     | ({
         _key: string;
@@ -1001,28 +1001,28 @@ export type GetPostQueryResult = {
       }
   > | null;
   desc: string | null;
-  date: string;
+  date: string | null;
   views: number | 0;
   numberOfCharacters: number;
   estimatedWordCount: number;
   estimatedReadingTime: number;
 } | null;
 // Variable: GetPostsQuery
-// Query: *[_type == 'post']{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': coalesce(date, _createdAt),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)} | order($sortOrder) [$startNumber...$endNumber]
+// Query: *[_type == 'post']{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': dateTime(select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  )),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)} | order(date desc) [$startNumber...$endNumber]
 export type GetPostsQueryResult = Array<{
   _id: string;
   objectID: string;
   _rev: string;
   _type: 'post';
   _createdAt: string;
-  title: string;
+  title: string | null;
   publishedAt: null;
   tags: Array<{
     _id: string;
-    title: string;
-    slug: Slug;
+    title: string | null;
+    slug: Slug | null;
   }> | null;
-  slug: Slug;
+  slug: Slug | null;
   body: Array<
     | ({
         _key: string;
@@ -1093,7 +1093,7 @@ export type GetPostsQueryResult = Array<{
       }
   > | null;
   desc: string | null;
-  date: string;
+  date: string | null;
   views: number | 0;
   numberOfCharacters: number;
   estimatedWordCount: number;
@@ -1108,8 +1108,8 @@ import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     "*[_type == 'siteSettings'][0]": GetConfigQueryResult;
-    "*[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': coalesce(date, _createdAt),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n}[0]": GetPostQueryResult;
-    "*[_type == 'post']{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': coalesce(date, _createdAt),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n} | order($sortOrder) [$startNumber...$endNumber]": GetPostsQueryResult;
+    "*[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  ),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n}[0]": GetPostQueryResult;
+    "*[_type == 'post']{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': dateTime(select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  )),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n} | order(date desc) [$startNumber...$endNumber]": GetPostsQueryResult;
     "count(*[_type == 'post'])": CountPostsQueryResult;
   }
 }

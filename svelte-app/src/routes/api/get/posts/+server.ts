@@ -12,8 +12,6 @@ export const GET = (async ({ url }) => {
     limit: parseInt(
       url.searchParams.get('limit') ?? DEFAULT_FILTER_QUERY_PARAMS.limit.toString()
     ),
-    sort: url.searchParams.get('sort') ?? DEFAULT_FILTER_QUERY_PARAMS.sort,
-    order: url.searchParams.get('order') ?? DEFAULT_FILTER_QUERY_PARAMS.order,
     preview: !!url.searchParams.get('preview')
   };
 

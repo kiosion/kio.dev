@@ -99,16 +99,12 @@ export const HOMEPAGE_POSTS_NUM = 4 as const;
 
 export const DEFAULT_FILTER_QUERY_PARAMS = {
   page: 0,
-  limit: 10,
-  sort: 'date',
-  order: 'desc'
+  limit: 10
 } as const;
 
 export const DEFAULT_POST_QUERY_PARAMS = {
-  page: DEFAULT_FILTER_QUERY_PARAMS.page,
-  limit: 99,
-  sort: DEFAULT_FILTER_QUERY_PARAMS.sort,
-  order: DEFAULT_FILTER_QUERY_PARAMS.order
+  page: 0,
+  limit: 99
 } as const;
 
 export const DEFAULT_DESKTOP_WIDTH = 1024;

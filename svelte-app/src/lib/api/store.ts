@@ -25,8 +25,6 @@ type BaseParams = {
 type CollectionFilter = {
   page?: number;
   limit?: number;
-  sort?: 'date' | 'title' | 'views' | 'publishedAt';
-  order?: 'asc' | 'desc';
 };
 
 type SlugOrId =
@@ -39,11 +37,11 @@ type SlugOrId =
       id: string;
     };
 
-export type SingleParams<M extends Model> = M extends 'post' | 'project'
+export type SingleParams<M extends Model> = M extends 'post'
   ? SlugOrId & BaseParams
   : BaseParams;
 
-export type ManyParams<M extends Model> = M extends 'post' | 'project'
+export type ManyParams<M extends Model> = M extends 'post'
   ? { tags?: string[] } & CollectionFilter & BaseParams
   : M extends 'tag'
     ? CollectionFilter & BaseParams

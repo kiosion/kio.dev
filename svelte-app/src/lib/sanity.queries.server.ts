@@ -19,7 +19,10 @@ export const GetPostQuery = defineQuery(
   slug,
   body,
   desc,
-  'date': coalesce(date, _createdAt),
+  'date': select(
+    defined(date) => date + 'T00:00:00Z',
+    true => _createdAt
+  ),
   'views': coalesce(views, 0),
   'numberOfCharacters': length(pt::text(body)),
   'estimatedWordCount': round(length(pt::text(body)) / 5),
@@ -43,11 +46,14 @@ export const GetPostsQuery = defineQuery(`*[_type == 'post']{
   slug,
   body,
   desc,
-  'date': coalesce(date, _createdAt),
+  'date': dateTime(select(
+    defined(date) => date + 'T00:00:00Z',
+    true => _createdAt
+  )),
   'views': coalesce(views, 0),
   'numberOfCharacters': length(pt::text(body)),
   'estimatedWordCount': round(length(pt::text(body)) / 5),
   'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-} | order($sortOrder) [$startNumber...$endNumber]`);
+} | order(date desc) [$startNumber...$endNumber]`);
 
 export const CountPostsQuery = defineQuery("count(*[_type == 'post'])");

@@ -123,27 +123,21 @@ export const getPosts = async ({
   tag,
   page = 0,
   limit = 10,
-  sort = 'date',
-  order = 'desc',
   preview = false
 }: {
   tag?: string;
   page?: number;
   limit?: number;
-  sort?: string;
-  order?: string;
   preview?: boolean;
 }) => {
   const startNumber = page * limit;
   const endNumber = startNumber + limit;
-  const sortOrder = `${sort} ${order}`;
 
   // TODO: Add tag filtering
   const result = await (preview ? previewClient : client)
     .fetch(GetPostsQuery, {
       startNumber,
-      endNumber,
-      sortOrder
+      endNumber
     })
     .then(handleNoResults)
     .catch(handleSanityError);

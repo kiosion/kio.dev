@@ -8,9 +8,7 @@ import type { LayoutLoad } from './$types';
 import type { ToruData } from '$components/sidebar/toru';
 
 export const trailingSlash = 'ignore';
-
-// export const ssr = ENV !== 'testing';
-export const ssr = false;
+export const ssr = ENV !== 'testing';
 
 export const load = (async ({ params, url, fetch }) => {
   const config = unwrapAPIResponse(
