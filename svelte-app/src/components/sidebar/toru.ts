@@ -1,7 +1,6 @@
-import { writable } from 'svelte/store';
-
 import { browser } from '$app/environment';
 import Logger from '$lib/logger';
+import { writable } from 'svelte/store';
 
 export type ToruData = {
   title: string;
@@ -38,13 +37,13 @@ const onError = (e: Event) => {
   Logger.error('[ToruSync] Error', e);
 };
 
-const onMessage = (e: MessageEvent<string | unknown>) => {
+const onMessage = (e: MessageEvent<string>) => {
   if (!e.data || e.data === 'pong') {
     return;
   }
 
   try {
-    const res = JSON.parse(e.data as string) as ToruData;
+    const res = JSON.parse(e.data) as ToruData;
 
     Logger.info('[ToruSync] Received frame');
 

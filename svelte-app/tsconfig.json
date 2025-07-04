@@ -12,21 +12,21 @@
     "noEmit": true,
     "removeComments": true,
     "rootDir": "./",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "typeRoots": ["./types", "./types/generated"]
+    "strict": true
   },
   "include": [
     "src/**/*",
+    "src/routes/**/.well-known/**/*",
     "test/**/*",
     "tests/**/*",
     "types/**/*",
-    "cypress/**/*",
     "*.js",
-    "*.ts"
+    "*.ts",
+    "eslint.config.mjs"
   ],
   "exclude": ["**/node_modules"]
 }

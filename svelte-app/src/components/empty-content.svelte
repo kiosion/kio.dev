@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-
   import ExclamationCircle from '$components/icons/exclamation-circle.svelte';
+  import { t } from '$lib/i18n';
 </script>
 
 <div
-  class="mb-2 mt-8 flex w-full select-none flex-row items-center justify-start gap-x-3 px-8"
+  class="mt-8 mb-2 flex w-full flex-row items-center justify-start gap-x-3 px-8 select-none"
   data-test-id="error-text"
 >
   <ExclamationCircle />
-  <p class="font-sans text-md font-medium">
+  <p class="text-md font-sans font-medium">
     {$t('errors.no-content.message')}
   </p>
 </div>

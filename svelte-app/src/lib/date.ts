@@ -1,7 +1,6 @@
 /* eslint-disable func-call-spacing */
-import { derived } from 'svelte/store';
-
 import { currentLang, t } from '$lib/i18n';
+import { derived } from 'svelte/store';
 
 export const formatDate = derived(
   [currentLang],
@@ -86,7 +85,7 @@ export const displayRange = derived([currentLang, t], ([currentLang, t]) => {
         month: 'short',
         year: 'numeric'
       }).format(endDate)}`;
-    } catch (_) {
+    } catch {
       return t('Invalid date');
     }
   };

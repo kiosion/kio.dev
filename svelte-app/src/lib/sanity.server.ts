@@ -1,3 +1,5 @@
+import { ClientError, createClient, type SanityDocument } from '@sanity/client';
+import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import { isAPISuccess } from '$lib/api/result';
 import { buildSummary } from '$lib/data.server';
 import { ENV } from '$lib/env';
@@ -13,10 +15,6 @@ import {
   GetPostQuery,
   GetPostsQuery
 } from '$lib/sanity.queries.server';
-
-import { ClientError, createClient, type SanityDocument } from '@sanity/client';
-
-import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import type { HeadingNode } from '$types/documents';
 import type { GetPostQueryResult, GetPostsQueryResult } from '$types/sanity';
 

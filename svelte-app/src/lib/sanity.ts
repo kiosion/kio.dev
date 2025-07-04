@@ -1,7 +1,4 @@
-import { API_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
-
 import imageUrlBuilder from '@sanity/image-url';
-
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
 import type {
   FitMode,
@@ -12,6 +9,7 @@ import type {
   SanityImageRect,
   SanityImageSource
 } from '@sanity/image-url/lib/types/types';
+import { SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
 export interface ImageCrop {
   top: number;

@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { fade, fly } from 'svelte/transition';
-
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { t } from '$lib/i18n';
+  import { fade, fly } from 'svelte/transition';
 
   export let dialog: HTMLDialogElement,
     show = false;
@@ -43,7 +42,7 @@
     out:fade={{ duration: BASE_ANIMATION_DURATION }}
   >
     <span
-      class="focus-outline-sm absolute left-1/2 top-0 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold text-dark transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 dark:text-light print:hidden"
+      class="focus-outline-sm text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
       role="button"
       aria-label={$t('Close')}
       tabindex="0"

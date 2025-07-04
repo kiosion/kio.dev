@@ -1,8 +1,7 @@
+import type { APIResponse } from '$lib/api/result';
 import { isAPIFailure } from '$lib/api/result';
 import { API_URL } from '$lib/env';
 import Logger from '$lib/logger';
-
-import type { APIResponse } from '$lib/api/result';
 import type { RouteFetch } from '$types';
 
 export const request = async <T>(

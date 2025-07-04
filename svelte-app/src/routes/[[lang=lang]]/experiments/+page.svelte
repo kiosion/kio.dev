@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-  import { pageTitle } from '$lib/navigation';
-
+  import ErrorBoundary from '$components/error-boundary.svelte';
   import GameOfLifeExperiment from '$components/experiments/gol.svelte';
   import MagneticCursorExperiment from '$components/experiments/mag-cursor.svelte';
   import ToruExperiment from '$components/experiments/toru.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
+  import { t } from '$lib/i18n';
+  import { pageTitle } from '$lib/navigation';
 
   $: description = $t('pages.experiments.description');
 </script>
@@ -26,18 +26,24 @@
 
 <BaseContainer>
   <HeadedBlock heading={$t('Experiments')} first>
-    <ToruExperiment />
+    <ErrorBoundary>
+      <ToruExperiment />
+    </ErrorBoundary>
 
     <span
       class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
     ></span>
 
-    <GameOfLifeExperiment></GameOfLifeExperiment>
+    <ErrorBoundary>
+      <GameOfLifeExperiment />
+    </ErrorBoundary>
 
     <span
       class="block w-full min-w-0 flex-1 border-b border-dashed border-neutral-200 transition-colors dark:border-neutral-400"
     ></span>
 
-    <MagneticCursorExperiment></MagneticCursorExperiment>
+    <ErrorBoundary>
+      <MagneticCursorExperiment />
+    </ErrorBoundary>
   </HeadedBlock>
 </BaseContainer>

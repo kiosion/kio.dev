@@ -1,7 +1,6 @@
 <script lang="ts">
   import { buildImageUrl, getCrop } from '$lib/sanity';
   import settings from '$lib/settings';
-
   import type { SiteConfig } from '$types';
 
   const { theme } = settings;
@@ -19,7 +18,7 @@
 </script>
 
 <img
-  class="aspect-square h-14 w-14 flex-shrink-0 select-none rounded-lg bg-neutral-300/50 p-0 dark:bg-neutral-100/50"
+  class="aspect-square h-14 w-14 flex-shrink-0 rounded-lg bg-neutral-300/50 p-0 select-none dark:bg-neutral-100/50"
   src={imageUrl}
   alt="kio.dev"
 />

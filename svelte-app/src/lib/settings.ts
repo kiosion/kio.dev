@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment, svelte/no-ignored-unsubscribe */
-import { get, type Writable, writable } from 'svelte/store';
-
-import { useMediaQuery } from 'svelte-breakpoints';
-
 import { browser } from '$app/environment';
 import { APP_THEMES, LOCAL_SETTINGS_KEY, MEDIA_QUERIES } from '$lib/consts';
 import Logger from '$lib/logger';
+import { get, type Writable, writable } from 'svelte/store';
+import { useMediaQuery } from 'svelte-breakpoints';
 
 type Settings = {
   theme: (typeof APP_THEMES)[keyof typeof APP_THEMES];

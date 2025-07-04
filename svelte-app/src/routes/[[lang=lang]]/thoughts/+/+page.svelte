@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { linkTo, t } from '$lib/i18n';
-
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import EmptyContent from '$components/empty-content.svelte';
   import HeadedBlock from '$components/headings/headed-block.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
+  import { linkTo, t } from '$lib/i18n';
 
   export let data;
 </script>
@@ -41,7 +40,7 @@
               data-sveltekit-preload-data
             >
               <h2
-                class="font-mono text-md text-neutral-800 transition-colors group-hover:italic group-hover:text-neutral-900 group-focus-visible:italic group-focus-visible:text-neutral-900 dark:text-neutral-100 group-hover:dark:text-neutral-0 group-focus-visible:dark:text-neutral-0"
+                class="text-md group-hover:dark:text-neutral-0 group-focus-visible:dark:text-neutral-0 font-mono text-neutral-800 transition-colors group-hover:text-neutral-900 group-hover:italic group-focus-visible:text-neutral-900 group-focus-visible:italic dark:text-neutral-100"
               >
                 {tag.title}
               </h2>

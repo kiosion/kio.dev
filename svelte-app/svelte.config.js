@@ -1,6 +1,5 @@
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
-// import { vitePreprocess } from '@sveltejs/kit/vite';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,13 +14,14 @@ export default {
   },
   preprocess: [
     vitePreprocess({
-      script: true,
+      // Seems to break snippet exports from modules >= 5.5.0
+      // script: true,
       style: {
         resolve: {
           alias: [
             {
               find: /^@styles\/(.*)$/,
-              replacement: path.resolve(__dirname, 'src/styles/_$1.scss')
+              replacement: path.resolve(__dirname, 'src/styles/$1.scss')
             }
           ]
         }

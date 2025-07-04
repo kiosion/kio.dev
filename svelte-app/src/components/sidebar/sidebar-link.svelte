@@ -1,9 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
-  import { isLocalized, linkTo, t } from '$lib/i18n';
-
   import type { NAV_LINKS } from '$lib/consts';
+  import { isLocalized, linkTo, t } from '$lib/i18n';
 
   export let link: (typeof NAV_LINKS)[number],
     navigatingIsActive = false;
@@ -36,7 +35,7 @@
 
 <a
   href={link.url}
-  class="focus-outline-sm -mx-2 block w-[calc(100%+16px)] rounded-lg px-3 py-1.5 text-md text-neutral-700 transition-colors dark:text-neutral-200"
+  class="focus-outline-sm text-md -mx-2 block w-[calc(100%+16px)] rounded-lg px-3 py-1.5 text-neutral-700 transition-colors dark:text-neutral-200"
   class:active={isActive}
   class:font-semibold={isActive}
   aria-current={isActive ? 'page' : undefined}
