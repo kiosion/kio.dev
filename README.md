@@ -1,30 +1,40 @@
 # kio.dev
 
-Welcome to the monorepo for my blog, portfolio, Nowpage, and CV! You can see the site at https://kio.dev.
+Welcome to the monorepo for my devblog / portfolio!
 
-## 📚 Stack
-#### Frontend
-* SvelteKit
-* TypeScript
-* TailwindCSS + SCSS utils & scoped styles
+🌐 **Live Site:** [kio.dev](https://kio.dev/)
 
-#### API
-* Elixir
-* Cowboy + Plug + HTTPoison
-* Sanity.io
+## 📁 Structure
 
-#### Hosting / Deploys
-* Docker
-* Netlify
-* GCP Cloud Run
+`svelte-app/` - Main SvelteKit application
+`sanity-cms/` - Sanity CMS schema and configuration
 
-## 📦 Dependencies
-To build the project, you'll need:
+## 📚 Tech Stack
+### Front-end
+- SvelteKit - Full-stack framework
+- TypeScript - Type-safe development
+- TailwindCSS - Util-first styling
+- Playwright - e2e testing
 
-* Node ~18.17.1
-* PNPM ~8.0
-* Elixir ~1.16 (with OTP 26, Rebar3, & Hex)
-* Docker & docker-compose
+### Content Management
+- Sanity.io - Headless CMS for blog posts and portfolio content
+
+### Deployment
+- Netlify - Hosting and continuous deployment
+
+## 🚀 Development
+### Prerequisites
+
+- Node.js ~22.14
+- PNPM ~9.15
+
+### Setup
+
+```bash
+git clone https://github.com/yourusername/kio.dev.git
+cd kio.dev
+make web
+```
 
 ## 📃 License
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details. Any changes or derivatives must be released under the same license. 

@@ -8,7 +8,7 @@ export const formatDate = derived(
   ([currentLang]) =>
     (
       dateStr: string | null | undefined,
-      format: 'full' | 'med' | 'short' | 'days' = 'full'
+      format: 'full' | 'med' | 'short' | 'rel' = 'full'
     ) => {
       if (!dateStr) {
         return '';
@@ -36,13 +36,27 @@ export const formatDate = derived(
             year: 'numeric',
             timeZone: 'UTC'
           }).format(date);
-        case 'days': {
+        case 'rel': {
+          // Not precise, but good enough :p
           const now = new Date(),
-            diffDays = Math.floor((now.getTime() - date.getTime()) / 86400000);
+            diffDays = Math.floor((now.getTime() - date.getTime()) / 86400000),
+            diffMonths = Math.floor(diffDays / 30),
+            diffYears = Math.floor(diffDays / 365);
+
+          const [val, unit] = (() => {
+            if (diffYears > 1) {
+              return [diffYears, 'year'] as const;
+            } else if (diffMonths > 6) {
+              return [diffMonths, 'month'] as const;
+            } else {
+              return [diffDays, 'day'] as const;
+            }
+          })();
 
           return new Intl.RelativeTimeFormat(currentLang, {
-            numeric: 'auto'
-          }).format(-diffDays, 'day');
+            numeric: 'auto',
+            style: 'long'
+          }).format(-val, unit);
         }
       }
     }

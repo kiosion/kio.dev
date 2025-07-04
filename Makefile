@@ -11,7 +11,6 @@ install-web:
 	@echo "Installing sveltekit deps..."
 	@cd ./svelte-app && pnpm install --frozen-lockfile
 
-# install sanity deps
 install-sanity: SHELL:=/bin/bash
 install-sanity: install
 install-sanity:
@@ -28,17 +27,14 @@ web: install-web
 web:
 	@cd ./svelte-app && pnpm dev
 
-# Build svelte app for prod
 prod: SHELL:=/bin/bash
 prod:
 	@cd ./svelte-app && SVELTE_ADAPTER_ENV=netlify pnpm build
 
-# vitest
 vitest: SHELL:=/bin/bash
 vitest:
 	@cd ./svelte-app && pnpm run test:vitest
 
-# playwright
 playwright: SHELL:=/bin/bash
 playwright:
 	@cd ./svelte-app && pnpm run test:playwright
@@ -52,7 +48,6 @@ format: SHELL:=/bin/bash
 format: install-web install-sanity install-api lint
 	@cd ./svelte-app && pnpm format:json
 
-# Cleanup temp files / dirs
 cleanup: SHELL:=/bin/bash
 cleanup:
 	@rm -rf ./sanity-cms/dist ./svelte-app/.netlify ./svelte-app/.svelte-kit ./svelte-app/build ./svelte-app/dist

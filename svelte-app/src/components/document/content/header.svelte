@@ -73,7 +73,7 @@
   class="flex w-full flex-row flex-wrap justify-between gap-2 p-2 text-sm text-neutral-700 dark:text-neutral-100"
 >
   <div class="flex flex-row gap-2">
-    <Tooltip content={$formatDate(data.date, 'days') ?? $t('Unknown date')}>
+    <Tooltip content={$formatDate(data.date, 'rel') ?? $t('Unknown date')}>
       <p
         class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
         aria-label="Published date"
