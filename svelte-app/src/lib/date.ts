@@ -85,7 +85,7 @@ export const displayRange = derived([currentLang, t], ([currentLang, t]) => {
         month: 'short',
         year: 'numeric'
       }).format(endDate)}`;
-    } catch (_) {
+    } catch {
       return t('Invalid date');
     }
   };

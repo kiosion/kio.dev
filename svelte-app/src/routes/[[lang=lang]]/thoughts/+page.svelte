@@ -72,14 +72,14 @@
       {#each tags as tag, i}
         {#if i < MAX_TAGS}
           <a
-            class="focus-outline-sm flex shrink-0 select-none flex-row items-center justify-between gap-x-3 whitespace-nowrap rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+            class="focus-outline-sm flex shrink-0 flex-row items-center justify-between gap-x-3 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm whitespace-nowrap text-neutral-700 transition-colors select-none hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
             href={$linkTo(`/thoughts/+/${tag.slug?.current}`)}
             data-sveltekit-preload-code
             data-sveltekit-preload-data
             aria-label={$t('Topic') + ': ' + tag.title}
           >
             <span class="flex flex-row items-center justify-start gap-x-1">
-              <span class="select-none font-semibold">#</span>
+              <span class="font-semibold select-none">#</span>
               <span>{tag.title?.toLowerCase()}</span>
             </span>
             <span class="text-xs"

@@ -1,6 +1,7 @@
 <script lang="ts">
   import LangToggle from '$components/controls/lang-toggle.svelte';
   import ThemeToggle from '$components/controls/theme-toggle.svelte';
+  import ErrorBoundary from '$components/error-boundary.svelte';
   import EnvelopeOpenSmall from '$components/icons/envelope-open-small.svelte';
   import EnvelopeSmall from '$components/icons/envelope-small.svelte';
   import GlobeAmericasSmall from '$components/icons/globe-americas-small.svelte';
@@ -16,8 +17,6 @@
   import { APP_VERSION } from '$lib/env';
   import { t } from '$lib/i18n';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
-
-  import ErrorBoundary from './error-boundary.svelte';
 
   export let config: NonNullable<GetConfigQueryResult>,
     toruData: Promise<ToruData | undefined>,

@@ -20,10 +20,10 @@
   },
   "include": [
     "src/**/*",
+    "src/routes/**/.well-known/**/*",
     "test/**/*",
     "tests/**/*",
     "types/**/*",
-    "cypress/**/*",
     "*.js",
     "*.ts",
     "eslint.config.mjs"

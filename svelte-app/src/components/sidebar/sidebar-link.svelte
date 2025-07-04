@@ -1,9 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { navigating, page } from '$app/stores';
-  import { isLocalized, linkTo, t } from '$lib/i18n';
-
   import type { NAV_LINKS } from '$lib/consts';
+  import { isLocalized, linkTo, t } from '$lib/i18n';
 
   export let link: (typeof NAV_LINKS)[number],
     navigatingIsActive = false;

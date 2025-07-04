@@ -3,7 +3,6 @@
 
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
-  import Divider from '$components/divider.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import SidebarHeadings from '$components/sidebar/sidebar-headings.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';

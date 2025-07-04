@@ -9,7 +9,7 @@ import type {
   SanityImageRect,
   SanityImageSource
 } from '@sanity/image-url/lib/types/types';
-import { API_URL, SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
+import { SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
 export interface ImageCrop {
   top: number;
