@@ -55,12 +55,12 @@
   });
 
   onMount(() => {
-    if (!scrollContainer || !browser) {
+    if (!browser) {
       return;
     }
 
     scrollObserverUnsubscriber = sidebarBlock.subscribe((_) => handleScroll());
-    scrollProgressUpdateInterval = setInterval(() => handleScroll(), 1000);
+    scrollProgressUpdateInterval = setInterval(() => handleScroll(), 2000);
   });
 
   onDestroy(() => {
@@ -81,6 +81,7 @@
     desc: undefined,
     tags: undefined
   });
+  // $: console.log({ scrollContainer });
 </script>
 
 {#if $isDesktop && $sidebarBlock}
