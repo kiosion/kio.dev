@@ -6,8 +6,8 @@ Welcome to the monorepo for my devblog / portfolio!
 
 ## 📁 Structure
 
-`svelte-app/` - Main SvelteKit application
-`sanity-cms/` - Sanity CMS schema and configuration
+- `svelte-app/` - Main SvelteKit application
+- `sanity-cms/` - Sanity CMS schema and configuration
 
 ## 📚 Tech Stack
 ### Front-end
@@ -31,7 +31,7 @@ Welcome to the monorepo for my devblog / portfolio!
 ### Setup
 
 ```bash
-git clone https://github.com/yourusername/kio.dev.git
+git clone git@github.com:kiosion/kio.dev.git
 cd kio.dev
 make web
 ```
