@@ -1,0 +1,31 @@
+name: Deploy Application
+
+on:
+  workflow_call:
+
+jobs:
+  deploy-app:
+    name: Deploy to Netlify
+    environment: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          working-directory: svelte-app
+      - name: Install dependencies
+        run: cd svelte-app && pnpm install --frozen-lockfile
+      - name: Build for production
+        env:
+          SVELTE_NETLIFY_ENV: netlify
+          VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
+          VITE_SANITY_TOKEN: ${{ secrets.VITE_SANITY_TOKEN }}
+          VITE_APP_VERSION: ${{ github.sha }}
+        run: cd svelte-app && pnpm build
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: cd svelte-app && pnpm netlify deploy --dir=./build --functions=./.netlify/functions-internal --prod

@@ -1,60 +1,61 @@
-name: CI - Sanity
+name: Sanity Pipeline
 
 on:
   push:
     branches: ["main"]
-    paths-ignore:
-      - "**/*.md"
-      - "LICENSE"
-      - "**/.husky"
-      - "svelte-app/**"
-      - "express-api/**"
-      - "elixir-api/**"
+    paths:
+      - "sanity-cms/**"
 
 concurrency:
-  group: sanity
+  group: sanity-pipeline-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    environment: Sanity
+  quality-checks:
+    name: Sanity Quality Checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 18.18.0
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
+          working-directory: sanity-cms
+      - name: Install dependencies
+        run: cd sanity-cms && pnpm install --frozen-lockfile
+      - name: Run lint check
+        run: cd sanity-cms && pnpm lint
+
+  deploy-environments:
+    name: Deploy Sanity Studio
+    needs: quality-checks
+    runs-on: ubuntu-latest
+    environment: sanity
+    strategy:
+      matrix:
+        env: [dev, prod]
+        include:
+          - env: dev
+            dataset: dev
+            site_id_secret: NETLIFY_DEV_SITE_ID
+          - env: prod
+            dataset: production
+            site_id_secret: NETLIFY_SITE_ID
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          run_install: false
-      - name: Use node_modules cache
-        uses: actions/cache@v4
-        id: nm-cache
-        with:
-          path: "sanity-cms/node_modules"
-          key: ${{ runner.os }}-npm-${{ hashFiles('sanity-cms/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: Install Dependencies
-        if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: (cd ./sanity-cms && pnpm install)
-      - name: Lint check
-        run: (cd ./sanity-cms && pnpm lint)
-      - name: Build for development
-        run: (cd ./sanity-cms && SANITY_STUDIO_DATASET="dev" pnpm sanity build)
-      - name: Deploy development studio
+          working-directory: sanity-cms
+      - name: Install dependencies
+        run: cd sanity-cms && pnpm install --frozen-lockfile
+      - name: Build Sanity Studio
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod)
-      - name: Build for production
-        run: (cd ./sanity-cms && pnpm sanity build)
-      - name: Deploy production studio
+          SANITY_STUDIO_DATASET: ${{ matrix.dataset }}
+        run: cd sanity-cms && pnpm sanity build
+      - name: Deploy to Netlify
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets[matrix.site_id_secret] }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: (cd ./sanity-cms && pnpm netlify deploy --dir=./dist --prod)
+        run: cd sanity-cms && pnpm netlify deploy --dir=./dist --prod
