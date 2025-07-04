@@ -185,25 +185,20 @@ export const getPosts = async ({
 
 export const getPost = async ({
   slug,
-  id,
   preview
 }: {
-  id?: string;
   slug?: string;
   preview?: boolean;
 }) => {
-  if (!slug && !id) {
+  if (!slug) {
     return {
       status: 400,
-      errors: ['Missing slug or id']
+      errors: ['Missing slug']
     };
   }
 
   const result = await (preview ? previewClient : client)
-    .fetch(GetPostQuery, {
-      id,
-      slug
-    })
+    .fetch(GetPostQuery, { slug })
     .then(handleNoResults)
     .catch(handleSanityError);
 

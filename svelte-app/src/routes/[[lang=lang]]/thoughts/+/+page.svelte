@@ -38,6 +38,7 @@
               href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
               class="pointer-cursor focus-outline group -mx-3 -my-2 flex flex-row items-center justify-between gap-x-4 rounded-lg px-3 py-2 transition-colors hover:bg-neutral-200/50 focus-visible:bg-neutral-200/50 dark:hover:bg-neutral-800/75 dark:focus-visible:bg-neutral-800/75"
               data-sveltekit-preload-code
+              data-sveltekit-preload-data
             >
               <h2
                 class="font-mono text-md text-neutral-800 transition-colors group-hover:italic group-hover:text-neutral-900 group-focus-visible:italic group-focus-visible:text-neutral-900 dark:text-neutral-100 group-hover:dark:text-neutral-0 group-focus-visible:dark:text-neutral-0"

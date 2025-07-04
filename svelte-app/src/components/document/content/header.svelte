@@ -78,7 +78,7 @@
         class="cursor-default rounded-lg bg-neutral-200/50 px-2.5 py-2 transition-colors dark:bg-neutral-700"
         aria-label="Published date"
       >
-        {$formatDate(data.date, 'full') ?? $t('Unknown date')}
+        {$formatDate(data.date, 'full') || $t('Unknown date')}
       </p>
     </Tooltip>
     <Tooltip
@@ -103,6 +103,7 @@
     dir="left"
     text={$t('All posts')}
     preload-code
+    preload-data
   />
 </BaseContainer>
 
@@ -127,15 +128,15 @@
       class="flex flex-row flex-wrap items-center justify-start gap-3 p-2 text-sm"
       aria-label={$t('Tags')}
     >
-      {#each data.tags as tag}
+      {#each data.tags as { slug, title }}
         <a
           class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
-          href={$linkTo(`/thoughts/+/${tag.slug.current}`)}
+          href={$linkTo(`/thoughts/+/${slug.current}`)}
           data-sveltekit-preload-code
-          aria-label={$t('Topic') + ': ' + tag.title}
+          aria-label={$t('Topic') + ': ' + title}
         >
           <span class="select-none font-bold">#</span>
-          <span>{tag.title.toLowerCase()}</span>
+          <span>{title.toLowerCase()}</span>
         </a>
       {/each}
     </div>

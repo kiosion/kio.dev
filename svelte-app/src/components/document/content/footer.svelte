@@ -13,6 +13,7 @@
       dir={$isMobile ? 'up' : 'left'}
       text={$t('All posts')}
       preload-code
+      preload-data
     />
   </div>
 </BaseContainer>

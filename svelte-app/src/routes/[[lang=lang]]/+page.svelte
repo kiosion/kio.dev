@@ -76,6 +76,7 @@
       placement="after"
       text={$t('All posts')}
       preload-code
+      preload-data
     />
     <ArrowButton
       href={$linkTo('/thoughts/+')}

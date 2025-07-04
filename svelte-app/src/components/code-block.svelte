@@ -88,6 +88,7 @@
 
   const updateHeight = (height?: number) => height && (containerHeight = height);
 
+  $: console.log({ lang, LanguageType });
   $: hideLoader = innerHeight > 52;
   $: hideLoader &&
     (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore) &&
@@ -145,25 +146,27 @@
       aria-hidden="true"
       bind:clientHeight={innerHeight}
     >
-      {#await LanguageType then resolvedLang}
-        {#if lang === 'svelte'}
-          <HighlightSvelte code={content} let:highlighted>
-            {#if showLineNumbers === true}
-              <LineNumbers {highlighted} hideBorder wrapLines />
-            {/if}
-          </HighlightSvelte>
-        {:else}
-          <Highlight code={content} language={resolvedLang} let:highlighted>
-            {#if showLineNumbers === true}
-              <LineNumbers {highlighted} hideBorder wrapLines />
-            {/if}
-          </Highlight>
-        {/if}
-      {:catch error}
-        <div class="p-3 font-mono text-sm">
-          {$t('Error loading')}:&nbsp;{error.message}
-        </div>
-      {/await}
+      {#if LanguageType}
+        {#await LanguageType then resolvedLang}
+          {#if lang === 'svelte'}
+            <HighlightSvelte code={content} let:highlighted>
+              {#if showLineNumbers === true}
+                <LineNumbers {highlighted} hideBorder wrapLines />
+              {/if}
+            </HighlightSvelte>
+          {:else}
+            <Highlight code={content} language={resolvedLang} let:highlighted>
+              {#if showLineNumbers === true}
+                <LineNumbers {highlighted} hideBorder wrapLines />
+              {/if}
+            </Highlight>
+          {/if}
+        {:catch error}
+          <div class="p-3 font-mono text-sm">
+            {$t('Error loading')}:&nbsp;{error.message}
+          </div>
+        {/await}
+      {/if}
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
