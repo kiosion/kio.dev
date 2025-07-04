@@ -1,19 +1,14 @@
-import { endpointResponse } from '$lib/data.server';
+import { MutateRequestSchema } from '$lib/api/schemas';
+import { errorResponse, successResponse } from '$lib/api/types';
+import { createEndpoint } from '$lib/api/utils.server';
 import { incViews } from '$lib/sanity.server';
 
-import type { RequestHandler } from './$types';
-
-export const POST = (async ({ request }) => {
-  const body = await request.json();
-
-  switch (body.action) {
-    case 'inc': {
-      const { id } = body;
-      const res = await incViews({ id });
-      return endpointResponse(res, res.status);
-    }
-    default: {
-      return endpointResponse({ status: 400, errors: ['Invalid action'] }, 400);
-    }
+export const POST = createEndpoint(MutateRequestSchema, async (params) => {
+  const { action, id } = params;
+  if (action === 'inc') {
+    const res = await incViews({ id });
+    return successResponse(res);
+  } else {
+    return errorResponse(400, ['Invalid action']);
   }
-}) satisfies RequestHandler;
+});

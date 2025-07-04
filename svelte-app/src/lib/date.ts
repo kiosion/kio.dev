@@ -6,7 +6,14 @@ import { currentLang, t } from '$lib/i18n';
 export const formatDate = derived(
   [currentLang],
   ([currentLang]) =>
-    (dateStr: string, format: 'full' | 'med' | 'short' | 'days' = 'full') => {
+    (
+      dateStr: string | undefined | null,
+      format: 'full' | 'med' | 'short' | 'days' = 'full'
+    ) => {
+      if (!dateStr?.trim()) {
+        return undefined;
+      }
+
       const date = new Date(dateStr);
 
       switch (format) {

@@ -1,4 +1,4 @@
-import { isAPISuccess } from '$lib/api/result';
+import { isAPIError } from '$lib/api/types';
 import { buildSummary } from '$lib/data.server';
 import { ENV } from '$lib/env';
 import {
@@ -16,14 +16,21 @@ import {
 
 import { ClientError, createClient, type SanityDocument } from '@sanity/client';
 
-import type { APIFailure, APIResponse, Result } from '$lib/api/result';
+import type {
+  GetConfigParamsSchema,
+  GetPostParamsSchema,
+  GetPostsParamsSchema
+} from '$lib/api/schemas';
+import type { APIResponse } from '$lib/api/types';
 import type { HeadingNode } from '$types/documents';
-import type { GetPostQueryResult, GetPostsQueryResult } from '$types/sanity';
+import type { GetPostQueryResult } from '$types/sanity';
+import type { z } from 'zod';
 
 const clientConfig = {
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
-  useCdn: ENV === 'production',
+  // useCdn: ENV === 'production',
+  useCdn: true,
   apiVersion: SANITY_API_VERSION,
   token: SANITY_API_TOKEN
 };
@@ -38,7 +45,7 @@ const previewClient = createClient({
   perspective: 'drafts'
 });
 
-const handleNoResults = <T>(res: T): APIResponse<T> =>
+const handleNoResults = <T>(res: T) =>
   res
     ? {
         status: 200,
@@ -49,7 +56,7 @@ const handleNoResults = <T>(res: T): APIResponse<T> =>
         errors: ['No results found']
       };
 
-const handleSanityError = (err: Error): APIFailure => {
+const handleSanityError = (err: Error) => {
   const errorResp = {
     status: 500,
     errors: ['Failed to fetch data']
@@ -67,32 +74,25 @@ const handleSanityError = (err: Error): APIFailure => {
   return errorResp;
 };
 
-const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>>(
-  d: D
-): Result<D & { headings?: HeadingNode[] }> => {
-  if (!d.body) {
-    return [d, undefined];
+const processHeadings = <T extends GetPostQueryResult>(
+  res: APIResponse<T>
+): APIResponse<T & { headings: HeadingNode[] }> => {
+  if (isAPIError(res)) {
+    return res;
   }
 
-  const [headings, err] = buildSummary(d.body);
-  if (err) {
-    return [d, err];
-  }
+  const headings = buildSummary(res.data?.body);
 
-  return [
-    {
-      ...d,
-      headings
-    },
-    undefined
-  ];
+  return {
+    ...res,
+    data: {
+      ...res.data,
+      headings: headings ?? []
+    }
+  };
 };
 
-export const incViews = async ({
-  id
-}: {
-  id: string;
-}): Promise<APIResponse<SanityDocument>> => {
+export const incViews = async ({ id }: { id: string }) => {
   const res = (await client
     .patch(id)
     .setIfMissing({ views: 0 })
@@ -119,21 +119,12 @@ export const incViews = async ({
   return res;
 };
 
-export const getPosts = async ({
-  tag,
-  page = 0,
-  limit = 10,
-  preview = false
-}: {
-  tag?: string;
-  page?: number;
-  limit?: number;
-  preview?: boolean;
-}) => {
+export const getPosts = async (params: z.output<typeof GetPostsParamsSchema>) => {
+  const { page, limit, preview } = params;
+
   const startNumber = page * limit;
   const endNumber = startNumber + limit;
 
-  // TODO: Add tag filtering
   const result = await (preview ? previewClient : client)
     .fetch(GetPostsQuery, {
       startNumber,
@@ -142,96 +133,63 @@ export const getPosts = async ({
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (!isAPISuccess(result)) {
+  if (isAPIError(result)) {
     return result;
   }
 
-  // TODO: Reuse original query to narrow the count; this counts *everything* even w/ filters.
   const totalPosts = await (preview ? previewClient : client)
     .fetch(CountPostsQuery)
     .catch(() => 0);
   const totalPages = Math.ceil(totalPosts / limit);
-  const hasMore = totalPosts > endNumber;
-  const hasLess = startNumber > 0;
-
-  const [posts, errs] = result.data.reduce(
-    (acc: [GetPostsQueryResult, Error[]], post: GetPostsQueryResult[number]) => {
-      const [postWithHeadings, err] = processHeadings(post);
-      if (err) {
-        acc[1].push(err);
-      }
-      acc[0].push(postWithHeadings || post);
-      return acc;
-    },
-    [[], []]
-  );
 
   return {
     status: 200,
-    data: posts,
-    errors: [...(result.errors ?? []), ...errs.map((e) => e.message)],
+    data: result.data,
+    errors: result.errors ?? [],
     meta: {
       total: totalPosts,
       count: result.data.length,
-      hasMore,
-      hasLess,
       page: {
         current: page,
-        total: totalPages
+        total: totalPages,
+        limit
       }
     }
   };
 };
 
-export const getPost = async ({
-  slug,
-  id,
-  preview
-}: {
-  id?: string;
-  slug?: string;
-  preview?: boolean;
-}) => {
-  if (!slug && !id) {
-    return {
-      status: 400,
-      errors: ['Missing slug or id']
-    };
-  }
+export const getPost = async (params: z.output<typeof GetPostParamsSchema>) => {
+  const { slug } = params;
 
-  const result = await (preview ? previewClient : client)
-    .fetch(GetPostQuery, {
-      id,
-      slug
-    })
+  const result = await (params.preview ? previewClient : client)
+    .fetch(GetPostQuery, { slug })
     .then(handleNoResults)
+    .then(processHeadings)
     .catch(handleSanityError);
 
-  if (!isAPISuccess(result)) {
+  if (isAPIError(result)) {
     return result;
   }
 
-  const [post, err] = processHeadings(result.data);
-
   return {
     status: 200,
-    data: post,
-    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
+    data: result.data,
+    errors: result.errors ?? []
   };
 };
 
-export const getConfig = async ({ preview = false }: { preview?: boolean }) => {
-  const config = await (preview ? previewClient : client)
+export async function getConfig(params: z.output<typeof GetConfigParamsSchema>) {
+  const data = await (params.preview ? previewClient : client)
     .fetch(GetConfigQuery)
     .then(handleNoResults)
     .catch(handleSanityError);
 
-  if (!isAPISuccess(config)) {
-    return config;
+  if (isAPIError(data)) {
+    return data;
   }
 
   return {
     status: 200,
-    data: config.data
+    data: data.data
   };
-};
+}

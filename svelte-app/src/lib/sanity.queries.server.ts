@@ -3,7 +3,7 @@ import { defineQuery } from 'groq';
 export const GetConfigQuery = defineQuery("*[_type == 'siteSettings'][0]");
 
 export const GetPostQuery = defineQuery(
-  `*[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{
+  `*[_type == 'post' && slug.current == $slug]{
   _id,
   'objectID': _id,
   _rev,

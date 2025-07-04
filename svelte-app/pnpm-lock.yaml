@@ -146,6 +146,9 @@ importers:
       vitest:
         specifier: 1.6.0
         version: 1.6.0(@types/node@20.14.2)(jsdom@24.1.0)(sass@1.77.6)
+      zod:
+        specifier: ^3.25.70
+        version: 3.25.70
 
 packages:
 
@@ -6117,6 +6120,9 @@ packages:
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
+  zod@3.25.70:
+    resolution: {integrity: sha512-2WWzL2X2GpPU6as2xK1HFb6U5BZdJMdpB5Qtlan4a1KLYcZ6Gvox+mqZpxOd66sfe5AP3pEWpd2BC3f0yLH/nQ==}
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -6845,7 +6851,7 @@ snapshots:
       unixify: 1.0.0
       urlpattern-polyfill: 8.0.2
       yargs: 17.7.2
-      zod: 3.23.8
+      zod: 3.25.70
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -12505,3 +12511,5 @@ snapshots:
       readable-stream: 4.5.2
 
   zod@3.23.8: {}
+
+  zod@3.25.70: {}

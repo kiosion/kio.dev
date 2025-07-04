@@ -1,21 +1,6 @@
 import Logger from '$lib/logger';
 
-import type { Result } from '$lib/api/result';
 import type { HeadingNode } from '$types/documents';
-
-export const endpointResponse = <T extends Record<PropertyKey, unknown>>(
-  content: T,
-  status = 200,
-  init: ResponseInit = {}
-) => {
-  return new Response(JSON.stringify(content), {
-    headers: {
-      'content-type': 'application/json; charset=utf-8'
-    },
-    status,
-    ...init
-  });
-};
 
 type MaybeBlock = {
   _type?: unknown;
@@ -35,16 +20,16 @@ type HeadingBlock = {
   children: RawChild[];
 };
 
-export const buildSummary = (body?: unknown): Result<HeadingNode[]> => {
+export const buildSummary = (body?: unknown): HeadingNode[] => {
   try {
     if (!Array.isArray(body)) {
-      return [[], undefined];
+      return [];
     }
 
     const headingBlocks = body.filter(isHeadingBlock);
 
     if (headingBlocks.length === 0) {
-      return [[], undefined];
+      return [];
     }
 
     const headings = headingBlocks.map(blockToHeading);
@@ -70,12 +55,12 @@ export const buildSummary = (body?: unknown): Result<HeadingNode[]> => {
       stack.push(heading);
     }
 
-    return [tree, undefined];
+    return tree;
   } catch (e) {
     const err =
       e instanceof Error ? e : new Error('Unknown error while building summary');
     Logger.error('Error building heading summary', err);
-    return [undefined, err];
+    return [];
   }
 };
 

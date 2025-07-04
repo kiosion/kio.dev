@@ -342,8 +342,8 @@ export type Tag = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
+  title: string;
+  slug: Slug;
   desc?: string;
 };
 
@@ -927,10 +927,10 @@ export type GetPostQueryResult = {
   publishedAt: null;
   tags: Array<{
     _id: string;
-    title: string | null;
-    slug: Slug | null;
+    title: string;
+    slug: Slug;
   }> | null;
-  slug: Slug | null;
+  slug: Slug;
   body: Array<
     | ({
         _key: string;
@@ -1019,10 +1019,10 @@ export type GetPostsQueryResult = Array<{
   publishedAt: null;
   tags: Array<{
     _id: string;
-    title: string | null;
-    slug: Slug | null;
+    title: string;
+    slug: Slug;
   }> | null;
-  slug: Slug | null;
+  slug: Slug;
   body: Array<
     | ({
         _key: string;
@@ -1108,7 +1108,7 @@ import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     "*[_type == 'siteSettings'][0]": GetConfigQueryResult;
-    "*[_type == 'post' && (_id == '$id' || slug.current == '$slug')]{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  ),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n}[0]": GetPostQueryResult;
+    "*[_type == 'post' && slug.current == $slug]{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  ),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n}[0]": GetPostQueryResult;
     "*[_type == 'post']{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': dateTime(select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  )),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n} | order(date desc) [$startNumber...$endNumber]": GetPostsQueryResult;
     "count(*[_type == 'post'])": CountPostsQueryResult;
   }

@@ -18,8 +18,8 @@
   const tags: Pick<Tag, '_id' | 'slug' | 'title'>[] = [],
     tagCounts: Record<Tag['_id'], number> = {};
 
-  for (let i = 0; i < data.posts?.length; i++) {
-    const postTags = data.posts[i]?.tags ?? [];
+  for (let i = 0; i < (data.posts?.length || 0); i++) {
+    const postTags = data.posts?.[i]?.tags ?? [];
 
     if (!postTags.length) {
       continue;
@@ -102,7 +102,7 @@
   </BaseContainer>
 
   <BaseContainer class="px-4 py-6">
-    {#if data.posts.length}
+    {#if data.posts?.length}
       <DocumentList documents={data.posts}></DocumentList>
     {:else}
       <EmptyContent />

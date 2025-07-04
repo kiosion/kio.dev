@@ -47,7 +47,7 @@ export const load = (async ({ parent }) => {
       ((tags[j]._id === UNCATEGORIZED_TAG._id ? -1 : 0) ||
         tagCounts[tags[j]._id] < currentCount ||
         (tagCounts[tags[j]._id] === currentCount &&
-          tags[j].title.localeCompare(currentTag.title) > 0))
+          tags[j].title!.localeCompare(currentTag.title!) > 0))
     ) {
       tags[j + 1] = tags[j];
       j--;
