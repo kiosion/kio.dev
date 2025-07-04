@@ -7,7 +7,6 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import { linkTo, t } from '$lib/i18n';
   import { pageTitle } from '$lib/navigation';
-  import { failed } from '$lib/snippets.svelte';
 
   export let data;
 

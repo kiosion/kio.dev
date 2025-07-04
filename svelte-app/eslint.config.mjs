@@ -30,7 +30,7 @@ export default tseslint.config(
     },
     rules: {
       // original overrides
-      '@typescript-eslint/no-unused-expressions': [1],
+      '@typescript-eslint/no-unused-expressions': [0],
       // this rule is just wrong too often.
       '@typescript-eslint/no-redundant-type-constituents': [0],
       // same with this one, apparently 'Element' and 'HTMLElement' are identical, ffs.
@@ -48,6 +48,9 @@ export default tseslint.config(
       '@typescript-eslint/no-namespace': [0],
       '@typescript-eslint/restrict-template-expressions': [0],
       '@typescript-eslint/no-unused-vars': [0],
+      '@typescript-eslint/no-misused-promises': [0],
+      '@typescript-eslint/no-base-to-string': [0],
+      '@typescript-eslint/restrict-plus-operands': [0],
       '@typescript-eslint/ban-ts-comment': [
         2,
         {
@@ -133,11 +136,13 @@ export default tseslint.config(
       ],
       'simple-import-sort/exports': 'error',
 
-      'unused-imports/no-unused-imports': 'off',
+      'unused-imports/no-unused-imports': [1],
       'unused-imports/no-unused-vars': [
-        'error',
+        2,
         {
+          vars: 'all',
           varsIgnorePattern: '^_*?',
+          args: 'after-used',
           argsIgnorePattern: '^_*?'
         }
       ]
@@ -178,20 +183,20 @@ export default tseslint.config(
       'svelte/no-immutable-reactive-statements': [2],
       'svelte/no-useless-mustaches': [2],
       'svelte/require-optimized-style-attribute': [2],
-      'svelte/no-trailing-spaces': 'error',
-      'svelte/no-spaces-around-equal-signs-in-attribute': 'error',
-      'svelte/prefer-class-directive': 'error',
-      'svelte/valid-each-key': 'error',
-      'svelte/require-store-reactive-access': 'error',
-      'svelte/button-has-type': 'error',
-      'svelte/no-reactive-functions': 'error',
-      'svelte/no-target-blank': 'error',
-      'svelte/valid-prop-names-in-kit-pages': 'error',
-      'svelte/require-store-callbacks-use-set-param': 'error',
-      'svelte/no-reactive-reassign': 'error',
-      'svelte/no-dom-manipulating': 'error',
-      'svelte/no-reactive-literals': 'error',
-      'svelte/prefer-destructured-store-props': 'error'
+      'svelte/no-trailing-spaces': [2],
+      'svelte/no-spaces-around-equal-signs-in-attribute': [2],
+      'svelte/prefer-class-directive': [2],
+      'svelte/valid-each-key': [2],
+      'svelte/require-store-reactive-access': [2],
+      'svelte/button-has-type': [2],
+      'svelte/no-reactive-functions': [2],
+      'svelte/no-target-blank': [2],
+      'svelte/valid-prop-names-in-kit-pages': [2],
+      'svelte/require-store-callbacks-use-set-param': [2],
+      'svelte/no-reactive-reassign': [2],
+      'svelte/no-dom-manipulating': [2],
+      'svelte/no-reactive-literals': [2],
+      'svelte/prefer-destructured-store-props': [1]
     }
   },
 

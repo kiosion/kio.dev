@@ -1,4 +1,3 @@
-/* eslint-disable svelte/no-ignored-unsubscribe */
 import { browser } from '$app/environment';
 import { APP_THEMES, LOCAL_SETTINGS_KEY, MEDIA_QUERIES } from '$lib/consts';
 import Logger from '$lib/logger';

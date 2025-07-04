@@ -3,7 +3,7 @@
 
   import { browser } from '$app/environment';
   import { afterNavigate } from '$app/navigation';
-  import { navigating } from '$app/stores';
+  import { navigating } from '$app/state';
   import ArrowButton from '$components/controls/arrow-button.svelte';
   import BaseContainer from '$components/layouts/base-container.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
@@ -13,7 +13,6 @@
   import { parseViews } from '$lib/utils';
   import type { HeadingNode } from '$types/documents';
   import type { GetPostQueryResult } from '$types/sanity';
-  import { get } from 'svelte/store';
 
   export let data: NonNullable<GetPostQueryResult> & {
       headings: HeadingNode[];
@@ -35,7 +34,7 @@
           clearTimeout(sidebarTimeout);
         }
 
-        if (entry.isIntersecting || get(navigating)) {
+        if (entry.isIntersecting || navigating.type) {
           sidebarTimeout = setTimeout(() => sidebarBlock.set(undefined), 250);
         } else {
           sidebarTimeout = setTimeout(() => sidebarBlock.set(data), 500);
@@ -128,12 +127,12 @@
     >
       {#each data.tags as { slug, title }}
         <a
-          class="focus-outline-sm flex select-none flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+          class="focus-outline-sm flex flex-row gap-x-2 rounded-md bg-neutral-200/50 px-2.5 py-2 transition-colors select-none hover:bg-neutral-200 focus-visible:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
           href={$linkTo(`/thoughts/+/${slug.current}`)}
           data-sveltekit-preload-code
           aria-label={$t('Topic') + ': ' + title}
         >
-          <span class="select-none font-bold">#</span>
+          <span class="font-bold select-none">#</span>
           <span>{title.toLowerCase()}</span>
         </a>
       {/each}
