@@ -44,6 +44,18 @@ export default {
       group: 'sidebar'
     },
     {
+      name: 'role',
+      type: 'string',
+      title: 'Role',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'hero',
+      type: 'string',
+      title: 'Hero',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
       name: 'image',
       type: 'object',
       title: 'Profile Picture',
@@ -82,9 +94,6 @@ export default {
       title: 'Enable Toru',
       group: 'sidebar',
       initialValue: false,
-      // options: {
-      // layout:
-      // },
       validation: (Rule: Rule) => Rule.required()
     },
     {

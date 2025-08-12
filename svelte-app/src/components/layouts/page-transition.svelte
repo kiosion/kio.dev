@@ -3,7 +3,7 @@
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import { getNavigationDirection } from '$lib/utils';
   import { circIn, circOut } from 'svelte/easing';
-  import { fly } from 'svelte/transition';
+  import { fly, fade } from 'svelte/transition';
 
   export let pathname: string | undefined;
 
@@ -21,12 +21,15 @@
   });
 </script>
 
-{#key pathname}
-  <div
-    {...$$restProps}
-    in:fly={{ duration, delay: duration, easing: circOut, y: dist * dir }}
-    out:fly={{ duration, easing: circIn, y: -dist * dir }}
-  >
-    <slot />
-  </div>
-{/key}
+<div class="relative grid w-full">
+  {#key pathname}
+    <div
+      {...$$restProps}
+      class="col-start-1 row-start-1 [grid-area:1/1] w-full min-w-0"
+      in:fly={{ duration, delay: duration, easing: circOut, y: dist * dir }}
+      out:fly={{ duration, easing: circIn, y: -dist * dir }}
+    >
+      <slot />
+    </div>
+  {/key}
+</div>

@@ -11,15 +11,11 @@
   import ProfileImage from '$components/sidebar/profile-image.svelte';
   import SidebarBlock from '$components/sidebar/sidebar-block.svelte';
   import SidebarLink from '$components/sidebar/sidebar-link.svelte';
-  import type { ToruData } from '$components/sidebar/toru';
-  import ToruWidget from '$components/sidebar/toru.svelte';
   import { BASE_GIT_URL, BASE_PAGE_TITLE, NAV_LINKS } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
-  import { t } from '$lib/i18n';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
 
   export let config: NonNullable<GetConfigQueryResult>,
-    toruData: Promise<ToruData | undefined>,
     scrollContainer: HTMLElement | null | undefined;
 
   const socials = config?.socialLinks?.map((social) => ({
@@ -108,7 +104,7 @@
       <p
         class="text-sm font-medium text-neutral-600 transition-colors select-none dark:text-neutral-300"
       >
-        {$t('Pages')}
+        Pages
       </p>
       <ul
         class="flex w-full flex-col items-start justify-start gap-y-1 select-none"
@@ -133,12 +129,6 @@
   <ErrorBoundary>
     <SidebarBlock {scrollContainer} />
   </ErrorBoundary>
-
-  {#if config.enableToru}
-    <ErrorBoundary>
-      <ToruWidget initPromise={toruData} />
-    </ErrorBoundary>
-  {/if}
 
   {#if APP_VERSION?.length}
     <div

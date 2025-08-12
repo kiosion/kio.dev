@@ -8,28 +8,23 @@
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { page } from '$app/stores';
-  import ErrorBoundary from '$components/error-boundary.svelte';
-  import PageTransition from '$components/layouts/page-transition.svelte';
-  import Sidebar from '$components/sidebar.svelte';
+  import Header from '$components/new/header.svelte';
   import {
-    APP_LANGS,
     APP_THEMES,
-    BASE_ANIMATION_DURATION,
-    BASE_PAGE_TITLE,
-    DEFAULT_APP_LANG
+    BASE_PAGE_TITLE
   } from '$lib/consts';
-  import { ENV, SELF_BASE_URL } from '$lib/env';
-  import { check as checkTranslations, currentLang, isLocalized, t } from '$lib/i18n';
+  import { SELF_BASE_URL } from '$lib/env';
   import Settings, { listenForMQLChange, loading } from '$lib/settings';
   import type { Unsubscriber } from 'svelte/store';
   import { get } from 'svelte/store';
   import { fly } from 'svelte/transition';
   import { classList } from 'svelte-body';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import ErrorBoundary from '$components/error-boundary.svelte';
 
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
-    setLoadingTimer: ReturnType<typeof setTimeout> | undefined,
-    scrollContainer: HTMLElement | null;
+    setLoadingTimer: ReturnType<typeof setTimeout> | undefined;
 
   const { theme } = Settings,
     skipToContent = (e: KeyboardEvent) => {
@@ -73,12 +68,7 @@
       theme.set('dark');
     }
 
-    unsubscribers.push(
-      currentLang.subscribe((lang) => {
-        document.documentElement.lang = lang;
-      }),
-      ...listenForMQLChange()
-    );
+    unsubscribers.push(...listenForMQLChange());
 
     // styles for hljs codeblocks
     unsubscribers.push(
@@ -91,10 +81,6 @@
       )
     );
 
-    if (ENV !== 'production') {
-      checkTranslations();
-    }
-
     loading.set(false);
   });
 
@@ -103,19 +89,12 @@
   export let data;
 
   $: ({ url } = $page);
-  $: isLocalized.set(APP_LANGS.includes($page?.params?.lang));
-  $: currentLang.set(
-    APP_LANGS.includes($page?.params?.lang) ? $page?.params?.lang : DEFAULT_APP_LANG
-  );
 </script>
 
 <svelte:head>
-  <meta name="author" content="Kio" />
+  <meta name="author" content={data.config.name} />
   <meta name="theme-color" content={$theme === APP_THEMES.DARK ? '#16160e' : '#e5e4e6'} />
-  <meta
-    property="og:locale"
-    content={$currentLang === APP_LANGS[1] ? 'fr_CA' : 'en_CA'}
-  />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content={BASE_PAGE_TITLE} />
   <meta property="og:url" content={url?.href} />
   <meta property="og:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
@@ -132,32 +111,23 @@
 
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
-<span
-  class="focus-outline-sm text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
-  role="button"
-  aria-label={$t('Skip to content')}
-  tabindex="0"
-  in:fly={{ delay: 100, duration: BASE_ANIMATION_DURATION / 3, y: -40 }}
-  out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}
-  on:keydown={skipToContent}>{$t('Skip to content')}</span
->
+<div class="text-dark dark:text-light mx-auto h-full w-full lg:text-lg">
+  <div class="flex flex-col h-full w-full mx-auto overflow-x-hidden overflow-y-auto">
+    <Header config={data.config} />
 
-<div class="main text-dark dark:text-light mx-auto h-full w-full p-5 lg:text-lg">
-  <div
-    class="themed-scrollbar flex h-full w-full flex-col gap-5 overflow-x-hidden overflow-y-scroll rounded-xl lg:h-full lg:flex-row lg:overflow-y-hidden"
-  >
-    <Sidebar config={data.config} toruData={data.toruData} {scrollContainer} />
-
-    <div
-      class="focus-outline max-w-6xl flex-1 rounded-xl lg:mr-auto lg:overflow-x-hidden lg:overflow-y-scroll"
-      id="content-wrapper"
-      bind:this={scrollContainer}
-    >
+    <main class="mx-auto px-8 py-10 w-full flex flex-1">
       <PageTransition pathname={data.pathname}>
         <ErrorBoundary>
           <slot />
         </ErrorBoundary>
       </PageTransition>
-    </div>
+    </main>
+
+    <footer class="border-t border-dark dark:border-light">
+      <div class="flex flex-col gap-2 mx-auto px-8 py-6 text-sm">
+        <p>Build fast, ship safe.</p>
+        <p>&copy; {new Date().getFullYear()} {data.config.name}</p>
+      </div>
+    </footer>
   </div>
 </div>
