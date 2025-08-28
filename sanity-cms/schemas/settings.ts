@@ -21,19 +21,60 @@ const Section = {
   ]
 };
 
+const Page = {
+  type: 'object',
+  fields: [
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'text',
+      rows: 1,
+      description: 'Page title',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    {
+      name: 'desc',
+      title: 'Description',
+      type: 'text',
+      rows: 1,
+      description: 'SEO description',
+      validation: (Rule: Rule) => Rule.max(160)
+    },
+    {
+      name: 'heading',
+      title: 'Heading',
+      type: 'text',
+      rows: 2,
+      description: 'Main heading on the page',
+      validation: (Rule: Rule) => Rule.required()
+    },
+    Body,
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'heading',
+    },
+  },
+};
+
 export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
   groups: [
     {
-      name: 'sidebar',
-      title: 'Sidebar'
+      name: 'home',
+      title: 'Homepage'
     },
     {
-      name: 'sections',
-      title: 'Sections'
-    }
+      name: 'about',
+      title: 'About',
+    },
+    {
+      name: 'contact',
+      title: 'Contact / Footer',
+    },
   ],
   fields: [
     {
@@ -41,60 +82,53 @@ export default {
       type: 'string',
       title: 'Name',
       validation: (Rule: Rule) => Rule.required(),
-      group: 'sidebar'
-    },
-    {
-      name: 'role',
-      type: 'string',
-      title: 'Role',
-      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'hero',
-      type: 'string',
+      type: 'text',
       title: 'Hero',
       validation: (Rule: Rule) => Rule.required(),
+      group: 'home',
     },
     {
-      name: 'image',
-      type: 'object',
-      title: 'Profile Picture',
-      validation: (Rule: Rule) => Rule.required(),
-      fields: [
-        {
-          name: 'dark',
-          type: 'image',
-          title: 'Dark Mode',
-          validation: (Rule: Rule) => Rule.required()
-        },
-        {
-          name: 'light',
-          type: 'image',
-          title: 'Light Mode',
-          validation: (Rule: Rule) => Rule.required()
-        }
-      ],
-      group: 'sidebar'
-    },
-    {
-      name: 'handle',
-      type: 'string',
-      title: 'Handle',
-      group: 'sidebar'
+      name: 'info',
+      type: 'array',
+      title: 'Info Bullets',
+      of: [{ type: 'string' }],
+      group: 'home',
     },
     {
       name: 'bio',
       type: 'text',
       title: 'Bio',
-      group: 'sidebar'
+      group: 'home',
     },
     {
-      name: 'enableToru',
-      type: 'boolean',
-      title: 'Enable Toru',
-      group: 'sidebar',
-      initialValue: false,
-      validation: (Rule: Rule) => Rule.required()
+      name: 'about',
+      title: 'About',
+      type: 'array',
+      of: BodyBlocks,
+      group: 'about',
+      validation: (Rule: Rule) => Rule.required().min(1),
+    },
+    {
+      name: 'contact',
+      title: 'Contact',
+      type: 'array',
+      of: BodyBlocks,
+      group: 'contact',
+      validation: (Rule: Rule) => Rule.required().min(1),
+    },
+    {
+      name: 'email',
+      title: 'Email',
+      type: 'string',
+      validation: (Rule: Rule) =>
+        Rule.uri({
+          scheme: ['mailto'],
+          allowRelative: false
+        }),
+      group: 'contact',
     },
     {
       name: 'socialLinks',
@@ -163,23 +197,20 @@ export default {
               }) as PreviewValue
           } satisfies PreviewConfig
         }
-      ],
-      group: 'sidebar'
+      ]
     },
-    {
-      name: 'about',
-      type: 'array',
-      title: 'About Sections',
-      group: 'sections',
-      of: [Section]
-    },
-    {
-      name: 'meta',
-      type: 'array',
-      title: 'Meta Sections',
-      group: 'sections',
-      of: [Section]
-    },
+    // {
+    //   name: 'about',
+    //   type: 'array',
+    //   title: 'About Sections',
+    //   of: [Section]
+    // },
+    // {
+    //   name: 'meta',
+    //   type: 'array',
+    //   title: 'Meta Sections',
+    //   of: [Section]
+    // },
     {
       name: 'timeline',
       title: 'Work Timeline',
@@ -248,7 +279,8 @@ export default {
     {
       name: 'pgpKey',
       type: 'text',
-      title: 'PGP Key'
+      title: 'PGP Key',
+      group: 'contact',
     }
   ]
 };

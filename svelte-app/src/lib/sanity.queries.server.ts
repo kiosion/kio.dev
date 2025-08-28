@@ -1,6 +1,6 @@
 import { defineQuery } from 'groq';
 
-export const GetConfigQuery = defineQuery("*[_type == 'siteSettings'][0]");
+export const GetConfigQuery = defineQuery(`*[_type == 'siteSettings'][0]`);
 
 export const GetPostQuery = defineQuery(
   `*[_type == 'post' && slug.current == $slug]{

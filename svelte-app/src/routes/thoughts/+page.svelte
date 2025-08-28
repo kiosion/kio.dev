@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-  import { pageTitle } from '$lib/navigation';
   import PostList from '$components/new/post-list.svelte';
-
+  import { pageTitle } from '$lib/navigation';
   import type { Tag } from '$types/sanity';
 
-  export let data;
-
-  $: description = $t('pages.thoughts.description');
+  const { data } = $props();
 
   const tags: Pick<Tag, '_id' | 'slug' | 'title'>[] = [],
     tagCounts: Record<Tag['_id'], number> = {};
@@ -47,6 +43,8 @@
 
     tags[j + 1] = currentTag;
   }
+
+  const description = 'Thoughts and guides on programming, tech, and finance.';
 </script>
 
 <svelte:head>
@@ -62,7 +60,7 @@
   <meta property="twitter:description" content={description} />
 </svelte:head>
 
-{#snippet tagItem(tag: typeof tags[number])}
+{#snippet tagItem(tag: (typeof tags)[number])}
   <a
     class="group flex flex-row items-center justify-start gap-x-0.5"
     href={`/thoughts/+/${tag.slug?.current}`}
@@ -72,18 +70,23 @@
   >
     <span class="opacity-70 select-none">#</span>
     <span
-      class="group-hover:underline group-hover:opacity-100 opacity-70 underline-offset-4 decoration-orange-light dark:decoration-orange-dark decoration-2 transition-opacity"
-    >{tag.title?.toLowerCase()}</span>
+      class="decoration-orange-light dark:decoration-orange-dark decoration-2 underline-offset-[3px] opacity-70 transition-opacity group-hover:underline group-hover:opacity-100"
+      >{tag.title?.toLowerCase()}</span
+    >
   </a>
 {/snippet}
 
-<div class="flex flex-col flex-grow gap-20 h-full min-w-full">
-  <section class="flex flex-row flex-wrap items-start justify-between w-full mt-10 gap-y-12">
-    <div class="flex flex-col gap-8 mr-auto">
-      <div class="flex flex-col gap-2 text-5xl font-display tracking-wide max-w-2xl">
-        <h1>Thoughts &amp; guides</h1>
-      </div>
-      <div class="pl-1 text-lg max-w-prose flex flex-row flex-wrap items-center justify-start gap-3">
+<div class="flex h-full min-w-full flex-grow flex-col gap-20">
+  <section
+    class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12"
+  >
+    <div class="mr-auto flex flex-col gap-8">
+      <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
+        Thoughts &amp; guides
+      </h1>
+      <div
+        class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg"
+      >
         {#each tags as tag}
           {@render tagItem(tag)}
         {/each}
@@ -92,9 +95,7 @@
   </section>
 
   <section class="flex flex-col gap-2">
-    <h2 class="text-base tracking-wide opacity-70">
-      All posts
-    </h2>
+    <h2 class="text-base tracking-wide opacity-70">All posts</h2>
     <PostList posts={data.posts} />
   </section>
 </div>

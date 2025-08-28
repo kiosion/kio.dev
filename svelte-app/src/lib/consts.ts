@@ -16,7 +16,9 @@ export const VALID_DOC_TYPES = ['post', 'config', 'tag'] as const;
 
 export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
 
-export const BASE_PAGE_TITLE = 'kio.dev';
+export const BASE_DOMAIN = 'kio.dev';
+
+export const BASE_PAGE_TITLE = BASE_DOMAIN;
 
 export const TORU_API_URL = 'https://toru.kio.dev/api/v1';
 
@@ -42,20 +44,15 @@ export const APP_ROUTES = [
     hidden: false
   },
   {
-    name: 'Work',
-    path: '/work',
-    hidden: false
-  },
-  {
-    name: 'Experiments',
-    path: '/experiments',
-    hidden: true
-  },
-  {
     name: 'Etc',
     path: '/etc',
     hidden: false
-  }
+  },
+  // {
+  //   name: 'Get in touch',
+  //   path: '/contact',
+  //   hidden: false
+  // }
 ] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
@@ -73,11 +70,8 @@ export const ROUTE_ORDER = [
   '/thoughts',
   '/thoughts/*',
   '/thoughts/*/*',
-  '/work',
-  '/work/*',
-  '/work/*/*',
   '/etc',
-  '/experiments'
+  // '/contact',
 ];
 
 export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(

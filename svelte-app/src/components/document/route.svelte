@@ -4,16 +4,13 @@
   import { page } from '$app/stores';
   import Content from '$components/document/content/content.svelte';
   import { BASE_PAGE_TITLE } from '$lib/consts';
-  import { t } from '$lib/i18n';
   import { scrollTo } from '$lib/navigation';
   import type { RouteFetch } from '$types';
-  import type { HeadingNode } from '$types/documents';
-  import type { GetPostQueryResult } from '$types/sanity';
+  import type { GetConfigQueryResult, GetPostQueryResult } from '$types/sanity';
   import type { Unsubscriber } from 'svelte/store';
 
-  export let data: NonNullable<GetPostQueryResult> & {
-      headings: HeadingNode[];
-    },
+  export let data: NonNullable<GetPostQueryResult>,
+    config: NonNullable<GetConfigQueryResult>,
     routeFetch: RouteFetch;
 
   let pageUnsubscriber: Unsubscriber;
@@ -36,7 +33,7 @@
     ? data.desc.length > 160
       ? `${data.desc.slice(0, 160 - 3)}...`
       : data.desc
-    : $t(`A blog post on ${BASE_PAGE_TITLE}`);
+    : `A blog post on ${BASE_PAGE_TITLE}`;
 </script>
 
 <svelte:head>
@@ -51,7 +48,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content={data.title} />
   <meta property="twitter:description" content={pageDescription} />
-  <meta property="article:author" content="Kio" />
+  <meta property="article:author" content={config.name} />
   <meta
     property="article:published_time"
     content={new Date(data.date || '0')?.toISOString()}

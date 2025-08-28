@@ -8,19 +8,16 @@
   import { browser } from '$app/environment';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { page } from '$app/stores';
+  import ErrorBoundary from '$components/error-boundary.svelte';
+  import PageTransition from '$components/layouts/page-transition.svelte';
+  import Footer from '$components/new/footer.svelte';
   import Header from '$components/new/header.svelte';
-  import {
-    APP_THEMES,
-    BASE_PAGE_TITLE
-  } from '$lib/consts';
+  import { APP_THEMES, BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import Settings, { listenForMQLChange, loading } from '$lib/settings';
   import type { Unsubscriber } from 'svelte/store';
   import { get } from 'svelte/store';
-  import { fly } from 'svelte/transition';
   import { classList } from 'svelte-body';
-  import PageTransition from '$components/layouts/page-transition.svelte';
-  import ErrorBoundary from '$components/error-boundary.svelte';
 
   let unsubscribers = [] as Unsubscriber[],
     HighlightStyles: string | undefined,
@@ -112,10 +109,12 @@
 <svelte:body use:classList={[$theme, $loading ? 'is-loading' : 'is-loaded']} />
 
 <div class="text-dark dark:text-light mx-auto h-full w-full lg:text-lg">
-  <div class="flex flex-col h-full w-full mx-auto overflow-x-hidden overflow-y-auto">
-    <Header config={data.config} />
+  <div
+    class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll"
+  >
+    <Header />
 
-    <main class="mx-auto px-8 py-10 w-full flex flex-1">
+    <main class="mx-auto flex w-full flex-1 px-8 py-10">
       <PageTransition pathname={data.pathname}>
         <ErrorBoundary>
           <slot />
@@ -123,11 +122,6 @@
       </PageTransition>
     </main>
 
-    <footer class="border-t border-dark dark:border-light">
-      <div class="flex flex-col gap-2 mx-auto px-8 py-6 text-sm">
-        <p>Build fast, ship safe.</p>
-        <p>&copy; {new Date().getFullYear()} {data.config.name}</p>
-      </div>
-    </footer>
+    <Footer config={data.config} />
   </div>
 </div>

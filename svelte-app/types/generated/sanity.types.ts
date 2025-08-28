@@ -74,192 +74,161 @@ export type SiteSettings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  image?: {
-    dark?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-    light?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-  };
-  handle?: string;
+  name: string;
+  hero: string;
+  info?: Array<string>;
   bio?: string;
-  enableToru?: boolean;
+  about: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+  >;
+  contact: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+  >;
+  email?: string;
   socialLinks?: Array<{
-    name?: string;
+    name: string;
     url?: string;
     internal?: boolean;
     rel?: Array<'nofollow' | 'noopener' | 'noreferrer' | 'me'>;
     _key: string;
   }>;
-  about?: Array<{
-    title?: string;
-    content?: Array<
-      | {
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: 'span';
-            _key: string;
-          }>;
-          style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
-          listItem?: 'bullet' | 'number';
-          markDefs?: Array<
-            | {
-                href?: string;
-                newtab?: boolean;
-                external?: boolean;
-                _type: 'link';
-                _key: string;
-              }
-            | {
-                note?: Array<{
-                  children?: Array<{
-                    marks?: Array<string>;
-                    text?: string;
-                    _type: 'span';
-                    _key: string;
-                  }>;
-                  style?: 'normal';
-                  listItem?: 'bullet' | 'number';
-                  markDefs?: Array<{
-                    href?: string;
-                    newtab?: boolean;
-                    external?: boolean;
-                    _type: 'link';
-                    _key: string;
-                  }>;
-                  level?: number;
-                  _type: 'block';
-                  _key: string;
-                }>;
-                _type: 'footnote';
-                _key: string;
-              }
-          >;
-          level?: number;
-          _type: 'block';
-          _key: string;
-        }
-      | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: 'image';
-          _key: string;
-        }
-      | ({
-          _key: string;
-        } & Code)
-      | ({
-          _key: string;
-        } & Divider)
-      | ({
-          _key: string;
-        } & Header)
-    >;
-    _key: string;
-  }>;
-  meta?: Array<{
-    title?: string;
-    content?: Array<
-      | {
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: 'span';
-            _key: string;
-          }>;
-          style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
-          listItem?: 'bullet' | 'number';
-          markDefs?: Array<
-            | {
-                href?: string;
-                newtab?: boolean;
-                external?: boolean;
-                _type: 'link';
-                _key: string;
-              }
-            | {
-                note?: Array<{
-                  children?: Array<{
-                    marks?: Array<string>;
-                    text?: string;
-                    _type: 'span';
-                    _key: string;
-                  }>;
-                  style?: 'normal';
-                  listItem?: 'bullet' | 'number';
-                  markDefs?: Array<{
-                    href?: string;
-                    newtab?: boolean;
-                    external?: boolean;
-                    _type: 'link';
-                    _key: string;
-                  }>;
-                  level?: number;
-                  _type: 'block';
-                  _key: string;
-                }>;
-                _type: 'footnote';
-                _key: string;
-              }
-          >;
-          level?: number;
-          _type: 'block';
-          _key: string;
-        }
-      | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: 'image';
-          _key: string;
-        }
-      | ({
-          _key: string;
-        } & Code)
-      | ({
-          _key: string;
-        } & Divider)
-      | ({
-          _key: string;
-        } & Header)
-    >;
-    _key: string;
-  }>;
   timeline?: Array<{
-    title?: string;
+    title: string;
     subtitle?: string;
     range?: {
-      start?: string;
+      start: string;
       end?: string;
     };
     body?: Array<
@@ -336,6 +305,86 @@ export type SiteSettings = {
   pgpKey?: string;
 };
 
+export type Page = {
+  _id: string;
+  _type: 'page';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  desc?: string;
+  heading: string;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+  >;
+};
+
 export type Tag = {
   _id: string;
   _type: 'tag';
@@ -353,8 +402,8 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
+  title: string;
+  slug: Slug;
   desc?: string;
   date?: string;
   views?: number;
@@ -448,8 +497,8 @@ export type Project = {
   }>;
   github?: string;
   links?: Array<{
-    title?: string;
-    url?: string;
+    title: string;
+    url: string;
     _key: string;
   }>;
 };
@@ -460,8 +509,8 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
+  title: string;
+  slug: Slug;
   desc?: string;
   date?: string;
   views?: number;
@@ -602,14 +651,14 @@ export type SanityImageMetadata = {
 
 export type Slug = {
   _type: 'slug';
-  current?: string;
+  current: string;
   source?: string;
 };
 
 export type Header = {
   _type: 'header';
-  icon?: string;
-  title?: string;
+  icon: string;
+  title: string;
 };
 
 export type Divider = {
@@ -632,6 +681,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | Geopoint
   | SiteSettings
+  | Page
   | Tag
   | Project
   | Post
@@ -654,192 +704,161 @@ export type GetConfigQueryResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  image?: {
-    dark?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-    light?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-  };
-  handle?: string;
+  name: string;
+  hero: string;
+  info?: Array<string>;
   bio?: string;
-  enableToru?: boolean;
+  about: Array<
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  >;
+  contact: Array<
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  >;
+  email?: string;
   socialLinks?: Array<{
-    name?: string;
+    name: string;
     url?: string;
     internal?: boolean;
     rel?: Array<'me' | 'nofollow' | 'noopener' | 'noreferrer'>;
     _key: string;
   }>;
-  about?: Array<{
-    title?: string;
-    content?: Array<
-      | ({
-          _key: string;
-        } & Code)
-      | ({
-          _key: string;
-        } & Divider)
-      | ({
-          _key: string;
-        } & Header)
-      | {
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: 'span';
-            _key: string;
-          }>;
-          style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-          listItem?: 'bullet' | 'number';
-          markDefs?: Array<
-            | {
-                note?: Array<{
-                  children?: Array<{
-                    marks?: Array<string>;
-                    text?: string;
-                    _type: 'span';
-                    _key: string;
-                  }>;
-                  style?: 'normal';
-                  listItem?: 'bullet' | 'number';
-                  markDefs?: Array<{
-                    href?: string;
-                    newtab?: boolean;
-                    external?: boolean;
-                    _type: 'link';
-                    _key: string;
-                  }>;
-                  level?: number;
-                  _type: 'block';
-                  _key: string;
-                }>;
-                _type: 'footnote';
-                _key: string;
-              }
-            | {
-                href?: string;
-                newtab?: boolean;
-                external?: boolean;
-                _type: 'link';
-                _key: string;
-              }
-          >;
-          level?: number;
-          _type: 'block';
-          _key: string;
-        }
-      | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: 'image';
-          _key: string;
-        }
-    >;
-    _key: string;
-  }>;
-  meta?: Array<{
-    title?: string;
-    content?: Array<
-      | ({
-          _key: string;
-        } & Code)
-      | ({
-          _key: string;
-        } & Divider)
-      | ({
-          _key: string;
-        } & Header)
-      | {
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: 'span';
-            _key: string;
-          }>;
-          style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-          listItem?: 'bullet' | 'number';
-          markDefs?: Array<
-            | {
-                note?: Array<{
-                  children?: Array<{
-                    marks?: Array<string>;
-                    text?: string;
-                    _type: 'span';
-                    _key: string;
-                  }>;
-                  style?: 'normal';
-                  listItem?: 'bullet' | 'number';
-                  markDefs?: Array<{
-                    href?: string;
-                    newtab?: boolean;
-                    external?: boolean;
-                    _type: 'link';
-                    _key: string;
-                  }>;
-                  level?: number;
-                  _type: 'block';
-                  _key: string;
-                }>;
-                _type: 'footnote';
-                _key: string;
-              }
-            | {
-                href?: string;
-                newtab?: boolean;
-                external?: boolean;
-                _type: 'link';
-                _key: string;
-              }
-          >;
-          level?: number;
-          _type: 'block';
-          _key: string;
-        }
-      | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: 'image';
-          _key: string;
-        }
-    >;
-    _key: string;
-  }>;
   timeline?: Array<{
-    title?: string;
+    title: string;
     subtitle?: string;
     range?: {
-      start?: string;
+      start: string;
       end?: string;
     };
     body?: Array<
