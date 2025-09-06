@@ -1,24 +1,11 @@
 <script lang="ts">
   import PostList from '$components/new/post-list.svelte';
-  import { pageTitle } from '$lib/navigation';
+  import { PageMeta } from '$lib/nav.svelte';
 
-  export let data;
+  const { data } = $props();
 
-  // const description = '';
+  PageMeta.desc = data.config.meta?.index?.desc ?? '';
 </script>
-
-<svelte:head>
-  <title>{$pageTitle}</title>
-  <meta itemprop="name" content={$pageTitle} />
-  <!-- <meta itemprop="description" content={description} /> -->
-  <meta name="robots" content="index, follow" />
-  <!-- <meta name="description" content={description} /> -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={$pageTitle} />
-  <!-- <meta property="og:description" content={description} /> -->
-  <meta property="twitter:title" content={$pageTitle} />
-  <!-- <meta property="twitter:description" content={description} /> -->
-</svelte:head>
 
 <div class="flex h-full min-w-full flex-grow flex-col gap-20">
   <section

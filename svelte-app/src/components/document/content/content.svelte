@@ -1,14 +1,14 @@
 <script lang="ts">
-  import Footer from '$components/document/content/footer.svelte';
   import Header from '$components/document/content/header.svelte';
   import EmptyContent from '$components/empty-content.svelte';
-  import BaseContainer from '$components/layouts/base-container.svelte';
   import PortableText from '$components/portable-text/portable-text.svelte';
   import type { RouteFetch } from '$types';
   import type { GetPostQueryResult } from '$types/sanity';
 
-  export let data: NonNullable<GetPostQueryResult>,
-    routeFetch: RouteFetch;
+  const {
+    data,
+    routeFetch
+  }: { data: NonNullable<GetPostQueryResult>; routeFetch: RouteFetch } = $props();
 </script>
 
 <div class="flex h-full w-full flex-col gap-y-5">

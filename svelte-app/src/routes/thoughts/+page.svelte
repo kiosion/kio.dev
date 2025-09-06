@@ -1,6 +1,6 @@
 <script lang="ts">
   import PostList from '$components/new/post-list.svelte';
-  import { pageTitle } from '$lib/navigation';
+  import { PageMeta } from '$lib/nav.svelte';
   import type { Tag } from '$types/sanity';
 
   const { data } = $props();
@@ -44,20 +44,11 @@
     tags[j + 1] = currentTag;
   }
 
-  const description = 'Thoughts and guides on programming, tech, and finance.';
+  PageMeta.desc = data.config.meta?.thoughts?.desc ?? '';
 </script>
 
 <svelte:head>
-  <title>{$pageTitle}</title>
-  <meta itemprop="name" content={$pageTitle} />
-  <meta itemprop="description" content={description} />
   <meta name="robots" content="index, follow" />
-  <meta name="description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={$pageTitle} />
-  <meta property="og:description" content={description} />
-  <meta property="twitter:title" content={$pageTitle} />
-  <meta property="twitter:description" content={description} />
 </svelte:head>
 
 {#snippet tagItem(tag: (typeof tags)[number])}

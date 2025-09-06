@@ -90,26 +90,6 @@
       &.light {
         @apply bg-neutral-0 text-dark;
       }
-
-      &:not(.is-loaded) {
-        cursor: wait !important;
-
-        & a,
-        & button,
-        & [role='button'] {
-          cursor: not-allowed !important;
-        }
-      }
-
-      &.is-loading {
-        cursor: wait !important;
-
-        & a,
-        & button,
-        & [role='button'] {
-          cursor: not-allowed !important;
-        }
-      }
     }
 
     ::selection {

@@ -4,7 +4,16 @@
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
 
-  const url = $derived(page?.url?.pathname);
+  const url = $derived(page.url?.pathname);
+  const hasSlug = $derived(!!page.params?.slug && !!page.data?.post?.title);
+  const postTitle = $derived.by<string | undefined>(() => {
+    const baseTitle = page.data?.post?.title;
+    return baseTitle
+      ? baseTitle.length > 40
+        ? `${baseTitle.slice(0, 40 - 3)}...`
+        : baseTitle
+      : undefined;
+  });
 
   const linkMatches = (link: string) =>
     link === '/' ? url === link : url.startsWith(link);
@@ -51,16 +60,35 @@
         >
         {#each NAV_LINKS as link}
           {#if linkMatches(link.url)}
-            <p
-              class="text-md decoration-orange-light dark:decoration-orange-dark absolute inset-0 tracking-wide underline decoration-2 underline-offset-4"
+            <svelte:element
+              this={hasSlug ? 'a' : 'p'}
+              href={hasSlug ? link.url : undefined}
+              class="text-md decoration-orange-light dark:decoration-orange-dark absolute inset-0 tracking-wide decoration-2 underline-offset-[3px]"
+              class:underline={!hasSlug}
+              class:opacity-100={!hasSlug}
+              class:opacity-70={hasSlug}
               in:fly={{ duration: 400, x: 150, delay: 250, easing: cubicOut }}
               out:fly={{ duration: 400, x: 150, easing: cubicIn }}
             >
               {link.name}
-            </p>
+            </svelte:element>
           {/if}
         {/each}
       </div>
+      {#if hasSlug}
+        <span
+          class="text-md opacity-70"
+          in:fly={{ duration: 400, x: 150, delay: 250, easing: cubicOut }}
+          out:fly={{ duration: 400, x: 150, easing: cubicIn }}>/</span
+        >
+        <p
+          class="text-md decoration-orange-light dark:decoration-orange-dark tracking-wide underline decoration-2 underline-offset-[3px]"
+          in:fly={{ duration: 400, x: 150, delay: 250, easing: cubicOut }}
+          out:fly={{ duration: 400, x: 150, easing: cubicIn }}
+        >
+          {postTitle}
+        </p>
+      {/if}
     </div>
 
     <nav class="text-md flex flex-row items-center justify-end gap-x-10 tracking-wide">

@@ -27,15 +27,13 @@
 </script>
 
 <a
-  class="focus-outline-sm decoration-orange-light dark:text-neutral-0 relative block w-full rounded-sm font-extrabold text-neutral-800 decoration-2 underline-offset-4 transition-colors {style}"
-  class:px-6={global.context.documentView}
-  class:md:px-10={global.context.documentView}
+  class="focus-outline-sm decoration-orange-light dark:text-neutral-0 relative block w-full rounded-sm text-neutral-800 decoration-2 underline-offset-4 transition-colors {style}"
   class:!mt-8={indexInParent === 0}
   class:underline={isHighlighted}
   id={`heading-${value._key}`}
   href={`#${value._key}`}
 >
-  <svelte:element this={style} class="font-display -ml-1.5 inline font-bold">
+  <svelte:element this={style} class="font-display -ml-1.5 inline font-semibold">
     <slot />
   </svelte:element>
 </a>

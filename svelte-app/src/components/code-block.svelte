@@ -40,7 +40,6 @@
   let langTypePromise = $state<Promise<SHLanguageType<SHLanguageUnion>> | undefined>(
     undefined
   );
-  let codeContainer = $state<HTMLElement | undefined>(undefined);
   let showMoreHeight = $state<number | undefined>(undefined);
   let innerHeight = $state(0);
   let hideLoader = $state(false);
@@ -107,7 +106,7 @@
 </script>
 
 <div
-  class="mx-7 my-5 rounded-lg bg-neutral-200/50 transition-colors dark:bg-neutral-700"
+  class="my-5 border-y transition-colors"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
@@ -144,7 +143,6 @@
   <div
     class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
     style="height: {containerHeight}px"
-    bind:this={codeContainer}
   >
     <div
       class="pointer-events-none absolute top-1/2 left-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
@@ -176,7 +174,7 @@
           {/if}
         {:catch error}
           <div class="p-3 font-mono text-sm">
-            {$t('Error loading')}:&nbsp;{error.message}
+            Error loading: {error.message}
           </div>
         {/await}
       {/if}
@@ -221,10 +219,10 @@
   @reference 'tailwindcss';
 
   .show-more-gradient {
-    background: helpers.ease-gradient('to top', colors.$neutral-200, transparent);
+    background: helpers.ease-gradient('to top', colors.$neutral-0, transparent);
 
     @include mixins.dark {
-      background: helpers.ease-gradient('to top', colors.$neutral-700, transparent);
+      background: helpers.ease-gradient('to top', colors.$neutral-800, transparent);
     }
   }
 
