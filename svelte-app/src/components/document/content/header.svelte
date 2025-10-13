@@ -22,7 +22,7 @@
   </a>
 {/snippet}
 
-<section class="mt-10 flex w-full flex-col gap-y-8 border-b pb-2">
+<section class="mt-10 flex w-full flex-col gap-y-6 border-b pb-4">
   <div class="flex flex-col gap-y-4">
     <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
       {data.title}
