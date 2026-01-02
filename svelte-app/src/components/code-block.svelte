@@ -5,10 +5,10 @@
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
   import DocumentTextSmall from '$components/icons/document-text-small.svelte';
-  import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
-  import MinusSmall from '$components/icons/minus-small.svelte';
-  import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
-  import PlusSmall from '$components/icons/plus-small.svelte';
+  // import MinusCircleSmall from '$components/icons/minus-circle-small.svelte';
+  // import MinusSmall from '$components/icons/minus-small.svelte';
+  // import PlusCircleSmall from '$components/icons/plus-circle-small.svelte';
+  // import PlusSmall from '$components/icons/plus-small.svelte';
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
@@ -40,12 +40,12 @@
   let langTypePromise = $state<Promise<SHLanguageType<SHLanguageUnion>> | undefined>(
     undefined
   );
-  let showMoreHeight = $state<number | undefined>(undefined);
-  let innerHeight = $state(0);
+  // let showMoreHeight = $state<number | undefined>(undefined);
+  // let innerHeight = $state(0);
   let hideLoader = $state(false);
   let copied = $state<ReturnType<typeof setTimeout> | undefined>(undefined);
-  let containerHeight = $state(DEFAULT_CODE_BLOCK_HEIGHT);
-  let showingMore = $state(false);
+  // let containerHeight = $state(DEFAULT_CODE_BLOCK_HEIGHT);
+  // let showingMore = $state(false);
 
   const id = Math.random().toString(36).substring(2),
     copy = () => {
@@ -90,27 +90,15 @@
   };
 
   onMount(() => {
-    langTypePromise = getLangType(lang?.toLowerCase());
-  });
-
-  const updateHeight = (height?: number) => height && (containerHeight = height);
-
-  $effect(() => {
-    if (innerHeight > 52) {
-      hideLoader = true;
-    }
-    if (hideLoader && (innerHeight < DEFAULT_CODE_BLOCK_HEIGHT || showingMore)) {
-      updateHeight(showingMore ? innerHeight + (showMoreHeight ?? 0) / 2 : innerHeight);
-    }
+    langTypePromise = getLangType(lang?.toLowerCase()).finally(() => (hideLoader = true));
   });
 </script>
 
 <div
-  class="my-5 border-y transition-colors"
+  class="relative my-5 rounded-sm bg-neutral-100/50 transition-colors dark:bg-neutral-600/50"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}
-  style="content-visibility: auto"
 >
   {#if filename}
     <div
@@ -141,8 +129,7 @@
     </button>
   </Tooltip>
   <div
-    class="focus-outline relative h-fit w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
-    style="height: {containerHeight}px"
+    class="focus-outline relative h-fit min-h-16 w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
   >
     <div
       class="pointer-events-none absolute top-1/2 left-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transition-opacity"
@@ -155,7 +142,6 @@
       class="h-fit w-full min-w-full rounded-sm p-1 pr-8 pl-4 transition-all"
       id="hljs-container"
       aria-hidden="true"
-      bind:clientHeight={innerHeight}
     >
       {#if langTypePromise}
         {#await langTypePromise then resolvedLang}
@@ -181,34 +167,6 @@
     </div>
     <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
   </div>
-
-  {#if hideLoader && innerHeight > DEFAULT_CODE_BLOCK_HEIGHT}
-    <div
-      class="show-more-gradient absolute right-0 bottom-0 left-0 z-10 flex items-center justify-center pt-6 pb-4 text-center"
-      class:showingMore
-      bind:clientHeight={showMoreHeight}
-    >
-      <button
-        class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-1.5 rounded-md bg-neutral-300/50 px-2 py-1.5 text-sm transition-colors hover:bg-neutral-300 focus-visible:bg-neutral-300 dark:bg-neutral-500/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-        onclick={() => {
-          showingMore = !showingMore;
-          if (!showingMore) {
-            updateHeight(DEFAULT_CODE_BLOCK_HEIGHT);
-          }
-        }}
-        type="button"
-      >
-        {#if showingMore}
-          <MinusSmall class="group-hover:hidden group-focus-visible:hidden" />
-          <MinusCircleSmall class="hidden group-hover:block group-focus-visible:block" />
-        {:else}
-          <PlusSmall class="group-hover:hidden group-focus-visible:hidden" />
-          <PlusCircleSmall class="hidden group-hover:block group-focus-visible:block" />
-        {/if}
-        {$t('Show {amount}', { amount: $t(showingMore ? 'less' : 'more') })}
-      </button>
-    </div>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -217,14 +175,6 @@
   @use '@styles/mixins';
 
   @reference 'tailwindcss';
-
-  .show-more-gradient {
-    background: helpers.ease-gradient('to top', colors.$neutral-0, transparent);
-
-    @include mixins.dark {
-      background: helpers.ease-gradient('to top', colors.$neutral-800, transparent);
-    }
-  }
 
   :global(#hljs-container > pre) {
     white-space: break-spaces;

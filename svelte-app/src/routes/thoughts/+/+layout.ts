@@ -10,12 +10,12 @@ const UNCATEGORIZED_TAG = {
 } satisfies Pick<Tag, '_id' | 'slug' | 'title'>;
 
 export const load = (async ({ parent }) => {
-  const _parent = await parent(),
+  const parentData = await parent(),
     tags: Pick<Tag, '_id' | 'slug' | 'title'>[] = [],
     tagCounts: Record<string, number> = {},
     postsByTag: Record<string, NonNullable<GetPostsQueryResult>> = {};
 
-  for (const post of _parent.posts ?? []) {
+  for (const post of parentData.posts ?? []) {
     if (!post.tags?.length) {
       if (!(UNCATEGORIZED_TAG._id in tagCounts)) {
         tags.push(UNCATEGORIZED_TAG);
@@ -57,5 +57,9 @@ export const load = (async ({ parent }) => {
     tags[j + 1] = currentTag;
   }
 
-  return { tags, postsByTag };
+  return {
+    breadcrumbs: [...parentData.breadcrumbs, { label: 'Topics', href: '/thoughts/+' }],
+    tags,
+    postsByTag
+  };
 }) satisfies LayoutLoad;

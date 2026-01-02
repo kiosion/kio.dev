@@ -61,7 +61,7 @@
   >
     <span class="opacity-70 select-none">#</span>
     <span
-      class="decoration-orange-light dark:decoration-orange-dark decoration-2 underline-offset-[3px] opacity-70 transition-opacity group-hover:underline group-hover:opacity-100"
+      class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-70 transition-[opacity,text-decoration-color,color] group-hover:opacity-100"
       >{tag.title?.toLowerCase()}</span
     >
   </a>

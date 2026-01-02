@@ -28,31 +28,29 @@ interface AppRoute {
   name: string;
   path: string;
   children?: AppRoute[];
-  hidden?: boolean;
 }
 
 export const APP_ROUTES = [
   {
     name: 'Home',
     path: '/',
-    hidden: false
   },
   {
     name: 'Thoughts',
     path: '/thoughts',
-    children: [{ name: 'Post', path: '/thoughts/:slug' }],
-    hidden: false
+    children: [
+      { name: 'Post', path: '/thoughts/:slug' },
+      {
+        name: 'Topics',
+        path: '/thoughts/+',
+        children: [{ name: 'Topic', path: '/thoughts/+/:slug' }]
+      }
+    ],
   },
   {
-    name: 'Etc',
+    name: 'About',
     path: '/etc',
-    hidden: false
   },
-  // {
-  //   name: 'Get in touch',
-  //   path: '/contact',
-  //   hidden: false
-  // }
 ] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
@@ -71,10 +69,9 @@ export const ROUTE_ORDER = [
   '/thoughts/*',
   '/thoughts/*/*',
   '/etc',
-  // '/contact',
 ];
 
-export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
+export const NAV_LINKS = TOP_LEVEL_ROUTES.map(
   (route) => ({
     name: route.name,
     url: route.path

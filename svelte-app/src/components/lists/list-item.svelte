@@ -11,8 +11,8 @@
   href={$linkTo(`/thoughts/${document.slug.current}`)}
   class="focus-outline group relative -my-3 flex w-full flex-col gap-y-1 rounded-lg p-3 transition-colors hover:bg-neutral-200/50 focus-visible:bg-neutral-200/50 dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700"
   tabindex="0"
-  data-sveltekit-preload-code
-  data-sveltekit-preload-data
+  data-sveltekit-preload-code="eager"
+  data-sveltekit-preload-data="hover"
 >
   <div
     class="flex flex-row flex-wrap items-center justify-start gap-0.5 px-0.5 font-sans text-sm font-medium text-neutral-700 transition-colors dark:text-neutral-200"

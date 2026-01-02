@@ -10,8 +10,8 @@
   <a
     class="group flex flex-row items-center justify-start gap-x-0.5"
     href={`/thoughts/+/${tag.slug?.current}`}
-    data-sveltekit-preload-code
-    data-sveltekit-preload-data
+    data-sveltekit-preload-code="eager"
+    data-sveltekit-preload-data="hover"
     aria-label={'Topic' + ': ' + tag.title}
   >
     <span class="select-none">#</span>
@@ -22,7 +22,9 @@
   </a>
 {/snippet}
 
-<section class="mt-10 flex w-full flex-col gap-y-6 border-b pb-4">
+<section
+  class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-300 pb-4 dark:border-neutral-400"
+>
   <div class="flex flex-col gap-y-4">
     <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
       {data.title}

@@ -1,5 +1,6 @@
 import { unwrapAPIResponse } from '$lib/api/result';
 import { findOne } from '$lib/api/store';
+import { BASE_DOMAIN } from '$lib/consts';
 import { ENV } from '$lib/env';
 
 import type { LayoutLoad } from './$types';
@@ -12,5 +13,9 @@ export const load = (async ({ url, fetch }) => {
     await findOne(fetch, 'config')
   );
 
-  return { pathname: url.pathname, config };
+  return {
+    breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],
+    pathname: url.pathname,
+    config
+  };
 }) satisfies LayoutLoad;

@@ -59,26 +59,20 @@
   .h5 {
     @apply mt-6 mb-4;
   }
-  .h6 {
-    @apply mt-6 mb-4;
-  }
 
   h1 {
-    @apply text-4xl leading-[1.1];
+    @apply text-3xl leading-[1.1];
   }
   h2 {
-    @apply text-3xl leading-[1.05];
+    @apply text-2xl leading-[1.05];
   }
   h3 {
-    @apply text-2xl leading-none;
-  }
-  h4 {
     @apply text-xl leading-none;
   }
-  h5 {
+  h4 {
     @apply text-lg leading-none;
   }
-  h6 {
+  h5 {
     @apply text-lg leading-none;
   }
 

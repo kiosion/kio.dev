@@ -13,7 +13,7 @@
   const routeFetch = portableText.global.context.routeFetch as RouteFetch;
 </script>
 
-<ConstrainWidth class="px-6 md:px-10">
+<ConstrainWidth>
   <ErrorBoundary>
     <Image image={portableText.value} {routeFetch} />
   </ErrorBoundary>

@@ -12,14 +12,19 @@ export const load = (async ({ parent, fetch, params }) => {
 
   let post: NonNullable<GetPostQueryResult & { headings: HeadingNode[] }> | undefined;
 
+  const parentData = await parent();
+
   if (browser) {
-    const _parent = await parent();
-    post = _parent?.posts?.find?.((p) => p.slug?.current === params.slug);
+    post = parentData?.posts?.find?.((p) => p.slug?.current === params.slug);
   }
 
   if (!post) {
     post = unwrapAPIResponse(await findOne(fetch, 'post', opts));
   }
 
-  return { post, routeFetch: fetch };
+  return {
+    breadcrumbs: [...parentData.breadcrumbs, { label: post.title, href: `/thoughts/${params.slug}` }],
+    post,
+    routeFetch: fetch
+  };
 }) satisfies PageLoad;

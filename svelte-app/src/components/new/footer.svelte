@@ -7,7 +7,7 @@
 </script>
 
 <footer
-  class="border-dark dark:border-light flex w-full flex-row items-center justify-between gap-x-8 border-t"
+  class="bg-light dark:bg-dark flex w-full flex-row items-center justify-between gap-x-8 border-t border-neutral-300 dark:border-neutral-400"
 >
   <div class="py-6 pl-8 text-sm">
     <p>&copy; {new Date().getFullYear()} {config.name}</p>
