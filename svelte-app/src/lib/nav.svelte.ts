@@ -1,19 +1,18 @@
-import type { page } from '$app/state';
 import { APP_ROUTES, BASE_PAGE_TITLE } from '$lib/consts';
-import type { GetConfigQueryResult } from '$types/generated/sanity.types';
+import { normalizePathname } from '$lib/utils';
 
-export const PageMeta = $state({ title: BASE_PAGE_TITLE, desc: '' });
+export type Meta = { title: string; desc?: string };
 
-export const getPageTitle = (state: typeof page) => {
-  const basePathname = state?.url?.pathname ?? '/',
-      pathname = `/${
-        basePathname.slice(1).split('/')[0]
-      }`,
-      route = APP_ROUTES.find((r) => r.path === pathname);
-  
-    return route?.name?.length
+export const getPageMeta = (basePathname?: string) => {
+  const top = `/${normalizePathname(basePathname || '/').slice(1).split('/')[0]}`;
+  const route = APP_ROUTES.find((r) => r.path === top);
+
+  return {
+    title: route?.name?.length
       ? `${route.name} | ${BASE_PAGE_TITLE}`
-      : BASE_PAGE_TITLE;
+      : BASE_PAGE_TITLE,
+    desc: route?.desc
+  };
 };
 
 export const scrollTo = (

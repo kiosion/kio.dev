@@ -1,14 +1,12 @@
 <script lang="ts">
   import ExclamationCircle from '$components/icons/exclamation-circle.svelte';
-  import { t } from '$lib/i18n';
+
+  let { message = 'No content available.' } = $props();
 </script>
 
 <div
-  class="mt-8 mb-2 flex w-full flex-row items-center justify-start gap-x-3 px-8 select-none"
-  data-test-id="error-text"
+  class="my-4 flex flex-col items-center justify-center gap-4 text-center text-base text-neutral-700 dark:text-neutral-300"
 >
   <ExclamationCircle />
-  <p class="text-md font-sans font-medium">
-    {$t('errors.no-content.message')}
-  </p>
+  <p>{message}</p>
 </div>

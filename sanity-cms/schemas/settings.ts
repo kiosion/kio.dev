@@ -2,62 +2,6 @@ import Body, { BodyBlocks } from '$objects/body';
 
 import type { PreviewConfig, PreviewValue, Rule } from 'sanity';
 
-const Section = {
-  title: 'Section',
-  type: 'object',
-  fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: BodyBlocks
-    }
-  ]
-};
-
-const Page = {
-  type: 'object',
-  fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'text',
-      rows: 1,
-      description: 'Page title',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'desc',
-      title: 'Description',
-      type: 'text',
-      rows: 1,
-      description: 'SEO description',
-      validation: (Rule: Rule) => Rule.max(160)
-    },
-    {
-      name: 'heading',
-      title: 'Heading',
-      type: 'text',
-      rows: 2,
-      description: 'Main heading on the page',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    Body,
-  ],
-  preview: {
-    select: {
-      title: 'title',
-      subtitle: 'heading',
-    },
-  },
-};
-
 export default {
   name: 'siteSettings',
   title: 'Site Settings',
@@ -199,18 +143,6 @@ export default {
         }
       ]
     },
-    // {
-    //   name: 'about',
-    //   type: 'array',
-    //   title: 'About Sections',
-    //   of: [Section]
-    // },
-    // {
-    //   name: 'meta',
-    //   type: 'array',
-    //   title: 'Meta Sections',
-    //   of: [Section]
-    // },
     {
       name: 'timeline',
       title: 'Work Timeline',

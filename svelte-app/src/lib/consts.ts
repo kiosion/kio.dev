@@ -27,6 +27,7 @@ export const BASE_GIT_URL = 'https://github.com/kiosion/kio.dev';
 interface AppRoute {
   name: string;
   path: string;
+  desc?: string;
   children?: AppRoute[];
 }
 
@@ -34,10 +35,12 @@ export const APP_ROUTES = [
   {
     name: 'Home',
     path: '/',
+    desc: 'Portfolio and writing on programming, security, finance, and whatever I\'m exploring.'
   },
   {
     name: 'Thoughts',
     path: '/thoughts',
+    desc: 'Notes, guides, and thoughts on programming, security, finance, and more.',
     children: [
       { name: 'Post', path: '/thoughts/:slug' },
       {
@@ -50,6 +53,7 @@ export const APP_ROUTES = [
   {
     name: 'About',
     path: '/etc',
+    desc: 'What I work on and how to reach me.'
   },
 ] as const satisfies AppRoute[];
 

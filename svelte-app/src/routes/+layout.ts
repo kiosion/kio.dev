@@ -2,6 +2,7 @@ import { unwrapAPIResponse } from '$lib/api/result';
 import { findOne } from '$lib/api/store';
 import { BASE_DOMAIN } from '$lib/consts';
 import { ENV } from '$lib/env';
+import { getPageMeta } from '$lib/nav.svelte';
 
 import type { LayoutLoad } from './$types';
 
@@ -16,6 +17,7 @@ export const load = (async ({ url, fetch }) => {
   return {
     breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],
     pathname: url.pathname,
-    config
+    config,
+    meta: getPageMeta(url.pathname)
   };
 }) satisfies LayoutLoad;

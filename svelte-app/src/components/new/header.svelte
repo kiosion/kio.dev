@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
+  import { pathnameGroupKey } from '$lib/utils';
   import { flip } from 'svelte/animate';
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
@@ -10,6 +11,12 @@
   const url = $derived(page.url?.pathname ?? '/');
 
   const breadcrumbs = $derived.by<Crumb[]>(() => {
+    if (page.error) {
+      return [
+        { label: BASE_DOMAIN, href: '/' },
+        { label: page.status === 404 ? 'Not Found' : 'Error' }
+      ];
+    }
     return (
       (page.data?.breadcrumbs as Crumb[] | undefined) ?? [
         { label: BASE_DOMAIN, href: '/' }
@@ -31,15 +38,17 @@
 {#snippet navLink(href: string, text: string, active = false)}
   <a
     {href}
-    class="decoration-orange-light dark:decoration-orange-dark decoration-2 underline-offset-[3px] transition-opacity"
+    class="underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
     aria-current={active ? 'page' : undefined}
     aria-disabled={active}
+    class:decoration-orange-light={active}
+    class:dark:decoration-orange-dark={active}
     class:select-none={active}
     class:pointer-events-none={active}
-    class:opacity-50={active}
+    class:opacity-100={active}
     class:opacity-70={!active}
-    class:underline={active}
-    class:hover:underline={!active}
+    class:hover:decoration-orange-light={!active}
+    class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="hover"
@@ -52,8 +61,9 @@
   <svelte:element
     this={crumb.href && !isLast ? 'a' : 'span'}
     href={crumb.href && !isLast ? crumb.href : undefined}
-    class="decoration-orange-light dark:decoration-orange-dark inline-block max-w-[18ch] min-w-0 truncate tracking-wide decoration-2 underline-offset-[3px] transition-opacity sm:max-w-[34ch]"
-    class:hover:underline={!!crumb.href && !isLast}
+    class="inline-block max-w-[18ch] min-w-0 truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] sm:max-w-[34ch]"
+    class:hover:decoration-orange-light={!!crumb.href && !isLast}
+    class:hover:dark:decoration-orange-dark={!!crumb.href && !isLast}
     class:opacity-70={!isLast}
     class:hover:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
@@ -106,7 +116,7 @@
       class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
     >
       {#each NAV_LINKS as link}
-        {@render navLink(link.url, link.name, link.url === url)}
+        {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
       {/each}
     </nav>
   </div>

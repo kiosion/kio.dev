@@ -8,7 +8,6 @@ import sveltePlugin from 'eslint-plugin-svelte';
 import unusedImports from 'eslint-plugin-unused-imports';
 import svelteParser from 'svelte-eslint-parser';
 import tseslint from 'typescript-eslint';
-// import localRules from 'eslint-plugin-local-rules';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -26,7 +25,6 @@ export default tseslint.config(
       prettier: prettierPlugin,
       'simple-import-sort': sortPlugin,
       'unused-imports': unusedImports
-      // 'local-rules': localRules
     },
     rules: {
       // original overrides

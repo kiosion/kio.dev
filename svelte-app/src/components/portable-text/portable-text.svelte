@@ -49,8 +49,6 @@
     class?: string;
   } = $props();
 
-  // throw new Error('Testing sdlfkjsdlfkj');
-
   const customScrollTo = (event: Event, id: string) => {
     event.preventDefault();
     const element = document.querySelector(`#${id}`);

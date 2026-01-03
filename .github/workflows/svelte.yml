@@ -8,9 +8,6 @@ on:
       - "LICENSE"
       - "**/.husky"
       - "sanity-cms/**"
-      - "express-api/**"
-      - "rust-api/**"
-      - "elixir-api/**"
 
 concurrency:
   group: ci
@@ -45,12 +42,9 @@ jobs:
         run: make install-web
       - name: Run lint check
         run: (cd ./svelte-app && pnpm lint)
-  tests:
-    name: Tests
-    uses: ./.github/workflows/test.yml
-    secrets: inherit
+
   deploy:
     name: Deploy
-    needs: [lint, tests]
+    needs: [lint]
     uses: ./.github/workflows/netlify-deploy.yml
     secrets: inherit

@@ -1,10 +1,7 @@
 <script lang="ts">
   import PostList from '$components/new/post-list.svelte';
-  import { PageMeta } from '$lib/nav.svelte';
 
   const { data } = $props();
-
-  PageMeta.desc = data.config.meta?.index?.desc ?? '';
 </script>
 
 <div class="flex h-full min-w-full flex-grow flex-col gap-20">
@@ -35,7 +32,7 @@
   <div class="min-h-0 flex-1"></div>
 
   <section class="flex flex-col gap-2">
-    <div class="text-base tracking-wide opacity-70">Recent posts</div>
+    <span class="text-base tracking-wide opacity-70">Recent posts</span>
 
     {#if !data.posts.length}
       <p class="text-md opacity-70">No posts yet.</p>
@@ -43,17 +40,12 @@
       <PostList posts={data.posts} />
     {/if}
 
-    <div class="flex flex-row items-center gap-2 text-sm">
+    <div class="flex flex-row items-center gap-2 text-base">
       <a
         href="/thoughts"
         class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
-        >More</a
-      >
-      <span class="opacity-70 select-none">/</span>
-      <a
-        href="/thoughts/+"
-        class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
-        >Topics</a
+        data-sveltekit-preload-code="eager"
+        data-sveltekit-preload-data="hover">See all</a
       >
     </div>
   </section>
