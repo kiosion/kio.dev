@@ -2,10 +2,18 @@ name: Deploy app
 
 on:
   workflow_call:
+    secrets:
+      VITE_SANITY_PROJECT_ID:
+        required: true
+      VITE_SANITY_TOKEN:
+        required: true
+      NETLIFY_SITE_ID:
+        required: true
+      NETLIFY_AUTH_TOKEN:
+        required: true
 
 jobs:
   build:
-    environment: CI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -47,4 +47,8 @@ jobs:
     name: Deploy
     needs: [lint]
     uses: ./.github/workflows/netlify-deploy.yml
-    secrets: inherit
+    secrets:
+      VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
+      VITE_SANITY_TOKEN: ${{ secrets.VITE_SANITY_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
