@@ -28,7 +28,71 @@ export type SiteSettings = {
   _rev: string;
   name: string;
   hero: string;
-  info?: Array<string>;
+  info?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+  >;
   bio?: string;
   about: Array<
     | {
@@ -160,7 +224,6 @@ export type SiteSettings = {
         _key: string;
       } & Header)
   >;
-  email?: string;
   socialLinks?: Array<{
     name: string;
     url?: string;
@@ -690,7 +753,71 @@ export type GetConfigQueryResult = {
   _rev: string;
   name: string;
   hero: string;
-  info?: Array<string>;
+  info?: Array<
+    | ({
+        _key: string;
+      } & Code)
+    | ({
+        _key: string;
+      } & Divider)
+    | ({
+        _key: string;
+      } & Header)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<
+          | {
+              note?: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?: 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs?: Array<{
+                  href?: string;
+                  newtab?: boolean;
+                  external?: boolean;
+                  _type: 'link';
+                  _key: string;
+                }>;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }>;
+              _type: 'footnote';
+              _key: string;
+            }
+          | {
+              href?: string;
+              newtab?: boolean;
+              external?: boolean;
+              _type: 'link';
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  >;
   bio?: string;
   about: Array<
     | ({
@@ -822,7 +949,6 @@ export type GetConfigQueryResult = {
         _key: string;
       }
   >;
-  email?: string;
   socialLinks?: Array<{
     name: string;
     url?: string;

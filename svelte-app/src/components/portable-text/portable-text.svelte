@@ -83,7 +83,7 @@
 
 <ErrorBoundary>
   <div
-    class="max-w-5xl"
+    class="max-w-5xl {className}"
     class:text-base={bodySize === 'base'}
     class:text-md={bodySize === 'md'}
   >

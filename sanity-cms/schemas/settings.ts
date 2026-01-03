@@ -37,8 +37,8 @@ export default {
     {
       name: 'info',
       type: 'array',
-      title: 'Info Bullets',
-      of: [{ type: 'string' }],
+      title: 'Info',
+      of: BodyBlocks,
       group: 'home',
     },
     {
@@ -62,17 +62,6 @@ export default {
       of: BodyBlocks,
       group: 'contact',
       validation: (Rule: Rule) => Rule.required().min(1),
-    },
-    {
-      name: 'email',
-      title: 'Email',
-      type: 'string',
-      validation: (Rule: Rule) =>
-        Rule.uri({
-          scheme: ['mailto'],
-          allowRelative: false
-        }),
-      group: 'contact',
     },
     {
       name: 'socialLinks',

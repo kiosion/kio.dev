@@ -1,5 +1,7 @@
 <script lang="ts">
+  import ErrorBoundary from '$components/error-boundary.svelte';
   import PostList from '$components/new/post-list.svelte';
+  import PortableText from '$components/portable-text/portable-text.svelte';
 
   const { data } = $props();
 </script>
@@ -20,11 +22,13 @@
         {data.config.bio}
       </p>
     </div>
-    <div class="text-md ml-auto flex max-w-xs flex-col gap-4 text-right opacity-70">
+    <div
+      class="text-md mt-4 ml-auto max-w-xs text-right text-neutral-600 dark:text-neutral-300"
+    >
       {#if data.config.info}
-        {#each data.config.info as bullet}
-          <p>{bullet}</p>
-        {/each}
+        <ErrorBoundary>
+          <PortableText text={data.config.info} class="leading-4" />
+        </ErrorBoundary>
       {/if}
     </div>
   </section>

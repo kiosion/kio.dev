@@ -12,7 +12,35 @@
   <div class="py-6 pl-8 text-sm">
     <p>&copy; {new Date().getFullYear()} {config.name}</p>
   </div>
-  {#if config.email || APP_VERSION?.length}
+  {#if config.socialLinks?.length || APP_VERSION?.length}
+    <div class="flex flex-row items-center justify-end gap-4 py-6 pr-8 text-sm">
+      {#if config.socialLinks?.length}
+        {#each config.socialLinks as link, idx}
+          <a
+            class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
+            href={link.url}
+            rel="noopener noreferrer"
+            target="_blank">{link.name}</a
+          >
+          {#if idx < config.socialLinks.length - 1}
+            <span class="opacity-50 select-none">|</span>
+          {/if}
+        {/each}
+      {/if}
+      {#if config.socialLinks?.length && APP_VERSION?.length}
+        <span class="opacity-50 select-none">|</span>
+      {/if}
+      {#if APP_VERSION?.length}
+        <a
+          class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}>#{APP_VERSION.slice(0, 6)}</a
+        >
+      {/if}
+    </div>
+  {/if}
+  <!-- {#if config.email || APP_VERSION?.length}
     <div class="flex flex-row items-center justify-end gap-4 py-6 pr-8 text-sm">
       {#if config.email}
         <a
@@ -32,5 +60,5 @@
         >
       {/if}
     </div>
-  {/if}
+  {/if} -->
 </footer>

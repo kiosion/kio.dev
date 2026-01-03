@@ -51,7 +51,7 @@ export const APP_ROUTES = [
     ],
   },
   {
-    name: 'About',
+    name: 'Etc',
     path: '/etc',
     desc: 'What I work on and how to reach me.'
   },
