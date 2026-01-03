@@ -1,0 +1,68 @@
+name: Lint (Sanity schema/types)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "sanity-cms/**"
+      - "svelte-app/types/generated/**"
+      - ".github/workflows/sanity-schema-check.yml"
+
+concurrency:
+  group: sanity-schema-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  schema-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./sanity-cms
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+          cache-dependency-path: sanity-cms/pnpm-lock.yaml
+
+      - name: Install Deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate schema
+        run: pnpm sanity schema validate --level error
+      
+      - name: Extract schema
+        run: pnpm sanity schema extract --enforce-required-fields
+      
+      - name: Generate types
+        run: pnpm sanity typegen generate
+      
+      - name: Check for uncommitted changes
+        working-directory: ..
+        run: |
+          set -euo pipefail
+
+          CHANGED="$(git status --porcelain -- sanity-cms/schema.json svelte-app/types/generated || true)"
+
+          if [[ -n "$CHANGED" ]]; then
+            echo "❌ Schema or generated types are out of date. Please run 'make typegen' and commit the changes."
+            echo
+            echo "Changed files:"
+            echo "$CHANGED"
+            echo
+            echo "Diff (truncated):"
+            git --no-pager diff sanity-cms/schema.json svelte-app/types/generated || true
+            exit 1
+          else
+            echo "✅ Schema and generated types are up to date."
+          fi

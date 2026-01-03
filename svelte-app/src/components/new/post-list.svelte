@@ -121,7 +121,7 @@
           <a class="group block py-4" href={`/thoughts/${post.slug.current}`}>
             <div class="flex items-baseline justify-between gap-4">
               <h3
-                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-4 transition-colors"
+                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-4"
               >
                 {post.title}
               </h3>

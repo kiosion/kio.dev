@@ -22,6 +22,11 @@ sanity-%:
 	@make install-sanity
 	@cd ./sanity-cms && SANITY_STUDIO_DATASET=$(if $(findstring dev,$@),dev,production) pnpm dev
 
+typegen: SHELL:=/bin/bash
+typegen: install-web install-sanity
+	@cd ./sanity-cms && pnpm sanity schema extract --enforce-required-fields
+	@cd ./sanity-cms && pnpm sanity typegen generate
+
 web: SHELL:=/bin/bash
 web: install-web
 web:
@@ -31,18 +36,10 @@ prod: SHELL:=/bin/bash
 prod:
 	@cd ./svelte-app && SVELTE_ADAPTER_ENV=netlify pnpm build
 
-vitest: SHELL:=/bin/bash
-vitest:
-	@cd ./svelte-app && pnpm run test:vitest
-
-playwright: SHELL:=/bin/bash
-playwright:
-	@cd ./svelte-app && pnpm run test:playwright
-
 lint: SHELL:=/bin/bash
 lint: install-web install-sanity
 	@cd ./svelte-app && pnpm lint
-	@cd ./sanity-cms && pnpm lint
+	@cd ./sanity-cms && pnpm lint && pnpm validate
 
 format: SHELL:=/bin/bash
 format: install-web install-sanity install-api lint

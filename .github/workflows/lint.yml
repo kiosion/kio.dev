@@ -1,0 +1,88 @@
+name: Lint Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "svelte-app/**"
+      - "sanity-cms/**"
+      - ".github/workflows/lint.yml"
+
+concurrency:
+  group: lint-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      svelte: ${{ steps.filter.outputs.svelte }}
+      sanity: ${{ steps.filter.outputs.sanity }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            svelte:
+              - "svelte-app/**"
+            sanity:
+              - "sanity-cms/**"
+
+  lint-svelte:
+    needs: changes
+    if: needs.changes.outputs.svelte == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: svelte-app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+          cache-dependency-path: svelte-app/pnpm-lock.yaml
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:check
+
+  lint-sanity:
+    needs: changes
+    if: needs.changes.outputs.sanity == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: sanity-cms
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+          cache-dependency-path: sanity-cms/pnpm-lock.yaml
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:check
