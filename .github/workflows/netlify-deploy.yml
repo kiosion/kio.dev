@@ -49,4 +49,8 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          SVELTE_NETLIFY_ENV: netlify
+          VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
+          VITE_SANITY_TOKEN: ${{ secrets.VITE_SANITY_TOKEN }}
+          VITE_APP_VERSION: ${{ github.sha }}
         run: cd ./svelte-app && pnpm netlify deploy --dir=./build --functions=./.netlify/functions-internal --prod
