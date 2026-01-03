@@ -1,8 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
 
-  import { browser } from '$app/environment';
-
+  import type { ComputePositionConfig, Placement } from '@floating-ui/dom';
   import {
     arrow,
     autoUpdate,
@@ -11,8 +10,7 @@
     offset as offsetFn,
     shift
   } from '@floating-ui/dom';
-
-  import type { ComputePositionConfig, Placement } from '@floating-ui/dom';
+  import { browser } from '$app/environment';
   import type { TransitionConfig } from 'svelte/transition';
 
   export let id: number,

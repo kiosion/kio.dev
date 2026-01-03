@@ -1,10 +1,10 @@
-import { defineConfig, SanityDocumentLike } from 'sanity';
-import { studioTheme } from '@sanity/ui';
-import { deskTool } from 'sanity/desk';
+import { Config, defineConfig, SanityDocumentLike } from 'sanity';
+import { buildTheme } from '@sanity/ui/theme';
 import { schemaTypes } from '$schema/schema';
 import { structure } from '$/structure';
 import { codeInput } from '@sanity/code-input';
 import { visionTool } from '@sanity/vision';
+import { structureTool } from 'sanity/structure';
 
 const dataset =
   (import.meta as { env?: Record<string, string> }).env
@@ -16,17 +16,13 @@ export default defineConfig({
   projectId: 'gkgnfulv',
   dataset,
   plugins: [
-    deskTool({
-      structure
-    }),
+    structureTool({ structure }),
     visionTool({
       defaultApiVersion: 'v2022-11-29'
     }),
     codeInput()
   ],
-  theme: {
-    ...studioTheme
-  },
+  theme: buildTheme(),
   schema: {
     types: schemaTypes
   },
@@ -36,20 +32,15 @@ export default defineConfig({
         { slug } = document as SanityDocumentLike & {
           slug: { current: string };
         },
-        baseUrl =
-          dataset === 'production'
-            ? 'https://kio.dev'
-            : 'https://stage.kio.dev';
+        baseUrl = 'https://kio.dev';
       if (!slug?.current) {
         return prev;
       }
       switch (document._type) {
         case 'post':
           return `${baseUrl}/thoughts/${slug.current}`;
-        case 'project':
-          return `${baseUrl}/work/${slug.current}`;
       }
       return prev;
     }
   }
-});
+} satisfies Config);

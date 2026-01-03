@@ -1,5 +1,5 @@
 <svg
-  class="-ml-1 mt-0.5 h-5 w-5 animate-spin text-orange-light !opacity-100 {$$props.class ||
+  class="text-orange-light mt-0.5 -ml-1 h-5 w-5 animate-spin !opacity-100 {$$props.class ||
     ''}"
   style="opacity:0"
   xmlns="http://www.w3.org/2000/svg"

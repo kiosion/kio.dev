@@ -2,38 +2,23 @@ import Body, { BodyBlocks } from '$objects/body';
 
 import type { PreviewConfig, PreviewValue, Rule } from 'sanity';
 
-const Section = {
-  title: 'Section',
-  type: 'object',
-  fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: BodyBlocks
-    }
-  ]
-};
-
 export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
   groups: [
     {
-      name: 'sidebar',
-      title: 'Sidebar'
+      name: 'home',
+      title: 'Homepage'
     },
     {
-      name: 'sections',
-      title: 'Sections'
-    }
+      name: 'about',
+      title: 'About',
+    },
+    {
+      name: 'contact',
+      title: 'Contact / Footer',
+    },
   ],
   fields: [
     {
@@ -41,51 +26,42 @@ export default {
       type: 'string',
       title: 'Name',
       validation: (Rule: Rule) => Rule.required(),
-      group: 'sidebar'
     },
     {
-      name: 'image',
-      type: 'object',
-      title: 'Profile Picture',
+      name: 'hero',
+      type: 'text',
+      title: 'Hero',
       validation: (Rule: Rule) => Rule.required(),
-      fields: [
-        {
-          name: 'dark',
-          type: 'image',
-          title: 'Dark Mode',
-          validation: (Rule: Rule) => Rule.required()
-        },
-        {
-          name: 'light',
-          type: 'image',
-          title: 'Light Mode',
-          validation: (Rule: Rule) => Rule.required()
-        }
-      ],
-      group: 'sidebar'
+      group: 'home',
     },
     {
-      name: 'handle',
-      type: 'string',
-      title: 'Handle',
-      group: 'sidebar'
+      name: 'info',
+      type: 'array',
+      title: 'Info',
+      of: BodyBlocks,
+      group: 'home',
     },
     {
       name: 'bio',
       type: 'text',
       title: 'Bio',
-      group: 'sidebar'
+      group: 'home',
     },
     {
-      name: 'enableToru',
-      type: 'boolean',
-      title: 'Enable Toru',
-      group: 'sidebar',
-      initialValue: false,
-      // options: {
-      // layout:
-      // },
-      validation: (Rule: Rule) => Rule.required()
+      name: 'about',
+      title: 'About',
+      type: 'array',
+      of: BodyBlocks,
+      group: 'about',
+      validation: (Rule: Rule) => Rule.required().min(1),
+    },
+    {
+      name: 'contact',
+      title: 'Contact',
+      type: 'array',
+      of: BodyBlocks,
+      group: 'contact',
+      validation: (Rule: Rule) => Rule.required().min(1),
     },
     {
       name: 'socialLinks',
@@ -112,34 +88,6 @@ export default {
                   scheme: ['https', 'http', 'mailto', 'tel']
                 });
               }
-            },
-            {
-              name: 'internal',
-              title: 'Internal',
-              type: 'boolean',
-              initialValue: false,
-              options: {
-                layout: 'checkbox'
-              },
-              description: 'Relative to the site root, e.g. /about'
-            },
-            {
-              name: 'rel',
-              title: 'Rel',
-              type: 'array',
-              of: [
-                {
-                  type: 'string',
-                  options: {
-                    list: [
-                      { title: 'nofollow', value: 'nofollow' },
-                      { title: 'noopener', value: 'noopener' },
-                      { title: 'noreferrer', value: 'noreferrer' },
-                      { title: 'me', value: 'me' }
-                    ]
-                  }
-                }
-              ]
             }
           ],
           preview: {
@@ -154,22 +102,7 @@ export default {
               }) as PreviewValue
           } satisfies PreviewConfig
         }
-      ],
-      group: 'sidebar'
-    },
-    {
-      name: 'about',
-      type: 'array',
-      title: 'About Sections',
-      group: 'sections',
-      of: [Section]
-    },
-    {
-      name: 'meta',
-      type: 'array',
-      title: 'Meta Sections',
-      group: 'sections',
-      of: [Section]
+      ]
     },
     {
       name: 'timeline',
@@ -239,7 +172,8 @@ export default {
     {
       name: 'pgpKey',
       type: 'text',
-      title: 'PGP Key'
+      title: 'PGP Key',
+      group: 'contact',
     }
   ]
 };

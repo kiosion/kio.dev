@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(body.dark, body.dark *));
+
+@theme {
+  --font-sans: 'TASA Orbiter Deck', sans-serif;
+  --font-display: 'TASA Orbiter Display', sans-serif;
+  --font-mono: 'Commit Mono', monospace;
+
+  --color-black: #0d0c0c;
+  --color-white: #ffffff;
+  --color-dark: #181717;
+  --color-light: #f2f0ed;
+
+  --color-accent-light: #1e65e1;
+  --color-accent-dark: #affa71;
+
+  --color-orange-light: #ff4800;
+  --color-orange-dark: #e03400;
+
+  --color-neutral-0: #f2f0ed;
+  --color-neutral-100: #e4e0dc;
+  --color-neutral-200: #cfc9c2;
+  --color-neutral-300: #b5aca1;
+  --color-neutral-400: #595650;
+  --color-neutral-500: #383432;
+  --color-neutral-600: #2a2726;
+  --color-neutral-700: #1e1c1b;
+  --color-neutral-800: #181717;
+  --color-neutral-light: #e4e0dc;
+  --color-neutral-dark: #383432;
+
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.2rem;
+
+  --breakpoint-3xl: 1824px;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.15;
+  --text-sm: 0.9rem;
+  --text-sm--line-height: 1.25;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-md: 1.125rem;
+  --text-md--line-height: 1.5;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 1.5;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.5;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.5;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 1.5;
+}
+
+@layer base {
+  body {
+    @apply h-full w-full overflow-x-hidden;
+  }
+
+  @layer base {
+    body,
+    html {
+      height: 100vh;
+      overflow: hidden;
+      transition: background 150ms ease;
+
+      @media print {
+        height: fit-content;
+        overflow: visible;
+      }
+    }
+
+    body,
+    html,
+    div,
+    span,
+    p,
+    img {
+      box-sizing: border-box;
+    }
+
+    body {
+      @apply bg-neutral-800 text-light;
+
+      &.light {
+        @apply bg-neutral-0 text-dark;
+      }
+    }
+
+    ::selection {
+      @apply bg-orange-light/90 text-light;
+    }
+
+    .dark {
+      ::selection {
+        @apply bg-orange-light/90 text-dark;
+      }
+    }
+  }
+}
+
+@layer utilities {
+  .focus-outline {
+    @apply outline-offset-4;
+
+    &,
+    &-sm {
+      @apply focus-visible:outline-2 outline-orange-light;
+    }
+
+    &-sm {
+      @apply outline-offset-2;
+    }
+  }
+
+  .themed-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-200) transparent;
+
+    .dark & {
+      scrollbar-color: var(--color-neutral-400) transparent;
+    }
+  }
+}
+
+@layer components {
+  .pt-ol {
+    li {
+      ol {
+        @apply my-3 list-[lower-alpha];
+      }
+    }
+  }
+
+  .pt-ul {
+    li {
+      ul {
+        @apply my-3 list-disc;
+      }
+    }
+  }
+}

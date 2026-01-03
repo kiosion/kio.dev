@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
-
-  import Tooltip from '$components/tooltips/tooltip.svelte';
-
   import type { MarkComponentProps } from '@portabletext/svelte';
   import type {
     PortableTextBlock,
     PortableTextMarkDefinition
   } from '@portabletext/types';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { t } from '$lib/i18n';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
@@ -41,6 +39,7 @@
   <Tooltip content={$t('Go to footnote')}>
     <sup
       ><a
+        class="decoration-dark/80 dark:decoration-light/80 underline decoration-dotted underline-offset-4"
         href={`#note-${portableText.value._key}`}
         id="src-{portableText.value._key}"
         aria-label={$t('Go to footnote')}
@@ -54,21 +53,3 @@
     >
   </Tooltip>
 </span>
-
-<style lang="scss">
-  span {
-    &,
-    sup > a {
-      @apply underline decoration-dark/80 decoration-dotted underline-offset-4;
-    }
-  }
-
-  :global(.dark) {
-    span {
-      &,
-      sup > a {
-        @apply decoration-light/80;
-      }
-    }
-  }
-</style>

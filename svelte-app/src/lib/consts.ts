@@ -16,7 +16,9 @@ export const VALID_DOC_TYPES = ['post', 'config', 'tag'] as const;
 
 export const LOCAL_SETTINGS_KEY = 'kio-dev-settings';
 
-export const BASE_PAGE_TITLE = 'kio.dev';
+export const BASE_DOMAIN = 'kio.dev';
+
+export const BASE_PAGE_TITLE = BASE_DOMAIN;
 
 export const TORU_API_URL = 'https://toru.kio.dev/api/v1';
 
@@ -25,37 +27,34 @@ export const BASE_GIT_URL = 'https://github.com/kiosion/kio.dev';
 interface AppRoute {
   name: string;
   path: string;
+  desc?: string;
   children?: AppRoute[];
-  hidden?: boolean;
 }
 
 export const APP_ROUTES = [
   {
     name: 'Home',
     path: '/',
-    hidden: false
+    desc: 'Portfolio and writing on programming, security, finance, and whatever I\'m exploring.'
   },
   {
     name: 'Thoughts',
     path: '/thoughts',
-    children: [{ name: 'Post', path: '/thoughts/:slug' }],
-    hidden: false
-  },
-  {
-    name: 'Work',
-    path: '/work',
-    hidden: false
-  },
-  {
-    name: 'Experiments',
-    path: '/experiments',
-    hidden: true
+    desc: 'Notes, guides, and thoughts on programming, security, finance, and more.',
+    children: [
+      { name: 'Post', path: '/thoughts/:slug' },
+      {
+        name: 'Topics',
+        path: '/thoughts/+',
+        children: [{ name: 'Topic', path: '/thoughts/+/:slug' }]
+      }
+    ],
   },
   {
     name: 'Etc',
     path: '/etc',
-    hidden: false
-  }
+    desc: 'What I work on and how to reach me.'
+  },
 ] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
@@ -73,14 +72,10 @@ export const ROUTE_ORDER = [
   '/thoughts',
   '/thoughts/*',
   '/thoughts/*/*',
-  '/work',
-  '/work/*',
-  '/work/*/*',
   '/etc',
-  '/experiments'
 ];
 
-export const NAV_LINKS = TOP_LEVEL_ROUTES.filter((route) => !route.hidden)?.map(
+export const NAV_LINKS = TOP_LEVEL_ROUTES.map(
   (route) => ({
     name: route.name,
     url: route.path

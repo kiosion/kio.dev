@@ -1,11 +1,10 @@
-/* eslint-disable quote-props, prettier/prettier */
+/* eslint-disable prettier/prettier */
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
+import type { ConfigEnv } from 'vite';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
-import StripTestSelectors from 'vite-plugin-test-selectors';
-
-import type { ConfigEnv } from 'vite';
 
 export default defineConfig(({ mode }: ConfigEnv) => {
   const isTesting = mode === 'testing',
@@ -13,23 +12,20 @@ export default defineConfig(({ mode }: ConfigEnv) => {
 
   return {
     plugins: [
-      sveltekit(),
-      StripTestSelectors({
-        dev: !isTesting
-      }),
-      (isDev || isTesting) && Inspect()
+      tailwindcss(),
+      sveltekit()
+      // (isDev || isTesting) && Inspect()
     ],
     resolve: {
       alias: [
         {
           find: /^@styles\/(.*)$/,
-          replacement: resolve(__dirname, 'src/styles/_$1.scss')
+          replacement: resolve(__dirname, 'src/styles/$1.scss')
         }
       ]
     },
     optimizeDeps: {
       include: [
-        'twemoji',
         'svelte-highlight',
         'highlight.js',
         'highlight.js/lib/core',
