@@ -7,7 +7,7 @@ import {
   BsFillFileTextFill,
   BsFillFileEarmarkTextFill
 } from 'react-icons/bs';
-import type { StructureBuilder, StructureResolverContext } from 'sanity/desk';
+import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 
 export const structure = (
   S: StructureBuilder,

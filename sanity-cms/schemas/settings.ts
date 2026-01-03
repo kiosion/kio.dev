@@ -99,34 +99,6 @@ export default {
                   scheme: ['https', 'http', 'mailto', 'tel']
                 });
               }
-            },
-            {
-              name: 'internal',
-              title: 'Internal',
-              type: 'boolean',
-              initialValue: false,
-              options: {
-                layout: 'checkbox'
-              },
-              description: 'Relative to the site root, e.g. /about'
-            },
-            {
-              name: 'rel',
-              title: 'Rel',
-              type: 'array',
-              of: [
-                {
-                  type: 'string',
-                  options: {
-                    list: [
-                      { title: 'nofollow', value: 'nofollow' },
-                      { title: 'noopener', value: 'noopener' },
-                      { title: 'noreferrer', value: 'noreferrer' },
-                      { title: 'me', value: 'me' }
-                    ]
-                  }
-                }
-              ]
             }
           ],
           preview: {

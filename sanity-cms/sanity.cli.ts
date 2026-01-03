@@ -20,5 +20,12 @@ export default defineCliConfig({
         $: path.resolve(__dirname, './')
       }
     }
-  }
+  },
+  typegen: {
+    path: '../svelte-app/src/lib/sanity.queries.server.ts',
+    schema: './schema.json',
+    generates: '../svelte-app/types/generated/sanity.types.ts',
+    formatGeneratedCode: true,
+    overloadClientMethods: true
+  },
 });

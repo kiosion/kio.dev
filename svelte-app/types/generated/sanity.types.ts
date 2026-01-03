@@ -13,59 +13,11 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch';
-  background?: string;
-  foreground?: string;
-  population?: number;
-  title?: string;
-};
-
-export type SanityImagePalette = {
-  _type: 'sanity.imagePalette';
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions';
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
-};
-
-export type SanityFileAsset = {
-  _id: string;
-  _type: 'sanity.fileAsset';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
-export type Geopoint = {
-  _type: 'geopoint';
-  lat?: number;
-  lng?: number;
-  alt?: number;
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 };
 
 export type SiteSettings = {
@@ -126,12 +78,8 @@ export type SiteSettings = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -195,12 +143,8 @@ export type SiteSettings = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -220,8 +164,6 @@ export type SiteSettings = {
   socialLinks?: Array<{
     name: string;
     url?: string;
-    internal?: boolean;
-    rel?: Array<'nofollow' | 'noopener' | 'noreferrer' | 'me'>;
     _key: string;
   }>;
   timeline?: Array<{
@@ -279,12 +221,8 @@ export type SiteSettings = {
           _key: string;
         }
       | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
+          asset?: SanityImageAssetReference;
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: 'image';
@@ -362,12 +300,8 @@ export type Page = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -394,6 +328,19 @@ export type Tag = {
   title: string;
   slug: Slug;
   desc?: string;
+};
+
+export type Slug = {
+  _type: 'slug';
+  current: string;
+  source?: string;
+};
+
+export type TagReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'tag';
 };
 
 export type Project = {
@@ -455,12 +402,8 @@ export type Project = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -476,20 +419,14 @@ export type Project = {
         _key: string;
       } & Header)
   >;
-  tags?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'tag';
-  }>;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
   images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
+    asset?: SanityImageAssetReference;
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: 'image';
@@ -501,6 +438,22 @@ export type Project = {
     url: string;
     _key: string;
   }>;
+};
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop';
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot';
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type Post = {
@@ -562,12 +515,8 @@ export type Post = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -583,29 +532,96 @@ export type Post = {
         _key: string;
       } & Header)
   >;
-  tags?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'tag';
-  }>;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
 };
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type Header = {
+  _type: 'header';
+  icon: string;
+  title: string;
 };
 
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+export type Divider = {
+  _type: 'divider';
+  style?: 'break' | 'readMore' | 'divider';
+};
+
+export type Code = {
+  _type: 'code';
+  language?: string;
+  filename?: string;
+  code?: string;
+  highlightedLines?: Array<number>;
+};
+
+export type SanityImagePaletteSwatch = {
+  _type: 'sanity.imagePaletteSwatch';
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
+
+export type SanityImagePalette = {
+  _type: 'sanity.imagePalette';
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: 'sanity.imageDimensions';
+  height: number;
+  width: number;
+  aspectRatio: number;
+};
+
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata';
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: 'sanity.fileAsset';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData';
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -631,70 +647,38 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
-export type Slug = {
-  _type: 'slug';
-  current: string;
-  source?: string;
-};
-
-export type Header = {
-  _type: 'header';
-  icon: string;
-  title: string;
-};
-
-export type Divider = {
-  _type: 'divider';
-  style?: 'break' | 'readMore' | 'divider';
-};
-
-export type Code = {
-  _type: 'code';
-  language?: string;
-  filename?: string;
-  code?: string;
-  highlightedLines?: Array<number>;
+export type Geopoint = {
+  _type: 'geopoint';
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
 export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
+  | SanityImageAssetReference
   | SiteSettings
   | Page
   | Tag
+  | Slug
+  | TagReference
   | Project
-  | Post
   | SanityImageCrop
   | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | Slug
+  | Post
   | Header
   | Divider
-  | Code;
+  | Code
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: ../svelte-app/src/lib/sanity.queries.server.ts
 // Variable: GetConfigQuery
 // Query: *[_type == 'siteSettings'][0]
@@ -765,12 +749,8 @@ export type GetConfigQueryResult = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -834,12 +814,8 @@ export type GetConfigQueryResult = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -850,8 +826,6 @@ export type GetConfigQueryResult = {
   socialLinks?: Array<{
     name: string;
     url?: string;
-    internal?: boolean;
-    rel?: Array<'me' | 'nofollow' | 'noopener' | 'noreferrer'>;
     _key: string;
   }>;
   timeline?: Array<{
@@ -918,12 +892,8 @@ export type GetConfigQueryResult = {
           _key: string;
         }
       | {
-          asset?: {
-            _ref: string;
-            _type: 'reference';
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-          };
+          asset?: SanityImageAssetReference;
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: 'image';
@@ -934,6 +904,8 @@ export type GetConfigQueryResult = {
   }>;
   pgpKey?: string;
 } | null;
+
+// Source: ../svelte-app/src/lib/sanity.queries.server.ts
 // Variable: GetPostQuery
 // Query: *[_type == 'post' && slug.current == $slug]{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  ),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)}[0]
 export type GetPostQueryResult = {
@@ -1007,12 +979,8 @@ export type GetPostQueryResult = {
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -1026,6 +994,8 @@ export type GetPostQueryResult = {
   estimatedWordCount: number;
   estimatedReadingTime: number;
 } | null;
+
+// Source: ../svelte-app/src/lib/sanity.queries.server.ts
 // Variable: GetPostsQuery
 // Query: *[_type == 'post']{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': dateTime(select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  )),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)} | order(date desc) [$startNumber...$endNumber]
 export type GetPostsQueryResult = Array<{
@@ -1099,12 +1069,8 @@ export type GetPostsQueryResult = Array<{
         _key: string;
       }
     | {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
+        asset?: SanityImageAssetReference;
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: 'image';
@@ -1118,6 +1084,8 @@ export type GetPostsQueryResult = Array<{
   estimatedWordCount: number;
   estimatedReadingTime: number;
 }>;
+
+// Source: ../svelte-app/src/lib/sanity.queries.server.ts
 // Variable: CountPostsQuery
 // Query: count(*[_type == 'post'])
 export type CountPostsQueryResult = number;
