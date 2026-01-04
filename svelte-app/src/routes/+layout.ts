@@ -3,13 +3,14 @@ import { findOne } from '$lib/api/store';
 import { BASE_DOMAIN } from '$lib/consts';
 import { ENV } from '$lib/env';
 import { getPageMeta } from '$lib/nav.svelte';
+import { isThemeChoice, THEME_COOKIE_NAME } from '$lib/theme';
 
 import type { LayoutLoad } from './$types';
 
 export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';
 
-export const load = (async ({ url, fetch }) => {
+export const load = (async ({ data, url, fetch }) => {
   const config = unwrapAPIResponse(
     await findOne(fetch, 'config')
   );
@@ -18,6 +19,7 @@ export const load = (async ({ url, fetch }) => {
     breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],
     pathname: url.pathname,
     config,
+    initialTheme: data?.initialTheme || 'system',
     meta: getPageMeta(url.pathname)
   };
 }) satisfies LayoutLoad;

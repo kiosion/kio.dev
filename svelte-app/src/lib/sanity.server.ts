@@ -85,37 +85,6 @@ const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>
   ];
 };
 
-export const incViews = async ({
-  id
-}: {
-  id: string;
-}): Promise<APIResponse<SanityDocument>> => {
-  const res = (await client
-    .patch(id)
-    .setIfMissing({ views: 0 })
-    .inc({ views: 1 })
-    .commit()
-    .then((res) => ({
-      status: 200,
-      errors: [],
-      data: res
-    }))
-    .catch((err) => {
-      if (err instanceof ClientError) {
-        return {
-          status: err.response?.statusCode || 500,
-          errors: [`Sanity Error: ${err.details?.type}: ${err.details?.description}`]
-        };
-      }
-      return {
-        status: 500,
-        errors: [err.message || 'An unknown error occurred']
-      };
-    })) satisfies APIResponse<SanityDocument>;
-
-  return res;
-};
-
 export const getPosts = async ({
   tag,
   page = 0,

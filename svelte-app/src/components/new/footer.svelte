@@ -7,13 +7,13 @@
 </script>
 
 <footer
-  class="bg-light dark:bg-dark flex w-full flex-row items-center justify-between gap-x-8 border-t border-neutral-300 transition-colors dark:border-neutral-400"
+  class="bg-light dark:bg-dark flex w-full flex-col items-center justify-center gap-x-8 gap-y-6 border-t border-neutral-300 px-8 py-6 transition-colors sm:flex-row sm:justify-between dark:border-neutral-400"
 >
-  <div class="py-6 pl-8 text-sm">
+  <div class="text-sm">
     <p>&copy; {new Date().getFullYear()} {config.name}</p>
   </div>
   {#if config.socialLinks?.length || APP_VERSION?.length}
-    <div class="flex flex-row items-center justify-end gap-4 py-6 pr-8 text-sm">
+    <div class="flex flex-row items-center justify-end gap-4 text-sm">
       {#if config.socialLinks?.length}
         {#each config.socialLinks as link, idx}
           <a
