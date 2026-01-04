@@ -13,39 +13,39 @@ export default {
     },
     {
       name: 'about',
-      title: 'About',
+      title: 'About'
     },
     {
       name: 'contact',
-      title: 'Contact / Footer',
-    },
+      title: 'Contact / Footer'
+    }
   ],
   fields: [
     {
       name: 'name',
       type: 'string',
       title: 'Name',
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required()
     },
     {
       name: 'hero',
       type: 'text',
       title: 'Hero',
       validation: (Rule: Rule) => Rule.required(),
-      group: 'home',
+      group: 'home'
     },
     {
       name: 'info',
       type: 'array',
       title: 'Info',
       of: BodyBlocks,
-      group: 'home',
+      group: 'home'
     },
     {
       name: 'bio',
       type: 'text',
       title: 'Bio',
-      group: 'home',
+      group: 'home'
     },
     {
       name: 'about',
@@ -53,7 +53,7 @@ export default {
       type: 'array',
       of: BodyBlocks,
       group: 'about',
-      validation: (Rule: Rule) => Rule.required().min(1),
+      validation: (Rule: Rule) => Rule.required().min(1)
     },
     {
       name: 'contact',
@@ -61,7 +61,7 @@ export default {
       type: 'array',
       of: BodyBlocks,
       group: 'contact',
-      validation: (Rule: Rule) => Rule.required().min(1),
+      validation: (Rule: Rule) => Rule.required().min(1)
     },
     {
       name: 'socialLinks',
@@ -173,7 +173,7 @@ export default {
       name: 'pgpKey',
       type: 'text',
       title: 'PGP Key',
-      group: 'contact',
+      group: 'contact'
     }
   ]
 };

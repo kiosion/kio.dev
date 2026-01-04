@@ -3,7 +3,6 @@ import { browser } from '$app/environment';
 import * as cache from '$lib/api/cache';
 import { request } from '$lib/api/client';
 import { type APIResponse, isAPISuccess } from '$lib/api/result';
-import Logger from '$lib/logger';
 import type { RouteFetch } from '$types';
 import type { HeadingNode } from '$types/documents';
 import type { GetConfigQueryResult, GetPostQueryResult, Tag } from '$types/sanity';
@@ -123,35 +122,4 @@ async function getMany<M extends 'post' | 'tag'>(
   );
 }
 
-async function incViews<M extends 'post'>(
-  fetch: RouteFetch,
-  model: DocumentRegistry[M] & { _type: M }
-): Promise<APIResponse<Pick<DocumentRegistry[M], '_id' | 'views'>>> {
-  if (model._type !== 'post') {
-    return {
-      status: 400,
-      errors: ['Invalid document type: ' + model._type]
-    };
-  }
-
-  try {
-    return await request<Pick<DocumentRegistry[M], '_id' | 'views'>>(fetch, '/mutate', {
-      method: 'POST',
-      body: JSON.stringify({
-        id: model._id,
-        action: 'inc',
-        field: 'views'
-      })
-    });
-  } catch (err) {
-    const error = err instanceof Error ? err : new Error('Unknown error');
-    Logger.error(`Error incrementing views for ${model._type} ${model._id}`, error);
-
-    return {
-      status: 500,
-      errors: ['Failed to increment views']
-    };
-  }
-}
-
-export { getMany as find, getOne as findOne, incViews };
+export { getMany as find, getOne as findOne };

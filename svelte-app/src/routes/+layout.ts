@@ -9,15 +9,14 @@ import type { LayoutLoad } from './$types';
 export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';
 
-export const load = (async ({ url, fetch }) => {
-  const config = unwrapAPIResponse(
-    await findOne(fetch, 'config')
-  );
+export const load = (async ({ data, url, fetch }) => {
+  const config = unwrapAPIResponse(await findOne(fetch, 'config'));
 
   return {
     breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],
     pathname: url.pathname,
     config,
+    initialTheme: data?.initialTheme || 'system',
     meta: getPageMeta(url.pathname)
   };
 }) satisfies LayoutLoad;

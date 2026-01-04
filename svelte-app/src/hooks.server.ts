@@ -1,5 +1,6 @@
 import type { Handle, HandleServerError, ResolveOptions } from '@sveltejs/kit';
-import { APP_LANGS, APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
+import { APP_LANGS, APP_THEMES } from '$lib/consts';
+import { isThemeChoice, THEME_COOKIE_NAME } from '$lib/theme';
 
 const replaceTheme = (html: string, theme: string) => {
   const classAttrRegexp = /<body([^>]*?)class="([^"]*?)"/i,
@@ -30,7 +31,7 @@ export const handle = (async ({ event, resolve }) => {
   const lang = event.request.url.match(
       new RegExp(`^(?:https?://)?[^/]+/(${APP_LANGS.join('|')})/?`)
     ),
-    settings = event.cookies.get(LOCAL_SETTINGS_KEY);
+    theme = event.cookies.get(THEME_COOKIE_NAME);
 
   if (lang?.[1] && APP_LANGS.includes(lang[1])) {
     transforms.push((html) =>
@@ -38,32 +39,9 @@ export const handle = (async ({ event, resolve }) => {
     );
   }
 
-  let theme: (typeof APP_THEMES)[keyof typeof APP_THEMES] = APP_THEMES.DARK;
+  const parsedTheme = isThemeChoice(theme) ? theme : APP_THEMES.DARK;
 
-  if (settings) {
-    try {
-      const parsed_settings = JSON.parse(
-        Buffer.from(settings, 'base64')?.toString?.() || '{}'
-      );
-
-      if (Array.isArray(parsed_settings)) {
-        parsed_settings.forEach(([key, savedSetting]) => {
-          if (key === 'theme') {
-            theme = savedSetting;
-          }
-        });
-      }
-    } catch (e) {
-      console.error('Failed while parsing settings cookie from request', e);
-    }
-  }
-
-  // Fall back to dark theme
-  if (!theme || !Object.values(APP_THEMES).includes(theme)) {
-    theme = APP_THEMES.DARK;
-  }
-
-  transforms.push((html) => replaceTheme(html, theme));
+  transforms.push((html) => replaceTheme(html, parsedTheme));
 
   if (transforms.length) {
     resolveOptions.transformPageChunk = ({ html }) =>

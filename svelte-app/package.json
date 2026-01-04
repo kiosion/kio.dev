@@ -18,7 +18,8 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write ./src/**/*.{ts,svelte}",
     "format:json": "bun ./scripts/lint-json.ts ./src/languages/en.json ./src/languages/fr.json",
-    "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\""
+    "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\"",
+    "lint:check": "pnpm prettier --check ./src/**/*.{ts,svelte} && pnpm eslint \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\""
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

@@ -7,4 +7,12 @@ import tag from '$schema/tag';
 import page from '$schema/page';
 import siteSettings from '$schema/settings';
 
-export const schemaTypes = [divider, header, post, project, tag, page, siteSettings];
+export const schemaTypes = [
+  divider,
+  header,
+  post,
+  project,
+  tag,
+  page,
+  siteSettings
+];

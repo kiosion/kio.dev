@@ -1,10 +1,15 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import ThemeToggle from '$components/theme-toggle.svelte';
   import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
+  import type { ThemeChoice } from '$lib/theme';
   import { pathnameGroupKey } from '$lib/utils';
   import { flip } from 'svelte/animate';
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
+
+  let { theme, setTheme }: { theme: ThemeChoice; setTheme: (t: ThemeChoice) => void } =
+    $props();
 
   type Crumb = { label: string; href?: string };
 
@@ -38,9 +43,10 @@
 {#snippet navLink(href: string, text: string, active = false)}
   <a
     {href}
-    class="underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
+    class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
     aria-current={active ? 'page' : undefined}
     aria-disabled={active}
+    class:decoration-transparent={!active}
     class:decoration-orange-light={active}
     class:dark:decoration-orange-dark={active}
     class:select-none={active}
@@ -112,12 +118,17 @@
     </nav>
 
     <!-- Right-side nav -->
-    <nav
-      class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
+    <div
+      class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end"
     >
-      {#each NAV_LINKS as link}
-        {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
-      {/each}
-    </nav>
+      <nav
+        class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
+      >
+        {#each NAV_LINKS as link}
+          {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
+        {/each}
+      </nav>
+      <ThemeToggle {theme} {setTheme} />
+    </div>
   </div>
 </header>

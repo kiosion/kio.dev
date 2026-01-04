@@ -27,5 +27,5 @@ export default defineCliConfig({
     generates: '../svelte-app/types/generated/sanity.types.ts',
     formatGeneratedCode: true,
     overloadClientMethods: true
-  },
+  }
 });

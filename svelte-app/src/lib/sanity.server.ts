@@ -1,13 +1,9 @@
-import { ClientError, createClient, type ClientConfig, type SanityDocument } from '@sanity/client';
+import { type ClientConfig, ClientError, createClient } from '@sanity/client';
 import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import { isAPISuccess } from '$lib/api/result';
 import { buildSummary } from '$lib/data.server';
 import { ENV, SANITY_PROJECT_ID } from '$lib/env';
-import {
-  SANITY_API_TOKEN,
-  SANITY_API_VERSION,
-  SANITY_DATASET
-} from '$lib/env.server';
+import { SANITY_API_TOKEN, SANITY_API_VERSION, SANITY_DATASET } from '$lib/env.server';
 import {
   CountPostsQuery,
   GetConfigQuery,
@@ -83,37 +79,6 @@ const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>
     },
     undefined
   ];
-};
-
-export const incViews = async ({
-  id
-}: {
-  id: string;
-}): Promise<APIResponse<SanityDocument>> => {
-  const res = (await client
-    .patch(id)
-    .setIfMissing({ views: 0 })
-    .inc({ views: 1 })
-    .commit()
-    .then((res) => ({
-      status: 200,
-      errors: [],
-      data: res
-    }))
-    .catch((err) => {
-      if (err instanceof ClientError) {
-        return {
-          status: err.response?.statusCode || 500,
-          errors: [`Sanity Error: ${err.details?.type}: ${err.details?.description}`]
-        };
-      }
-      return {
-        status: 500,
-        errors: [err.message || 'An unknown error occurred']
-      };
-    })) satisfies APIResponse<SanityDocument>;
-
-  return res;
 };
 
 export const getPosts = async ({

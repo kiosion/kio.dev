@@ -1,0 +1,54 @@
+name: Deploy (Sanity)
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "sanity-cms/**"
+
+concurrency:
+  group: sanity-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    environment: Sanity
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./sanity-cms
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+          cache-dependency-path: sanity-cms/pnpm-lock.yaml
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build + deploy (dev studio)
+        env:
+          SANITY_STUDIO_DATASET: dev
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_DEV_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          pnpm sanity build
+          pnpm netlify deploy --dir=./dist --prod --no-build
+
+      - name: Build + deploy (production studio)
+        env:
+          SANITY_STUDIO_DATASET: production
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          pnpm sanity build
+          pnpm netlify deploy --dir=./dist --prod --no-build
