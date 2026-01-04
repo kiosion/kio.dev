@@ -1,5 +1,5 @@
 import type { Handle, HandleServerError, ResolveOptions } from '@sveltejs/kit';
-import { APP_LANGS, APP_THEMES, LOCAL_SETTINGS_KEY } from '$lib/consts';
+import { APP_LANGS, APP_THEMES } from '$lib/consts';
 import { isThemeChoice, THEME_COOKIE_NAME } from '$lib/theme';
 
 const replaceTheme = (html: string, theme: string) => {

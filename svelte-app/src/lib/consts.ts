@@ -35,7 +35,7 @@ export const APP_ROUTES = [
   {
     name: 'Home',
     path: '/',
-    desc: 'Portfolio and writing on programming, security, finance, and whatever I\'m exploring.'
+    desc: "Portfolio and writing on programming, security, finance, and whatever I'm exploring."
   },
   {
     name: 'Thoughts',
@@ -48,13 +48,13 @@ export const APP_ROUTES = [
         path: '/thoughts/+',
         children: [{ name: 'Topic', path: '/thoughts/+/:slug' }]
       }
-    ],
+    ]
   },
   {
     name: 'Etc',
     path: '/etc',
     desc: 'What I work on and how to reach me.'
-  },
+  }
 ] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
@@ -67,20 +67,12 @@ export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
   return rest;
 }) satisfies Omit<AppRoute, 'children'>[];
 
-export const ROUTE_ORDER = [
-  '/',
-  '/thoughts',
-  '/thoughts/*',
-  '/thoughts/*/*',
-  '/etc',
-];
+export const ROUTE_ORDER = ['/', '/thoughts', '/thoughts/*', '/thoughts/*/*', '/etc'];
 
-export const NAV_LINKS = TOP_LEVEL_ROUTES.map(
-  (route) => ({
-    name: route.name,
-    url: route.path
-  })
-);
+export const NAV_LINKS = TOP_LEVEL_ROUTES.map((route) => ({
+  name: route.name,
+  url: route.path
+}));
 
 export const ERRORS = {
   GENERIC_NO_DATA: 'Failed to load required data.',

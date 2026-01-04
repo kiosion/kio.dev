@@ -1,12 +1,12 @@
 import { browser } from '$app/environment';
 import { unwrapAPIResponse } from '$lib/api/result';
-import { findOne } from '$lib/api/store';
-
-import type { PageLoad } from './$types';
 import type { SingleParams } from '$lib/api/store';
+import { findOne } from '$lib/api/store';
+import { BASE_PAGE_TITLE } from '$lib/consts';
 import type { HeadingNode } from '$types/documents';
 import type { GetPostQueryResult } from '$types/generated/sanity.types';
-import { BASE_PAGE_TITLE } from '$lib/consts';
+
+import type { PageLoad } from './$types';
 
 export const load = (async ({ parent, fetch, params }) => {
   const opts: SingleParams<'post'> = params;
@@ -24,7 +24,10 @@ export const load = (async ({ parent, fetch, params }) => {
   }
 
   return {
-    breadcrumbs: [...parentData.breadcrumbs, { label: post.title, href: `/thoughts/${params.slug}` }],
+    breadcrumbs: [
+      ...parentData.breadcrumbs,
+      { label: post.title, href: `/thoughts/${params.slug}` }
+    ],
     post,
     routeFetch: fetch,
     meta: {

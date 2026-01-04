@@ -1,13 +1,9 @@
-import { ClientError, createClient, type ClientConfig, type SanityDocument } from '@sanity/client';
+import { type ClientConfig, ClientError, createClient } from '@sanity/client';
 import type { APIFailure, APIResponse, Result } from '$lib/api/result';
 import { isAPISuccess } from '$lib/api/result';
 import { buildSummary } from '$lib/data.server';
 import { ENV, SANITY_PROJECT_ID } from '$lib/env';
-import {
-  SANITY_API_TOKEN,
-  SANITY_API_VERSION,
-  SANITY_DATASET
-} from '$lib/env.server';
+import { SANITY_API_TOKEN, SANITY_API_VERSION, SANITY_DATASET } from '$lib/env.server';
 import {
   CountPostsQuery,
   GetConfigQuery,

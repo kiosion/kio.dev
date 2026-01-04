@@ -28,7 +28,7 @@ export default defineConfig({
   },
   document: {
     productionUrl: async (prev, context) => {
-      const { dataset, document } = context,
+      const { document } = context,
         { slug } = document as SanityDocumentLike & {
           slug: { current: string };
         },

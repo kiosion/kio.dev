@@ -30,12 +30,12 @@ export default {
       description: 'Main heading on the page',
       validation: (Rule: Rule) => Rule.required()
     },
-    Body,
+    Body
   ],
   preview: {
     select: {
       title: 'title',
-      subtitle: 'heading',
-    },
-  },
+      subtitle: 'heading'
+    }
+  }
 };

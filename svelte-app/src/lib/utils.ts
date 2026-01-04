@@ -26,19 +26,24 @@ export const parseViews = derived(
 const routeTrie = new RouteTrie();
 ROUTE_ORDER.forEach((route, index) => routeTrie.insert(route, index));
 
-const stripTrailingSlash = (p: string) => (p.length > 1 && p.endsWith('/') ? p.slice(0, -1) : p);
+const stripTrailingSlash = (p: string) =>
+  p.length > 1 && p.endsWith('/') ? p.slice(0, -1) : p;
 
 const stripLocalePrefix = (p: string) =>
   get(isLocalized) ? p.replace(/\/[a-z]{2}\//, '/') : p;
 
 export const pathnameGroupKey = (pathname: string) => {
   // collapse tag routes into one group
-  if (pathname === '/thoughts' || pathname.startsWith('/thoughts/+')) return '/thoughts';
+  if (pathname === '/thoughts' || pathname.startsWith('/thoughts/+')) {
+    return '/thoughts';
+  }
   return pathname;
 };
 
 export const normalizePathname = (p?: string) => {
-  if (!p) return '/';
+  if (!p) {
+    return '/';
+  }
   const base = stripTrailingSlash(stripLocalePrefix(p));
   return base || '/';
 };
@@ -47,12 +52,16 @@ export const getNavigationDirection = (from?: string, to?: string) => {
   const _from = normalizePathname(from);
   const _to = normalizePathname(to);
 
-  if (!_from || !_to) return 1;
+  if (!_from || !_to) {
+    return 1;
+  }
 
   const fromKey = pathnameGroupKey(_from);
   const toKey = pathnameGroupKey(_to);
 
-  if (fromKey === toKey) return 0;
+  if (fromKey === toKey) {
+    return 0;
+  }
 
   const fromIndex = routeTrie.search(fromKey);
   const toIndex = routeTrie.search(toKey);

@@ -8,11 +8,13 @@ import type { LayoutLoad } from './$types';
 export const load = (async ({ parent, fetch }) => {
   const parentData = await parent();
 
-  const posts = unwrapAPIResponse(
-    await find(fetch, 'post', DEFAULT_POST_QUERY_PARAMS)
-  ) ?? [];
+  const posts =
+    unwrapAPIResponse(await find(fetch, 'post', DEFAULT_POST_QUERY_PARAMS)) ?? [];
 
-  const [tags, tagCounts]: [Pick<Tag, '_id' | 'slug' | 'title'>[], Record<string, number>] = (() => {
+  const [tags, tagCounts]: [
+    Pick<Tag, '_id' | 'slug' | 'title'>[],
+    Record<string, number>
+  ] = (() => {
     const counts: Record<string, number> = {};
     const acc: Pick<Tag, '_id' | 'slug' | 'title'>[] = [];
 
