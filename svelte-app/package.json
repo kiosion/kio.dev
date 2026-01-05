@@ -64,7 +64,7 @@
     "svelte-breakpoints": "^0.3.0",
     "svelte-check": "^3.7.1",
     "svelte-eslint-parser": "^1.2.0",
-    "svelte-highlight": "^7.8.3",
+    "svelte-highlight": "^7.9.0",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.0",
