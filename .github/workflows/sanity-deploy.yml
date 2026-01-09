@@ -42,7 +42,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           pnpm sanity build
-          pnpm netlify deploy --dir=./dist --prod --no-build
+          pnpm netlify deploy --dir=./dist --prod
 
       - name: Build + deploy (production studio)
         env:
@@ -51,4 +51,4 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           pnpm sanity build
-          pnpm netlify deploy --dir=./dist --prod --no-build
+          pnpm netlify deploy --dir=./dist --prod

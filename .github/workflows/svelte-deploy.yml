@@ -19,7 +19,7 @@ jobs:
         working-directory: ./svelte-app
 
     env:
-      SVELTE_NETLIFY_ENV: netlify
+      SVELTE_ADAPTER_ENV: netlify
       VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
       VITE_SANITY_TOKEN: ${{ secrets.VITE_SANITY_TOKEN }}
       VITE_APP_VERSION: ${{ github.sha }}
