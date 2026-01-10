@@ -5,7 +5,7 @@
     children,
     message = 'Something went wrong displaying this content.',
     showRetry = true,
-    showError = false
+    showError = false,
   }: {
     children?: Snippet;
     message?: string;

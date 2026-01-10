@@ -8,6 +8,7 @@ import sveltePlugin from 'eslint-plugin-svelte';
 import unusedImports from 'eslint-plugin-unused-imports';
 import svelteParser from 'svelte-eslint-parser';
 import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -24,7 +25,8 @@ export default tseslint.config(
       import: importPlugin,
       prettier: prettierPlugin,
       'simple-import-sort': sortPlugin,
-      'unused-imports': unusedImports
+      'unused-imports': unusedImports,
+      '@stylistic': stylistic
     },
     rules: {
       // original overrides
@@ -58,12 +60,14 @@ export default tseslint.config(
 
       'prettier/prettier': [2],
 
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+
       'array-bracket-spacing': ['error', 'never'],
       'arrow-spacing': 'error',
       'block-scoped-var': 'error',
       'block-spacing': 'error',
       'brace-style': ['error', '1tbs'],
-      'comma-dangle': ['error', 'never'],
+      'comma-dangle': ['error', 'always-multiline'],
       'comma-spacing': 'error',
       'comma-style': 'error',
       curly: 'error',

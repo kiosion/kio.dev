@@ -3,7 +3,7 @@
   import type {
     ArbitraryTypedObject,
     PortableTextBlock,
-    PortableTextMarkDefinition
+    PortableTextMarkDefinition,
   } from '@portabletext/types';
   import ErrorBoundary from '$components/error-boundary.svelte';
   import ChevronDoubleUpSmall from '$components/icons/chevron-double-up-small.svelte';
@@ -39,7 +39,7 @@
     bodySize = 'md',
     documentView = false,
     routeFetch = undefined,
-    class: className
+    class: className,
   }: {
     text: (PortableTextBlock | ArbitraryTypedObject)[];
     bodySize?: 'base' | 'md';
@@ -70,8 +70,8 @@
         return [
           ...notes,
           ...currentBlock.markDefs.filter(
-            (def: PortableTextMarkDefinition) => def._type === 'footnote'
-          )
+            (def: PortableTextMarkDefinition) => def._type === 'footnote',
+          ),
         ];
       }, [] as FootnoteProps[]);
     } catch (e) {
@@ -96,12 +96,12 @@
               link: CustomLink,
               code: CustomCode,
               highlight: CustomHighlight,
-              notranslate: NullMark
-            }
+              notranslate: NullMark,
+            },
           }}
           context={{
             documentView,
-            bodySize
+            bodySize,
           }}
         ></PortableText>
       {:else}
@@ -111,14 +111,14 @@
             types: {
               code: CodeBlock,
               divider: Divider,
-              image: Image
+              image: Image,
             },
             marks: {
               link: CustomLink,
               code: CustomCode,
               highlight: CustomHighlight,
               footnote: Footnote,
-              notranslate: NullMark
+              notranslate: NullMark,
             },
             block: {
               h1: CustomHeading,
@@ -128,23 +128,23 @@
               h5: CustomHeading,
               h6: CustomHeading,
               normal: CustomParagraph,
-              blockquote: CustomQuote
+              blockquote: CustomQuote,
             },
             list: {
               bullet: UlWrapper,
-              number: OlWrapper
+              number: OlWrapper,
             },
             listItem: {
               bullet: ListItem,
               number: ListItem,
-              normal: ListItem
-            }
+              normal: ListItem,
+            },
           }}
           context={{
             footnotes,
             routeFetch,
             documentView,
-            bodySize
+            bodySize,
           }}
         ></PortableText>
         {#if footnotes?.length}

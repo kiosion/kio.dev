@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Link from '$components/link.svelte';
   import { BASE_GIT_URL } from '$lib/consts';
   import { APP_VERSION } from '$lib/env';
   import type { GetConfigQueryResult } from '$types/generated/sanity.types';
@@ -16,11 +17,11 @@
     <div class="flex flex-row items-center justify-end gap-4 text-sm">
       {#if config.socialLinks?.length}
         {#each config.socialLinks as link, idx}
-          <a
+          <Link
             class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] dark:decoration-neutral-400"
-            href={link.url}
-            rel="noopener noreferrer"
-            target="_blank">{link.name}</a
+            href={link.url ?? ''}
+            target="_blank"
+            rel="noopener noreferrer">{link.name}</Link
           >
           {#if idx < config.socialLinks.length - 1}
             <span class="opacity-50 select-none">|</span>
