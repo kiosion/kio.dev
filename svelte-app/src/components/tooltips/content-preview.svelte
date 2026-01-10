@@ -5,13 +5,13 @@
 
   let { header, children }: { header?: string; children: Snippet } = $props();
 
-  const scaleFac = 0.45;
+  const scaleFac = 0.5;
   const inverseScaleFac = 1 / scaleFac;
 </script>
 
 <ErrorBoundary>
   <div
-    class="pointer-events-none flex h-56 w-sm flex-col gap-y-3 overflow-hidden rounded-md bg-neutral-100 p-4 shadow-lg shadow-neutral-300/50 transition-colors select-none dark:bg-neutral-600"
+    class="pointer-events-none flex h-56 w-sm flex-col gap-y-3 overflow-hidden rounded-md bg-neutral-100/80 p-4 backdrop-blur-sm transition-colors select-none dark:bg-neutral-500/80"
   >
     {#if header}
       <span class="line-clamp-1 block w-full text-sm font-semibold opacity-70">

@@ -107,11 +107,10 @@
     class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll"
   >
     <Header
-      setTheme={(v) => (theme = v)}
-      {theme}
-      fetch={data.fetch}
       config={data.config}
       posts={data.posts}
+      setTheme={(v) => (theme = v)}
+      {theme}
     />
 
     <main

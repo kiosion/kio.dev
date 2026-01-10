@@ -121,7 +121,7 @@
     {target}
     {followCursor}
     className={typeof content === 'string'
-      ? 'bg-neutral-600 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark whitespace-nowrap rounded-md'
+      ? 'bg-neutral-100/70 backdrop-blur-sm text-sm font-semibold text-dark/70 dark:bg-neutral-500/70 dark:text-light/70 whitespace-nowrap rounded-md'
       : undefined}
   >
     {#if typeof content === 'string'}

@@ -14,7 +14,6 @@ export const load = (async ({ data, url, fetch }) => {
     unwrapAPIResponse(await find(fetch, 'post', { limit: HOMEPAGE_POSTS_NUM })),
     unwrapAPIResponse(await findOne(fetch, 'config')),
   ]);
-  // const config = unwrapAPIResponse(await findOne(fetch, 'config'));
 
   return {
     breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],

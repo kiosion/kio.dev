@@ -116,7 +116,7 @@
   in:maybeTransition={{ duration }}
   out:maybeTransition={{ duration }}
 >
-  <span class="block px-2 py-1.5 {className || ''}">
+  <span class="block px-3 py-2 {className || ''}">
     {@render children()}
   </span>
 </div>

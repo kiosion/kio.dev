@@ -6,14 +6,16 @@
   let {
     posts: unfilteredPosts,
     tags,
+    filter = true,
   }: {
     posts: NonNullable<GetPostsQueryResult>;
     tags: NonNullable<NonNullable<GetPostsQueryResult>[number]['tags']>;
+    filter?: boolean;
   } = $props();
 
   const selected = $derived(page.params.slug);
 
-  const isActiveTag = (slug?: string) => !!selected && slug === selected;
+  const isActiveTag = (slug?: string) => filter && !!selected && slug === selected;
 
   const filterByTag = $derived.by(
     () => (slug: string) =>
@@ -23,16 +25,10 @@
   );
 
   const posts = $derived.by(() => {
-    if (!selected) {
+    if (!filter || !selected) {
       return unfilteredPosts ?? [];
     }
     return filterByTag(selected);
-  });
-
-  const fmt = new Intl.DateTimeFormat(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
   });
 </script>
 
@@ -88,7 +84,7 @@
 
   <section class="flex flex-col gap-2">
     <span class="text-base tracking-wide">
-      {#if selected}
+      {#if filter && selected}
         <span class="opacity-70"
           >{posts.length ?? '-'}&nbsp;matching&nbsp;post{posts.length === 1
             ? ''

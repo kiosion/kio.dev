@@ -9,7 +9,6 @@
   import { APP_ROUTES, BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
   import type { ThemeChoice } from '$lib/theme';
   import { pathnameGroupKey } from '$lib/utils';
-  import type { RouteFetch } from '$types';
   import type {
     GetConfigQueryResult,
     GetPostsQueryResult,
@@ -23,13 +22,11 @@
     setTheme,
     config,
     posts,
-    fetch,
   }: {
     theme: ThemeChoice;
     setTheme: (t: ThemeChoice) => void;
     config: NonNullable<GetConfigQueryResult>;
     posts: NonNullable<GetPostsQueryResult>;
-    fetch: RouteFetch;
   } = $props();
 
   type Crumb = { label: string; href?: string };
@@ -59,6 +56,8 @@
     const parent = c.at(-2);
     return [c[0], { label: '...', href: parent?.href }, c.at(-1)!];
   });
+
+  $inspect({ posts });
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
@@ -80,6 +79,7 @@
             },
             [] as NonNullable<(typeof posts)[number]['tags']>,
           )}
+          filter={false}
         />
       {:else if href === APP_ROUTES.find((r) => r.name === 'Etc')?.path}
         <AboutContent {config} />
