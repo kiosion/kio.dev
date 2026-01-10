@@ -80,7 +80,7 @@ export const ERRORS = {
 } as const;
 
 export const BASE_TRANSITION_DURATION = 200 as const;
-export const BASE_ANIMATION_DURATION = 300 as const;
+export const BASE_ANIMATION_DURATION = 250 as const;
 
 export const HOMEPAGE_POSTS_NUM = 4 as const;
 

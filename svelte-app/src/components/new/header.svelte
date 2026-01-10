@@ -1,15 +1,36 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import AboutContent from '$components/pages/about-content.svelte';
+  import BlogContent from '$components/pages/blog-content.svelte';
+  import HomeContent from '$components/pages/home-content.svelte';
   import ThemeToggle from '$components/theme-toggle.svelte';
-  import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
+  import ContentPreview from '$components/tooltips/content-preview.svelte';
+  import Tooltip from '$components/tooltips/tooltip.svelte';
+  import { APP_ROUTES, BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
   import type { ThemeChoice } from '$lib/theme';
   import { pathnameGroupKey } from '$lib/utils';
+  import type { RouteFetch } from '$types';
+  import type {
+    GetConfigQueryResult,
+    GetPostsQueryResult,
+  } from '$types/generated/sanity.types';
   import { flip } from 'svelte/animate';
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
 
-  let { theme, setTheme }: { theme: ThemeChoice; setTheme: (t: ThemeChoice) => void } =
-    $props();
+  let {
+    theme,
+    setTheme,
+    config,
+    posts,
+    fetch,
+  }: {
+    theme: ThemeChoice;
+    setTheme: (t: ThemeChoice) => void;
+    config: NonNullable<GetConfigQueryResult>;
+    posts: NonNullable<GetPostsQueryResult>;
+    fetch: RouteFetch;
+  } = $props();
 
   type Crumb = { label: string; href?: string };
 
@@ -19,12 +40,12 @@
     if (page.error) {
       return [
         { label: BASE_DOMAIN, href: '/' },
-        { label: page.status === 404 ? 'Not Found' : 'Error' }
+        { label: page.status === 404 ? 'Not Found' : 'Error' },
       ];
     }
     return (
       (page.data?.breadcrumbs as Crumb[] | undefined) ?? [
-        { label: BASE_DOMAIN, href: '/' }
+        { label: BASE_DOMAIN, href: '/' },
       ]
     );
   });
@@ -41,26 +62,59 @@
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
-  <a
-    {href}
-    class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
-    aria-current={active ? 'page' : undefined}
-    aria-disabled={active}
-    class:decoration-transparent={!active}
-    class:decoration-orange-light={active}
-    class:dark:decoration-orange-dark={active}
-    class:select-none={active}
-    class:pointer-events-none={active}
-    class:opacity-100={active}
-    class:opacity-70={!active}
-    class:hover:decoration-orange-light={!active}
-    class:hover:dark:decoration-orange-dark={!active}
-    class:hover:opacity-100={!active}
-    data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="hover"
+  {#snippet navLinkTooltip()}
+    <ContentPreview header={text}>
+      {#if href === APP_ROUTES.find((r) => r.name === 'Home')?.path}
+        <HomeContent {config} {posts} />
+      {:else if href === APP_ROUTES.find((r) => r.name === 'Thoughts')?.path}
+        <BlogContent
+          {posts}
+          tags={posts.reduce(
+            (prev, cur) => {
+              (cur.tags ?? []).forEach((t) => {
+                if (!prev.some((pt) => pt.slug.current === t.slug.current)) {
+                  prev.push(t);
+                }
+              });
+              return prev;
+            },
+            [] as NonNullable<(typeof posts)[number]['tags']>,
+          )}
+        />
+      {:else if href === APP_ROUTES.find((r) => r.name === 'Etc')?.path}
+        <AboutContent {config} />
+      {/if}
+    </ContentPreview>
+  {/snippet}
+
+  <Tooltip
+    content={navLinkTooltip}
+    delay={[250, 0]}
+    offset={[2, 8]}
+    duration={250}
+    placement="bottom-start"
   >
-    {text}
-  </a>
+    <a
+      {href}
+      class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
+      aria-current={active ? 'page' : undefined}
+      aria-disabled={active}
+      class:decoration-transparent={!active}
+      class:decoration-orange-light={active}
+      class:dark:decoration-orange-dark={active}
+      class:select-none={active}
+      class:pointer-events-none={active}
+      class:opacity-100={active}
+      class:opacity-70={!active}
+      class:hover:decoration-orange-light={!active}
+      class:hover:dark:decoration-orange-dark={!active}
+      class:hover:opacity-100={!active}
+      data-sveltekit-preload-code="eager"
+      data-sveltekit-preload-data="hover"
+    >
+      {text}
+    </a>
+  </Tooltip>
 {/snippet}
 
 {#snippet breadcrumbSegment(crumb: Crumb, isLast: boolean)}
@@ -83,7 +137,7 @@
 {/snippet}
 
 <header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 dark:border-neutral-400"
+  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 transition-colors dark:border-neutral-400"
 >
   <div
     class="relative isolate mx-auto grid w-full items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6"

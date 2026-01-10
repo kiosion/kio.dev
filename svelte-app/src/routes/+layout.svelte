@@ -42,11 +42,11 @@
     // update hljs styles
     if (theme === APP_THEMES.LIGHT) {
       import('svelte-highlight/styles/stackoverflow-light').then(
-        (mod) => (HighlightStyles = mod.default)
+        (mod) => (HighlightStyles = mod.default),
       );
     } else {
       import('svelte-highlight/styles/stackoverflow-dark').then(
-        (mod) => (HighlightStyles = mod.default)
+        (mod) => (HighlightStyles = mod.default),
       );
     }
   });
@@ -60,7 +60,7 @@
         } else if (theme === APP_THEMES.LIGHT && m) {
           theme = APP_THEMES.DARK;
         }
-      })
+      }),
     );
   });
 
@@ -106,9 +106,17 @@
   <div
     class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll"
   >
-    <Header setTheme={(v) => (theme = v)} {theme} />
+    <Header
+      setTheme={(v) => (theme = v)}
+      {theme}
+      fetch={data.fetch}
+      config={data.config}
+      posts={data.posts}
+    />
 
-    <main class="mx-auto flex w-full flex-1 px-8 py-10">
+    <main
+      class="bg-light dark:bg-dark mx-auto flex w-full flex-1 px-8 py-10 transition-colors"
+    >
       <PageTransition>
         <ErrorBoundary showError>
           {@render children()}

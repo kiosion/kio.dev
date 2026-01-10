@@ -1,70 +1,95 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import type { Placement } from '@floating-ui/dom';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { linkTo, t } from '$lib/i18n';
+  import type { Snippet } from 'svelte';
+  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
-  export let tooltipPlacement: Placement = 'bottom',
-    tooltipText: string | undefined = undefined,
-    newtab = false;
+  type CommonProps = {
+    children: Snippet;
+    tooltipPlacement?: Placement;
+    tooltipText?: string;
+    showTooltip?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    'data-sveltekit-preload-code'?: 'eager' | 'hover' | 'off' | 'tap' | 'viewport';
+    'data-sveltekit-preload-data'?: 'hover' | 'off' | 'tap';
+    onclick?: (e: MouseEvent | KeyboardEvent) => void;
+  };
 
-  const isMailLink: boolean = $$props.href?.startsWith?.('mailto:'),
-    mailAddress: string = isMailLink ? $$props.href.slice('mailto:'.length) : '',
-    dispatch = createEventDispatcher(),
-    type = !$$props.href?.length || isMailLink ? 'button' : 'a';
+  type AnchorProps = CommonProps & { href: string; target?: string; rel?: string } & Omit<
+      HTMLAnchorAttributes,
+      'href' | 'onclick'
+    >;
+  type ButtonProps = CommonProps & {
+    href?: undefined;
+    target?: undefined;
+    rel?: undefined;
+  } & HTMLButtonAttributes;
 
-  $: link = (() => {
-    if (isMailLink) {
-      return undefined;
-    }
+  type Props = AnchorProps | ButtonProps;
 
-    if ($$props.href?.startsWith('/')) {
-      return $linkTo($$props.href);
-    }
+  let {
+    children,
+    tooltipPlacement = 'bottom',
+    tooltipText = undefined,
+    showTooltip = false,
+    size = 'md',
+    onclick,
+    ...restProps
+  }: Props = $props();
 
-    return $$props.href;
-  })();
+  const isMailLink = $derived(restProps.href?.startsWith('mailto:')),
+    mailAddress = $derived(
+      isMailLink ? (restProps.href?.slice('mailto:'.length) ?? '') : '',
+    ),
+    type = $derived(!restProps.href?.length || isMailLink ? 'button' : 'a'),
+    link = $derived.by(() => {
+      if (isMailLink || !restProps.href?.length) {
+        return undefined;
+      }
+      return restProps.href.startsWith('/') ? $linkTo(restProps.href) : restProps.href;
+    });
 </script>
 
 <Tooltip
-  content={(tooltipText ?? isMailLink)
-    ? $t('Copy {value}', { value: `'${mailAddress}'` })
-    : link && link.length > 50
-      ? `${link.slice(0, 50 - 3)}...`
-      : (link ?? $t('Visit'))}
+  content={showTooltip
+    ? isMailLink
+      ? $t('Copy {value}', { value: `'${mailAddress}'` })
+      : tooltipText?.trim().length
+        ? tooltipText
+        : link && link.length > 50
+          ? `${link.slice(0, 50 - 3)}...`
+          : (link ?? $t('Visit'))
+    : undefined}
   placement={tooltipPlacement}
   delay={[500, 0]}
 >
   <svelte:element
     this={type}
-    target={newtab ? '_blank' : undefined}
-    rel={newtab ? 'noopener noreferrer' : undefined}
-    class="focus-outline-sm hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs font-semibold underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors focus-visible:decoration-[3px] dark:decoration-neutral-400"
+    rel={restProps.target ?? undefined}
+    class="hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-100 transition-[color,text-decoration-color,opacity] hover:opacity-80 focus-visible:opacity-80 dark:decoration-neutral-400"
+    class:text-base={size === 'sm'}
+    class:text-lg={size === 'lg'}
     tabindex="0"
-    aria-label={$$props['aria-label']}
-    {...$$restProps}
+    {...restProps}
     href={link}
-    onclick={() => {
+    onclick={(e: MouseEvent) => {
       if (isMailLink) {
         navigator.clipboard.writeText(mailAddress);
       }
-
-      dispatch('click');
+      onclick?.(e);
     }}
     onkeyup={(e: KeyboardEvent) => {
       if (e.key !== 'Enter') {
         return;
       }
-
       if (isMailLink) {
         navigator.clipboard.writeText(mailAddress);
       }
-
-      dispatch('click');
+      onclick?.(e);
     }}
     role={type === 'a' ? 'link' : 'button'}
   >
-    <slot />
+    {@render children()}
   </svelte:element>
 </Tooltip>
