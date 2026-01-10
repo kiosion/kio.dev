@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "svelte-app/**"
+      - ".github/workflows/svelte-deploy.yml"
 
 concurrency:
   group: svelte-deploy
