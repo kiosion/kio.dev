@@ -38,7 +38,7 @@
     "@tailwindcss/postcss": "^4.1.10",
     "@tailwindcss/vite": "^4.1.10",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
-    "@typescript-eslint/parser": "^8.35.0",
+    "@typescript-eslint/parser": "^8.51.0",
     "autoprefixer": "^10.4.21",
     "dotenv": "^16.5.0",
     "eslint": "^9.29.0",
