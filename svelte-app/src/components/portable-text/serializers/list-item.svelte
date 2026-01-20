@@ -4,7 +4,7 @@
 
   let {
     portableText,
-    children
+    children,
   }: { portableText: ListItemComponentProps; children: Snippet } = $props();
 
   const global = $derived(portableText.global);
@@ -12,7 +12,6 @@
 
 <li
   class:mb-2={global.context.bodySize === 'md'}
-  class:mb-1={global.context.bodySize === 'base'}
->
+  class:mb-1={global.context.bodySize === 'base'}>
   {@render children()}
 </li>

@@ -29,13 +29,13 @@ export const handle = (async ({ event, resolve }) => {
   };
 
   const lang = event.request.url.match(
-      new RegExp(`^(?:https?://)?[^/]+/(${APP_LANGS.join('|')})/?`)
+      new RegExp(`^(?:https?://)?[^/]+/(${APP_LANGS.join('|')})/?`),
     ),
     theme = event.cookies.get(THEME_COOKIE_NAME);
 
   if (lang?.[1] && APP_LANGS.includes(lang[1])) {
     transforms.push((html) =>
-      html.replace(/<html lang="en">/, `<html lang="${lang[1]}">`)
+      html.replace(/<html lang="en">/, `<html lang="${lang[1]}">`),
     );
   }
 
@@ -54,5 +54,5 @@ export const handle = (async ({ event, resolve }) => {
 export const handleError = (({ error }) => ({
   code: (error as Error & { code?: number })?.code ?? 500,
   message: (error as Error)?.message ?? 'An unknown error occured.',
-  stack: (error as Error)?.stack
+  stack: (error as Error)?.stack,
 })) satisfies HandleServerError;

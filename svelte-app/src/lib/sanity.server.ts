@@ -8,7 +8,7 @@ import {
   CountPostsQuery,
   GetConfigQuery,
   GetPostQuery,
-  GetPostsQuery
+  GetPostsQuery,
 } from '$lib/sanity.queries.server';
 import type { HeadingNode } from '$types/documents';
 import type { GetPostQueryResult, GetPostsQueryResult } from '$types/sanity';
@@ -18,40 +18,40 @@ const clientConfig = {
   dataset: SANITY_DATASET,
   useCdn: ENV === 'production',
   apiVersion: SANITY_API_VERSION,
-  token: SANITY_API_TOKEN
+  token: SANITY_API_TOKEN,
 } satisfies ClientConfig;
 
 const client = createClient({
   ...clientConfig,
-  perspective: 'published'
+  perspective: 'published',
 });
 
 const previewClient = createClient({
   ...clientConfig,
-  perspective: 'drafts'
+  perspective: 'drafts',
 });
 
 const handleNoResults = <T>(res: T): APIResponse<T> =>
   res
     ? {
         status: 200,
-        data: res
+        data: res,
       }
     : {
         status: 404,
-        errors: ['No results found']
+        errors: ['No results found'],
       };
 
 const handleSanityError = (err: Error): APIFailure => {
   const errorResp = {
     status: 500,
-    errors: ['Failed to fetch data']
+    errors: ['Failed to fetch data'],
   };
 
   if (err instanceof ClientError) {
     errorResp.status = err.response?.statusCode || 500;
     errorResp.errors.push(
-      `Sanity Error: ${err.details.type}: ${err.details.description}`
+      `Sanity Error: ${err.details.type}: ${err.details.description}`,
     );
   } else {
     errorResp.errors.push(err.message || 'An unknown error occurred');
@@ -61,7 +61,7 @@ const handleSanityError = (err: Error): APIFailure => {
 };
 
 const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>>(
-  d: D
+  d: D,
 ): Result<D & { headings?: HeadingNode[] }> => {
   if (!d.body) {
     return [d, undefined];
@@ -75,9 +75,9 @@ const processHeadings = <D extends Pick<NonNullable<GetPostQueryResult>, 'body'>
   return [
     {
       ...d,
-      headings
+      headings,
     },
-    undefined
+    undefined,
   ];
 };
 
@@ -85,7 +85,7 @@ export const getPosts = async ({
   tag,
   page = 0,
   limit = 10,
-  preview = false
+  preview = false,
 }: {
   tag?: string;
   page?: number;
@@ -99,7 +99,7 @@ export const getPosts = async ({
   const result = await (preview ? previewClient : client)
     .fetch(GetPostsQuery, {
       startNumber,
-      endNumber
+      endNumber,
     })
     .then(handleNoResults)
     .catch(handleSanityError);
@@ -125,7 +125,7 @@ export const getPosts = async ({
       acc[0].push(postWithHeadings || post);
       return acc;
     },
-    [[], []]
+    [[], []],
   );
 
   return {
@@ -139,15 +139,15 @@ export const getPosts = async ({
       hasLess,
       page: {
         current: page,
-        total: totalPages
-      }
-    }
+        total: totalPages,
+      },
+    },
   };
 };
 
 export const getPost = async ({
   slug,
-  preview
+  preview,
 }: {
   slug?: string;
   preview?: boolean;
@@ -155,7 +155,7 @@ export const getPost = async ({
   if (!slug) {
     return {
       status: 400,
-      errors: ['Missing slug']
+      errors: ['Missing slug'],
     };
   }
 
@@ -173,7 +173,7 @@ export const getPost = async ({
   return {
     status: 200,
     data: post,
-    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean)
+    errors: [...(result.errors ?? []), err ? err.message : undefined].filter(Boolean),
   };
 };
 
@@ -189,6 +189,6 @@ export const getConfig = async ({ preview = false }: { preview?: boolean }) => {
 
   return {
     status: 200,
-    data: config.data
+    data: config.data,
   };
 };

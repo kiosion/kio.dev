@@ -7,7 +7,7 @@ export const formatDate = derived(
   ([currentLang]) =>
     (
       dateStr: string | null | undefined,
-      format: 'full' | 'med' | 'short' | 'rel' = 'full'
+      format: 'full' | 'med' | 'short' | 'rel' = 'full',
     ) => {
       if (!dateStr) {
         return '';
@@ -20,20 +20,20 @@ export const formatDate = derived(
             month: 'long',
             day: 'numeric',
             year: 'numeric',
-            timeZone: 'UTC'
+            timeZone: 'UTC',
           }).format(date);
         case 'short':
           return new Intl.DateTimeFormat(currentLang, {
             month: 'short',
             day: 'numeric',
-            timeZone: 'UTC'
+            timeZone: 'UTC',
           }).format(date);
         case 'med':
           return new Intl.DateTimeFormat(currentLang, {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
-            timeZone: 'UTC'
+            timeZone: 'UTC',
           }).format(date);
         case 'rel': {
           // Not precise, but good enough :p
@@ -54,11 +54,11 @@ export const formatDate = derived(
 
           return new Intl.RelativeTimeFormat(currentLang, {
             numeric: 'auto',
-            style: 'long'
+            style: 'long',
           }).format(-val, unit);
         }
       }
-    }
+    },
 );
 
 export const displayRange = derived([currentLang, t], ([currentLang, t]) => {
@@ -74,16 +74,16 @@ export const displayRange = derived([currentLang, t], ([currentLang, t]) => {
       if (!endDate) {
         return `${new Intl.DateTimeFormat(currentLang, {
           month: 'short',
-          year: 'numeric'
+          year: 'numeric',
         }).format(startDate)} - ${t('present')}`;
       }
 
       return `${new Intl.DateTimeFormat(currentLang, {
         month: 'short',
-        year: 'numeric'
+        year: 'numeric',
       }).format(startDate)} - ${new Intl.DateTimeFormat(currentLang, {
         month: 'short',
-        year: 'numeric'
+        year: 'numeric',
       }).format(endDate)}`;
     } catch {
       return t('Invalid date');
@@ -141,7 +141,7 @@ export const displayMonthDuration = derived<
 });
 
 export const sortDocumentsByYear = <T extends { date?: string; _createdAt: string }>(
-  documents: T[]
+  documents: T[],
 ) => {
   const grouped =
     documents.reduce(
@@ -153,7 +153,7 @@ export const sortDocumentsByYear = <T extends { date?: string; _createdAt: strin
 
         return acc;
       },
-      {} as Record<string, NonNullable<T[]>>
+      {} as Record<string, NonNullable<T[]>>,
     ) || {};
 
   return Object.keys(grouped)
@@ -165,7 +165,7 @@ export const sortDocumentsByYear = <T extends { date?: string; _createdAt: strin
           const aDate = new Date(a.date || a._createdAt);
           const bDate = new Date(b.date || b._createdAt);
           return bDate.getTime() - aDate.getTime();
-        })
+        }),
       };
     });
 };

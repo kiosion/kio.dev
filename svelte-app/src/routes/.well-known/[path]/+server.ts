@@ -11,28 +11,28 @@ export const GET = (({ url }) => {
       return new Response(security, {
         headers: {
           'content-type': 'text/plain',
-          charset: 'utf-8'
-        }
+          charset: 'utf-8',
+        },
       });
     case 'robots.txt':
       return new Response(Robots, {
         headers: {
           'content-type': 'text/plain',
-          charset: 'utf-8'
-        }
+          charset: 'utf-8',
+        },
       });
     default:
       return new Response(
         JSON.stringify({
           status: 404,
-          message: 'Not found'
+          message: 'Not found',
         }),
         {
           headers: {
             'content-type': 'application/json',
-            charset: 'utf-8'
-          }
-        }
+            charset: 'utf-8',
+          },
+        },
       );
   }
 }) satisfies RequestHandler;

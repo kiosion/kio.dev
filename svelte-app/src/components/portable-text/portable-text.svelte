@@ -85,8 +85,7 @@
   <div
     class="max-w-5xl {className}"
     class:text-base={bodySize === 'base'}
-    class:text-md={bodySize === 'md'}
-  >
+    class:text-md={bodySize === 'md'}>
     {#if text}
       {#if plainText}
         <PortableText
@@ -102,8 +101,7 @@
           context={{
             documentView,
             bodySize,
-          }}
-        ></PortableText>
+          }}></PortableText>
       {:else}
         <PortableText
           value={text}
@@ -145,8 +143,7 @@
             routeFetch,
             documentView,
             bodySize,
-          }}
-        ></PortableText>
+          }}></PortableText>
         {#if footnotes?.length}
           <div class="footnotes mt-8 px-6 transition-[color] md:px-10">
             <h3 class="font-display mb-6 block text-2xl font-bold">
@@ -168,16 +165,13 @@
                           if (e.code === 'Space' || e.code === 'Enter') {
                             customScrollTo(e, `src-${note._key}`);
                           }
-                        }}
-                      >
+                        }}>
                         <span
-                          class="hidden group-hover:inline group-focus-visible:inline"
-                        >
+                          class="hidden group-hover:inline group-focus-visible:inline">
                           <ChevronDoubleUpSmall />
                         </span>
                         <span
-                          class="inline group-hover:hidden group-focus-visible:hidden"
-                        >
+                          class="inline group-hover:hidden group-focus-visible:hidden">
                           <ChevronUpSmall />
                         </span>
                       </a>

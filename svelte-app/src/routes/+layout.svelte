@@ -104,18 +104,15 @@
 
 <div class="text-dark dark:text-light mx-auto h-full w-full lg:text-lg">
   <div
-    class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll"
-  >
+    class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll">
     <Header
       config={data.config}
       posts={data.posts}
       setTheme={(v) => (theme = v)}
-      {theme}
-    />
+      {theme} />
 
     <main
-      class="bg-light dark:bg-dark mx-auto flex w-full flex-1 px-8 py-10 transition-colors"
-    >
+      class="bg-light dark:bg-dark mx-auto flex w-full flex-1 px-8 py-10 transition-colors">
       <PageTransition>
         <ErrorBoundary showError>
           {@render children()}

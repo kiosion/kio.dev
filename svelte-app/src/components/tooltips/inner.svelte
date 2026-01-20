@@ -114,8 +114,7 @@
   bind:this={tooltipElement}
   aria-hidden="true"
   in:maybeTransition={{ duration }}
-  out:maybeTransition={{ duration }}
->
+  out:maybeTransition={{ duration }}>
   <span class="block px-3 py-2 {className || ''}">
     {@render children()}
   </span>

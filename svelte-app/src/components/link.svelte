@@ -62,8 +62,7 @@
           : (link ?? $t('Visit'))
     : undefined}
   placement={tooltipPlacement}
-  delay={[500, 0]}
->
+  delay={[500, 0]}>
   <svelte:element
     this={type}
     rel={restProps.target ?? undefined}
@@ -88,8 +87,7 @@
       }
       onclick?.(e);
     }}
-    role={type === 'a' ? 'link' : 'button'}
-  >
+    role={type === 'a' ? 'link' : 'button'}>
     {@render children()}
   </svelte:element>
 </Tooltip>

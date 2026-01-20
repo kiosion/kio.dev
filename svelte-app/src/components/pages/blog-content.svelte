@@ -42,8 +42,7 @@
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="hover"
     data-sveltekit-replacestate
-    data-sveltekit-noscroll
-  >
+    data-sveltekit-noscroll>
     <span class="opacity-70 select-none">#</span>
     <span
       class="underline decoration-2 underline-offset-[3px] transition-[opacity,text-decoration-color,color]"
@@ -56,25 +55,21 @@
       class:group-hover:decoration-orange-light={!isActiveTag(tag.slug?.current)}
       class:group-hover:group-hover:dark:decoration-orange-dark={!isActiveTag(
         tag.slug?.current,
-      )}
-    >
-      {tag.title?.toLowerCase()}</span
-    >
+      )}>
+      {tag.title?.toLowerCase()}</span>
   </a>
 {/snippet}
 
 <div class="flex h-full min-w-full flex-grow flex-col gap-20">
   <section
-    class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12"
-  >
+    class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
     <div class="mr-auto flex flex-col gap-8">
       <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
         Thoughts &amp; guides
       </h1>
 
       <div
-        class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg"
-      >
+        class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg">
         {#each tags as tag}
           {@render tagItem(tag)}
         {/each}
@@ -88,16 +83,14 @@
         <span class="opacity-70"
           >{posts.length ?? '-'}&nbsp;matching&nbsp;post{posts.length === 1
             ? ''
-            : 's'}</span
-        >
+            : 's'}</span>
         <a
           href="/thoughts"
           class="inline-block cursor-pointer text-base opacity-70 transition-opacity hover:opacity-100"
           data-sveltekit-preload-code="eager"
           data-sveltekit-preload-data="hover"
           data-sveltekit-replacestate
-          data-sveltekit-noscroll>&nbsp;&mdash;&nbsp;clear</a
-        >
+          data-sveltekit-noscroll>&nbsp;&mdash;&nbsp;clear</a>
       {:else}
         <span class="opacity-70">All posts</span>
       {/if}

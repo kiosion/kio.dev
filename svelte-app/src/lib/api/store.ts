@@ -48,7 +48,7 @@ export type ManyParams<M extends Model> = M extends 'post'
 const buildPath = (
   model: string,
   many: boolean,
-  params: Record<string, unknown> = {}
+  params: Record<string, unknown> = {},
 ): string => {
   const url = new URL(`get/${model}${many ? 's' : ''}`, 'https://dummy');
   for (const [k, v] of Object.entries(params)) {
@@ -69,7 +69,7 @@ const buildPath = (
 const withCache = async <T>(
   key: string,
   ttl: number,
-  fn: () => Promise<APIResponse<T>>
+  fn: () => Promise<APIResponse<T>>,
 ): Promise<APIResponse<T>> => {
   if (!browser) {
     return await fn();
@@ -78,7 +78,7 @@ const withCache = async <T>(
   if (cached) {
     return {
       status: 200,
-      data: cached
+      data: cached,
     };
   }
   const res = await fn();
@@ -91,34 +91,34 @@ const withCache = async <T>(
 async function getOne<M extends 'post' | 'config' | 'tag'>(
   fetch: RouteFetch,
   model: M,
-  params: SingleParams<M>
+  params: SingleParams<M>,
 ): Promise<APIResponse<DocumentRegistry[M]>>;
 
 async function getOne<M extends 'config'>(
   fetch: RouteFetch,
   model: M,
-  params?: SingleParams<M>
+  params?: SingleParams<M>,
 ): Promise<APIResponse<DocumentRegistry[M]>>;
 
 async function getOne<M extends Model>(
   fetch: RouteFetch,
   model: M,
-  params?: SingleParams<M>
+  params?: SingleParams<M>,
 ): Promise<APIResponse<DocumentRegistry[M]>> {
   const key = JSON.stringify({ model, params, many: false });
   return withCache(key, cache.DEFAULT_TTL, () =>
-    request<DocumentRegistry[M]>(fetch, buildPath(model, false, params))
+    request<DocumentRegistry[M]>(fetch, buildPath(model, false, params)),
   );
 }
 
 async function getMany<M extends 'post' | 'tag'>(
   fetch: RouteFetch,
   model: M,
-  params?: ManyParams<M>
+  params?: ManyParams<M>,
 ): Promise<APIResponse<DocumentRegistry[M][]>> {
   const key = JSON.stringify({ model, params, many: true });
   return withCache(key, cache.DEFAULT_TTL, () =>
-    request<DocumentRegistry[M][]>(fetch, buildPath(model, true, params))
+    request<DocumentRegistry[M][]>(fetch, buildPath(model, true, params)),
   );
 }
 

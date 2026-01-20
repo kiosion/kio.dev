@@ -8,8 +8,7 @@
 </script>
 
 <footer
-  class="bg-light dark:bg-dark flex w-full flex-col items-center justify-center gap-x-8 gap-y-6 border-t border-neutral-300 px-8 py-6 transition-colors sm:flex-row sm:justify-between dark:border-neutral-400"
->
+  class="bg-light dark:bg-dark flex w-full flex-col items-center justify-center gap-x-8 gap-y-6 border-t border-neutral-300 px-8 py-6 transition-colors sm:flex-row sm:justify-between dark:border-neutral-400">
   <div class="text-sm">
     <p>&copy; {new Date().getFullYear()} {config.name}</p>
   </div>
@@ -21,8 +20,7 @@
             class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] dark:decoration-neutral-400"
             href={link.url ?? ''}
             target="_blank"
-            rel="noopener noreferrer">{link.name}</Link
-          >
+            rel="noopener noreferrer">{link.name}</Link>
           {#if idx < config.socialLinks.length - 1}
             <span class="opacity-50 select-none">|</span>
           {/if}
@@ -36,8 +34,7 @@
           class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] dark:decoration-neutral-400"
           target="_blank"
           rel="noopener noreferrer"
-          href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}>#{APP_VERSION.slice(0, 6)}</a
-        >
+          href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}>#{APP_VERSION.slice(0, 6)}</a>
       {/if}
     </div>
   {/if}

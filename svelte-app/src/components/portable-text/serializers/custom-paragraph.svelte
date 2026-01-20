@@ -12,8 +12,7 @@
   class:mt-4={global.context.bodySize !== 'base'}
   class:first:mt-0={!global.context.documentView}
   class:first:mt-8={global.context.documentView}
-  class:lg:max-w-[60rem]={global.context.documentView}
->
+  class:lg:max-w-[60rem]={global.context.documentView}>
   <slot />
 </p>
 

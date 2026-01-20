@@ -5,14 +5,14 @@ import type { HeadingNode } from '$types/documents';
 export const endpointResponse = <T extends Record<PropertyKey, unknown>>(
   content: T,
   status = 200,
-  init: ResponseInit = {}
+  init: ResponseInit = {},
 ) => {
   return new Response(JSON.stringify(content), {
     headers: {
-      'content-type': 'application/json; charset=utf-8'
+      'content-type': 'application/json; charset=utf-8',
     },
     status,
-    ...init
+    ...init,
   });
 };
 
@@ -109,5 +109,5 @@ const blockToHeading = (b: HeadingBlock): HeadingNode => ({
   type: b.style,
   typeLevel: Number((b.style as string)[1]) as 1 | 2 | 3 | 4 | 5 | 6,
   children: [],
-  parent: null
+  parent: null,
 });

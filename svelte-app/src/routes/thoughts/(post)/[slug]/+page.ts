@@ -26,7 +26,7 @@ export const load = (async ({ parent, fetch, params }) => {
   return {
     breadcrumbs: [
       ...parentData.breadcrumbs,
-      { label: post.title, href: `/thoughts/${params.slug}` }
+      { label: post.title, href: `/thoughts/${params.slug}` },
     ],
     post,
     routeFetch: fetch,
@@ -36,7 +36,7 @@ export const load = (async ({ parent, fetch, params }) => {
         ? post.desc.length > 160
           ? `${post.desc.slice(0, 160 - 3)}...`
           : post.desc
-        : `A blog post on ${BASE_PAGE_TITLE}`
-    }
+        : `A blog post on ${BASE_PAGE_TITLE}`,
+    },
   };
 }) satisfies PageLoad;

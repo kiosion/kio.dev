@@ -19,8 +19,7 @@
 
 <div class="flex h-full min-w-full flex-grow flex-col gap-20">
   <section
-    class="relative mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12"
-  >
+    class="relative mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
     <div class="mr-auto flex flex-col gap-8">
       <div class="font-display flex max-w-2xl flex-col gap-2 text-5xl tracking-wide">
         {#if config.hero}
@@ -34,8 +33,7 @@
       </p>
     </div>
     <div
-      class="text-md mt-4 ml-auto max-w-xs text-right text-neutral-600 dark:text-neutral-300"
-    >
+      class="text-md mt-4 ml-auto max-w-xs text-right text-neutral-600 dark:text-neutral-300">
       {#if config.info}
         <ErrorBoundary>
           <PortableText text={config.info} class="leading-4" />
@@ -59,8 +57,7 @@
       <Link
         href="/thoughts/"
         data-sveltekit-preload-code="eager"
-        data-sveltekit-preload-data="hover"
-      >
+        data-sveltekit-preload-data="hover">
         See all
       </Link>
     </div>

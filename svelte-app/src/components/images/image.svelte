@@ -20,7 +20,7 @@
     { _ref } = image.asset,
     imgDimensions = {
       width: Math.min(crop.width, 1200),
-      height: Math.min(crop.width, 1200) * (crop.height / crop.width)
+      height: Math.min(crop.width, 1200) * (crop.height / crop.width),
     },
     placeholderSrc =
       placeholder || buildImageUrl({ ref: _ref, crop, width: 30, blur: 40 }),
@@ -36,9 +36,9 @@
           css: (t) => `
           transform: ${transform} scale(${t});
           opacity: ${t}
-        `
+        `,
         };
-      }
+      },
     });
 
   let fullSrc: string,
@@ -47,7 +47,7 @@
 
   onMount(() => {
     srcPromise ||= routeFetch(
-      buildImageUrl({ ref: _ref, crop, width: imgDimensions.width })
+      buildImageUrl({ ref: _ref, crop, width: imgDimensions.width }),
     ).then(async (res) => {
       const mimeType =
           res.headers.get('content-type') ||
@@ -56,7 +56,7 @@
         ab = await res.arrayBuffer(),
         buf = new Uint8Array(ab).reduce(
           (data, byte) => data + String.fromCharCode(byte),
-          ''
+          '',
         );
       return `data:${mimeType};base64,${btoa(buf)}`;
     });
@@ -70,8 +70,7 @@
     <div
       class="loading font-code absolute top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
       style="max-width: {imgDimensions.width}px; left: min(50%, {imgDimensions.width /
-        2}px);"
-    >
+        2}px);">
       <Spinner></Spinner>
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
@@ -79,8 +78,7 @@
       class="w-full rounded-md select-none"
       src={placeholderSrc}
       draggable="false"
-      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
-    />
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};" />
   {:then src}
     <button
       class="focus-outline-sm relative block max-h-fit w-full cursor-zoom-in rounded-md"
@@ -95,8 +93,7 @@
           showImageModal = !showImageModal;
         }
       }}
-      type="button"
-    >
+      type="button">
       {#if showImageModal}
         <img
           class="placeholder absolute top-0 left-0 w-full rounded-md opacity-50 select-none"
@@ -104,8 +101,7 @@
           alt={_key}
           draggable="false"
           style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
-          out:fade={{ duration: BASE_ANIMATION_DURATION }}
-        />
+          out:fade={{ duration: BASE_ANIMATION_DURATION }} />
       {:else}
         <img
           {src}
@@ -113,22 +109,19 @@
           alt={_key}
           draggable="false"
           in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-          out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-        />
+          out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }} />
       {/if}
     </button>
   {:catch e}
     <p
-      class="error font-code absolute top-1/2 left-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
-    >
+      class="error font-code absolute top-1/2 left-1/2 h-fit w-fit max-w-full -translate-x-1/2 -translate-y-1/2 transform text-center text-base">
       {$t('Error')}:&nbsp;{e?.message || e}
     </p>
     <img
       src={placeholderSrc}
       alt={_key}
       draggable="false"
-      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
-    />
+      style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};" />
   {/await}
   <img
     class="backdrop absolute top-0 left-1/2 -z-[1] w-full -translate-x-1/2 rounded-md opacity-20 blur-lg transition-opacity select-none print:hidden"
@@ -136,8 +129,7 @@
     alt={_key}
     draggable="false"
     aria-hidden="true"
-    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
-  />
+    style="max-width: {imgDimensions.width}px; max-height: {imgDimensions.height}px; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};" />
 </div>
 
 <ImageModal bind:dialog bind:show={showImageModal}>
@@ -147,8 +139,7 @@
     alt={_key}
     style="object-fit: contain; aspect-ratio: {imgDimensions.width} / {imgDimensions.height};"
     in:receive={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-    out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }}
-  />
+    out:send={{ key: _key, duration: BASE_ANIMATION_DURATION }} />
 </ImageModal>
 
 <style lang="scss">

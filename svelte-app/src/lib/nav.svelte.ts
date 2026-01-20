@@ -13,13 +13,13 @@ export const getPageMeta = (basePathname?: string) => {
 
   return {
     title: route?.name?.length ? `${route.name} | ${BASE_PAGE_TITLE}` : BASE_PAGE_TITLE,
-    desc: route?.desc
+    desc: route?.desc,
   };
 };
 
 export const scrollTo = (
   url: URL | undefined,
-  scrollParams: ScrollIntoViewOptions = {}
+  scrollParams: ScrollIntoViewOptions = {},
 ) => {
   const { hash } = url || { hash: '' };
 
@@ -34,6 +34,6 @@ export const scrollTo = (
   target?.scrollIntoView({
     behavior: 'smooth',
     block: 'center',
-    ...scrollParams
+    ...scrollParams,
   });
 };

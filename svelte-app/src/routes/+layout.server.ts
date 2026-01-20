@@ -11,6 +11,6 @@ export const load = (({ cookies }) => {
   const rawTheme = cookies.get(THEME_COOKIE_NAME);
 
   return {
-    initialTheme: isThemeChoice(rawTheme) ? rawTheme : APP_THEMES.DARK
+    initialTheme: isThemeChoice(rawTheme) ? rawTheme : APP_THEMES.DARK,
   };
 }) satisfies LayoutServerLoad;

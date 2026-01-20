@@ -116,13 +116,11 @@
           animate:flip={{ duration: 220 }}
           in:fade={{ duration: 140, delay: idx * 15 }}
           out:fadeSlide={{ duration: 200, idx }}
-          onoutroend={handleOutroEnd}
-        >
+          onoutroend={handleOutroEnd}>
           <a class="group block py-4" href={`/thoughts/${post.slug.current}`}>
             <div class="flex items-baseline justify-between gap-4">
               <h3
-                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,color]"
-              >
+                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,color]">
                 {post.title}
               </h3>
               <time class="text-sm whitespace-nowrap opacity-70">

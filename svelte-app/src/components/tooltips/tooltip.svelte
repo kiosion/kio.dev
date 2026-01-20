@@ -122,8 +122,7 @@
     {followCursor}
     className={typeof content === 'string'
       ? 'bg-neutral-100/70 backdrop-blur-sm text-sm font-semibold text-dark/70 dark:bg-neutral-500/70 dark:text-light/70 whitespace-nowrap rounded-md'
-      : undefined}
-  >
+      : undefined}>
     {#if typeof content === 'string'}
       {content}
     {:else if content}

@@ -7,7 +7,7 @@ export const GET = (async ({ url }) => {
   const params = {
     id: url.searchParams.get('id') ?? undefined,
     slug: url.searchParams.get('slug') ?? undefined,
-    preview: !!url.searchParams.get('preview')
+    preview: !!url.searchParams.get('preview'),
   };
 
   const res = await getPost(params);

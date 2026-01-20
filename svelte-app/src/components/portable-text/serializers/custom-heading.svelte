@@ -31,8 +31,7 @@
   class:!mt-8={indexInParent === 0}
   class:underline={isHighlighted}
   id={`heading-${value._key}`}
-  href={`#${value._key}`}
->
+  href={`#${value._key}`}>
   <svelte:element this={style} class="font-display -ml-1.5 inline font-semibold">
     <slot />
   </svelte:element>

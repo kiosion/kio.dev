@@ -13,7 +13,7 @@ export const load = (async ({ parent, fetch }) => {
 
   const [tags, tagCounts]: [
     Pick<Tag, '_id' | 'slug' | 'title'>[],
-    Record<string, number>
+    Record<string, number>,
   ] = (() => {
     const counts: Record<string, number> = {};
     const acc: Pick<Tag, '_id' | 'slug' | 'title'>[] = [];
@@ -49,6 +49,6 @@ export const load = (async ({ parent, fetch }) => {
     breadcrumbs: [...parentData.breadcrumbs, { label: 'Thoughts', href: '/thoughts' }],
     posts,
     tags,
-    tagCounts
+    tagCounts,
   };
 }) satisfies LayoutLoad;

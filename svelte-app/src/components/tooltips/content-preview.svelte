@@ -11,8 +11,7 @@
 
 <ErrorBoundary>
   <div
-    class="pointer-events-none flex h-56 w-sm flex-col gap-y-3 overflow-hidden rounded-md bg-neutral-100/80 p-4 backdrop-blur-sm transition-colors select-none dark:bg-neutral-500/80"
-  >
+    class="pointer-events-none flex h-56 w-sm flex-col gap-y-3 overflow-hidden rounded-md bg-neutral-100/80 p-4 backdrop-blur-sm transition-colors select-none dark:bg-neutral-500/80">
     {#if header}
       <span class="line-clamp-1 block w-full text-sm font-semibold opacity-70">
         {BASE_DOMAIN}&nbsp;/&nbsp;{header}
@@ -21,8 +20,7 @@
     <div class="w-full flex-1 overflow-hidden rounded-md">
       <div
         class="bg-light dark:bg-dark h-screen px-6"
-        style="transform: scale({scaleFac}); transform-origin: 0 0; width: calc(100% * {inverseScaleFac}"
-      >
+        style="transform: scale({scaleFac}); transform-origin: 0 0; width: calc(100% * {inverseScaleFac}">
         {@render children()}
       </div>
     </div>

@@ -5,8 +5,7 @@
 </script>
 
 <div
-  class="my-4 flex flex-col items-center justify-center gap-4 text-center text-base text-neutral-700 dark:text-neutral-300"
->
+  class="my-4 flex flex-col items-center justify-center gap-4 text-center text-base text-neutral-700 dark:text-neutral-300">
   <ExclamationCircle />
   <p>{message}</p>
 </div>

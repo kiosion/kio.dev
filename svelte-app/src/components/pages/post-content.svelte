@@ -24,20 +24,17 @@
     class="group flex flex-row items-center justify-start gap-x-0.5"
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="hover"
-    aria-label={'Topic' + ': ' + tag.title}
-  >
+    aria-label={'Topic' + ': ' + tag.title}>
     <span class="opacity-70 select-none">#</span>
     <span
       class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-70 transition-[color,text-decoration-color,opacity] group-hover:opacity-100"
-      >{tag.title?.toLowerCase()}</span
-    >
+      >{tag.title?.toLowerCase()}</span>
   </a>
 {/snippet}
 
 <div class="flex h-full w-full flex-col gap-y-5{className ? ' ' + className : ''}">
   <section
-    class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-300 pb-4 dark:border-neutral-400"
-  >
+    class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-300 pb-4 dark:border-neutral-400">
     <div class="flex flex-col gap-y-4">
       <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
         {post.title}

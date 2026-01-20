@@ -79,8 +79,7 @@
             },
             [] as NonNullable<(typeof posts)[number]['tags']>,
           )}
-          filter={false}
-        />
+          filter={false} />
       {:else if href === APP_ROUTES.find((r) => r.name === 'Etc')?.path}
         <AboutContent {config} />
       {/if}
@@ -92,8 +91,7 @@
     delay={[250, 0]}
     offset={[2, 8]}
     duration={250}
-    placement="bottom-start"
-  >
+    placement="bottom-start">
     <a
       {href}
       class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
@@ -110,8 +108,7 @@
       class:hover:dark:decoration-orange-dark={!active}
       class:hover:opacity-100={!active}
       data-sveltekit-preload-code="eager"
-      data-sveltekit-preload-data="hover"
-    >
+      data-sveltekit-preload-data="hover">
       {text}
     </a>
   </Tooltip>
@@ -130,26 +127,22 @@
     in:fly={{ duration: 400, x: 150, delay: 100, easing: cubicOut }}
     out:fly={{ duration: 400, x: 150, easing: cubicIn }}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="hover"
-  >
+    data-sveltekit-preload-data="hover">
     {crumb.label}
   </svelte:element>
 {/snippet}
 
 <header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 transition-colors dark:border-neutral-400"
->
+  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 transition-colors dark:border-neutral-400">
   <div
-    class="relative isolate mx-auto grid w-full items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6"
-  >
+    class="relative isolate mx-auto grid w-full items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
     <!-- Breadcrumbs -->
     <nav aria-label="Breadcrumb" class="min-w-0 select-none">
       <ol class="hidden min-w-0 items-center whitespace-nowrap sm:flex">
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
-            animate:flip={{ duration: 250, easing: cubicOut }}
-          >
+            animate:flip={{ duration: 250, easing: cubicOut }}>
             {#key crumb.label}
               {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
             {/key}
@@ -161,8 +154,7 @@
         {#each mobileBreadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
-            animate:flip={{ duration: 250, easing: cubicOut }}
-          >
+            animate:flip={{ duration: 250, easing: cubicOut }}>
             {#key crumb.label}
               {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
             {/key}
@@ -173,11 +165,9 @@
 
     <!-- Right-side nav -->
     <div
-      class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end"
-    >
+      class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end">
       <nav
-        class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
-      >
+        class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8">
         {#each NAV_LINKS as link}
           {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
         {/each}
