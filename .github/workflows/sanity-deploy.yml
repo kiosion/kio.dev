@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "sanity-cms/**"
+      - ".github/workflows/sanity-deploy.yml"
 
 concurrency:
   group: sanity-deploy

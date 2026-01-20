@@ -7,7 +7,7 @@ import type { RouteFetch } from '$types';
 export const request = async <T>(
   fetch: RouteFetch,
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<APIResponse<T>> => {
   try {
     const res = await fetch(`${API_URL}${path}`, options);
@@ -25,8 +25,8 @@ export const request = async <T>(
       status: 500,
       errors: [
         'Failed to parse response',
-        err instanceof Error ? err.message : 'Unknown error'
-      ]
+        err instanceof Error ? err.message : 'Unknown error',
+      ],
     };
   }
 };

@@ -8,7 +8,7 @@ export const unwrap = <T>([data, err]: Result<T>): T => {
   if (err || !data) {
     throw error(err?.code || 500, {
       message: err?.message || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
-      stack: err?.stack
+      stack: err?.stack,
     });
   }
   return data;
@@ -47,7 +47,7 @@ export function unwrapAPIResponse<T>(res: APIResponse<T>, noThrow: true): T | un
 export function unwrapAPIResponse<T>(res: APIResponse<T>, noThrow?: false): T;
 export function unwrapAPIResponse<T, K = boolean>(
   res: APIResponse<T>,
-  noThrow?: K
+  noThrow?: K,
 ): T | undefined {
   if (isAPIFailure(res)) {
     if (noThrow) {
@@ -55,7 +55,7 @@ export function unwrapAPIResponse<T, K = boolean>(
     }
     throw error(res.status, {
       message: res.errors[0] || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
-      stack: res.errors.join('\n')
+      stack: res.errors.join('\n'),
     });
   }
 

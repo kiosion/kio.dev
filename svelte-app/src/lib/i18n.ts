@@ -12,7 +12,7 @@ const currentLang = writable(DEFAULT_APP_LANG);
 const notFound = (key: string, lang: string, abbr = 0) => {
   abbr > 0
     ? Logger.errorOnce(
-        `[i18n] Missing translation for key "${key}" in ${lang}.json & ${abbr} others}`
+        `[i18n] Missing translation for key "${key}" in ${lang}.json & ${abbr} others}`,
       )
     : Logger.errorOnce(`[i18n] Missing translation for key "${key}" in ${lang}.json`);
   return key;
@@ -52,7 +52,7 @@ const getLocaleObject = (lang: (typeof APP_LANGS)[number]) => {
 
 const getKey = (
   localeObject: typeof EN | typeof FR | undefined,
-  key: LocaleKey
+  key: LocaleKey,
 ): string | undefined => {
   if (!localeObject) {
     return undefined;
@@ -89,7 +89,7 @@ const _translate = <K extends LocaleKey>(
   params?: ExtractTVars<K> extends never
     ? never
     : Record<ExtractTVars<K>, string | number>,
-  overrideLang?: string
+  overrideLang?: string,
 ): string => {
   const lang = overrideLang || currentLang || DEFAULT_APP_LANG;
 
@@ -101,7 +101,7 @@ const _translate = <K extends LocaleKey>(
     }
     return Object.entries(params).reduce(
       (acc, [key, value]) => acc.replace(`{${key}}`, value as string),
-      str
+      str,
     );
   };
 
@@ -123,7 +123,7 @@ const translate = derived<
     params?: ExtractTVars<K> extends never
       ? never
       : Record<ExtractTVars<K>, string | number>,
-    overrideLang?: string
+    overrideLang?: string,
   ) => string
 >(
   currentLang,
@@ -133,9 +133,9 @@ const translate = derived<
       params?: ExtractTVars<K> extends never
         ? never
         : Record<ExtractTVars<K>, string | number>,
-      overrideLang?: string
+      overrideLang?: string,
     ) =>
-      _translate(val, key, params, overrideLang)
+      _translate(val, key, params, overrideLang),
 );
 
 const addSearchParams = (path: string, params?: URLSearchParams): string => {
@@ -148,7 +148,7 @@ const _linkTo = (
   currentLang: string | undefined,
   path: string,
   paramsOrLang?: URLSearchParams | string,
-  lang?: string
+  lang?: string,
 ): string => {
   if (path.match(/(?:^(http|https|ftp|ssh)|^[^/].*\.([a-z]{2,6})).*?$/gim)) {
     return path;
@@ -192,7 +192,7 @@ const linkTo = derived(
   currentLang,
   (val) =>
     ((path: string, paramsOrLang?: URLSearchParams | string, lang?: string) =>
-      _linkTo(val, path, paramsOrLang, lang)) as LinkTo
+      _linkTo(val, path, paramsOrLang, lang)) as LinkTo,
 );
 
 export { check, currentLang, isLocalized, linkTo, translate as t };

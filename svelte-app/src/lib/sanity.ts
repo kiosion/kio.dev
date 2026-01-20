@@ -7,7 +7,7 @@ import type {
   SanityImageCrop,
   SanityImageObject,
   SanityImageRect,
-  SanityImageSource
+  SanityImageSource,
 } from '@sanity/image-url/lib/types/types';
 import { SANITY_DATASET, SANITY_PROJECT_ID } from '$lib/env';
 
@@ -23,8 +23,8 @@ export interface ImageCrop {
 const config: SanityClientLike = {
   clientConfig: {
     projectId: SANITY_PROJECT_ID,
-    dataset: SANITY_DATASET
-  }
+    dataset: SANITY_DATASET,
+  },
 };
 
 const builder = imageUrlBuilder(config);
@@ -32,7 +32,7 @@ const builder = imageUrlBuilder(config);
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
 export const getCrop = (
-  image: SanityImageObject | undefined
+  image: SanityImageObject | undefined,
 ): SanityImageCrop & SanityImageRect => {
   if (!image || !image?.asset) {
     return {
@@ -42,7 +42,7 @@ export const getCrop = (
       bottom: 0,
       right: 0,
       width: 0,
-      height: 0
+      height: 0,
     };
   }
   const ref = image.asset._ref,
@@ -54,7 +54,7 @@ export const getCrop = (
       bottom: Math.floor(dimensions[1] * (image?.crop?.bottom ?? 0)),
       right: Math.floor(dimensions[0] * (image?.crop?.right ?? 0)),
       width: 0,
-      height: 0
+      height: 0,
     };
 
   crop.width = Math.floor(dimensions[0] - (crop.left + crop.right));
@@ -86,8 +86,8 @@ type buildImageUrlOptions = baseBuildImageUrlOptions &
 
 export const buildImageUrl = (
   { baseUrl, ref, crop, width, height, blur, fit, format }: buildImageUrlOptions = {
-    baseUrl: undefined
-  } as buildImageUrlOptions
+    baseUrl: undefined,
+  } as buildImageUrlOptions,
 ) => {
   if (!baseUrl) {
     if (!ref) {

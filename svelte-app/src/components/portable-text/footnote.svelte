@@ -2,7 +2,7 @@
   import type { MarkComponentProps } from '@portabletext/svelte';
   import type {
     PortableTextBlock,
-    PortableTextMarkDefinition
+    PortableTextMarkDefinition,
   } from '@portabletext/types';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { t } from '$lib/i18n';
@@ -30,7 +30,7 @@
 
   $: number =
     portableText.global.context.footnotes.findIndex(
-      (note) => note._key === portableText.value._key
+      (note) => note._key === portableText.value._key,
     ) + 1;
 </script>
 
@@ -49,7 +49,6 @@
             customScrollTo(e, `note-${portableText.value._key}`);
           }
         }}>{number}</a
-      ></sup
-    >
+      ></sup>
   </Tooltip>
 </span>

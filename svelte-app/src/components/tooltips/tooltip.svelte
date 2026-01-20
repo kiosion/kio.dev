@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onDestroy, onMount, type Snippet } from 'svelte';
 
   import type { Placement } from '@floating-ui/dom';
   import Inner from '$components/tooltips/inner.svelte';
@@ -8,28 +8,38 @@
   import { isMobile } from '$lib/responsive';
   import { cubicInOut } from 'svelte/easing';
   import { get } from 'svelte/store';
-  import { fade, fly } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
-  export let content: string | undefined = undefined,
-    duration: number = BASE_ANIMATION_DURATION,
-    placement: Placement = 'bottom',
-    delay: [number, number] = [0, 0],
-    offset: number = 10,
-    showArrow = false,
-    followCursor = false;
+  let {
+    children,
+    content = undefined,
+    duration = BASE_ANIMATION_DURATION,
+    placement = 'bottom',
+    delay = [0, 0],
+    offset = 10,
+    followCursor = false,
+  }: {
+    children: Snippet<[{ id?: string }]>;
+    content?: string | Snippet<[{ id?: string }]>;
+    duration?: number;
+    placement?: Placement;
+    delay?: [number, number];
+    offset?: number | [number, number];
+    followCursor?: boolean;
+  } = $props();
 
   const tooltipId = Math.floor(Math.random() * 100000);
 
-  let timeoutInId: ReturnType<typeof setTimeout>,
-    timeoutOutId: ReturnType<typeof setTimeout>,
-    container: HTMLSpanElement,
-    target: HTMLElement | null,
-    active = false;
+  let timeoutInId: ReturnType<typeof setTimeout> | undefined = $state(undefined),
+    timeoutOutId: ReturnType<typeof setTimeout> | undefined = $state(undefined),
+    container: HTMLSpanElement | null = $state(null),
+    target: HTMLElement | null = $state(null),
+    active = $state(false);
 
   export const id = `tooltip-${tooltipId}`;
 
   const showTooltip = () => {
-    if (!target || (!content && !$$slots?.content) || get(isMobile)) {
+    if (!target || !content || get(isMobile)) {
       return;
     }
 
@@ -57,7 +67,7 @@
     }
   };
 
-  const getActionableTarget = (el: HTMLElement | null): HTMLElement | null => {
+  const getActionableTarget = (el: HTMLElement | null) => {
     if (el && getComputedStyle(el)?.display === 'contents') {
       return getActionableTarget(el?.firstElementChild as HTMLElement | null);
     }
@@ -70,7 +80,7 @@
     ['mouseleave', hideTooltip],
     ['focusin', showTooltip],
     ['focusout', hideTooltip],
-    ['blur', hideTooltip]
+    ['blur', hideTooltip],
   ] as const;
 
   onMount(() => {
@@ -96,28 +106,27 @@
 </script>
 
 <span bind:this={container} class="contents" data-test-id="tooltip-container">
-  <slot {id} />
+  {@render children({ id })}
 </span>
 
 {#if active && target}
   <Inner
     id={tooltipId}
-    transition={content
-      ? (node, args) => fade(node, { ...(args ?? {}), easing: cubicInOut })
-      : (node, args) => fly(node, { ...(args ?? {}), easing: cubicInOut, x: 4 })}
+    transition={typeof content === 'string'
+      ? (node, args) => fly(node, { ...(args ?? {}), easing: cubicInOut, y: 2 })
+      : (node, args) => fly(node, { ...(args ?? {}), easing: cubicInOut, y: 4 })}
     {duration}
     {placement}
     {offset}
     {target}
-    {showArrow}
     {followCursor}
-    className={content &&
-      'bg-neutral-600 font-mono text-xs text-light dark:bg-neutral-100 dark:text-dark whitespace-nowrap rounded-md'}
-  >
-    {#if content}
+    className={typeof content === 'string'
+      ? 'bg-neutral-100/70 backdrop-blur-sm text-sm font-semibold text-dark/70 dark:bg-neutral-500/70 dark:text-light/70 whitespace-nowrap rounded-md'
+      : undefined}>
+    {#if typeof content === 'string'}
       {content}
-    {:else}
-      <slot name="content" {id} />
+    {:else if content}
+      {@render content({ id })}
     {/if}
   </Inner>
 {/if}

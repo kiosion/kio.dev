@@ -7,12 +7,12 @@ import type { RequestHandler } from './$types';
 export const GET = (async ({ url }) => {
   const params = {
     page: parseInt(
-      url.searchParams.get('page') ?? DEFAULT_FILTER_QUERY_PARAMS.page.toString()
+      url.searchParams.get('page') ?? DEFAULT_FILTER_QUERY_PARAMS.page.toString(),
     ),
     limit: parseInt(
-      url.searchParams.get('limit') ?? DEFAULT_FILTER_QUERY_PARAMS.limit.toString()
+      url.searchParams.get('limit') ?? DEFAULT_FILTER_QUERY_PARAMS.limit.toString(),
     ),
-    preview: !!url.searchParams.get('preview')
+    preview: !!url.searchParams.get('preview'),
   };
 
   const res = await getPosts(params);

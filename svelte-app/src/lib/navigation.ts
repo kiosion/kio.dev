@@ -18,7 +18,7 @@ export const pageTitle = derived([isLocalized, t, page], (vals) => {
 
 export const scrollTo = (
   url: PageStore['url'],
-  scrollParams: ScrollIntoViewOptions = {}
+  scrollParams: ScrollIntoViewOptions = {},
 ) => {
   const { hash } = url || { hash: '' };
 
@@ -33,6 +33,6 @@ export const scrollTo = (
   target?.scrollIntoView({
     behavior: 'smooth',
     block: 'center',
-    ...scrollParams
+    ...scrollParams,
   });
 };

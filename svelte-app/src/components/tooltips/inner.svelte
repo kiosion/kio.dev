@@ -1,37 +1,51 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onDestroy, onMount, type Snippet } from 'svelte';
 
-  import type { ComputePositionConfig, Placement } from '@floating-ui/dom';
+  import type { ComputePositionConfig, OffsetOptions, Placement } from '@floating-ui/dom';
   import {
-    arrow,
     autoUpdate,
     computePosition,
     flip,
     offset as offsetFn,
-    shift
+    shift,
   } from '@floating-ui/dom';
   import { browser } from '$app/environment';
   import type { TransitionConfig } from 'svelte/transition';
 
-  export let id: number,
-    className: string | undefined = undefined,
-    duration: number,
-    placement: Placement,
-    offset: number,
-    followCursor: boolean,
-    showArrow: boolean,
-    transition: ((node: Element, args?: unknown) => TransitionConfig) | undefined =
-      undefined,
+  let {
+    children,
+    id,
+    className = undefined,
+    duration,
+    placement,
+    offset,
+    followCursor,
+    transition = undefined,
+    target,
+  }: {
+    children: Snippet;
+    id: number;
+    className: string | undefined;
+    duration: number;
+    placement: Placement;
+    offset: number | [number, number];
+    followCursor: boolean;
+    transition: ((node: Element, args?: unknown) => TransitionConfig) | undefined;
     target: HTMLElement;
+  } = $props();
 
-  let tooltipElement: HTMLDivElement,
-    arrowElement: HTMLSpanElement,
-    position = { x: 0, y: 0 },
+  let tooltipElement: HTMLDivElement | null = $state(null),
+    position = $state({ x: 0, y: 0 }),
     cleanup: () => void,
-    maybeTransition =
+    maybeTransition = $derived(
       transition && duration > 0
         ? transition
-        : (_node: Element, _args?: unknown): TransitionConfig => ({});
+        : (_node: Element, _args?: unknown): TransitionConfig => ({}),
+    ),
+    offsetValue = $derived({
+      mainAxis: typeof offset === 'number' ? offset : offset[0],
+      crossAxis: typeof offset === 'number' ? undefined : offset[1],
+    } satisfies OffsetOptions);
 
   const calculatePosition = async (e?: MouseEvent) => {
     if (!browser || !target || !tooltipElement) {
@@ -47,53 +61,30 @@
           top: e.clientY,
           right: e.clientX,
           bottom: e.clientY,
-          width: offset * 1.5,
-          height: offset * 1.5
-        })
+          width: (offsetValue.crossAxis ?? offsetValue.mainAxis) * 1.5,
+          height: offsetValue.mainAxis * 1.5,
+        }),
       } as HTMLElement;
     }
 
     const middleware: ComputePositionConfig['middleware'] = [
-      offsetFn(offset),
+      offsetFn(offsetValue),
       flip(),
-      shift({ padding: 10 })
+      shift({ padding: 10 }),
     ];
-
-    if (showArrow) {
-      middleware.push(arrow({ element: arrowElement }));
-    }
 
     const {
       x,
       y,
       placement: actualPlacement,
-      middlewareData
+      middlewareData,
     } = await computePosition(targetToUse, tooltipElement, {
       placement,
-      middleware
+      middleware,
     });
 
     position.x = x;
     position.y = y;
-
-    if (showArrow) {
-      const staticSide = (
-        {
-          top: 'bottom',
-          right: 'left',
-          bottom: 'top',
-          left: 'right'
-        } as const
-      )[actualPlacement.split('-')[0]]!;
-
-      Object.assign(arrowElement.style, {
-        left: middlewareData.arrow?.x ? `${middlewareData.arrow.x}px` : '',
-        top: middlewareData.arrow?.y ? `${middlewareData.arrow.y}px` : '',
-        right: '',
-        bottom: '',
-        [staticSide]: '-4px'
-      });
-    }
   };
 
   onMount(() => {
@@ -102,7 +93,7 @@
     }
 
     cleanup = autoUpdate(target, tooltipElement, calculatePosition, {
-      animationFrame: false
+      animationFrame: false,
     });
 
     if (followCursor) {
@@ -123,15 +114,8 @@
   bind:this={tooltipElement}
   aria-hidden="true"
   in:maybeTransition={{ duration }}
-  out:maybeTransition={{ duration }}
->
-  <span class="block px-2 py-1.5 {className || ''}">
-    <slot />
+  out:maybeTransition={{ duration }}>
+  <span class="block px-3 py-2 {className || ''}">
+    {@render children()}
   </span>
-  {#if showArrow}
-    <span
-      class="absolute block h-2 w-2 rotate-45 bg-neutral-600 dark:bg-neutral-100"
-      bind:this={arrowElement}
-    ></span>
-  {/if}
 </div>

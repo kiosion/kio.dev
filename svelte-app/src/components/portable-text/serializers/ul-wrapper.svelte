@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { ListComponentProps } from '@portabletext/svelte';
+  import type { Snippet } from 'svelte';
 
-  export let portableText: ListComponentProps;
+  let {
+    portableText,
+    children,
+  }: { portableText: ListComponentProps; children: Snippet } = $props();
 
-  $: ({ global } = portableText);
+  const global = $derived(portableText.global);
 </script>
 
 <ul
@@ -12,7 +16,6 @@
   class:my-4={global.context.bodySize === 'base'}
   class:px-6={global.context.documentView}
   class:md:px-10={global.context.documentView}
-  class:lg:max-w-[60rem]={global.context.documentView}
->
-  <slot />
+  class:lg:max-w-[60rem]={global.context.documentView}>
+  {@render children()}
 </ul>

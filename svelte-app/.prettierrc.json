@@ -2,9 +2,9 @@
   "useTabs": false,
   "tabWidth": 2,
   "semi": true,
-  "bracketSameLine": false,
+  "bracketSameLine": true,
   "singleQuote": true,
-  "trailingComma": "none",
+  "trailingComma": "all",
   "printWidth": 90,
   "bracketSpacing": true,
   "plugins": [

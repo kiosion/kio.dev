@@ -55,5 +55,5 @@ export default {
   warn,
   error,
   warnOnce,
-  errorOnce
+  errorOnce,
 };

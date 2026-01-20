@@ -25,7 +25,7 @@
     content,
     filename,
     showLineNumbers = true,
-    lang
+    lang,
   }: {
     content: string;
     filename?: string;
@@ -34,7 +34,7 @@
   } = $props();
 
   let langTypePromise = $state<Promise<SHLanguageType<SHLanguageUnion>> | undefined>(
-    undefined
+    undefined,
   );
   let hideLoader = $state(false);
   let copied = $state<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -50,7 +50,7 @@
           () => {
             copied = undefined;
           },
-          (BASE_ANIMATION_DURATION / 2) * 10
+          (BASE_ANIMATION_DURATION / 2) * 10,
         );
       }
     };
@@ -90,13 +90,11 @@
   class="relative my-5 rounded-sm bg-neutral-100/50 transition-colors dark:bg-neutral-600/50"
   role="group"
   aria-label={$t('Code block')}
-  aria-labelledby={filename ? `${id}-filename` : undefined}
->
+  aria-labelledby={filename ? `${id}-filename` : undefined}>
   {#if filename}
     <div
       class="flex flex-row items-center justify-start gap-x-4 bg-neutral-200/50 px-8 py-4 font-mono text-sm transition-colors dark:bg-neutral-800/5"
-      id="{id}-filename"
-    >
+      id="{id}-filename">
       <DocumentTextSmall class="text-neutral-500 dark:text-neutral-300" />
       <span>{filename}</span>
     </div>
@@ -106,8 +104,7 @@
   <div
     class="pointer-events-none absolute top-4 right-4 h-fit w-fit transition-opacity"
     class:opacity-0={hideLoader}
-    aria-hidden="true"
-  >
+    aria-hidden="true">
     <Spinner />
   </div>
   <Tooltip content={$t('Copy to clipboard')} placement="left">
@@ -117,8 +114,7 @@
       onclick={() => copy()}
       onkeydown={(e) => e.key === 'Enter' && copy()}
       aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-      type="button"
-    >
+      type="button">
       {#if copied !== undefined}
         <ClipboardDocumentCheck />
       {:else}
@@ -127,14 +123,12 @@
     </button>
   </Tooltip>
   <div
-    class="focus-outline relative h-fit min-h-16 w-full overflow-hidden rounded-sm text-lg transition-[height,color]"
-  >
+    class="focus-outline relative h-fit min-h-16 w-full overflow-hidden rounded-sm text-lg transition-[height,color]">
     <ErrorBoundary>
       <div
         class="h-fit w-full min-w-full rounded-sm p-1 pr-8 pl-4 transition-all"
         id="hljs-container"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         {#if langTypePromise}
           {#await langTypePromise}
             <Highlight code={content} language={Plaintext} let:highlighted>

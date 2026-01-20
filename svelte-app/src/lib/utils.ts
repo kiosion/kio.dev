@@ -12,7 +12,7 @@ const _parseViews = (views: number | undefined, lang: string) => {
 
   const parser = new Intl.NumberFormat(lang, {
     notation: 'compact',
-    compactDisplay: 'short'
+    compactDisplay: 'short',
   });
 
   return parser.format(views);
@@ -20,7 +20,7 @@ const _parseViews = (views: number | undefined, lang: string) => {
 
 export const parseViews = derived(
   currentLang,
-  (currentLang) => (views: number | undefined) => _parseViews(views, currentLang)
+  (currentLang) => (views: number | undefined) => _parseViews(views, currentLang),
 );
 
 const routeTrie = new RouteTrie();

@@ -28,8 +28,7 @@
     <div
       class="col-start-1 row-start-1 w-full min-w-0 [grid-area:1/1]"
       in:fly={{ duration, delay: duration, easing: circOut, y: dist * dir }}
-      out:fly={{ duration, easing: circIn, y: -dist * dir }}
-    >
+      out:fly={{ duration, easing: circIn, y: -dist * dir }}>
       {@render children()}
     </div>
   {/key}

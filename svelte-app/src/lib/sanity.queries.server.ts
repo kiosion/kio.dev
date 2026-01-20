@@ -27,7 +27,7 @@ export const GetPostQuery = defineQuery(
   'numberOfCharacters': length(pt::text(body)),
   'estimatedWordCount': round(length(pt::text(body)) / 5),
   'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)
-}[0]`
+}[0]`,
 );
 
 export const GetPostsQuery = defineQuery(`*[_type == 'post']{

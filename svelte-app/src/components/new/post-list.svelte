@@ -18,7 +18,7 @@
   const fmt = new Intl.DateTimeFormat(undefined, {
     year: 'numeric',
     month: 'short',
-    day: '2-digit'
+    day: '2-digit',
   });
 
   const fadeSlide = (node: Element, opts: { duration: number; idx: number }) => {
@@ -34,7 +34,7 @@
         const sCss = s?.css ? s.css(t, u) : '';
         const fCss = f?.css ? f.css(t, u) : '';
         return `${sCss};${fCss}`;
-      }
+      },
     };
   };
 
@@ -116,13 +116,11 @@
           animate:flip={{ duration: 220 }}
           in:fade={{ duration: 140, delay: idx * 15 }}
           out:fadeSlide={{ duration: 200, idx }}
-          onoutroend={handleOutroEnd}
-        >
+          onoutroend={handleOutroEnd}>
           <a class="group block py-4" href={`/thoughts/${post.slug.current}`}>
             <div class="flex items-baseline justify-between gap-4">
               <h3
-                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-4"
-              >
+                class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-[3px] opacity-100 transition-[text-decoration-color,color,opacity] group-hover:opacity-80 group-focus-visible:opacity-80">
                 {post.title}
               </h3>
               <time class="text-sm whitespace-nowrap opacity-70">

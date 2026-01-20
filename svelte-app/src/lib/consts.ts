@@ -1,12 +1,12 @@
 export const APP_THEMES = {
   DARK: 'dark',
-  LIGHT: 'light'
+  LIGHT: 'light',
 } as const;
 
 export const MEDIA_QUERIES = {
   DARK_THEME: '(prefers-color-scheme: dark)',
   LIGHT_THEME: '(prefers-color-scheme: light)',
-  REDUCE_MOTION: '(prefers-reduced-motion: reduce)'
+  REDUCE_MOTION: '(prefers-reduced-motion: reduce)',
 } as const;
 
 export const APP_LANGS = ['en', 'fr'];
@@ -35,7 +35,7 @@ export const APP_ROUTES = [
   {
     name: 'Home',
     path: '/',
-    desc: "Portfolio and writing on programming, security, finance, and whatever I'm exploring."
+    desc: "Portfolio and writing on programming, security, finance, and whatever I'm exploring.",
   },
   {
     name: 'Thoughts',
@@ -46,15 +46,15 @@ export const APP_ROUTES = [
       {
         name: 'Topics',
         path: '/thoughts/+',
-        children: [{ name: 'Topic', path: '/thoughts/+/:slug' }]
-      }
-    ]
+        children: [{ name: 'Topic', path: '/thoughts/+/:slug' }],
+      },
+    ],
   },
   {
     name: 'Etc',
     path: '/etc',
-    desc: 'What I work on and how to reach me.'
-  }
+    desc: 'What I work on and how to reach me.',
+  },
 ] as const satisfies AppRoute[];
 
 export const TOP_LEVEL_ROUTES = APP_ROUTES.map((r) => {
@@ -71,27 +71,27 @@ export const ROUTE_ORDER = ['/', '/thoughts', '/thoughts/*', '/thoughts/*/*', '/
 
 export const NAV_LINKS = TOP_LEVEL_ROUTES.map((route) => ({
   name: route.name,
-  url: route.path
+  url: route.path,
 }));
 
 export const ERRORS = {
   GENERIC_NO_DATA: 'Failed to load required data.',
-  GENERIC_SOMETHING_WENT_WRONG: 'Sorry, something went wrong. Please try again.'
+  GENERIC_SOMETHING_WENT_WRONG: 'Sorry, something went wrong. Please try again.',
 } as const;
 
 export const BASE_TRANSITION_DURATION = 200 as const;
-export const BASE_ANIMATION_DURATION = 300 as const;
+export const BASE_ANIMATION_DURATION = 250 as const;
 
 export const HOMEPAGE_POSTS_NUM = 4 as const;
 
 export const DEFAULT_FILTER_QUERY_PARAMS = {
   page: 0,
-  limit: 10
+  limit: 10,
 } as const;
 
 export const DEFAULT_POST_QUERY_PARAMS = {
   page: 0,
-  limit: 99
+  limit: 99,
 } as const;
 
 export const DEFAULT_DESKTOP_WIDTH = 1024;

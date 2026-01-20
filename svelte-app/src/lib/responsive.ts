@@ -6,5 +6,5 @@ export const isDesktop = useMediaQuery(DEFAULT_DESKTOP_BREAKPOINT),
   isTablet = useMediaQuery(DEFAULT_TABLET_BREAKPOINT),
   isMobile = derived(
     [isDesktop, isTablet],
-    ([isDesktop, isTablet]) => !isDesktop && !isTablet
+    ([isDesktop, isTablet]) => !isDesktop && !isTablet,
   );

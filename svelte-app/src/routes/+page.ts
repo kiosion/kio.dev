@@ -4,12 +4,8 @@ import { HOMEPAGE_POSTS_NUM } from '$lib/consts';
 
 import type { PageLoad } from './$types';
 
-export const load = (async ({ parent, fetch, params }) => {
-  const posts = unwrapAPIResponse(
-    await find(fetch, 'post', { limit: HOMEPAGE_POSTS_NUM }),
-    true
-  );
-  const config = await parent().then((data) => data.config);
+export const load = (async ({ parent }) => {
+  const parentData = await parent();
 
-  return { posts: posts ?? [], config };
+  return { posts: parentData.posts, config: parentData.config };
 }) satisfies PageLoad;
