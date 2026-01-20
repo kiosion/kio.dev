@@ -16,11 +16,8 @@
     <div class="flex flex-row items-center justify-end gap-4 text-sm">
       {#if config.socialLinks?.length}
         {#each config.socialLinks as link, idx}
-          <Link
-            class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] dark:decoration-neutral-400"
-            href={link.url ?? ''}
-            target="_blank"
-            rel="noopener noreferrer">{link.name}</Link>
+          <Link href={link.url ?? ''} target="_blank" rel="noopener noreferrer"
+            >{link.name}</Link>
           {#if idx < config.socialLinks.length - 1}
             <span class="opacity-50 select-none">|</span>
           {/if}
@@ -30,11 +27,10 @@
         <span class="opacity-50 select-none">|</span>
       {/if}
       {#if APP_VERSION?.length}
-        <a
-          class="hover:decoration-orange-light hover:dark:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] dark:decoration-neutral-400"
+        <Link
+          href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}
           target="_blank"
-          rel="noopener noreferrer"
-          href={`${BASE_GIT_URL}/commit/${APP_VERSION}`}>#{APP_VERSION.slice(0, 6)}</a>
+          rel="noopener noreferrer">#{APP_VERSION.slice(0, 6)}</Link>
       {/if}
     </div>
   {/if}

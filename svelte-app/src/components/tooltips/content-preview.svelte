@@ -19,7 +19,7 @@
     {/if}
     <div class="w-full flex-1 overflow-hidden rounded-md">
       <div
-        class="bg-light dark:bg-dark h-screen px-6"
+        class="bg-light dark:bg-dark -mt-1 h-screen px-8"
         style="transform: scale({scaleFac}); transform-origin: 0 0; width: calc(100% * {inverseScaleFac}">
         {@render children()}
       </div>
