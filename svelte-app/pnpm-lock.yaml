@@ -18,8 +18,8 @@ importers:
         specifier: ^1.53.1
         version: 1.53.2
       '@portabletext/svelte':
-        specifier: ^3.0.0
-        version: 3.0.0(svelte@5.34.8)
+        specifier: ^3.0.1
+        version: 3.0.1(svelte@5.34.8)
       '@portabletext/toolkit':
         specifier: ^2.0.17
         version: 2.0.17
@@ -1098,13 +1098,17 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@portabletext/svelte@3.0.0':
-    resolution: {integrity: sha512-1PTbasjgyYdA/vpt4BCs3Nc0Fr8pqJQRuI6llhpNe+JgZ1EoSstzzjkSSGn9TtPW7yPls5i/7QksqhYTjUDocw==}
+  '@portabletext/svelte@3.0.1':
+    resolution: {integrity: sha512-zti69Y0kTSOijZmdQQp8emuDM5IYn2zZFPoRH37sCN7bu3QRCQgFqiMouGw+m7x3z7BgaaBLKsyvkDHrA8QnzA==}
     peerDependencies:
       svelte: ^5.0.0
 
   '@portabletext/toolkit@2.0.17':
     resolution: {integrity: sha512-5wj+oUaCmHm9Ay1cytPmT1Yc0SrR1twwUIc0qNQ3MtaXaNMPw99Gjt1NcA34yfyKmEf/TAB2NiiT72jFxdddIQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
+  '@portabletext/toolkit@2.0.18':
+    resolution: {integrity: sha512-m3v2WwKQTNNk5BFZlUuPuCW0Zi6iDSpwrium4Ej5L2FHDXhFuwAyEMPXDrvwPvqjES/oJzcwmdKLMhYa44T9BQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
   '@portabletext/types@2.0.13':
@@ -7413,12 +7417,16 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@portabletext/svelte@3.0.0(svelte@5.34.8)':
+  '@portabletext/svelte@3.0.1(svelte@5.34.8)':
     dependencies:
-      '@portabletext/toolkit': 2.0.17
+      '@portabletext/toolkit': 2.0.18
       svelte: 5.34.8
 
   '@portabletext/toolkit@2.0.17':
+    dependencies:
+      '@portabletext/types': 2.0.13
+
+  '@portabletext/toolkit@2.0.18':
     dependencies:
       '@portabletext/types': 2.0.13
 
