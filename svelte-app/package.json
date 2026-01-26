@@ -29,7 +29,7 @@
     "@portabletext/toolkit": "^2.0.17",
     "@portabletext/types": "^2.0.13",
     "@sanity/client": "^7.6.0",
-    "@sanity/image-url": "^1.1.0",
+    "@sanity/image-url": "^2.0.3",
     "@stylistic/eslint-plugin": "^5.7.0",
     "@sveltejs/adapter-netlify": "5.0.2",
     "@sveltejs/adapter-node": "5.2.12",
