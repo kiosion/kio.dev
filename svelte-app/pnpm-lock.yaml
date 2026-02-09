@@ -138,8 +138,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(svelte@5.34.8)
       svelte-highlight:
-        specifier: ^7.8.3
-        version: 7.8.3
+        specifier: ^7.9.0
+        version: 7.9.0
       tailwindcss:
         specifier: ^4.1.10
         version: 4.1.10
@@ -5663,8 +5663,8 @@ packages:
       svelte:
         optional: true
 
-  svelte-highlight@7.8.3:
-    resolution: {integrity: sha512-i4CE/6yda1fCh0ovUVATk1S1feu1y3+CV+l1brgtMPPRO9VTGq+hPpUjVEJWQkE7hPAgwgVpHccoa5M2gpKxYQ==}
+  svelte-highlight@7.9.0:
+    resolution: {integrity: sha512-226LBTtvTnM2L2JkQq8mZeKEeMfPLYyta7VxZatFT4UPX5zdHEerKeMTvrfbxm7MVTWc7TPThsNoVdhWC177KQ==}
 
   svelte-preprocess@5.1.4:
     resolution: {integrity: sha512-IvnbQ6D6Ao3Gg6ftiM5tdbR6aAETwjhHV+UKGf5bHGYR69RQvF1ho0JKPcbUON4vy4R7zom13jPjgdOWCQ5hDA==}
@@ -12242,7 +12242,7 @@ snapshots:
     optionalDependencies:
       svelte: 5.34.8
 
-  svelte-highlight@7.8.3:
+  svelte-highlight@7.9.0:
     dependencies:
       highlight.js: 11.11.1
 
