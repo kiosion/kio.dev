@@ -8,7 +8,7 @@
 </script>
 
 <footer
-  class="bg-light dark:bg-dark flex w-full flex-col items-center justify-center gap-x-8 gap-y-6 border-t border-neutral-300 px-8 py-6 transition-colors sm:flex-row sm:justify-between dark:border-neutral-400">
+  class="bg-light dark:bg-dark flex w-full flex-col items-center justify-center gap-x-8 gap-y-6 border-t border-neutral-200 px-8 py-6 transition-colors sm:flex-row sm:justify-between dark:border-neutral-500">
   <div class="text-sm">
     <p>&copy; {new Date().getFullYear()} {config.name}</p>
   </div>

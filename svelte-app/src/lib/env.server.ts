@@ -11,3 +11,5 @@ export const SANITY_DATASET: 'production' | 'dev' =
 
 export const SANITY_API_VERSION = 'v2022-11-29' as const;
 export const SANITY_API_TOKEN: string = import.meta.env.VITE_SANITY_TOKEN;
+
+export const WAKATIME_API_KEY: string = import.meta.env.VITE_WAKATIME_API_KEY;

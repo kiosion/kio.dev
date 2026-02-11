@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import Divider from '$components/divider.svelte';
   import ErrorBoundary from '$components/error-boundary.svelte';
   import ClipboardDocument from '$components/icons/clipboard-document.svelte';
   import ClipboardDocumentCheck from '$components/icons/clipboard-document-check.svelte';
@@ -87,41 +86,44 @@
 </script>
 
 <div
-  class="relative my-5 rounded-sm bg-neutral-100/50 transition-colors dark:bg-neutral-600/50"
+  class="relative my-5 rounded-sm border border-neutral-200 dark:border-neutral-500"
   role="group"
   aria-label={$t('Code block')}
   aria-labelledby={filename ? `${id}-filename` : undefined}>
-  {#if filename}
-    <div
-      class="flex flex-row items-center justify-start gap-x-4 bg-neutral-200/50 px-8 py-4 font-mono text-sm transition-colors dark:bg-neutral-800/5"
-      id="{id}-filename">
-      <DocumentTextSmall class="text-neutral-500 dark:text-neutral-300" />
-      <span>{filename}</span>
-    </div>
-    <Divider margin="my-0"></Divider>
-  {/if}
-
   <div
-    class="pointer-events-none absolute top-4 right-4 h-fit w-fit transition-opacity"
-    class:opacity-0={hideLoader}
-    aria-hidden="true">
-    <Spinner />
+    class="absolute top-0 right-0 left-0 flex h-fit flex-row items-center justify-between border-neutral-200 px-5 py-4 font-mono text-sm transition-colors dark:border-neutral-500"
+    class:justify-end={!filename}
+    class:absolute={!filename}
+    class:border-b={filename}>
+    {#if filename}
+      <div class="flex flex-row items-center justify-start gap-x-4" id="{id}-filename">
+        <DocumentTextSmall class="text-neutral-500 dark:text-neutral-300" />
+        <span>{filename}</span>
+      </div>
+    {/if}
+    <Tooltip content={$t('Copy to clipboard')} placement="left">
+      <button
+        class="focus-outline-sm text-dark/80 dark:text-light/80 hover:text-orange-light focus-visible:text-orange-light z-[2] -m-2 cursor-pointer rounded-md p-2 opacity-0 transition-colors"
+        class:opacity-100={hideLoader}
+        onclick={() => copy()}
+        onkeydown={(e) => e.key === 'Enter' && copy()}
+        aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+        type="button">
+        {#if copied !== undefined}
+          <ClipboardDocumentCheck />
+        {:else}
+          <ClipboardDocument />
+        {/if}
+      </button>
+    </Tooltip>
+    <div
+      class="pointer-events-none absolute top-4.5 right-6 h-fit w-fit transition-opacity"
+      class:opacity-0={hideLoader}
+      aria-hidden="true">
+      <Spinner />
+    </div>
   </div>
-  <Tooltip content={$t('Copy to clipboard')} placement="left">
-    <button
-      class="focus-outline-sm text-dark/80 hover:text-dark focus-visible:text-dark dark:text-light/80 hover:dark:text-light focus-visible:dark:text-light absolute right-0 z-[2] mt-2 mr-2.5 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs opacity-0 transition-colors hover:bg-neutral-300/50 focus-visible:bg-neutral-300/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-      class:opacity-100={hideLoader}
-      onclick={() => copy()}
-      onkeydown={(e) => e.key === 'Enter' && copy()}
-      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-      type="button">
-      {#if copied !== undefined}
-        <ClipboardDocumentCheck />
-      {:else}
-        <ClipboardDocument />
-      {/if}
-    </button>
-  </Tooltip>
+
   <div
     class="focus-outline relative h-fit min-h-16 w-full overflow-hidden rounded-sm text-lg transition-[height,color]">
     <ErrorBoundary>

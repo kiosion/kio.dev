@@ -13,6 +13,7 @@
     GetConfigQueryResult,
     GetPostsQueryResult,
   } from '$types/generated/sanity.types';
+  import type { WakaTimeStatsResponse } from '$types/wakatime';
   import { flip } from 'svelte/animate';
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
@@ -22,11 +23,13 @@
     setTheme,
     config,
     posts,
+    wakatimeStats,
   }: {
     theme: ThemeChoice;
     setTheme: (t: ThemeChoice) => void;
     config: NonNullable<GetConfigQueryResult>;
     posts: NonNullable<GetPostsQueryResult>;
+    wakatimeStats: Promise<WakaTimeStatsResponse | undefined>;
   } = $props();
 
   type Crumb = { label: string; href?: string };
@@ -56,8 +59,6 @@
     const parent = c.at(-2);
     return [c[0], { label: '...', href: parent?.href }, c.at(-1)!];
   });
-
-  $inspect({ posts });
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
@@ -81,7 +82,7 @@
           )}
           filter={false} />
       {:else if href === APP_ROUTES.find((r) => r.name === 'Etc')?.path}
-        <AboutContent {config} />
+        <AboutContent {config} {wakatimeStats} />
       {/if}
     </ContentPreview>
   {/snippet}
@@ -133,7 +134,7 @@
 {/snippet}
 
 <header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 transition-colors dark:border-neutral-400">
+  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-500">
   <div
     class="relative isolate mx-auto grid w-full items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
     <!-- Breadcrumbs -->

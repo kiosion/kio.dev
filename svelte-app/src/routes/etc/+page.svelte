@@ -4,4 +4,4 @@
   const { data } = $props();
 </script>
 
-<AboutContent config={data.config} />
+<AboutContent config={data.config} wakatimeStats={data.wakatimeStats} />

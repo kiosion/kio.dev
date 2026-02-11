@@ -108,6 +108,7 @@
     <Header
       config={data.config}
       posts={data.posts}
+      wakatimeStats={data.wakatimeStats}
       setTheme={(v) => (theme = v)}
       {theme} />
 

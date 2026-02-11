@@ -66,11 +66,12 @@
   <svelte:element
     this={type}
     rel={restProps.target ?? undefined}
-    class="hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-100 transition-[color,text-decoration-color,opacity] hover:opacity-80 focus-visible:opacity-80 dark:decoration-neutral-400"
-    class:text-base={size === 'sm'}
-    class:text-lg={size === 'lg'}
     tabindex="0"
     {...restProps}
+    class="hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-100 transition-[color,text-decoration-color,opacity] hover:opacity-80 focus-visible:opacity-80 dark:decoration-neutral-400 {restProps.class ||
+      ''}"
+    class:text-base={size === 'sm'}
+    class:text-lg={size === 'lg'}
     href={link}
     onclick={(e: MouseEvent) => {
       if (isMailLink) {

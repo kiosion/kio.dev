@@ -71,7 +71,7 @@
       class="loading font-code absolute top-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 transform text-center text-base"
       style="max-width: {imgDimensions.width}px; left: min(50%, {imgDimensions.width /
         2}px);">
-      <Spinner></Spinner>
+      <Spinner />
     </div>
     <!-- svelte-ignore a11y-missing-attribute -->
     <img

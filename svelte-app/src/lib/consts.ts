@@ -24,6 +24,10 @@ export const TORU_API_URL = 'https://toru.kio.dev/api/v1';
 
 export const BASE_GIT_URL = 'https://github.com/kiosion/kio.dev';
 
+export const WAKATIME_API_URL = 'https://wakatime.com/api/v1';
+
+export const WAKATIME_USER = 'kiosion';
+
 interface AppRoute {
   name: string;
   path: string;

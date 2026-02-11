@@ -20,6 +20,7 @@ export const load = (async ({ data, url, fetch }) => {
     initialTheme: data?.initialTheme || 'system',
     meta: getPageMeta(url.pathname),
     pathname: url.pathname,
+    wakatimeStats: data.wakatimeStats,
     config,
     posts,
     fetch,

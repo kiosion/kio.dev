@@ -1,7 +1,7 @@
 <script lang="ts">
   import ExclamationCircle from '$components/icons/exclamation-circle.svelte';
 
-  let { message = 'No content available.' } = $props();
+  let { message = 'No content available.' }: { message?: string } = $props();
 </script>
 
 <div
