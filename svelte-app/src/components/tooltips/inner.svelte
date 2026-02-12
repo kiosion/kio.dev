@@ -83,8 +83,7 @@
       middleware,
     });
 
-    position.x = x;
-    position.y = y;
+    position = { x, y };
   };
 
   onMount(() => {
@@ -112,7 +111,7 @@
   class="pointer-events-none absolute z-50 print:hidden"
   id={`tooltip-${id}`}
   bind:this={tooltipElement}
-  aria-hidden="true"
+  role="tooltip"
   in:maybeTransition={{ duration }}
   out:maybeTransition={{ duration }}>
   <span class="block px-3 py-2 {className || ''}">

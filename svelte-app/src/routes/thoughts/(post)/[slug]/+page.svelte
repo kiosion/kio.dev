@@ -18,4 +18,4 @@
     content={new Date(data.post.date || '0')?.toISOString()} />
 </svelte:head>
 
-<PostContent post={data.post} fetch={data.fetch} />
+<PostContent post={data.post} />

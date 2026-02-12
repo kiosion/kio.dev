@@ -10,6 +10,9 @@ export const endpointResponse = <T extends Record<PropertyKey, unknown>>(
   return new Response(JSON.stringify(content), {
     headers: {
       'content-type': 'application/json; charset=utf-8',
+      'cache-control': status >= 200 && status < 400
+        ? 'public, max-age=60, stale-while-revalidate=300'
+        : 'no-store',
     },
     status,
     ...init,

@@ -26,7 +26,6 @@
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { t } from '$lib/i18n';
   import Logger from '$lib/logger';
-  import type { RouteFetch } from '$types';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
@@ -38,14 +37,12 @@
     plainText = false,
     bodySize = 'md',
     documentView = false,
-    routeFetch = undefined,
     class: className,
   }: {
     text: (PortableTextBlock | ArbitraryTypedObject)[];
     bodySize?: 'base' | 'md';
     plainText?: boolean;
     documentView?: boolean;
-    routeFetch?: RouteFetch | undefined;
     class?: string;
   } = $props();
 
@@ -140,7 +137,6 @@
           }}
           context={{
             footnotes,
-            routeFetch,
             documentView,
             bodySize,
           }}></PortableText>
@@ -155,26 +151,29 @@
                   <span class="inline-flex flex-row items-start break-all">
                     <Self text={note.note} plainText />
                     <Tooltip content={$t('Go to footnote source')} placement="top">
-                      <a
-                        class="focus-outline-sm group hover:bg-neutral-light dark:hover:bg-neutral-dark ml-2 rounded-xs px-2 py-1 text-sm transition-colors"
-                        href={`#src-${note._key}`}
-                        id="note-{note._key}"
-                        aria-label={$t('Go to footnote source')}
-                        onclick={(e) => customScrollTo(e, `src-${note._key}`)}
-                        onkeydown={(e) => {
-                          if (e.code === 'Space' || e.code === 'Enter') {
-                            customScrollTo(e, `src-${note._key}`);
-                          }
-                        }}>
-                        <span
-                          class="hidden group-hover:inline group-focus-visible:inline">
-                          <ChevronDoubleUpSmall />
-                        </span>
-                        <span
-                          class="inline group-hover:hidden group-focus-visible:hidden">
-                          <ChevronUpSmall />
-                        </span>
-                      </a>
+                      {#snippet children({ id: tooltipId })}
+                        <a
+                          class="focus-outline-sm group hover:bg-neutral-light dark:hover:bg-neutral-dark ml-2 rounded-xs px-2 py-1 text-sm transition-colors"
+                          href={`#src-${note._key}`}
+                          id="note-{note._key}"
+                          aria-label={$t('Go to footnote source')}
+                          aria-describedby={tooltipId}
+                          onclick={(e) => customScrollTo(e, `src-${note._key}`)}
+                          onkeydown={(e) => {
+                            if (e.code === 'Space' || e.code === 'Enter') {
+                              customScrollTo(e, `src-${note._key}`);
+                            }
+                          }}>
+                          <span
+                            class="hidden group-hover:inline group-focus-visible:inline">
+                            <ChevronDoubleUpSmall />
+                          </span>
+                          <span
+                            class="inline group-hover:hidden group-focus-visible:hidden">
+                            <ChevronUpSmall />
+                          </span>
+                        </a>
+                      {/snippet}
                     </Tooltip>
                   </span>
                 </li>

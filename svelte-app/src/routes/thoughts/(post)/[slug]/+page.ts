@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import { unwrapAPIResponse } from '$lib/api/result';
 import type { SingleParams } from '$lib/api/store';
 import { findOne } from '$lib/api/store';
@@ -11,17 +10,15 @@ import type { PageLoad } from './$types';
 export const load = (async ({ parent, fetch, params }) => {
   const opts: SingleParams<'post'> = params;
 
-  let post: NonNullable<GetPostQueryResult & { headings: HeadingNode[] }> | undefined;
-
-  const parentData = await parent();
-
-  if (browser) {
-    post = parentData?.posts?.find?.((p) => p.slug?.current === params.slug);
-  }
-
-  if (!post) {
-    post = unwrapAPIResponse(await findOne(fetch, 'post', opts));
-  }
+  const [parentData, post] = await Promise.all([
+    parent(),
+    findOne(fetch, 'post', opts).then(
+      (res) =>
+        unwrapAPIResponse(res) as NonNullable<
+          GetPostQueryResult & { headings: HeadingNode[] }
+        >,
+    ),
+  ]);
 
   return {
     breadcrumbs: [
@@ -29,7 +26,6 @@ export const load = (async ({ parent, fetch, params }) => {
       { label: post.title, href: `/thoughts/${params.slug}` },
     ],
     post,
-    routeFetch: fetch,
     meta: {
       title: `${post?.title} | ${BASE_PAGE_TITLE}`,
       desc: post?.desc

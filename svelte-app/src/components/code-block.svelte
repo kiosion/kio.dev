@@ -108,19 +108,22 @@
     <Spinner />
   </div>
   <Tooltip content={$t('Copy to clipboard')} placement="left">
-    <button
-      class="focus-outline-sm text-dark/80 hover:text-dark focus-visible:text-dark dark:text-light/80 hover:dark:text-light focus-visible:dark:text-light absolute right-0 z-[2] mt-2 mr-2.5 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs opacity-0 transition-colors hover:bg-neutral-300/50 focus-visible:bg-neutral-300/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
-      class:opacity-100={hideLoader}
-      onclick={() => copy()}
-      onkeydown={(e) => e.key === 'Enter' && copy()}
-      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
-      type="button">
-      {#if copied !== undefined}
-        <ClipboardDocumentCheck />
-      {:else}
-        <ClipboardDocument />
-      {/if}
-    </button>
+    {#snippet children({ id: tooltipId })}
+      <button
+        class="focus-outline-sm text-dark/80 hover:text-dark focus-visible:text-dark dark:text-light/80 hover:dark:text-light focus-visible:dark:text-light absolute right-0 z-[2] mt-2 mr-2.5 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs opacity-0 transition-colors hover:bg-neutral-300/50 focus-visible:bg-neutral-300/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
+        class:opacity-100={hideLoader}
+        onclick={() => copy()}
+        onkeydown={(e) => e.key === 'Enter' && copy()}
+        aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+        aria-describedby={tooltipId}
+        type="button">
+        {#if copied !== undefined}
+          <ClipboardDocumentCheck />
+        {:else}
+          <ClipboardDocument />
+        {/if}
+      </button>
+    {/snippet}
   </Tooltip>
   <div
     class="focus-outline relative h-fit min-h-16 w-full overflow-hidden rounded-sm text-lg transition-[height,color]">

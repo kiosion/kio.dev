@@ -7,8 +7,9 @@
   import Logger from '$lib/logger';
   import { isMobile } from '$lib/responsive';
   import { cubicInOut } from 'svelte/easing';
-  import { get } from 'svelte/store';
   import { fly } from 'svelte/transition';
+
+  let nextId = 0;
 
   let {
     children,
@@ -28,7 +29,7 @@
     followCursor?: boolean;
   } = $props();
 
-  const tooltipId = Math.floor(Math.random() * 100000);
+  const tooltipId = nextId++;
 
   let timeoutInId: ReturnType<typeof setTimeout> | undefined = $state(undefined),
     timeoutOutId: ReturnType<typeof setTimeout> | undefined = $state(undefined),
@@ -36,10 +37,11 @@
     target: HTMLElement | null = $state(null),
     active = $state(false);
 
-  export const id = `tooltip-${tooltipId}`;
+  const id = `tooltip-${tooltipId}`;
+  const mobile = $derived($isMobile);
 
   const showTooltip = () => {
-    if (!target || !content || get(isMobile)) {
+    if (!target || !content || mobile) {
       return;
     }
 

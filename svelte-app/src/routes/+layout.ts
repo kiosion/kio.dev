@@ -22,6 +22,5 @@ export const load = (async ({ data, url, fetch }) => {
     pathname: url.pathname,
     config,
     posts,
-    fetch,
   };
 }) satisfies LayoutLoad;

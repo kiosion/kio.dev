@@ -57,7 +57,6 @@
     return [c[0], { label: '...', href: parent?.href }, c.at(-1)!];
   });
 
-  $inspect({ posts });
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
@@ -92,25 +91,28 @@
     offset={[2, 8]}
     duration={250}
     placement="bottom-start">
-    <a
-      {href}
-      class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
-      aria-current={active ? 'page' : undefined}
-      aria-disabled={active}
-      class:decoration-transparent={!active}
-      class:decoration-orange-light={active}
-      class:dark:decoration-orange-dark={active}
-      class:select-none={active}
-      class:pointer-events-none={active}
-      class:opacity-100={active}
-      class:opacity-70={!active}
-      class:hover:decoration-orange-light={!active}
-      class:hover:dark:decoration-orange-dark={!active}
-      class:hover:opacity-100={!active}
-      data-sveltekit-preload-code="eager"
-      data-sveltekit-preload-data="hover">
-      {text}
-    </a>
+    {#snippet children({ id: tooltipId })}
+      <a
+        {href}
+        class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
+        aria-current={active ? 'page' : undefined}
+        aria-disabled={active}
+        aria-describedby={tooltipId}
+        class:decoration-transparent={!active}
+        class:decoration-orange-light={active}
+        class:dark:decoration-orange-dark={active}
+        class:select-none={active}
+        class:pointer-events-none={active}
+        class:opacity-100={active}
+        class:opacity-70={!active}
+        class:hover:decoration-orange-light={!active}
+        class:hover:dark:decoration-orange-dark={!active}
+        class:hover:opacity-100={!active}
+        data-sveltekit-preload-code="eager"
+        data-sveltekit-preload-data="hover">
+        {text}
+      </a>
+    {/snippet}
   </Tooltip>
 {/snippet}
 

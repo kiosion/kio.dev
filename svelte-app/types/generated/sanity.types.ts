@@ -1123,7 +1123,7 @@ export type GetPostQueryResult = {
 
 // Source: ../svelte-app/src/lib/sanity.queries.server.ts
 // Variable: GetPostsQuery
-// Query: *[_type == 'post']{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  body,  desc,  'date': dateTime(select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  )),  'views': coalesce(views, 0),  'numberOfCharacters': length(pt::text(body)),  'estimatedWordCount': round(length(pt::text(body)) / 5),  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)} | order(date desc) [$startNumber...$endNumber]
+// Query: *[_type == 'post']{  _id,  'objectID': _id,  _rev,  _type,  _createdAt,  title,  publishedAt,  tags[]->{    _id,    title,    slug  },  slug,  desc,  'date': dateTime(select(    defined(date) => date + 'T00:00:00Z',    true => _createdAt  )),  'views': coalesce(views, 0)} | order(date desc) [$startNumber...$endNumber]
 export type GetPostsQueryResult = Array<{
   _id: string;
   objectID: string;
@@ -1138,77 +1138,9 @@ export type GetPostsQueryResult = Array<{
     slug: Slug;
   }> | null;
   slug: Slug;
-  body: Array<
-    | ({
-        _key: string;
-      } & Code)
-    | ({
-        _key: string;
-      } & Divider)
-    | ({
-        _key: string;
-      } & Header)
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: 'span';
-          _key: string;
-        }>;
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-        listItem?: 'bullet' | 'number';
-        markDefs?: Array<
-          | {
-              note?: Array<{
-                children?: Array<{
-                  marks?: Array<string>;
-                  text?: string;
-                  _type: 'span';
-                  _key: string;
-                }>;
-                style?: 'normal';
-                listItem?: 'bullet' | 'number';
-                markDefs?: Array<{
-                  href?: string;
-                  newtab?: boolean;
-                  external?: boolean;
-                  _type: 'link';
-                  _key: string;
-                }>;
-                level?: number;
-                _type: 'block';
-                _key: string;
-              }>;
-              _type: 'footnote';
-              _key: string;
-            }
-          | {
-              href?: string;
-              newtab?: boolean;
-              external?: boolean;
-              _type: 'link';
-              _key: string;
-            }
-        >;
-        level?: number;
-        _type: 'block';
-        _key: string;
-      }
-    | {
-        asset?: SanityImageAssetReference;
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: 'image';
-        _key: string;
-      }
-  > | null;
   desc: string | null;
   date: string | null;
   views: number | 0;
-  numberOfCharacters: number;
-  estimatedWordCount: number;
-  estimatedReadingTime: number;
 }>;
 
 // Source: ../svelte-app/src/lib/sanity.queries.server.ts
@@ -1222,7 +1154,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     "*[_type == 'siteSettings'][0]": GetConfigQueryResult;
     "*[_type == 'post' && slug.current == $slug]{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  ),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n}[0]": GetPostQueryResult;
-    "*[_type == 'post']{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  body,\n  desc,\n  'date': dateTime(select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  )),\n  'views': coalesce(views, 0),\n  'numberOfCharacters': length(pt::text(body)),\n  'estimatedWordCount': round(length(pt::text(body)) / 5),\n  'estimatedReadingTime': round(length(pt::text(body)) / 5 / 120)\n} | order(date desc) [$startNumber...$endNumber]": GetPostsQueryResult;
+    "*[_type == 'post']{\n  _id,\n  'objectID': _id,\n  _rev,\n  _type,\n  _createdAt,\n  title,\n  publishedAt,\n  tags[]->{\n    _id,\n    title,\n    slug\n  },\n  slug,\n  desc,\n  'date': dateTime(select(\n    defined(date) => date + 'T00:00:00Z',\n    true => _createdAt\n  )),\n  'views': coalesce(views, 0)\n} | order(date desc) [$startNumber...$endNumber]": GetPostsQueryResult;
     "count(*[_type == 'post'])": CountPostsQueryResult;
   }
 }

@@ -29,7 +29,7 @@
   type Props = AnchorProps | ButtonProps;
 
   let {
-    children,
+    children: innerContent,
     tooltipPlacement = 'bottom',
     tooltipText = undefined,
     showTooltip = false,
@@ -63,31 +63,34 @@
     : undefined}
   placement={tooltipPlacement}
   delay={[500, 0]}>
-  <svelte:element
-    this={type}
-    rel={restProps.target ?? undefined}
-    class="hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-100 transition-[color,text-decoration-color,opacity] hover:opacity-80 focus-visible:opacity-80 dark:decoration-neutral-400"
-    class:text-base={size === 'sm'}
-    class:text-lg={size === 'lg'}
-    tabindex="0"
-    {...restProps}
-    href={link}
-    onclick={(e: MouseEvent) => {
-      if (isMailLink) {
-        navigator.clipboard.writeText(mailAddress);
-      }
-      onclick?.(e);
-    }}
-    onkeyup={(e: KeyboardEvent) => {
-      if (e.key !== 'Enter') {
-        return;
-      }
-      if (isMailLink) {
-        navigator.clipboard.writeText(mailAddress);
-      }
-      onclick?.(e);
-    }}
-    role={type === 'a' ? 'link' : 'button'}>
-    {@render children()}
-  </svelte:element>
+  {#snippet children({ id: tooltipId })}
+    <svelte:element
+      this={type}
+      rel={restProps.target ?? undefined}
+      class="hover:decoration-orange-light focus-visible:decoration-orange-light hover:dark:decoration-orange-light focus-visible:dark:decoration-orange-light cursor-pointer rounded-xs underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-100 transition-[color,text-decoration-color,opacity] hover:opacity-80 focus-visible:opacity-80 dark:decoration-neutral-400"
+      class:text-base={size === 'sm'}
+      class:text-lg={size === 'lg'}
+      tabindex="0"
+      {...restProps}
+      href={link}
+      aria-describedby={tooltipId}
+      onclick={(e: MouseEvent) => {
+        if (isMailLink) {
+          navigator.clipboard.writeText(mailAddress);
+        }
+        onclick?.(e);
+      }}
+      onkeyup={(e: KeyboardEvent) => {
+        if (e.key !== 'Enter') {
+          return;
+        }
+        if (isMailLink) {
+          navigator.clipboard.writeText(mailAddress);
+        }
+        onclick?.(e);
+      }}
+      role={type === 'a' ? 'link' : 'button'}>
+      {@render innerContent()}
+    </svelte:element>
+  {/snippet}
 </Tooltip>

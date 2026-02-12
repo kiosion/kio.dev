@@ -11,7 +11,7 @@ import {
   GetPostsQuery,
 } from '$lib/sanity.queries.server';
 import type { HeadingNode } from '$types/documents';
-import type { GetPostQueryResult, GetPostsQueryResult } from '$types/sanity';
+import type { GetPostQueryResult } from '$types/sanity';
 
 const clientConfig = {
   projectId: SANITY_PROJECT_ID,
@@ -94,44 +94,34 @@ export const getPosts = async ({
 }) => {
   const startNumber = page * limit;
   const endNumber = startNumber + limit;
+  const c = preview ? previewClient : client;
 
   // TODO: Add tag filtering
-  const result = await (preview ? previewClient : client)
-    .fetch(GetPostsQuery, {
-      startNumber,
-      endNumber,
-    })
-    .then(handleNoResults)
-    .catch(handleSanityError);
+  // Run posts + count queries in parallel
+  const [result, totalPosts] = await Promise.all([
+    c
+      .fetch(GetPostsQuery, {
+        startNumber,
+        endNumber,
+      })
+      .then(handleNoResults)
+      .catch(handleSanityError),
+    // TODO: Reuse original query to narrow the count; this counts *everything* even w/ filters.
+    c.fetch(CountPostsQuery).catch(() => 0),
+  ]);
 
   if (!isAPISuccess(result)) {
     return result;
   }
 
-  // TODO: Reuse original query to narrow the count; this counts *everything* even w/ filters.
-  const totalPosts = await (preview ? previewClient : client)
-    .fetch(CountPostsQuery)
-    .catch(() => 0);
   const totalPages = Math.ceil(totalPosts / limit);
   const hasMore = totalPosts > endNumber;
   const hasLess = startNumber > 0;
 
-  const [posts, errs] = result.data.reduce(
-    (acc: [GetPostsQueryResult, Error[]], post: GetPostsQueryResult[number]) => {
-      const [postWithHeadings, err] = processHeadings(post);
-      if (err) {
-        acc[1].push(err);
-      }
-      acc[0].push(postWithHeadings || post);
-      return acc;
-    },
-    [[], []],
-  );
-
   return {
     status: 200,
-    data: posts,
-    errors: [...(result.errors ?? []), ...errs.map((e) => e.message)],
+    data: result.data,
+    errors: result.errors ?? [],
     meta: {
       total: totalPosts,
       count: result.data.length,

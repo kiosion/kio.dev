@@ -6,18 +6,32 @@
   } from '@portabletext/types';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { t } from '$lib/i18n';
+  import type { Snippet } from 'svelte';
 
   interface FootnoteProps extends PortableTextMarkDefinition {
     _key: string;
     note: PortableTextBlock[];
   }
 
-  export let portableText: MarkComponentProps<
-    FootnoteProps,
-    {
-      footnotes: FootnoteProps[];
-    }
-  >;
+  let {
+    portableText,
+    children: ptChildren,
+  }: {
+    portableText: MarkComponentProps<
+      FootnoteProps,
+      {
+        footnotes: FootnoteProps[];
+      }
+    >;
+    children: Snippet;
+  } = $props();
+
+  let number = $derived.by(() => {
+    const index = portableText.global.context.footnotes.findIndex(
+      (note) => note._key === portableText.value._key,
+    );
+    return index >= 0 ? index + 1 : '?';
+  });
 
   const customScrollTo = (event: Event, id: string) => {
     event.preventDefault();
@@ -27,28 +41,26 @@
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
-
-  $: number =
-    portableText.global.context.footnotes.findIndex(
-      (note) => note._key === portableText.value._key,
-    ) + 1;
 </script>
 
 <span>
-  <slot />&nbsp;
+  {@render ptChildren()}&nbsp;
   <Tooltip content={$t('Go to footnote')}>
-    <sup
-      ><a
-        class="decoration-dark/80 dark:decoration-light/80 underline decoration-dotted underline-offset-4"
-        href={`#note-${portableText.value._key}`}
-        id="src-{portableText.value._key}"
-        aria-label={$t('Go to footnote')}
-        on:click={(e) => customScrollTo(e, `note-${portableText.value._key}`)}
-        on:keydown={(e) => {
-          if (e.code === 'Space' || e.code === 'Enter') {
-            customScrollTo(e, `note-${portableText.value._key}`);
-          }
-        }}>{number}</a
-      ></sup>
+    {#snippet children({ id: tooltipId })}
+      <sup
+        ><a
+          class="decoration-dark/80 dark:decoration-light/80 underline decoration-dotted underline-offset-4"
+          href={`#note-${portableText.value._key}`}
+          id="src-{portableText.value._key}"
+          aria-label={$t('Go to footnote')}
+          aria-describedby={tooltipId}
+          onclick={(e) => customScrollTo(e, `note-${portableText.value._key}`)}
+          onkeydown={(e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+              customScrollTo(e, `note-${portableText.value._key}`);
+            }
+          }}>{number}</a
+        ></sup>
+    {/snippet}
   </Tooltip>
 </span>

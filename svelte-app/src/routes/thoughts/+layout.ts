@@ -6,10 +6,12 @@ import type { Tag } from '$types/generated/sanity.types';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ parent, fetch }) => {
-  const parentData = await parent();
+  // Start posts fetch immediately, don't wait for parent layout
+  const postsPromise = find(fetch, 'post', DEFAULT_POST_QUERY_PARAMS);
 
-  const posts =
-    unwrapAPIResponse(await find(fetch, 'post', DEFAULT_POST_QUERY_PARAMS)) ?? [];
+  const [parentData, postsResponse] = await Promise.all([parent(), postsPromise]);
+
+  const posts = unwrapAPIResponse(postsResponse) ?? [];
 
   const [tags, tagCounts]: [
     Pick<Tag, '_id' | 'slug' | 'title'>[],

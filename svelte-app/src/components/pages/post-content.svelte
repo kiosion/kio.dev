@@ -4,16 +4,13 @@
   import PortableText from '$components/portable-text/portable-text.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { formatDate } from '$lib/date';
-  import type { RouteFetch } from '$types';
   import type { GetPostQueryResult } from '$types/generated/sanity.types';
 
   let {
     post,
-    fetch,
     class: className = undefined,
   }: {
     post: NonNullable<GetPostQueryResult>;
-    fetch: RouteFetch;
     class?: string;
   } = $props();
 </script>
@@ -41,15 +38,22 @@
       </h1>
       <div class="flex flex-row items-center gap-2 text-base">
         <Tooltip content={$formatDate(post.date, 'rel') || 'Unknown date'}>
-          <p class="cursor-default" aria-label="Published date">
-            {$formatDate(post.date, 'full') || 'Unknown date'}
-          </p>
+          {#snippet children({ id: tooltipId })}
+            <p
+              class="cursor-default"
+              aria-label="Published date"
+              aria-describedby={tooltipId}>
+              {$formatDate(post.date, 'full') || 'Unknown date'}
+            </p>
+          {/snippet}
         </Tooltip>
         <p class="text-base">&middot;</p>
         <Tooltip content={`${(post.estimatedWordCount ?? 0).toLocaleString('en')} words`}>
-          <p class="cursor-default">
-            {`${post.estimatedReadingTime || 0} min read`}
-          </p>
+          {#snippet children({ id: tooltipId })}
+            <p class="cursor-default" aria-describedby={tooltipId}>
+              {`${post.estimatedReadingTime || 0} min read`}
+            </p>
+          {/snippet}
         </Tooltip>
         {#if post?.tags?.length}
           <p class="text-base">&middot;</p>
@@ -71,7 +75,7 @@
   <section class="font-sans text-base">
     {#if post?.body}
       <ErrorBoundary>
-        <PortableText text={post.body} routeFetch={fetch} documentView />
+        <PortableText text={post.body} documentView />
       </ErrorBoundary>
     {:else}
       <EmptyContent />
