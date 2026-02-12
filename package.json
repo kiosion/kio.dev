@@ -1,12 +1,24 @@
 {
   "private": true,
   "version": "0.0.0",
+  "scripts": {
+    "prepare": "husky",
+    "dev": "pnpm --filter svelte-app dev",
+    "dev:sanity": "pnpm --filter sanity-cms dev",
+    "build": "pnpm --filter svelte-app build",
+    "build:sanity": "pnpm --filter sanity-cms build",
+    "lint": "pnpm --filter svelte-app lint && pnpm --filter sanity-cms lint",
+    "lint:check": "pnpm --filter svelte-app lint:check && pnpm --filter sanity-cms lint:check",
+    "format": "pnpm --filter svelte-app format && pnpm --filter sanity-cms format",
+    "test": "pnpm --filter svelte-app test",
+    "test:unit": "pnpm --filter svelte-app test:vitest",
+    "test:e2e": "pnpm --filter svelte-app test:playwright",
+    "check": "pnpm --filter svelte-app check",
+    "typegen": "pnpm --filter sanity-cms exec sanity schema extract --enforce-required-fields && pnpm --filter sanity-cms exec sanity typegen generate"
+  },
   "devDependencies": {
     "husky": "^9.1.6",
     "lint-staged": "^16.2.7"
-  },
-  "scripts": {
-    "prepare": "test -f ./.husky/pre-commit || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
   },
   "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc"
 }

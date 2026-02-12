@@ -17,7 +17,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./svelte-app
 
     env:
       SVELTE_ADAPTER_ENV: netlify
@@ -38,13 +37,12 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: svelte-app/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: pnpm build --mode production
+        run: pnpm --filter svelte-app build --mode production
 
       - name: Deploy to Netlify
-        run: pnpm netlify deploy --dir=./build --functions=./.netlify/functions-internal --prod --no-build
+        run: pnpm --filter svelte-app exec netlify deploy --dir=./build --functions=./.netlify/functions-internal --prod --no-build

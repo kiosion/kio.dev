@@ -18,7 +18,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./sanity-cms
 
     steps:
       - uses: actions/checkout@v4
@@ -33,29 +32,27 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: sanity-cms/pnpm-lock.yaml
 
       - name: Install Deps
         run: pnpm install --frozen-lockfile
 
       - name: Validate schema
-        run: pnpm sanity schema validate --level error
-      
+        run: pnpm --filter sanity-cms exec sanity schema validate --level error
+
       - name: Extract schema
-        run: pnpm sanity schema extract --enforce-required-fields
-      
+        run: pnpm --filter sanity-cms exec sanity schema extract --enforce-required-fields
+
       - name: Generate types
-        run: pnpm sanity typegen generate
-      
+        run: pnpm --filter sanity-cms exec sanity typegen generate
+
       - name: Check for uncommitted changes
-        working-directory: ..
         run: |
           set -euo pipefail
 
           CHANGED="$(git status --porcelain -- sanity-cms/schema.json svelte-app/types/generated || true)"
 
           if [[ -n "$CHANGED" ]]; then
-            echo "❌ Schema or generated types are out of date. Please run 'make typegen' and commit the changes."
+            echo "Schema or generated types are out of date. Please run 'make typegen' and commit the changes."
             echo
             echo "Changed files:"
             echo "$CHANGED"
@@ -64,5 +61,5 @@ jobs:
             git --no-pager diff sanity-cms/schema.json svelte-app/types/generated || true
             exit 1
           else
-            echo "✅ Schema and generated types are up to date."
+            echo "Schema and generated types are up to date."
           fi

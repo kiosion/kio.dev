@@ -1,13 +1,10 @@
 {
-  "elixir-api/**/*.{ex,exs}": [
-    "mix format"
-  ],
   "sanity-cms/**/*.{ts,js}": [
-    "./sanity-cms/node_modules/.bin/prettier --write"
+    "pnpm --filter sanity-cms exec prettier --write"
   ],
   "svelte-app/**/*.{svelte,ts,js}": [
-    "./svelte-app/node_modules/.bin/prettier --write",
-    "./svelte-app/node_modules/.bin/eslint --fix \"./svelte-app/src/**/*.{ts,svelte}\" \"./svelte-app/types/**/*.ts\""
+    "pnpm --filter svelte-app exec prettier --write",
+    "pnpm --filter svelte-app exec eslint --fix"
   ],
   "svelte-app/src/languages/*.json": [
     "bun ./svelte-app/scripts/lint-json.ts",

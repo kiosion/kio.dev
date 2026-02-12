@@ -37,10 +37,6 @@ jobs:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: svelte-app
 
     steps:
       - uses: actions/checkout@v4
@@ -53,23 +49,18 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: svelte-app/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint:check
+        run: pnpm --filter svelte-app lint:check
 
   lint-sanity:
     name: Lint Sanity
     needs: changes
     if: needs.changes.outputs.sanity == 'true'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: sanity-cms
 
     steps:
       - uses: actions/checkout@v4
@@ -82,10 +73,9 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: sanity-cms/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint:check
+        run: pnpm --filter sanity-cms lint:check

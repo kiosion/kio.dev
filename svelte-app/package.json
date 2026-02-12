@@ -7,19 +7,18 @@
     "build:test": "rm -rf ./dist && vite build --mode testing",
     "dev": "vite dev --mode development --host",
     "dev:backed": "vite dev --mode backed --host",
-    "package": "svelte-kit package",
     "preview": "vite preview",
     "generate": "bun ./scripts/generate-types && pnpm eslint --fix \"./types/**/*.ts\"",
-    "test": "test:vitest; test:playwright",
+    "test": "pnpm test:vitest; pnpm test:playwright",
     "test:vitest": "MODE=testing vitest --run",
     "test:playwright": "playwright test",
     "coverage": "vitest run --coverage",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "format": "prettier --write ./src/**/*.{ts,svelte}",
+    "format": "prettier --write './src/**/*.{ts,svelte}'",
     "format:json": "bun ./scripts/lint-json.ts ./src/languages/en.json ./src/languages/fr.json",
     "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\"",
-    "lint:check": "pnpm prettier --check ./src/**/*.{ts,svelte} && pnpm eslint \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\""
+    "lint:check": "pnpm prettier --check './src/**/*.{ts,svelte}' && pnpm eslint \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\""
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
