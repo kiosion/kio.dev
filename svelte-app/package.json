@@ -33,7 +33,7 @@
     "@stylistic/eslint-plugin": "^5.7.0",
     "@sveltejs/adapter-netlify": "5.0.2",
     "@sveltejs/adapter-node": "5.2.12",
-    "@sveltejs/kit": "^2.49.5",
+    "@sveltejs/kit": "^2.52.2",
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/postcss": "^4.1.10",
