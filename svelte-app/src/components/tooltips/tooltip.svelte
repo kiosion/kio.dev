@@ -2,12 +2,11 @@
   import { onDestroy, onMount, type Snippet } from 'svelte';
 
   import type { Placement } from '@floating-ui/dom';
+  import { browser } from '$app/environment';
   import Inner from '$components/tooltips/inner.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
   import Logger from '$lib/logger';
-  import { isMobile } from '$lib/responsive';
   import { cubicInOut } from 'svelte/easing';
-  import { get } from 'svelte/store';
   import { fly } from 'svelte/transition';
 
   let {
@@ -38,8 +37,11 @@
 
   export const id = `tooltip-${tooltipId}`;
 
+  const isTouchOnly = () =>
+    browser && window.matchMedia('(hover: none)').matches;
+
   const showTooltip = () => {
-    if (!target || !content || get(isMobile)) {
+    if (!target || !content || isTouchOnly()) {
       return;
     }
 

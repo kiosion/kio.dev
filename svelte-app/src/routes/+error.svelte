@@ -74,7 +74,7 @@
 
 <svelte:head>
   <meta name="robots" content="none" />
-  <title>{heading} | {BASE_PAGE_TITLE}</title>
+  <title>{heading} — {BASE_PAGE_TITLE}</title>
 </svelte:head>
 
 {#snippet textButton(onClick: () => void, label: string)}

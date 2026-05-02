@@ -1,11 +1,27 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import PostContent from '$components/pages/post-content.svelte';
-  import { scrollTo } from '$lib/navigation';
 
   const { data } = $props();
+  const PostComponent = $derived(data.post.Component);
 
-  $effect(() => page?.url && scrollTo(page.url));
+  $effect(() => {
+    if (page?.url) {
+      const { hash } = page.url || { hash: '' };
+
+      if (!hash.length) {
+        return;
+      }
+
+      const target =
+        document.getElementById(hash.slice(1)) ||
+        document.getElementById(`heading-${hash.slice(1)}`);
+
+      target?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  });
 </script>
 
 <svelte:head>
@@ -18,4 +34,4 @@
     content={new Date(data.post.date || '0')?.toISOString()} />
 </svelte:head>
 
-<PostContent post={data.post} fetch={data.fetch} />
+<PostComponent />

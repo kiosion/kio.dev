@@ -1,11 +1,9 @@
-import { isAPIFailure } from '$lib/api/result';
-import { findOne } from '$lib/api/store';
-import { ERRORS } from '$lib/consts';
 import Robots from '$lib/fixtures/robots';
+import { siteConfig } from '$lib/site-config';
 
 import type { RequestHandler } from './$types';
 
-export const GET = (async ({ url, fetch }) => {
+export const GET = (({ url }) => {
   const filename = url.pathname.split('/').pop();
 
   switch (filename) {
@@ -17,25 +15,13 @@ export const GET = (async ({ url, fetch }) => {
         },
       });
     case 'pgp.txt': {
-      const res = await findOne(fetch, 'config');
-      if (isAPIFailure(res)) {
-        return new Response(
-          JSON.stringify({
-            status: res.status,
-            message: res.errors[0] || ERRORS.GENERIC_SOMETHING_WENT_WRONG,
-            stack: res.errors.join('\n'),
-          }),
-          {
-            status: res.status,
-            headers: {
-              'content-type': 'application/json',
-              charset: 'utf-8',
-            },
-          },
-        );
+      if (!siteConfig.pgpKey) {
+        return new Response('Not found', {
+          status: 404,
+          headers: { 'content-type': 'text/plain', charset: 'utf-8' },
+        });
       }
-      const { pgpKey } = res.data ?? {};
-      return new Response(pgpKey as string, {
+      return new Response(siteConfig.pgpKey, {
         headers: {
           'content-type': 'text/plain',
           charset: 'utf-8',
@@ -49,6 +35,7 @@ export const GET = (async ({ url, fetch }) => {
           message: 'Not found',
         }),
         {
+          status: 404,
           headers: {
             'content-type': 'application/json',
             charset: 'utf-8',

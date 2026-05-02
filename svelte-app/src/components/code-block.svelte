@@ -9,7 +9,6 @@
   import Spinner from '$components/loading/spinner.svelte';
   import Tooltip from '$components/tooltips/tooltip.svelte';
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { t } from '$lib/i18n';
   import Highlight from 'svelte-highlight/Highlight.svelte';
   import HighlightSvelte from 'svelte-highlight/HighlightSvelte.svelte';
   // eslint-disable-next-line import/no-duplicates
@@ -87,9 +86,9 @@
 </script>
 
 <div
-  class="relative my-5 rounded-sm bg-neutral-100/50 transition-colors dark:bg-neutral-600/50"
+  class="relative my-5 max-w-4xl overflow-hidden rounded-sm bg-neutral-100/50 transition-colors dark:bg-neutral-600/50"
   role="group"
-  aria-label={$t('Code block')}
+  aria-label="Code block"
   aria-labelledby={filename ? `${id}-filename` : undefined}>
   {#if filename}
     <div
@@ -107,13 +106,13 @@
     aria-hidden="true">
     <Spinner />
   </div>
-  <Tooltip content={$t('Copy to clipboard')} placement="left">
+  <Tooltip content="Copy to clipboard" placement="left">
     <button
       class="focus-outline-sm text-dark/80 hover:text-dark focus-visible:text-dark dark:text-light/80 hover:dark:text-light focus-visible:dark:text-light absolute right-0 z-[2] mt-2 mr-2.5 cursor-pointer rounded-md px-2 py-1.5 font-mono text-xs opacity-0 transition-colors hover:bg-neutral-300/50 focus-visible:bg-neutral-300/50 hover:dark:bg-neutral-500 focus-visible:dark:bg-neutral-500"
       class:opacity-100={hideLoader}
       onclick={() => copy()}
       onkeydown={(e) => e.key === 'Enter' && copy()}
-      aria-label={copied !== undefined ? $t('Copied') : $t('Copy to clipboard')}
+      aria-label={copied !== undefined ? 'Copied' : 'Copy to clipboard'}
       type="button">
       {#if copied !== undefined}
         <ClipboardDocumentCheck />
@@ -164,13 +163,12 @@
         {/if}
       </div>
     </ErrorBoundary>
-    <p class="sr-only" aria-label={$t('Code content')}>{content}</p>
+    <p class="sr-only" aria-label="Code content">{content}</p>
   </div>
 </div>
 
 <style lang="scss">
   @use '@styles/colors';
-  @use '@styles/helpers';
   @use '@styles/mixins';
 
   @reference 'tailwindcss';
@@ -208,9 +206,11 @@
     color: colors.$light !important;
   }
 
-  :global(.dark code::selection),
-  :global(.dark code.hljs::selection) {
-    background: colors.$orange-light !important;
-    color: colors.$dark !important;
+  @media (prefers-color-scheme: dark) {
+    :global(code::selection),
+    :global(code.hljs::selection) {
+      background: colors.$orange-light !important;
+      color: colors.$dark !important;
+    }
   }
 </style>

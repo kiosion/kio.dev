@@ -1,14 +1,3 @@
-export const APP_THEMES = {
-  DARK: 'dark',
-  LIGHT: 'light',
-} as const;
-
-export const MEDIA_QUERIES = {
-  DARK_THEME: '(prefers-color-scheme: dark)',
-  LIGHT_THEME: '(prefers-color-scheme: light)',
-  REDUCE_MOTION: '(prefers-reduced-motion: reduce)',
-} as const;
-
 export const APP_LANGS = ['en', 'fr'];
 export const DEFAULT_APP_LANG = APP_LANGS[0];
 
@@ -33,14 +22,14 @@ interface AppRoute {
 
 export const APP_ROUTES = [
   {
-    name: 'Home',
+    name: 'About',
     path: '/',
-    desc: "Portfolio and writing on programming, security, finance, and whatever I'm exploring.",
+    desc: 'A little about me and what I do.',
   },
   {
     name: 'Thoughts',
     path: '/thoughts',
-    desc: 'Notes, guides, and thoughts on programming, security, finance, and more.',
+    desc: 'My notes, guides, and thoughts on programming, security, finance, and more.',
     children: [
       { name: 'Post', path: '/thoughts/:slug' },
       {
@@ -53,7 +42,7 @@ export const APP_ROUTES = [
   {
     name: 'Etc',
     path: '/etc',
-    desc: 'What I work on and how to reach me.',
+    desc: 'Miscellaneous and how to reach me.',
   },
 ] as const satisfies AppRoute[];
 

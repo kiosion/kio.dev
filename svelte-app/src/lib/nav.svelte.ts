@@ -12,28 +12,7 @@ export const getPageMeta = (basePathname?: string) => {
   const route = APP_ROUTES.find((r) => r.path === top);
 
   return {
-    title: route?.name?.length ? `${route.name} | ${BASE_PAGE_TITLE}` : BASE_PAGE_TITLE,
+    title: route?.name?.length ? `${route.name} — ${BASE_PAGE_TITLE}` : BASE_PAGE_TITLE,
     desc: route?.desc,
   };
-};
-
-export const scrollTo = (
-  url: URL | undefined,
-  scrollParams: ScrollIntoViewOptions = {},
-) => {
-  const { hash } = url || { hash: '' };
-
-  if (!hash.length) {
-    return;
-  }
-
-  const target =
-    document.getElementById(hash.slice(1)) ||
-    document.getElementById(`heading-${hash.slice(1)}`);
-
-  target?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'center',
-    ...scrollParams,
-  });
 };

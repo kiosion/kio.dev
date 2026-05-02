@@ -1,70 +1,28 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-
   // eslint-disable-next-line no-restricted-imports
   import '../tailwind.css';
   // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
-  import { browser } from '$app/environment';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';
-  import PageTransition from '$components/layouts/page-transition.svelte';
   import Footer from '$components/new/footer.svelte';
   import Header from '$components/new/header.svelte';
-  import { APP_THEMES, BASE_PAGE_TITLE } from '$lib/consts';
+  import { BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import type { Meta } from '$lib/nav.svelte';
-  import { type ThemeChoice, writeThemeCookie } from '$lib/theme';
-  import type { Unsubscriber } from 'svelte/store';
-  import { readable } from 'svelte/store';
-  import { classList } from 'svelte-body';
-  import { useMediaQuery } from 'svelte-breakpoints';
+  import HighlightDarkStyles from 'svelte-highlight/styles/stackoverflow-dark';
+  import HighlightLightStyles from 'svelte-highlight/styles/stackoverflow-light';
 
-  let unsubscribers = [] as Unsubscriber[],
-    HighlightStyles = $state<string | undefined>();
+  const lightHighlight = HighlightLightStyles.replace(
+    /^<style>/i,
+    '<style media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">',
+  );
+  const darkHighlight = HighlightDarkStyles.replace(
+    /^<style>/i,
+    '<style media="(prefers-color-scheme: dark)">',
+  );
 
   const { data, children } = $props();
-
-  const prefersDark = browser
-    ? useMediaQuery('(prefers-color-scheme: dark)')
-    : readable(true);
-
-  let theme = $state<ThemeChoice>(data.initialTheme);
-
-  $effect(() => {
-    if (!browser) {
-      return;
-    }
-
-    // update cookie
-    writeThemeCookie(theme);
-
-    // update hljs styles
-    if (theme === APP_THEMES.LIGHT) {
-      import('svelte-highlight/styles/stackoverflow-light').then(
-        (mod) => (HighlightStyles = mod.default),
-      );
-    } else {
-      import('svelte-highlight/styles/stackoverflow-dark').then(
-        (mod) => (HighlightStyles = mod.default),
-      );
-    }
-  });
-
-  onMount(() => {
-    // keep theme synced with system preference
-    unsubscribers.push(
-      prefersDark.subscribe((m) => {
-        if (theme === APP_THEMES.DARK && !m) {
-          theme = APP_THEMES.LIGHT;
-        } else if (theme === APP_THEMES.LIGHT && m) {
-          theme = APP_THEMES.DARK;
-        }
-      }),
-    );
-  });
-
-  onDestroy(() => unsubscribers.forEach((u) => u()));
 
   const meta = $derived(page.data.meta as Meta);
 </script>
@@ -82,8 +40,9 @@
     <meta property="twitter:description" content={meta.desc} />
   {/if}
 
-  <meta name="author" content={data.config.name} />
-  <meta name="theme-color" content={theme === APP_THEMES.DARK ? '#16160e' : '#e5e4e6'} />
+  <meta name="author" content={data.siteConfig.name} />
+  <meta name="theme-color" content="#e5e4e6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#16160e" media="(prefers-color-scheme: dark)" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content={BASE_PAGE_TITLE} />
@@ -94,32 +53,21 @@
 
   <link rel="preload" href="/assets/logo-standard.webp" as="image" />
 
-  {#if HighlightStyles}
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html HighlightStyles}
-  {/if}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html lightHighlight}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html darkHighlight}
 </svelte:head>
 
-<svelte:body use:classList={[theme]} />
+<div
+  class="bg-light text-dark dark:text-light relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll dark:bg-neutral-800">
+  <Header />
 
-<div class="text-dark dark:text-light mx-auto h-full w-full lg:text-lg">
-  <div
-    class="themed-scrollbar relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll">
-    <Header
-      config={data.config}
-      posts={data.posts}
-      setTheme={(v) => (theme = v)}
-      {theme} />
+  <main class="mx-auto flex w-full max-w-6xl flex-1 flex-grow flex-col gap-20 px-8 py-10">
+    <ErrorBoundary showError>
+      {@render children()}
+    </ErrorBoundary>
+  </main>
 
-    <main
-      class="bg-light dark:bg-dark mx-auto flex w-full flex-1 px-8 py-10 transition-colors">
-      <PageTransition>
-        <ErrorBoundary showError>
-          {@render children()}
-        </ErrorBoundary>
-      </PageTransition>
-    </main>
-
-    <Footer config={data.config} />
-  </div>
+  <Footer config={data.siteConfig} />
 </div>

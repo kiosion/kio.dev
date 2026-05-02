@@ -1,6 +1,7 @@
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { mdsvex } from 'mdsvex';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -8,11 +9,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
+  extensions: ['.svelte', '.md'],
   compilerOptions: {
     cssHash: ({ hash, css }) => `sc-${hash(css)}`,
-    discloseVersion: false
+    discloseVersion: false,
   },
   preprocess: [
+    mdsvex({
+      extensions: ['.md'],
+      smartypants: false,
+      layout: {
+        post: path.resolve(__dirname, 'src/components/markdown-post.svelte'),
+      },
+    }),
     vitePreprocess({
       // Seems to break snippet exports from modules >= 5.5.0
       // script: true,
@@ -21,12 +30,12 @@ export default {
           alias: [
             {
               find: /^@styles\/(.*)$/,
-              replacement: path.resolve(__dirname, 'src/styles/$1.scss')
-            }
-          ]
-        }
-      }
-    })
+              replacement: path.resolve(__dirname, 'src/styles/$1.scss'),
+            },
+          ],
+        },
+      },
+    }),
   ],
   kit: {
     alias: {
@@ -36,24 +45,23 @@ export default {
       '@vars': 'src/styles/vars',
       $assets: 'src/static',
       $components: 'src/components',
+      $content: 'src/content',
       $langs: 'src/languages',
       $routes: 'src/routes',
       $tests: 'tests',
       $types: 'types/app',
-      '$types/generated': 'types/generated',
-      '$types/sanity': 'types/generated/sanity.types'
     },
     adapter:
       process.env.SVELTE_ADAPTER_ENV === 'netlify'
         ? NetlifyAdapter({
             edge: false,
-            split: false
+            split: false,
           })
         : NodeAdapter({ out: './dist' }),
     files: {
       lib: 'src/lib',
       params: 'src/params',
-      routes: 'src/routes'
+      routes: 'src/routes',
     },
     prerender: {
       crawl: true,
@@ -64,7 +72,7 @@ export default {
             return;
           }
         }
-      }
-    }
-  }
+      },
+    },
+  },
 };

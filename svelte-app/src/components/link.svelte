@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Placement } from '@floating-ui/dom';
   import Tooltip from '$components/tooltips/tooltip.svelte';
-  import { linkTo, t } from '$lib/i18n';
   import type { Snippet } from 'svelte';
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
@@ -47,19 +46,19 @@
       if (isMailLink || !restProps.href?.length) {
         return undefined;
       }
-      return restProps.href.startsWith('/') ? $linkTo(restProps.href) : restProps.href;
+      return restProps.href;
     });
 </script>
 
 <Tooltip
   content={showTooltip
     ? isMailLink
-      ? $t('Copy {value}', { value: `'${mailAddress}'` })
+      ? `Copy ${mailAddress}`
       : tooltipText?.trim().length
         ? tooltipText
         : link && link.length > 50
           ? `${link.slice(0, 50 - 3)}...`
-          : (link ?? $t('Visit'))
+          : (link ?? 'Visit')
     : undefined}
   placement={tooltipPlacement}
   delay={[500, 0]}>

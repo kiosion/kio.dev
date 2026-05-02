@@ -1,6 +1,20 @@
 import type { NumericRange } from '@sveltejs/kit';
 
-// Add some custom props to global Errors
+declare module '*.md' {
+  import type { SvelteComponent } from 'svelte';
+
+  export const metadata: {
+    title: string;
+    date: string;
+    desc?: string;
+    tags?: string[];
+    draft?: boolean;
+    [key: string]: unknown;
+  };
+
+  export default class Comp extends SvelteComponent {}
+}
+
 declare global {
   interface ErrorOptions {
     // @ts-expect-error - Overriding base type
@@ -23,4 +37,4 @@ declare global {
   }
 }
 
-export type RouteFetch = (info: RequestInfo, init?: RequestInit) => Promise<Response>;
+export {};

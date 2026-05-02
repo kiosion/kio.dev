@@ -5,7 +5,6 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "svelte-app/**"
-      - "sanity-cms/**"
       - ".github/workflows/lint.yml"
 
 concurrency:
@@ -18,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       svelte: ${{ steps.filter.outputs.svelte }}
-      sanity: ${{ steps.filter.outputs.sanity }}
 
     steps:
       - uses: actions/checkout@v4
@@ -54,35 +52,6 @@ jobs:
           node-version: 22.14.0
           cache: pnpm
           cache-dependency-path: svelte-app/pnpm-lock.yaml
-
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint:check
-
-  lint-sanity:
-    name: Lint Sanity
-    needs: changes
-    if: needs.changes.outputs.sanity == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: sanity-cms
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.14.0
-          cache: pnpm
-          cache-dependency-path: sanity-cms/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile

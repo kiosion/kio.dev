@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:where(body.dark, body.dark *));
-
 @theme {
   --font-sans: 'TASA Orbiter Deck', sans-serif;
   --font-display: 'TASA Orbiter Display', sans-serif;
@@ -67,7 +65,6 @@
     html {
       height: 100vh;
       overflow: hidden;
-      transition: background 150ms ease;
 
       @media print {
         height: fit-content;
@@ -84,19 +81,24 @@
       box-sizing: border-box;
     }
 
-    body {
-      @apply bg-neutral-800 text-light;
+    div {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-neutral-200) transparent;
 
-      &.light {
-        @apply bg-neutral-0 text-dark;
+      @media (prefers-color-scheme: dark) {
+        scrollbar-color: var(--color-neutral-400) transparent;
       }
+    }
+
+    body {
+      @apply bg-neutral-0 text-dark dark:bg-neutral-800 dark:text-light;
     }
 
     ::selection {
       @apply bg-orange-light/90 text-light;
     }
 
-    .dark {
+    @media (prefers-color-scheme: dark) {
       ::selection {
         @apply bg-orange-light/90 text-dark;
       }
@@ -115,15 +117,6 @@
 
     &-sm {
       @apply outline-offset-2;
-    }
-  }
-
-  .themed-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-neutral-200) transparent;
-
-    .dark & {
-      scrollbar-color: var(--color-neutral-400) transparent;
     }
   }
 }

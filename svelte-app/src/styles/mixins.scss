@@ -30,9 +30,3 @@
     }
   }
 }
-
-@mixin dark {
-  :global(.dark) & {
-    @content;
-  }
-}

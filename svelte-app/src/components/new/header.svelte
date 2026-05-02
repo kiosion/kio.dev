@@ -1,33 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import AboutContent from '$components/pages/about-content.svelte';
-  import BlogContent from '$components/pages/blog-content.svelte';
-  import HomeContent from '$components/pages/home-content.svelte';
-  import ThemeToggle from '$components/theme-toggle.svelte';
-  import ContentPreview from '$components/tooltips/content-preview.svelte';
-  import Tooltip from '$components/tooltips/tooltip.svelte';
-  import { APP_ROUTES, BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
-  import type { ThemeChoice } from '$lib/theme';
+  import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
   import { pathnameGroupKey } from '$lib/utils';
-  import type {
-    GetConfigQueryResult,
-    GetPostsQueryResult,
-  } from '$types/generated/sanity.types';
-  import { flip } from 'svelte/animate';
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
-
-  let {
-    theme,
-    setTheme,
-    config,
-    posts,
-  }: {
-    theme: ThemeChoice;
-    setTheme: (t: ThemeChoice) => void;
-    config: NonNullable<GetConfigQueryResult>;
-    posts: NonNullable<GetPostsQueryResult>;
-  } = $props();
 
   type Crumb = { label: string; href?: string };
 
@@ -56,62 +32,28 @@
     const parent = c.at(-2);
     return [c[0], { label: '...', href: parent?.href }, c.at(-1)!];
   });
-
-  $inspect({ posts });
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
-  {#snippet navLinkTooltip()}
-    <ContentPreview header={text}>
-      {#if href === APP_ROUTES.find((r) => r.name === 'Home')?.path}
-        <HomeContent {config} {posts} />
-      {:else if href === APP_ROUTES.find((r) => r.name === 'Thoughts')?.path}
-        <BlogContent
-          {posts}
-          tags={posts.reduce(
-            (prev, cur) => {
-              (cur.tags ?? []).forEach((t) => {
-                if (!prev.some((pt) => pt.slug.current === t.slug.current)) {
-                  prev.push(t);
-                }
-              });
-              return prev;
-            },
-            [] as NonNullable<(typeof posts)[number]['tags']>,
-          )}
-          filter={false} />
-      {:else if href === APP_ROUTES.find((r) => r.name === 'Etc')?.path}
-        <AboutContent {config} />
-      {/if}
-    </ContentPreview>
-  {/snippet}
-
-  <Tooltip
-    content={navLinkTooltip}
-    delay={[250, 0]}
-    offset={[2, 8]}
-    duration={250}
-    placement="bottom-start">
-    <a
-      {href}
-      class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
-      aria-current={active ? 'page' : undefined}
-      aria-disabled={active}
-      class:decoration-transparent={!active}
-      class:decoration-orange-light={active}
-      class:dark:decoration-orange-dark={active}
-      class:select-none={active}
-      class:pointer-events-none={active}
-      class:opacity-100={active}
-      class:opacity-70={!active}
-      class:hover:decoration-orange-light={!active}
-      class:hover:dark:decoration-orange-dark={!active}
-      class:hover:opacity-100={!active}
-      data-sveltekit-preload-code="eager"
-      data-sveltekit-preload-data="hover">
-      {text}
-    </a>
-  </Tooltip>
+  <a
+    {href}
+    class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
+    aria-current={active ? 'page' : undefined}
+    aria-disabled={active}
+    class:decoration-transparent={!active}
+    class:decoration-orange-light={active}
+    class:dark:decoration-orange-dark={active}
+    class:select-none={active}
+    class:pointer-events-none={active}
+    class:opacity-100={active}
+    class:opacity-70={!active}
+    class:hover:decoration-orange-light={!active}
+    class:hover:dark:decoration-orange-dark={!active}
+    class:hover:opacity-100={!active}
+    data-sveltekit-preload-code="eager"
+    data-sveltekit-preload-data="hover">
+    {text}
+  </a>
 {/snippet}
 
 {#snippet breadcrumbSegment(crumb: Crumb, isLast: boolean)}
@@ -128,21 +70,34 @@
     out:fly={{ duration: 400, x: 150, easing: cubicIn }}
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="hover">
-    {crumb.label}
+    {#if crumb.href === '/'}
+      <span class="flex flex-row items-center">
+        <span class="mr-4 mb-0.5" aria-hidden="true">
+          <img
+            src="/assets/logo-standard.webp"
+            class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
+            alt="" />
+        </span>
+        {#if !isLast}
+          {crumb.label}
+        {/if}
+      </span>
+    {:else}
+      {crumb.label}
+    {/if}
   </svelte:element>
 {/snippet}
 
 <header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-300 transition-colors dark:border-neutral-400">
+  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-400">
   <div
-    class="relative isolate mx-auto grid w-full items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
+    class="relative isolate mx-auto grid w-full max-w-6xl items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
     <!-- Breadcrumbs -->
-    <nav aria-label="Breadcrumb" class="min-w-0 select-none">
+    <nav class="min-w-0 select-none">
       <ol class="hidden min-w-0 items-center whitespace-nowrap sm:flex">
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
-            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
-            animate:flip={{ duration: 250, easing: cubicOut }}>
+            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
             {#key crumb.label}
               {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
             {/key}
@@ -153,8 +108,7 @@
       <ol class="flex min-w-0 items-center whitespace-nowrap sm:hidden">
         {#each mobileBreadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
-            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
-            animate:flip={{ duration: 250, easing: cubicOut }}>
+            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
             {#key crumb.label}
               {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
             {/key}
@@ -172,7 +126,6 @@
           {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
         {/each}
       </nav>
-      <ThemeToggle {theme} {setTheme} />
     </div>
   </div>
 </header>

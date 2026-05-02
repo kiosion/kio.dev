@@ -1,16 +1,26 @@
-import { APP_THEMES } from '$lib/consts';
+import { BASE_DOMAIN, HOMEPAGE_POSTS_NUM } from '$lib/consts';
 import { ENV } from '$lib/env';
-import { isThemeChoice, THEME_COOKIE_NAME } from '$lib/theme';
+import { getPageMeta } from '$lib/nav.svelte';
+import { getAllPosts } from '$lib/posts';
+import { siteConfig } from '$lib/site-config';
 
 import type { LayoutServerLoad } from './$types';
 
 export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';
 
-export const load = (({ cookies }) => {
-  const rawTheme = cookies.get(THEME_COOKIE_NAME);
+export const load = (({ url, setHeaders }) => {
+  setHeaders({
+    'cache-control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400',
+  });
+
+  const recentPosts = getAllPosts().slice(0, HOMEPAGE_POSTS_NUM);
 
   return {
-    initialTheme: isThemeChoice(rawTheme) ? rawTheme : APP_THEMES.DARK,
+    breadcrumbs: [{ label: BASE_DOMAIN, href: '/' }],
+    meta: getPageMeta(url.pathname),
+    pathname: url.pathname,
+    siteConfig,
+    posts: recentPosts,
   };
 }) satisfies LayoutServerLoad;
