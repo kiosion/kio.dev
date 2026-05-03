@@ -61,7 +61,7 @@
   class="bg-light text-dark dark:text-light relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll dark:bg-neutral-800">
   <Header />
 
-  <main class="mx-auto flex w-full max-w-6xl flex-1 flex-grow flex-col gap-20 px-8 py-10">
+  <main class="mx-auto flex w-full max-w-6xl flex-1 grow flex-col gap-18 px-8 py-10">
     <ErrorBoundary showError>
       {@render children()}
     </ErrorBoundary>

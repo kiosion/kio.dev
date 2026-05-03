@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { BASE_PAGE_TITLE } from '$lib/consts';
-import { loadPost } from '$lib/posts';
+import { loadPost } from '$lib/content';
 
 import type { PageLoad } from './$types';
 

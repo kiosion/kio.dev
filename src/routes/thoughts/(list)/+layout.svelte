@@ -51,21 +51,19 @@
   </a>
 {/snippet}
 
-<section class="mt-8 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
-  <div class="mr-auto flex flex-col gap-8">
-    <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
-      Thoughts &amp; guides
-    </h1>
+<section class="mt-8 flex w-full flex-col gap-8">
+  <h1 class="font-display font-semibold flex max-w-2xl flex-col text-4xl md:text-5xl tracking-wide">
+    Thoughts &amp; guides
+  </h1>
 
-    {#if data.tags.length}
-      <div
-        class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg">
-        {#each data.tags as tag (tag.slug)}
-          {@render tagItem(tag)}
-        {/each}
-      </div>
-    {/if}
-  </div>
+  {#if data.tags.length}
+    <div
+      class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg">
+      {#each data.tags as tag (tag.slug)}
+        {@render tagItem(tag)}
+      {/each}
+    </div>
+  {/if}
 </section>
 
 <section class="flex flex-col gap-2">

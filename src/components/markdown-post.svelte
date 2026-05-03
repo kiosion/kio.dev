@@ -55,7 +55,7 @@
     <section
       class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-200 pb-6 dark:border-neutral-400">
       <div class="flex flex-col gap-y-4">
-        <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
+        <h1 class="font-display font-semibold flex max-w-2xl flex-col text-4xl md:text-5xl tracking-wide">
           {title}
         </h1>
         {#if formattedDate}
@@ -75,7 +75,7 @@
   {/if}
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <section class="md-body font-sans text-base" onclick={handleHashClick}>
+  <section class="md-body font-sans text-md" onclick={handleHashClick}>
     {@render children?.()}
   </section>
 </div>
@@ -147,7 +147,7 @@
     }
 
     :global(pre.shiki) {
-      @apply my-6 max-w-prose overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
+      @apply my-6 max-w-4xl w-fit overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
     }
 
     :global(pre.shiki code) {
@@ -159,7 +159,7 @@
     }
 
     :global(img) {
-      @apply my-6 max-w-full rounded-md;
+      @apply my-6 max-w-3xl h-auto rounded-md;
     }
 
     :global(.footnote-ref) {

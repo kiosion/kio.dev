@@ -18,7 +18,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default {
   extensions: ['.svelte', '.md'],
   compilerOptions: {
-    cssHash: ({ hash, css }) => `sc-${hash(css)}`,
     discloseVersion: false,
   },
   preprocess: [

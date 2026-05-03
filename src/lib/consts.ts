@@ -6,7 +6,7 @@ export const BASE_GIT_URL = 'https://github.com/kiosion/kio.dev';
 
 export const BASE_ANIMATION_DURATION = 250 as const;
 
-export const HOMEPAGE_POSTS_NUM = 4 as const;
+export const HOMEPAGE_POSTS_NUM = 3 as const;
 
 interface AppRoute {
   name: string;

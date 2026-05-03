@@ -28,7 +28,7 @@
   {#if zoom}
     <button
       type="button"
-      class="focus-outline-sm block w-full cursor-zoom-in rounded-md"
+      class="focus-outline-sm block cursor-zoom-in rounded-md"
       aria-label={alt || 'Open image'}
       onclick={() => (showModal = true)}>
       <img
@@ -39,8 +39,7 @@
         loading="lazy"
         decoding="async"
         draggable="false"
-        class="block w-full rounded-md select-none"
-        style:aspect-ratio={aspect} />
+        class="block max-w-3xl h-auto rounded-md select-none" />
     </button>
   {:else}
     <img
@@ -50,8 +49,7 @@
       {height}
       loading="lazy"
       decoding="async"
-      class="block w-full rounded-md"
-      style:aspect-ratio={aspect} />
+      class="block max-w-3xl h-auto rounded-md" />
   {/if}
 
   {#if caption}

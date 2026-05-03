@@ -3,21 +3,38 @@
   import PostList from '$components/new/post-list.svelte';
 
   let { data } = $props();
+  let AboutContent = $derived(data.content.Component);
 </script>
 
-<section class="mt-8 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
-  <div class="mr-auto flex flex-col gap-8">
-    <div class="font-display flex max-w-2xl flex-col gap-2 text-4xl tracking-wide">
-      <p>Hey, my name's Maxim.</p>
-      <p>Security & infra engineer based in</p>
-      <p>New York, NY.</p>
-    </div>
-    <p class="max-w-prose text-lg">
-      I'm a self-taught engineer with over 15 years of experience in software and systems,
-      currently focused on security and distributed infrastructure at enterprise scale.
-      This site's where I write about programming, security, finance, or anything else
-      that's captured my interest.
+<section class="mt-8 flex w-full flex-col gap-8">
+  <div class="font-display flex max-w-2xl flex-col gap-3 text-4xl md:text-5xl font-semibold tracking-wide">
+    {#each data.content.title as line}
+      <p>{line}</p>
+    {/each}
+    <!-- <p>Hey, my name's Maxim.</p>
+    <p>Security & infra engineer based in</p>
+    <p>New York, NY.</p> -->
+  </div>
+  <div class="flex max-w-prose flex-col gap-3 text-lg">
+    <AboutContent />
+    <!-- <p>
+      Currently at
+      <Link
+        href="https://goteleport.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Teleport</Link>, working on identity governance and
+      zero-trust infrastructure access solutions, mostly with Go and TypeScript day-to-day. Before that, I spent a few
+      years on web apps, auth systems, and distributed infra.
     </p>
+    <p>
+      Outside of work, you'll usually find me at a club or concert, hiking upstate,
+      thrifting in the city, or lost in classic sci-fi or philosophy.
+    </p>
+    <p>
+      Here, I yap about programming, security, and whatever else I'm thinking
+      about.
+    </p> -->
   </div>
 </section>
 

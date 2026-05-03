@@ -1,7 +1,7 @@
 import { BASE_DOMAIN, HOMEPAGE_POSTS_NUM } from '$lib/consts';
+import { getAllPosts } from '$lib/content';
 import { ENV } from '$lib/env';
 import { getPageMeta } from '$lib/nav.svelte';
-import { getAllPosts } from '$lib/posts';
 import { siteConfig } from '$lib/site-config';
 
 import type { LayoutServerLoad } from './$types';

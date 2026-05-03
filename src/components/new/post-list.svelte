@@ -1,6 +1,6 @@
 <script lang="ts">
   import EmptyContent from '$components/empty-content.svelte';
-  import type { Post } from '$lib/posts';
+  import type { Post } from '$lib/content';
 
   const { posts }: { posts: Post[] } = $props();
 
@@ -15,7 +15,7 @@
   {#if !posts?.length}
     <EmptyContent message="No posts found." />
   {:else}
-    <ul class="divide-y divide-neutral-300 dark:divide-neutral-400">
+    <ul class="divide-y divide-neutral-200 dark:divide-neutral-400">
       {#each posts as post, idx (post.slug)}
         <li>
           <a class="group block py-4" href={`/thoughts/${post.slug}`}>

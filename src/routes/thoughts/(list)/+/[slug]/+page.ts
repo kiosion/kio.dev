@@ -1,4 +1,4 @@
-import { getAllPosts } from '$lib/posts';
+import { getAllPosts } from '$lib/content';
 
 import type { EntryGenerator, PageLoad } from './$types';
 
