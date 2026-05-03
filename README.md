@@ -4,20 +4,11 @@ Welcome to the monorepo for my devblog / portfolio!
 
 🌐 **Live Site:** [kio.dev](https://kio.dev/)
 
-## 📁 Structure
-
-- `svelte-app/` - Main SvelteKit application
-- `sanity-cms/` - Sanity CMS schema and configuration
-
 ## 📚 Tech Stack
 ### Front-end
-- SvelteKit - Full-stack framework
-- TypeScript - Type-safe development
-- TailwindCSS - Util-first styling
-- Playwright - e2e testing
-
-### Content Management
-- Sanity.io - Headless CMS for blog posts and portfolio content
+- SvelteKit
+- TypeScript
+- TailwindCSS
 
 ### Deployment
 - Netlify - Hosting and continuous deployment
@@ -25,7 +16,7 @@ Welcome to the monorepo for my devblog / portfolio!
 ## 🚀 Development
 ### Prerequisites
 
-- Node.js ~22.14
+- Node.js ~23
 - PNPM ~9.15
 
 ### Setup
@@ -33,7 +24,7 @@ Welcome to the monorepo for my devblog / portfolio!
 ```bash
 git clone git@github.com:kiosion/kio.dev.git
 cd kio.dev
-make web
+pnpm dev
 ```
 
 ## 📃 License

@@ -3,9 +3,6 @@ name: Deploy (SvelteKit)
 on:
   push:
     branches: ["main"]
-    paths:
-      - "svelte-app/**"
-      - ".github/workflows/svelte-deploy.yml"
 
 concurrency:
   group: svelte-deploy
@@ -14,15 +11,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./svelte-app
 
     env:
       SVELTE_ADAPTER_ENV: netlify
-      VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
-      VITE_SANITY_TOKEN: ${{ secrets.VITE_SANITY_TOKEN }}
       VITE_APP_VERSION: ${{ github.sha }}
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -38,7 +29,6 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: svelte-app/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile

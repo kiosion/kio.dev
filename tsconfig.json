@@ -1,0 +1,31 @@
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noEmit": true,
+    "removeComments": true,
+    "rootDir": "./",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "src/**/*",
+    "src/routes/**/.well-known/**/*",
+    "scripts/**/*",
+    "types/**/*",
+    "*.js",
+    "*.ts",
+    "eslint.config.mjs"
+  ],
+  "exclude": ["**/node_modules"]
+}
