@@ -7,34 +7,14 @@
 </script>
 
 <section class="mt-8 flex w-full flex-col gap-8">
-  <div class="font-display flex max-w-2xl flex-col gap-3 text-4xl md:text-5xl font-semibold tracking-wide">
+  <div
+    class="font-display flex max-w-2xl flex-col gap-3 text-4xl font-semibold tracking-wide md:text-5xl">
     {#each data.content.title as line}
       <p>{line}</p>
     {/each}
-    <!-- <p>Hey, my name's Maxim.</p>
-    <p>Security & infra engineer based in</p>
-    <p>New York, NY.</p> -->
   </div>
   <div class="flex max-w-prose flex-col gap-3 text-lg">
     <AboutContent />
-    <!-- <p>
-      Currently at
-      <Link
-        href="https://goteleport.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Teleport</Link>, working on identity governance and
-      zero-trust infrastructure access solutions, mostly with Go and TypeScript day-to-day. Before that, I spent a few
-      years on web apps, auth systems, and distributed infra.
-    </p>
-    <p>
-      Outside of work, you'll usually find me at a club or concert, hiking upstate,
-      thrifting in the city, or lost in classic sci-fi or philosophy.
-    </p>
-    <p>
-      Here, I yap about programming, security, and whatever else I'm thinking
-      about.
-    </p> -->
   </div>
 </section>
 

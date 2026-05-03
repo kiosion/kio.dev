@@ -26,28 +26,39 @@
     });
   });
 
+  let bodyEl: HTMLElement | undefined = $state();
+
   /**
    * Intercept clicks on in-page hash links inside the post body so the target
    * scrolls to viewport center (smooth) instead of snapping to the top.
-   * Used by footnote refs/backrefs and any heading anchors.
    */
-  const handleHashClick = (e: MouseEvent) => {
-    const link = (e.target instanceof Element ? e.target : null)?.closest('a[href^="#"]');
-    if (!(link instanceof HTMLAnchorElement)) {
+  $effect(() => {
+    const el = bodyEl;
+    if (!el) {
       return;
     }
-    const href = link.getAttribute('href');
-    if (!href || href === '#') {
-      return;
-    }
-    const target = document.getElementById(href.slice(1));
-    if (!target) {
-      return;
-    }
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    history.pushState(null, '', href);
-  };
+    const handler = (e: MouseEvent) => {
+      const link = (e.target instanceof Element ? e.target : null)?.closest(
+        'a[href^="#"]',
+      );
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+      const href = link.getAttribute('href');
+      if (!href || href === '#') {
+        return;
+      }
+      const target = document.getElementById(href.slice(1));
+      if (!target) {
+        return;
+      }
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      history.pushState(null, '', href);
+    };
+    el.addEventListener('click', handler);
+    return () => el.removeEventListener('click', handler);
+  });
 </script>
 
 <div class="flex w-full flex-col gap-y-5">
@@ -55,7 +66,8 @@
     <section
       class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-200 pb-6 dark:border-neutral-400">
       <div class="flex flex-col gap-y-4">
-        <h1 class="font-display font-semibold flex max-w-2xl flex-col text-4xl md:text-5xl tracking-wide">
+        <h1
+          class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl">
           {title}
         </h1>
         {#if formattedDate}
@@ -74,13 +86,12 @@
     </section>
   {/if}
 
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <section class="md-body font-sans text-md" onclick={handleHashClick}>
+  <section bind:this={bodyEl} class="md-body text-md font-sans">
     {@render children?.()}
   </section>
 </div>
 
-<style lang="scss">
+<style>
   @reference '../tailwind.css';
 
   .md-body {
@@ -147,7 +158,7 @@
     }
 
     :global(pre.shiki) {
-      @apply my-6 max-w-4xl w-fit overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
+      @apply my-6 w-fit max-w-4xl overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
     }
 
     :global(pre.shiki code) {
@@ -159,7 +170,7 @@
     }
 
     :global(img) {
-      @apply my-6 max-w-3xl h-auto rounded-md;
+      @apply my-6 h-auto max-w-3xl rounded-md;
     }
 
     :global(.footnote-ref) {

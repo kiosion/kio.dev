@@ -1,6 +1,7 @@
 // @ts-check
 
 import eslint from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import sortPlugin from 'eslint-plugin-simple-import-sort';
@@ -8,7 +9,6 @@ import sveltePlugin from 'eslint-plugin-svelte';
 import unusedImports from 'eslint-plugin-unused-imports';
 import svelteParser from 'svelte-eslint-parser';
 import tseslint from 'typescript-eslint';
-import stylistic from '@stylistic/eslint-plugin';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -18,15 +18,15 @@ export default tseslint.config(
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
-        extraFileExtensions: ['.svelte']
-      }
+        extraFileExtensions: ['.svelte'],
+      },
     },
     plugins: {
       import: importPlugin,
       prettier: prettierPlugin,
       'simple-import-sort': sortPlugin,
       'unused-imports': unusedImports,
-      '@stylistic': stylistic
+      '@stylistic': stylistic,
     },
     rules: {
       // original overrides
@@ -54,8 +54,8 @@ export default tseslint.config(
       '@typescript-eslint/ban-ts-comment': [
         2,
         {
-          'ts-expect-error': 'allow-with-description'
-        }
+          'ts-expect-error': 'allow-with-description',
+        },
       ],
 
       'prettier/prettier': [2],
@@ -104,10 +104,10 @@ export default tseslint.config(
           patterns: [
             {
               group: ['./*', '../*', '!./$types'],
-              message: "Only use relative imports from './$types'."
-            }
-          ]
-        }
+              message: "Only use relative imports from './$types'.",
+            },
+          ],
+        },
       ],
 
       'object-shorthand': 'error',
@@ -132,9 +132,9 @@ export default tseslint.config(
             ['^\\$components(/)?'],
             ['^[^.].*'],
             ['^\\.'],
-            ['\\u0000$']
-          ]
-        }
+            ['\\u0000$'],
+          ],
+        },
       ],
       'simple-import-sort/exports': 'error',
 
@@ -145,10 +145,10 @@ export default tseslint.config(
           vars: 'all',
           varsIgnorePattern: '^_*?',
           args: 'after-used',
-          argsIgnorePattern: '^_*?'
-        }
-      ]
-    }
+          argsIgnorePattern: '^_*?',
+        },
+      ],
+    },
   },
 
   // Svelte override
@@ -157,11 +157,11 @@ export default tseslint.config(
     languageOptions: {
       parser: svelteParser,
       parserOptions: {
-        parser: '@typescript-eslint/parser'
-      }
+        parser: '@typescript-eslint/parser',
+      },
     },
     plugins: {
-      svelte: sveltePlugin
+      svelte: sveltePlugin,
     },
     rules: {
       'no-undef': [0],
@@ -177,8 +177,7 @@ export default tseslint.config(
           enforceScriptPresent: false,
           enforceStylePresent: false,
           script: ['ts'],
-          style: ['scss']
-        }
+        },
       ],
       'svelte/no-at-debug-tags': [2],
       'svelte/no-ignored-unsubscribe': [2],
@@ -198,8 +197,8 @@ export default tseslint.config(
       'svelte/no-reactive-reassign': [2],
       'svelte/no-dom-manipulating': [2],
       'svelte/no-reactive-literals': [2],
-      'svelte/prefer-destructured-store-props': [1]
-    }
+      'svelte/prefer-destructured-store-props': [1],
+    },
   },
 
   // Test file override
@@ -207,7 +206,7 @@ export default tseslint.config(
     files: ['**/*.test.ts', '**/*.spec.ts'],
     rules: {
       '@typescript-eslint/no-empty-function': 'off',
-      'no-restricted-imports': 'off'
-    }
-  }
+      'no-restricted-imports': 'off',
+    },
+  },
 );

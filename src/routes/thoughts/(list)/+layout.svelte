@@ -16,9 +16,7 @@
 
   const posts = $derived(
     selected
-      ? data.posts.filter((p) =>
-          (p.tags ?? []).some((t) => tagSlug(t) === selected),
-        )
+      ? data.posts.filter((p) => (p.tags ?? []).some((t) => tagSlug(t) === selected))
       : data.posts,
   );
 </script>
@@ -52,7 +50,8 @@
 {/snippet}
 
 <section class="mt-8 flex w-full flex-col gap-8">
-  <h1 class="font-display font-semibold flex max-w-2xl flex-col text-4xl md:text-5xl tracking-wide">
+  <h1
+    class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl">
     Thoughts &amp; guides
   </h1>
 

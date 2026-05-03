@@ -69,30 +69,13 @@ export default {
     vitePreprocess({
       // Seems to break snippet exports from modules >= 5.5.0
       // script: true,
-      style: {
-        resolve: {
-          alias: [
-            {
-              find: /^@styles\/(.*)$/,
-              replacement: path.resolve(__dirname, 'src/styles/$1.scss'),
-            },
-          ],
-        },
-      },
     }),
   ],
   kit: {
     alias: {
-      '@breakpoints': 'src/styles/breakpoints',
-      '@colours': 'src/styles/colours',
-      '@utils': 'src/styles/utils',
-      '@vars': 'src/styles/vars',
-      $assets: 'src/static',
       $components: 'src/components',
       $content: 'src/content',
-      $langs: 'src/languages',
       $routes: 'src/routes',
-      $tests: 'tests',
       $types: 'types/app',
     },
     adapter:

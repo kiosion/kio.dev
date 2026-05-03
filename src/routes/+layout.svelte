@@ -1,8 +1,6 @@
 <script lang="ts">
   // eslint-disable-next-line no-restricted-imports
   import '../tailwind.css';
-  // eslint-disable-next-line no-restricted-imports
-  import '../app.scss';
   import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';

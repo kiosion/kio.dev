@@ -39,7 +39,7 @@
         loading="lazy"
         decoding="async"
         draggable="false"
-        class="block max-w-3xl h-auto rounded-md select-none" />
+        class="block h-auto max-w-3xl rounded-md select-none" />
     </button>
   {:else}
     <img
@@ -49,7 +49,7 @@
       {height}
       loading="lazy"
       decoding="async"
-      class="block max-w-3xl h-auto rounded-md" />
+      class="block h-auto max-w-3xl rounded-md" />
   {/if}
 
   {#if caption}
