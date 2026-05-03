@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Cycle detection on a graph that doesn't exist yet
-date: 2026-02-03
+date: 2025-11-12
 tags: [programming, algorithms]
-desc: Cycle detection isn't hard. Cycle detection against a graph you haven't written yet is more interesting.
+desc: Cycle detection that runs against a live database and an in-memory request payload through the same code, by writing your validators against an interface that doesn't care which one it's walking.
 ---
 
 Hierarchical groups come up a lot in the work I do, and they all have similar shapes, whether you're looking at LDAP, IAM, RBAC tiers, or some flavor of dependency graph: group A contains some users plus another group B, B contains some users plus group C, and so on, walking down to enumerate effective members, and walking up to enumerate ancestors. The single-edge version of cycle detection here is easy, since when someone calls your API to nest one group inside another, you can check the proposed edge against your live store, run a DFS upward from the new parent, and reject the request if the walk ever lands on the child.
@@ -12,7 +12,7 @@ Hierarchical groups come up a lot in the work I do, and they all have similar sh
 
 The case I actually want to talk about is the one where you can't do that, because the graph you're meant to validate against doesn't yet exist. This shows up the moment you accept a bulk import, a snapshot from some upstream system like a directory sync, IaC apply, or config push, where dozens of mutually-referential nodes and edges land all at once with none of them in your store yet. "Validate this edge against live state" stops meaning anything, because the things the edge points at don't exist anywhere except in the request payload sitting in your handler, and you can't compose the result from individual single-edge checks either, since the validity of any one edge depends on the rest of the batch you haven't yet considered.
 
-The bulk-import case forces you to treat the entire proposed graph as a single consistent unit, materialize it somewhere you can walk, and run validation against that. None of the actual algorithms (cycle detection, depth bounds, ancestor enumeration) change between the persisted and prospective cases, which leaves only one real question: how do you keep the validators from caring whether the thing they're walking is your live database or a fresh `map` populated from a request?
+The bulk-import case forces you to treat the entire proposed graph as a single consistent unit, materialize it somewhere you can walk, and run validation against that. None of the actual algorithms (cycle detection, depth bounds, ancestor enumeration) change between the persisted and prospective cases, leaving the question of how to keep the validators from caring whether the thing they're walking is your live database or a fresh `map` populated from a request.
 
 ## Validators that don't care where they walk
 
@@ -81,8 +81,8 @@ func checkInsert(s Store, parent, child string, maxDepth int) error {
 }
 ```
 
-The function walks up from the proposed parent along ancestor edges looking for the proposed child, with a depth bound layered in for the acyclic-but-pathological case where someone's nested fifty groups deep, since any traversal that walks the hierarchy in production pays the depth cost, and it's worth bounding once at insertion rather than discovering the problem the next time something OOMs at runtime.
+The function walks up from the proposed parent along ancestor edges looking for the proposed child, with a depth bound layered in for the acyclic-but-pathological case where someone's nested fifty groups deep. Any traversal that walks the hierarchy in production pays the depth cost, so it's worth bounding once at insertion rather than discovering the problem the next time something OOMs at runtime.
 
-What matters in this snippet isn't the DFS itself, which is just basic graph machinery, but that `checkInsert` doesn't know or care whether the `Store` it got is your real database, or a `Batch` populated from a request body, so the same call site validates a single new edge against persisted state and also validates an entire prospective graph against itself, depending only on what you hand it.
+The DFS is just basic graph machinery. `checkInsert` doesn't know or care whether the `Store` it got is your real database or a `Batch` populated from a request body, so the same call site validates a single new edge against persisted state and also validates an entire prospective graph against itself, depending only on what you hand it.
 
-The catchy framing for this whole thing is that you're validating a graph that doesn't yet exist, which is true enough, but the actual move isn't a more clever algorithm. It's making your validators agnostic to where the graph lives in the first place, and once that abstraction is there, prospective and persisted graphs become the same problem, single-edge inserts and entire bulk imports run through the same code, and they can stop being separate concerns.
+Once your validators are agnostic to where the graph lives, prospective and persisted graphs collapse into the same problem, single-edge inserts and entire bulk imports run through the same code, and the framing of "a graph that doesn't yet exist" just becomes a way of saying "a graph," since the validator can't tell the difference.
