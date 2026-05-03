@@ -206,14 +206,14 @@
 @keyframes content-fade-out {
   to {
     opacity: 0;
-    scale: 0.998;
+    scale: 0.997;
   }
 }
 
 @keyframes content-fade-in {
   from {
     opacity: 0;
-    scale: 0.998;
+    scale: 0.997;
   }
 }
 
@@ -223,7 +223,7 @@
    * Old fades out over T; new fades in over T, starting at T/2.
    * Total runtime ≈ T * 1.5.
    */
-  --page-transition-duration: 200ms;
+  --page-transition-duration: 220ms;
 }
 
 main {

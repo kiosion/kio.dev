@@ -77,39 +77,19 @@
   <title>{heading} — {BASE_PAGE_TITLE}</title>
 </svelte:head>
 
-{#snippet textButton(onClick: () => void, label: string)}
-  <button
-    type="button"
-    class="hover:decoration-orange-light hover:dark:decoration-orange-dark w-fit cursor-pointer underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
-    onclick={onClick}>{label}</button>
-{/snippet}
-
-<div class="flex h-full min-w-full flex-grow flex-col gap-y-10" data-test-id="error-page">
-  <section
-    class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
-    <div class="mr-auto flex flex-col gap-8">
-      <h1 class="font-display flex max-w-2xl flex-col text-5xl tracking-wide">
-        {heading}
-      </h1>
-      <p>
-        {page.error?.message && page.status !== 404 ? page.error.message : message}
-      </p>
-      <div class="flex flex-row items-center gap-2 text-base">
-        {@render textButton(() => history.back(), 'Go back')}
-        <span class="opacity-70 select-none">/</span>
-        {#if causes?.length}
-          {@render textButton(
-            () => (showStack = !showStack),
-            showStack ? 'Hide details' : 'Show details',
-          )}
-        {/if}
-      </div>
-    </div>
-  </section>
-  {#if showStack}
-    <section class="max-w-5xl overflow-x-auto">
-      <pre
-        class="font-code rounded-lg bg-neutral-200/75 p-4 text-sm break-all whitespace-pre-wrap transition-colors dark:bg-neutral-700">{#each causes as cause, i}{cause?.trim?.()}{#if i < causes.length - 1}<br />{/if}{/each}</pre>
-    </section>
-  {/if}
-</div>
+<section
+  class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
+  <div class="mr-auto flex flex-col gap-8">
+    <h1
+      class="font-display flex flex-col text-4xl font-semibold tracking-wide md:text-5xl">
+      {heading}
+    </h1>
+    <p class="text-md">
+      {page.error?.message && page.status !== 404 ? page.error.message : message}
+    </p>
+    <button
+      type="button"
+      class="text-md hover:decoration-orange-light hover:dark:decoration-orange-dark w-fit cursor-pointer underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
+      onclick={() => history.back()}>Go back</button>
+  </div>
+</section>
