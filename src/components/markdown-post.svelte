@@ -158,7 +158,7 @@
     }
 
     :global(pre.shiki) {
-      @apply my-6 w-fit max-w-4xl overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
+      @apply my-6 max-w-3xl overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
     }
 
     :global(pre.shiki code) {

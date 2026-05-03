@@ -21,7 +21,7 @@
 <div class="min-h-0 flex-1"></div>
 
 <section class="flex flex-col gap-2">
-  <span class="text-base tracking-wide opacity-70">Recent thoughts</span>
+  <span class="text-base tracking-wide opacity-70">Recent posts</span>
 
   {#if data.posts?.length}
     <PostList posts={data.posts} />
