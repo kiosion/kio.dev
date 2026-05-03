@@ -106,6 +106,76 @@
   }
 }
 
+/* shiki dual-theme: switch CSS vars on system color scheme */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+    font-style: var(--shiki-dark-font-style);
+    font-weight: var(--shiki-dark-font-weight);
+    text-decoration: var(--shiki-dark-text-decoration);
+  }
+}
+
+@keyframes content-fade-out {
+  to {
+    opacity: 0;
+    scale: 0.998;
+  }
+}
+
+@keyframes content-fade-in {
+  from {
+    opacity: 0;
+    scale: 0.998;
+  }
+}
+
+:root {
+  /*
+   * Duration of each half of the page transition.
+   * Old fades out over T; new fades in over T, starting at T/2.
+   * Total runtime ≈ T * 1.5.
+   */
+  --page-transition-duration: 200ms;
+}
+
+main {
+  view-transition-name: page-main;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(page-main) {
+  animation: content-fade-out var(--page-transition-duration)
+    cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(page-main) {
+  animation: content-fade-in var(--page-transition-duration)
+    cubic-bezier(0, 0, 0.2, 1) calc(var(--page-transition-duration) / 2) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page-main),
+  ::view-transition-new(page-main) {
+    animation: none !important;
+  }
+}
+
 @layer utilities {
   .focus-outline {
     @apply outline-offset-4;

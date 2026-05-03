@@ -8,6 +8,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const trailingSlash = 'ignore';
 export const ssr = ENV !== 'testing';
+export const prerender = true;
 
 export const load = (({ url, setHeaders }) => {
   setHeaders({

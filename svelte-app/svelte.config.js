@@ -1,9 +1,16 @@
 import NetlifyAdapter from '@sveltejs/adapter-netlify';
 import NodeAdapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import { mdsvex } from 'mdsvex';
+import { escapeSvelte, mdsvex } from 'mdsvex';
 import path from 'path';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypeSlug from 'rehype-slug';
+import { codeToHtml } from 'shiki';
 import { fileURLToPath } from 'url';
+
+// eslint-disable-next-line no-restricted-imports
+import remarkFootnotes from './scripts/remark-footnotes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,10 +24,48 @@ export default {
   preprocess: [
     mdsvex({
       extensions: ['.md'],
-      smartypants: false,
+      smartypants: {
+        backticks: false,
+      },
       layout: {
         post: path.resolve(__dirname, 'src/components/markdown-post.svelte'),
       },
+      highlight: {
+        highlighter: async (code, lang) => {
+          const html = await codeToHtml(code, {
+            lang: lang ?? 'text',
+            themes: { light: 'github-light', dark: 'github-dark' },
+            defaultColor: false,
+            colorReplacements: {
+              'github-light': {
+                '#fff': '#e4e0dc',
+              },
+              'github-dark': {
+                '#24292e': '#2a2726',
+              },
+            },
+          });
+          return `{@html \`${escapeSvelte(html)}\`}`;
+        },
+      },
+      remarkPlugins: [remarkFootnotes],
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap',
+            properties: { class: 'heading-anchor' },
+          },
+        ],
+        [
+          rehypeExternalLinks,
+          {
+            target: '_blank',
+            rel: ['nofollow', 'noopener', 'noreferrer'],
+          },
+        ],
+      ],
     }),
     vitePreprocess({
       // Seems to break snippet exports from modules >= 5.5.0
@@ -66,13 +111,7 @@ export default {
     prerender: {
       crawl: true,
       entries: ['*'],
-      handleHttpError: ({ status, path }) => {
-        if (status === 404) {
-          if (path.startsWith('/en') || path.startsWith('/fr')) {
-            return;
-          }
-        }
-      },
+      handleUnseenRoutes: 'ignore',
     },
   },
 };

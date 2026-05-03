@@ -7,6 +7,9 @@ node_modules
 .env.*
 !.env.example
 
+# Font subsets (generated from fonts-source/ at build/dev time)
+/static/assets/fonts/tasa_orbiter/
+
 # Dependencies
 .pnp.*
 .yarn/*

@@ -25,6 +25,29 @@
       day: 'numeric',
     });
   });
+
+  /**
+   * Intercept clicks on in-page hash links inside the post body so the target
+   * scrolls to viewport center (smooth) instead of snapping to the top.
+   * Used by footnote refs/backrefs and any heading anchors.
+   */
+  const handleHashClick = (e: MouseEvent) => {
+    const link = (e.target instanceof Element ? e.target : null)?.closest('a[href^="#"]');
+    if (!(link instanceof HTMLAnchorElement)) {
+      return;
+    }
+    const href = link.getAttribute('href');
+    if (!href || href === '#') {
+      return;
+    }
+    const target = document.getElementById(href.slice(1));
+    if (!target) {
+      return;
+    }
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    history.pushState(null, '', href);
+  };
 </script>
 
 <div class="flex w-full flex-col gap-y-5">
@@ -51,7 +74,8 @@
     </section>
   {/if}
 
-  <section class="md-body font-sans text-base">
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <section class="md-body font-sans text-base" onclick={handleHashClick}>
     {@render children?.()}
   </section>
 </div>
@@ -88,7 +112,15 @@
     }
 
     :global(a) {
-      @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-opacity hover:opacity-100 dark:decoration-neutral-400;
+      @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 dark:decoration-neutral-400;
+    }
+
+    :global(.heading-anchor) {
+      @apply no-underline opacity-100;
+    }
+    :global(.heading-anchor:hover),
+    :global(.heading-anchor:focus-visible) {
+      @apply decoration-orange-light dark:decoration-orange-dark underline;
     }
 
     :global(ul),
@@ -114,12 +146,40 @@
       @apply mx-0.5 rounded-sm bg-neutral-200/60 px-1.5 py-0.5 font-mono text-sm dark:bg-neutral-400/60;
     }
 
+    :global(pre.shiki) {
+      @apply my-6 max-w-prose overflow-x-auto rounded-md p-4 font-mono text-sm leading-5;
+    }
+
+    :global(pre.shiki code) {
+      @apply font-mono;
+    }
+
     :global(hr) {
       @apply my-8 border-t border-dashed border-neutral-300;
     }
 
     :global(img) {
       @apply my-6 max-w-full rounded-md;
+    }
+
+    :global(.footnote-ref) {
+      @apply text-xs font-semibold;
+    }
+    :global(.footnote-ref a) {
+      @apply text-orange-light dark:text-orange-dark no-underline opacity-100 hover:opacity-80;
+    }
+
+    :global(.footnotes-heading) {
+      @apply mt-12 text-lg font-semibold tracking-wide text-neutral-500 dark:text-neutral-100;
+    }
+    :global(.footnotes) {
+      @apply mt-2 ml-5 max-w-prose text-sm text-neutral-500 dark:text-neutral-100;
+    }
+    :global(.footnotes li) {
+      @apply mt-1 leading-relaxed;
+    }
+    :global(.footnote-backref) {
+      @apply text-orange-light dark:text-orange-dark ml-1 inline-block no-underline opacity-100 hover:opacity-80;
     }
   }
 </style>

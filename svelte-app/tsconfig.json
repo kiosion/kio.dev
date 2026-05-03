@@ -21,6 +21,7 @@
   "include": [
     "src/**/*",
     "src/routes/**/.well-known/**/*",
+    "scripts/**/*",
     "types/**/*",
     "*.js",
     "*.ts",

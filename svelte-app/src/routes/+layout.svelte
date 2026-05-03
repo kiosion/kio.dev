@@ -3,6 +3,7 @@
   import '../tailwind.css';
   // eslint-disable-next-line no-restricted-imports
   import '../app.scss';
+  import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';
   import Footer from '$components/new/footer.svelte';
@@ -10,17 +11,19 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import type { Meta } from '$lib/nav.svelte';
-  import HighlightDarkStyles from 'svelte-highlight/styles/stackoverflow-dark';
-  import HighlightLightStyles from 'svelte-highlight/styles/stackoverflow-light';
 
-  const lightHighlight = HighlightLightStyles.replace(
-    /^<style>/i,
-    '<style media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">',
-  );
-  const darkHighlight = HighlightDarkStyles.replace(
-    /^<style>/i,
-    '<style media="(prefers-color-scheme: dark)">',
-  );
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) {
+      return;
+    }
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 
   const { data, children } = $props();
 
@@ -52,11 +55,6 @@
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 
   <link rel="preload" href="/assets/logo-standard.webp" as="image" />
-
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-  {@html lightHighlight}
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-  {@html darkHighlight}
 </svelte:head>
 
 <div
