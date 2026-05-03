@@ -3,42 +3,15 @@ name: Lint Check
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-    paths:
-      - "svelte-app/**"
-      - ".github/workflows/lint.yml"
 
 concurrency:
   group: lint-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  changes:
-    name: Detect Changes
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    outputs:
-      svelte: ${{ steps.filter.outputs.svelte }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            svelte:
-              - "svelte-app/**"
-            sanity:
-              - "sanity-cms/**"
-
-  lint-svelte:
-    name: Lint Svelte
-    needs: changes
-    if: needs.changes.outputs.svelte == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: svelte-app
 
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +24,6 @@ jobs:
         with:
           node-version: 22.14.0
           cache: pnpm
-          cache-dependency-path: svelte-app/pnpm-lock.yaml
 
       - name: Install deps
         run: pnpm install --frozen-lockfile

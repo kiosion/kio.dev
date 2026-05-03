@@ -1,20 +1,16 @@
-**/node_modules
-**/.DS_Store
-**/.env
-**/.vscode
-**/dist
-**/coverage
-**/cypress/videos
-**/cypress/screenshots
-**/cypress/downloads
-**/.netlify
-**/bundle
-**/build
-**/.*-error.log
-**/build
-**/_build
-**/deps
-elixir-api/cover
+.DS_Store
+node_modules
+/build
+/dist
+/.svelte-kit
+/.netlify
+/package
+.env
+.env.*
+!.env.example
+
+# Font subsets (generated from fonts-source/ at build/dev time)
+/static/assets/fonts/tasa_orbiter/
 
 # Dependencies
 .pnp.*
