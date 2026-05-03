@@ -52,7 +52,7 @@
   <meta property="twitter:url" content={page.url?.href} />
   <meta property="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 
-  <link rel="preload" href="/assets/logo-standard.webp" as="image" />
+  <link rel="preload" href="/assets/logo-standard--small.webp" as="image" />
 </svelte:head>
 
 <div

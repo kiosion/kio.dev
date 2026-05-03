@@ -74,7 +74,7 @@
       <span class="flex flex-row items-center">
         <span class="mr-4 mb-0.5" aria-hidden="true">
           <img
-            src="/assets/logo-standard.webp"
+            src="/assets/logo-standard--small.webp"
             class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
             alt="" />
         </span>
