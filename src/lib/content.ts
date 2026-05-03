@@ -1,4 +1,5 @@
 import type { Component } from 'svelte';
+import { posts as POSTS_MANIFEST } from 'virtual:posts-manifest';
 
 const slugFromPath = (path: string): string =>
   path.split('/').pop()!.replace(/\.md$/, '');
@@ -40,20 +41,12 @@ export type PostMetadata = {
 export type Post = PostMetadata & { slug: string };
 export type LoadedPost = LoadedContent<PostMetadata>;
 
-const POSTS_EAGER = import.meta.glob<{ metadata: PostMetadata }>(
-  '/src/content/posts/*.md',
-  { eager: true },
-);
-
 const POSTS_LAZY = import.meta.glob<ContentModule<PostMetadata>>(
   '/src/content/posts/*.md',
 );
 
 export const getAllPosts = (): Post[] =>
-  Object.entries(POSTS_EAGER)
-    .map(([path, mod]) => ({ ...mod.metadata, slug: slugFromPath(path) }))
-    .filter((p) => !p.draft)
-    .sort(sortByDateDesc);
+  POSTS_MANIFEST.filter((p) => !p.draft).sort(sortByDateDesc);
 
 export const loadPost = async (slug: string): Promise<LoadedPost | undefined> => {
   const post = await loadOne<PostMetadata>(

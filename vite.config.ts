@@ -6,6 +6,8 @@ import type { ConfigEnv } from 'vite';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
 
+import postsManifest from './scripts/posts-manifest-plugin.js';
+
 export default defineConfig(({ mode }: ConfigEnv) => {
   const isTesting = mode === 'testing',
     isDev = mode === 'development';
@@ -13,6 +15,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   return {
     plugins: [
       tailwindcss(),
+      postsManifest({ postsDir: 'src/content/posts' }),
       sveltekit()
       // (isDev || isTesting) && Inspect()
     ],

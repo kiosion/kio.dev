@@ -18,7 +18,11 @@
     <ul class="divide-y divide-neutral-200 dark:divide-neutral-400">
       {#each posts as post, idx (post.slug)}
         <li>
-          <a class="group block py-4" href={`/thoughts/${post.slug}`}>
+          <a
+            class="group block py-4"
+            href={`/thoughts/${post.slug}`}
+            data-sveltekit-preload-code="eager"
+            data-sveltekit-preload-data="eager">
             <div class="flex items-baseline justify-between gap-4">
               <h3
                 class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark font-semibold underline decoration-transparent decoration-2 underline-offset-[3px] opacity-100 transition-[text-decoration-color,color,opacity] group-hover:opacity-80 group-focus-visible:opacity-80">
@@ -30,7 +34,9 @@
             </div>
 
             {#if post.desc}
-              <p class="mt-1 text-base opacity-70">{post.desc}</p>
+              <p class="mt-1 line-clamp-1 max-w-4xl text-base opacity-70">
+                {post.desc}
+              </p>
             {/if}
           </a>
         </li>

@@ -51,7 +51,7 @@
     class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="hover">
+    data-sveltekit-preload-data="eager">
     {text}
   </a>
 {/snippet}
@@ -69,7 +69,7 @@
     in:fly={{ duration: 400, x: 150, delay: 100, easing: cubicOut }}
     out:fly={{ duration: 400, x: 150, easing: cubicIn }}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="hover">
+    data-sveltekit-preload-data="eager">
     {#if crumb.href === '/'}
       <span class="flex flex-row items-center">
         <span class="mr-4 mb-0.5" aria-hidden="true">

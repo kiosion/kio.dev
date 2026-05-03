@@ -8,3 +8,8 @@ declare namespace App {
     stack?: string;
   }
 }
+
+declare module 'virtual:posts-manifest' {
+  import type { PostMetadata } from '$lib/content';
+  export const posts: (PostMetadata & { slug: string })[];
+}

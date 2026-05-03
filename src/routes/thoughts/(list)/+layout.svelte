@@ -31,7 +31,7 @@
     href={isActiveTag(tag.slug) ? '/thoughts' : `/thoughts/+/${tag.slug}`}
     aria-current={isActiveTag(tag.slug) ? 'page' : undefined}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="hover"
+    data-sveltekit-preload-data="eager"
     data-sveltekit-replacestate
     data-sveltekit-noscroll>
     <span class="opacity-70 select-none">#</span>
@@ -74,7 +74,7 @@
         href="/thoughts"
         class="inline-block cursor-pointer text-base opacity-70 transition-opacity hover:opacity-100"
         data-sveltekit-preload-code="eager"
-        data-sveltekit-preload-data="hover"
+        data-sveltekit-preload-data="eager"
         data-sveltekit-replacestate
         data-sveltekit-noscroll>&nbsp;&mdash;&nbsp;clear</a>
     {:else}
