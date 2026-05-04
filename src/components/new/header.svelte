@@ -2,8 +2,6 @@
   import { page } from '$app/state';
   import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
   import { pathnameGroupKey } from '$lib/utils';
-  import { cubicIn, cubicOut } from 'svelte/easing';
-  import { fly } from 'svelte/transition';
 
   type Crumb = { label: string; href?: string };
 
@@ -60,28 +58,24 @@
   <svelte:element
     this={crumb.href && !isLast ? 'a' : 'span'}
     href={crumb.href && !isLast ? crumb.href : undefined}
-    class="inline-block max-w-[18ch] min-w-0 truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] sm:max-w-[34ch]"
+    class="inline-flex max-w-[18ch] min-w-0 flex-row items-center truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] sm:max-w-[34ch]"
     class:hover:decoration-orange-light={!!crumb.href && !isLast}
     class:hover:dark:decoration-orange-dark={!!crumb.href && !isLast}
     class:opacity-70={!isLast}
     class:hover:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
-    in:fly={{ duration: 400, x: 150, delay: 100, easing: cubicOut }}
-    out:fly={{ duration: 400, x: 150, easing: cubicIn }}
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="eager">
     {#if crumb.href === '/'}
-      <span class="flex flex-row items-center">
-        <span class="mr-4 mb-0.5" aria-hidden="true">
-          <img
-            src="/assets/logo-standard--small.webp"
-            class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
-            alt="" />
-        </span>
-        {#if !isLast}
-          {crumb.label}
-        {/if}
+      <span class="mr-4 mb-0.5" aria-hidden="true">
+        <img
+          src="/assets/logo-standard--small.webp"
+          class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
+          alt="" />
       </span>
+      {#if !isLast}
+        {crumb.label}
+      {/if}
     {:else}
       {crumb.label}
     {/if}
@@ -93,25 +87,21 @@
   <div
     class="relative isolate mx-auto grid w-full max-w-6xl items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
     <!-- Breadcrumbs -->
-    <nav class="min-w-0 select-none">
-      <ol class="hidden min-w-0 items-center whitespace-nowrap sm:flex">
+    <nav class="min-w-0 select-none" aria-label="Breadcrumbs">
+      <ol class="hidden min-w-0 items-center whitespace-nowrap md:flex">
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
-            {#key crumb.label}
-              {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
-            {/key}
+            {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
           </li>
         {/each}
       </ol>
 
-      <ol class="flex min-w-0 items-center whitespace-nowrap sm:hidden">
+      <ol class="flex min-w-0 items-center whitespace-nowrap md:hidden">
         {#each mobileBreadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
-            {#key crumb.label}
-              {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
-            {/key}
+            {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
           </li>
         {/each}
       </ol>
@@ -121,7 +111,8 @@
     <div
       class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end">
       <nav
-        class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8">
+        class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
+        aria-label="Primary">
         {#each NAV_LINKS as link}
           {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
         {/each}
