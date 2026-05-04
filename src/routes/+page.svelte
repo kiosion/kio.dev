@@ -8,7 +8,8 @@
 
 <section class="mt-8 flex w-full flex-col gap-8">
   <div
-    class="font-display flex max-w-2xl flex-col gap-3 text-4xl font-semibold tracking-wide md:text-5xl">
+    class="font-display flex max-w-2xl flex-col gap-3 text-4xl font-semibold tracking-wide md:text-5xl"
+  >
     {#each data.content.title as line}
       <p>{line}</p>
     {/each}
@@ -33,7 +34,8 @@
     <Link
       href="/thoughts/"
       data-sveltekit-preload-code="eager"
-      data-sveltekit-preload-data="hover">
+      data-sveltekit-preload-data="hover"
+    >
       See all
     </Link>
   </div>

@@ -30,7 +30,8 @@
       type="button"
       class="focus-outline-sm block cursor-zoom-in rounded-md"
       aria-label={alt || 'Open image'}
-      onclick={() => (showModal = true)}>
+      onclick={() => (showModal = true)}
+    >
       <img
         {src}
         {alt}
@@ -39,7 +40,8 @@
         loading="lazy"
         decoding="async"
         draggable="false"
-        class="block h-auto max-w-3xl rounded-md select-none" />
+        class="block h-auto max-w-3xl rounded-md select-none"
+      />
     </button>
   {:else}
     <img
@@ -49,7 +51,8 @@
       {height}
       loading="lazy"
       decoding="async"
-      class="block h-auto max-w-3xl rounded-md" />
+      class="block h-auto max-w-3xl rounded-md"
+    />
   {/if}
 
   {#if caption}
@@ -62,6 +65,7 @@
     <img
       {src}
       {alt}
-      class="mx-auto max-h-full max-w-full rounded-md object-contain select-none" />
+      class="mx-auto max-h-full max-w-full rounded-md object-contain select-none"
+    />
   </ImageModal>
 {/if}

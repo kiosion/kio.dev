@@ -49,7 +49,8 @@
     class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="eager">
+    data-sveltekit-preload-data="eager"
+  >
     {text}
   </a>
 {/snippet}
@@ -65,13 +66,15 @@
     class:hover:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
     data-sveltekit-preload-code="eager"
-    data-sveltekit-preload-data="eager">
+    data-sveltekit-preload-data="eager"
+  >
     {#if crumb.href === '/'}
       <span class="mr-4 mb-0.5" aria-hidden="true">
         <img
           src="/assets/logo-standard--small.webp"
           class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
-          alt="" />
+          alt=""
+        />
       </span>
       {#if !isLast}
         {crumb.label}
@@ -83,15 +86,18 @@
 {/snippet}
 
 <header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-400">
+  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-400"
+>
   <div
-    class="relative isolate mx-auto grid w-full max-w-6xl items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6">
+    class="relative isolate mx-auto grid w-full max-w-6xl items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6"
+  >
     <!-- Breadcrumbs -->
     <nav class="min-w-0 select-none" aria-label="Breadcrumbs">
       <ol class="hidden min-w-0 items-center whitespace-nowrap md:flex">
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
-            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
+            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
+          >
             {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
           </li>
         {/each}
@@ -100,7 +106,8 @@
       <ol class="flex min-w-0 items-center whitespace-nowrap md:hidden">
         {#each mobileBreadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
-            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none">
+            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
+          >
             {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
           </li>
         {/each}
@@ -109,10 +116,12 @@
 
     <!-- Right-side nav -->
     <div
-      class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end">
+      class="flex flex-row flex-wrap items-center justify-between gap-8 sm:justify-end"
+    >
       <nav
         class="text-md flex flex-row items-center justify-start gap-x-4 tracking-wide sm:justify-end sm:gap-x-8"
-        aria-label="Primary">
+        aria-label="Primary"
+      >
         {#each NAV_LINKS as link}
           {@render navLink(link.url, link.name, link.url === pathnameGroupKey(url))}
         {/each}

@@ -78,10 +78,12 @@
 </svelte:head>
 
 <section
-  class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12">
+  class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12"
+>
   <div class="mr-auto flex flex-col gap-8">
     <h1
-      class="font-display flex flex-col text-4xl font-semibold tracking-wide md:text-5xl">
+      class="font-display flex flex-col text-4xl font-semibold tracking-wide md:text-5xl"
+    >
       {heading}
     </h1>
     <p class="text-md">
@@ -90,6 +92,7 @@
     <button
       type="button"
       class="text-md hover:decoration-orange-light hover:dark:decoration-orange-dark w-fit cursor-pointer underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
-      onclick={() => history.back()}>Go back</button>
+      onclick={() => history.back()}>Go back</button
+    >
   </div>
 </section>

@@ -64,22 +64,26 @@
 <div class="flex w-full flex-col gap-y-5">
   {#if title}
     <section
-      class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-200 pb-6 dark:border-neutral-400">
+      class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-200 pb-6 dark:border-neutral-400"
+    >
       <div class="flex flex-col gap-y-4">
         <h1
-          class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl">
+          class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl"
+        >
           {title}
         </h1>
         {#if formattedDate}
           <div
-            class="flex flex-row items-center gap-2 text-base text-neutral-500 dark:text-neutral-100">
+            class="flex flex-row items-center gap-2 text-base text-neutral-500 dark:text-neutral-100"
+          >
             <p class="cursor-default" aria-label="Published date">{formattedDate}</p>
           </div>
         {/if}
       </div>
       {#if desc}
         <p
-          class="text-md max-w-prose tracking-wide text-neutral-500 dark:text-neutral-100">
+          class="text-md max-w-prose tracking-wide text-neutral-500 dark:text-neutral-100"
+        >
           {desc}
         </p>
       {/if}
