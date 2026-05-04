@@ -20,7 +20,7 @@ You request access to one EC2 host. The host is satisfiable by a role that grant
 
 Inside the host, all three logins are available to you, because the principal gate on the cert is global to the identity. It doesn't know which host you're connecting to, and the role-derived principal list it inherited at approval names every login the role permitted. You wanted `deploy`, but the cert lets you in as `deploy`, `admin`, or `root`, and the only thing between you and `root` is your own discipline. Arguably, this is bad design on the role side in this example, with the role being too broad in the first place, though making each role narrow enough to match every legitimate access pattern multiplies role definitions faster than anyone wants to maintain.
 
-The same pattern repeats across resource types. AWS Console: the role grants ten ARNs in the account, you wanted one, the cert grants ten. AWS Identity Center: the role grants every permission set on the account, you wanted `BillingAdmin`, the cert grants the full set. Database user: the role grants both `migration_admin` and `report_reader`, you wanted `migration_admin` for a one-off, the cert grants both. The resource gate works, the principal gate is too coarse to.
+The same pattern repeats across any resource type where principals are applicable; the resource gate works, but the principal gate is too coarse to.
 
 ## Constraints on the request, not on the role
 

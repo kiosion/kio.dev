@@ -1,5 +1,5 @@
 ---
-title: ["Hey, my name's Maxim.","Security & infra engineer based in","New York, NY"]
+title: ["Hey, my name's Maxim.","Security & infra engineer based in","New York, NY."]
 ---
 
 <script>
