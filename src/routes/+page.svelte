@@ -1,28 +1,28 @@
 <script lang="ts">
   import Link from '$components/link.svelte';
-  import PostList from '$components/new/post-list.svelte';
+  import PageSection from '$components/page-section.svelte';
+  import PageTitle from '$components/page-title.svelte';
+  import PostList from '$components/post-list.svelte';
 
   let { data } = $props();
   let AboutContent = $derived(data.content.Component);
 </script>
 
-<section class="mt-8 flex w-full flex-col gap-8">
-  <div
-    class="font-display flex max-w-2xl flex-col gap-3 text-4xl font-semibold tracking-wide md:text-5xl"
-  >
+<PageSection>
+  <PageTitle class="gap-3">
     {#each data.content.title as line}
-      <p>{line}</p>
+      <span>{line}</span>
     {/each}
-  </div>
+  </PageTitle>
   <div class="flex max-w-prose flex-col gap-3 text-lg">
     <AboutContent />
   </div>
-</section>
+</PageSection>
 
 <div class="min-h-0 flex-1"></div>
 
-<section class="flex flex-col gap-2">
-  <span class="text-base tracking-wide opacity-70">Recent posts</span>
+<PageSection>
+  <h2 class="text-base tracking-wide opacity-70">Recent posts</h2>
 
   {#if data.posts?.length}
     <PostList posts={data.posts} />
@@ -39,4 +39,4 @@
       See all
     </Link>
   </div>
-</section>
+</PageSection>

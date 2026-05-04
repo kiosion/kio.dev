@@ -4,8 +4,8 @@
   import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';
-  import Footer from '$components/new/footer.svelte';
-  import Header from '$components/new/header.svelte';
+  import Footer from '$components/footer.svelte';
+  import Header from '$components/header.svelte';
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import type { Meta } from '$lib/nav.svelte';

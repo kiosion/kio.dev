@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import PageSection from '$components/page-section.svelte';
+  import PageTitle from '$components/page-title.svelte';
   import { BASE_PAGE_TITLE } from '$lib/consts';
 
   let title = $state('Unknown Error');
   let message = $state('Sorry, something went wrong. Please try again.');
-  let showStack = $state(false);
 
   switch (page.status) {
     case 400:
@@ -77,15 +78,11 @@
   <title>{heading} — {BASE_PAGE_TITLE}</title>
 </svelte:head>
 
-<section
-  class="mt-10 flex w-full flex-row flex-wrap items-start justify-between gap-y-12"
->
+<PageSection>
   <div class="mr-auto flex flex-col gap-8">
-    <h1
-      class="font-display flex flex-col text-4xl font-semibold tracking-wide md:text-5xl"
-    >
+    <PageTitle>
       {heading}
-    </h1>
+    </PageTitle>
     <p class="text-md">
       {page.error?.message && page.status !== 404 ? page.error.message : message}
     </p>
@@ -95,4 +92,4 @@
       onclick={() => history.back()}>Go back</button
     >
   </div>
-</section>
+</PageSection>

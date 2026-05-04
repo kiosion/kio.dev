@@ -1,13 +1,14 @@
 <script lang="ts">
+  import PageSection from '$components/page-section.svelte';
+  import PageTitle from '$components/page-title.svelte';
+
   let { data } = $props();
   let EtcContent = $derived(data.content.Component);
 </script>
 
-<section class="text-md mt-8 flex w-full flex-col gap-6">
-  <h1
-    class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl"
-  >
+<PageSection>
+  <PageTitle>
     {data.content.title}
-  </h1>
+  </PageTitle>
   <EtcContent />
-</section>
+</PageSection>

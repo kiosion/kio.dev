@@ -1,6 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import PostList from '$components/new/post-list.svelte';
+  import PageSection from '$components/page-section.svelte';
+  import PageTitle from '$components/page-title.svelte';
+  import PostList from '$components/post-list.svelte';
 
   let { data } = $props();
 
@@ -52,13 +54,8 @@
   </a>
 {/snippet}
 
-<section class="mt-8 flex w-full flex-col gap-8">
-  <h1
-    class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl"
-  >
-    Thoughts &amp; guides
-  </h1>
-
+<PageSection>
+  <PageTitle>Thoughts &amp; guides</PageTitle>
   {#if data.tags.length}
     <div
       class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg"
@@ -68,10 +65,10 @@
       {/each}
     </div>
   {/if}
-</section>
+</PageSection>
 
-<section class="flex flex-col gap-2">
-  <span class="text-base tracking-wide">
+<PageSection>
+  <h2 class="text-base tracking-wide">
     {#if selected}
       <span class="opacity-70"
         >{posts.length}&nbsp;matching&nbsp;post{posts.length === 1 ? '' : 's'}</span
@@ -87,7 +84,7 @@
     {:else}
       <span class="opacity-70">All posts</span>
     {/if}
-  </span>
+  </h2>
 
   <PostList {posts} />
-</section>
+</PageSection>

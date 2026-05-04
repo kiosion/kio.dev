@@ -1,13 +1,18 @@
 <script lang="ts">
+  import PageSection from '$components/page-section.svelte';
+  import PageTitle from '$components/page-title.svelte';
+
   let {
     title,
     date,
     desc,
+    tags,
     children,
   }: {
     title?: string;
     date?: string;
     desc?: string;
+    tags?: string[];
     children?: import('svelte').Snippet;
   } = $props();
 
@@ -63,31 +68,37 @@
 
 <div class="flex w-full flex-col gap-y-5">
   {#if title}
-    <section
-      class="mt-8 flex w-full flex-col gap-y-6 border-b border-neutral-200 pb-6 dark:border-neutral-400"
-    >
-      <div class="flex flex-col gap-y-4">
-        <h1
-          class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl"
-        >
-          {title}
-        </h1>
-        {#if formattedDate}
-          <div
-            class="flex flex-row items-center gap-2 text-base text-neutral-500 dark:text-neutral-100"
-          >
-            <p class="cursor-default" aria-label="Published date">{formattedDate}</p>
+    <PageSection class="border-b border-neutral-200 pb-6 dark:border-neutral-400">
+      <PageTitle>
+        {title}
+      </PageTitle>
+      <div class="flex flex-col gap-y-4 text-neutral-500 dark:text-neutral-100">
+        {#if formattedDate || tags?.length}
+          <div class="flex flex-row flex-wrap gap-3">
+            {#if formattedDate}
+              <p class="text-base" aria-label="Published date">{formattedDate}</p>
+            {/if}
+            {#if tags?.length}
+              {#if formattedDate}<span class="opacity-70 select-none">-</span>{/if}
+              <ul class="flex flex-row gap-2">
+                {#each tags as tag}
+                  <li
+                    class="before:opacity-80 before:content-['#'] after:content-[','] last:after:content-none"
+                  >
+                    {tag}
+                  </li>
+                {/each}
+              </ul>
+            {/if}
           </div>
         {/if}
+        {#if desc}
+          <p class="text-md max-w-prose tracking-wide">
+            {desc}
+          </p>
+        {/if}
       </div>
-      {#if desc}
-        <p
-          class="text-md max-w-prose tracking-wide text-neutral-500 dark:text-neutral-100"
-        >
-          {desc}
-        </p>
-      {/if}
-    </section>
+    </PageSection>
   {/if}
 
   <section bind:this={bodyEl} class="md-body text-md font-sans">
