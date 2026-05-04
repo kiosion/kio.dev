@@ -59,26 +59,29 @@
   <svelte:element
     this={crumb.href && !isLast ? 'a' : 'span'}
     href={crumb.href && !isLast ? crumb.href : undefined}
-    class="inline-flex max-w-[18ch] min-w-0 flex-row items-center truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] sm:max-w-[34ch]"
+    class="inline-block max-w-[24ch] min-w-0 truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] md:max-w-[48ch]"
     class:hover:decoration-orange-light={!!crumb.href && !isLast}
     class:hover:dark:decoration-orange-dark={!!crumb.href && !isLast}
     class:opacity-70={!isLast}
     class:hover:opacity-100={crumb.href && !isLast}
+    class:focus-visible:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
     data-sveltekit-preload-code="eager"
     data-sveltekit-preload-data="eager"
   >
     {#if crumb.href === '/'}
-      <span class="mr-4 mb-0.5" aria-hidden="true">
-        <img
-          src="/assets/logo-standard--small.webp"
-          class="size-6 shrink-0 grow-0 transition-[filter] dark:invert"
-          alt=""
-        />
+      <span class="flex flex-row items-center gap-4">
+        <span class="mb-0.5 shrink-0" aria-hidden="true">
+          <img
+            src="/assets/logo-standard--small.webp"
+            class="size-6 shrink-0 transition-[filter] dark:invert"
+            alt=""
+          />
+        </span>
+        {#if !isLast}
+          {crumb.label}
+        {/if}
       </span>
-      {#if !isLast}
-        {crumb.label}
-      {/if}
     {:else}
       {crumb.label}
     {/if}
@@ -89,7 +92,7 @@
   class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-400"
 >
   <div
-    class="relative isolate mx-auto grid w-full max-w-6xl items-center gap-6 px-8 py-6 sm:grid-cols-[minmax(0,1fr)_max-content] sm:items-center sm:gap-y-0 sm:px-8 sm:py-6"
+    class="relative mx-auto flex w-full max-w-6xl flex-row items-center justify-between gap-6 px-8 py-6"
   >
     <!-- Breadcrumbs -->
     <nav class="min-w-0 select-none" aria-label="Breadcrumbs">
@@ -97,6 +100,7 @@
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
+            class:shrink-0={i === 0 || crumb.label === '...'}
           >
             {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
           </li>
@@ -104,13 +108,9 @@
       </ol>
 
       <ol class="flex min-w-0 items-center whitespace-nowrap md:hidden">
-        {#each mobileBreadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
-          <li
-            class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
-          >
-            {@render breadcrumbSegment(crumb, i === mobileBreadcrumbs.length - 1)}
-          </li>
-        {/each}
+        <li class="text-md flex min-w-0 items-center">
+          {@render breadcrumbSegment({ label: BASE_DOMAIN, href: '/' }, false)}
+        </li>
       </ol>
     </nav>
 
