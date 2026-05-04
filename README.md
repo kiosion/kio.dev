@@ -16,8 +16,8 @@ Welcome to the monorepo for my devblog / portfolio!
 ## 🚀 Development
 ### Prerequisites
 
-- Node.js ~23
-- PNPM ~9.15
+- Node.js ~24
+- PNPM ~10.33.2
 
 ### Setup
 
