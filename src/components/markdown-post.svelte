@@ -131,11 +131,23 @@
     }
 
     :global(.heading-anchor) {
-      @apply no-underline opacity-100;
+      @apply relative underline decoration-transparent opacity-100 transition-[text-decoration-color];
+
+      &:hover,
+      &:focus-visible {
+        &:before {
+          @apply opacity-75;
+        }
+      }
+
+      &:before {
+        @apply text-md absolute top-1/2 -left-5 -translate-y-1/2 opacity-0 transition-opacity;
+        content: '#';
+      }
     }
     :global(.heading-anchor:hover),
     :global(.heading-anchor:focus-visible) {
-      @apply decoration-orange-light dark:decoration-orange-dark underline;
+      @apply decoration-orange-light dark:decoration-orange-dark;
     }
 
     :global(ul),
@@ -170,7 +182,7 @@
     }
 
     :global(hr) {
-      @apply my-8 border-t border-dashed border-neutral-300;
+      @apply my-8 border-t border-dashed border-neutral-200 dark:border-neutral-400;
     }
 
     :global(img) {
@@ -181,14 +193,14 @@
       @apply text-xs font-semibold;
     }
     :global(.footnote-ref a) {
-      @apply text-orange-light dark:text-orange-dark no-underline opacity-100 hover:opacity-80;
+      @apply text-orange-light dark:text-orange-dark -m-1.5 p-1.5 no-underline opacity-100 hover:opacity-80;
     }
 
     :global(.footnotes-heading) {
-      @apply mt-12 text-lg font-semibold tracking-wide text-neutral-500 dark:text-neutral-100;
+      @apply mt-12 text-xl font-semibold tracking-wide text-neutral-500 dark:text-neutral-100;
     }
     :global(.footnotes) {
-      @apply mt-2 ml-5 max-w-prose text-sm text-neutral-500 dark:text-neutral-100;
+      @apply mt-2 ml-5 max-w-prose text-base text-neutral-500 dark:text-neutral-100;
     }
     :global(.footnotes li) {
       @apply mt-1 leading-relaxed;
