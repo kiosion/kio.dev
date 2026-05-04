@@ -15,7 +15,7 @@
     "format": "prettier --write ./src/**/*.{ts,svelte}",
     "lint": "pnpm format && pnpm eslint --fix \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\"",
     "lint:check": "pnpm prettier --check ./src/**/*.{ts,svelte} && pnpm eslint \"./src/**/*.{ts,svelte}\" \"./types/**/*.ts\"",
-    "subset-fonts": "node ./scripts/subset-fonts.js",
+    "subset-fonts": "node ./scripts/subset-fonts.ts",
     "prepare": "test -f ./.husky/pre-commit || (husky install && chmod ug+x ./.husky/* && husky add ./.husky/pre-commit 'pnpm lint-staged')"
   },
   "devDependencies": {
@@ -28,6 +28,7 @@
     "@tailwindcss/postcss": "^4.1.10",
     "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",
+    "@types/subset-font": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
     "autoprefixer": "^10.4.21",

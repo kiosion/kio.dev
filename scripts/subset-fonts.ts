@@ -1,17 +1,3 @@
-/**
- * Subsets the TASA Orbiter display + deck weights down to a smaller glyph set
- * (alphanumerics + Latin accents + common punctuation) for build/deploy.
- *
- * Originals live in `fonts-source/tasa_orbiter/` (committed, untouched).
- * Subsets are written to `static/assets/fonts/tasa_orbiter/` (gitignored,
- * regenerated on each `pnpm dev` or `pnpm build`).
- *
- * Commit Mono is intentionally left full because code blocks use a wide
- * symbol range.
- *
- *   node ./scripts/subset-fonts.js
- */
-
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,14 +10,14 @@ const SOURCE_DIR = join(ROOT, 'fonts-source/tasa_orbiter');
 const OUTPUT_DIR = join(ROOT, 'static/assets/fonts/tasa_orbiter');
 
 // Unicode ranges to keep
-const RANGES = [
+const RANGES: ReadonlyArray<readonly [number, number]> = [
   [0x0020, 0x007e], // Basic Latin (printable ASCII)
   [0x00a0, 0x00ff], // Latin-1 Supplement (accented Latin, ©, ¡, ¿, …)
   [0x0100, 0x017f], // Latin Extended-A (additional European accents)
   [0x2010, 0x2027], // General Punctuation (em/en dash, smart quotes, ellipsis)
 ];
 
-const FILES = [
+const FILES: readonly string[] = [
   'TASAOrbiterDisplay-Regular.woff2',
   'TASAOrbiterDisplay-SemiBold.woff2',
   'TASAOrbiterDisplay-Bold.woff2',
@@ -41,14 +27,14 @@ const FILES = [
 ];
 
 const text = RANGES.flatMap(([start, end]) => {
-  const out = [];
+  const out: string[] = [];
   for (let cp = start; cp <= end; cp++) {
     out.push(String.fromCodePoint(cp));
   }
   return out;
 }).join('');
 
-const fmt = (n) => `${(n / 1024).toFixed(1)}K`;
+const fmt = (n: number) => `${(n / 1024).toFixed(1)}K`;
 
 await mkdir(OUTPUT_DIR, { recursive: true });
 
@@ -64,7 +50,9 @@ for (const filename of FILES) {
   totalOut += subset.length;
 
   const pct = Math.round((1 - subset.length / original.length) * 100);
-  console.log(`  ${filename}: ${fmt(original.length)} → ${fmt(subset.length)}  (-${pct}%)`);
+  console.log(
+    `  ${filename}: ${fmt(original.length)} → ${fmt(subset.length)}  (-${pct}%)`,
+  );
 }
 
 console.log(

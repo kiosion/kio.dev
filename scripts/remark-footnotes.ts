@@ -1,39 +1,20 @@
-/**
- * Tiny remark plugin that adds GFM-style footnote support for mdsvex 0.12.
- *
- * mdsvex bundles its own remark-parse and applies user remarkPlugins AFTER
- * parsing, so syntax-extending plugins like remark-gfm can't actually hook
- * the tokenizer. mdsvex's parser treats `[^id]` as a `linkReference` node
- * (identifier `^id`), so we transform those rather than scanning text.
- *
- *   - Root paragraphs that start with a `linkReference[identifier=^*]`
- *     followed by a text node beginning with `:` → captured as definitions
- *     and stripped from the body.
- *   - Other `linkReference[identifier=^*]` nodes anywhere → replaced with
- *     <sup><a></a></sup> linking to the definition at the bottom.
- *
- * Numbering follows the order references first appear; an unused definition
- * is silently dropped.
- */
+interface MdNode {
+  type: string;
+  children?: MdNode[];
+  value?: string;
+  depth?: number;
+  ordered?: boolean;
+  spread?: boolean;
+  identifier?: string;
+  data?: { hProperties?: Record<string, unknown> };
+}
 
-/**
- * @typedef {Object} MdNode
- * @property {string} type
- * @property {MdNode[]} [children]
- * @property {string} [value]
- * @property {number} [depth]
- * @property {boolean} [ordered]
- * @property {boolean} [spread]
- * @property {string} [identifier]
- * @property {{ hProperties?: Record<string, unknown> }} [data]
- */
-
-/** @typedef {MdNode & { children: MdNode[] }} MdRoot */
+type MdRoot = MdNode & { children: MdNode[] };
 
 export default function remarkFootnotes() {
-  return (/** @type {MdRoot} */ tree) => {
-    /** @type {Map<string, MdNode[]>} id (without leading ^) → definition children */
-    const definitions = new Map();
+  return (tree: MdRoot) => {
+    // id (without leading ^) -> definition children
+    const definitions = new Map<string, MdNode[]>();
 
     // pass 1: pull footnote-definition paragraphs out of body
     tree.children = tree.children.filter((node) => {
@@ -55,8 +36,7 @@ export default function remarkFootnotes() {
 
       const id = ident.slice(1);
       const trimmed = second.value.replace(/^:\s*/, '');
-      /** @type {MdNode[]} */
-      const remaining = [];
+      const remaining: MdNode[] = [];
       if (trimmed.length > 0) {
         remaining.push({ type: 'text', value: trimmed });
       }
@@ -66,8 +46,7 @@ export default function remarkFootnotes() {
     });
 
     // pass 2: walk the tree, replace [^id] linkReference nodes with sups
-    /** @type {string[]} */
-    const refOrder = [];
+    const refOrder: string[] = [];
     transformLinkReferences(tree, refOrder);
 
     // pass 3: append the footnotes section if anything was referenced
@@ -106,18 +85,14 @@ export default function remarkFootnotes() {
   };
 }
 
-/**
- * @param {MdNode} node
- * @param {string[]} refOrder
- */
-function transformLinkReferences(node, refOrder) {
+function transformLinkReferences(node: MdNode, refOrder: string[]): void {
   if (!node.children) {
     return;
   }
   for (let i = 0; i < node.children.length; i++) {
     const child = node.children[i];
     if (child.type === 'linkReference' && (child.identifier ?? '').startsWith('^')) {
-      const id = /** @type {string} */ (child.identifier).slice(1);
+      const id = (child.identifier as string).slice(1);
       if (!refOrder.includes(id)) {
         refOrder.push(id);
       }

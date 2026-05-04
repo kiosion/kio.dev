@@ -6,7 +6,7 @@ import type { ConfigEnv } from 'vite';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
 
-import postsManifest from './scripts/posts-manifest-plugin.js';
+import postsManifest from './scripts/posts-manifest-plugin.ts';
 
 export default defineConfig(({ mode }: ConfigEnv) => {
   const isTesting = mode === 'testing',
