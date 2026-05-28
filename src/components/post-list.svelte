@@ -22,7 +22,7 @@
             class="group block py-4"
             href={`/thoughts/${post.slug}`}
             data-sveltekit-preload-code="eager"
-            data-sveltekit-preload-data="eager"
+            data-sveltekit-preload-data="hover"
           >
             <div class="flex items-baseline justify-between gap-4">
               <h3
