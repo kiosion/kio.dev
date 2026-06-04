@@ -20,7 +20,7 @@ export const load = (async ({ parent, params }) => {
     ],
     post,
     meta: {
-      title: `${post.title} — ${BASE_PAGE_TITLE}`,
+      title: `${BASE_PAGE_TITLE} — ${post.title}`,
       desc: post.desc
         ? post.desc.length > 160
           ? `${post.desc.slice(0, 160 - 3)}...`

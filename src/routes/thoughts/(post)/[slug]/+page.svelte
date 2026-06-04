@@ -25,13 +25,10 @@
 </script>
 
 <svelte:head>
-  <meta name="robots" content="index, nofollow" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="article" />
   <meta
     property="article:published_time"
-    content={new Date(data.post.date || '0')?.toISOString()}
-  />
-  <meta
-    property="article:modified_time"
     content={new Date(data.post.date || '0')?.toISOString()}
   />
 </svelte:head>

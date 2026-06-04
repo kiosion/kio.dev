@@ -75,7 +75,7 @@
 
 <svelte:head>
   <meta name="robots" content="none" />
-  <title>{heading} — {BASE_PAGE_TITLE}</title>
+  <title>{BASE_PAGE_TITLE} — {heading}</title>
 </svelte:head>
 
 <PageSection>

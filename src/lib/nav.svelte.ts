@@ -12,7 +12,10 @@ export const getPageMeta = (basePathname?: string) => {
   const route = APP_ROUTES.find((r) => r.path === top);
 
   return {
-    title: route?.name?.length ? `${route.name} — ${BASE_PAGE_TITLE}` : BASE_PAGE_TITLE,
+    title:
+      route?.name?.length && route.path !== '/'
+        ? `${BASE_PAGE_TITLE} — ${route.name}`
+        : BASE_PAGE_TITLE,
     desc: route?.desc,
   };
 };
