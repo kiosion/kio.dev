@@ -14,3 +14,13 @@
     <EtcContent />
   </div>
 </PageSection>
+
+<style>
+  @reference '../../tailwind.css';
+
+  div {
+    :global(hr) {
+      @apply my-8 border-t border-dashed border-neutral-200 dark:border-neutral-400;
+    }
+  }
+</style>
