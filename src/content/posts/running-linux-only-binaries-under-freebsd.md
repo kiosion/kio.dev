@@ -3,24 +3,24 @@ layout: post
 title: Running linux-only-binaries-under-freebsd
 date: 2024-03-31
 tags: [guides]
-desc: Running Linux-only binaries under FreeBSD using its Linux binary compatibility tools and Jails
+desc:
+  Running Linux-only binaries under FreeBSD using its Linux binary compatibility
+  tools and Jails
 ---
 
 <script>
   import Image from '$components/images/image.svelte';
 </script>
 
-I've taken a real liking to FreeBSD lately, but my biggest initial annoyance
-was its lack of compatibility with Linux apps and tools I've grown accustomed
-to.
+I've taken a real liking to FreeBSD lately, but my biggest initial annoyance was
+its lack of compatibility with Linux apps and tools I've grown accustomed to.
 
-Despite also being a Unix-like operating system, it isn't able to run many
-Linux binaries and programs. Spotify is one example I ran into while testing
-out FreeBSD as a desktop OS. Due to certain DRM library dependencies
-(_cough cough_, Widevine CDM), it's not able to run natively. This would be a
-deal-breaker for me, but luckily, there's a quick and rather easy workaround,
-using a virtualization concept called Jails, and FreeBSD's Linux binary
-compatibility.
+Despite also being a Unix-like operating system, it isn't able to run many Linux
+binaries and programs. Spotify is one example I ran into while testing out
+FreeBSD as a desktop OS. Due to certain DRM library dependencies (_cough cough_,
+Widevine CDM), it's not able to run natively. This would be a deal-breaker for
+me, but luckily, there's a quick and rather easy workaround, using a
+virtualization concept called Jails, and FreeBSD's Linux binary compatibility.
 
 ## Jails & Linux Binary Compatibility
 
@@ -31,12 +31,12 @@ full-blown virtual machines, they're perfect for running a Linux environment
 efficiently.
 
 FreeBSD's Linux binary compatibility feature is the magic wand here - it
-emulates a Linux environment within a Jail, allowing you to run many Linux
-apps seamlessly. The environment I'll be setting up here, based on Ubuntu,
-provides the necessary libraries and components required to run many
-Linux-only binaries (not just Spotify, although that's what my focus was on
-here). Not everything works perfectly, however, and certain binaries or
-programs may require modifying the basic setup I detail in this article.
+emulates a Linux environment within a Jail, allowing you to run many Linux apps
+seamlessly. The environment I'll be setting up here, based on Ubuntu, provides
+the necessary libraries and components required to run many Linux-only binaries
+(not just Spotify, although that's what my focus was on here). Not everything
+works perfectly, however, and certain binaries or programs may require modifying
+the basic setup I detail in this article.
 
 ## Getting started
 
@@ -46,13 +46,13 @@ our host BSD shell, while `/$` denotes commands to be run within the Jail.
 First things first, let's enable Linux binary compatibility. Loading the
 necessary kernel modules is the first step:
 
-- `linux`: The basic Linux compat layer, necessary for running Linux binaries
-  on FreeBSD
+- `linux`: The basic Linux compat layer, necessary for running Linux binaries on
+  FreeBSD
 - `linux64`: Specifically for 64-bit compat
 - `fdescfs`: Used by Linux programs to access file descriptors in a UNIX-like
   manner
-- `linprocfs`: Emulates the Linux /proc filesystem, providing process and
-  system information in a way Linux binaries will expect
+- `linprocfs`: Emulates the Linux /proc filesystem, providing process and system
+  information in a way Linux binaries will expect
 - `tmpfs`: A temporary filesystem for creation of cache in RAM
 - `linsysfs`: Emulates the Linux /sys filesystem, providing system and device
   information for Linux binaries, similar to linprocfs
@@ -156,8 +156,7 @@ $ zfs create -o compression=on -o mountpoint=/compat zroot/compat
 ```
 
 You could also use BTRFS - although it's much less battle-tested, it's what I
-use on my main Arch install, and I chose to use it here as well rather than
-ZFS.
+use on my main Arch install, and I chose to use it here as well rather than ZFS.
 
 For either option, snapshotting should be used as a quick backup before making
 any potentially-breaking changes:
@@ -188,8 +187,7 @@ compat.linux-emul_path: /compat/linux -> /compat/ubuntu
 ## Bootstrapping Ubuntu Base
 
 Using Debootstrap[^2], we'll download and install the Ubuntu base systems by
-specifying the target's name, e.g., focal for 'Focal Fossa' (version 20.04
-LTS).
+specifying the target's name, e.g., focal for 'Focal Fossa' (version 20.04 LTS).
 
 ```sh
 $ pkg install debootstrap
@@ -279,19 +277,19 @@ $ chroot /compat/ubuntu /bin/bash
 ### Uninstalling
 
 If wanted, the Ubuntu Jail and these compatibility tools can be safely removed,
-mostly by following the reverse order. First, the automatic startup we set
-needs to be disabled. FreeBSD then needs to be rebooted, before finally deleting
-the Ubuntu system directory and/or destroying its volume.
+mostly by following the reverse order. First, the automatic startup we set needs
+to be disabled. FreeBSD then needs to be rebooted, before finally deleting the
+Ubuntu system directory and/or destroying its volume.
 
 ## Wrapping up
 
 With those updating/future removal tips in mind, we're almost done! The final
 step is to use Ubuntu's apt package manager as you would in a normal Ubuntu
-system to install Spotify. You may want to create a script or symlink for
-easier access without needing to navigate the command-line and chroot into the
-jail each time. That aside, most programs/binaries should work out-of-the-box.
-If some libraries are still missing, though, there's a section in FreeBSD's
-docs on [installing additional libs manually](https://docs.freebsd.org/en/books/handbook/linuxemu/#linuxemu-libs-manually).
+system to install Spotify. You may want to create a script or symlink for easier
+access without needing to navigate the command-line and chroot into the jail
+each time. That aside, most programs/binaries should work out-of-the-box. If
+some libraries are still missing, though, there's a section in FreeBSD's docs on
+[installing additional libs manually](https://docs.freebsd.org/en/books/handbook/linuxemu/#linuxemu-libs-manually).
 
 <Image
   src="/assets/img/ADAC2ADE-B080-4A87-938A-9FEB9714CC64.png"
@@ -301,11 +299,12 @@ docs on [installing additional libs manually](https://docs.freebsd.org/en/books/
 Great success! 🥳
 
 I hope this writeup helped out! A massive thanks to Micski and their amazing
-writeup on this same topic back in 2021 - their steps & scripts are what I
-based this guide on, and helped me get up-and-running with Spotify, Slack,
-Zoom, and other essentials, allowing me to daily-drive FreeBSD on my
-development machine.
+writeup on this same topic back in 2021 - their steps & scripts are what I based
+this guide on, and helped me get up-and-running with Spotify, Slack, Zoom, and
+other essentials, allowing me to daily-drive FreeBSD on my development machine.
 
 [^1]: More on Jails: https://wiki.freebsd.org/Jails
 
-[^2]: More on FreeBSD's Debootstrap: https://docs.freebsd.org/en/books/handbook/linuxemu/#linuxemu-debootstrap
+[^2]:
+    More on FreeBSD's Debootstrap:
+    https://docs.freebsd.org/en/books/handbook/linuxemu/#linuxemu-debootstrap

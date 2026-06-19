@@ -3,7 +3,9 @@ layout: post
 title: Using a Yubikey for SSH Authentication on MacOS / Linux
 date: 2021-11-29
 tags: [security, ssh, guides]
-desc: How to authenticate SSH connections using your Yubikey's Authentication slot, on both Linux and MacOS.
+desc:
+  How to authenticate SSH connections using your Yubikey's Authentication slot,
+  on both Linux and MacOS.
 ---
 
 Setting up a Yubikey for SSH authentication can be a bit tricky, and I found
@@ -20,8 +22,8 @@ Authentication slot (9a) and keep the Smart Card slot open for other uses.
 ### Linux
 
 yubikey-manager can be used as either an AppImage from
-[Yubikey's website](https://www.yubico.com/support/download/yubikey-manager/)
-or installed from your package manager.
+[Yubikey's website](https://www.yubico.com/support/download/yubikey-manager/) or
+installed from your package manager.
 
 - On Arch Linux, it's available under the name
   [`yubikey-manager-qt`](https://archlinux.org/packages/community/x86_64/yubikey-manager-qt/);
@@ -50,16 +52,17 @@ yubikey-manager can be downloaded and installed from
 [Yubikey's website](https://www.yubico.com/support/download/yubikey-manager/).
 
 yubikey-agent can be installed using Homebrew: `brew install yubikey-agent`.
-After installation, it needs to be enabled using `brew services start yubikey-agent`.
+After installation, it needs to be enabled using
+`brew services start yubikey-agent`.
 
 ## Steps
 
 ### Generate a new key
 
-Here, you could either choose `yubikey-agent -setup`, or, use yubikey-manager
-to generate a key. I chose the second option and recommend it, as although
-yubikey-agent is easier, it doesn't give any control over the type or length
-of key generated.
+Here, you could either choose `yubikey-agent -setup`, or, use yubikey-manager to
+generate a key. I chose the second option and recommend it, as although
+yubikey-agent is easier, it doesn't give any control over the type or length of
+key generated.
 
 #### Using yubikey-agent
 
@@ -71,8 +74,8 @@ You'll be asked to set a PIN, and be given your public key once the process is
 finished.
 
 > It's important to note that `yubikey-agent -setup` generates a random
-> Management Key and stores it in PIN-protected metadata, making it difficult
-> to use other PIV slots without some hack-y workarounds[^1].
+> Management Key and stores it in PIN-protected metadata, making it difficult to
+> use other PIV slots without some hack-y workarounds[^1].
 
 #### Using yubikey-manager
 
@@ -86,13 +89,13 @@ be fine if you're not sure), name it 'SSH Key', and set the expiration date.
 
 If everything looks good, save it and enter the PIN to confirm. If you haven't
 set one previously, the default is 123456. This should be changed to something
-more secure, along with the PUK and Management Key. Save these somewhere
-offline and safe.
+more secure, along with the PUK and Management Key. Save these somewhere offline
+and safe.
 
 ### Configure your shell
 
-Next, you'll need to configure your shell to set the `SSH_AUTH_SOCK`
-environment variable on launch.
+Next, you'll need to configure your shell to set the `SSH_AUTH_SOCK` environment
+variable on launch.
 
 First find the location of the yubikey-agent socket. You can look at the output
 of `ps aux | grep yubikey-agent` if you're not sure. For me, on Linux, its
@@ -107,8 +110,8 @@ where the path is the location of the yubikey-agent socket.
 #### Bash/ZSH
 
 Open your config and add
-`export SSH_AUTH_SOCK="/run/user/{UID}/yubikey-agent/yubikey-agent.sock"`,
-where the path is the location of the yubikey-agent socket.
+`export SSH_AUTH_SOCK="/run/user/{UID}/yubikey-agent/yubikey-agent.sock"`, where
+the path is the location of the yubikey-agent socket.
 
 ### Extra deps
 
@@ -134,4 +137,6 @@ Yubikey's Authentication slot.
   it with yubikey-agent, I've found either unplugging-and-re-plugging it, or
   sending a SIGHUP to the yubikey-agent process solves this.
 
-[^1]: See yubikey-agent's [manual setup instructions](https://github.com/FiloSottile/yubikey-agent#manual-setup-and-technical-details)
+[^1]:
+    See yubikey-agent's
+    [manual setup instructions](https://github.com/FiloSottile/yubikey-agent#manual-setup-and-technical-details)

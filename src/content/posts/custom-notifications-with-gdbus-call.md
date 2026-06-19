@@ -9,17 +9,25 @@ tags: [guides, linux]
   import Image from '$components/images/image.svelte';
 </script>
 
-I wanted to write this short guide on the functionality of `gdbus call` as I couldn't find any resources online regarding it besides its own documentation. I'll also quickly cover my wired-notify config, since it's a really neat notification daemon that I don't think is nearly popular enough :)
+I wanted to write this short guide on the functionality of `gdbus call` as I
+couldn't find any resources online regarding it besides its own documentation.
+I'll also quickly cover my wired-notify config, since it's a really neat
+notification daemon that I don't think is nearly popular enough :)
 
-Here's the reason I went through this trouble, first off: a tiny configurable volume HUD that live-updates in place as you change the device volume.
+Here's the reason I went through this trouble, first off: a tiny configurable
+volume HUD that live-updates in place as you change the device volume.
 
 <Image
   src="/assets/img/8A566FF9-492B-4CB3-945B-2370F47CC856.png"
   alt="Screenshot of custom scripted volume HUD over desktop"
 />
 
-Although `gdbus call` has *many* use-cases, the one I'll focus on here is sending custom notifications, as notify-send doesn't expose many of the properties I needed to set. `notify-send`, along with other notification frameworks I looked at, didn't support updating existing notifications using identifiers. `gdbus call` does allow this granular control, along with exposing some other cool properties.
-
+Although `gdbus call` has _many_ use-cases, the one I'll focus on here is
+sending custom notifications, as notify-send doesn't expose many of the
+properties I needed to set. `notify-send`, along with other notification
+frameworks I looked at, didn't support updating existing notifications using
+identifiers. `gdbus call` does allow this granular control, along with exposing
+some other cool properties.
 
 ## Syntax
 
@@ -40,29 +48,37 @@ gdbus call \
   "4000"
 ```
 
-Running this will return `(uint32 1,)`, the '1' representing the notification's unique identifier. This is useful if you want to parse that identifier and re-use it later; one way to do so would be using sed (e.g., `sed 's/[^ ]* //; s/,.//'` would strip everything but the identifier).
-
+Running this will return `(uint32 1,)`, the '1' representing the notification's
+unique identifier. This is useful if you want to parse that identifier and
+re-use it later; one way to do so would be using sed (e.g.,
+`sed 's/[^ ]* //; s/,.//'` would strip everything but the identifier).
 
 A few other tips:
+
 - `--session` represents the user's `systemd --user` instance
-- `--dest`, `--object-path`, and `--method` in this case are all used to point to `freedesktop.notifications.notify`, and the following parameters are specified in freedesktop's documentation
+- `--dest`, `--object-path`, and `--method` in this case are all used to point
+  to `freedesktop.notifications.notify`, and the following parameters are
+  specified in freedesktop's documentation
 - The '1' represents the identifier, and the replaces ID
 - The following blank string is the notification icon
-- The following two strings are for the Summary (notification title) and Body (multi-line description)
-- The empty array is for actions, for ex, sending a callback to the application when clicked
-- The empty dictionary is for hints; these are used to send extra data such as (in my use case) the current volume level, an image, extra text, etc
-- The '4000' represents the expiration timeout in ms. If set to -1, it falls back to the notification server's default
-
+- The following two strings are for the Summary (notification title) and Body
+  (multi-line description)
+- The empty array is for actions, for ex, sending a callback to the application
+  when clicked
+- The empty dictionary is for hints; these are used to send extra data such as
+  (in my use case) the current volume level, an image, extra text, etc
+- The '4000' represents the expiration timeout in ms. If set to -1, it falls
+  back to the notification server's default
 
 ## Body text
 
 The body text can, in most cases, contain limited markup:
+
 - `<b>...</b>` for bold,
 - `<i>...</i>` for italics,
 - `<u>...</u>` for underlines,
 - `<a href="...">...</a>` for links, and
 - `<img src="..." alt="...">` for images
-
 
 ## Providing hints
 
@@ -70,26 +86,25 @@ Hints are provided as a dictionary, using the following format:
 
 `{'Name': <'type':'value'>}`
 
-
-So, for example, sending a hint for the integer value of my volume notification looks like:
+So, for example, sending a hint for the integer value of my volume notification
+looks like:
 
 `{'value': <58>}`
-
 
 And for providing a file path for an image preview:
 
 `{'image-path': <'file:///dir/image.jpg'}`
 
+Note that when providing the dictionary in the command, it should be encased by
+double-quotes.
 
-Note that when providing the dictionary in the command, it should be encased by double-quotes.
-
-
-That's all there is to it! I hope this comes in handy for someone at some point :)
-
+That's all there is to it! I hope this comes in handy for someone at some point
+:)
 
 ## More configs
 
-Finally, if you're curious, here's my wired-notify config, as well as the simple script I call on volume update to send a notification to it:
+Finally, if you're curious, here's my wired-notify config, as well as the simple
+script I call on volume update to send a notification to it:
 
 ```sh wired.ron
 (
@@ -227,7 +242,7 @@ Finally, if you're curious, here's my wired-notify config, as well as the simple
                 dimensions: (width: (min: 0, max: 300), height: (min: 0, max: 0)),
             )),
         ),
-        
+
         (
             name: "progressBody",
             parent: "progressBlock",
@@ -253,7 +268,7 @@ Finally, if you're curious, here's my wired-notify config, as well as the simple
 ## The sink should be the default
 my $sink = `pactl get-default-sink`;
 
-## Run pactl and store output 
+## Run pactl and store output
 open(my $fh, '-|', 'pactl list sinks');
 
 ## Set the record separator to consecutive newlines (same as -000)
@@ -264,7 +279,7 @@ while (<$fh>) {
         ## Extract the current volume
         /Volume:.*?(\d+)%/;
         my $volume=$1;
-        ## Send the notification, using gdbus so we can specify the 
+        ## Send the notification, using gdbus so we can specify the
         ## ID to update on repeat
         exec "gdbus call --session --dest org.freedesktop.Notifications --object-path /org/freedesktop/Notifications --method org.freedesktop.Notifications.Notify 'identifier' '999' '' 'Volume' '$volume%' '[]' '{\"value\": <$volume>}' '4000'";
     }

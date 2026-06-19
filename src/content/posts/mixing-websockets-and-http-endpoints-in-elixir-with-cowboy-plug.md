@@ -3,7 +3,9 @@ layout: post
 title: Mixing WebSockets & HTTP endpoints in Elixir with Cowboy + Plug
 date: 2023-07-30
 tags: [guides, programming]
-desc: Using a custom dispatcher structure for mixing HTTP and WebSocket endpoints in a simple Plug-based Elixir API
+desc:
+  Using a custom dispatcher structure for mixing HTTP and WebSocket endpoints in
+  a simple Plug-based Elixir API
 ---
 
 Howdy! 🤠
@@ -11,14 +13,14 @@ Howdy! 🤠
 I recently found myself wanting to add a WebSocket endpoint to an existing
 Plug-based Elixir API I'd built with Cowboy. It seemed like a straightforward
 task, but I found pretty sparse information online about it. After a weekend
-spent looking through Hexdocs & Cowboy's documentation, I figured I'd write
-a short post about my solution.
+spent looking through Hexdocs & Cowboy's documentation, I figured I'd write a
+short post about my solution.
 
 My reason for using Cowboy in the first place comes partly from stubbornness.
 Frameworks like Phoenix offer useful abstractions and utilities, but I prefer
-the lightweight & more minimalist approach provided by libraries like Cowboy.
-I find it gives more granular control over request handling, and is nicer to
-work with for smaller-scale applications.
+the lightweight & more minimalist approach provided by libraries like Cowboy. I
+find it gives more granular control over request handling, and is nicer to work
+with for smaller-scale applications.
 
 ## Creating a Custom Dispatcher Structure
 
@@ -63,9 +65,9 @@ end
 ```
 
 In this minimal example, we define a dispatcher structure that routes requests
-starting with "/websocket" to the `SocketRouter` module, while `Router`
-handles all other paths. Since the order is hierarchical, the WebSocket route
-comes first, followed by the `:_` catch-all atom for any others.
+starting with "/websocket" to the `SocketRouter` module, while `Router` handles
+all other paths. Since the order is hierarchical, the WebSocket route comes
+first, followed by the `:_` catch-all atom for any others.
 
 ## Stub HTTP Router
 
@@ -145,8 +147,8 @@ behaviour using `@behaviour`. This consists of a few callbacks:
 
 ## Profit (?)
 
-With the demo app running locally, we can see these endpoints in action!
-First up, the HTTP router:
+With the demo app running locally, we can see these endpoints in action! First
+up, the HTTP router:
 
 ```sh
 $ curl -i http://localhost:3000
@@ -164,8 +166,8 @@ $ wscat -c ws://localhost:3000/websocket
 Connected (press CTRL+C to quit)
 ```
 
-Once connected, sending a text frame of "ping" yields a response of "pong",
-as expected:
+Once connected, sending a text frame of "ping" yields a response of "pong", as
+expected:
 
 ```sh
 > ping
@@ -173,8 +175,8 @@ as expected:
 ```
 
 So there you have it! I hope this quick overview is useful; I've personally
-loved working with Cowboy so far and am glad I was able to make it work for
-this use-case of mine 😁
+loved working with Cowboy so far and am glad I was able to make it work for this
+use-case of mine 😁
 
 ## More resources
 
