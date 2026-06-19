@@ -10,7 +10,7 @@ import { codeToHtml } from 'shiki';
 import { fileURLToPath } from 'url';
 
 // eslint-disable-next-line no-restricted-imports
-import remarkFootnotes from './scripts/remark-footnotes.ts';
+import remarkFootnotes, { footnotePreprocess } from './scripts/remark-footnotes.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,6 +21,7 @@ export default {
     discloseVersion: false,
   },
   preprocess: [
+    footnotePreprocess(),
     mdsvex({
       extensions: ['.md'],
       smartypants: {

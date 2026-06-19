@@ -11,6 +11,72 @@ interface MdNode {
 
 type MdRoot = MdNode & { children: MdNode[] };
 
+/**
+ * Collapse multi-line ("block") footnote definitions into the single-line form
+ * before mdsvex/remark parses them.
+ */
+export const flattenFootnoteDefinitions = (source: string): string => {
+  const lines = source.split('\n');
+  const out: string[] = [];
+  let inFence = false;
+  let fence = '';
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    const fenceMatch = line.match(/^\s*(`{3,}|~{3,})/);
+    if (fenceMatch) {
+      const marker = fenceMatch[1][0];
+      if (!inFence) {
+        inFence = true;
+        fence = marker;
+      } else if (fence === marker) {
+        inFence = false;
+      }
+      out.push(line);
+      continue;
+    }
+    if (inFence) {
+      out.push(line);
+      continue;
+    }
+
+    const match = line.match(/^\[\^([^\]]+)\]:[ \t]*$/);
+    if (match) {
+      const parts: string[] = [];
+      let j = i + 1;
+      while (j < lines.length && /^[ \t]+\S/.test(lines[j])) {
+        parts.push(lines[j].trim());
+        j++;
+      }
+      if (parts.length > 0) {
+        out.push(`[^${match[1]}]: ${parts.join(' ')}`);
+        i = j - 1;
+        continue;
+      }
+    }
+
+    out.push(line);
+  }
+
+  return out.join('\n');
+};
+
+/**
+ * Svelte preprocessor wrapping {@link flattenFootnoteDefinitions}. Must run
+ * before mdsvex in the `preprocess` array so it sees raw markdown. Only `.md`
+ * files are touched.
+ */
+export const footnotePreprocess = () => ({
+  name: 'flatten-footnote-defs',
+  markup: ({ content, filename }: { content: string; filename?: string }) => {
+    if (!filename?.endsWith('.md')) {
+      return;
+    }
+    return { code: flattenFootnoteDefinitions(content) };
+  },
+});
+
 export default function remarkFootnotes() {
   return (tree: MdRoot) => {
     // id (without leading ^) -> definition children

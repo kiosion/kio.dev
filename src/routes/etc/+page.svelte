@@ -10,5 +10,7 @@
   <PageTitle>
     {data.content.title}
   </PageTitle>
-  <EtcContent />
+  <div class="prose-links">
+    <EtcContent />
+  </div>
 </PageSection>

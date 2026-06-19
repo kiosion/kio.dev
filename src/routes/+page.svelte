@@ -14,7 +14,7 @@
       <span>{line}</span>
     {/each}
   </PageTitle>
-  <div class="flex max-w-prose flex-col gap-3 text-lg">
+  <div class="prose-links flex max-w-prose flex-col gap-3 text-lg">
     <AboutContent />
   </div>
 </PageSection>
