@@ -64,7 +64,7 @@
 </svelte:head>
 
 <div
-  class="bg-light text-dark dark:text-light relative mx-auto flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll dark:bg-neutral-800"
+  class="bg-light text-dark dark:text-light relative mx-auto flex min-h-dvh w-full flex-col overflow-x-hidden dark:bg-neutral-800"
 >
   <Header />
 

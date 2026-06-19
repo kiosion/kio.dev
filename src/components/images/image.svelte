@@ -28,7 +28,7 @@
   {#if zoom}
     <button
       type="button"
-      class="focus-outline-sm block cursor-zoom-in rounded-md"
+      class="block cursor-zoom-in rounded-md"
       aria-label={alt || 'Open image'}
       onclick={() => (showModal = true)}
     >

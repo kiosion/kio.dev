@@ -133,21 +133,10 @@
 
 @layer base {
   body {
-    @apply h-full w-full overflow-x-hidden;
+    @apply w-full overflow-x-hidden;
   }
 
   @layer base {
-    body,
-    html {
-      height: 100vh;
-      overflow: hidden;
-
-      @media print {
-        height: fit-content;
-        overflow: visible;
-      }
-    }
-
     body,
     html,
     div,
@@ -157,6 +146,9 @@
       box-sizing: border-box;
     }
 
+    /* The document is the scroll container; `div` covers nested scrollers
+       like overflowing code blocks. */
+    html,
     div {
       scrollbar-width: thin;
       scrollbar-color: var(--color-neutral-200) transparent;
@@ -178,6 +170,16 @@
       ::selection {
         @apply bg-orange-light/90 text-dark;
       }
+    }
+
+    /* Global keyboard-focus ring: an orange outline matching the site accent,
+       replacing the OS default. The outline follows each element's own
+       `border-radius`; the fallback `border-radius` below keeps the ring
+       consistently rounded on elements that don't define one. */
+    :focus-visible {
+      outline: 2px solid var(--color-orange-light);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
     }
   }
 }
@@ -226,44 +228,44 @@
   --page-transition-duration: 220ms;
 }
 
-main {
-  view-transition-name: page-main;
+/*
+ * The page transition is driven by `root` rather than `main`: `root` is always
+ * exactly the size of the viewport, so the crossfade looks identical whether the
+ * page fits on screen or scrolls far off it. (Naming `main` instead would morph
+ * between the old element's full scrolled height and the new one's — jarringly
+ * different between short and long pages.)
+ *
+ * Header and footer are lifted into their own groups so they stay static during
+ * the transition. As a side effect this removes them from the `root` snapshot,
+ * leaving `root` as the viewport-sized content area between them.
+ */
+header {
+  view-transition-name: site-header;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
+footer {
+  view-transition-name: site-footer;
+}
+
+::view-transition-group(site-header),
+::view-transition-group(site-footer) {
   animation: none;
 }
 
-::view-transition-old(page-main) {
+::view-transition-old(root) {
   animation: content-fade-out var(--page-transition-duration)
     cubic-bezier(0.4, 0, 1, 1) both;
 }
 
-::view-transition-new(page-main) {
+::view-transition-new(root) {
   animation: content-fade-in var(--page-transition-duration)
     cubic-bezier(0, 0, 0.2, 1) calc(var(--page-transition-duration) / 2) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(page-main),
-  ::view-transition-new(page-main) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
     animation: none !important;
-  }
-}
-
-@layer utilities {
-  .focus-outline {
-    @apply outline-offset-4;
-
-    &,
-    &-sm {
-      @apply focus-visible:outline-2 outline-orange-light;
-    }
-
-    &-sm {
-      @apply outline-offset-2;
-    }
   }
 }
 

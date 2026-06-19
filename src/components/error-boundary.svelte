@@ -27,7 +27,7 @@
       {/if}
       {#if showRetry}
         <button
-          class="focus-outline group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-2 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
+          class="group flex w-fit cursor-pointer flex-row items-center justify-center gap-x-2 rounded-lg bg-neutral-200/50 px-2.5 py-2 text-sm transition-colors hover:bg-neutral-200 focus-visible:gap-3 focus-visible:bg-neutral-200 dark:bg-neutral-800/75 dark:hover:bg-neutral-800 dark:focus-visible:bg-neutral-800"
           onclick={reset}
           type="button"
         >

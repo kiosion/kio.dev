@@ -47,7 +47,7 @@
     out:fade={{ duration: BASE_ANIMATION_DURATION }}
   >
     <span
-      class="focus-outline-sm text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
+      class="text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
       role="button"
       aria-label="Close"
       tabindex="0"
