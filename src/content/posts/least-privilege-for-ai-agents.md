@@ -11,38 +11,38 @@ desc:
 Most systems hand out _far_ more access than anyone uses. Microsoft's multicloud
 audit puts the share of granted permissions ever exercised at under 2%, with
 more than half of all identities able to reach almost
-everything.[^overprovision] What keps that unused surplus from being abused was
-rarely the access-control layer, which grants more than it can keep track of. It
-was the person standing behind the credential.
+everything.[^overprovision] What kept that unused surplus from being abused was
+rarely the access-control layer. It was the person standing behind the
+credential.
 
-That person did work the authorization model never credited. They didn't assume
-every login their roles allowed, they hesitated at the request that didn't sit
-right, and they narrowed a broad grant in practice without anyone writing the
-narrowing down. None of it ran on the attacker's input. A phising email doesn't
-get to rewrite the person reading it, and fooling them was slow and uncertain
-even when it eventually worked. Their judgement was, in effect, an uncredited
-access control.
+That person held the access in check in ways the system never recorded. They
+left most of what their roles allowed untouched, they hesitated at the request
+that didn't sit right, and the grant that was broad on paper stayed narrow in
+their hands. None of that restraint lived in the system; it lived in the person,
+which is the same reason an attacker had no good handle on it. A phishing email
+doesn't get to rewrite the person reading it, and fooling them was slow and
+uncertain even when it eventually worked. Their judgement was, in effect, an
+uncredited access control.
 
 AI undercuts that protection from two sides at once. The first is the cost of
 mounting an attack. Commoditised models now write the convincing lure and the
 working exploit for pennies, and national cyber agencies expect this to raise
-both the volume and the impact of attacks.[^ncsc] In November of 2025, Anthropic
+both the volume and the impact of attacks.[^ncsc] In November 2025, Anthropic
 reported attackers running most of a real espionage campaign through its own
-model, which, having been told it was a security firm running an authorised
-test, mapped networks, wrote exploits, and reached into roughly thirty
-organisations largely on its own.[^anthropic] The second is the target. An agent
-has something that resembles judgement, the reasoning it runs before it acts,
-but that reasoning runs on the very context an attacker steers, so whoever
-plants the instruction also plants the rationale for following it.
+model. Having been told it was a security firm running an authorised test, it
+mapped networks, wrote exploits, and reached into roughly thirty organisations
+largely on its own.[^anthropic] The second is the target. An agent has something
+that resembles judgement, the reasoning it runs before it acts, but that
+reasoning runs on the very context an attacker steers, so whoever plants the
+instruction also plants the rationale for following it.
 
 Prompt injection, the term
 [Simon Willison coined in 2022](https://simonwillison.net/2022/Sep/12/prompt-injection/),
 is no more than text an agent reads as a trusted instruction, social engineering
-against something that brings none of the resistance a person would, with no
-colleague to ask, no second channel to check the story, and no stake in getting
-it right. Newer designs try to restore the missing check with a second model, a
-verifier pass, or one agent reviewing another, but each of these reads the same
-untrusted context and can be turned by the same input.
+against something with no colleague to ask, no second channel to check the story,
+and no stake in getting it right. Newer designs try to restore the missing check
+with a second model, a verifier pass, or one agent reviewing another, but each of
+these reads the same untrusted context and can be turned by the same input.
 
 This is an old problem with an old name: a prompt-injected agent is a _confused
 deputy_, a program talked into misusing authority it legitimately
@@ -58,7 +58,7 @@ against Prompt Injections_, states it simply in this context:
 You settle what the actor may do before it meets untrusted input, and you put
 that decision where the input can't reach it. For authority, that means binding
 each permission to the specific thing it acts on, so there's no broad grant
-laying around for a sentence to redirect.
+lying around for a sentence to redirect.
 
 ---
 
@@ -87,7 +87,7 @@ problem; it's the over-provisioning problem from earlier in new clothes, and not
 one I'll settle here. What the request-review-assume loop _does_ settle is
 narrower, and still worth something. It forces the decision to exist, as a
 discrete event, somewhere the agent's prompt can't reach. Whoever makes the
-call, and however well they make it, it's no longer soley the agent's to talk
+call, and however well they make it, it's no longer solely the agent's to talk
 itself into.
 
 Narrowing at the request step is a win of its own, too. A request that has to
