@@ -54,7 +54,7 @@
     "rehype-slug": "^5",
     "shiki": "^4.0.2",
     "subset-font": "^2.5.0",
-    "svelte": "^5.34.8",
+    "svelte": "^5.55.7",
     "svelte-check": "^3.7.1",
     "svelte-eslint-parser": "^1.2.0",
     "tailwindcss": "^4.1.10",
