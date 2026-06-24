@@ -80,7 +80,24 @@
             {/if}
             {#if tags?.length}
               {#if formattedDate}<span class="opacity-70 select-none">-</span>{/if}
-              <ul class="flex flex-row gap-2">
+              <div class="flex flex-row gap-2">
+                {#each tags as tag}
+                  <a
+                    class="group flex flex-row items-center justify-start gap-x-0.5"
+                    href={`/thoughts/+/${tag}`}
+                    data-sveltekit-preload-code="hover"
+                    data-sveltekit-preload-data="hover"
+                  >
+                    <span class="opacity-70 select-none">#</span>
+                    <span
+                      class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-80 transition-[opacity,text-decoration-color,color] group-hover:opacity-100"
+                    >
+                      {tag}</span
+                    >
+                  </a>
+                {/each}
+              </div>
+              <!-- <ul class="flex flex-row gap-2">
                 {#each tags as tag}
                   <li
                     class="before:opacity-80 before:content-['#'] after:content-[','] last:after:content-none"
@@ -88,12 +105,12 @@
                     {tag}
                   </li>
                 {/each}
-              </ul>
+              </ul> -->
             {/if}
           </div>
         {/if}
         {#if desc}
-          <p class="text-md max-w-prose tracking-wide">
+          <p class="text-md max-w-prose tracking-wide" role="doc-subtitle">
             {desc}
           </p>
         {/if}
@@ -176,7 +193,15 @@
     }
 
     :global(blockquote) {
-      @apply border-orange-light dark:border-orange-dark my-6 max-w-prose border-l-2 pl-4 italic opacity-90;
+      @apply my-6 max-w-prose pl-3 italic opacity-90;
+
+      &::before {
+        @apply font-display text-orange-light dark:text-orange-dark float-left mt-6 mr-4 -ml-2.5 text-6xl leading-0 font-semibold;
+        content: '“';
+      }
+    }
+    :global(blockquote p:first-child) {
+      @apply mt-0;
     }
 
     :global(p > code),
@@ -204,7 +229,7 @@
       @apply text-xs font-semibold;
     }
     :global(.footnote-ref a) {
-      @apply text-orange-light dark:text-orange-dark -m-1.5 p-1.5 no-underline opacity-100 hover:opacity-80;
+      @apply text-orange-light dark:text-orange-dark -my-1.5 -mr-1 -ml-2 p-1.5 no-underline opacity-100 hover:opacity-80;
     }
 
     :global(.footnotes-heading) {

@@ -22,13 +22,17 @@
 <div class="min-h-0 flex-1"></div>
 
 <PageSection>
-  <h2 class="text-base tracking-wide opacity-70">Recent posts</h2>
-
-  {#if data.posts?.length}
+  <div>
+    <div class="flex w-full flex-row items-center justify-start gap-3">
+      <h2
+        class="shrink-0 font-mono text-sm text-neutral-500 uppercase opacity-70 dark:text-neutral-200"
+      >
+        Recent posts
+      </h2>
+      <span class="h-px flex-1 bg-neutral-200 dark:bg-neutral-400"></span>
+    </div>
     <PostList posts={data.posts} />
-  {:else}
-    <p class="text-md opacity-70">No posts yet.</p>
-  {/if}
+  </div>
 
   <div class="flex flex-row items-center gap-2 text-base">
     <Link

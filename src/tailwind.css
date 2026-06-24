@@ -199,59 +199,6 @@
   }
 }
 
-@keyframes content-fade-out {
-  to {
-    opacity: 0;
-    scale: 0.997;
-  }
-}
-
-@keyframes content-fade-in {
-  from {
-    opacity: 0;
-    scale: 0.997;
-  }
-}
-
-:root {
-  /*
-   * Duration of each half of the page transition.
-   * Old fades out over T; new fades in over T, starting at T/2.
-   * Total runtime ≈ T * 1.5.
-   */
-  --page-transition-duration: 220ms;
-}
-
-header {
-  view-transition-name: site-header;
-}
-
-footer {
-  view-transition-name: site-footer;
-}
-
-::view-transition-group(site-header),
-::view-transition-group(site-footer) {
-  animation: none;
-}
-
-::view-transition-old(root) {
-  animation: content-fade-out var(--page-transition-duration) cubic-bezier(0.4, 0, 1, 1)
-    both;
-}
-
-::view-transition-new(root) {
-  animation: content-fade-in var(--page-transition-duration) cubic-bezier(0, 0, 0.2, 1)
-    calc(var(--page-transition-duration) / 2) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
-  }
-}
-
 @layer components {
   .prose-links a {
     @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 dark:decoration-neutral-400;

@@ -1,7 +1,6 @@
 <script lang="ts">
   // eslint-disable-next-line no-restricted-imports
   import '../tailwind.css';
-  import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';
   import Footer from '$components/footer.svelte';
@@ -9,24 +8,18 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import type { Meta } from '$lib/nav.svelte';
-  import { normalizePathname } from '$lib/utils';
-
-  onNavigate((navigation) => {
-    if (!document.startViewTransition) {
-      return;
-    }
-
-    return new Promise((resolve) => {
-      document.startViewTransition(async () => {
-        resolve();
-        await navigation.complete;
-      });
-    });
-  });
+  import { pageIn, pageOut } from '$lib/transitions';
+  import { normalizePathname, pathnameGroupKey } from '$lib/utils';
 
   const { data, children } = $props();
 
   const meta = $derived(page.data.meta as Meta);
+
+  // Key the page wrapper so the transition fires on real navigations but not on
+  // in-page hash links. pathnameGroupKey collapses /thoughts and its /+/<tag>
+  // filters into one key, so toggling a tag updates in place without a
+  // transition, while list<->post and post<->post still transition.
+  const transitionKey = $derived(pathnameGroupKey(normalizePathname(page.url?.pathname)));
 </script>
 
 <svelte:head>
@@ -65,10 +58,20 @@
 >
   <Header />
 
-  <main class="mx-auto flex w-full max-w-6xl flex-1 grow flex-col gap-18 px-8 py-10">
-    <ErrorBoundary showError>
-      {@render children()}
-    </ErrorBoundary>
+  <main
+    class="mx-auto grid w-full max-w-6xl flex-1 grow grid-cols-1 grid-rows-1 px-8 py-10"
+  >
+    {#key transitionKey}
+      <div
+        class="col-start-1 row-start-1 flex min-w-0 flex-col gap-18"
+        in:pageIn
+        out:pageOut
+      >
+        <ErrorBoundary showError>
+          {@render children()}
+        </ErrorBoundary>
+      </div>
+    {/key}
   </main>
 
   <Footer config={data.siteConfig} />

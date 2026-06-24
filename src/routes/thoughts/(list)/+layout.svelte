@@ -1,10 +1,14 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import EmptyContent from '$components/empty-content.svelte';
   import PageSection from '$components/page-section.svelte';
   import PageTitle from '$components/page-title.svelte';
   import PostList from '$components/post-list.svelte';
+  import type { Post } from '$lib/content';
 
   let { data } = $props();
+
+  const ThoughtsContent = $derived(data.content.Component);
 
   const tagSlug = (tag: string) =>
     tag
@@ -21,6 +25,23 @@
       ? data.posts.filter((p) => (p.tags ?? []).some((t) => tagSlug(t) === selected))
       : data.posts,
   );
+
+  // Group the (already tag-filtered) posts into year buckets, newest year first.
+  const postsByYear = $derived.by(() => {
+    const groups = new Map<number, Post[]>();
+    for (const p of posts) {
+      const year = new Date(p.date).getFullYear();
+      const bucket = groups.get(year);
+      if (bucket) {
+        bucket.push(p);
+      } else {
+        groups.set(year, [p]);
+      }
+    }
+    return [...groups.entries()]
+      .sort(([a], [b]) => b - a)
+      .map(([year, posts]) => ({ year, posts }));
+  });
 </script>
 
 <svelte:head>
@@ -55,10 +76,21 @@
 {/snippet}
 
 <PageSection>
-  <PageTitle>Thoughts &amp; guides</PageTitle>
+  <PageTitle>{data.content.title}</PageTitle>
+
+  <div class="prose-links flex max-w-prose flex-col gap-3 text-lg">
+    <ThoughtsContent />
+    <p
+      class="inline font-mono text-base opacity-50"
+      aria-label="{posts.length} posts total"
+    >
+      [ {String(posts.length).padStart(2, '0')} ]
+    </p>
+  </div>
+
   {#if data.tags.length}
     <div
-      class="flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1 text-lg"
+      class="text-md flex max-w-prose flex-row flex-wrap items-center justify-start gap-3 pl-1"
     >
       {#each data.tags as tag (tag.slug)}
         {@render tagItem(tag)}
@@ -68,23 +100,23 @@
 </PageSection>
 
 <PageSection>
-  <h2 class="text-base tracking-wide">
-    {#if selected}
-      <span class="opacity-70"
-        >{posts.length}&nbsp;matching&nbsp;post{posts.length === 1 ? '' : 's'}</span
-      >
-      <a
-        href="/thoughts"
-        class="inline-block cursor-pointer text-base opacity-70 transition-opacity hover:opacity-100"
-        data-sveltekit-preload-code="eager"
-        data-sveltekit-preload-data="hover"
-        data-sveltekit-replacestate
-        data-sveltekit-noscroll>&nbsp;&mdash;&nbsp;clear</a
-      >
-    {:else}
-      <span class="opacity-70">All posts</span>
-    {/if}
-  </h2>
-
-  <PostList {posts} />
+  {#if posts.length}
+    <div class="flex flex-col gap-8">
+      {#each postsByYear as { year, posts: yearPosts } (year)}
+        <section>
+          <div class="flex w-full flex-row items-center justify-start gap-3">
+            <h2
+              class="shrink-0 font-mono text-sm tracking-wider text-neutral-500 opacity-70 dark:text-neutral-200"
+            >
+              {year}
+            </h2>
+            <span class="h-px flex-1 bg-neutral-200 dark:bg-neutral-400"></span>
+          </div>
+          <PostList posts={yearPosts} />
+        </section>
+      {/each}
+    </div>
+  {:else}
+    <EmptyContent message="No posts found." />
+  {/if}
 </PageSection>

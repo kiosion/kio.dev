@@ -71,3 +71,13 @@ const ETC = import.meta.glob<ContentModule<EtcMetadata>>('/src/content/etc.md');
 
 export const loadEtcContent = (): Promise<LoadedEtcContent | undefined> =>
   loadOne<EtcMetadata>(ETC);
+
+export type ThoughtsMetadata = { title: string };
+export type LoadedThoughtsContent = LoadedContent<ThoughtsMetadata>;
+
+const THOUGHTS = import.meta.glob<ContentModule<ThoughtsMetadata>>(
+  '/src/content/thoughts.md',
+);
+
+export const loadThoughtsContent = (): Promise<LoadedThoughtsContent | undefined> =>
+  loadOne<ThoughtsMetadata>(THOUGHTS);
