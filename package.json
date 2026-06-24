@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-local-rules": "^3.0.2",
     "eslint-plugin-prettier": "^5.5.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "eslint-plugin-svelte": "^3.9.3",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^9.1.6",
