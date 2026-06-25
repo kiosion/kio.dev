@@ -48,7 +48,7 @@
     class:hover:decoration-orange-light={!active}
     class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
-    data-sveltekit-preload-code="eager"
+    data-sveltekit-preload-code="hover"
     data-sveltekit-preload-data="hover"
   >
     {text}
@@ -66,7 +66,7 @@
     class:hover:opacity-100={crumb.href && !isLast}
     class:focus-visible:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
-    data-sveltekit-preload-code="eager"
+    data-sveltekit-preload-code="hover"
     data-sveltekit-preload-data="hover"
   >
     {#if crumb.href === '/'}

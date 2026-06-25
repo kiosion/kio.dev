@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import PageSection from '$components/page-section.svelte';
   import PageTitle from '$components/page-title.svelte';
+  import { receive, send } from '$lib/transitions';
 
   let {
     title,
@@ -15,6 +17,11 @@
     tags?: string[];
     children?: import('svelte').Snippet;
   } = $props();
+
+  // Receives the post-list card's title/desc on navigation so the card morphs
+  // into the post hero. Receive-only here (the card is the sole sender), so two
+  // cards can never pair with each other across pages.
+  const slug = $derived(page.params.slug ?? '');
 
   const formattedDate = $derived.by(() => {
     if (!date) {
@@ -66,17 +73,33 @@
   });
 </script>
 
-<div class="flex w-full flex-col gap-y-5">
+<div
+  class="flex w-full flex-col gap-y-5"
+  // in:receive|global={{ key: `post-body-in-${slug}` }}
+  // out:send|global={{ key: `post-body-out-${slug}` }}
+>
   {#if title}
-    <PageSection class="border-b border-neutral-200 pb-6 dark:border-neutral-400">
-      <PageTitle>
-        {title}
-      </PageTitle>
-      <div class="flex flex-col gap-y-4 text-neutral-500 dark:text-neutral-100">
+    <PageSection>
+      <div
+        class="w-fit max-w-full"
+        out:send|global={{ key: `post-title-out-${slug}` }}
+        in:receive|global={{ key: `post-title-in-${slug}` }}
+      >
+        <PageTitle>
+          {title}
+        </PageTitle>
+      </div>
+      <div
+        class="flex flex-col gap-y-4 text-neutral-500 dark:text-neutral-100"
+        out:send|global={{ key: `post-meta-out-${slug}` }}
+        in:receive|global={{ key: `post-meta-in-${slug}` }}
+      >
         {#if formattedDate || tags?.length}
           <div class="flex flex-row flex-wrap gap-3">
             {#if formattedDate}
-              <p class="text-base" aria-label="Published date">{formattedDate}</p>
+              <p class="text-base" aria-label="Published date">
+                {formattedDate}
+              </p>
             {/if}
             {#if tags?.length}
               {#if formattedDate}<span class="opacity-70 select-none">-</span>{/if}
@@ -97,15 +120,6 @@
                   </a>
                 {/each}
               </div>
-              <!-- <ul class="flex flex-row gap-2">
-                {#each tags as tag}
-                  <li
-                    class="before:opacity-80 before:content-['#'] after:content-[','] last:after:content-none"
-                  >
-                    {tag}
-                  </li>
-                {/each}
-              </ul> -->
             {/if}
           </div>
         {/if}
@@ -118,7 +132,12 @@
     </PageSection>
   {/if}
 
-  <section bind:this={bodyEl} class="md-body text-md font-sans">
+  <section
+    bind:this={bodyEl}
+    class="md-body text-md border-t border-neutral-200 pt-6 font-sans dark:border-neutral-400"
+    in:receive|global={{ key: `post-body-in-${slug}` }}
+    out:send|global={{ key: `post-body-out-${slug}` }}
+  >
     {@render children?.()}
   </section>
 </div>

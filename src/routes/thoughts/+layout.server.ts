@@ -8,7 +8,7 @@ const tagSlug = (tag: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 
-export const load = (async ({ parent }) => {
+export const load = (async ({ parent, params }) => {
   const parentData = await parent();
   const posts = getAllPosts();
 
@@ -32,7 +32,9 @@ export const load = (async ({ parent }) => {
 
   return {
     breadcrumbs: [...parentData.breadcrumbs, { label: 'Thoughts', href: '/thoughts' }],
-    posts,
+    posts: params.slug
+      ? posts.filter((p) => (p.tags ?? []).some((t) => tagSlug(t) === params.slug))
+      : posts,
     tags,
     tagCounts,
   };

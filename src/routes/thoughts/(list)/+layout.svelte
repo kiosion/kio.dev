@@ -10,26 +10,14 @@
 
   const ThoughtsContent = $derived(data.content.Component);
 
-  const tagSlug = (tag: string) =>
-    tag
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-
   const selected = $derived(page.params.slug);
 
   const isActiveTag = (slug?: string) => !!selected && slug === selected;
 
-  const posts = $derived(
-    selected
-      ? data.posts.filter((p) => (p.tags ?? []).some((t) => tagSlug(t) === selected))
-      : data.posts,
-  );
-
   // Group the (already tag-filtered) posts into year buckets, newest year first.
   const postsByYear = $derived.by(() => {
     const groups = new Map<number, Post[]>();
-    for (const p of posts) {
+    for (const p of data.posts) {
       const year = new Date(p.date).getFullYear();
       const bucket = groups.get(year);
       if (bucket) {
@@ -53,7 +41,7 @@
     class="group flex flex-row items-center justify-start gap-x-0.5"
     href={isActiveTag(tag.slug) ? '/thoughts' : `/thoughts/+/${tag.slug}`}
     aria-current={isActiveTag(tag.slug) ? 'page' : undefined}
-    data-sveltekit-preload-code="eager"
+    data-sveltekit-preload-code="hover"
     data-sveltekit-preload-data="hover"
     data-sveltekit-replacestate
     data-sveltekit-noscroll
@@ -75,17 +63,20 @@
   </a>
 {/snippet}
 
+{#snippet count()}
+  <span
+    class="font-mono text-base opacity-50"
+    aria-label="{data.posts.length} posts total"
+  >
+    [ {String(data.posts.length).padStart(2, '0')} ]
+  </span>
+{/snippet}
+
 <PageSection>
   <PageTitle>{data.content.title}</PageTitle>
 
-  <div class="prose-links flex max-w-prose flex-col gap-3 text-lg">
-    <ThoughtsContent />
-    <p
-      class="inline font-mono text-base opacity-50"
-      aria-label="{posts.length} posts total"
-    >
-      [ {String(posts.length).padStart(2, '0')} ]
-    </p>
+  <div class="prose-links max-w-prose text-lg">
+    <ThoughtsContent {count} />
   </div>
 
   {#if data.tags.length}
@@ -100,19 +91,11 @@
 </PageSection>
 
 <PageSection>
-  {#if posts.length}
+  {#if data.posts.length}
     <div class="flex flex-col gap-8">
       {#each postsByYear as { year, posts: yearPosts } (year)}
         <section>
-          <div class="flex w-full flex-row items-center justify-start gap-3">
-            <h2
-              class="shrink-0 font-mono text-sm tracking-wider text-neutral-500 opacity-70 dark:text-neutral-200"
-            >
-              {year}
-            </h2>
-            <span class="h-px flex-1 bg-neutral-200 dark:bg-neutral-400"></span>
-          </div>
-          <PostList posts={yearPosts} />
+          <PostList posts={yearPosts} title={year} />
         </section>
       {/each}
     </div>
