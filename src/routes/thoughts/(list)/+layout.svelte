@@ -5,6 +5,7 @@
   import PageTitle from '$components/page-title.svelte';
   import PostList from '$components/post-list.svelte';
   import type { Post } from '$lib/content';
+  import { listEnter, listExit } from '$lib/transitions';
 
   let { data } = $props();
 
@@ -92,9 +93,9 @@
 
 <PageSection>
   {#if data.posts.length}
-    <div class="flex flex-col gap-8">
+    <div class="flex flex-col">
       {#each postsByYear as { year, posts: yearPosts } (year)}
-        <section>
+        <section class="mb-8" in:listEnter out:listExit>
           <PostList posts={yearPosts} title={year} />
         </section>
       {/each}

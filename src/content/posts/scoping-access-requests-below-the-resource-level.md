@@ -2,7 +2,7 @@
 layout: post
 title: Scoping access requests below the resource level
 date: 2026-05-02
-tags: [security, design]
+tags: [security, access-control]
 desc:
   Closing the gap of resource-based access requests by pushing scope down past
   the resource gate, into the principal layer.

@@ -73,13 +73,9 @@
   });
 </script>
 
-<div
-  class="flex w-full flex-col gap-y-5"
-  // in:receive|global={{ key: `post-body-in-${slug}` }}
-  // out:send|global={{ key: `post-body-out-${slug}` }}
->
+<article class="flex w-full flex-col gap-y-5">
   {#if title}
-    <PageSection>
+    <PageSection as="header">
       <div
         class="w-fit max-w-full"
         out:send|global={{ key: `post-title-out-${slug}` }}
@@ -95,31 +91,38 @@
         in:receive|global={{ key: `post-meta-in-${slug}` }}
       >
         {#if formattedDate || tags?.length}
-          <div class="flex flex-row flex-wrap gap-3">
+          <div class="flex flex-row flex-wrap items-center gap-y-2">
             {#if formattedDate}
-              <p class="text-base" aria-label="Published date">
-                {formattedDate}
-              </p>
+              <time class="text-base" datetime={date}>
+                <span class="sr-only">Published </span>{formattedDate}
+              </time>
             {/if}
             {#if tags?.length}
-              {#if formattedDate}<span class="opacity-70 select-none">-</span>{/if}
-              <div class="flex flex-row gap-2">
+              {#if formattedDate}<span
+                  aria-hidden="true"
+                  class="mx-3 opacity-70 select-none">&ndash;</span
+                >{/if}
+              <ul role="list" class="flex flex-row flex-wrap gap-x-2 gap-y-2">
                 {#each tags as tag}
-                  <a
-                    class="group flex flex-row items-center justify-start gap-x-0.5"
-                    href={`/thoughts/+/${tag}`}
-                    data-sveltekit-preload-code="hover"
-                    data-sveltekit-preload-data="hover"
-                  >
-                    <span class="opacity-70 select-none">#</span>
-                    <span
-                      class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-80 transition-[opacity,text-decoration-color,color] group-hover:opacity-100"
+                  <li>
+                    <a
+                      class="group flex flex-row items-center justify-start gap-x-0.5"
+                      href={`/thoughts/+/${tag}`}
+                      rel="tag"
+                      aria-label={`Posts tagged ${tag}`}
+                      data-sveltekit-preload-code="hover"
+                      data-sveltekit-preload-data="hover"
                     >
-                      {tag}</span
-                    >
-                  </a>
+                      <span aria-hidden="true" class="opacity-70 select-none">#</span>
+                      <span
+                        class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-80 transition-[opacity,text-decoration-color,color] group-hover:opacity-100"
+                      >
+                        {tag}</span
+                      >
+                    </a>
+                  </li>
                 {/each}
-              </div>
+              </ul>
             {/if}
           </div>
         {/if}
@@ -140,7 +143,7 @@
   >
     {@render children?.()}
   </section>
-</div>
+</article>
 
 <style>
   @reference '../tailwind.css';

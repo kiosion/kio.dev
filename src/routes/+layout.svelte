@@ -1,7 +1,6 @@
 <script lang="ts">
   // eslint-disable-next-line no-restricted-imports
   import '../tailwind.css';
-  import { beforeNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import ErrorBoundary from '$components/error-boundary.svelte';
   import Footer from '$components/footer.svelte';
@@ -9,7 +8,7 @@
   import { BASE_PAGE_TITLE } from '$lib/consts';
   import { SELF_BASE_URL } from '$lib/env';
   import type { Meta } from '$lib/nav.svelte';
-  import { pageIn, pageOut, setPageWrapperTransitioning } from '$lib/transitions';
+  import { pageIn, pageOut } from '$lib/transitions';
   import { normalizePathname, pathnameGroupKey } from '$lib/utils';
 
   const { data, children } = $props();
@@ -21,16 +20,6 @@
   // filters into one key, so toggling a tag updates in place without a
   // transition, while list<->post and post<->post still transition.
   const transitionKey = $derived(pathnameGroupKey(normalizePathname(page.url?.pathname)));
-
-  // Tell the card morph whether this navigation also fades the page wrapper. A
-  // same-group nav (toggling a tag) leaves transitionKey unchanged, so the
-  // wrapper doesn't fade — without this, an outgoing card's unmatched morph
-  // would linger 150ms over the new list and flicker.
-  beforeNavigate((nav) => {
-    const from = pathnameGroupKey(normalizePathname(nav.from?.url.pathname));
-    const to = pathnameGroupKey(normalizePathname(nav.to?.url.pathname));
-    setPageWrapperTransitioning(from !== to);
-  });
 </script>
 
 <svelte:head>

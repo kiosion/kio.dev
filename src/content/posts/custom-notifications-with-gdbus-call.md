@@ -2,7 +2,7 @@
 layout: post
 title: Custom Notifications with 'gdbus call' + 'wired-notify'
 date: 2022-06-09
-tags: [guides, linux]
+tags: [linux, dbus]
 ---
 
 <script>

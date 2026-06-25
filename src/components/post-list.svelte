@@ -1,7 +1,7 @@
 <script lang="ts">
   import EmptyContent from '$components/empty-content.svelte';
   import type { Post } from '$lib/content';
-  import { receive, send } from '$lib/transitions';
+  import { listEnter, listExit, receive, send } from '$lib/transitions';
 
   const { posts, title }: { posts: Post[]; title?: string | number } = $props();
 
@@ -27,7 +27,7 @@
 {:else}
   <ul class="divide-y divide-neutral-200 dark:divide-neutral-400">
     {#each posts as post, idx (post.slug)}
-      <li>
+      <li in:listEnter out:listExit>
         <a
           class="group block py-4"
           href={`/thoughts/${post.slug}`}

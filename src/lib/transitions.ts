@@ -1,11 +1,6 @@
-import { cubicIn, cubicOut, quintOut } from 'svelte/easing';
+import { cubicIn, cubicOut } from 'svelte/easing';
 import { crossfade, type TransitionConfig } from 'svelte/transition';
 
-/**
- * Outgoing content fades over this; incoming starts ~as it finishes, so the two
- * never overlap in place (which is what made the old crossfade look like it
- * "clipped"). Total runtime ≈ OUT + IN - the small handoff overlap.
- */
 export const PAGE_OUT_DURATION = 150;
 export const PAGE_IN_DURATION = 300;
 
@@ -19,19 +14,15 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/**
- * Whether the in-flight navigation also swaps the keyed page wrapper (a
- * cross-group nav like list<->post), versus an in-place update like toggling a
- * tag filter — set from the layout's `beforeNavigate`. When it's an in-place
- * update there's no page fade for an unmatched morph element to ride, so `ride`
- * must remove it instantly; otherwise the outgoing card lingers 150ms beside the
- * instantly-added new one and reads as a flicker. Defaults to `false` (no fade).
- */
-let pageWrapperTransitioning = false;
+/** Per-row enter/exit durations for the in-place list reflow (tag filtering). */
+const LIST_ENTER_DURATION = 260;
+const LIST_EXIT_DURATION = 200;
 
-export function setPageWrapperTransitioning(value: boolean) {
-  pageWrapperTransitioning = value;
-}
+/**
+ * How long an unmatched morph element stays put while whatever encloses it
+ * animates away.
+ */
+const RIDE_DURATION = Math.max(PAGE_OUT_DURATION, LIST_EXIT_DURATION);
 
 /**
  * Fade + slide-up for incoming page content. Decelerating ease (quintOut) so it
@@ -58,7 +49,7 @@ export function pageIn(
 /**
  * Fade + slide-DOWN for outgoing page content — the mirror of pageIn's slide-up,
  * so content sinks away as it leaves. Accelerating ease (cubicIn). Same
- * `(1 - t) * RISE` offset as pageIn, but since `t` runs 1→0 on the way out it
+ * `(1 - t) * RISE` offset as pageIn, but since `t` runs 1-to-0 on the way out it
  * travels downward instead of up.
  */
 export function pageOut(
@@ -76,21 +67,17 @@ export function pageOut(
 }
 
 /**
- * An unmatched / non-morphing element (a card that isn't the one being opened,
- * or a hero with no counterpart) rides the page fade instead of transitioning on
- * its own: it stays put on the way out (the wrapper's fade carries it) and
- * appears instantly on the way in. No independent fade, no per-element pinning.
+ * An unmatched / non-morphing element rides whatever encloses it instead of
+ * transitioning on its own: on the way out it stays put and on
+ * the way in it appears instantly.
  */
 const ride = (intro: boolean): TransitionConfig =>
-  intro || prefersReducedMotion() || !pageWrapperTransitioning
+  intro || prefersReducedMotion()
     ? { duration: 0 }
-    : { duration: PAGE_OUT_DURATION, css: () => '' };
+    : { duration: RIDE_DURATION, css: () => '' };
 
 /**
- * Shared-element morph between a post-list card and the post page hero. Each
- * direction uses its own key namespace (see the components) so a card's `send`
- * only ever matches the hero's `receive`, never another card. Unmatched elements
- * fall through to `ride`, i.e. the page fade.
+ * Shared-element morph between a post-list card and the post page hero.
  */
 export const [send, receive] = crossfade({
   duration: () => (prefersReducedMotion() ? 0 : PAGE_IN_DURATION),
@@ -98,3 +85,47 @@ export const [send, receive] = crossfade({
   easing: cubicOut,
   fallback: (_node, _params, intro) => ride(intro),
 });
+
+/**
+ * Collapse + fade for a single row entering/leaving the list in place.
+ * Animates the box model to zero so neighbours flow into/out of the freed
+ * space through normal layout.
+ */
+function collapseFade(
+  node: Element,
+  { duration, easing }: { duration: number; easing: (t: number) => number },
+): TransitionConfig {
+  if (prefersReducedMotion()) {
+    return { duration: 0 };
+  }
+  const style = getComputedStyle(node);
+  const height = parseFloat(style.height);
+  const paddingTop = parseFloat(style.paddingTop);
+  const paddingBottom = parseFloat(style.paddingBottom);
+  const marginTop = parseFloat(style.marginTop);
+  const marginBottom = parseFloat(style.marginBottom);
+  const borderTop = parseFloat(style.borderTopWidth);
+  const borderBottom = parseFloat(style.borderBottomWidth);
+  return {
+    duration,
+    easing,
+    css: (t) =>
+      'overflow: hidden;' +
+      `opacity: ${t};` +
+      `height: ${t * height}px;` +
+      `padding-top: ${t * paddingTop}px;` +
+      `padding-bottom: ${t * paddingBottom}px;` +
+      `margin-top: ${t * marginTop}px;` +
+      `margin-bottom: ${t * marginBottom}px;` +
+      `border-top-width: ${t * borderTop}px;` +
+      `border-bottom-width: ${t * borderBottom}px;`,
+  };
+}
+
+/** A list row appearing in place: grow + fade in, decelerating into position. */
+export const listEnter = (node: Element): TransitionConfig =>
+  collapseFade(node, { duration: LIST_ENTER_DURATION, easing: cubicOut });
+
+/** A list row leaving in place: collapse + fade out, accelerating away. */
+export const listExit = (node: Element): TransitionConfig =>
+  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicIn });

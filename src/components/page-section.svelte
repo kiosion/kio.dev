@@ -3,17 +3,23 @@
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
+    as = 'section',
     children,
     class: classNames,
-    ...sectionProps
-  }: { children: Snippet } & HTMLAttributes<HTMLElement> = $props();
+    ...rest
+  }: {
+    /** Element to render as — defaults to `section`. */
+    as?: keyof HTMLElementTagNameMap;
+    children: Snippet;
+  } & HTMLAttributes<HTMLElement> = $props();
 </script>
 
-<section
+<svelte:element
+  this={as}
   class="flex w-full flex-col not-first-of-type:gap-2 first-of-type:mt-6 first-of-type:gap-8{classNames?.length
     ? ' ' + classNames
     : ''}"
-  {...sectionProps}
+  {...rest}
 >
   {@render children()}
-</section>
+</svelte:element>
