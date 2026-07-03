@@ -137,6 +137,16 @@
       @apply mt-4 max-w-prose leading-relaxed;
     }
 
+    /* TASA Orbiter has no italic face; the browser fakes it with a harsh ~13deg
+       shear. Replace that with a gentler hand-rolled skew. ponytail: skew needs
+       inline-block, so a multi-word italic run won't break mid-phrase. */
+    :global(em),
+    :global(i) {
+      font-style: normal;
+      display: inline-block;
+      transform: skewX(-7deg);
+    }
+
     :global(a) {
       @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 dark:decoration-neutral-400;
     }
