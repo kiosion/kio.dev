@@ -8,7 +8,7 @@ desc:
   it.
 ---
 
-Nearly all access is held rather than used. When Microsoft
+Nearly all access to digital infrastructure is held and unused. When Microsoft
 [audited identities](https://www.microsoft.com/en-us/security/blog/2024/05/29/6-insights-from-microsofts-2024-state-of-multicloud-risk-report-to-evolve-your-security-strategy/)
 across its customers' cloud environments, under 2% of granted permissions had
 ever been exercised, and more than half of all identities could reach nearly
@@ -107,22 +107,21 @@ the approved roles allow there. Constraints add the missing dimension of _what_,
 per-resource. Each constraint pairs a resource in the request with the specific
 permissions (e.g., SSH logins, database users, Kube groups, AWS roles) wanted on
 it, and on approval those pairs are encoded into the certificate the requester
-assumes. That certificate is the enforcement artifact. The set the reviewer
-approved is what any access checks read, with no step between filing and
-connection where it can change.
+assumes. That certificate is the enforcement artifact. Access checks read the
+set the reviewer approved, and there is no step between filing and connection
+where it can change.
 
 The first win is who authors the specificity. Least privilege was always
 expressible with roles alone, but only by authoring and maintaining
-hyper-specific roles per-task, which in practice, is not sustainable.
-Constraints move that work from role authors to request authors. The requester
-describes exactly what the task needs and the reviewer rules on exactly that,
-the only requirement being that a role at least as broad as the task exists.
-This makes per-task provisioning workable, letting agents ask late and request
-only what their next step needs, when they need it. The request is still an
-untrusted proposal; no matter how the asking is arranged, the requester sits on
-the untrusted side of the boundary and may already be compromised. Review is
-where trust enters, and is what fixes the plan outside the agent, before
-execution.
+hyper-specific roles per-task, which in practice is not sustainable. Constraints
+move that work from role authors to request authors. The requester describes
+exactly what the task needs and the reviewer rules on exactly that, the only
+requirement being that a role at least as broad as the task exists. This makes
+per-task provisioning workable; agents can ask late and request only what the
+next step needs. The request is still an untrusted proposal; no matter how the
+asking is arranged, the requester sits on the untrusted side of the boundary and
+may already be compromised. Review is where trust enters; it's what fixes the
+plan outside the agent, before execution.
 
 The second win, and what I see (no pun intended) as the bigger one, is
 visibility. Review at volume is the unsolved problem; a person judging every
@@ -132,16 +131,41 @@ evaluates. A role-satisfied request hides the actual grant inside role
 definitions; a constrained request carries the whole grant on its face. The
 reviewer sees precisely what they're approving, the audit log records precisely
 what was grantable, and policy can match on the constraints themselves rather
-than role names. That's visibility, never detection.
+than role names.
+
+---
+
+The fair objection is that none of this is really new advice. Least privilege
+dates to
+[Saltzer and Schroeder in 1975](https://web.mit.edu/Saltzer/www/publications/protection/),
+and the audit this post opened with is what half a century of recommending it
+produced. Their paper names the reason in another of its principles,
+"psychological acceptability"; people route around controls they find painful.
+Asking is the painful part. Every request is a ticket to file and an approval to
+wait on while work sits blocked, so people request broadly, hoard what they're
+granted, and organisations settle on over-provisioning as the price of nobody
+being interrupted. People know the principle; the unused 98% is insurance
+against the cost of asking again.
+
+That failure was a fact about the requester, and the requester is the part
+that's changed. An agent doesn't need the insurance. It can name the exact
+resources and permissions its next step requires, because it just finished
+planning that step, and filing one more request takes milliseconds. What stays
+expensive is the other seat, review, which is why the legibility of the request
+matters more than any property of the requester.
+
+---
 
 So, sorry if a partial answer disappoints; as framed by Schneier, partial is the
-only kind on offer as long as LLMs are operating on potentially-adversarial
+only kind on offer as long as LLMs are operating on potentially adversarial
 input. An agent stays steerable by what it reads and no grant design changes
-that; the judgement people supplied for free doesn't come back. What _can_
-change is what the agent is holding when it happens, and how legible the
-arrangement is. The loop underneath, request/review/assume, remains critical no
-matter what fills each seat. The decision over an agent's reach is a recorded
-event, made outside the agent, enforced by software its context can't reach.
+that. What _can_ change is what the agent is holding when it happens, and how
+legible the arrangement is. The loop underneath, request/review/assume, holds no
+matter what fills each seat. Half a century on, there's finally a requester that
+doesn't mind asking. What's taking the place of people's judgement in the
+requester's seat has to be explicit: a decision over the agent's reach that is
+recorded, made outside the agent, and enforced by software its context can't
+reach.
 
 [^macros]:
     The closest ancestor is probably the macro virus, an Office document
