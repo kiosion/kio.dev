@@ -56,10 +56,7 @@
   <meta name="twitter:url" content={page.url?.href} />
   <meta name="twitter:image" content="{SELF_BASE_URL}/assets/dark-embed.png" />
 
-  <link
-    rel="canonical"
-    href="{SELF_BASE_URL}{normalizePathname(page.url?.pathname)}"
-  />
+  <link rel="canonical" href="{SELF_BASE_URL}{normalizePathname(page.url?.pathname)}" />
   <link rel="preload" href="/assets/logo-standard--small.webp" as="image" />
 </svelte:head>
 
