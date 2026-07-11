@@ -2,13 +2,13 @@
 layout: post
 title: Least privilege for AI agents
 date: 2026-06-14
-tags: [security, design, ai]
+tags: [security, ai-agents, access-control]
 desc:
   Human judgement has been an uncredited access control, and agents don't have
   it.
 ---
 
-Nearly all access to digital infrastructure is held and unused. When Microsoft
+Nearly all access to digital infrastructure is held, and unused. When Microsoft
 [audited identities](https://www.microsoft.com/en-us/security/blog/2024/05/29/6-insights-from-microsofts-2024-state-of-multicloud-risk-report-to-evolve-your-security-strategy/)
 across its customers' cloud environments, under 2% of granted permissions had
 ever been exercised, and more than half of all identities could reach nearly
@@ -135,7 +135,7 @@ than role names.
 
 ---
 
-The fair objection is that none of this is really new advice. Least privilege
+A fair objection is that none of this is really new advice. Least privilege
 dates to
 [Saltzer and Schroeder in 1975](https://web.mit.edu/Saltzer/www/publications/protection/),
 and the audit this post opened with is what half a century of recommending it
@@ -144,15 +144,13 @@ produced. Their paper names the reason in another of its principles,
 Asking is the painful part. Every request is a ticket to file and an approval to
 wait on while work sits blocked, so people request broadly, hoard what they're
 granted, and organisations settle on over-provisioning as the price of nobody
-being interrupted. People know the principle; the unused 98% is insurance
-against the cost of asking again.
-
-That failure was a fact about the requester, and the requester is the part
-that's changed. An agent doesn't need the insurance. It can name the exact
-resources and permissions its next step requires, because it just finished
-planning that step, and filing one more request takes milliseconds. What stays
-expensive is the other seat, review, which is why the legibility of the request
-matters more than any property of the requester.
+being interrupted. People know the principle; the unused 98% can be seen as
+"insurance" against the cost (perceived or real) of asking again. Agents,
+though, don't need that; they can name the exact resources and permissions
+needed for their next step, with a far lower time cost, and none of the same
+pain in asking. What stays expensive is the other seat, the reviewer, which is
+why the legibility of the request matters just as much, if not more, than any
+property of the requester.
 
 ---
 

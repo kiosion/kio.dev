@@ -8,35 +8,32 @@
   let AboutContent = $derived(data.content.Component);
 </script>
 
-<PageSection>
-  <PageTitle class="gap-3">
-    {#each data.content.title as line}
-      <span>{line}</span>
-    {/each}
-  </PageTitle>
-  <div class="prose-links flex max-w-prose flex-col gap-3 text-lg">
-    <AboutContent />
-  </div>
-</PageSection>
+<div class="flex min-h-[calc(100dvh-13rem)] flex-col gap-18">
+  <PageSection>
+    <PageTitle class="gap-3">
+      {#each data.content.title as line}
+        <span>{line}</span>
+      {/each}
+    </PageTitle>
+    <div class="prose-links flex max-w-prose flex-col gap-3 text-lg">
+      <AboutContent />
+    </div>
+  </PageSection>
 
-<div class="min-h-0 flex-1"></div>
+  <div class="min-h-0 flex-1"></div>
 
-<PageSection>
-  <h2 class="text-base tracking-wide opacity-70">Recent posts</h2>
-
-  {#if data.posts?.length}
-    <PostList posts={data.posts} />
-  {:else}
-    <p class="text-md opacity-70">No posts yet.</p>
-  {/if}
-
-  <div class="flex flex-row items-center gap-2 text-base">
-    <Link
-      href="/thoughts/"
-      data-sveltekit-preload-code="eager"
-      data-sveltekit-preload-data="hover"
-    >
-      See all
-    </Link>
-  </div>
-</PageSection>
+  <PageSection>
+    <div>
+      <PostList posts={data.posts} title="Recent posts" />
+      <div class="border-t border-neutral-200 pt-4 text-base dark:border-neutral-400">
+        <Link
+          href="/thoughts/"
+          data-sveltekit-preload-code="hover"
+          data-sveltekit-preload-data="hover"
+        >
+          See all posts
+        </Link>
+      </div>
+    </div>
+  </PageSection>
+</div>

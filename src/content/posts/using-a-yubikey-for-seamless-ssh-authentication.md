@@ -2,7 +2,7 @@
 layout: post
 title: Using a Yubikey for SSH Authentication on MacOS / Linux
 date: 2021-11-29
-tags: [security, ssh, guides]
+tags: [security, ssh, hardware]
 desc:
   How to authenticate SSH connections using your Yubikey's Authentication slot,
   on both Linux and MacOS.

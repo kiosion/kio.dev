@@ -2,7 +2,7 @@
 layout: post
 title: DSLR Cameras as Webcams on Linux
 date: 2022-04-13
-tags: [guides]
+tags: [linux, hardware]
 desc: Using DSLR or Mirrorless cameras as 'webcams' on Linux thanks to v4l2
 ---
 

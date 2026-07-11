@@ -2,7 +2,7 @@
 layout: post
 title: Mixing WebSockets & HTTP endpoints in Elixir with Cowboy + Plug
 date: 2023-07-30
-tags: [guides, programming]
+tags: [elixir, websockets]
 desc:
   Using a custom dispatcher structure for mixing HTTP and WebSocket endpoints in
   a simple Plug-based Elixir API

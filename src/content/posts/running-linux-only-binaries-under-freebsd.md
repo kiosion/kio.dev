@@ -2,7 +2,7 @@
 layout: post
 title: Running linux-only-binaries-under-freebsd
 date: 2024-03-31
-tags: [guides]
+tags: [freebsd, linux]
 desc:
   Running Linux-only binaries under FreeBSD using its Linux binary compatibility
   tools and Jails
