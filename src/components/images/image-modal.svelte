@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BASE_ANIMATION_DURATION } from '$lib/consts';
+  import { prefersReducedMotion } from '$lib/transitions';
   import type { Snippet } from 'svelte';
   import { fade, fly } from 'svelte/transition';
 
@@ -51,8 +52,15 @@
       role="button"
       aria-label="Close"
       tabindex="0"
-      in:fly={{ delay: 100, duration: BASE_ANIMATION_DURATION / 3, y: -40 }}
-      out:fly={{ duration: BASE_ANIMATION_DURATION / 3, y: 40 }}
+      in:fly={{
+        delay: 100,
+        duration: BASE_ANIMATION_DURATION / 3,
+        y: prefersReducedMotion() ? 0 : -40,
+      }}
+      out:fly={{
+        duration: BASE_ANIMATION_DURATION / 3,
+        y: prefersReducedMotion() ? 0 : 40,
+      }}
       onkeyup={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.stopPropagation();

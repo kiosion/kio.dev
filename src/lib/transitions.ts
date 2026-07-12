@@ -10,7 +10,7 @@ export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 50;
 /** How far (px) incoming content travels up as it fades in. */
 const RISE = 8;
 
-const prefersReducedMotion = () =>
+export const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

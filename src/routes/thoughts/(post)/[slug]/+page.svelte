@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { prefersReducedMotion } from '$lib/transitions';
 
   const { data } = $props();
   const PostComponent = $derived(data.post.Component);
@@ -17,7 +18,7 @@
         document.getElementById(`heading-${hash.slice(1)}`);
 
       target?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: prefersReducedMotion() ? 'instant' : 'smooth',
         block: 'center',
       });
     }

@@ -2,7 +2,7 @@
   import { page } from '$app/state';
   import PageSection from '$components/page-section.svelte';
   import PageTitle from '$components/page-title.svelte';
-  import { receive, send } from '$lib/transitions';
+  import { prefersReducedMotion, receive, send } from '$lib/transitions';
 
   let {
     title,
@@ -65,7 +65,10 @@
         return;
       }
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'instant' : 'smooth',
+        block: 'center',
+      });
       history.pushState(null, '', href);
     };
     el.addEventListener('click', handler);
