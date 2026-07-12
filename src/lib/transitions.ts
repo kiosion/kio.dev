@@ -1,11 +1,11 @@
-import { cubicIn, cubicOut } from 'svelte/easing';
+import { cubicOut } from 'svelte/easing';
 import { crossfade, type TransitionConfig } from 'svelte/transition';
 
-export const PAGE_OUT_DURATION = 150;
-export const PAGE_IN_DURATION = 300;
+export const PAGE_OUT_DURATION = 120;
+export const PAGE_IN_DURATION = 250;
 
 /** Incoming content (and the heading/body morph) waits until the fade-out ends. */
-export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 50;
+export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 40;
 
 /** How far (px) incoming content travels up as it fades in. */
 const RISE = 8;
@@ -25,7 +25,7 @@ const LIST_EXIT_DURATION = 200;
 const RIDE_DURATION = Math.max(PAGE_OUT_DURATION, LIST_EXIT_DURATION);
 
 /**
- * Fade + slide-up for incoming page content. Decelerating ease (quintOut) so it
+ * Fade + slide-up for incoming page content. Decelerating ease (cubicOut) so it
  * settles into place. Delayed until the outgoing fade is essentially done.
  */
 export function pageIn(
@@ -48,7 +48,7 @@ export function pageIn(
 
 /**
  * Fade + slide-DOWN for outgoing page content — the mirror of pageIn's slide-up,
- * so content sinks away as it leaves. Accelerating ease (cubicIn). Same
+ * so content sinks away as it leaves. Decelerating ease (cubicOut), matching pageIn. Same
  * `(1 - t) * RISE` offset as pageIn, but since `t` runs 1-to-0 on the way out it
  * travels downward instead of up.
  */
@@ -61,7 +61,7 @@ export function pageOut(
   }
   return {
     duration,
-    easing: cubicIn,
+    easing: cubicOut,
     css: (t) => `opacity: ${t}; transform: translateY(${(1 - t) * RISE}px);`,
   };
 }
@@ -126,6 +126,6 @@ function collapseFade(
 export const listEnter = (node: Element): TransitionConfig =>
   collapseFade(node, { duration: LIST_ENTER_DURATION, easing: cubicOut });
 
-/** A list row leaving in place: collapse + fade out, accelerating away. */
+/** A list row leaving in place: collapse + fade out, settling closed. */
 export const listExit = (node: Element): TransitionConfig =>
-  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicIn });
+  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicOut });
