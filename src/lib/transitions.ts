@@ -7,6 +7,9 @@ export const PAGE_IN_DURATION = 250;
 /** Incoming content (and the heading/body morph) waits until the fade-out ends. */
 export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 40;
 
+/** Default duration for one-off component transitions (image modal fade). */
+export const BASE_ANIMATION_DURATION = 250;
+
 /** How far (px) incoming content travels up as it fades in. */
 const RISE = 8;
 

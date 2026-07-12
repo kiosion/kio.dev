@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { BASE_ANIMATION_DURATION } from '$lib/consts';
-  import { prefersReducedMotion } from '$lib/transitions';
+  import { BASE_ANIMATION_DURATION, prefersReducedMotion } from '$lib/transitions';
   import type { Snippet } from 'svelte';
   import { fade, fly } from 'svelte/transition';
 
@@ -48,7 +47,7 @@
     out:fade={{ duration: BASE_ANIMATION_DURATION }}
   >
     <span
-      class="text-dark dark:text-light absolute top-0 left-1/2 z-50 -mt-14 -translate-x-1/2 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[margin-top,background-color,color] focus-visible:mt-4 dark:bg-neutral-600 print:hidden"
+      class="text-dark dark:text-light absolute top-0 left-1/2 z-50 -translate-x-1/2 -translate-y-14 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[translate,background-color,color] focus-visible:translate-y-4 dark:bg-neutral-600 print:hidden"
       role="button"
       aria-label="Close"
       tabindex="0"
