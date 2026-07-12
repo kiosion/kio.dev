@@ -129,3 +129,34 @@ export const listEnter = (node: Element): TransitionConfig =>
 /** A list row leaving in place: collapse + fade out, settling closed. */
 export const listExit = (node: Element): TransitionConfig =>
   collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicOut });
+
+/** Duration for the inline-image ↔ fullscreen zoom morph. */
+export const ZOOM_DURATION = 300;
+
+/**
+ * Morph an element from a source rect on the page (intro) or back to it
+ * (outro): translate + scale from the rect's center to the element's natural
+ * position. Falls back to a fade when reduced motion is preferred or no
+ * origin rect is available.
+ */
+export function zoomFrom(
+  node: Element,
+  { from }: { from?: DOMRect } = {},
+): TransitionConfig {
+  if (prefersReducedMotion() || !from) {
+    return {
+      duration: ZOOM_DURATION / 2,
+      css: (t) => `opacity: ${t};`,
+    };
+  }
+  const to = node.getBoundingClientRect();
+  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
+  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+  const scale = from.width / to.width;
+  return {
+    duration: ZOOM_DURATION,
+    easing: cubicOut,
+    css: (t, u) =>
+      `transform-origin: center; transform: translate(${u * dx}px, ${u * dy}px) scale(${1 - u * (1 - scale)}); opacity: ${Math.min(1, t * 2)};`,
+  };
+}

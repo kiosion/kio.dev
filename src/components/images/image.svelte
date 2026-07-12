@@ -1,5 +1,6 @@
 <script lang="ts">
   import ImageModal from '$components/images/image-modal.svelte';
+  import { zoomFrom } from '$lib/transitions';
 
   let {
     src,
@@ -20,6 +21,7 @@
   } = $props();
 
   let showModal = $state(false);
+  let inlineImg: HTMLImageElement | undefined = $state();
 
   const aspect = $derived(width && height ? `${width} / ${height}` : undefined);
 </script>
@@ -29,10 +31,12 @@
     <button
       type="button"
       class="block cursor-zoom-in rounded-md"
+      class:invisible={showModal}
       aria-label={alt || 'Open image'}
       onclick={() => (showModal = true)}
     >
       <img
+        bind:this={inlineImg}
         {src}
         {alt}
         {width}
@@ -66,6 +70,8 @@
       {src}
       {alt}
       class="mx-auto max-h-full max-w-full rounded-md object-contain select-none"
+      in:zoomFrom={{ from: inlineImg?.getBoundingClientRect() }}
+      out:zoomFrom={{ from: inlineImg?.getBoundingClientRect() }}
     />
   </ImageModal>
 {/if}
