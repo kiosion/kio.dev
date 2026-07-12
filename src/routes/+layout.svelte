@@ -34,8 +34,9 @@
   {/if}
 
   <meta name="author" content={data.siteConfig.name} />
-  <meta name="theme-color" content="#e5e4e6" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#16160e" media="(prefers-color-scheme: dark)" />
+  <!-- Matches --color-light / --color-dark so browser chrome tint is seamless. -->
+  <meta name="theme-color" content="#f2f0ed" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#181717" media="(prefers-color-scheme: dark)" />
   <meta name="twitter:card" content="summary" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />

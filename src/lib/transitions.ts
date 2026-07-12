@@ -11,7 +11,7 @@ export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 40;
 export const BASE_ANIMATION_DURATION = 250;
 
 /** How far (px) incoming content travels up as it fades in. */
-const RISE = 8;
+const RISE = 6;
 
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
@@ -155,7 +155,15 @@ export function zoomFrom(
   const to = node.getBoundingClientRect();
   const dx = from.left + from.width / 2 - (to.left + to.width / 2);
   const dy = from.top + from.height / 2 - (to.top + to.height / 2);
-  const scale = from.width / to.width;
+  // With `object-contain`, the element box can be letterboxed: scale against
+  // the drawn image, not the box. (Centers coincide, so dx/dy are unaffected.)
+  let toWidth = to.width;
+  if (node instanceof HTMLImageElement && node.naturalWidth && node.naturalHeight) {
+    toWidth =
+      Math.min(to.width / node.naturalWidth, to.height / node.naturalHeight) *
+      node.naturalWidth;
+  }
+  const scale = from.width / toWidth;
   return {
     duration: ZOOM_DURATION,
     easing: cubicOut,

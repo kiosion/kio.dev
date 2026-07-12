@@ -48,6 +48,9 @@
     class:hover:decoration-orange-light={!active}
     class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
+    class:active:decoration-orange-light={!active}
+    class:active:dark:decoration-orange-dark={!active}
+    class:active:opacity-100={!active}
     data-sveltekit-preload-code="hover"
     data-sveltekit-preload-data="hover"
   >
@@ -88,9 +91,7 @@
   </svelte:element>
 {/snippet}
 
-<header
-  class="bg-light dark:bg-dark sticky top-0 z-10 border-b border-neutral-200 transition-colors dark:border-neutral-400"
->
+<header class="site-header sticky top-0 z-10">
   <div
     class="relative mx-auto flex w-full max-w-6xl flex-row items-center justify-between gap-6 px-8 py-6"
   >

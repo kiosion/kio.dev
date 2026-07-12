@@ -29,7 +29,7 @@
     {#each posts as post, idx (post.slug)}
       <li in:listEnter out:listExit>
         <a
-          class="group block py-4"
+          class="group block py-4 transition-opacity duration-100 active:opacity-60"
           href={`/thoughts/${post.slug}`}
           data-sveltekit-preload-code="hover"
           data-sveltekit-preload-data="hover"

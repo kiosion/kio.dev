@@ -13,11 +13,13 @@
 
   let closeButton: HTMLSpanElement | undefined = $state();
 
+  // Space closes on keyup so the keydown that opened the modal (Enter/Space on
+  // the inline image button) can't immediately dismiss it.
   const onKeyUp = (e: KeyboardEvent) => {
     if (!show) {
       return;
     }
-    if (e.key === ' ' || e.key === 'Escape') {
+    if (e.key === ' ') {
       e.stopPropagation();
       e.preventDefault();
       show = false;
@@ -25,13 +27,33 @@
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (!show || e.key !== 'Tab') {
+    if (!show) {
       return;
     }
-    e.stopPropagation();
-    e.preventDefault();
-    closeButton?.focus();
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      e.preventDefault();
+      show = false;
+      return;
+    }
+    if (e.key === 'Tab') {
+      e.stopPropagation();
+      e.preventDefault();
+      closeButton?.focus();
+    }
   };
+
+  // The page must not scroll behind the fullscreen dialog.
+  $effect(() => {
+    if (!show) {
+      return;
+    }
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  });
 </script>
 
 <svelte:window onkeydown={onKeyDown} onkeyup={onKeyUp} />
@@ -39,15 +61,21 @@
 {#if show}
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <dialog
-    class="fixed inset-0 z-50 flex h-full w-full cursor-zoom-out flex-col items-center justify-center bg-black/80"
+    class="fixed inset-0 z-50 flex h-full w-full cursor-zoom-out flex-col items-center justify-center bg-transparent"
     onclick={() => (show = false)}
     onkeydown={onKeyDown}
     onkeyup={onKeyUp}
-    in:fade={{ duration: BASE_ANIMATION_DURATION }}
-    out:fade={{ duration: BASE_ANIMATION_DURATION }}
   >
+    <!-- Fade the backdrop only: the dialog itself must not fade, or its opacity
+         masks the image's zoom morph while it travels. -->
+    <div
+      class="absolute inset-0 bg-black/80"
+      aria-hidden="true"
+      in:fade={{ duration: BASE_ANIMATION_DURATION }}
+      out:fade={{ duration: BASE_ANIMATION_DURATION }}
+    ></div>
     <span
-      class="text-dark dark:text-light absolute top-0 left-1/2 z-50 -translate-x-1/2 -translate-y-14 cursor-pointer rounded-xs bg-neutral-100 px-4 py-2 text-sm font-bold transition-[translate,background-color,color] focus-visible:translate-y-4 dark:bg-neutral-600 print:hidden"
+      class="text-dark dark:text-light absolute top-0 left-1/2 z-50 -translate-x-1/2 -translate-y-14 cursor-pointer rounded-xs bg-neutral-100/85 px-4 py-2 text-sm font-bold backdrop-blur-md transition-[translate,background-color,color,scale] focus-visible:translate-y-4 active:scale-[0.97] dark:bg-neutral-600/85 print:hidden"
       role="button"
       aria-label="Close"
       tabindex="0"

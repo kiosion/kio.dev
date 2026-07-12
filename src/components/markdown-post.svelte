@@ -246,7 +246,9 @@
       @apply my-8 border-t border-dashed border-neutral-200 dark:border-neutral-400;
     }
 
-    :global(img) {
+    /* Prose images only — the fullscreen image inside the zoom dialog sizes
+       itself and must not inherit the 3xl cap. */
+    :global(img:not(dialog img)) {
       @apply my-6 h-auto max-w-3xl rounded-md;
     }
 

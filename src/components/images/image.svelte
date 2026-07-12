@@ -8,7 +8,7 @@
     caption,
     width,
     height,
-    zoom = false,
+    zoom = true,
     class: className = '',
   }: {
     src: string;
@@ -30,7 +30,7 @@
   {#if zoom}
     <button
       type="button"
-      class="block cursor-zoom-in rounded-md"
+      class="block cursor-zoom-in rounded-md transition-[scale] active:scale-[0.99]"
       class:invisible={showModal}
       aria-label={alt || 'Open image'}
       onclick={() => (showModal = true)}
@@ -69,7 +69,7 @@
     <img
       {src}
       {alt}
-      class="mx-auto max-h-full max-w-full rounded-md object-contain select-none"
+      class="h-full w-full rounded-md object-contain select-none"
       in:zoomFrom={{ from: inlineImg?.getBoundingClientRect() }}
       out:zoomFrom={{ from: inlineImg?.getBoundingClientRect() }}
     />
