@@ -133,6 +133,22 @@ export const listEnter = (node: Element): TransitionConfig =>
 export const listExit = (node: Element): TransitionConfig =>
   collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicOut });
 
+/**
+ * A breadcrumb segment entering/leaving: fade + width-collapse in place, so
+ * neighbouring segments slide smoothly instead of jumping when one swaps.
+ */
+export function crumbFade(node: Element): TransitionConfig {
+  if (prefersReducedMotion()) {
+    return { duration: 0 };
+  }
+  const width = node.getBoundingClientRect().width;
+  return {
+    duration: 160,
+    easing: cubicOut,
+    css: (t) => `opacity: ${t}; max-width: ${t * width}px; overflow: hidden;`,
+  };
+}
+
 /** Duration for the inline-image ↔ fullscreen zoom morph. */
 export const ZOOM_DURATION = 300;
 

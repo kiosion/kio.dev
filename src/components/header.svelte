@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
+  import { crumbFade } from '$lib/transitions';
   import { pathnameGroupKey } from '$lib/utils';
 
   type Crumb = { label: string; href?: string };
@@ -20,22 +21,12 @@
       ]
     );
   });
-
-  const mobileBreadcrumbs = $derived.by<Crumb[]>(() => {
-    const c = breadcrumbs;
-    if (c.length <= 2) {
-      return c;
-    }
-
-    const parent = c.at(-2);
-    return [c[0], { label: '...', href: parent?.href }, c.at(-1)!];
-  });
 </script>
 
 {#snippet navLink(href: string, text: string, active = false)}
   <a
     {href}
-    class="underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
+    class="-mx-2 -my-2 px-2 py-2 underline decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity]"
     aria-current={active ? 'page' : undefined}
     aria-disabled={active}
     class:decoration-transparent={!active}
@@ -48,29 +39,41 @@
     class:hover:decoration-orange-light={!active}
     class:hover:dark:decoration-orange-dark={!active}
     class:hover:opacity-100={!active}
+    class:focus-visible:decoration-orange-light={!active}
+    class:focus-visible:dark:decoration-orange-dark={!active}
+    class:focus-visible:opacity-100={!active}
     class:active:decoration-orange-light={!active}
     class:active:dark:decoration-orange-dark={!active}
-    class:active:opacity-100={!active}
-    data-sveltekit-preload-code="hover"
-    data-sveltekit-preload-data="hover"
+    class:active:opacity-50={!active}
   >
     {text}
   </a>
+{/snippet}
+
+{#snippet crumbLabel(text: string, linky: boolean)}
+  <!-- Underline lives on this inner span: text-decoration doesn't propagate
+       into the home crumb's flex wrapper, and it keeps the logo underline-free. -->
+  <span
+    class="underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color]"
+    class:group-hover:decoration-orange-light={linky}
+    class:group-hover:dark:decoration-orange-dark={linky}
+    class:group-focus-visible:decoration-orange-light={linky}
+    class:group-focus-visible:dark:decoration-orange-dark={linky}
+    class:group-active:decoration-orange-light={linky}
+    class:group-active:dark:decoration-orange-dark={linky}>{text}</span
+  >
 {/snippet}
 
 {#snippet breadcrumbSegment(crumb: Crumb, isLast: boolean)}
   <svelte:element
     this={crumb.href && !isLast ? 'a' : 'span'}
     href={crumb.href && !isLast ? crumb.href : undefined}
-    class="inline-block max-w-[24ch] min-w-0 truncate tracking-wide underline decoration-transparent decoration-2 underline-offset-[3px] transition-[text-decoration-color,opacity] md:max-w-[48ch]"
-    class:hover:decoration-orange-light={!!crumb.href && !isLast}
-    class:hover:dark:decoration-orange-dark={!!crumb.href && !isLast}
+    class="group inline-block max-w-[24ch] min-w-0 truncate tracking-wide transition-opacity md:max-w-[48ch]"
     class:opacity-70={!isLast}
     class:hover:opacity-100={crumb.href && !isLast}
+    class:active:opacity-50={crumb.href && !isLast}
     class:focus-visible:opacity-100={crumb.href && !isLast}
     aria-current={isLast ? 'page' : undefined}
-    data-sveltekit-preload-code="hover"
-    data-sveltekit-preload-data="hover"
   >
     {#if crumb.href === '/'}
       <span class="flex flex-row items-center gap-4">
@@ -81,12 +84,10 @@
             alt=""
           />
         </span>
-        {#if !isLast}
-          {crumb.label}
-        {/if}
+        {@render crumbLabel(crumb.label, !isLast)}
       </span>
     {:else}
-      {crumb.label}
+      {@render crumbLabel(crumb.label, !!crumb.href && !isLast)}
     {/if}
   </svelte:element>
 {/snippet}
@@ -98,10 +99,14 @@
     <!-- Breadcrumbs -->
     <nav class="min-w-0 select-none" aria-label="Breadcrumbs">
       <ol class="hidden min-w-0 items-center whitespace-nowrap md:flex">
+        <!-- Keyed per segment: unchanged crumbs hold still; a segment that
+             enters/leaves fades while its width collapses, so neighbours
+             slide instead of jumping. -->
         {#each breadcrumbs as crumb, i (crumb.href ?? `${i}:${crumb.label}`)}
           <li
             class="text-md flex min-w-0 items-center before:mx-2 before:opacity-70 before:content-['/'] first:before:content-none"
             class:shrink-0={i === 0 || crumb.label === '...'}
+            transition:crumbFade
           >
             {@render breadcrumbSegment(crumb, i === breadcrumbs.length - 1)}
           </li>

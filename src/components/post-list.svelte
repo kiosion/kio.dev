@@ -31,8 +31,6 @@
         <a
           class="group block py-4 transition-opacity duration-100 active:opacity-60"
           href={`/thoughts/${post.slug}`}
-          data-sveltekit-preload-code="hover"
-          data-sveltekit-preload-data="hover"
         >
           <div class="flex items-baseline justify-between gap-4">
             <h3
@@ -42,7 +40,7 @@
             >
               {post.title}
             </h3>
-            <time class="text-sm whitespace-nowrap opacity-70">
+            <time class="text-sm whitespace-nowrap tabular-nums opacity-70">
               {fmt.format(new Date(post.date!))}
             </time>
           </div>

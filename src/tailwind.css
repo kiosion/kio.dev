@@ -157,8 +157,15 @@
       }
     }
 
+    html {
+      /* Native anchor jumps must clear the sticky header. */
+      scroll-padding-top: 6rem;
+    }
+
     body {
       @apply bg-neutral-0 text-dark dark:text-light dark:bg-neutral-800;
+      /* Links carry their own active: states; the UA gray flash fights them. */
+      -webkit-tap-highlight-color: transparent;
     }
 
     ::selection {
@@ -216,9 +223,11 @@
     }
 
     @supports (animation-timeline: scroll()) {
+      /* scroll(root): body's overflow-x-hidden makes it the "nearest" scroll
+         container, but the document scrolls on the root. */
       border-color: transparent;
       animation: header-edge linear both;
-      animation-timeline: scroll();
+      animation-timeline: scroll(root);
       animation-range: 0 48px;
     }
 
@@ -242,7 +251,7 @@
   }
 
   .prose-links a {
-    @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 dark:decoration-neutral-400;
+    @apply hover:decoration-orange-light active:decoration-orange-light dark:hover:decoration-orange-dark dark:active:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 active:opacity-70 dark:decoration-neutral-400;
   }
 
   .pt-ol {

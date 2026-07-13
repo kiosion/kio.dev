@@ -20,8 +20,11 @@
       <div class="flex flex-row items-center justify-end gap-4 text-sm">
         {#if config.social?.length}
           {#each config.social as link, idx (link.url)}
-            <Link href={link.url} target="_blank" rel="noopener noreferrer"
-              >{link.name}</Link
+            <Link
+              class="-my-2 inline-block py-2"
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer">{link.name}</Link
             >
             {#if idx < config.social.length - 1}
               <span class="opacity-50 select-none">|</span>

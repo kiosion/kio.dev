@@ -16,7 +16,7 @@
 
 <svelte:element
   this={as}
-  class="flex w-full flex-col not-first-of-type:gap-2 first-of-type:mt-6 first-of-type:gap-8{classNames?.length
+  class="flex w-full flex-col not-first-of-type:gap-2 first-of-type:mt-2 first-of-type:gap-8{classNames?.length
     ? ' ' + classNames
     : ''}"
   {...rest}

@@ -26,13 +26,7 @@
     <div>
       <PostList posts={data.posts} title="Recent posts" />
       <div class="border-t border-neutral-200 pt-4 text-base dark:border-neutral-400">
-        <Link
-          href="/thoughts/"
-          data-sveltekit-preload-code="hover"
-          data-sveltekit-preload-data="hover"
-        >
-          See all posts
-        </Link>
+        <Link href="/thoughts/">See all posts</Link>
       </div>
     </div>
   </PageSection>

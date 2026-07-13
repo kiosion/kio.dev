@@ -54,8 +54,10 @@
   <link rel="preload" href="/assets/logo-standard--small.webp" as="image" />
 </svelte:head>
 
+<!-- No overflow-x-hidden here: it would become the header's nearest scroll
+     container and silently break position:sticky. Body clips overflow-x. -->
 <div
-  class="bg-light text-dark dark:text-light relative mx-auto flex min-h-dvh w-full flex-col overflow-x-hidden dark:bg-neutral-800"
+  class="bg-light text-dark dark:text-light relative mx-auto flex min-h-dvh w-full flex-col dark:bg-neutral-800"
 >
   <Header />
 

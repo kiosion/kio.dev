@@ -88,7 +88,7 @@
     </p>
     <button
       type="button"
-      class="text-md hover:decoration-orange-light hover:dark:decoration-orange-dark w-fit cursor-pointer underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-colors dark:decoration-neutral-400"
+      class="text-md hover:decoration-orange-light focus-visible:decoration-orange-light active:decoration-orange-light hover:dark:decoration-orange-dark focus-visible:dark:decoration-orange-dark active:dark:decoration-orange-dark w-fit cursor-pointer underline decoration-neutral-200 decoration-2 underline-offset-[3px] transition-[opacity,text-decoration-color] hover:opacity-80 active:opacity-60 dark:decoration-neutral-400"
       onclick={() => history.back()}>Go back</button
     >
   </div>

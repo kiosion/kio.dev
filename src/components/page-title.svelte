@@ -10,7 +10,7 @@
 </script>
 
 <h1
-  class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide md:text-5xl{className?.length
+  class="font-display flex max-w-2xl flex-col text-4xl font-semibold tracking-wide text-balance md:text-5xl{className?.length
     ? ' ' + className
     : ''}"
   {...h1Props}

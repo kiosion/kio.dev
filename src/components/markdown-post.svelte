@@ -109,16 +109,14 @@
                 {#each tags as tag}
                   <li>
                     <a
-                      class="group flex flex-row items-center justify-start gap-x-0.5"
+                      class="group -my-1 flex flex-row items-center justify-start gap-x-0.5 py-1"
                       href={`/thoughts/+/${tag}`}
                       rel="tag"
                       aria-label={`Posts tagged ${tag}`}
-                      data-sveltekit-preload-code="hover"
-                      data-sveltekit-preload-data="hover"
                     >
                       <span aria-hidden="true" class="opacity-70 select-none">#</span>
                       <span
-                        class="group-hover:decoration-orange-light group-hover:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-80 transition-[opacity,text-decoration-color,color] group-hover:opacity-100"
+                        class="group-hover:decoration-orange-light group-active:decoration-orange-light group-hover:dark:decoration-orange-dark group-active:dark:decoration-orange-dark underline decoration-transparent decoration-2 underline-offset-[3px] opacity-80 transition-[opacity,text-decoration-color,color] group-hover:opacity-100 group-active:opacity-60"
                       >
                         {tag}</span
                       >
@@ -158,7 +156,7 @@
     :global(h4),
     :global(h5),
     :global(h6) {
-      @apply font-display font-semibold tracking-wide;
+      @apply font-display font-semibold tracking-wide text-balance;
     }
     :global(h1) {
       @apply mt-10 mb-6 text-3xl leading-[1.1];
@@ -176,11 +174,11 @@
     }
 
     :global(p) {
-      @apply mt-4 max-w-prose leading-relaxed;
+      @apply mt-4 max-w-prose leading-relaxed text-pretty;
     }
 
     :global(a) {
-      @apply hover:decoration-orange-light dark:hover:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 dark:decoration-neutral-400;
+      @apply hover:decoration-orange-light active:decoration-orange-light dark:hover:decoration-orange-dark dark:active:decoration-orange-dark underline decoration-neutral-200 decoration-2 underline-offset-[3px] opacity-90 transition-[opacity,text-decoration-color] hover:opacity-100 active:opacity-70 dark:decoration-neutral-400;
     }
 
     :global(.heading-anchor) {
