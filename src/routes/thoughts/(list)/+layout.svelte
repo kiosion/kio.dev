@@ -5,7 +5,7 @@
   import PageTitle from '$components/page-title.svelte';
   import PostList from '$components/post-list.svelte';
   import type { Post } from '$lib/content';
-  import { listEnter, listExit } from '$lib/transitions';
+  import { pageIn, pageOut } from '$lib/transitions';
 
   let { data } = $props();
 
@@ -92,15 +92,25 @@
 </PageSection>
 
 <PageSection>
-  {#if data.posts.length}
-    <div class="flex flex-col">
-      {#each postsByYear as { year, posts: yearPosts } (year)}
-        <section class="mb-8" in:listEnter out:listExit>
-          <PostList posts={yearPosts} title={year} />
-        </section>
-      {/each}
-    </div>
-  {:else}
-    <EmptyContent message="No posts found." />
-  {/if}
+  <!-- Tag filtering swaps the list wholesale in the same vocabulary as page
+       transitions (it IS a navigation — only scoped to this region): outgoing
+       list sinks away, incoming rises in, overlaid in one grid cell. Per-row
+       geometry animation read as churn when filters shared no posts. -->
+  <div class="grid grid-cols-1 grid-rows-1">
+    {#key selected ?? 'all'}
+      <div class="col-start-1 row-start-1 min-w-0" in:pageIn out:pageOut>
+        {#if data.posts.length}
+          <div class="flex flex-col">
+            {#each postsByYear as { year, posts: yearPosts } (year)}
+              <section class="mb-8">
+                <PostList posts={yearPosts} title={year} />
+              </section>
+            {/each}
+          </div>
+        {:else}
+          <EmptyContent message="No posts found." />
+        {/if}
+      </div>
+    {/key}
+  </div>
 </PageSection>

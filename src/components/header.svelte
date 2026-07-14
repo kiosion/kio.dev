@@ -1,8 +1,27 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { BASE_DOMAIN, NAV_LINKS } from '$lib/consts';
-  import { crumbFade } from '$lib/transitions';
+  import { crumbFade, PAGE_IN_DELAY, PAGE_IN_DURATION } from '$lib/transitions';
   import { pathnameGroupKey } from '$lib/utils';
+
+  /* Progress bar only earns its place on posts long enough to need it.
+     Measured after the page transition settles — during the crossfade both
+     page trees share the grid cell, so an earlier read sees max(old, new).
+     ponytail: no resize listener; a window resize won't re-gate until the
+     next navigation. */
+  let longPost = $state(false);
+
+  $effect(() => {
+    if (!page.data.post) {
+      longPost = false;
+      return;
+    }
+    void page.url.pathname; // re-measure on post-to-post navigation
+    const timer = setTimeout(() => {
+      longPost = document.documentElement.scrollHeight >= window.innerHeight * 1.75;
+    }, PAGE_IN_DELAY + PAGE_IN_DURATION);
+    return () => clearTimeout(timer);
+  });
 
   type Crumb = { label: string; href?: string };
 
@@ -93,6 +112,11 @@
 {/snippet}
 
 <header class="site-header sticky top-0 z-10">
+  <!-- Reading progress, long post pages only. Purely decorative scroll
+       position echo — hidden from the a11y tree. -->
+  {#if longPost}
+    <div class="post-progress" aria-hidden="true"></div>
+  {/if}
   <div
     class="relative mx-auto flex w-full max-w-6xl flex-row items-center justify-between gap-6 px-8 py-6"
   >

@@ -2,6 +2,8 @@
   import { page } from '$app/state';
   import PageSection from '$components/page-section.svelte';
   import PageTitle from '$components/page-title.svelte';
+  import { codeCopy } from '$lib/code-copy';
+  import { imageZoom } from '$lib/image-zoom';
   import { prefersReducedMotion, receive, send } from '$lib/transitions';
 
   let {
@@ -139,6 +141,8 @@
   <section
     bind:this={bodyEl}
     class="md-body text-md border-t border-neutral-200 pt-6 font-sans dark:border-neutral-400"
+    use:codeCopy
+    use:imageZoom
     in:receive|global={{ key: `post-body-in-${slug}` }}
     out:send|global={{ key: `post-body-out-${slug}` }}
   >

@@ -1,6 +1,7 @@
 <script lang="ts">
   import PageSection from '$components/page-section.svelte';
   import PageTitle from '$components/page-title.svelte';
+  import { codeCopy } from '$lib/code-copy';
 
   let { data } = $props();
   let EtcContent = $derived(data.content.Component);
@@ -10,7 +11,7 @@
   <PageTitle>
     {data.content.title}
   </PageTitle>
-  <div class="prose-links">
+  <div class="prose-links" use:codeCopy>
     <EtcContent />
   </div>
 </PageSection>

@@ -1,8 +1,15 @@
+<script lang="ts">
+  import type { SVGAttributes } from 'svelte/elements';
+
+  const { class: className, ...rest }: SVGAttributes<SVGSVGElement> = $props();
+</script>
+
 <svg
-  class="size-5 {$$props.class || ''}"
+  {...rest}
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 20 20"
   fill="currentColor"
+  class="size-5{className ? ' ' + className : ''}"
 >
   <path
     fill-rule="evenodd"

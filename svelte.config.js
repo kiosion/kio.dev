@@ -48,8 +48,10 @@ export default {
           return `{@html \`${escapeSvelte(html)}\`}`;
         },
       },
-      remarkPlugins: [remarkFootnotes],
-      rehypePlugins: [
+      // Plugin generics disagree across unified majors; erase
+      // the skew rather than fight it
+      remarkPlugins: /** @type {any} */ ([remarkFootnotes]),
+      rehypePlugins: /** @type {any} */ ([
         rehypeSlug,
         [
           rehypeAutolinkHeadings,
@@ -65,7 +67,7 @@ export default {
             rel: ['nofollow', 'noopener', 'noreferrer'],
           },
         ],
-      ],
+      ]),
     }),
     vitePreprocess({
       // Seems to break snippet exports from modules >= 5.5.0

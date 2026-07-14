@@ -16,15 +16,11 @@ export const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Per-row enter/exit durations for the in-place list reflow (tag filtering). */
-const LIST_ENTER_DURATION = 260;
-const LIST_EXIT_DURATION = 200;
-
 /**
  * How long an unmatched morph element stays put while whatever encloses it
- * animates away.
+ * (the page or list fade-out) animates away.
  */
-const RIDE_DURATION = Math.max(PAGE_OUT_DURATION, LIST_EXIT_DURATION);
+const RIDE_DURATION = PAGE_OUT_DURATION;
 
 /**
  * Fade + slide-up for incoming page content. Decelerating ease (quintOut) so it
@@ -79,7 +75,7 @@ const ride = (intro: boolean): TransitionConfig =>
     : { duration: RIDE_DURATION, css: () => '' };
 
 /**
- * Shared-element morph between a post-list card and the post page hero.
+ * Shared-element morph between a post-list card and the post page header.
  */
 export const [send, receive] = crossfade({
   duration: () => (prefersReducedMotion() ? 0 : PAGE_IN_DURATION),
@@ -87,50 +83,6 @@ export const [send, receive] = crossfade({
   easing: quintOut,
   fallback: (_node, _params, intro) => ride(intro),
 });
-
-/**
- * Collapse + fade for a single row entering/leaving the list in place.
- * Animates the box model to zero so neighbours flow into/out of the freed
- * space through normal layout.
- */
-function collapseFade(
-  node: Element,
-  { duration, easing }: { duration: number; easing: (t: number) => number },
-): TransitionConfig {
-  if (prefersReducedMotion()) {
-    return { duration: 0 };
-  }
-  const style = getComputedStyle(node);
-  const height = parseFloat(style.height);
-  const paddingTop = parseFloat(style.paddingTop);
-  const paddingBottom = parseFloat(style.paddingBottom);
-  const marginTop = parseFloat(style.marginTop);
-  const marginBottom = parseFloat(style.marginBottom);
-  const borderTop = parseFloat(style.borderTopWidth);
-  const borderBottom = parseFloat(style.borderBottomWidth);
-  return {
-    duration,
-    easing,
-    css: (t) =>
-      'overflow: hidden;' +
-      `opacity: ${t};` +
-      `height: ${t * height}px;` +
-      `padding-top: ${t * paddingTop}px;` +
-      `padding-bottom: ${t * paddingBottom}px;` +
-      `margin-top: ${t * marginTop}px;` +
-      `margin-bottom: ${t * marginBottom}px;` +
-      `border-top-width: ${t * borderTop}px;` +
-      `border-bottom-width: ${t * borderBottom}px;`,
-  };
-}
-
-/** A list row appearing in place: grow + fade in, decelerating into position. */
-export const listEnter = (node: Element): TransitionConfig =>
-  collapseFade(node, { duration: LIST_ENTER_DURATION, easing: quintOut });
-
-/** A list row leaving in place: collapse + fade out, settling closed. */
-export const listExit = (node: Element): TransitionConfig =>
-  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: quintOut });
 
 /**
  * A breadcrumb segment entering/leaving: fade + width-collapse in place, so

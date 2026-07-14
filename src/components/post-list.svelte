@@ -1,7 +1,7 @@
 <script lang="ts">
   import EmptyContent from '$components/empty-content.svelte';
   import type { Post } from '$lib/content';
-  import { listEnter, listExit, receive, send } from '$lib/transitions';
+  import { receive, send } from '$lib/transitions';
 
   const { posts, title }: { posts: Post[]; title?: string | number } = $props();
 
@@ -26,8 +26,8 @@
   <EmptyContent message="No posts found." />
 {:else}
   <ul class="divide-y divide-neutral-200 dark:divide-neutral-400">
-    {#each posts as post, idx (post.slug)}
-      <li in:listEnter out:listExit>
+    {#each posts as post, _ (post.slug)}
+      <li>
         <a
           class="group block py-4 transition-opacity duration-100 active:opacity-60"
           href={`/thoughts/${post.slug}`}
@@ -56,7 +56,7 @@
           </p>
         </a>
         <span
-          class="h-full w-full bg-neutral-50 dark:bg-neutral-900"
+          class="bg-neutral-0 h-full w-full dark:bg-neutral-800"
           aria-hidden="true"
           out:send|global={{ key: `post-body-in-${post.slug}` }}
           in:receive|global={{ key: `post-body-out-${post.slug}` }}
