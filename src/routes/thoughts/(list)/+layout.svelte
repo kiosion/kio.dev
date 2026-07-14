@@ -49,7 +49,7 @@
   >
     <span class="opacity-70 select-none">#</span>
     <span
-      class="underline decoration-2 underline-offset-[3px] transition-[opacity,text-decoration-color,color]"
+      class="group-active:decoration-orange-light group-active:dark:decoration-orange-dark underline decoration-2 underline-offset-[3px] transition-[opacity,text-decoration-color,color] group-active:opacity-60"
       class:opacity-100={isActiveTag(tag.slug)}
       class:decoration-orange-light={isActiveTag(tag.slug)}
       class:dark:decoration-orange-dark={isActiveTag(tag.slug)}

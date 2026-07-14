@@ -130,6 +130,12 @@
   --text-4xl--line-height: 1.2;
   --text-5xl: 2.5rem;
   --text-5xl--line-height: 1.15;
+
+  /* Motion: one shared personality. Strong decel curve (≈ quintOut) replaces
+     Tailwind's stock cubic-bezier(0.4, 0, 0.2, 1) for every transition utility;
+     src/lib/transitions.ts uses quintOut so JS and CSS motion match. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --default-transition-timing-function: var(--ease-out);
 }
 
 @layer base {
@@ -137,15 +143,17 @@
     @apply w-full overflow-x-hidden;
   }
 
-  @layer base {
-    body,
-    html,
-    div,
-    span,
-    p,
-    img {
-      box-sizing: border-box;
-    }
+  /* Keep this layer flat: a nested @layer base sorts BELOW Tailwind's own
+     preflight rules, which would let preflight's resets (e.g. `::after
+     { margin: 0 }`) override everything declared here. */
+  body,
+  html,
+  div,
+  span,
+  p,
+  img {
+    box-sizing: border-box;
+  }
 
     html,
     div {
@@ -160,6 +168,10 @@
     html {
       /* Native anchor jumps must clear the sticky header. */
       scroll-padding-top: 6rem;
+      /* Reserve the scrollbar gutter even when content is short, so page width
+         doesn't shift between scrolling and non-scrolling pages. (No-op on
+         overlay-scrollbar platforms, which can't be forced via CSS.) */
+      scrollbar-gutter: stable;
     }
 
     body {
@@ -183,6 +195,20 @@
       outline-offset: 2px;
       border-radius: var(--radius-sm);
     }
+
+    /* External links (target="_blank") get a small ↗ cue. Drawn via mask so it
+       inherits currentColor — the subset fonts don't ship the arrow glyph. */
+    a[target='_blank']::after {
+      content: '';
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      margin-left: 0.2em;
+      vertical-align: 0.15em;
+      background-color: currentColor;
+      opacity: 0.6;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 11.5 11.5 4.5M5.5 4.5h6v6' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+        center / contain no-repeat;
   }
 }
 

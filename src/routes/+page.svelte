@@ -8,7 +8,14 @@
   let AboutContent = $derived(data.content.Component);
 </script>
 
-<div class="flex min-h-[calc(100dvh-13rem)] flex-col gap-18">
+<!-- Fill viewport exactly. Height derived from the viewport so an
+     outgoing page sharing the cell during transitions won't stretch it.
+     Breakdown: header 3rem pad + 1.6875rem text-md line + 1px border;
+     main py-10 5rem; footer 3rem pad + 1.125rem text-sm line + 1px border.
+     Below sm the footer stacks to two rows + gap-y-6. -->
+<div
+  class="flex min-h-[calc(100dvh-16.4375rem-2px)] flex-col justify-between gap-18 sm:min-h-[calc(100dvh-13.8125rem-2px)]"
+>
   <PageSection>
     <PageTitle class="gap-3">
       {#each data.content.title as line}
@@ -19,8 +26,6 @@
       <AboutContent />
     </div>
   </PageSection>
-
-  <div class="min-h-0 flex-1"></div>
 
   <PageSection>
     <div>

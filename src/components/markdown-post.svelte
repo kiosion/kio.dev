@@ -184,19 +184,32 @@
     :global(.heading-anchor) {
       @apply relative underline decoration-transparent opacity-100 transition-[text-decoration-color];
 
-      &:hover,
+      /* Raw :hover isn't auto-gated like Tailwind's hover: variant — without
+         the media query, touch taps flash the marker. */
+      @media (hover: hover) {
+        &:hover {
+          &:before {
+            @apply translate-x-0 opacity-75;
+          }
+        }
+      }
+
       &:focus-visible {
         &:before {
-          @apply opacity-75;
+          @apply translate-x-0 opacity-75;
         }
       }
 
       &:before {
-        @apply text-md absolute top-1/2 -left-5 -translate-y-1/2 opacity-0 transition-opacity;
+        @apply text-md absolute top-1/2 -left-5 -translate-x-0.5 -translate-y-1/2 opacity-0 transition-[opacity,translate];
         content: '#';
       }
     }
-    :global(.heading-anchor:hover),
+    @media (hover: hover) {
+      :global(.heading-anchor:hover) {
+        @apply decoration-orange-light dark:decoration-orange-dark;
+      }
+    }
     :global(.heading-anchor:focus-visible) {
       @apply decoration-orange-light dark:decoration-orange-dark;
     }
@@ -244,9 +257,7 @@
       @apply my-8 border-t border-dashed border-neutral-200 dark:border-neutral-400;
     }
 
-    /* Prose images only — the fullscreen image inside the zoom dialog sizes
-       itself and must not inherit the 3xl cap. */
-    :global(img:not(dialog img)) {
+    :global(img) {
       @apply my-6 h-auto max-w-3xl rounded-md;
     }
 
@@ -254,7 +265,7 @@
       @apply text-xs font-semibold;
     }
     :global(.footnote-ref a) {
-      @apply text-orange-light dark:text-orange-dark -my-1.5 -mr-1 -ml-2 p-1.5 no-underline opacity-100 hover:opacity-80;
+      @apply text-orange-light dark:text-orange-dark -my-1.5 -mr-1 -ml-2 p-1.5 no-underline opacity-100 transition-opacity hover:opacity-80;
     }
 
     :global(.footnotes-heading) {
@@ -267,7 +278,7 @@
       @apply mt-1 leading-relaxed;
     }
     :global(.footnote-backref) {
-      @apply text-orange-light dark:text-orange-dark ml-1 inline-block no-underline opacity-100 hover:opacity-80;
+      @apply text-orange-light dark:text-orange-dark ml-1 inline-block no-underline opacity-100 transition-opacity hover:opacity-80;
     }
   }
 </style>

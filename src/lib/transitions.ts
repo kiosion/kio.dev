@@ -1,4 +1,6 @@
-import { cubicOut } from 'svelte/easing';
+// quintOut ≈ cubic-bezier(0.23, 1, 0.32, 1) — the same curve as --ease-out in
+// tailwind.css, so Svelte-driven and CSS-driven motion share one personality.
+import { quintOut } from 'svelte/easing';
 import { crossfade, type TransitionConfig } from 'svelte/transition';
 
 export const PAGE_OUT_DURATION = 120;
@@ -6,9 +8,6 @@ export const PAGE_IN_DURATION = 250;
 
 /** Incoming content (and the heading/body morph) waits until the fade-out ends. */
 export const PAGE_IN_DELAY = PAGE_OUT_DURATION - 40;
-
-/** Default duration for one-off component transitions (image modal fade). */
-export const BASE_ANIMATION_DURATION = 250;
 
 /** How far (px) incoming content travels up as it fades in. */
 const RISE = 6;
@@ -28,7 +27,7 @@ const LIST_EXIT_DURATION = 200;
 const RIDE_DURATION = Math.max(PAGE_OUT_DURATION, LIST_EXIT_DURATION);
 
 /**
- * Fade + slide-up for incoming page content. Decelerating ease (cubicOut) so it
+ * Fade + slide-up for incoming page content. Decelerating ease (quintOut) so it
  * settles into place. Delayed until the outgoing fade is essentially done.
  */
 export function pageIn(
@@ -44,14 +43,14 @@ export function pageIn(
   return {
     duration,
     delay,
-    easing: cubicOut,
+    easing: quintOut,
     css: (t) => `opacity: ${t}; transform: translateY(${(1 - t) * RISE}px);`,
   };
 }
 
 /**
  * Fade + slide-DOWN for outgoing page content — the mirror of pageIn's slide-up,
- * so content sinks away as it leaves. Decelerating ease (cubicOut), matching pageIn. Same
+ * so content sinks away as it leaves. Decelerating ease (quintOut), matching pageIn. Same
  * `(1 - t) * RISE` offset as pageIn, but since `t` runs 1-to-0 on the way out it
  * travels downward instead of up.
  */
@@ -64,7 +63,7 @@ export function pageOut(
   }
   return {
     duration,
-    easing: cubicOut,
+    easing: quintOut,
     css: (t) => `opacity: ${t}; transform: translateY(${(1 - t) * RISE}px);`,
   };
 }
@@ -85,7 +84,7 @@ const ride = (intro: boolean): TransitionConfig =>
 export const [send, receive] = crossfade({
   duration: () => (prefersReducedMotion() ? 0 : PAGE_IN_DURATION),
   delay: 50,
-  easing: cubicOut,
+  easing: quintOut,
   fallback: (_node, _params, intro) => ride(intro),
 });
 
@@ -127,11 +126,11 @@ function collapseFade(
 
 /** A list row appearing in place: grow + fade in, decelerating into position. */
 export const listEnter = (node: Element): TransitionConfig =>
-  collapseFade(node, { duration: LIST_ENTER_DURATION, easing: cubicOut });
+  collapseFade(node, { duration: LIST_ENTER_DURATION, easing: quintOut });
 
 /** A list row leaving in place: collapse + fade out, settling closed. */
 export const listExit = (node: Element): TransitionConfig =>
-  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: cubicOut });
+  collapseFade(node, { duration: LIST_EXIT_DURATION, easing: quintOut });
 
 /**
  * A breadcrumb segment entering/leaving: fade + width-collapse in place, so
@@ -144,46 +143,7 @@ export function crumbFade(node: Element): TransitionConfig {
   const width = node.getBoundingClientRect().width;
   return {
     duration: 160,
-    easing: cubicOut,
+    easing: quintOut,
     css: (t) => `opacity: ${t}; max-width: ${t * width}px; overflow: hidden;`,
-  };
-}
-
-/** Duration for the inline-image ↔ fullscreen zoom morph. */
-export const ZOOM_DURATION = 300;
-
-/**
- * Morph an element from a source rect on the page (intro) or back to it
- * (outro): translate + scale from the rect's center to the element's natural
- * position. Falls back to a fade when reduced motion is preferred or no
- * origin rect is available.
- */
-export function zoomFrom(
-  node: Element,
-  { from }: { from?: DOMRect } = {},
-): TransitionConfig {
-  if (prefersReducedMotion() || !from) {
-    return {
-      duration: ZOOM_DURATION / 2,
-      css: (t) => `opacity: ${t};`,
-    };
-  }
-  const to = node.getBoundingClientRect();
-  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
-  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
-  // With `object-contain`, the element box can be letterboxed: scale against
-  // the drawn image, not the box. (Centers coincide, so dx/dy are unaffected.)
-  let toWidth = to.width;
-  if (node instanceof HTMLImageElement && node.naturalWidth && node.naturalHeight) {
-    toWidth =
-      Math.min(to.width / node.naturalWidth, to.height / node.naturalHeight) *
-      node.naturalWidth;
-  }
-  const scale = from.width / toWidth;
-  return {
-    duration: ZOOM_DURATION,
-    easing: cubicOut,
-    css: (t, u) =>
-      `transform-origin: center; transform: translate(${u * dx}px, ${u * dy}px) scale(${1 - u * (1 - scale)}); opacity: ${Math.min(1, t * 2)};`,
   };
 }

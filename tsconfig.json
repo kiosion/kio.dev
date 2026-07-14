@@ -23,6 +23,7 @@
     "src/routes/**/.well-known/**/*",
     "scripts/**/*",
     "types/**/*",
+    "tests/**/*",
     "*.js",
     "*.ts",
     "eslint.config.mjs"

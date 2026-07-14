@@ -73,9 +73,9 @@ connected and follow the steps.
 You'll be asked to set a PIN, and be given your public key once the process is
 finished.
 
-> It's important to note that `yubikey-agent -setup` generates a random
-> Management Key and stores it in PIN-protected metadata, making it difficult to
-> use other PIV slots without some hack-y workarounds[^1].
+It's important to note that `yubikey-agent -setup` generates a random Management
+Key and stores it in PIN-protected metadata, making it difficult to use other
+PIV slots without some hack-y workarounds[^1].
 
 #### Using yubikey-manager
 
