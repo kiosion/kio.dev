@@ -4,21 +4,20 @@ title: Least privilege for AI agents
 date: 2026-06-14
 tags: [security, ai-agents, access-control]
 desc:
-  Human judgement has been an uncredited access control, and agents don't have
-  it.
+  Human judgement has been an uncredited access control. Agents don't have it.
 ---
 
-Nearly all access to digital infrastructure is held, and unused. When Microsoft
+When Microsoft
 [audited identities](https://www.microsoft.com/en-us/security/blog/2024/05/29/6-insights-from-microsofts-2024-state-of-multicloud-risk-report-to-evolve-your-security-strategy/)
 across its customers' cloud environments, under 2% of granted permissions had
 ever been exercised, and more than half of all identities could reach nearly
 everything. Everything past that 2% exists mostly as risk, abusable in two ways:
-steal the credential, or manipulate the person holding it. The last decade of
-identity work went into the first. MFA, hardware keys, short-lived certificates,
-and just-in-time access all aim at hardening the credential itself.
+steal the credential, or manipulate the person holding it.
 
-The second way gets less attention, in part because it usually collapses into
-the first. The
+The last decade of identity work has focused on the first; MFA, hardware keys,
+short-lived certificates, and just-in-time access all aim at hardening the
+credential itself. The second way gets less attention, in part because it
+usually collapses into the first. The
 [2023 MGM breach](https://specopssoft.com/blog/mgm-resorts-service-desk-hack/)
 began as a help-desk call whose goal was an MFA reset; once Scattered Spider
 held working credentials, the deception was over. Attackers convert a deceived
@@ -31,139 +30,150 @@ scale, but they can't be recruited at scale into working through everything
 their access allows. Human judgement has been an uncredited access control.
 
 Agents sit right where people did, holding credentials and taking open-ended
-direction in natural language,[^macros] but without analogous judgement. There
-is no separate thread for reasoning. A model continues one document, and its
-system prompt, the operator's task, tool outputs, and an attacker's input are
-all pieces of it. The context window is where reasoning happens, making attacker
-text part of the judgement rather than petitioning it from outside.
+direction in natural language,[^macros] but without analogous judgement to fall
+back on. There's no separate thread for reasoning. A model continues one
+document. The system prompt, the operator's task, tool outputs, and whatever an
+attacker managed to slip into a web page or a README all land in the same
+context window, and the context window is where the reasoning happens, making
+attacker text part of the judgement rather than petitioning it from outside.
 
-Human separation is leaky too; the difference is that successful deception has
-asymmetric outcomes. Deceiving a person buys limited actions, while deceiving an
-agent buys the agent: a machine's thoroughness, valid credentials, sessions that
-look like normal work. In November 2025, Anthropic
+Human separation is leaky too; the difference being the asymmetric outcomes of
+successful deception. Deceiving a person buys limited actions (each one a fresh
+chance for an attacker's pretext to fall apart), whilst deceiving an agent buys
+the agent: a machine's thoroughness, valid credentials, sessions that look like
+normal work. Capability gains merely raise what a compromised model is worth. In
+November 2025, Anthropic
 [reported](https://www.anthropic.com/news/disrupting-AI-espionage) attackers
-using its model to run most of a real espionage campaign; told it was doing
-authorised testing for a security firm, it mapped networks, wrote exploits, and
-reached roughly thirty organisations largely on its own.[^anthropic]
+using its model to run most of a real espionage campaign. Told it was performing
+authorised testing for a security firm, Claude mapped networks, wrote working
+exploits, and reached roughly thirty organisations largely on its
+own.[^anthropic]
 
-A common rebuttal is that this is temporary, that better models will stop being
-fooled, that workflows with sceptical validator steps will alleviate the risk. I
-don't buy that, for architectural reasons. Everything a model reads arrives in
-one channel, and the markings separating instructions from data are learned
-behaviour rather than inherent structure. Willison
-[named prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/)
-after SQL injection because it's the same flaw, but SQL injection had a complete
-fix; parameterised statements hand the database the query and the data
-separately. There's nothing equivalent to hand a model. The separation is a
-tendency, and a tendency has an error rate.
-[Schneier is more blunt](https://www.schneier.com/blog/archives/2025/08/we-are-still-unable-to-secure-llms-from-malicious-inputs.html):
+A common rebuttal is that this is temporary; that better models will stop being
+fooled, and sceptical validator steps will catch what slips through. I don't buy
+that, for architectural reasons. Everything a model reads arrives in one
+channel, and the markings separating instructions from data are learned
+behaviour rather than inherent structure. Simon Willison
+[coined the term _prompt injection_](https://simonwillison.net/2022/Sep/12/prompt-injection/)
+back in 2022, naming it after SQL injection due to a shared root flaw. SQL
+injection, though, had a complete fix: parameterised statements hand the
+database the query and the untrusted data separately. There's nothing equivalent
+to hand a model.
 
-> We have zero agentic AI systems that are secure against these attacks...It’s
-> an existential problem that, near as I can tell, most people developing [them]
-> are just pretending isn’t there.
+Every defence built inside one's context is a tendency, with an error rate. In
+October 2025, researchers from OpenAI, Anthropic, and Google DeepMind measured
+that error rate. They ran adaptive attacks against twelve published defences
+([_The Attacker Moves Second_](https://arxiv.org/abs/2510.09023)) and bypassed
+most of them more than nine times out of ten, including many that had reported
+near-zero attack success. Against an adversary who chooses how many attempts to
+make, a control that fails one time in a thousand isn't functioning as a
+control.
+[Schneier is more blunt](https://www.schneier.com/blog/archives/2025/08/we-are-still-unable-to-secure-llms-from-malicious-inputs.html)
+with his read:
 
-Every defence within models inherits that error rate, and this has been
-measured. In October 2025, researchers from OpenAI, Anthropic, and Google
-DeepMind tested twelve published defences against adaptive attackers and
-bypassed most of them more than nine times out of ten, including many that had
-reported near-zero attack success. Their title states the principle,
-[_The Attacker Moves Second_](https://arxiv.org/abs/2510.09023). A control that
-fails one time in a thousand, against an adversary who chooses how many attempts
-to make, isn't functioning as a control. Capability gains only raise what a
-compromised model is worth. Agents won't become secure just by getting smarter.
+> We have zero agentic AI systems that are secure against these attacks. ...
+> It’s an existential problem that, near as I can tell, most people developing
+> [them] are just pretending isn’t there.
 
-None of this is a new class of failure. A program talked into misusing authority
-it legitimately holds is a _confused deputy_, a problem
-[described by Norm Hardy](http://cap-lore.com/CapTheory/ConfusedDeputy.html) in
-1988, and the remedy that grew out of it isn't new either. Capability-based
-security ties each permission to the specific object it covers, so that no
-authority exists beyond what the task requires. Prompt injection is a failure of
-authority, rather than a failure of reasoning, which is why more reasoning
-inside the same trust boundary was never going to be a solution. A 2025 paper,
-_Design Patterns for Securing LLM Agents against Prompt Injections_, states the
-modern version plainly:
+He's right, and what's interesting is that none of this is a new class of
+failure. A program talked into misusing authority it legitimately holds is a
+_confused deputy_, a problem
+[Norm Hardy described](http://cap-lore.com/CapTheory/ConfusedDeputy.html)
+in 1988. Hardy's deputy was a Fortran compiler on Tymshare's commercial
+timesharing service, marked with a licence to write into its home directory so
+it could keep a statistics file there. The billing records happened to live in
+the same directory. Users could hand the compiler a path for its optional debug
+output, and someone handed it the path of the billing file. The compiler wrote
+where it was told, as its licence allowed, and the billing records were gone.
+The user's request only had to name the file; the authority was already the
+compiler's.
+
+The remedy that grew from it, capability-based security, ties each permission to
+the specific object it covers, ensuring no authority exists beyond what the task
+at hand requires. Looking through that lens, prompt injection is a failure of
+authority, not reasoning, and more reasoning inside the same trust boundary will
+never be a complete solution. In their 2025 paper _Design Patterns for Securing
+LLM Agents against Prompt Injections_, Beurer-Kellner and colleagues frame this
+as a core design constraint:
 
 > Once an LLM agent has ingested untrusted input, it must be constrained so that
 > it is impossible for that input to trigger any consequential
 > actions.[^designpatterns]
 
-The paper's plan-then-execute pattern describes fixing a plan from the trusted
-request alone, so an injection during execution can corrupt data but can't
-change what the program does next. Google DeepMind's
+The paper's plan-then-execute pattern fixes a plan ahead of execution from the
+trusted request alone, allowing injections during execution to corrupt data but
+not to influence what the program does next. Google DeepMind's
 [CaMeL](https://arxiv.org/abs/2503.18813) is a close parallel here. It builds
-the same idea into an interpreter that derives its structure from the trusted
-query, then enforces capability policies on everything flowing through it.
+the same pattern into an interpreter, deriving its structure from the trusted
+query, then enforcing capability policies on everything that passes through it.
 
 ---
 
-The infrastructure equivalent is binding each permission to the specific
-resource it acts on, and it's one area I've spent the past few months on at
+The equivalent for digital infrastructure is binding each permission to the
+resource it acts on, and it's what I've spent the past few months on at
 [Teleport](https://goteleport.com/), as
 [resource-scoped constraints](/thoughts/scoping-access-requests-below-the-resource-level)
 in access requests.[^views] Access requests already eliminate standing privilege
-with per-task grants, bounded approval windows, and short-lived certificates,
-and they can already name specific resources; but the grant is still everything
-the approved roles allow there. Constraints add the missing dimension of _what_,
-per-resource. Each constraint pairs a resource in the request with the specific
-permissions (e.g., SSH logins, database users, Kube groups, AWS roles) wanted on
-it, and on approval those pairs are encoded into the certificate the requester
-assumes. That certificate is the enforcement artifact. Access checks read the
-set the reviewer approved, and there is no step between filing and connection
-where it can change.
+with per-task grants, time-bounded approval windows, and short-lived
+certificates. While they can already name specific resources, the resulting
+grant is still everything the approved roles allow there. Constraints add the
+missing dimension of _what_, per-resource. Each one pairs a resource in the
+request with the permissions wanted on it (e.g., SSH logins, database users,
+Kube groups, AWS roles). On approval, those pairs are encoded into the
+certificate the requester assumes.
 
-The first win is who authors the specificity. Least privilege was always
-expressible with roles alone, but only by authoring and maintaining
-hyper-specific roles per-task, which in practice is not sustainable. Constraints
-move that work from role authors to request authors. The requester describes
-exactly what the task needs and the reviewer rules on exactly that, the only
-requirement being that a role at least as broad as the task exists. This makes
-per-task provisioning workable; agents can ask late and request only what the
-next step needs. The request is still an untrusted proposal; no matter how the
-asking is arranged, the requester sits on the untrusted side of the boundary and
-may already be compromised. Review is where trust enters; it's what fixes the
-plan outside the agent, before execution.
+An agent that requested one host with `logins: [deploy]` gets a certificate that
+opens that host only as `deploy`, no matter what else the underlying roles
+satisfying the request would have allowed. There's no step between filing and
+connection where the grant can widen.
 
-The second win, and what I see (no pun intended) as the bigger one, is
-visibility. Review at volume is the unsolved problem; a person judging every
-request eventually stops reading, and the industry's answer is standing
-auto-approval policy, which is only as good as the information in the request it
-evaluates. A role-satisfied request hides the actual grant inside role
-definitions; a constrained request carries the whole grant on its face. The
-reviewer sees precisely what they're approving, the audit log records precisely
-what was grantable, and policy can match on the constraints themselves rather
-than role names.
+Least privilege was always expressible with roles alone, but only by authoring
+and maintaining hyper-specific ones per-task, which, in practice, isn't
+sustainable. Constraints bound to resources move that work from role authors to
+request authors. The requester describes exactly what the task needs and the
+reviewer rules on that, with the only requirement being that a role at least as
+broad as the task exists. This makes per-task provisioning workable; agents can
+ask late and request only what the next step needs. The request is still an
+untrusted proposal, though. The requester sits on the untrusted side of the
+boundary and may already be compromised.
 
----
+Review is where trust enters; it's what fixes the plan outside the agent, before
+execution.
 
-A fair objection is that none of this is really new advice. Least privilege
-dates to
+The bigger win, to my eye (no pun intended), is visibility. Review-at-volume is
+still an unsolved problem; a person judging every request eventually stops
+reading. The industry's answer, standing auto-approval policy, is only as good
+as the information available in the request it evaluates. A role-satisfied
+request hides the actual grants inside role definitions, while a constrained
+request carries all grants on its face. The reviewer sees precisely what they're
+approving, the audit log can record precisely what was grantable, and policy can
+match on specific constraints themselves rather than role names.
+
+But isn't this just least privilege again? It is; least privilege dates to
 [Saltzer and Schroeder in 1975](https://web.mit.edu/Saltzer/www/publications/protection/),
-and the audit this post opened with is what half a century of recommending it
+and the audit I opened this post with is what half a century of recommending it
 produced. Their paper names the reason in another of its principles,
-"psychological acceptability"; people route around controls they find painful.
-Asking is the painful part. Every request is a ticket to file and an approval to
-wait on while work sits blocked, so people request broadly, hoard what they're
-granted, and organisations settle on over-provisioning as the price of nobody
-being interrupted. People know the principle; the unused 98% can be seen as
-"insurance" against the cost (perceived or real) of asking again. Agents,
-though, don't need that; they can name the exact resources and permissions
-needed for their next step, with a far lower time cost, and none of the same
-pain in asking. What stays expensive is the other seat, the reviewer, which is
-why the legibility of the request matters just as much, if not more, than any
-property of the requester.
+"psychological acceptability." People route around controls they find painful.
+Asking is the painful part.
 
----
+Every request is something to file and an approval to wait. People know the
+principle, yet request broadly and hoard what they're granted. Organisations
+settle on over-provisioning as the price of people not being interrupted. That
+unused 98% of permissions can be seen as "insurance" against the cost (perceived
+or real) of asking. Agents, though, don't need that. They can name the exact
+resources and permissions needed for their next step with a far lower time cost
+and none of the same pain in asking. What stays expensive is the other seat, the
+reviewer, which is why the legibility of the request matters just as much, if
+not more, than any property of the requester.
 
-So, sorry if a partial answer disappoints; as framed by Schneier, partial is the
-only kind on offer as long as LLMs are operating on potentially adversarial
-input. An agent stays steerable by what it reads and no grant design changes
-that. What _can_ change is what the agent is holding when it happens, and how
-legible the arrangement is. The loop underneath, request/review/assume, holds no
-matter what fills each seat. Half a century on, there's finally a requester that
-doesn't mind asking. What's taking the place of people's judgement in the
-requester's seat has to be explicit: a decision over the agent's reach that is
-recorded, made outside the agent, and enforced by software its context can't
-reach.
+So, sorry if a partial answer here disappoints. As framed by Schneier, partial
+is the only kind on offer as long as LLMs are operating on adversarial input. AI
+agents are steerable by what they read. No grant design can change that. What
+_can_ change is what they're holding when that happens, and how legible the
+arrangement is. Several decades later, there's finally a requester that doesn't
+mind asking. What's taking the place of people's judgement in that seat has to
+be an explicit decision over agents' reach, one that's recorded, that's made
+outside the agents, and that's enforced by software their context can't touch.
 
 [^macros]:
     The closest ancestor is probably the macro virus, an Office document
